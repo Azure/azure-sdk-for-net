@@ -291,20 +291,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region MachineLearningServicesPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> object. </returns>
+        public static MachineLearningServicesPrivateEndpointConnectionResource GetMachineLearningServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                MachineLearningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new MachineLearningServicesPrivateEndpointConnectionResource(client, id);
             }
             );
         }

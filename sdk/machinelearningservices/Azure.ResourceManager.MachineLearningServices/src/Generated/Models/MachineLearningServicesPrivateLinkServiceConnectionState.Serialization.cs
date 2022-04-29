@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class PrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class MachineLearningServicesPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkServiceConnectionState DeserializePrivateLinkServiceConnectionState(JsonElement element)
+        internal static MachineLearningServicesPrivateLinkServiceConnectionState DeserializeMachineLearningServicesPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<PrivateEndpointServiceConnectionStatus> status = default;
+            Optional<MachineLearningServicesPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new PrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new MachineLearningServicesPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new MachineLearningServicesPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
         }
     }
 }

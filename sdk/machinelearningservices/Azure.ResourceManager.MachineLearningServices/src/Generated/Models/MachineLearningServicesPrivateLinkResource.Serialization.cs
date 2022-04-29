@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class PrivateLinkResource : IUtf8JsonSerializable
+    public partial class MachineLearningServicesPrivateLinkResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element)
+        internal static MachineLearningServicesPrivateLinkResource DeserializeMachineLearningServicesPrivateLinkResource(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new PrivateLinkResource(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new MachineLearningServicesPrivateLinkResource(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    public partial class PrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class MachineLearningServicesPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             writer.WriteEndObject();
         }
 
-        internal static PrivateEndpointConnectionData DeserializePrivateEndpointConnectionData(JsonElement element)
+        internal static MachineLearningServicesPrivateEndpointConnectionData DeserializeMachineLearningServicesPrivateEndpointConnectionData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             ResourceType type = default;
             SystemData systemData = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<PrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<MachineLearningServicesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<MachineLearningServicesPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MachineLearningServicesPrivateLinkServiceConnectionState.DeserializeMachineLearningServicesPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.MachineLearningServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new PrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            provisioningState = new MachineLearningServicesPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningServicesPrivateEndpointConnectionData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

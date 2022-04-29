@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    /// <summary> A class representing the PrivateEndpointConnection data model. </summary>
-    public partial class PrivateEndpointConnectionData : ResourceData
+    /// <summary> A class representing the MachineLearningServicesPrivateEndpointConnection data model. </summary>
+    public partial class MachineLearningServicesPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
-        public PrivateEndpointConnectionData()
+        /// <summary> Initializes a new instance of MachineLearningServicesPrivateEndpointConnectionData. </summary>
+        public MachineLearningServicesPrivateEndpointConnectionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningServicesPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, PrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal MachineLearningServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, PrivateEndpoint privateEndpoint, MachineLearningServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, MachineLearningServicesPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public MachineLearningServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public PrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public MachineLearningServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

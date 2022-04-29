@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    internal partial class PrivateLinkResourceListResult
+    internal partial class MachineLearningServicesPrivateEndpointConnectionListResult
     {
-        internal static PrivateLinkResourceListResult DeserializePrivateLinkResourceListResult(JsonElement element)
+        internal static MachineLearningServicesPrivateEndpointConnectionListResult DeserializeMachineLearningServicesPrivateEndpointConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<MachineLearningServicesPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +26,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<MachineLearningServicesPrivateEndpointConnectionData> array = new List<MachineLearningServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
+                        array.Add(MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new PrivateLinkResourceListResult(Optional.ToList(value));
+            return new MachineLearningServicesPrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

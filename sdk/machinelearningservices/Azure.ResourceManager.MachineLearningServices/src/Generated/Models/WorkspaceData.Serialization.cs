@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<string> imageBuildCompute = default;
             Optional<bool> allowPublicAccessWhenBehindVnet = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<MachineLearningServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<IList<SharedPrivateLinkResource>> sharedPrivateLinkResources = default;
             Optional<NotebookResourceInfo> notebookInfo = default;
             Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<MachineLearningServicesPrivateEndpointConnectionData> array = new List<MachineLearningServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

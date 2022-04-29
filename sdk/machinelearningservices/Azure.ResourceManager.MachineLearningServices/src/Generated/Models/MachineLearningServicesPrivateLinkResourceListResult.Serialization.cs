@@ -8,15 +8,14 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    internal partial class PrivateEndpointConnectionListResult
+    internal partial class MachineLearningServicesPrivateLinkResourceListResult
     {
-        internal static PrivateEndpointConnectionListResult DeserializePrivateEndpointConnectionListResult(JsonElement element)
+        internal static MachineLearningServicesPrivateLinkResourceListResult DeserializeMachineLearningServicesPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<MachineLearningServicesPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,16 +25,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                    List<MachineLearningServicesPrivateLinkResource> array = new List<MachineLearningServicesPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                        array.Add(MachineLearningServicesPrivateLinkResource.DeserializeMachineLearningServicesPrivateLinkResource(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new MachineLearningServicesPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

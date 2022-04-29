@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class PrivateLinkResource : ResourceData
+    public partial class MachineLearningServicesPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
-        public PrivateLinkResource()
+        /// <summary> Initializes a new instance of MachineLearningServicesPrivateLinkResource. </summary>
+        public MachineLearningServicesPrivateLinkResource()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of MachineLearningServicesPrivateLinkResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal PrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        internal MachineLearningServicesPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;

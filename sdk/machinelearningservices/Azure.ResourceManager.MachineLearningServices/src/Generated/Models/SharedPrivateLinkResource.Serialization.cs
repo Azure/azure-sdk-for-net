@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> privateLinkResourceId = default;
             Optional<string> groupId = default;
             Optional<string> requestMessage = default;
-            Optional<PrivateEndpointServiceConnectionStatus> status = default;
+            Optional<MachineLearningServicesPrivateEndpointServiceConnectionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new PrivateEndpointServiceConnectionStatus(property0.Value.GetString());
+                            status = new MachineLearningServicesPrivateEndpointServiceConnectionStatus(property0.Value.GetString());
                             continue;
                         }
                     }
