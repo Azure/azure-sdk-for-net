@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="storageAccountId">Required if createOption is Import.
         /// The Azure Resource Manager identifier of the storage account
         /// containing the blob to import as a disk.</param>
-        /// <param name="imageReference">Disk source information.</param>
+        /// <param name="imageReference">Disk source information for PIR or
+        /// user images.</param>
         /// <param name="galleryImageReference">Required if creating from a
         /// Gallery Image. The id of the ImageDiskReference will be the ARM id
         /// of the shared galley image version from which to create a
@@ -96,7 +97,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string StorageAccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets disk source information.
+        /// Gets or sets disk source information for PIR or user images.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageDiskReference ImageReference { get; set; }
