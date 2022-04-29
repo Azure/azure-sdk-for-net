@@ -343,7 +343,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_defaultRequestOptions;
-            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, language);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -352,7 +352,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_defaultRequestOptions;
-            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, language);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
@@ -361,7 +361,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_defaultRequestOptions;
-            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -370,28 +370,36 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_defaultRequestOptions;
-            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
 
-        private async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        private async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
             scope.Start();
 
             try
             {
-                entityRecognitionInput.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
+                AnalyzeTextEntityRecognitionInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new EntitiesTaskParameters(
+                                        options.DisableServiceLogs,
+                                        options.ModelVersion,
+                                        Constants.DefaultStringIndexType)
+                };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    entityRecognitionInput, options.IncludeStatistics,
+                    input,
+                    options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(entityRecognitionInput.AnalysisInput.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -402,23 +410,31 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        private Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
             scope.Start();
 
             try
             {
-                entityRecognitionInput.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
+                AnalyzeTextEntityRecognitionInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new EntitiesTaskParameters(
+                                        options.DisableServiceLogs,
+                                        options.ModelVersion,
+                                        Constants.DefaultStringIndexType)
+                };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    entityRecognitionInput, options.IncludeStatistics,
+                    input,
+                    options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(entityRecognitionInput.AnalysisInput.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -427,34 +443,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, string language)
-        {
-            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
-            int id = 0;
-            foreach (var document in documents)
-            {
-                var input = new MultiLanguageInput(id: id.ToString(CultureInfo.InvariantCulture), text: document);
-                id++;
-                input.Language = language;
-                textEntityInputs.AnalysisInput.Documents.Add(input);
-            }
-
-            return textEntityInputs;
-        }
-
-        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents)
-        {
-            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
-            foreach (var document in documents)
-            {
-                var input = new MultiLanguageInput(document.Id, document.Text);
-                input.Language = document.Language;
-                textEntityInputs.AnalysisInput.Documents.Add(input);
-            }
-
-            return textEntityInputs;
         }
 
         #endregion
@@ -1198,7 +1186,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         }
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
+            => new MultiLanguageInput(id.ToString(CultureInfo.InvariantCulture), document) { Language = language ?? _options.DefaultLanguage };
 
         private MultiLanguageAnalysisInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
