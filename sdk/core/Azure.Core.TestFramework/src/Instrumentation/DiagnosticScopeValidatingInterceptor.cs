@@ -214,8 +214,9 @@ namespace Azure.Core.TestFramework
                         if (!diagnosticListener.Scopes.Any(e => !e.Name.StartsWith("Azure.Core")))
                         {
                             throw new InvalidOperationException(
-                                $"Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present. {Environment.NewLine} Ensure that the inner method that " +
-                                $"client calls are being forwarded to from the '{source}' method has diagnostic scopes defined by using clientDiagnostics.CreateScope(...).");
+                                "Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present." +
+                                $"Ensure that the inner method that client calls are being forwarded to from the '{{source}}' method has diagnostic scopes " +
+                                "defined by using clientDiagnostics.CreateScope(...).");
                         }
                     }
                 }
