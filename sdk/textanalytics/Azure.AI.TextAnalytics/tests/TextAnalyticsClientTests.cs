@@ -5,6 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
@@ -34,6 +35,30 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (AzureKeyCredential)null));
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TokenCredential)null));
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new DefaultAzureCredential()));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void CreateClientAllowsMissingDefaultLanguage(string defaultLanguage)
+        {
+            var uri = new Uri("http://localhost");
+            var options = new TextAnalyticsClientOptions { DefaultLanguage = defaultLanguage };
+
+            Assert.DoesNotThrow(() => new TextAnalyticsClient(uri, new AzureKeyCredential("apiKey"), options));
+            Assert.DoesNotThrow(() => new TextAnalyticsClient(uri, Mock.Of<TokenCredential>(), options));
+        }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void CreateClientAllowsMissingDefaultCountryHint(string defaultCountryHint)
+        {
+            var uri = new Uri("http://localhost");
+            var options = new TextAnalyticsClientOptions { DefaultCountryHint = defaultCountryHint };
+
+            Assert.DoesNotThrow(() => new TextAnalyticsClient(uri, new AzureKeyCredential("apiKey"), options));
+            Assert.DoesNotThrow(() => new TextAnalyticsClient(uri, Mock.Of<TokenCredential>(), options));
         }
 
         [Test]
