@@ -1174,9 +1174,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private MultiLanguageAnalysisInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
             MultiLanguageAnalysisInput input = new MultiLanguageAnalysisInput();
+            int i = 0;
             foreach (var document in documents)
             {
-                input.Documents.Add(ConvertToMultiLanguageInput(document, language));
+                input.Documents.Add(ConvertToMultiLanguageInput(document, language, i++));
             }
             return input;
         }
