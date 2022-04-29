@@ -479,14 +479,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     input.Documents.Add(doc);
                 }
                 var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzePiiEntites, cancellationToken: cancellationToken).ConfigureAwait(false);
-
                 analyzePiiEntites.Parameters = new PiiTaskParameters(
                     options.DisableServiceLogs,
                     options.ModelVersion,
                     new PiiDomain(options.DomainFilter.GetString()),
                     options.CategoriesFilter,
                     Constants.DefaultStringIndexType);
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzePiiEntites, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var piiEntities = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
@@ -526,8 +526,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     input.Documents.Add(doc);
                 }
                 var analyzePiiEntites = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
-                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzePiiEntites, cancellationToken: cancellationToken);
-
                 analyzePiiEntites.Parameters = new PiiTaskParameters(
                     options.DisableServiceLogs,
                     options.ModelVersion,
@@ -535,6 +533,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     options.CategoriesFilter,
                     Constants.DefaultStringIndexType);
 
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzePiiEntites, cancellationToken: cancellationToken);
                 var piiEntities = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
