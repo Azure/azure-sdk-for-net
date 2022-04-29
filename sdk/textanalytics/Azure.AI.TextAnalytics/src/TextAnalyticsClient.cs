@@ -20,9 +20,10 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class TextAnalyticsClient
     {
-        private readonly Uri _baseUri;
         internal readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
+
+        private readonly Uri _baseUri;
         private readonly TextAnalyticsClientOptions _options;
         private readonly TextAnalyticsRequestOptions _requestOptions = new TextAnalyticsRequestOptions();
 
@@ -158,7 +159,7 @@ namespace Azure.AI.TextAnalytics
                 if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault().Error);
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
@@ -218,7 +219,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault().Error);
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -485,7 +486,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault().Error);
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors[0].Error);
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -548,7 +549,7 @@ namespace Azure.AI.TextAnalytics
                 if (entityRecognition.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors.FirstOrDefault().Error);
+                    var error = Transforms.ConvertToError(entityRecognition.Results.Errors[0].Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(entityRecognition.Results.Documents.FirstOrDefault()), response);
@@ -837,7 +838,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault().Error);
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -907,7 +908,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     // only one document, so we can ignore the id and grab the first error message.
 
-                    var error = Transforms.ConvertToError(piiEntities.Results.Errors.FirstOrDefault().Error);
+                    var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
                     throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
@@ -2435,12 +2436,10 @@ namespace Azure.AI.TextAnalytics
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
             => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
-        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error)
-        {
-            if (string.IsNullOrEmpty(error.Target))
-                return null;
-            return new Dictionary<string, string> { { "Target", error.Target } };
-        }
+        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
+            (string.IsNullOrEmpty(error.Target))
+                ? null
+                : new Dictionary<string, string> { { "Target", error.Target } };
 
         #endregion
 

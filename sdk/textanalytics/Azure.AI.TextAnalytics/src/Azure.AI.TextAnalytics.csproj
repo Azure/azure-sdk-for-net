@@ -17,15 +17,18 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
+  <!-- Import the Text Analytics legacy generated source -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*" LinkBase="Shared/Legacy/Generated" />
+    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Custom/**/*" LinkBase="Shared/Legacy/Custom" />
   </ItemGroup>
 
+  <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared/core" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 </Project>

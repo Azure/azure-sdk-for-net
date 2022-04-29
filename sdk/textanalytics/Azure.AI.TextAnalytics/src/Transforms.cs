@@ -10,58 +10,29 @@ using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal static class Transforms
+    internal static partial class Transforms
     {
+        #region Needs Review
+
+        //
+        // REGION: Common
+        //
+        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
+
+        #endregion
+
         #region Common
 
         public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error)
-        {
-            string errorCode = error.Code;
-            string message = error.Message;
-            string target = error.Target;
-            InnerError innerError = error.Innererror;
-
-            if (innerError != null)
-            {
-                // Return the innermost error, which should be only one level down.
-                return new TextAnalyticsError(innerError.Code, message, target);
-            }
-
-            return new TextAnalyticsError(errorCode, message, target);
-        }
-
         internal static TextAnalyticsError ConvertToError(Error error)
         {
-            string errorCode = error.Code.ToString();
-            string message = error.Message;
-            string target = error.Target;
-            InnerErrorModel innerError = error.Innererror;
+            var innerError = error.Innererror;
 
-            if (innerError != null)
-            {
-                // Return the innermost error, which should be only one level down.
-                return new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target);
-            }
-
-            return new TextAnalyticsError(errorCode, message, target);
-        }
-
-        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors)
-        {
-            var errors = new List<TextAnalyticsError>();
-
-            if (internalErrors == null)
-            {
-                return errors;
-            }
-
-            foreach (TextAnalyticsErrorInternal error in internalErrors)
-            {
-                errors.Add(ConvertToError(error));
-            }
-            return errors;
+            return (innerError != null)
+                ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
+                : new TextAnalyticsError(error.Code.ToString(), error.Message, error.Target);
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
@@ -104,7 +75,6 @@ namespace Azure.AI.TextAnalytics
         internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage)
         {
             List<TextAnalyticsWarning> warnings = ConvertToWarnings(documentLanguage.Warnings);
-
             return new DetectedLanguage(documentLanguage.DetectedLanguage, warnings);
         }
 
@@ -130,6 +100,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
+
         #region AnalyzeSentiment
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
@@ -245,17 +216,22 @@ namespace Azure.AI.TextAnalytics
 
             throw new NotImplementedException();
         }
+
         #endregion
 
         #region Recognize PII Entities
 
         internal static List<PiiEntity> ConvertToPiiEntityList(List<Entity> entities)
-            => entities.Select((entity) => new PiiEntity(entity)).ToList();
+        {
+            var entityList = new List<PiiEntity>(entities.Count);
 
-        //internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiDocumentEntities documentEntities)
-        //{
-        //    return new PiiEntityCollection(ConvertToPiiEntityList(documentEntities.Entities.ToList()), documentEntities.RedactedText, ConvertToWarnings(documentEntities.Warnings));
-        //}
+            foreach (var entity in entities)
+            {
+                entityList.Add(new PiiEntity(entity));
+            }
+
+            return entityList;
+        }
 
         // CHANGED: added overload for New Swagger
         internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
@@ -439,7 +415,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Multi Category Classify
+        #region Multi-Category Classify
         internal static List<ClassificationCategory> ConvertToClassificationCategoryList(List<ClassificationResult> classifications)
             => classifications.Select((classification) => new ClassificationCategory(classification)).ToList();
 
@@ -470,9 +446,10 @@ namespace Azure.AI.TextAnalytics
 
             throw new NotImplementedException();
         }
+
         #endregion
 
-        #region SingleCategoryClassifyResult
+        #region Single Category Classify
         internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(CustomSingleLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
             //var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>(results.Errors.Count);
@@ -495,9 +472,10 @@ namespace Azure.AI.TextAnalytics
 
             throw new NotImplementedException();
         }
+
         #endregion
 
-        //#region Analyze Operation
+        #region Analyze Operation
 
         //internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
         //{
@@ -1032,7 +1010,7 @@ namespace Azure.AI.TextAnalytics
         //    return collection;
         //}
 
-        //#endregion
+        #endregion
 
         private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {

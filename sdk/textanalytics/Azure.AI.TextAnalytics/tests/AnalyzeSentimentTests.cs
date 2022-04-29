@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [Ignore("Not yet implemented")]
     public class AnalyzeSentimentTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeSentimentTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
