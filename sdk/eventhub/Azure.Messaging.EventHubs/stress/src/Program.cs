@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Stress
         {
             // Parse command line arguments
 
-            await CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsedAsync(RunOptions);
+            await CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsedAsync(RunOptions).ConfigureAwait(false);
         }
 
         /// <summary>

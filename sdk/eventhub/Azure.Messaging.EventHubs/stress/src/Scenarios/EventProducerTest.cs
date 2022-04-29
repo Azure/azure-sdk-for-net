@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Stress
             {
                 // Flush and wait for all metrics to be aggregated and sent to application insights
                 _metrics.Client.Flush();
-                await Task.Delay(60000);
+                await Task.Delay(60000).ConfigureAwait(false);
             }
         }
 
