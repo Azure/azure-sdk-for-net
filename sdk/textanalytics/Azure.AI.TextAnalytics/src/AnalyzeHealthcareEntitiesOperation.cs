@@ -139,7 +139,7 @@ namespace Azure.AI.TextAnalytics
 
             Id = operationId;
             //_serviceClient = client._serviceRestClient;
-            _diagnostics = client._clientDiagnostics;
+            _diagnostics = client._serviceClient.Diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: null);
         }
 

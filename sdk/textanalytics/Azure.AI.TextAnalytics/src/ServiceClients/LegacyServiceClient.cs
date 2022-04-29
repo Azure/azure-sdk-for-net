@@ -24,48 +24,41 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private static readonly AnalyzeHealthcareEntitiesOptions DefaultHeathcareEntitiesOptions = new();
         private static readonly AnalyzeSentimentOptions DefaultAnalyzeSentimentOptions = new();
 
-        internal readonly TextAnalyticsRestClient _serviceRestClient;
-        internal readonly ClientDiagnostics _clientDiagnostics;
-
+        private readonly TextAnalyticsRestClient _serviceRestClient;
+        private readonly TextAnalyticsClientOptions _options;
+        private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
-        private readonly string _defaultLanguage;
-        private readonly string _defaultCountryHint;
 
-        public LegacyServiceClient(Uri endpoint, TokenCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
+        public override ClientDiagnostics Diagnostics => _clientDiagnostics;
+
+        public LegacyServiceClient(Uri endpoint, TokenCredential credential, string authorizationScope, string serviceVersion, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            Argument.AssertNotNullOrEmpty(defaultLanguage, nameof(defaultLanguage));
-            Argument.AssertNotNullOrEmpty(defaultCountryHint, nameof(defaultCountryHint));
-            Argument.AssertNotNull(authorizationScope, nameof(authorizationScope));
-            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+            Argument.AssertNotNullOrEmpty(authorizationScope, nameof(authorizationScope));
+            Argument.AssertNotNullOrEmpty(serviceVersion, nameof(serviceVersion));
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _defaultLanguage = defaultLanguage;
-            _defaultCountryHint = defaultCountryHint;
+            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
-        public LegacyServiceClient(Uri endpoint, AzureKeyCredential credential, string defaultLanguage, string defaultCountryHint, string authorizationScope, string serviceVersion, ClientOptions options)
+        public LegacyServiceClient(Uri endpoint, AzureKeyCredential credential, string serviceVersion, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            Argument.AssertNotNullOrEmpty(defaultLanguage, nameof(defaultLanguage));
-            Argument.AssertNotNullOrEmpty(defaultCountryHint, nameof(defaultCountryHint));
-            Argument.AssertNotNull(authorizationScope, nameof(authorizationScope));
-            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+            Argument.AssertNotNullOrEmpty(serviceVersion, nameof(serviceVersion));
 
             _baseUri = endpoint;
             _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _defaultLanguage = defaultLanguage;
-            _defaultCountryHint = defaultCountryHint;
+            _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
@@ -591,6 +584,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #endregion
 
         #region Analyze Sentiment
+
         public override async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(document, nameof(document));
@@ -1304,7 +1298,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #region Common
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput($"{id}", document) { Language = language ?? _defaultLanguage };
+            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
 
         private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
@@ -1326,14 +1320,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             foreach (var document in documents)
             {
-                batchInput.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _defaultLanguage });;
+                batchInput.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage });;
             }
 
             return batchInput;
         }
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
-            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _defaultCountryHint };
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<string> documents, string countryHint)
         {
@@ -1355,7 +1349,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             foreach (var document in documents)
             {
-                batchInput.Documents.Add(new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _defaultCountryHint });
+                batchInput.Documents.Add(new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint });
             }
 
             return batchInput;

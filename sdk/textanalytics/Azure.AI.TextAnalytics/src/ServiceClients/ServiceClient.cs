@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics.ServiceClients
 {
@@ -16,6 +17,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal abstract class ServiceClient
     {
+        public abstract ClientDiagnostics Diagnostics { get; }
+
         #region Detect Language
 
         public abstract Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default);
