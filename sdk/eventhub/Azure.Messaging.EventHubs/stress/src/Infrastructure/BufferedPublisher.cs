@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventHubs.Stress
 {
     internal class BufferedPublisher
     {
-        private string _connectionString;
-        private string _eventHubName;
-        private Metrics _metrics;
-        private BufferedProducerTestConfig _testConfiguration;
+        private readonly string _connectionString;
+        private readonly string _eventHubName;
+        private readonly Metrics _metrics;
+        private readonly BufferedProducerTestConfig _testConfiguration;
 
         public BufferedPublisher(BufferedProducerTestConfig testConfiguration,
                                  Metrics metrics)

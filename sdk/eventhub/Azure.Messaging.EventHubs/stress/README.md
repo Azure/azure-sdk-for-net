@@ -1,5 +1,5 @@
 # Event Hub Stress Tests
-The scenarios in this directory provide a suite of stress tests that test the Event Hubs producer and buffered producer client types for long-term durability and reliability. For more in-depth information about the Azure SDK stress test tools, see the [stress test readme](https://github.com/Azure/azure-sdk-tools/blob/main/tools/stress-cluster/chaos/README.md).
+The scenarios in this directory provide a suite of stress tests that test the Event Hubs producer and buffered producer client types for long-term durability and reliability. For more in-depth information about the Azure SDK stress test tools, see the [stress test README](https://github.com/Azure/azure-sdk-tools/blob/main/tools/stress-cluster/chaos/README.md).
 
 Test runs can call any of the following tests:
 - "EventProducerTest"
