@@ -17,12 +17,10 @@ namespace Azure.Messaging.EventHubs.Stress
     internal class Publisher
     {
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref _randomSeed)), false);
-
-        private Metrics _metrics;
-
         private static int _randomSeed = Environment.TickCount;
-
-        private EventProducerTestConfig _testConfiguration;
+        
+        private readonly Metrics _metrics;      
+        private readonly EventProducerTestConfig _testConfiguration;
 
         public Publisher(EventProducerTestConfig configuration,
                          Metrics metrics)
