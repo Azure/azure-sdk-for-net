@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Cdn
             SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
             Optional<string> provisioningState = default;
-            Optional<string> frontDoorId = default;
+            Optional<Guid> frontDoorId = default;
             Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -135,7 +136,12 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("frontDoorId"))
                         {
-                            frontDoorId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            frontDoorId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("originResponseTimeoutSeconds"))
@@ -152,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), provisioningState.Value, frontDoorId.Value, Optional.ToNullable(originResponseTimeoutSeconds));
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), provisioningState.Value, Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

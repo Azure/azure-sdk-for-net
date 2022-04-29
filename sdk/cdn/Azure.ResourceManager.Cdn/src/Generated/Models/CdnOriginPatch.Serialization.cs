@@ -87,8 +87,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
-                writer.WriteStringValue(PrivateLinkResourceId);
+                if (PrivateLinkResourceId != null)
+                {
+                    writer.WritePropertyName("privateLinkResourceId");
+                    writer.WriteStringValue(PrivateLinkResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("privateLinkResourceId");
+                }
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {

@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.EventGrid
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IChannelsOperations.
+        /// </summary>
+        public virtual IChannelsOperations Channels { get; private set; }
+
+        /// <summary>
         /// Gets the IDomainsOperations.
         /// </summary>
         public virtual IDomainsOperations Domains { get; private set; }
@@ -87,9 +92,29 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual IDomainTopicsOperations DomainTopics { get; private set; }
 
         /// <summary>
+        /// Gets the IEventChannelsOperations.
+        /// </summary>
+        public virtual IEventChannelsOperations EventChannels { get; private set; }
+
+        /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         public virtual IEventSubscriptionsOperations EventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDomainTopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IDomainTopicEventSubscriptionsOperations DomainTopicEventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the ITopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual ITopicEventSubscriptionsOperations TopicEventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDomainEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IDomainEventSubscriptionsOperations DomainEventSubscriptions { get; private set; }
 
         /// <summary>
         /// Gets the ISystemTopicEventSubscriptionsOperations.
@@ -97,14 +122,39 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual ISystemTopicEventSubscriptionsOperations SystemTopicEventSubscriptions { get; private set; }
 
         /// <summary>
+        /// Gets the IPartnerTopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IPartnerTopicEventSubscriptionsOperations PartnerTopicEventSubscriptions { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the ITopicsOperations.
+        /// Gets the IPartnerConfigurationsOperations.
         /// </summary>
-        public virtual ITopicsOperations Topics { get; private set; }
+        public virtual IPartnerConfigurationsOperations PartnerConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerDestinationsOperations.
+        /// </summary>
+        public virtual IPartnerDestinationsOperations PartnerDestinations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerNamespacesOperations.
+        /// </summary>
+        public virtual IPartnerNamespacesOperations PartnerNamespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerRegistrationsOperations.
+        /// </summary>
+        public virtual IPartnerRegistrationsOperations PartnerRegistrations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicsOperations.
+        /// </summary>
+        public virtual IPartnerTopicsOperations PartnerTopics { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -122,6 +172,11 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual ISystemTopicsOperations SystemTopics { get; private set; }
 
         /// <summary>
+        /// Gets the ITopicsOperations.
+        /// </summary>
+        public virtual ITopicsOperations Topics { get; private set; }
+
+        /// <summary>
         /// Gets the IExtensionTopicsOperations.
         /// </summary>
         public virtual IExtensionTopicsOperations ExtensionTopics { get; private set; }
@@ -130,6 +185,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the ITopicTypesOperations.
         /// </summary>
         public virtual ITopicTypesOperations TopicTypes { get; private set; }
+
+        /// <summary>
+        /// Gets the IVerifiedPartnersOperations.
+        /// </summary>
+        public virtual IVerifiedPartnersOperations VerifiedPartners { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the EventGridManagementClient class.
@@ -372,19 +432,31 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </summary>
         private void Initialize()
         {
+            Channels = new ChannelsOperations(this);
             Domains = new DomainsOperations(this);
             DomainTopics = new DomainTopicsOperations(this);
+            EventChannels = new EventChannelsOperations(this);
             EventSubscriptions = new EventSubscriptionsOperations(this);
+            DomainTopicEventSubscriptions = new DomainTopicEventSubscriptionsOperations(this);
+            TopicEventSubscriptions = new TopicEventSubscriptionsOperations(this);
+            DomainEventSubscriptions = new DomainEventSubscriptionsOperations(this);
             SystemTopicEventSubscriptions = new SystemTopicEventSubscriptionsOperations(this);
+            PartnerTopicEventSubscriptions = new PartnerTopicEventSubscriptionsOperations(this);
             Operations = new Operations(this);
-            Topics = new TopicsOperations(this);
+            PartnerConfigurations = new PartnerConfigurationsOperations(this);
+            PartnerDestinations = new PartnerDestinationsOperations(this);
+            PartnerNamespaces = new PartnerNamespacesOperations(this);
+            PartnerRegistrations = new PartnerRegistrationsOperations(this);
+            PartnerTopics = new PartnerTopicsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             SystemTopics = new SystemTopicsOperations(this);
+            Topics = new TopicsOperations(this);
             ExtensionTopics = new ExtensionTopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
+            VerifiedPartners = new VerifiedPartnersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-12-01";
+            ApiVersion = "2021-10-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -414,12 +486,18 @@ namespace Microsoft.Azure.Management.EventGrid
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartnerDestinationInfo>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartnerDestinationInfo>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartnerClientAuthentication>("clientAuthenticationType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartnerClientAuthentication>("clientAuthenticationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartnerUpdateDestinationInfo>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartnerUpdateDestinationInfo>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdvancedFilter>("operatorType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdvancedFilter>("operatorType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryAttributeMapping>("type"));

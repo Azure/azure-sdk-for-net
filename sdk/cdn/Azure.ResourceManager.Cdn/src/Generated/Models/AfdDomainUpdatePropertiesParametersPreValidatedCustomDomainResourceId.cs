@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(string id)
+        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

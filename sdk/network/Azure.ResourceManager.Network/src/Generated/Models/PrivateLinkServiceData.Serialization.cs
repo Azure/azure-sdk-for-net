@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<PrivateLinkServiceIPConfiguration>> ipConfigurations = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<NetworkPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
             Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
             Optional<IList<string>> fqdns = default;
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<NetworkPrivateEndpointConnectionData> array = new List<NetworkPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

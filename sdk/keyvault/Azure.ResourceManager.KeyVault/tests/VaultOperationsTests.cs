@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
     public class VaultOperationsTests : VaultOperationsTestsBase
     {
         public VaultOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             VaultProperties.EnableSoftDelete = null;
 
-            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
-            var rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            ArmOperation<VaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
-            var createdVault = rawVault.Value.Data;
+            VaultData createdVault = rawVault.Value.Data;
 
             ValidateVault(createdVault,
                 VaultName,
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             parameters = new VaultCreateOrUpdateContent(Location, createdVault.Properties);
             parameters.Tags.InitializeFrom(Tags);
-            var rawUpdateVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            ArmOperation<VaultResource> rawUpdateVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
 
-            var updateVault = rawUpdateVault.Value.Data;
+            VaultData updateVault = rawUpdateVault.Value.Data;
 
             ValidateVault(updateVault,
                 VaultName,
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 VaultProperties.NetworkAcls,
                 Tags);
 
-            var rawRetrievedVault = await VaultCollection.GetAsync(VaultName);
+            Response<VaultResource> rawRetrievedVault = await VaultCollection.GetAsync(VaultName);
 
-            var retrievedVault = rawRetrievedVault.Value.Data;
+            VaultData retrievedVault = rawRetrievedVault.Value.Data;
             ValidateVault(retrievedVault,
                 VaultName,
                 ResGroupName,
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Delete
-            var deleteVault = await rawRetrievedVault.Value.DeleteAsync(WaitUntil.Completed);
+            ArmOperation deleteVault = await rawRetrievedVault.Value.DeleteAsync(WaitUntil.Completed);
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.KeyVault.Tests
             AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             VaultProperties.EnableSoftDelete = null;
 
-            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
 
-            var createVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
-            var vaultResponse = createVault.Value;
+            ArmOperation<VaultResource> createVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            VaultResource vaultResponse = createVault.Value;
 
             ValidateVault(vaultResponse.Data,
                 VaultName,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 Tags);
 
             // Get
-            var retrievedVault = await VaultCollection.GetAsync(VaultName);
+            Response<VaultResource> retrievedVault = await VaultCollection.GetAsync(VaultName);
 
             ValidateVault(retrievedVault.Value.Data,
                 VaultName,
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
             for (int i = 0; i < n; i++)
             {
                 string vaultName = Recording.GenerateAssetName("sdktest-vault-");
-                var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+                VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
                 parameters.Tags.InitializeFrom(Tags);
-                var createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
-                var vaultValue = createdVault.Value;
+                ArmOperation<VaultResource> createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
+                VaultResource vaultValue = createdVault.Value;
 
                 Assert.NotNull(vaultValue);
                 Assert.NotNull(vaultValue.Id);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 vaultList.Add(vaultValue);
             }
 
-            var vaults = VaultCollection.GetAllAsync(top);
+            AsyncPageable<VaultResource> vaults = VaultCollection.GetAllAsync(top);
 
             await foreach (var v in vaults)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             Assert.True(resourceIds.Count == 0);
 
-            var allVaults = VaultCollection.GetAllAsync(top);
+            AsyncPageable<VaultResource> allVaults = VaultCollection.GetAllAsync(top);
             Assert.NotNull(vaults);
 
             // Delete
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementRecoverDeletedVault()
         {
-            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
-            var createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
-            var vaultValue = createdVault.Value;
+            ArmOperation<VaultResource> createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            VaultResource vaultValue = createdVault.Value;
 
             // Delete
             await vaultValue.DeleteAsync(WaitUntil.Completed);
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             // Recover in default mode
-            var recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName,parameters).ConfigureAwait(false);
-            var recoveredVault = recoveredRawVault.Value;
+            ArmOperation<VaultResource> recoveredRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName,parameters).ConfigureAwait(false);
+            VaultResource recoveredVault = recoveredRawVault.Value;
             Assert.True(recoveredVault.Data.IsEqual(vaultValue.Data));
 
             // Get recovered vault
-            var getResult =  await VaultCollection.GetAsync(VaultName);
+            Response<VaultResource> getResult =  await VaultCollection.GetAsync(VaultName);
 
             // Delete
             await getResult.Value.DeleteAsync(WaitUntil.Completed);
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
 
             // Recover in recover mode
-            var recoveredRawVault2 = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
-            var recoveredVault2 = recoveredRawVault.Value;
+            ArmOperation<VaultResource> recoveredRawVault2 = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            VaultResource recoveredVault2 = recoveredRawVault.Value;
 
             Assert.True(recoveredVault2.Data.IsEqual(vaultValue.Data));
 
@@ -263,21 +263,20 @@ namespace Azure.ResourceManager.KeyVault.Tests
             await getResult.Value.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Ignore("Add this back when fix get with name/location issue")]
         [Test]
         public async Task KeyVaultManagementListDeletedVaults()
         {
             int n = 3;
             List<string> resourceIds = new List<string>();
             List<VaultResource> vaultList = new List<VaultResource>();
-            var parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
+            VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             for (int i = 0; i < n; i++)
             {
-                string vaultName = Recording.GenerateAssetName("sdktestvault");
-                var createdRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
+                string vaultName = Recording.GenerateAssetName("sdktest-vault-");
+                ArmOperation<VaultResource> createdRawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, parameters).ConfigureAwait(false);
 
-                var createdVault = createdRawVault.Value;
+                VaultResource createdVault = createdRawVault.Value;
 
                 Assert.NotNull(createdVault.Data);
                 Assert.NotNull(createdVault.Data.Id);
@@ -286,30 +285,21 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
                 await createdVault.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
 
-                var deletedVault = await DeletedVaultCollection.GetAsync(Location, vaultName).ConfigureAwait(false);
+                Response<DeletedVaultResource> deletedVault = await DeletedVaultCollection.GetAsync(Location, vaultName).ConfigureAwait(false);
                 Assert.IsTrue(deletedVault.Value.Data.Name.Equals(createdVault.Data.Name));
             }
 
-            // TODO -- we need to move the GetDeletedVaults method to its collection, and make sure it to return Resources instead of resource data
-            var deletedVaults = Subscription.GetDeletedVaultsAsync().ToEnumerableAsync().Result;
+            List<DeletedVaultResource> deletedVaults = Subscription.GetDeletedVaultsAsync().ToEnumerableAsync().Result;
             Assert.NotNull(deletedVaults);
 
-            //foreach (var v in deletedVaults)
-            //{
-            //    var exists = resourceIds.Remove(v.Properties.VaultId);
+            foreach (var v in deletedVaults)
+            {
+                bool exists = resourceIds.Remove(v.Data.Properties.VaultId);
+                if (resourceIds.Count == 0)
+                    break;
+            }
 
-            //    if (exists)
-            //    {
-            //        // TODO -- fix this
-            //        // Purge vault
-            //        await v.PurgeAsync().ConfigureAwait(false);
-            //        Assert.ThrowsAsync<RequestFailedException>(async () => await DeletedVaultCollection.GetAsync(Location));
-            //    }
-            //    if (resourceIds.Count == 0)
-            //        break;
-            //}
-
-            //Assert.True(resourceIds.Count == 0);
+            Assert.True(resourceIds.Count == 0);
         }
 
         private void ValidateVault(
