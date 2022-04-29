@@ -277,7 +277,7 @@ function Invoke-Generate() {
     Push-Location $sdkfolder/src
     dotnet build /t:GenerateCode
     if ( !$? ) {
-        Write-Error "Failed to create generate sdk."
+        Write-Error "Failed to generate sdk."
         Pop-Location
         exit 1
     }

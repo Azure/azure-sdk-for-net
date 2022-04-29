@@ -1,10 +1,6 @@
-# Sample readme template
+# <scenario_list>
 
-Use the guidelines in each section of this template to write samples, for an example following this template.
-
-This sample shows how to detect all the anomalies in the entire time series.
-
-To get started, make sure you have satisfied all the prerequisites and got all the resources required by [README][README].
+To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md#getting-started) for details.
 
 ## <scenario>
 

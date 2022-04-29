@@ -24,9 +24,16 @@ Write-Host "projectFolder:$projectFolder"
 Remove-Item $outputJsonFile
 # Generate Code
 Invoke-Generate -sdkfolder $projectFolder
+if ( !$? ) {
+  Write-Error "Failed to generate sdk."
+  exit 1
+}
 # Build
 Invoke-Build -sdkfolder $projectFolder
-
+if ( !$? ) {
+  Write-Error "Failed to build sdk. exit code: $?"
+  exit 1
+}
 # Generate APIs
 $repoRoot = (Join-Path $PSScriptRoot .. .. ..)
 Set-Location $repoRoot

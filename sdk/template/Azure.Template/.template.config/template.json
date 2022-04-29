@@ -193,12 +193,29 @@
       "datatype": "text",
       "valueSource": "libraryName",
       "valueTransform": "ServiceNameLowerForm",
-      "replaces": "ServiceNameLowercase"
+      "replaces": "template"
     },
+    "ServiceDirectoryPath": { 
+      "type": "generated", 
+      "generator": "join", 
+      "parameters": { 
+          "symbols": [ 
+              { 
+                  "type": "const", 
+                  "value": "sdk/" 
+              }, 
+              { 
+                  "type": "ref", 
+                  "value": "ServiceNameLowercase" 
+              } 
+          ], 
+          "separator": "" 
+      }, 
+      "replaces": "sdk/template" 
+    }, 
     "PackageSafeName": {
       "type": "generated",
       "generator": "join",
-      "replaces": "PackageSafeName",
       "parameters": {
         "symbols": [
           {
@@ -215,7 +232,30 @@
           }
         ],
         "separator": ""
-      }
+      },
+      "replaces": "AzureTemplate"
+    },
+    "PackageNameUnderscored": {
+      "type": "generated",
+      "generator": "join",
+      "parameters": {
+        "symbols": [
+          {
+            "type": "const",
+            "value": "Azure"
+          },
+          {
+            "type": "ref",
+            "value": "groupName"
+          },
+          {
+            "type": "ref",
+            "value": "libraryName"
+          }
+        ],
+        "separator": "_"
+      },
+      "replaces": "Azure_Template" 
     },
     "securityTypes": {
       "type": "generated",
