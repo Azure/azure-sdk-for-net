@@ -49,6 +49,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Not yet implemented")]
         public void RecognizeEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesAsync(""));
@@ -63,6 +64,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Not yet implemented")]
         public void RecognizePiiEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesAsync(""));
@@ -75,6 +77,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Not yet implemented")]
         public void AnalyzeSentimentArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentAsync(""));
@@ -95,6 +98,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Not yet implemented")]
         public void ExtractKeyPhrasesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesAsync(""));
@@ -109,6 +113,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Not yet implemented")]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesAsync(""));
