@@ -94,6 +94,7 @@ namespace Azure.Messaging.EventHubs.Stress
             }
 
             environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out appInsightsKey);
+            environment.TryGetValue(EnvironmentVariables.EventHubsConnectionString, out eventHubsConnectionString);
 
             // Prompt for needed resources if interactive mode is enabled
 
