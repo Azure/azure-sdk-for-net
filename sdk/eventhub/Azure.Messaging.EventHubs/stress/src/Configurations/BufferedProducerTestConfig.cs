@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Stress
 
         // The number of events to generate and enqueue during each iteration of PerformEnqueue
         public int EventEnqueueListSize = 50;
-        public long MaximumEventListSize = 1000000;
+        public long MaximumEventListSize = 1_000_000;
 
         // Buffered Producer Configuration
 
