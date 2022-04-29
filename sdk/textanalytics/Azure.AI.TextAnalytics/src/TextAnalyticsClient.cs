@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -260,8 +261,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            LanguageDetectionAnalysisInput detectLanguageInputs = DocumentsToLanguageDetection(documents, countryHint);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -295,8 +295,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = DocumentsToLanguageDetection(documents, detectLanguageInputs, countryHint);
+            LanguageDetectionAnalysisInput detectLanguageInputs = DocumentsToLanguageDetection(documents, countryHint);
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
 
@@ -323,8 +322,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+            LanguageDetectionAnalysisInput detectLanguageInputs = LanguageInputToLanguageDetection(documents);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }
@@ -352,8 +350,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= _requestOptions;
-            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
-            detectLanguageInputs = LanguageInputToLanguageDetection(documents, detectLanguageInputs);
+            LanguageDetectionAnalysisInput detectLanguageInputs = LanguageInputToLanguageDetection(documents);
 
             return DetectLanguageBatch(detectLanguageInputs, options, cancellationToken);
         }
@@ -410,8 +407,9 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, LanguageDetectionAnalysisInput detectLanguageInputs, string countryHint = default)
+        private LanguageDetectionAnalysisInput DocumentsToLanguageDetection(IEnumerable<string> documents, string countryHint = default)
         {
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             int id = 0;
             foreach (var document in documents)
             {
@@ -422,8 +420,9 @@ namespace Azure.AI.TextAnalytics
             return detectLanguageInputs;
         }
 
-        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents, LanguageDetectionAnalysisInput detectLanguageInputs)
+        private static LanguageDetectionAnalysisInput LanguageInputToLanguageDetection(IEnumerable<DetectLanguageInput> documents)
         {
+            LanguageDetectionAnalysisInput detectLanguageInputs = new LanguageDetectionAnalysisInput();
             foreach (var document in documents)
             {
                 LanguageInput languageInput = new LanguageInput (document.Id, document.Text);
@@ -591,13 +590,11 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents, language);
-            //return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, language);
+
+            return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -629,12 +626,11 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents, language);
-            //return RecognizeEntitiesBatch(input, options, cancellationToken);
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = DocumentsToEntityRecognition(documents, language);
+
+            return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
 
         /// <summary>
@@ -661,15 +657,11 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents);
 
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents);
-            //return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait
-            //(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await RecognizeEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -696,16 +688,13 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            ////MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= _requestOptions;
+            AnalyzeTextEntityRecognitionInput input = TextDocumentInputToEntityRecognition(documents);
 
-            //AnalyzeTextEntityRecognitionInput input = ConvertToMultiLanguageInputs(documents);
-            //return RecognizeEntitiesBatch(input, options, cancellationToken);
-            throw new NotImplementedException();
+            return RecognizeEntitiesBatch(input, options, cancellationToken);
         }
 
-        //CHANGED: Overload for new Swagger
         private async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -713,19 +702,16 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var input = entityRecognitionInput.AnalysisInput;
-                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
-                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
-                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                entityRecognitionInput.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    entityRecognitionInput, options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(entityRecognitionInput.AnalysisInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -736,7 +722,6 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
-        //CHANGED: Overload for new Swagger
         private Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(AnalyzeTextEntityRecognitionInput entityRecognitionInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -744,19 +729,16 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                var input = entityRecognitionInput.AnalysisInput;
-                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
-                analyzeRecognizeEntities.Parameters.ModelVersion = options.ModelVersion;
-                analyzeRecognizeEntities.Parameters.LoggingOptOut = options.DisableServiceLogs;
+                entityRecognitionInput.Parameters = new EntitiesTaskParameters(options.DisableServiceLogs, options.ModelVersion, Constants.DefaultStringIndexType);
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    analyzeRecognizeEntities, options.IncludeStatistics,
+                    entityRecognitionInput, options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(input.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(entityRecognitionInput.AnalysisInput.Documents);
                 RecognizeEntitiesResultCollection results = Transforms.ConvertToRecognizeEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -765,6 +747,34 @@ namespace Azure.AI.TextAnalytics
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static AnalyzeTextEntityRecognitionInput DocumentsToEntityRecognition(IEnumerable<string> documents, string language)
+        {
+            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
+            int id = 0;
+            foreach (var document in documents)
+            {
+                var input = new MultiLanguageInput(id: id.ToString(CultureInfo.InvariantCulture), text: document);
+                id++;
+                input.Language = language;
+                textEntityInputs.AnalysisInput.Documents.Add(input);
+            }
+
+            return textEntityInputs;
+        }
+
+        private static AnalyzeTextEntityRecognitionInput TextDocumentInputToEntityRecognition(IEnumerable<TextDocumentInput> documents)
+        {
+            AnalyzeTextEntityRecognitionInput textEntityInputs = new AnalyzeTextEntityRecognitionInput();
+            foreach (var document in documents)
+            {
+                var input = new MultiLanguageInput(document.Id, document.Text);
+                input.Language = document.Language;
+                textEntityInputs.AnalysisInput.Documents.Add(input);
+            }
+
+            return textEntityInputs;
         }
 
         #endregion
