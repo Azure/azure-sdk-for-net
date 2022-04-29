@@ -1,4 +1,5 @@
 # Azure Event Hubs client library for .NET
+## Local Stress Test Runs
 ## Getting Started
 The scenarios in this directory provide a suite of stress tests that test the Event Hubs producer and buffered producer client types for long-term durability and reliability. For more in-depth information about the Azure SDK stress test tools, see the [stress test README](https://github.com/Azure/azure-sdk-tools/blob/main/tools/stress-cluster/chaos/README.md).
 
@@ -8,7 +9,6 @@ Test runs can call any of the following tests:
 - "BurstBufferedProducerTest"
 - "ConcurrentBufferedProducerTest"
 
-## Local Stress Test Runs
 ### Install the Package
 ```cmd
 (env) <git root>/sdk/eventhub/Azure.Messaging.EventHubs/stress/src> dotnet clean
@@ -20,7 +20,7 @@ When tests are run locally, Azure resources need to be created prior to running 
 
 To run the compiled .dll file, navigate to the `<git root>/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0` directory.
 
-### Authenticate the client
+### Authenticate the Client
 In order for the stress tests to be able to interact with Azure, the user is required to input the connection strings upon request on the command line when the test is being run, or include them in a .env file. To use the CLI input, add the `-i` or `--interactive` flag to the call: 
 
 ```cmd
