@@ -546,7 +546,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_piiEntitiesOptions;
-            AnalyzeTextPiiEntitiesRecognitionInput input = DocumentsToPiiEntity(documents, language);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -555,7 +555,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_piiEntitiesOptions;
-            AnalyzeTextPiiEntitiesRecognitionInput input = DocumentsToPiiEntity(documents, language);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
             return RecognizePiiEntitiesBatch(input, options, cancellationToken);
         }
@@ -564,7 +564,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_piiEntitiesOptions;
-            AnalyzeTextPiiEntitiesRecognitionInput input = TextDocumentInputToPiiEntity(documents);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return await RecognizePiiEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
@@ -573,33 +573,38 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= s_piiEntitiesOptions;
-            AnalyzeTextPiiEntitiesRecognitionInput input = TextDocumentInputToPiiEntity(documents);
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
             return RecognizePiiEntitiesBatch(input, options, cancellationToken);
         }
 
-        private async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(AnalyzeTextPiiEntitiesRecognitionInput piiEntitiesRecognitionInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
+        private async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
             scope.Start();
 
             try
             {
-                piiEntitiesRecognitionInput.Parameters = new PiiTaskParameters(
-                    options.DisableServiceLogs,
-                    options.ModelVersion,
-                    new PiiDomain(options.DomainFilter.GetString()),
-                    options.CategoriesFilter,
-                    Constants.DefaultStringIndexType);
+                AnalyzeTextPiiEntitiesRecognitionInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new PiiTaskParameters(
+                                        options.DisableServiceLogs,
+                                        options.ModelVersion,
+                                        new PiiDomain(options.DomainFilter.GetString()),
+                                        options.CategoriesFilter,
+                                        Constants.DefaultStringIndexType)
+                };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    piiEntitiesRecognitionInput, options.IncludeStatistics,
+                    input,
+                    options.IncludeStatistics,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var entityRecognition = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(piiEntitiesRecognitionInput.AnalysisInput.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
                 RecognizePiiEntitiesResultCollection results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -610,28 +615,33 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        private Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(AnalyzeTextPiiEntitiesRecognitionInput piiEntitiesRecognitionInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
+        private Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(MultiLanguageAnalysisInput multiLanguageInput, RecognizePiiEntitiesOptions options, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
             scope.Start();
 
             try
             {
-                piiEntitiesRecognitionInput.Parameters = new PiiTaskParameters(
-                    options.DisableServiceLogs,
-                    options.ModelVersion,
-                    new PiiDomain(options.DomainFilter.GetString()),
-                    options.CategoriesFilter,
-                    Constants.DefaultStringIndexType);
+                AnalyzeTextPiiEntitiesRecognitionInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new PiiTaskParameters(
+                                        options.DisableServiceLogs,
+                                        options.ModelVersion,
+                                        new PiiDomain(options.DomainFilter.GetString()),
+                                        options.CategoriesFilter,
+                                        Constants.DefaultStringIndexType)
+                };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    piiEntitiesRecognitionInput, options.IncludeStatistics,
+                    input,
+                    options.IncludeStatistics,
                     cancellationToken: cancellationToken);
 
                 var entityRecognition = (PiiTaskResult)result.Value;
                 Response response = result.GetRawResponse();
 
-                IDictionary<string, int> map = CreateIdToIndexMap(piiEntitiesRecognitionInput.AnalysisInput.Documents);
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
                 RecognizePiiEntitiesResultCollection results = Transforms.ConvertToRecognizePiiEntitiesResultCollection(entityRecognition.Results, map);
                 return Response.FromValue(results, response);
             }
@@ -640,33 +650,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private static AnalyzeTextPiiEntitiesRecognitionInput DocumentsToPiiEntity(IEnumerable<string> documents, string language = default)
-        {
-            AnalyzeTextPiiEntitiesRecognitionInput piiEntitiesInput = new AnalyzeTextPiiEntitiesRecognitionInput();
-            int id = 0;
-            foreach (var document in documents)
-            {
-                var multiLanguageInput = new MultiLanguageInput(id: id.ToString(CultureInfo.InvariantCulture), text: document);
-                multiLanguageInput.Language = language;
-                piiEntitiesInput.AnalysisInput.Documents.Add(multiLanguageInput);
-            }
-
-            return piiEntitiesInput;
-        }
-
-        private static AnalyzeTextPiiEntitiesRecognitionInput TextDocumentInputToPiiEntity(IEnumerable<TextDocumentInput> documents)
-        {
-            AnalyzeTextPiiEntitiesRecognitionInput piiEntitiesInput = new AnalyzeTextPiiEntitiesRecognitionInput();
-            foreach (var document in documents)
-            {
-                var multiLanguageInput = new MultiLanguageInput(id: document.Id, text: document.Text);
-                multiLanguageInput.Language = document.Language;
-                piiEntitiesInput.AnalysisInput.Documents.Add(multiLanguageInput);
-            }
-
-            return piiEntitiesInput;
         }
 
         #endregion
