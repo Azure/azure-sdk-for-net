@@ -54,9 +54,13 @@ namespace Azure.Core.TestFramework
             var timeout = TestEnvironment.GlobalIsRunningInCI ? GLOBAL_TEST_TIMEOUT_IN_SECONDS : GLOBAL_LOCAL_TEST_TIMEOUT_IN_SECONDS;
             if (duration > TimeSpan.FromSeconds(timeout))
             {
-                executionContext.CurrentResult.SetResult(
-                    ResultState.Failure,
-                    $"Test exceeded global time limit of {timeout} seconds. Duration: {duration}");
+                string message = $"Test exceeded global time limit of {timeout} seconds. Duration: {duration} ";
+                if (this is RecordedTestBase &&
+                    !executionContext.CurrentTest.GetCustomAttributes<RecordedTestAttribute>(true).Any())
+                {
+                    message += Environment.NewLine + "Add the [RecordedTest] attribute to your test to allow an automatic retry for timeouts.";
+                }
+                throw new TestTimeoutException(message);
             }
         }
 
