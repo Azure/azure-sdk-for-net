@@ -89,7 +89,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void RecognizePiiEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesAsync(""));
