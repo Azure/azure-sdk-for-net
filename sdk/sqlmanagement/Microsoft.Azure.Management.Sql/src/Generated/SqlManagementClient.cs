@@ -133,26 +133,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerUsagesOperations ServerUsages { get; private set; }
 
         /// <summary>
-        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the IDatabaseAdvisorsOperations.
         /// </summary>
         public virtual IDatabaseAdvisorsOperations DatabaseAdvisors { get; private set; }
@@ -683,6 +663,26 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRecommendedSensitivityLabelsOperations RecommendedSensitivityLabels { get; private set; }
 
         /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -935,10 +935,6 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
-            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
-            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
-            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
-            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
             DatabaseAdvisors = new DatabaseAdvisorsOperations(this);
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             DatabaseColumns = new DatabaseColumnsOperations(this);
@@ -1045,6 +1041,10 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
             RecommendedSensitivityLabels = new RecommendedSensitivityLabelsOperations(this);
+            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
+            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
