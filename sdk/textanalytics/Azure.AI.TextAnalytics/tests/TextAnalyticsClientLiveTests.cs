@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [Ignore("Not yet implemented")]
+    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V2022_03_01_Preview)]
     public class TextAnalyticsClientLiveTests : TextAnalyticsClientLiveTestBase
     {
         public TextAnalyticsClientLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
