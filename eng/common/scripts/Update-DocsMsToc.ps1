@@ -298,7 +298,7 @@ foreach ($service in $serviceNameList) {
     }
   }
 
-  $serviceReadmeBaseName = $service.ToLower().Replace(' ', '-')
+  $serviceReadmeBaseName = $service.ToLower().Replace(' ', '-').Replace('/', '-')
   $hrefPrefix = "~/docs-ref-services"
 
   generate-service-level-readme -readmeBaseName $serviceReadmeBaseName -pathPrefix $hrefPrefix `
