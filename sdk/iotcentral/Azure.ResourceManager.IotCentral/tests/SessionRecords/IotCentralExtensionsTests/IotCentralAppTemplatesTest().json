@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "0",
-        "traceparent": "00-e6e3089f05c2094db8686ed8eaf26627-a81b62a7d727fe44-00",
+        "traceparent": "00-b1fe2c5934a8d94fbfbfac7da3d2c28d-665784f7ea006344-00",
         "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e58dee55738e8f25d0f517f226504bcf",
+        "x-ms-client-request-id": "af7b14a8bd8c89ac60d810d164cf8163",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,22 +18,22 @@
         "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
         "Content-Length": "12680",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 May 2022 16:29:12 GMT",
+        "Date": "Mon, 02 May 2022 21:00:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "X-Download-Options": "noopen",
         "X-Frame-Options": "DENY",
-        "X-IoT-Cluster": "iotcprodeastus01",
-        "x-iot-correlation": "6g24t8u8.0",
+        "X-IoT-Cluster": "iotcprodcentralus01",
+        "x-iot-correlation": "af65whjj.0",
         "X-IoT-Version": "041722.0001-release",
-        "x-ms-client-request-id": "e58dee55738e8f25d0f517f226504bcf",
-        "x-ms-correlation-request-id": "9bf02412-56da-44ca-aee5-8d2d9f96cbf3",
+        "x-ms-client-request-id": "af7b14a8bd8c89ac60d810d164cf8163",
+        "x-ms-correlation-request-id": "9e38d6f6-e3b4-454f-9188-74e61c70145b",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "c8a6e0d8-05cf-4341-a77f-135b15fb50f2",
-        "x-ms-routing-request-id": "CANADACENTRAL:20220502T162912Z:9bf02412-56da-44ca-aee5-8d2d9f96cbf3",
-        "X-MSEdge-Ref": "Ref A: 800B568889244F87BE8573476645D427 Ref B: EWR311000104023 Ref C: 2022-05-02T16:29:12Z",
+        "x-ms-request-id": "f09b2ef7-d4cf-4eef-ba29-1bbd0dbe66ab",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T210015Z:9e38d6f6-e3b4-454f-9188-74e61c70145b",
+        "X-MSEdge-Ref": "Ref A: BFAD30698FE94A3880F7B2984EE98F7F Ref B: CH1EDGE1822 Ref C: 2022-05-02T21:00:15Z",
         "X-XSS-Protection": "1; mode=block"
       },
       "ResponseBody": {
@@ -870,7 +870,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1195224793",
+    "RandomSeed": "221614053",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "77969078-2897-47b0-9143-917252379303"
   }

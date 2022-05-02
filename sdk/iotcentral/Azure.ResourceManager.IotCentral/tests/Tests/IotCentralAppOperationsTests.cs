@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -59,109 +56,62 @@ namespace Azure.ResourceManager.IotCentral.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task IotCentralListSubscriptionApplicationsTest()
+        public async Task IotCentralApplicationAddTagsTest()
         {
+            var appName = Recording.GenerateAssetName("test-app-");
+
             // Get IoT Central apps collection for resource group.
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
 
-            // Create IoT Central applications.
-            var appNames = new List<string>() { GetRandomTestName(), GetRandomTestName(), GetRandomTestName() };
-            foreach (var appName in appNames)
+            // Create IoT Central application.
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
             {
-                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
-                {
-                    DisplayName = appName,
-                    Subdomain = appName,
-                };
-                await appsCollection.CreateOrUpdateAsync(WaitUntil.Completed, appName, iotCentralAppData, CancellationToken.None);
-            }
+                DisplayName = appName,
+                Subdomain = appName,
+            };
+            var iotCentralAppOperation = await appsCollection.CreateOrUpdateAsync(WaitUntil.Completed, appName, iotCentralAppData, CancellationToken.None);
+            var iotCentralApp = iotCentralAppOperation.Value;
 
-            // Get and delete IoT Central apps.
-            await foreach (var subApp in subscription.GetIotCentralAppsAsync(CancellationToken.None))
-            {
-                if (appNames.Contains(subApp.Data.Name))
-                {
-                    appNames.Remove(subApp.Data.Name);
-                    await subApp.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-                }
-            }
+            // Add a tag.
+            var tag1IotCentralAppResponse = await iotCentralApp.AddTagAsync("key", "value", CancellationToken.None);
+            var tag1IotCentralApp = tag1IotCentralAppResponse.Value;
 
-            // Assert all apps created were found and deleted.
-            Assert.IsFalse(appNames.Any());
+            tag1IotCentralApp.Data.Tags.TryGetValue("key", out var tagReadVal);
+            Assert.AreEqual("value", tagReadVal);
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task IotCentralListResourceGroupApplicationsTest()
+        public async Task IotCentralApplicationRemoveTagsTest()
         {
+            var appName = Recording.GenerateAssetName("test-app-");
+
             // Get IoT Central apps collection for resource group.
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
 
-            // Create IoT Central applications.
-            var appNames = new List<string>() { GetRandomTestName(), GetRandomTestName(), GetRandomTestName() };
-            foreach (var appName in appNames)
+            // Create IoT Central application.
+            var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
             {
-                var iotCentralAppData = new IotCentralAppData(AzureLocation.WestUS, new AppSkuInfo(AppSku.ST0))
-                {
-                    DisplayName = appName,
-                    Subdomain = appName,
-                };
-                await appsCollection.CreateOrUpdateAsync(WaitUntil.Completed, appName, iotCentralAppData, CancellationToken.None);
-            }
+                DisplayName = appName,
+                Subdomain = appName,
+            };
+            iotCentralAppData.Tags.Add("key", "value");
+            var iotCentralAppOperation = await appsCollection.CreateOrUpdateAsync(WaitUntil.Completed, appName, iotCentralAppData, CancellationToken.None);
+            var iotCentralApp = iotCentralAppOperation.Value;
 
-            // Get and delete IoT Central apps.
-            await foreach (var rgApp in rg.GetIotCentralApps())
-            {
-                if (appNames.Contains(rgApp.Data.Name))
-                {
-                    appNames.Remove(rgApp.Data.Name);
-                    await rgApp.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
-                }
-            }
+            Assert.IsTrue(iotCentralApp.Data.Tags.ContainsKey("key"));
 
-            // Assert all apps created were found and deleted.
-            Assert.IsFalse(appNames.Any());
-        }
+            // Remove a tag.
+            var tag2IotCentralAppResource = await iotCentralApp.RemoveTagAsync("key", CancellationToken.None);
+            var tag2IotCentralApp = tag2IotCentralAppResource.Value;
 
-        [TestCase]
-        [RecordedTest]
-        public async Task IotCentralCheckNameTest()
-        {
-            // Check name operation.
-            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
-            var appAvailabilityInfoResponse = await subscription.CheckNameAvailabilityAppAsync(new OperationInputs(GetRandomTestName()), CancellationToken.None);
-            var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
-
-            Assert.IsTrue(appAvailabilityInfo.NameAvailable);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task IotCentralCheckSubdomainTest()
-        {
-            // Check subdomain operation.
-            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
-            var appAvailabilityInfoResponse = await subscription.CheckSubdomainAvailabilityAppAsync(new OperationInputs(GetRandomTestName()), CancellationToken.None);
-            var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
-
-            Assert.IsTrue(appAvailabilityInfo.NameAvailable);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task IotCentralAppTemplatesTest()
-        {
-            // List app templates.
-            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
-            var firstAppTemplate = await subscription.GetTemplatesAppsAsync(CancellationToken.None).FirstOrDefaultAsync((_) => true, CancellationToken.None);
-
-            Assert.IsNotNull(firstAppTemplate);
+            Assert.IsFalse(tag2IotCentralApp.Data.Tags.ContainsKey("key"));
         }
     }
 }
