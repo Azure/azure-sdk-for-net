@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
-        private EventHubsRetryOptions _retryOptions = new EventHubsRetryOptions();
+        private EventHubsRetryOptions _retryOptions = new EventHubBufferedProducerClientRetryOptions();
 
         /// <summary>
         ///   Indicates whether or not events should be published using idempotent semantics for retries. If enabled, retries during publishing
@@ -272,6 +272,26 @@ namespace Azure.Messaging.EventHubs.Producer
                 RetryOptions = RetryOptions
             };
             return translatedOptions;
+        }
+
+        /// <summary>
+        ///   Provides a set of retry options with defaults optimized for use with the
+        ///   <see cref="EventHubBufferedProducerClient" />.
+        /// </summary>
+        ///
+        /// <seealso cref="EventHubsRetryOptions" />
+        ///
+        private class EventHubBufferedProducerClientRetryOptions : EventHubsRetryOptions
+        {
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="EventHubBufferedProducerClientRetryOptions"/> class.
+            /// </summary>
+            ///
+            public EventHubBufferedProducerClientRetryOptions() : base()
+            {
+                MaximumRetries = 15;
+                TryTimeout = TimeSpan.FromMinutes(3);
+            }
         }
     }
 }
