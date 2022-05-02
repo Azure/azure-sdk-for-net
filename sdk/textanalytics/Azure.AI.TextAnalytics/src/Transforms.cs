@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionResult results, IDictionary<string, int> idToIndexMap)
         {
-            var detectedLanguages = new List<DetectLanguageResult>(results.Errors.Count);
+            var detectedLanguages = new List<DetectLanguageResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -172,7 +172,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizeEntitiesResult>(results.Errors.Count);
+            var recognizeEntities = new List<RecognizeEntitiesResult>();
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -270,32 +270,30 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Linked Entities
 
-        //internal static LinkedEntityCollection ConvertToLinkedEntityCollection(DocumentLinkedEntities documentEntities)
-        //{
-        //    return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
-        //}
-
-        internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
+        internal static LinkedEntityCollection ConvertToLinkedEntityCollection(EntityLinkingResultDocumentsItem documentEntities)
         {
-            //var recognizeEntities = new List<RecognizeLinkedEntitiesResult>(results.Errors.Count);
+            return new LinkedEntityCollection(documentEntities.Entities.ToList(), ConvertToWarnings(documentEntities.Warnings));
+        }
 
-            ////Read errors
-            //foreach (DocumentError error in results.Errors)
-            //{
-            //    recognizeEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
-            //}
+        internal static RecognizeLinkedEntitiesResultCollection ConvertToLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeLinkedEntities = new List<RecognizeLinkedEntitiesResult>();
 
-            ////Read document linked entities
-            //foreach (DocumentLinkedEntities docEntities in results.Documents)
-            //{
-            //    recognizeEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToLinkedEntityCollection(docEntities)));
-            //}
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                recognizeLinkedEntities.Add(new RecognizeLinkedEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
 
-            //recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+            //Read document entities
+            foreach (EntityLinkingResultDocumentsItem docEntities in results.Documents)
+            {
+                recognizeLinkedEntities.Add(new RecognizeLinkedEntitiesResult(docEntities.Id, docEntities.Statistics ?? default, ConvertToLinkedEntityCollection(docEntities)));
+            }
 
-            //return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, results.Statistics, results.ModelVersion);
+            recognizeLinkedEntities = SortHeterogeneousCollection(recognizeLinkedEntities, idToIndexMap);
 
-            throw new NotImplementedException();
+            return new RecognizeLinkedEntitiesResultCollection(recognizeLinkedEntities, results.Statistics, results.ModelVersion);
         }
 
         #endregion
