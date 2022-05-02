@@ -56,15 +56,20 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         public bool Equals(TrajectoryPose other)
         {
-            return this.Rotation.Equals(other.Rotation)
-                && this.Translation.Equals(other.Translation);
+            return Rotation.Equals(other.Rotation)
+                && Translation.Equals(other.Translation);
         }
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return obj is TrajectoryPose && this.Equals(obj as Vector4);
+            if (obj is TrajectoryPose pose)
+            {
+                return Equals(pose);
+            }
+
+            return false;
         }
 
         /// <inheritdoc/>

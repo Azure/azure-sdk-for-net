@@ -21,17 +21,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Gets the authentication endpoint.
         /// </summary>
-        public Uri MixedRealityAuthenticationEndpoint { get; set; }
+        public Uri? MixedRealityAuthenticationEndpoint { get; set; }
 
         /// <summary>
         /// Gets the authentication options.
         /// </summary>
-        public MixedRealityStsClientOptions MixedRealityAuthenticationOptions { get; set; }
+        public MixedRealityStsClientOptions? MixedRealityAuthenticationOptions { get; set; }
 
         /// <summary>
         /// Gets the service endpoint.
         /// </summary>
-        public Uri ServiceEndpoint { get; set; }
+        public Uri? ServiceEndpoint { get; set; }
 
         /// <summary>
         /// Gets the list of supported asset file types.

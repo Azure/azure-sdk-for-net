@@ -74,11 +74,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The unsupported filetype provided for asset conversion.
         /// </summary>
-        public AssetFileType AttemptedFileType { get; }
+        public AssetFileType? AttemptedFileType { get; }
 
         /// <summary>
         /// The list of file types supported by Azure Object Anchors Conversion.
         /// </summary>
-        public IReadOnlyList<AssetFileType> SupportedAssetFileTypes { get; }
+        public IReadOnlyList<AssetFileType>? SupportedAssetFileTypes { get; }
     }
 }

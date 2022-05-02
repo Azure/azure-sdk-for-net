@@ -50,7 +50,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Scale of transformation of asset units into meter space.
         /// </summary>
-        public float Scale { get; internal set; }
+        public float Scale { get; }
 
         /// <summary>
         /// Ground truth trajectory.
@@ -61,27 +61,32 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Dimensions of the asset.
         /// </summary>
-        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : (System.Numerics.Vector3)AssetDimensionsWrapper; }
+        public System.Numerics.Vector3? AssetDimensions
+            => AssetDimensionsWrapper is null ? null : (System.Numerics.Vector3)AssetDimensionsWrapper;
 
         /// <summary>
         /// BoundingBoxCenter of the asset.
         /// </summary>
-        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : (System.Numerics.Vector3)BoundingBoxCenterWrapper; }
+        public System.Numerics.Vector3? BoundingBoxCenter
+            => BoundingBoxCenterWrapper is null ? null : (System.Numerics.Vector3)BoundingBoxCenterWrapper;
 
         /// <summary>
         /// Gravity vector with respect to object's nominal position.
         /// </summary>
-        public System.Numerics.Vector3 Gravity { get => (System.Numerics.Vector3)GravityWrapper; internal set => GravityWrapper = (Vector3)value; }
+        public System.Numerics.Vector3 Gravity
+            => GravityWrapper is null ? default : (System.Numerics.Vector3)GravityWrapper;
 
         /// <summary>
         /// Orientation of model's bounding box.
         /// </summary>
-        public System.Numerics.Quaternion? PrincipalAxis { get => PrincipalAxisWrapper == null ? null : PrincipalAxisWrapper; }
+        public System.Numerics.Quaternion? PrincipalAxis
+            => PrincipalAxisWrapper is null ? null : (System.Numerics.Quaternion)PrincipalAxisWrapper;
 
         /// <summary>
         /// Definition of supporting plane.
         /// </summary>
-        public System.Numerics.Vector4? SupportingPlane { get => SupportingPlaneWrapper == null ? null : SupportingPlaneWrapper; }
+        public System.Numerics.Vector4? SupportingPlane
+            => SupportingPlaneWrapper is null ? null : (System.Numerics.Vector4)SupportingPlaneWrapper;
 
         /// <summary>
         /// Indices of Key Frames.
@@ -95,20 +100,20 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public IReadOnlyList<TrajectoryPose> TestTrajectoryCameraPoses { get; }
 
         [CodeGenMember("Dimensions")]
-        internal Vector3 AssetDimensionsWrapper { get; set; }
+        internal Vector3? AssetDimensionsWrapper { get; set; }
 
         [CodeGenMember("BoundingBoxCenter")]
-        internal Vector3 BoundingBoxCenterWrapper { get; set; }
+        internal Vector3? BoundingBoxCenterWrapper { get; set; }
 
         [CodeGenMember("Gravity")]
-        internal Vector3 GravityWrapper { get; set; }
+        internal Vector3? GravityWrapper { get; set; }
 
         [CodeGenMember("PrincipalAxis")]
-        internal Quaternion PrincipalAxisWrapper { get; set; }
+        internal Quaternion? PrincipalAxisWrapper { get; set; }
 
         /// <summary> Scale of transformation of asset units into meter space. </summary>
         [CodeGenMember("SupportingPlane")]
-        internal Vector4 SupportingPlaneWrapper { get; set; }
+        internal Vector4? SupportingPlaneWrapper { get; set; }
 
         /// <summary>
         /// Returns true if the values of the object contain valid data.
@@ -119,7 +124,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             invalidMessage = string.Empty;
 
-            if (!this.Gravity.IsNormalized())
+            if (!Gravity.IsNormalized())
             {
                 invalidMessage = $"The value for {nameof(AssetConversionConfiguration.Gravity)} must be normalized.";
             }

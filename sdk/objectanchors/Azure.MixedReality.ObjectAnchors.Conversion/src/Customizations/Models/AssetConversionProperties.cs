@@ -16,32 +16,44 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Represents the properties of an AOA asset conversion job.
         /// </summary>
-        internal AssetConversionProperties()
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        internal AssetConversionProperties() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        /// <summary>
+        /// Represents the properties of an AOA asset conversion job.
+        /// </summary>
+        /// <param name="conversionConfiguration">The conversion configuration.</param>
+        /// <param name="inputAssetFileType">The input asset file type.</param>
+        /// <param name="inputAssetUri">The input asset URI.</param>
+        internal AssetConversionProperties(
+            AssetConversionConfiguration conversionConfiguration,
+            AssetFileType inputAssetFileType,
+            Uri inputAssetUri)
         {
+            InputAssetFileType = inputAssetFileType;
+            InputAssetUri = inputAssetUri;
+            ConversionConfiguration = conversionConfiguration;
         }
 
         /// <summary>
         /// The URI for downloading the generated AOA Model.
         /// </summary>
-        public Uri OutputModelUri
-        {
-            get
-            {
-                return OutputModelUriString == null ? null : new Uri(OutputModelUriString);
-            }
-        }
+        public Uri? OutputModelUri
+            => OutputModelUriString is null ? null : new Uri(OutputModelUriString);
+
         /// <summary>
         /// The Uri to the Asset to be ingested by the AOA Asset Conversion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API.
         /// </summary>
-        public Uri InputAssetUri
+        public Uri? InputAssetUri
         {
             get
             {
-                return InputAssetUriString == null ? null : new Uri(InputAssetUriString);
+                return InputAssetUriString is null ? null : new Uri(InputAssetUriString);
             }
             internal set
             {
-                InputAssetUriString = value.AbsoluteUri;
+                InputAssetUriString = value?.AbsoluteUri ?? null;
             }
         }
 
@@ -55,7 +67,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// The configuration of the AOA asset conversion job.
         /// </summary>
         [CodeGenMember("IngestionConfiguration")]
-        public AssetConversionConfiguration ConversionConfiguration { get; internal set; }
+        public AssetConversionConfiguration ConversionConfiguration { get; }
 
         /// <summary>
         /// The error code of the AOA asset conversion job.
@@ -78,16 +90,21 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The scaled dimensions of the asset.
         /// </summary>
-        public System.Numerics.Vector3? ScaledAssetDimensions { get => ScaledAssetDimensionsWrapper == null ? null : (System.Numerics.Vector3)ScaledAssetDimensionsWrapper; }
+        public System.Numerics.Vector3? ScaledAssetDimensions
+            => ScaledAssetDimensionsWrapper is null ? null : (System.Numerics.Vector3)ScaledAssetDimensionsWrapper;
 
         [CodeGenMember("OutputModelUri")]
-        internal string OutputModelUriString { get; }
+        internal string? OutputModelUriString { get; }
 
         [CodeGenMember("InputAssetUri")]
-        internal string InputAssetUriString { get; set; }
+        internal string? InputAssetUriString { get; set; }
 
         [CodeGenMember("AssetFileType")]
-        internal string AssetFileTypeString { get => this.InputAssetFileType.ToString(); set => this.InputAssetFileType = new AssetFileType(value); }
+        internal string AssetFileTypeString
+        {
+            get => InputAssetFileType.ToString();
+            set => InputAssetFileType = new AssetFileType(value);
+        }
 
         [CodeGenMember("JobId")]
         internal Guid? JobIdInternal { get; set; }
@@ -96,6 +113,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal Guid? AccountIdInternal { get; set; }
 
         [CodeGenMember("ScaledAssetDimensions")]
-        internal Vector3 ScaledAssetDimensionsWrapper { get; set; }
+        internal Vector3? ScaledAssetDimensionsWrapper { get; set; }
     }
 }

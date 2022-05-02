@@ -33,6 +33,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public Uri UploadUri { get; }
 
         [CodeGenMember("InputAssetUri")]
-        internal string UploadUriString { get => UploadUri.AbsoluteUri; }
+        internal string UploadUriString => UploadUri.AbsoluteUri;
     }
 }

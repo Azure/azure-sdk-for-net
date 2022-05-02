@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -19,10 +16,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         private static readonly TimeSpan defaultPollingInterval = TimeSpan.FromSeconds(15);
         private readonly ObjectAnchorsConversionClient _objectAnchorsConversionClient;
         private readonly Guid _jobId;
-        private Response<AssetConversionProperties> _lastConversionResponse;
-        private Response<AssetConversionProperties> _conclusiveConversionResponse;
+        private Response<AssetConversionProperties>? _lastConversionResponse;
+        private Response<AssetConversionProperties>? _conclusiveConversionResponse;
         private bool _conversionEnded;
-        private object _updateStatusLock = new object();
+        private readonly object _updateStatusLock = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetConversionOperation"/> class.
@@ -37,7 +34,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetConversionOperation" /> for mocking. </summary>
-        protected AssetConversionOperation() {}
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        protected AssetConversionOperation() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         /// <inheritdoc/>
         public override string Id => _jobId.ToString();
@@ -63,10 +62,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Whether the operation has completed and has a successful final status.
         /// </summary>
-        public bool HasCompletedSuccessfully => HasCompleted && HasValue && (this.Value.ConversionStatus == AssetConversionStatus.Succeeded);
+        public bool HasCompletedSuccessfully => HasCompleted && HasValue && (Value.ConversionStatus == AssetConversionStatus.Succeeded);
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _lastConversionResponse.GetRawResponse();
+        public override Response GetRawResponse() => _lastConversionResponse?.GetRawResponse()
+            ?? throw new InvalidOperationException("No response was available.");
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)

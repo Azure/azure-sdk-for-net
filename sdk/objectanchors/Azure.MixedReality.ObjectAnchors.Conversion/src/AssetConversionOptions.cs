@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Core;
+
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    using Azure.Core;
-    using System;
-
     /// <summary>
     /// Represents an Object Anchors asset conversion job request's options.
     /// </summary>
@@ -32,10 +32,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public Guid JobId { get; set; } = Guid.NewGuid();
 
         /// <summary> Gravity vector with respect to object's nominal position. </summary>
-        public System.Numerics.Vector3 Gravity { get => ConversionConfiguration.Gravity; }
+        public System.Numerics.Vector3 Gravity => ConversionConfiguration.Gravity;
 
         /// <summary> Scale of transformation of asset units into meter space. </summary>
-        public float Scale { get => ConversionConfiguration.Scale; }
+        public float Scale => ConversionConfiguration.Scale;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetConversionOptions"/> class.
@@ -77,9 +77,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 throw new ArgumentException(assetConfigurationInvalidMessage, nameof(conversionConfiguration));
             }
 
-            this.InputAssetUri = inputAssetUri;
-            this.InputAssetFileType = inputAssetFileType;
-            this.ConversionConfiguration = conversionConfiguration;
+            InputAssetUri = inputAssetUri;
+            InputAssetFileType = inputAssetFileType;
+            ConversionConfiguration = conversionConfiguration;
         }
     }
 }

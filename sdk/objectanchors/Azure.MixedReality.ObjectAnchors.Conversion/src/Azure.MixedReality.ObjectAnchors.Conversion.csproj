@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://azure.microsoft.com/topic/mixed-reality/</PackageProjectUrl>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

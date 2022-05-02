@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -37,7 +34,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             {
                 new object[] { new Vector3(1, 0, 0), new Uri(anyWorkingUriString), true },
                 new object[] { default(Vector3), new Uri(anyWorkingUriString), false },
-                new object[] { new Vector3(1, 0, 0), default(Uri), false }
+                new object[] { new Vector3(1, 0, 0), default(Uri)!, false }
             };
 
         [Test]
@@ -80,7 +77,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             float x = 0.2672612f;
             float y = 0.5345224f;
             float z = 0.8017837f;
-            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, new Vector3(x, y, z), default, default, default, 1, default, default);
+            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, new Vector3(x, y, z), default!, default!, default, 1, default, default!);
             Assert.AreEqual(x, config.Gravity.X);
             Assert.AreEqual(y, config.Gravity.Y);
             Assert.AreEqual(z, config.Gravity.Z);
@@ -94,8 +91,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             float y = 2;
             float z = 3;
             float w = 4;
-            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default, default, default, 1, new Vector4(x, y, z, w), default);
-            Assert.AreEqual(x, config.SupportingPlane.Value.X);
+            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default!, default!, default, 1, new Vector4(x, y, z, w), default!);
+            Assert.NotNull(config.SupportingPlane);
+            Assert.AreEqual(x, config.SupportingPlane!.Value.X);
             Assert.AreEqual(y, config.SupportingPlane.Value.Y);
             Assert.AreEqual(z, config.SupportingPlane.Value.Z);
             Assert.AreEqual(w, config.SupportingPlane.Value.W);
@@ -109,8 +107,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             float y = 2;
             float z = 3;
             float w = 4;
-            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default, default, new Quaternion(x, y, z, w), 1, default, default);
-            Assert.AreEqual(x, config.PrincipalAxis.Value.X);
+            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default!, default!, new Quaternion(x, y, z, w), 1, default, default!);
+            Assert.NotNull(config.PrincipalAxis);
+            Assert.AreEqual(x, config.PrincipalAxis!.Value.X);
             Assert.AreEqual(y, config.PrincipalAxis.Value.Y);
             Assert.AreEqual(z, config.PrincipalAxis.Value.Z);
             Assert.AreEqual(w, config.PrincipalAxis.Value.W);

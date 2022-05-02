@@ -42,12 +42,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(default, accountDomain, azureCredential, options));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(default, accountDomain, tokenCredential));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(default, accountDomain, tokenCredential, options));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null, accessToken));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null, accessToken, options));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null, azureCredential));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null, azureCredential, options));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null, tokenCredential));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null, tokenCredential, options));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null!, accessToken));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null!, accessToken, options));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null!, azureCredential));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null!, azureCredential, options));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null!, tokenCredential));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, null!, tokenCredential, options));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(accountId, string.Empty, accessToken));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(accountId, string.Empty, accessToken, options));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(accountId, string.Empty, azureCredential));
@@ -60,9 +60,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(accountId, " ", azureCredential, options));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(accountId, " ", tokenCredential));
             Assert.Throws<ArgumentException>(() => new ObjectAnchorsConversionClient(accountId, " ", tokenCredential, options));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, accountDomain, (AzureKeyCredential)null));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, accountDomain, (AzureKeyCredential)null, options));
-            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, accountDomain, (TokenCredential)null));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, accountDomain, (AzureKeyCredential)null!));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, accountDomain, (AzureKeyCredential)null!, options));
+            Assert.Throws<ArgumentNullException>(() => new ObjectAnchorsConversionClient(accountId, accountDomain, (TokenCredential)null!));
         }
 
         [Test]

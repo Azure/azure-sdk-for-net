@@ -42,7 +42,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="keyCredential">The Azure Object Anchors account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions options = null)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AzureKeyCredential keyCredential, ObjectAnchorsConversionClientOptions? options = null)
             : this(accountId, accountDomain, new MixedRealityAccountKeyCredential(accountId, keyCredential), options) { }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="token">An access token used to access the specified Azure Object Anchors account.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions options = null)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, AccessToken token, ObjectAnchorsConversionClientOptions? options = null)
             : this(accountId, accountDomain, new StaticAccessTokenCredential(token), options) { }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
         /// <param name="credential">The credential used to access the Mixed Reality service.</param>
         /// <param name="options">The options.</param>
-        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, TokenCredential credential, ObjectAnchorsConversionClientOptions options = null)
+        public ObjectAnchorsConversionClient(Guid accountId, string accountDomain, TokenCredential credential, ObjectAnchorsConversionClientOptions? options = null)
         {
             Argument.AssertNotDefault(ref accountId, nameof(accountId));
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
@@ -74,6 +74,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(accountDomain);
 
             AccountId = accountId;
+            AccountDomain = accountDomain;
             _clientOptions = options;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(mrTokenCredential, GetDefaultScope(serviceEndpoint)));
@@ -87,7 +88,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <remarks>
         /// Required for mocking.
         /// </remarks>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         protected ObjectAnchorsConversionClient()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
         }
 
@@ -108,12 +111,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     throw new AssetFileTypeNotSupportedException(options.InputAssetFileType, _clientOptions.SupportedAssetFileTypes);
                 }
 
-                AssetConversionProperties properties = new AssetConversionProperties
-                {
-                    InputAssetFileType = options.InputAssetFileType,
-                    ConversionConfiguration = options.ConversionConfiguration,
-                    InputAssetUri = options.InputAssetUri
-                };
+                AssetConversionProperties properties = new(
+                    options.ConversionConfiguration,
+                    options.InputAssetFileType,
+                    options.InputAssetUri);
 
                 _ingestionJobRestClient.Create(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken);
                 return new AssetConversionOperation(options.JobId, this);
@@ -142,12 +143,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     throw new AssetFileTypeNotSupportedException(options.InputAssetFileType, _clientOptions.SupportedAssetFileTypes);
                 }
 
-                AssetConversionProperties properties = new AssetConversionProperties
-                {
-                    InputAssetFileType = options.InputAssetFileType,
-                    ConversionConfiguration = options.ConversionConfiguration,
-                    InputAssetUri = options.InputAssetUri
-                };
+                AssetConversionProperties properties = new(
+                    options.ConversionConfiguration,
+                    options.InputAssetFileType,
+                    options.InputAssetUri);
 
                 await _ingestionJobRestClient.CreateAsync(AccountId, options.JobId, body: properties, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return new AssetConversionOperation(options.JobId, this);

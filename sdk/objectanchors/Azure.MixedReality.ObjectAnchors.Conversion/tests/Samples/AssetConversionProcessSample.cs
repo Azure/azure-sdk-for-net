@@ -22,7 +22,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests.Samples
         private const float assetGravityZ = 0;
         private const float assetScale = 0.001f;
 
-        private static string currentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static string currentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
         private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
         public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);
 

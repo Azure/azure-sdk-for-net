@@ -27,7 +27,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         private const float assetScale = 0.001f;
         private const string ClientCorrelationVectorHeaderName = "X-MRC-CV";
 
-        private static string currentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private static string currentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
         private static readonly string assetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, assetsFileName);
         private static readonly string fakeAssetLocalFilePath = Path.Combine(currentWorkingDirectory, assetsFolderName, fakeAssetFileName);
         public string modelDownloadLocalFilePath => Path.Combine(currentWorkingDirectory, modelDownloadFileName);

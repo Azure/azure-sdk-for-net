@@ -37,37 +37,63 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         /// <summary>
         /// X component.
         /// </summary>
-        public float X { get { return data.X; } set { data.X = value; } }
+        public float X
+        {
+            get => data.X;
+            set { data.X = value; }
+        }
 
         /// <summary>
         /// Y component.
         /// </summary>
-        public float Y { get { return data.Y; } set { data.Y = value; } }
+        public float Y
+        {
+            get => data.Y;
+            set { data.Y = value; }
+        }
 
         /// <summary>
         /// Z component.
         /// </summary>
-        public float Z { get { return data.Z; } set { data.Z = value; } }
+        public float Z
+        {
+            get => data.Z;
+            set { data.Z = value; }
+        }
 
         /// <summary>
         /// W component.
         /// </summary>
-        public float W { get { return data.W; } set { data.W = value; } }
+        public float W
+        {
+            get => data.W;
+            set { data.W = value; }
+        }
 
         /// <summary>
         /// Assesses equality with another vector.
         /// </summary>
         /// <param name="other">The other vector being compared to.</param>
         /// <returns>Whether the two are equal.</returns>
-        public bool Equals(Vector4 other)
+        public bool Equals(Vector4? other)
         {
-            return this.data.Equals(other.data);
+            if (other is null)
+            {
+                return false;
+            }
+
+            return data.Equals(other.data);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return obj is Vector4 && this.Equals(obj as Vector4);
+            if (obj is Vector4 vector4)
+            {
+                return Equals(vector4);
+            }
+
+            return false;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -77,6 +103,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         }
 
         public static implicit operator System.Numerics.Vector4(Vector4 v) => v.data;
+
         public static implicit operator Vector4(System.Numerics.Vector4 v) => new Vector4(v);
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         public void ConstructorParameters()
         {
             _ = new AssetFileType(".foo");
-            Assert.Throws<ArgumentNullException>(() => new AssetFileType(null));
+            Assert.Throws<ArgumentNullException>(() => new AssetFileType(null!));
             Assert.Throws<ArgumentException>(() => new AssetFileType(string.Empty));
             Assert.Throws<ArgumentException>(() => new AssetFileType(" "));
             Assert.Throws<ArgumentException>(() => new AssetFileType("foo"));

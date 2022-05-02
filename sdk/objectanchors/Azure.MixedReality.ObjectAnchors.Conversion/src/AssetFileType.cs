@@ -13,7 +13,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// </summary>
     public readonly struct AssetFileType : IEquatable<AssetFileType>
     {
-        private readonly string _value;
+        private readonly string? _value;
         internal const string FbxValue = ".fbx";
         internal const string GlbValue = ".glb";
         internal const string GltfValue = ".gltf";
@@ -103,7 +103,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is AssetFileType otherFileType)
             {

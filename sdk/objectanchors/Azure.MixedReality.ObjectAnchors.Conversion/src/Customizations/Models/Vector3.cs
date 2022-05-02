@@ -36,32 +36,54 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         /// <summary>
         /// X component.
         /// </summary>
-        public float X { get { return data.X; } set { data.X = value; } }
+        public float X
+        {
+            get => data.X;
+            set { data.X = value; }
+        }
 
         /// <summary>
         /// Y component.
         /// </summary>
-        public float Y { get { return data.Y; } set { data.Y = value; } }
+        public float Y
+        {
+            get => data.Y;
+            set { data.Y = value; }
+        }
 
         /// <summary>
         /// Z component.
         /// </summary>
-        public float Z { get { return data.Z; } set { data.Z = value; } }
+        public float Z
+        {
+            get => data.Z;
+            set { data.Z = value; }
+        }
 
         /// <summary>
         /// Assesses equality with another vector.
         /// </summary>
         /// <param name="other">The other vector being compared to.</param>
         /// <returns>Whether the two are equal.</returns>
-        public bool Equals(Vector3 other)
+        public bool Equals(Vector3? other)
         {
-            return this.data.Equals(other.data);
+            if (other is null)
+            {
+                return false;
+            }
+
+            return data.Equals(other.data);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return obj is Vector3 && this.Equals(obj as Quaternion);
+            if (obj is Vector3 vector3)
+            {
+                return Equals(vector3);
+            }
+
+            return false;
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -76,6 +98,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         }
 
         public static explicit operator System.Numerics.Vector3(Vector3 v) => v.data;
+
         public static explicit operator Vector3(System.Numerics.Vector3 v) => new Vector3(v);
     }
 }
