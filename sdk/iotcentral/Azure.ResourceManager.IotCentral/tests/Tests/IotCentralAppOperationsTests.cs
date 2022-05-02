@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
     public class IotCentralAppOperationsTests : IotCentralManagementTestBase
     {
         public IotCentralAppOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
