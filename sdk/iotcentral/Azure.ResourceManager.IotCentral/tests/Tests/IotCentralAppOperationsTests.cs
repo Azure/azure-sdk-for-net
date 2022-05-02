@@ -28,12 +28,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
         {
             var appName = Recording.GenerateAssetName("test-app-");
 
-            // Initialize ARM client.
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-
             // Get IoT Central apps collection for resource group.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
@@ -66,12 +62,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
         [RecordedTest]
         public async Task IotCentralListSubscriptionApplicationsTest()
         {
-            // Initialize ARM client.
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-
             // Get IoT Central apps collection for resource group.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
@@ -106,12 +98,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
         [RecordedTest]
         public async Task IotCentralListResourceGroupApplicationsTest()
         {
-            // Initialize ARM client.
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-
             // Get IoT Central apps collection for resource group.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var rg = await CreateResourceGroupAsync(subscription, "sdk-test-rg-");
 
             var appsCollection = rg.GetIotCentralApps();
@@ -146,12 +134,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
         [RecordedTest]
         public async Task IotCentralCheckNameTest()
         {
-            // Initialize ARM client.
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-
             // Check name operation.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var appAvailabilityInfoResponse = await subscription.CheckNameAvailabilityAppAsync(new OperationInputs(Guid.NewGuid().ToString()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
@@ -162,12 +146,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
         [RecordedTest]
         public async Task IotCentralCheckSubdomainTest()
         {
-            // Initialize ARM client.
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-
             // Check subdomain operation.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var appAvailabilityInfoResponse = await subscription.CheckSubdomainAvailabilityAppAsync(new OperationInputs(Guid.NewGuid().ToString()), CancellationToken.None);
             var appAvailabilityInfo = appAvailabilityInfoResponse.Value;
 
@@ -178,12 +158,8 @@ namespace Azure.ResourceManager.IotCentral.Tests
         [RecordedTest]
         public async Task IotCentralAppTemplatesTest()
         {
-            // Initialize ARM client.
-            var credential = new DefaultAzureCredential();
-            var armClient = new ArmClient(credential);
-
             // List app templates.
-            var subscription = armClient.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
+            var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var firstAppTemplate = await subscription.GetTemplatesAppsAsync(CancellationToken.None).FirstOrDefaultAsync((_) => true, CancellationToken.None);
 
             Assert.IsNotNull(firstAppTemplate);
