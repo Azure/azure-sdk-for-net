@@ -82,7 +82,7 @@ namespace Azure.Core.TestFramework
                         context.CurrentResult = context.CurrentTest.MakeTestResult();
                         context.CurrentResult = innerCommand.Execute(context);
 
-                        if (context.CurrentResult.ResultState.Status != TestStatus.Passed)
+                        if (IsTestFailed(context))
                         {
                             context.CurrentResult.SetResult(
                                 ResultState.Error,

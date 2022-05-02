@@ -58,7 +58,7 @@ namespace Azure.Core.TestFramework
                 if (this is RecordedTestBase &&
                     !executionContext.CurrentTest.GetCustomAttributes<RecordedTestAttribute>(true).Any())
                 {
-                    message += Environment.NewLine + "Add the [RecordedTest] attribute to your test to allow an automatic retry for timeouts.";
+                    message += Environment.NewLine + "Replace the [Test] attribute with the [RecordedTest] attribute to your test to allow an automatic retry for timeouts.";
                 }
                 throw new TestTimeoutException(message);
             }
