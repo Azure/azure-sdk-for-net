@@ -22,15 +22,16 @@ namespace Azure.Core.Pipeline
 
         private readonly HttpMessageSanitizer _sanitizer;
 
-        public ClientDiagnostics(ClientOptions options)
+        public ClientDiagnostics(ClientOptions options, bool? suppressNestedClientActivities = null)
                     : this(options.GetType().Namespace!,
                     GetResourceProviderNamespace(options.GetType().Assembly),
-                    options.Diagnostics)
+                    options.Diagnostics,
+                    suppressNestedClientActivities)
         {
         }
 
-        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions)
-            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, false)
+        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities)
         {
             // TODO: use DiagnosticsOptions.SuppressNestedClientSpans  here after new Azure.Core ships:
             // ClientDiagnostics class is shared as a source code and used in client libraries.
