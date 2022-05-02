@@ -505,7 +505,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri(string.Format("{0}/subscriptions?api-version=2014-04-01-preview", baseuri))
+                RequestUri = new Uri(string.Format("{0}subscriptions?api-version=2014-04-01-preview", baseuri))
             };
 
             HttpClient client = new HttpClient();

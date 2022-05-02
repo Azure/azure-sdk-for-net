@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/denyAssignments?$filter=denyAssignmentName%20eq%20'AzureAuthzSDK_22704996-FBD0-4AB1-8625-722D897825D2'&api-version=2018-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9kZW55QXNzaWdubWVudHM/JGZpbHRlcj1kZW55QXNzaWdubWVudE5hbWUlMjBlcSUyMCdBenVyZUF1dGh6U0RLXzIyNzA0OTk2LUZCRDAtNEFCMS04NjI1LTcyMkQ4OTc4MjVEMicmYXBpLXZlcnNpb249MjAxOC0wNy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3172c3ba-8f32-43e1-bf66-c6231cbfb5ca/providers/Microsoft.Authorization/denyAssignments?$filter=denyAssignmentName%20eq%20'AzureAuthzSDK_22704996-FBD0-4AB1-8625-722D897825D2'&api-version=2022-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzE3MmMzYmEtOGYzMi00M2UxLWJmNjYtYzYyMzFjYmZiNWNhL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9kZW55QXNzaWdubWVudHM/JGZpbHRlcj1kZW55QXNzaWdubWVudE5hbWUlMjBlcSUyMCdBenVyZUF1dGh6U0RLXzIyNzA0OTk2LUZCRDAtNEFCMS04NjI1LTcyMkQ4OTc4MjVEMicmYXBpLXZlcnNpb249MjAyMi0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "75d78baa-1dc3-45cc-a0a7-00257f5ee640"
+          "98b7f069-ca6f-4345-aeb3-2b9c4ccf949b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.16002",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.12.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.13.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,31 +27,40 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5d30ba95-07ea-403f-ba64-725e7be28306"
-        ],
-        "x-ms-correlation-request-id": [
-          "5d30ba95-07ea-403f-ba64-725e7be28306"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20210612T003751Z:5d30ba95-07ea-403f-ba64-725e7be28306"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
+          "60eb5c58-7410-4571-a195-2f52c299c9e3"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14529"
+        ],
+        "x-ms-correlation-request-id": [
+          "d7585808-1f62-4bc2-af1d-8c95fd8c6c4b"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20220428T234426Z:d7585808-1f62-4bc2-af1d-8c95fd8c6c4b"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 3EB665A2D0704BAD85F7FE3F48CD8D39 Ref B: CO1EDGE1720 Ref C: 2022-04-28T23:44:26Z"
+        ],
         "Date": [
-          "Sat, 12 Jun 2021 00:37:50 GMT"
+          "Thu, 28 Apr 2022 23:44:26 GMT"
+        ],
+        "Content-Length": [
+          "12"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Content-Length": [
-          "12"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -60,6 +69,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f"
+    "SubscriptionId": "3172c3ba-8f32-43e1-bf66-c6231cbfb5ca"
   }
 }

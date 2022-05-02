@@ -231,6 +231,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='tenantId'>
         /// Tenant ID for cross-tenant request
         /// </param>
+        /// <param name='skipToken'>
+        /// The skipToken to apply on the operation. Use $skipToken={skiptoken}
+        /// to return paged role assignments following the skipToken passed.
+        /// Only supported on provider level calls.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -246,7 +251,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a role assignment by ID.
         /// </summary>

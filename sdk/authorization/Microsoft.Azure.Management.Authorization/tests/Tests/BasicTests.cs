@@ -28,7 +28,7 @@ namespace Authorization.Tests
         public const string ResourceGroup = "resourcegroups/" + ResourceGroupName;
         private readonly ITestOutputHelper _output;
         private TestExecutionContext testContext;
-        private const int RoleAssignmentPageSize = 20;
+        private const int RoleAssignmentPageSize = 1000;
         private const string RESOURCE_TEST_LOCATION = "westus";
 
         public BasicTests(TestExecutionContext context, ITestOutputHelper output)
@@ -37,7 +37,6 @@ namespace Authorization.Tests
             _output = output;
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void ClassicAdministratorListTests()
         {
@@ -68,7 +67,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentByIdTests()
         {
@@ -201,7 +199,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentsListGetTests()
         {
@@ -256,7 +253,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentsCreateDeleteTests()
         {
@@ -297,7 +293,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentAtScopeAndAboveTest()
         {
@@ -327,7 +322,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentListByFilterTest()
         {
@@ -397,7 +391,8 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "PAS Service Issue - Paging not enabled")]
+        // Currently pagination only kicks in if there are >= 1000 role assignments with conditions run in record mode at your own risk
+        [Fact]
         public void RoleAssignmentPagingTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -409,7 +404,11 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-                var allBuiltInRoles = client.RoleDefinitions.List(scope).Where(r => r.Type.Equals("BuiltInRole", StringComparison.OrdinalIgnoreCase));
+
+                // TODO uncomment line end after paging is enabled unconditionally
+                var allBuiltInRoles = client.RoleDefinitions.List(scope)//.Where(r => r.RoleType.Equals("BuiltInRole", StringComparison.OrdinalIgnoreCase));
+                    .Where(r => r.Permissions.Any()) // TODO remove after RBAC supports unconditional pagination
+                    .Where(r => r.Permissions.First().DataActions.Any()); // TODO remove after RBAC supports unconditional pagination
                 var allBuiltInRolesList = allBuiltInRoles as IList<RoleDefinition> ?? allBuiltInRoles.ToList();
                 int roleCount = allBuiltInRolesList.Count();
                 int userCount = testContext.Users.Count();
@@ -418,43 +417,29 @@ namespace Authorization.Tests
 
                 try
                 {
-                    for (int i = 0; i < RoleAssignmentPageSize + 2; i++)
+                    bool breakAll = false;
+                    foreach(RoleDefinition role in allBuiltInRolesList)
                     {
-                        Random random = new Random();
-
-                        // Get random user
-                        int userIndex = random.Next(0, userCount);
-                        var principalId = testContext.Users.ElementAt(userIndex);
-
-                        // Get random built-in role definition
-                        int roleIndex = random.Next(0, roleCount);
-                        var roleDefinition = allBuiltInRolesList.ElementAt(roleIndex);
-
-                        var newRoleAssignment = new RoleAssignmentCreateParameters()
+                        foreach(var user in testContext.Users)
                         {
-                            RoleDefinitionId = roleDefinition.Id,
-                            PrincipalId = principalId.ToString()
-                        };
-                        var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_" + i);
-                        RoleAssignment createResult = null;
-                        try
-                        {
-                            createResult = client.RoleAssignments.Create(
+                            var newRoleAssignment = new RoleAssignmentCreateParameters()
+                            {
+                                RoleDefinitionId = role.Id,
+                                PrincipalId = user.ObjectId,
+                                Condition = $"False OR True", // TODO remove after RBAC supports unconditional pagination
+                                ConditionVersion = "2.0" // TODO remove after RBAC supports unconditional pagination
+                            };
+                            var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_" + createdAssignments.Count);
+                            RoleAssignment createResult = client.RoleAssignments.Create(
                                 scope,
                                 assignmentName.ToString(),
                                 newRoleAssignment);
+                            Assert.NotNull(createResult);
+                            createdAssignments.Add(createResult);
+                            breakAll = createdAssignments.Count > RoleAssignmentPageSize + 2;
+                            if (breakAll) break;
                         }
-                        catch (CloudException e)
-                        {
-                            if (e.Response.StatusCode == HttpStatusCode.Conflict)
-                            {
-                                i--;
-                                continue;
-                            }
-                        }
-
-                        Assert.NotNull(createResult);
-                        createdAssignments.Add(createResult);
+                        if (breakAll) break;
                     }
 
                     // Validate
@@ -491,7 +476,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentListForScopeTest()
         {
@@ -766,7 +750,7 @@ namespace Authorization.Tests
                     Assert.Contains("is not supported", e.Response.Content);
                     threwException = true;
                 }
-                Assert.True(threwException,"Test failed to throw exception when expected");
+                Assert.True(threwException, "Test failed to throw exception when expected");
             }
         }
 
@@ -855,7 +839,7 @@ namespace Authorization.Tests
         [Fact]
         public void RoleAssignmentMaxVersion2_0Test()
         {
-            List<string> allowedVersions = new List<string>() { "1.0","2.0",null};
+            List<string> allowedVersions = new List<string>() { "1.0", "2.0", null };
             string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -902,7 +886,8 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-                var allRoleDefinitions = client.RoleDefinitions.List(scope);
+                var allRoleDefinitions = client.RoleDefinitions.List(scope)
+                    .Where(rd => rd.RoleType == "BuiltInRole"); // Test only for built-in roles
 
                 Assert.NotNull(allRoleDefinitions);
 
@@ -911,30 +896,25 @@ namespace Authorization.Tests
                     var singleRole = client.RoleDefinitions.Get(scope, roleDefinition.Name);
 
                     Assert.NotNull(singleRole);
+                    Assert.NotNull(singleRole.Id);
+                    Assert.NotNull(singleRole.Name);
+                    Assert.NotNull(singleRole.Type);
+                    Assert.NotNull(singleRole.Description);
+                    Assert.NotNull(singleRole.RoleName);
+                    Assert.NotNull(singleRole.RoleType);
+                    Assert.NotNull(singleRole.Permissions);
 
-                    if (singleRole.RoleType == "BuiltInRole")
+                    foreach (var assignableScope in singleRole.AssignableScopes)
                     {
-                        Assert.NotNull(singleRole);
-                        Assert.NotNull(singleRole.Id);
-                        Assert.NotNull(singleRole.Name);
-                        Assert.NotNull(singleRole.Type);
-                        Assert.NotNull(singleRole.Description);
-                        Assert.NotNull(singleRole.RoleName);
-                        Assert.NotNull(singleRole.RoleType);
-                        Assert.NotNull(singleRole.Permissions);
+                        Assert.True(!string.IsNullOrWhiteSpace(assignableScope));
+                    }
 
-                        foreach (var assignableScope in singleRole.AssignableScopes)
-                        {
-                            Assert.True(!string.IsNullOrWhiteSpace(assignableScope));
-                        }
-
-                        foreach (var permission in singleRole.Permissions)
-                        {
-                            Assert.NotNull(permission.Actions);
-                            Assert.NotNull(permission.NotActions);
-                            Assert.False(permission.Actions.Count() == 0 &&
-                            permission.DataActions.Count() == 0);
-                        }
+                    foreach (var permission in singleRole.Permissions)
+                    {
+                        Assert.NotNull(permission.Actions);
+                        Assert.NotNull(permission.NotActions);
+                        Assert.NotNull(permission.DataActions);
+                        Assert.NotNull(permission.NotDataActions);
                     }
                 }
             }
@@ -991,7 +971,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-                var allRoleDefinitions = client.RoleDefinitions.List(scope);
+                var allRoleDefinitions = client.RoleDefinitions.List(scope).Take(10); // take a subset of role definitions
 
                 Assert.NotNull(allRoleDefinitions);
 
@@ -1100,7 +1080,7 @@ namespace Authorization.Tests
 
                     // Update role name, permissions for the custom role
                     createOrUpdateParams.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
-                    createOrUpdateParams.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
+                    createOrUpdateParams.Permissions.Single().Actions.Add("Microsoft.Compute/*/read");
 
                     var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(scope,
                         roleDefinitionId.ToString(),
@@ -1114,7 +1094,7 @@ namespace Authorization.Tests
                     Assert.Equal("UpdatedRoleName_" + roleDefinitionId.ToString(), updatedRoleDefinition.RoleName);
                     Assert.NotEmpty(updatedRoleDefinition.Permissions);
                     Assert.Equal("Microsoft.Authorization/*/Read", updatedRoleDefinition.Permissions.Single().Actions.First());
-                    Assert.Equal("Microsoft.Support/*/read", updatedRoleDefinition.Permissions.Single().Actions.Last());
+                    Assert.Equal("Microsoft.Compute/*/read", updatedRoleDefinition.Permissions.Single().Actions.Last());
                     // Same assignable scopes
                     Assert.NotEmpty(updatedRoleDefinition.AssignableScopes);
                     Assert.Equal(scope.ToLower(), updatedRoleDefinition.AssignableScopes.Single().ToLower());
@@ -1160,18 +1140,6 @@ namespace Authorization.Tests
 
                 Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
                 string resourceGroupScope = currentSubscriptionId;
-
-                // create resource group,This works only if logged in using Username/Password method
-                var resourceClient = PermissionsTests.GetResourceManagementClient(context);
-                try
-                {
-                    resourceClient.ResourceGroups.CreateOrUpdate(
-                        "AzureAuthzSDK1",
-                        new ResourceGroup
-                        { Location = "westus" });
-                }
-                catch
-                { }
 
                 // Create a custom role definition
                 try
@@ -1486,7 +1454,7 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact]
+        [Fact] // TODO test in playback mode
         public void ElevateAccessTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

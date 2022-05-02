@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="scope">The role assignment scope.</param>
         /// <param name="principalType">The principal type of the assigned
         /// principal ID. Possible values include: 'User', 'Group',
-        /// 'ServicePrincipal', 'ForeignGroup'</param>
+        /// 'ServicePrincipal', 'ForeignGroup', 'Device'</param>
         /// <param name="description">Description of role assignment</param>
         /// <param name="condition">The conditions on the role assignment. This
         /// limits the resources it can be assigned to. e.g.:
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Gets or sets the principal type of the assigned principal ID.
         /// Possible values include: 'User', 'Group', 'ServicePrincipal',
-        /// 'ForeignGroup'
+        /// 'ForeignGroup', 'Device'
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalType")]
         public string PrincipalType { get; set; }
