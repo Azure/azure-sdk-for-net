@@ -5,12 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "148",
+        "Content-Length": "197",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-23f6c0e76e30694bace3f8cf4d5aa0d5-3c32968e185c864a-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "c7cc0f4eef4116020cd08fc1ac18bb3a",
+        "traceparent": "00-e1f3cfe3409e9d4a9246f6a71c321c92-995e1e59d45ee14d-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220501.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "75d4b77f700f6344c11311938526e775",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,18 +23,21 @@
             }
           ]
         },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit"
+        },
         "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a034f1df-02f7-4535-8d05-e2e2efdf7bfa",
+        "apim-request-id": "bb7d1ec6-b540-46f1-90a9-bda0a1c76c55",
         "Content-Length": "406",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Fri, 29 Apr 2022 23:10:05 GMT",
+        "Date": "Mon, 02 May 2022 03:09:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "kind": "EntityRecognitionResults",
@@ -75,7 +78,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1821881223",
+    "RandomSeed": "202096875",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
