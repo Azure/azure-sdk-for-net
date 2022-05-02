@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             Client = GetArmClient();
         }
 
-        public string GetRandomTestAppName() { return Recording.GenerateAssetName("test-app-"); }
+        public string GetRandomTestName() { return Recording.GenerateAssetName("test-"); }
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix)
         {
