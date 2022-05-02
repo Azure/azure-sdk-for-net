@@ -53,25 +53,16 @@ namespace Authorization.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string groupName = TestUtilities.GenerateName("csmrg");
-                var resourceClient = GetResourceManagementClient(context);
                 var authzClient = GetAuthorizationManagementClient(context);
 
-                resourceClient.ResourceGroups.CreateOrUpdate(groupName, new Microsoft.Azure.Management.Resources.Models.ResourceGroup
-                { Location = RESOURCE_TEST_LOCATION });
-                var resourcePermissions = authzClient.Permissions
-                    .ListForResourceGroupWithHttpMessagesAsync(groupName)
-                    .ConfigureAwait(false).GetAwaiter().GetResult();
+                var resourcePermissions = authzClient.Permissions.ListForResourceGroup("AzureAuthzSDK");
 
                 Assert.NotNull(resourcePermissions);
-                Assert.Equal(HttpStatusCode.OK, resourcePermissions.Response.StatusCode);
-                var permissions = ((IPage<Permission>)resourcePermissions.Body);
-                Assert.NotNull(permissions);
-                var permission = permissions.FirstOrDefault();
+
+                var permission = resourcePermissions.FirstOrDefault();
                 Assert.NotNull(permission);
                 Assert.NotNull(permission.Actions);
-                Assert.NotNull(permission.NotActions);
-                Assert.Equal("*", permission.Actions[0]);
+                Assert.Equal("*/read", permission.Actions[0]); // Even if the RG does not exist this is a valid result if you have */read at subscription level
             }
         }
 
@@ -89,62 +80,37 @@ namespace Authorization.Tests
                 var permission = resourcePermissions.FirstOrDefault();
                 Assert.NotNull(permission);
                 Assert.NotNull(permission.Actions);
-                Assert.Equal("*", permission.Actions[0]);
+                Assert.Equal("*/read", permission.Actions[0]); // Even if the RG does not exist this is a valid result if you have */read at subscription level
             }
         }
 
-        // Test fails when running with SPN auth method in Record mode
         [Fact]
         public void GetResourcePermissions()
         {
-            // NEXT environment variables used to record the mock
-
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string groupName = TestUtilities.GenerateName("csmrg");
-                string resourceName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "resourceId").ToString();
-                var client = GetResourceManagementClient(context);
-                var location = RESOURCE_TEST_LOCATION;
-
-                client.ResourceGroups.CreateOrUpdate(groupName,
-                    new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = location });
-
-                var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName,
-                        "Microsoft.Authorization",
-                        "",
-                        "roleAssignments",
-                        resourceName,
-                        "2017-09-01",
-                    new Microsoft.Azure.Management.Resources.Models.GenericResource()
-                    {
-                        Location = location,
-                        Properties = JObject.Parse("{'roleDefinitionId':'/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7','principalId':'f8d526a0-54eb-4941-ae69-ebf4a334d0f0'}")
-                    }
-                );
-
                 var authzClient = GetAuthorizationManagementClient(context);
 
-                var resourcePermissions = authzClient.Permissions.ListForResource(groupName,
-                    "Microsoft.Authorization",
+                var permissions = authzClient.Permissions.ListForResource(
+                    "AzureAuthzSDK",
+                    "Microsoft.DataLakeAnalytics",
                     "",
-                    "roleAssignments",
-                    resourceName
+                    "accounts",
+                    "uiest"
                 );
 
-                Assert.NotNull(resourcePermissions);
-                var permission = resourcePermissions.FirstOrDefault();
+                Assert.NotNull(permissions);
+
+                var permission = permissions.FirstOrDefault();
                 Assert.NotNull(permission);
                 Assert.NotNull(permission.Actions);
-                Assert.NotNull(permission.NotActions);
-                Assert.Equal("*", permission.Actions[0]);
+                Assert.Equal("*/read", permission.Actions[0]);
             }
         }
 
         [Fact]
         public void GetNonExistentResourcePermissions()
         {
-            // NEXT environment variables used to record the mock
-
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceName = TestUtilities.GenerateName("csmr");

@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="principalId">The principal ID.</param>
         /// <param name="principalType">The principal type of the assigned
         /// principal ID. Possible values include: 'User', 'Group',
-        /// 'ServicePrincipal', 'ForeignGroup'</param>
+        /// 'ServicePrincipal', 'ForeignGroup', 'Device'</param>
         /// <param name="roleAssignmentScheduleId">Id of the master role
         /// assignment schedule</param>
         /// <param name="originRoleAssignmentId">Role Assignment Id in external
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <summary>
         /// Gets or sets the principal type of the assigned principal ID.
         /// Possible values include: 'User', 'Group', 'ServicePrincipal',
-        /// 'ForeignGroup'
+        /// 'ForeignGroup', 'Device'
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalType")]
         public string PrincipalType { get; set; }

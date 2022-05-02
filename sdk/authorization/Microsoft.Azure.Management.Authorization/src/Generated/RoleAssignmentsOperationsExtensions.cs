@@ -355,9 +355,14 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='tenantId'>
             /// Tenant ID for cross-tenant request
             /// </param>
-            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string))
+            /// <param name='skipToken'>
+            /// The skipToken to apply on the operation. Use $skipToken={skiptoken} to
+            /// return paged role assignments following the skipToken passed. Only
+            /// supported on provider level calls.
+            /// </param>
+            public static IPage<RoleAssignment> ListForScope(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), string skipToken = default(string))
             {
-                return operations.ListForScopeAsync(scope, odataQuery, tenantId).GetAwaiter().GetResult();
+                return operations.ListForScopeAsync(scope, odataQuery, tenantId, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -379,12 +384,17 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='tenantId'>
             /// Tenant ID for cross-tenant request
             /// </param>
+            /// <param name='skipToken'>
+            /// The skipToken to apply on the operation. Use $skipToken={skiptoken} to
+            /// return paged role assignments following the skipToken passed. Only
+            /// supported on provider level calls.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RoleAssignment>> ListForScopeAsync(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RoleAssignment>> ListForScopeAsync(this IRoleAssignmentsOperations operations, string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, tenantId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListForScopeWithHttpMessagesAsync(scope, odataQuery, tenantId, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

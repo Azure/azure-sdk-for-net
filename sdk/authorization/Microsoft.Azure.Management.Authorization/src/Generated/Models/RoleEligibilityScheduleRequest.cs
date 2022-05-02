@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// scope.</param>
         /// <param name="principalType">The principal type of the assigned
         /// principal ID. Possible values include: 'User', 'Group',
-        /// 'ServicePrincipal', 'ForeignGroup'</param>
+        /// 'ServicePrincipal', 'ForeignGroup', 'Device'</param>
         /// <param name="status">The status of the role eligibility schedule
         /// request. Possible values include: 'Accepted', 'PendingEvaluation',
         /// 'Granted', 'Denied', 'PendingProvisioning', 'Provisioned',
@@ -153,7 +153,8 @@ namespace Microsoft.Azure.Management.Authorization.Models
 
         /// <summary>
         /// Gets the principal type of the assigned principal ID. Possible
-        /// values include: 'User', 'Group', 'ServicePrincipal', 'ForeignGroup'
+        /// values include: 'User', 'Group', 'ServicePrincipal',
+        /// 'ForeignGroup', 'Device'
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalType")]
         public string PrincipalType { get; private set; }

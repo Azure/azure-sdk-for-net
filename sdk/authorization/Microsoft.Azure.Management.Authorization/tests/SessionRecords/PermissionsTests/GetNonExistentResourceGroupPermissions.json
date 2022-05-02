@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Authorization/permissions?api-version=2018-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcGVybWlzc2lvbnM/YXBpLXZlcnNpb249MjAxOC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/3172c3ba-8f32-43e1-bf66-c6231cbfb5ca/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Authorization/permissions?api-version=2022-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzE3MmMzYmEtOGYzMi00M2UxLWJmNjYtYzYyMzFjYmZiNWNhL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcGVybWlzc2lvbnM/YXBpLXZlcnNpb249MjAyMi0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cd8a8fa3-15ff-49d8-8f69-5de8aac586c9"
+          "0349d35e-607d-4af9-b900-e68403253f57"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.30015.01",
+          "FxVersion/4.700.22.16002",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19043.",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.12.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.13.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "aa672ae2-4c5d-4353-a1dc-3394d45ef229"
+          "7b5ef11b-a4a4-41b3-9fd0-5423eee8f3ba"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -35,23 +35,26 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "Set-Cookie": [
-          "x-ms-gateway-slice=Production; path=/; secure; samesite=none; httponly"
-        ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "98b08478-6089-4728-be56-548104d0b1d6"
+          "8aa115d9-36ff-4f03-8e30-435196245f4f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210612T015217Z:98b08478-6089-4728-be56-548104d0b1d6"
+          "CENTRALUS:20220428T225549Z:8aa115d9-36ff-4f03-8e30-435196245f4f"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: ED373B86F4C34E72A4C825A2E6937318 Ref B: WSTEDGE0611 Ref C: 2022-04-28T22:55:49Z"
         ],
         "Date": [
-          "Sat, 12 Jun 2021 01:52:17 GMT"
+          "Thu, 28 Apr 2022 22:55:49 GMT"
         ],
         "Content-Length": [
-          "82"
+          "87"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -60,12 +63,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*/read\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "4004a9fd-d58e-48dc-aeb2-4a4aec58606f"
+    "SubscriptionId": "3172c3ba-8f32-43e1-bf66-c6231cbfb5ca"
   }
 }

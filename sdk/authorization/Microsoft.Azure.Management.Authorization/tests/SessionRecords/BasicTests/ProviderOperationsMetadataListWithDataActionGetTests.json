@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Authorization/providerOperations/Microsoft.Storage?api-version=2018-01-01-preview&$expand=resourceTypes",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnMvTWljcm9zb2Z0LlN0b3JhZ2U/YXBpLXZlcnNpb249MjAxOC0wMS0wMS1wcmV2aWV3JiRleHBhbmQ9cmVzb3VyY2VUeXBlcw==",
+      "RequestUri": "/providers/Microsoft.Authorization/providerOperations/Microsoft.Storage?api-version=2022-04-01&$expand=resourceTypes",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnMvTWljcm9zb2Z0LlN0b3JhZ2U/YXBpLXZlcnNpb249MjAyMi0wNC0wMSYkZXhwYW5kPXJlc291cmNlVHlwZXM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

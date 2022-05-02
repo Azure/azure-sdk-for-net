@@ -1345,6 +1345,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='tenantId'>
         /// Tenant ID for cross-tenant request
         /// </param>
+        /// <param name='skipToken'>
+        /// The skipToken to apply on the operation. Use $skipToken={skiptoken} to
+        /// return paged role assignments following the skipToken passed. Only
+        /// supported on provider level calls.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1366,7 +1371,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RoleAssignment>>> ListForScopeWithHttpMessagesAsync(string scope, ODataQuery<RoleAssignmentFilter> odataQuery = default(ODataQuery<RoleAssignmentFilter>), string tenantId = default(string), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -1384,6 +1389,7 @@ namespace Microsoft.Azure.Management.Authorization
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("tenantId", tenantId);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListForScope", tracingParameters);
             }
@@ -1407,6 +1413,10 @@ namespace Microsoft.Azure.Management.Authorization
             if (tenantId != null)
             {
                 _queryParameters.Add(string.Format("tenantId={0}", System.Uri.EscapeDataString(tenantId)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", skipToken));
             }
             if (_queryParameters.Count > 0)
             {

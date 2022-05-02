@@ -20,5 +20,6 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public const string Group = "Group";
         public const string ServicePrincipal = "ServicePrincipal";
         public const string ForeignGroup = "ForeignGroup";
+        public const string Device = "Device";
     }
 }
