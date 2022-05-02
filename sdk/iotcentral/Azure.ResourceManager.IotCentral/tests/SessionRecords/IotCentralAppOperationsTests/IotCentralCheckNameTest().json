@@ -1,6 +1,50 @@
 {
-  "Entries": [],
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/checkNameAvailability?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "47",
+        "Content-Type": "application/json",
+        "traceparent": "00-f450fa3c45760744b16a887fc42f6069-003706f6cfce5743-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1d91cf3b1f15dd9fd97ef1a69a1c5fa3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "b7e4d6c7-7734-4426-9e67-7ea2885968a0"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:29:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus01",
+        "x-iot-correlation": "3kklwe6k.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "1d91cf3b1f15dd9fd97ef1a69a1c5fa3",
+        "x-ms-correlation-request-id": "c255c448-4e1b-4811-9b9c-ff35a20bc12d",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "e057e5f1-c308-4973-9663-f9f2b700892d",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T152933Z:c255c448-4e1b-4811-9b9c-ff35a20bc12d",
+        "X-MSEdge-Ref": "Ref A: 7B56AB099FCD47E5821D84A6C952E228 Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:29:33Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "nameAvailable": true
+      }
+    }
+  ],
   "Variables": {
+    "RandomSeed": "1956522478",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "77969078-2897-47b0-9143-917252379303"
   }

@@ -1,7 +1,1528 @@
 {
-  "Entries": [],
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourcegroups/sdk-test-rg-5837?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "31",
+        "Content-Type": "application/json",
+        "traceparent": "00-42db6841075b894a8d97758f2f50599c-4f5a456b1779e148-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "739f9b33e9ca48c0c6058a8fa4845f0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "239",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:32:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2f7b958b-5f4d-451f-a26f-346b48644b7d",
+        "x-ms-ratelimit-remaining-subscription-writes": "1181",
+        "x-ms-request-id": "2f7b958b-5f4d-451f-a26f-346b48644b7d",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153254Z:2f7b958b-5f4d-451f-a26f-346b48644b7d"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837",
+        "name": "sdk-test-rg-5837",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-314?api-version=2021-11-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "123",
+        "Content-Type": "application/json",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-e8a3cf9a3a55444d-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d3056f8342aa7c25b60a6e87355c8596",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "ST0"
+        },
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "displayName": "test-app-314",
+          "subdomain": "test-app-314"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/e62923d0-b42a-4b26-83ab-127f8349ebed?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "663",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:02 GMT",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-download-options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "2gmdy3dg.1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "d3056f8342aa7c25b60a6e87355c8596",
+        "x-ms-correlation-request-id": "560fb445-40ff-455d-b6e3-041ec0659a88",
+        "x-ms-ratelimit-remaining-subscription-writes": "1180",
+        "x-ms-request-id": "1a1b17c6-6c41-4672-9397-664e61efc173",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153303Z:560fb445-40ff-455d-b6e3-041ec0659a88",
+        "X-MSEdge-Ref": "Ref A: 12228DC9FB3C4EF18447E237E65426C0 Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:32:55Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-314",
+        "name": "test-app-314",
+        "type": "Microsoft.IoTCentral/IoTApps",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "state": "created",
+          "provisioningState": "Creating",
+          "applicationId": "9228430f-8f53-49f0-8c75-d621070da75a",
+          "displayName": "test-app-314",
+          "subdomain": "test-app-314",
+          "template": "iotc-pnp-preview@1.0.0",
+          "publicNetworkAccess": "Enabled",
+          "networkRuleSets": {
+            "defaultAction": "Allow",
+            "applyToDevices": false,
+            "applyToIoTCentral": false,
+            "ipRules": []
+          },
+          "privateEndpointConnections": []
+        },
+        "sku": {
+          "name": "ST0"
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/e62923d0-b42a-4b26-83ab-127f8349ebed?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-4eab93dbf7459e4d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "45622bd6c72e30f5a56d0a3d577d5532",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:02 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "ba9upz5h.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "45622bd6c72e30f5a56d0a3d577d5532",
+        "x-ms-correlation-request-id": "22c131c1-666d-4823-aea8-7b133cfab141",
+        "x-ms-ratelimit-remaining-subscription-reads": "11885",
+        "x-ms-request-id": "45ef2dcc-8bef-43df-9e3b-af97d3d5c050",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153303Z:22c131c1-666d-4823-aea8-7b133cfab141",
+        "X-MSEdge-Ref": "Ref A: 14AC9BD7409D40249F09557828A75F11 Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:03Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Creating"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/e62923d0-b42a-4b26-83ab-127f8349ebed?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-cdf58b8aa09ab647-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5e3eed1f9b1d73d14b9b99496bfbf10b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:03 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "c6nwzkcr.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "5e3eed1f9b1d73d14b9b99496bfbf10b",
+        "x-ms-correlation-request-id": "593b303b-55c9-40a5-8f19-c25fca32cbdf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11884",
+        "x-ms-request-id": "009173d2-bc00-48e9-8c2f-67e68f26dbf7",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153304Z:593b303b-55c9-40a5-8f19-c25fca32cbdf",
+        "X-MSEdge-Ref": "Ref A: 81FE124D4F6246399A167E064D3F8BDE Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:04Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Creating"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/e62923d0-b42a-4b26-83ab-127f8349ebed?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-8e69b12f8e708f40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "09b12b4240f95967bbf63a3505e611bc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:04 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "q7n4dhs.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "09b12b4240f95967bbf63a3505e611bc",
+        "x-ms-correlation-request-id": "951e2268-de1a-4688-ba04-1cd12658f2eb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11883",
+        "x-ms-request-id": "d25574ca-858e-4e79-a694-527a61cf75cb",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153305Z:951e2268-de1a-4688-ba04-1cd12658f2eb",
+        "X-MSEdge-Ref": "Ref A: 0E0BAA6E11B346F694873DCAAC0CFC32 Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:05Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Creating"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/e62923d0-b42a-4b26-83ab-127f8349ebed?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-af753d77be844544-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9c0aa30b696c3b2559eef9922eacc4a9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "3l9fuuuh.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "9c0aa30b696c3b2559eef9922eacc4a9",
+        "x-ms-correlation-request-id": "cdceba97-084c-4899-9433-c32f9dc1ed9d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11882",
+        "x-ms-request-id": "caec08c3-6fc6-4a09-85e9-c209cace9c58",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153307Z:cdceba97-084c-4899-9433-c32f9dc1ed9d",
+        "X-MSEdge-Ref": "Ref A: 5B5E55E67E1A4D55A1DD67D25F4C7FF8 Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:06Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Creating"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/e62923d0-b42a-4b26-83ab-127f8349ebed?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-aa4258b72130c947-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2cfafe7b4bccdf3885e5a227609c6e64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "b3nw52lz.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "2cfafe7b4bccdf3885e5a227609c6e64",
+        "x-ms-correlation-request-id": "7c625c53-0b50-42d0-ab63-12471d0c0b34",
+        "x-ms-ratelimit-remaining-subscription-reads": "11881",
+        "x-ms-request-id": "b5a7945f-f915-4964-bf1d-4acb8111aea6",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153309Z:7c625c53-0b50-42d0-ab63-12471d0c0b34",
+        "X-MSEdge-Ref": "Ref A: 0C9E02DBCC0744B388A4D93FF938B18B Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:09Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-314?api-version=2021-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-75f22c11acd4f148b32a7565b0374487-f1f1351a01eadb4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c83ddd8a54f1d89f0575b00b46d52a0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "664",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:09 GMT",
+        "ETag": "W/\u002202008b6a-0000-0100-0000-626ff9b30000\u0022",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus01",
+        "x-iot-correlation": "569lnwnr.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "c83ddd8a54f1d89f0575b00b46d52a0f",
+        "x-ms-correlation-request-id": "de7c4c0e-ad23-405d-a97d-bcdc688accd7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11880",
+        "x-ms-request-id": "3baaa53f-1743-4d84-83e5-5e2ce3bc1132",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153309Z:de7c4c0e-ad23-405d-a97d-bcdc688accd7",
+        "X-MSEdge-Ref": "Ref A: E705AD96707840A7840CDD126C28F2C8 Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:09Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-314",
+        "name": "test-app-314",
+        "type": "Microsoft.IoTCentral/IoTApps",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "state": "created",
+          "provisioningState": "Succeeded",
+          "applicationId": "9228430f-8f53-49f0-8c75-d621070da75a",
+          "displayName": "test-app-314",
+          "subdomain": "test-app-314",
+          "template": "iotc-pnp-preview@1.0.0",
+          "publicNetworkAccess": "Enabled",
+          "networkRuleSets": {
+            "defaultAction": "Allow",
+            "applyToDevices": false,
+            "applyToIoTCentral": false,
+            "ipRules": []
+          },
+          "privateEndpointConnections": []
+        },
+        "sku": {
+          "name": "ST0"
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-178?api-version=2021-11-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "123",
+        "Content-Type": "application/json",
+        "traceparent": "00-050efd8fd2945d4787f1831b7bf0f996-339d0702532c8243-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "06b99131e4ebbfef6a2b1786c7fedbbd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "ST0"
+        },
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "displayName": "test-app-178",
+          "subdomain": "test-app-178"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/c8cd2b78-4c99-4902-a8ef-d0b2340b3a0d?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "663",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:16 GMT",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-download-options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus01",
+        "x-iot-correlation": "92o8k9l1.1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "06b99131e4ebbfef6a2b1786c7fedbbd",
+        "x-ms-correlation-request-id": "24047f44-7789-4d13-9a2f-dcd149b9304c",
+        "x-ms-ratelimit-remaining-subscription-writes": "1179",
+        "x-ms-request-id": "7122a3ec-9732-405f-b474-f92fcd4f48f9",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153317Z:24047f44-7789-4d13-9a2f-dcd149b9304c",
+        "X-MSEdge-Ref": "Ref A: 70A13961DAA649D8ABB2CAB359BBF1EE Ref B: CH1EDGE1018 Ref C: 2022-05-02T15:33:10Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-178",
+        "name": "test-app-178",
+        "type": "Microsoft.IoTCentral/IoTApps",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "state": "created",
+          "provisioningState": "Creating",
+          "applicationId": "c399bec5-fbf6-456d-a483-5646e934d26f",
+          "displayName": "test-app-178",
+          "subdomain": "test-app-178",
+          "template": "iotc-pnp-preview@1.0.0",
+          "publicNetworkAccess": "Enabled",
+          "networkRuleSets": {
+            "defaultAction": "Allow",
+            "applyToDevices": false,
+            "applyToIoTCentral": false,
+            "ipRules": []
+          },
+          "privateEndpointConnections": []
+        },
+        "sku": {
+          "name": "ST0"
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/c8cd2b78-4c99-4902-a8ef-d0b2340b3a0d?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-050efd8fd2945d4787f1831b7bf0f996-33175d9204fa194c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "cff592ba68e2a579ed7e5dc53d181006",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "1pgoe9et.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "cff592ba68e2a579ed7e5dc53d181006",
+        "x-ms-correlation-request-id": "4bfc6c4c-1bab-4a13-a4f2-a5ffedb652de",
+        "x-ms-ratelimit-remaining-subscription-reads": "11879",
+        "x-ms-request-id": "f0b8582c-e2c0-4a39-bb76-09b71363c1fc",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153317Z:4bfc6c4c-1bab-4a13-a4f2-a5ffedb652de",
+        "X-MSEdge-Ref": "Ref A: C3D99050DD8A4DF7AC1ADAEC59CFAE86 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:17Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-178?api-version=2021-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-050efd8fd2945d4787f1831b7bf0f996-24f2c00cdd350e4f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "b28bf29ad9cc34a0d892a7c9bd98243d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "664",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:17 GMT",
+        "ETag": "W/\u00221700e371-0000-0100-0000-626ff9bd0000\u0022",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "461t6dbz.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "b28bf29ad9cc34a0d892a7c9bd98243d",
+        "x-ms-correlation-request-id": "c57b6b57-8709-41d2-b3d9-ca34075fc261",
+        "x-ms-ratelimit-remaining-subscription-reads": "11878",
+        "x-ms-request-id": "0dd45c86-4d26-4ce6-af0f-b041d75f5891",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153317Z:c57b6b57-8709-41d2-b3d9-ca34075fc261",
+        "X-MSEdge-Ref": "Ref A: 2B0B9503A2DC4FF2B3E8BF93E601434E Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:17Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-178",
+        "name": "test-app-178",
+        "type": "Microsoft.IoTCentral/IoTApps",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "state": "created",
+          "provisioningState": "Succeeded",
+          "applicationId": "c399bec5-fbf6-456d-a483-5646e934d26f",
+          "displayName": "test-app-178",
+          "subdomain": "test-app-178",
+          "template": "iotc-pnp-preview@1.0.0",
+          "publicNetworkAccess": "Enabled",
+          "networkRuleSets": {
+            "defaultAction": "Allow",
+            "applyToDevices": false,
+            "applyToIoTCentral": false,
+            "ipRules": []
+          },
+          "privateEndpointConnections": []
+        },
+        "sku": {
+          "name": "ST0"
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-382?api-version=2021-11-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "123",
+        "Content-Type": "application/json",
+        "traceparent": "00-1da4ebc89da27841aa1d279e14962adb-eb34ba7778b78340-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "34cc66920b0817da1b6263f09ff2e945",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "ST0"
+        },
+        "tags": {},
+        "location": "westus",
+        "properties": {
+          "displayName": "test-app-382",
+          "subdomain": "test-app-382"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/092dde3b-2e08-4de5-b286-8b150ce5b6af?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "663",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:22 GMT",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-download-options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "4gyi224i.1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "34cc66920b0817da1b6263f09ff2e945",
+        "x-ms-correlation-request-id": "a576f63b-5b55-4c20-a299-cb1e580cb8cd",
+        "x-ms-ratelimit-remaining-subscription-writes": "1178",
+        "x-ms-request-id": "d4f8e114-ca44-44d3-9103-cf822bcba218",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153323Z:a576f63b-5b55-4c20-a299-cb1e580cb8cd",
+        "X-MSEdge-Ref": "Ref A: 493E29F1D37C41CF82AABCDEE45F792E Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:18Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-382",
+        "name": "test-app-382",
+        "type": "Microsoft.IoTCentral/IoTApps",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "state": "created",
+          "provisioningState": "Creating",
+          "applicationId": "70d65c60-9c12-4b8f-ae10-98b096058eaa",
+          "displayName": "test-app-382",
+          "subdomain": "test-app-382",
+          "template": "iotc-pnp-preview@1.0.0",
+          "publicNetworkAccess": "Enabled",
+          "networkRuleSets": {
+            "defaultAction": "Allow",
+            "applyToDevices": false,
+            "applyToIoTCentral": false,
+            "ipRules": []
+          },
+          "privateEndpointConnections": []
+        },
+        "sku": {
+          "name": "ST0"
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/092dde3b-2e08-4de5-b286-8b150ce5b6af?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1da4ebc89da27841aa1d279e14962adb-17a0cfec996ea14c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d6331f59dc4c8efe1774966976b095e5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:23 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "1d684rf1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "d6331f59dc4c8efe1774966976b095e5",
+        "x-ms-correlation-request-id": "6207bad2-8366-40de-b11c-128cbcb73e8c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11877",
+        "x-ms-request-id": "81cefea5-3691-4f36-abc5-60b31ad7b87d",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153324Z:6207bad2-8366-40de-b11c-128cbcb73e8c",
+        "X-MSEdge-Ref": "Ref A: 93029BAC78B5420D98F28B37C43770EA Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:23Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Creating"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/092dde3b-2e08-4de5-b286-8b150ce5b6af?api-version=2021-11-01-preview\u0026type=createOrUpdateIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1da4ebc89da27841aa1d279e14962adb-aa016fa0123ee743-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9db761a97bdbac9c82eb4247158a566b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "1xxflhut.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "9db761a97bdbac9c82eb4247158a566b",
+        "x-ms-correlation-request-id": "f8d83cff-00c2-42ee-b036-fcf0e222f364",
+        "x-ms-ratelimit-remaining-subscription-reads": "11876",
+        "x-ms-request-id": "1f61104b-ebe3-49aa-8fd7-b87bfa8783ac",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153325Z:f8d83cff-00c2-42ee-b036-fcf0e222f364",
+        "X-MSEdge-Ref": "Ref A: 522E921948CE475F9943879CB5AFA402 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:25Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-382?api-version=2021-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1da4ebc89da27841aa1d279e14962adb-026badbaf7ef064d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7f960d7b12bf35f9222e912c4f7a6a41",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "664",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:24 GMT",
+        "ETag": "W/\u002289005ff7-0000-0100-0000-626ff9c40000\u0022",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "bcbrfpyc.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "7f960d7b12bf35f9222e912c4f7a6a41",
+        "x-ms-correlation-request-id": "323dd28c-6fa9-429e-83a2-0420c68c8612",
+        "x-ms-ratelimit-remaining-subscription-reads": "11875",
+        "x-ms-request-id": "e10bef7d-165c-4cf0-9586-4db240f69807",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153325Z:323dd28c-6fa9-429e-83a2-0420c68c8612",
+        "X-MSEdge-Ref": "Ref A: C43EFB33335A4B53B49F4ADF1B6AD08A Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:25Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-382",
+        "name": "test-app-382",
+        "type": "Microsoft.IoTCentral/IoTApps",
+        "location": "westus",
+        "tags": {},
+        "properties": {
+          "state": "created",
+          "provisioningState": "Succeeded",
+          "applicationId": "70d65c60-9c12-4b8f-ae10-98b096058eaa",
+          "displayName": "test-app-382",
+          "subdomain": "test-app-382",
+          "template": "iotc-pnp-preview@1.0.0",
+          "publicNetworkAccess": "Enabled",
+          "networkRuleSets": {
+            "defaultAction": "Allow",
+            "applyToDevices": false,
+            "applyToIoTCentral": false,
+            "ipRules": []
+          },
+          "privateEndpointConnections": []
+        },
+        "sku": {
+          "name": "ST0"
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/iotApps?api-version=2021-11-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d458947ef8dd3942bc6d24e85f1d964d-f0f91e25b48a1540-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5ea6102b4af8de798387536099b6788d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "4998",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "cggd0dxr.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "5ea6102b4af8de798387536099b6788d",
+        "x-ms-correlation-request-id": "498c95f3-f29c-41d0-adb1-5f449f4b8844",
+        "x-ms-ratelimit-remaining-subscription-reads": "11874",
+        "x-ms-request-id": "e84df466-df0e-4a24-a60b-593aebea4a98",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153325Z:498c95f3-f29c-41d0-adb1-5f449f4b8844",
+        "X-MSEdge-Ref": "Ref A: 2E60FA74363948A6965533E5D9FB0DF3 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:25Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourcegroups/henrymorales-test/providers/Microsoft.IoTCentral/IoTApps/henrymorales-13228989",
+            "name": "henrymorales-13228989",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "westus",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "provisioningState": "Succeeded",
+              "applicationId": "2ad13b75-9386-4733-842e-e4b731b01d55",
+              "displayName": "henrymorales-13228989",
+              "subdomain": "henrymorales-13228989",
+              "template": "iotc-pnp-preview@1.0.0",
+              "publicNetworkAccess": "Disabled",
+              "networkRuleSets": {
+                "defaultAction": "Deny",
+                "applyToDevices": true,
+                "applyToIoTCentral": false,
+                "ipRules": [
+                  {
+                    "action": "Allow",
+                    "filterName": "73.42.196.46",
+                    "ipMask": "73.42.196.46"
+                  }
+                ]
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST2"
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-178",
+            "name": "test-app-178",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "westus",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "provisioningState": "Succeeded",
+              "applicationId": "c399bec5-fbf6-456d-a483-5646e934d26f",
+              "displayName": "test-app-178",
+              "subdomain": "test-app-178",
+              "template": "iotc-pnp-preview@1.0.0",
+              "publicNetworkAccess": "Enabled",
+              "networkRuleSets": {
+                "defaultAction": "Allow",
+                "applyToDevices": false,
+                "applyToIoTCentral": false,
+                "ipRules": []
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST0"
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-382",
+            "name": "test-app-382",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "westus",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "provisioningState": "Succeeded",
+              "applicationId": "70d65c60-9c12-4b8f-ae10-98b096058eaa",
+              "displayName": "test-app-382",
+              "subdomain": "test-app-382",
+              "template": "iotc-pnp-preview@1.0.0",
+              "publicNetworkAccess": "Enabled",
+              "networkRuleSets": {
+                "defaultAction": "Allow",
+                "applyToDevices": false,
+                "applyToIoTCentral": false,
+                "ipRules": []
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST0"
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/myResourceGroup/providers/Microsoft.IoTCentral/iotApps/my-iot-central-app",
+            "name": "my-iot-central-app",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "eastus2",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "provisioningState": "Succeeded",
+              "applicationId": "cabc981e-4273-44b3-a9f2-8e27d8faee9e",
+              "displayName": "my-iot-central-app",
+              "subdomain": "my-iot-central-app",
+              "template": "iotc-pnp-preview@1.0.0",
+              "publicNetworkAccess": "Enabled",
+              "networkRuleSets": {
+                "defaultAction": "Allow",
+                "applyToDevices": false,
+                "applyToIoTCentral": false,
+                "ipRules": []
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST0"
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourcegroups/IOTC/providers/Microsoft.IoTCentral/IoTApps/eng-iot-internal-testring",
+            "name": "eng-iot-internal-testring",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "centralus",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "applicationId": "134542b4-7ce8-40a3-98a2-07aeb0e36f0b",
+              "displayName": "eng-iot-internal-testing",
+              "subdomain": "eng-iot-internal-testring",
+              "template": "88bdf709-f7ea-4a55-8621-5229f87e72a9@1.0.0",
+              "publicNetworkAccess": "Enabled",
+              "networkRuleSets": {
+                "defaultAction": "Allow",
+                "applyToDevices": false,
+                "applyToIoTCentral": false,
+                "ipRules": []
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST2"
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/myResourceGroup/providers/Microsoft.IoTCentral/iotApps/iot-central-app-tocreate1",
+            "name": "iot-central-app-tocreate1",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "provisioningState": "Succeeded",
+              "applicationId": "dcdd8f9f-0b45-4bca-ab14-10e505a3c838",
+              "displayName": "iot-central-app-tocreate1-new-name",
+              "subdomain": "iot-central-app-tocreate1",
+              "template": "iotc-pnp-preview@1.0.0",
+              "publicNetworkAccess": "Disabled",
+              "networkRuleSets": {
+                "defaultAction": "Deny",
+                "applyToDevices": true,
+                "applyToIoTCentral": false,
+                "ipRules": []
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST2"
+            },
+            "identity": {
+              "type": "SystemAssigned",
+              "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "principalId": "dd94ec22-ef15-4c5f-8a8c-4bb77e93357a"
+            }
+          },
+          {
+            "id": "/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-314",
+            "name": "test-app-314",
+            "type": "Microsoft.IoTCentral/IoTApps",
+            "location": "westus",
+            "tags": {},
+            "properties": {
+              "state": "created",
+              "provisioningState": "Succeeded",
+              "applicationId": "9228430f-8f53-49f0-8c75-d621070da75a",
+              "displayName": "test-app-314",
+              "subdomain": "test-app-314",
+              "template": "iotc-pnp-preview@1.0.0",
+              "publicNetworkAccess": "Enabled",
+              "networkRuleSets": {
+                "defaultAction": "Allow",
+                "applyToDevices": false,
+                "applyToIoTCentral": false,
+                "ipRules": []
+              },
+              "privateEndpointConnections": []
+            },
+            "sku": {
+              "name": "ST0"
+            },
+            "identity": {
+              "type": "None"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-178?api-version=2021-11-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-86cb1e5a66e12b42b350a5ac0dab9987-c8018e25618fe74d-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "68ee2b1d1619962668827aacea6f5c08",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/8e16fdb5-75b2-42b2-982d-8461af66967f?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "0",
+        "Date": "Mon, 02 May 2022 15:33:25 GMT",
+        "Location": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/8e16fdb5-75b2-42b2-982d-8461af66967f?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-download-options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "ame6699c.1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "68ee2b1d1619962668827aacea6f5c08",
+        "x-ms-correlation-request-id": "c0ade72e-590e-4248-870f-d86f802fd0f1",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14988",
+        "x-ms-request-id": "376a3d1e-232b-45b1-818d-1a2e0f61b449",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153326Z:c0ade72e-590e-4248-870f-d86f802fd0f1",
+        "X-MSEdge-Ref": "Ref A: F89202C6277442EB8D04EAD31C2DD901 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:25Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/8e16fdb5-75b2-42b2-982d-8461af66967f?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-86cb1e5a66e12b42b350a5ac0dab9987-0f3f07a44d779c43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "230e03b5018c1427e910f576cfcdf413",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "6rra8zze.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "230e03b5018c1427e910f576cfcdf413",
+        "x-ms-correlation-request-id": "b3e5fdc1-7614-483e-9600-14c40ee66a70",
+        "x-ms-ratelimit-remaining-subscription-reads": "11873",
+        "x-ms-request-id": "ae69f6dd-0526-468f-88c1-5ad876d62441",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153326Z:b3e5fdc1-7614-483e-9600-14c40ee66a70",
+        "X-MSEdge-Ref": "Ref A: F3B76219ED86414AA83271370C0A2221 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:26Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/8e16fdb5-75b2-42b2-982d-8461af66967f?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-86cb1e5a66e12b42b350a5ac0dab9987-77723876232c284c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "97df4b2a749925a9b8bdd4611aefd7cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "a57wsk6h.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "97df4b2a749925a9b8bdd4611aefd7cf",
+        "x-ms-correlation-request-id": "91b379c0-d3af-4b28-a00a-9d102e8993ac",
+        "x-ms-ratelimit-remaining-subscription-reads": "11872",
+        "x-ms-request-id": "7e201a68-0854-4b71-a2f2-fd44937ba36b",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153327Z:91b379c0-d3af-4b28-a00a-9d102e8993ac",
+        "X-MSEdge-Ref": "Ref A: BC337D0718874976811CA2D0106C6B53 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:27Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/8e16fdb5-75b2-42b2-982d-8461af66967f?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-86cb1e5a66e12b42b350a5ac0dab9987-8787b09517c8e445-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e6f70ee538617f7cd9071ad302fc60c6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "b2ygw6x.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "e6f70ee538617f7cd9071ad302fc60c6",
+        "x-ms-correlation-request-id": "32de5d7e-01a9-4c64-871d-aeec7ddf7ba5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11871",
+        "x-ms-request-id": "7e25103f-4069-45b4-8923-614e299dee35",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153328Z:32de5d7e-01a9-4c64-871d-aeec7ddf7ba5",
+        "X-MSEdge-Ref": "Ref A: 47D7DC8409CE48ABAE6CEF923E53123A Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:28Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-382?api-version=2021-11-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e034f079419fd143903a383f1b968ae6-c8dcbe0e89ea0246-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "740ce8c404b941d25ae96bce2dc6fafa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9610d9e0-cb00-4de7-a3dc-17ac6357deeb?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "0",
+        "Date": "Mon, 02 May 2022 15:33:30 GMT",
+        "Location": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9610d9e0-cb00-4de7-a3dc-17ac6357deeb?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-download-options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "ttm45op.1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "740ce8c404b941d25ae96bce2dc6fafa",
+        "x-ms-correlation-request-id": "3b8f9da4-ded5-485d-aaca-846423eee8ea",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14987",
+        "x-ms-request-id": "ef7df0e2-e139-4326-b861-536cc42fe85f",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153330Z:3b8f9da4-ded5-485d-aaca-846423eee8ea",
+        "X-MSEdge-Ref": "Ref A: 448EBC80EBD940D0B986336383A27F12 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:28Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9610d9e0-cb00-4de7-a3dc-17ac6357deeb?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e034f079419fd143903a383f1b968ae6-eb4b1246d334be4e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "319d0d5c63e2e0153bb58c77cdae5112",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "31r5wf1q.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "319d0d5c63e2e0153bb58c77cdae5112",
+        "x-ms-correlation-request-id": "7b88ad6c-7050-4b6f-a8b7-52c961042c5e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11870",
+        "x-ms-request-id": "de72ea6f-d623-4fcf-a01c-611d320f24ac",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153330Z:7b88ad6c-7050-4b6f-a8b7-52c961042c5e",
+        "X-MSEdge-Ref": "Ref A: 6B8ECD0F292C4B05ADE90E80AEA610D2 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:30Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9610d9e0-cb00-4de7-a3dc-17ac6357deeb?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e034f079419fd143903a383f1b968ae6-92a2a541a0294941-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "db9a200d9f6cb6f1361aa5594641e783",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "8n0a5ylt.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "db9a200d9f6cb6f1361aa5594641e783",
+        "x-ms-correlation-request-id": "4fbc49fe-92ae-483e-b388-f867d5c42213",
+        "x-ms-ratelimit-remaining-subscription-reads": "11869",
+        "x-ms-request-id": "b368f081-1beb-4ff1-bc13-528317ca1e80",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153331Z:4fbc49fe-92ae-483e-b388-f867d5c42213",
+        "X-MSEdge-Ref": "Ref A: 28DA9281E15C47469D86CDC2006F69A4 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:31Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/9610d9e0-cb00-4de7-a3dc-17ac6357deeb?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e034f079419fd143903a383f1b968ae6-f8a469b457073640-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2071afc6c929d51810af851f813a2420",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:33 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "5h60ua4n.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "2071afc6c929d51810af851f813a2420",
+        "x-ms-correlation-request-id": "61935f3f-7553-47ed-b5c2-61f1e94b638c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11868",
+        "x-ms-request-id": "2333da23-586a-4b10-a4e9-799e9e631157",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153333Z:61935f3f-7553-47ed-b5c2-61f1e94b638c",
+        "X-MSEdge-Ref": "Ref A: 6EA04D029BB24D8D8D43092B78289044 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:32Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/resourceGroups/sdk-test-rg-5837/providers/Microsoft.IoTCentral/iotApps/test-app-314?api-version=2021-11-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a59a1445bec7b47ab7da66bad5a5703-0910fd64fbfeb047-00",
+        "User-Agent": "azsdk-net-ResourceManager.IotCentral/1.0.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3984ab0d463bbd501ce6fac7bdbb9afa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "azure-asyncoperation": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/82180afe-9056-4f9c-8648-33cebabef8fc?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "0",
+        "Date": "Mon, 02 May 2022 15:33:36 GMT",
+        "Location": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/82180afe-9056-4f9c-8648-33cebabef8fc?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus",
+        "Retry-After": "10",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": [
+          "CONFIG_NOCACHE",
+          "CONFIG_NOCACHE"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "x-download-options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodcentralus04",
+        "x-iot-correlation": "2tnpog2s.1.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "3984ab0d463bbd501ce6fac7bdbb9afa",
+        "x-ms-correlation-request-id": "a931d3b6-6984-4f51-b9c8-e0a552b10cd2",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14986",
+        "x-ms-request-id": "13510941-5f67-41b5-9acf-3f15e1e59a89",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153336Z:a931d3b6-6984-4f51-b9c8-e0a552b10cd2",
+        "X-MSEdge-Ref": "Ref A: 8A32323F98A748F89FC7053191497F64 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:33Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/82180afe-9056-4f9c-8648-33cebabef8fc?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a59a1445bec7b47ab7da66bad5a5703-ea966f7d8eabad46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9b4b85f5aebd7f485fb30342ce511754",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "82ktqduj.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "9b4b85f5aebd7f485fb30342ce511754",
+        "x-ms-correlation-request-id": "cc19260a-e2c1-452d-8cff-811e818ad317",
+        "x-ms-ratelimit-remaining-subscription-reads": "11867",
+        "x-ms-request-id": "3ccf9685-fe8e-4a8d-b3af-5c2d4a0cac77",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153336Z:cc19260a-e2c1-452d-8cff-811e818ad317",
+        "X-MSEdge-Ref": "Ref A: A149A61232D3441B911AFE86D11E2424 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:36Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/82180afe-9056-4f9c-8648-33cebabef8fc?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a59a1445bec7b47ab7da66bad5a5703-ad2628eb867e9a49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "78518b150689dce3c14031757b93a34b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "447dej6g.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "78518b150689dce3c14031757b93a34b",
+        "x-ms-correlation-request-id": "35f8317f-0d07-4644-8c4c-db8d7ff1658d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11866",
+        "x-ms-request-id": "e1d7c9e4-a7c0-482a-a5f7-db8c2a7c9d8d",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153337Z:35f8317f-0d07-4644-8c4c-db8d7ff1658d",
+        "X-MSEdge-Ref": "Ref A: 11D47CFE98444772B2FC6A9732BA90A8 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:37Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/82180afe-9056-4f9c-8648-33cebabef8fc?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a59a1445bec7b47ab7da66bad5a5703-5869ada9f4aebe46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "38d1ffb1fe701f3dc031bf882ea675b6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "21",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "asdkeazx.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "38d1ffb1fe701f3dc031bf882ea675b6",
+        "x-ms-correlation-request-id": "235c3770-d72a-44ed-92c7-868f29a06fc9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11865",
+        "x-ms-request-id": "9040e97d-9945-490d-9b7b-00fe2f917054",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153338Z:235c3770-d72a-44ed-92c7-868f29a06fc9",
+        "X-MSEdge-Ref": "Ref A: 57459C50135840628613847BD7F6F5B7 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:38Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Deleting"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/77969078-2897-47b0-9143-917252379303/providers/Microsoft.IoTCentral/locations/westus/operationResults/82180afe-9056-4f9c-8648-33cebabef8fc?api-version=2021-11-01-preview\u0026type=deleteIotApplication\u0026x-iot-region=westus\u0026asyncinfo",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4a59a1445bec7b47ab7da66bad5a5703-5aae6db814c7e846-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "8ea776aebc7fef71a16fd97c7cd204cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-stale=0, private, post-check=0, pre-check=0",
+        "Content-Length": "22",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 May 2022 15:33:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-IoT-Cluster": "iotcprodwestus01",
+        "x-iot-correlation": "2g5kgrz9.0",
+        "X-IoT-Version": "041722.0001-release",
+        "x-ms-client-request-id": "8ea776aebc7fef71a16fd97c7cd204cb",
+        "x-ms-correlation-request-id": "06ea3629-cf6c-4a86-bea8-094abfbc6183",
+        "x-ms-ratelimit-remaining-subscription-reads": "11864",
+        "x-ms-request-id": "ece9d553-929d-416a-a034-7450007c4bf1",
+        "x-ms-routing-request-id": "CANADACENTRAL:20220502T153339Z:06ea3629-cf6c-4a86-bea8-094abfbc6183",
+        "X-MSEdge-Ref": "Ref A: 94C0EC73436A4D948545F8F93D341E48 Ref B: CH1EDGE1422 Ref C: 2022-05-02T15:33:39Z",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    }
+  ],
   "Variables": {
-    "RandomSeed": "181595287",
+    "RandomSeed": "1126575068",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "77969078-2897-47b0-9143-917252379303"
   }
