@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-preview.25 (Unreleased)
+## 12.0.0-preview.25 (2022-05-02)
 - Updated Change Feed to return 0 events when meta/segments.json file hasn't been created yet.
 
 ## 12.0.0-preview.24 (2022-04-19)
