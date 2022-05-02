@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 
@@ -51,11 +52,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             base.GetObjectData(info, context);
         }
 
-        internal AssetFileTypeNotSupportedException(AssetFileType assetFileType, IReadOnlyList<AssetFileType> supportedAssetFileTypes)
+        internal AssetFileTypeNotSupportedException(AssetFileType assetFileType, IReadOnlyCollection<AssetFileType> supportedAssetFileTypes)
             : base($"The provided asset file type of \"{assetFileType}\" is unsupported by Azure Object Anchors for conversion. Supported file types: {string.Join(", ", supportedAssetFileTypes)}")
         {
             AttemptedFileType = assetFileType;
-            SupportedAssetFileTypes = supportedAssetFileTypes;
+            SupportedAssetFileTypes = supportedAssetFileTypes.ToArray();
         }
 
         /// <summary>

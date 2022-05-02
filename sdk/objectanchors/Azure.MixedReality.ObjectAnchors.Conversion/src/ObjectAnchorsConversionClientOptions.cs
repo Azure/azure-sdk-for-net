@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.MixedReality.Authentication;
 
@@ -16,12 +16,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <seealso cref="Azure.Core.ClientOptions" />
     public class ObjectAnchorsConversionClientOptions : ClientOptions
     {
-        internal string Version { get; }
-
-        /// <summary>
-        /// Gets the list of supported asset file types.
-        /// </summary>
-        internal HashSet<AssetFileType> SupportedAssetFileTypes { get; }
+        private readonly HashSet<AssetFileType> _supportedAssetFileTypes;
 
         /// <summary>
         /// Gets the authentication endpoint.
@@ -29,14 +24,24 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         public Uri MixedRealityAuthenticationEndpoint { get; set; }
 
         /// <summary>
+        /// Gets the authentication options.
+        /// </summary>
+        public MixedRealityStsClientOptions MixedRealityAuthenticationOptions { get; set; }
+
+        /// <summary>
         /// Gets the service endpoint.
         /// </summary>
         public Uri ServiceEndpoint { get; set; }
 
         /// <summary>
-        /// Gets the authentication options.
+        /// Gets the list of supported asset file types.
         /// </summary>
-        public MixedRealityStsClientOptions MixedRealityAuthenticationOptions { get; set; }
+        internal IReadOnlyCollection<AssetFileType> SupportedAssetFileTypes => _supportedAssetFileTypes;
+
+        /// <summary>
+        /// Gets the version.
+        /// </summary>
+        internal string Version { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClientOptions"/> class.
@@ -51,7 +56,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
-            SupportedAssetFileTypes = version switch
+            _supportedAssetFileTypes = version switch
             {
                 ServiceVersion.V0_2_preview_0 or ServiceVersion.V0_3_preview_0 => new HashSet<AssetFileType>
                 {
@@ -67,21 +72,27 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The Azure Spatial Anchors service version.
         /// </summary>
+        [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
+        [SuppressMessage("Usage", "AZC0016:Invalid ServiceVersion member name.")]
         public enum ServiceVersion
         {
             /// <summary>
             /// Version 0.2-preview.0 of the Azure Object Anchors service.
             /// </summary>
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
             V0_2_preview_0 = 1,
 
             /// <summary>
             /// Version 0.3-preview.0 of the Azure Object Anchors service.
             /// </summary>
             V0_3_preview_0 = 2,
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
-#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        /// <summary>
+        /// Gets a value indicating if the specified asset file type is supported.
+        /// </summary>
+        /// <param name="assertFileType">Type of the assert file.</param>
+        /// <returns><c>true</c> if the asset file type is supported, <c>false</c> otherwise.</returns>
+        internal bool IsFileTypeSupported(AssetFileType assertFileType)
+            => _supportedAssetFileTypes.Contains(assertFileType);
     }
 }
