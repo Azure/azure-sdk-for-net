@@ -1,8 +1,8 @@
 # Release History
 
-## 5.0.1 (Unreleased)
-### Bugs Fixed
-- Queue message is not removed from the queue after stopping QueueListener. (#28156)
+## 5.0.1 (2022-05-02)
+- Implemented caching blobs in shared memory for faster I/O.
+- Fixed queue message is not removed from the queue after stopping QueueListener. (#28156)
 
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage 5.0.0.
