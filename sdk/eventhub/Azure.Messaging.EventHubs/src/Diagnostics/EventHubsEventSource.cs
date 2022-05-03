@@ -2501,6 +2501,32 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered persistent service
+        ///   throttling during attempts to publish a batch and is backing off.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition that the handler was invoked for.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="backoffSeconds">The number of seconds that the back-off will delay.</param>
+        /// <param name="backoffCount">The message for the exception that occurred.</param>
+        ///
+        [Event(122, Level = EventLevel.Warning, Message = "The Event Hubs service is throttling the buffered producer instance with identifier '{0}' for Event Hub: {1}, Partition Id: '{2}', Operation Id: '{3}'.  To avoid overloading the service, publishing of this batch will delay for {4} seconds.  This batch has attempted a delay to avoid throttling {5} times.  This is non-fatal and publishing will continue to retry.")]
+        public virtual void BufferedProducerThrottleDelay(string identifier,
+                                                          string eventHubName,
+                                                          string partitionId,
+                                                          string operationId,
+                                                          double backoffSeconds,
+                                                          int backoffCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(122, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, backoffSeconds, backoffCount);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that the publishing of events has completed, writing into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
