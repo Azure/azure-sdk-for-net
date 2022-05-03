@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="imageReference">Disk source information for PIR or
         /// user images.</param>
         /// <param name="galleryImageReference">Required if creating from a
-        /// Gallery Image. The id of the ImageDiskReference will be the ARM id
-        /// of the shared galley image version from which to create a
-        /// disk.</param>
+        /// Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId
+        /// of the ImageDiskReference will be the ARM id of the shared galley
+        /// image version from which to create a disk.</param>
         /// <param name="sourceUri">If createOption is Import, this is the URI
         /// of a blob to be imported into a managed disk.</param>
         /// <param name="sourceResourceId">If createOption is Copy, this is the
@@ -103,9 +103,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ImageDiskReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets required if creating from a Gallery Image. The id of
-        /// the ImageDiskReference will be the ARM id of the shared galley
-        /// image version from which to create a disk.
+        /// Gets or sets required if creating from a Gallery Image. The
+        /// id/sharedGalleryImageId/communityGalleryImageId of the
+        /// ImageDiskReference will be the ARM id of the shared galley image
+        /// version from which to create a disk.
         /// </summary>
         [JsonProperty(PropertyName = "galleryImageReference")]
         public ImageDiskReference GalleryImageReference { get; set; }
@@ -165,14 +166,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (CreateOption == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreateOption");
-            }
-            if (ImageReference != null)
-            {
-                ImageReference.Validate();
-            }
-            if (GalleryImageReference != null)
-            {
-                GalleryImageReference.Validate();
             }
         }
     }
