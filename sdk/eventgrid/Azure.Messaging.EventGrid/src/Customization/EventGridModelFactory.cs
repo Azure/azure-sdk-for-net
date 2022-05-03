@@ -458,6 +458,14 @@ namespace Azure.Messaging.EventGrid
             return AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
         }
 
+        /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>
+        /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData()
+        {
+            return new AcsRecordingFileStatusUpdatedEventData(null, null, null, null, null, null, null);
+        }
+
         /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>

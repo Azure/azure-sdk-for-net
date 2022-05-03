@@ -1618,10 +1618,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             var healthEvent = eventData as HealthcareFhirResourceCreatedEventData;
             Assert.IsNotNull(healthEvent);
-            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.ResourceType);
-            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.ResourceFhirAccount);
-            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.ResourceFhirId);
-            Assert.AreEqual(1, healthEvent.ResourceVersionId);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
 
         [Test]
@@ -1635,10 +1635,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             var healthEvent = eventData as HealthcareFhirResourceUpdatedEventData;
             Assert.IsNotNull(healthEvent);
-            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.ResourceType);
-            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.ResourceFhirAccount);
-            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.ResourceFhirId);
-            Assert.AreEqual(1, healthEvent.ResourceVersionId);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
 
         [Test]
@@ -1652,10 +1652,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             var healthEvent = eventData as HealthcareFhirResourceDeletedEventData;
             Assert.IsNotNull(healthEvent);
-            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.ResourceType);
-            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.ResourceFhirAccount);
-            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.ResourceFhirId);
-            Assert.AreEqual(1, healthEvent.ResourceVersionId);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
         #endregion
         #endregion
@@ -3096,10 +3096,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             var healthEvent = eventData as HealthcareFhirResourceCreatedEventData;
             Assert.IsNotNull(healthEvent);
-            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.ResourceType);
-            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.ResourceFhirAccount);
-            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.ResourceFhirId);
-            Assert.AreEqual(1, healthEvent.ResourceVersionId);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
 
         [Test]
@@ -3113,10 +3113,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             var healthEvent = eventData as HealthcareFhirResourceUpdatedEventData;
             Assert.IsNotNull(healthEvent);
-            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.ResourceType);
-            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.ResourceFhirAccount);
-            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.ResourceFhirId);
-            Assert.AreEqual(1, healthEvent.ResourceVersionId);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
 
         [Test]
@@ -3130,10 +3130,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             var healthEvent = eventData as HealthcareFhirResourceDeletedEventData;
             Assert.IsNotNull(healthEvent);
-            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.ResourceType);
-            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.ResourceFhirAccount);
-            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.ResourceFhirId);
-            Assert.AreEqual(1, healthEvent.ResourceVersionId);
+            Assert.AreEqual(HealthcareFhirResourceType.Patient, healthEvent.FhirResourceType);
+            Assert.AreEqual("{fhir-account}.fhir.azurehealthcareapis.com", healthEvent.FhirServiceHostName);
+            Assert.AreEqual("e0a1f743-1a70-451f-830e-e96477163902", healthEvent.FhirResourceId);
+            Assert.AreEqual(1, healthEvent.FhirResourceVersionId);
         }
         #endregion
         #endregion

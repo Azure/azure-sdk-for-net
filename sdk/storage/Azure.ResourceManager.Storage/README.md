@@ -65,7 +65,7 @@ Then we can create a storage account inside this resource group.
 StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
 StorageKind kind = StorageKind.Storage;
 string location = "westus2";
-StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, location);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, location);
 //now we can create a storage account with defined account name and parameters
 StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
 string accountName = "myAccount";
@@ -133,7 +133,8 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 
 ## Contributing
 
-For details on contributing to this repository, see the [contributing guide][cg].
+For details on contributing to this repository, see the [contributing
+guide][cg].
 
 This project welcomes contributions and suggestions. Most contributions
 require you to agree to a Contributor License Agreement (CLA) declaring
@@ -154,7 +155,3 @@ more information see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)

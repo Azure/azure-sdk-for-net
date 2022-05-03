@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(SecurityPolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 

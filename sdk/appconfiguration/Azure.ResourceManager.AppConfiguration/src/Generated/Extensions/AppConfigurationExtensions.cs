@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<DeletedConfigurationStoreResource>> GetDeletedConfigurationStoreAsync(this SubscriptionResource subscriptionResource, string location, string configStoreName, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetDeletedConfigurationStores().GetAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<DeletedConfigurationStoreResource> GetDeletedConfigurationStore(this SubscriptionResource subscriptionResource, string location, string configStoreName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetDeletedConfigurationStores().Get(location, configStoreName, cancellationToken);
@@ -102,14 +104,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,14 +120,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: CheckAppConfigurationNameAvailability
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
+        /// <param name="content"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(checkNameAvailabilityParameters, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ConfigurationStoreResource>> GetConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
@@ -170,6 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ConfigurationStoreResource> GetConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetConfigurationStores().Get(configStoreName, cancellationToken);

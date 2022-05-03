@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            return await GetExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailability
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this TenantResource tenantResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this TenantResource tenantResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            return GetExtensionClient(tenantResource).CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
+            return GetExtensionClient(tenantResource).CheckCdnNameAvailability(input, cancellationToken);
         }
 
         /// <summary>
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailabilityWithSubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            return await GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckNameAvailabilityWithSubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="checkNameAvailabilityInput"> Input to check. </param>
+        /// <param name="input"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
+            Argument.AssertNotNull(input, nameof(input));
 
-            return GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(checkNameAvailabilityInput, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(input, cancellationToken);
         }
 
         /// <summary>
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: ValidateProbe
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="validateProbeInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
-        public static async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).ValidateProbeAsync(validateProbeInput, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: ValidateProbe
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="validateProbeInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="validateProbeInput"/> is null. </exception>
-        public static Response<ValidateProbeOutput> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeInput validateProbeInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ValidateProbeOutput> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(validateProbeInput, nameof(validateProbeInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).ValidateProbe(validateProbeInput, cancellationToken);
+            return GetExtensionClient(subscriptionResource).ValidateProbe(content, cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +264,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
@@ -279,6 +280,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
@@ -302,6 +304,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
@@ -317,6 +320,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        [ForwardsClientCalls]
         public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
@@ -328,14 +332,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckEndpointNameAvailability
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="checkEndpointNameAvailabilityInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkEndpointNameAvailabilityInput"/> is null. </exception>
-        public static async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkEndpointNameAvailabilityInput, nameof(checkEndpointNameAvailabilityInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailabilityAsync(checkEndpointNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,14 +348,14 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CheckEndpointNameAvailability
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="checkEndpointNameAvailabilityInput"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkEndpointNameAvailabilityInput"/> is null. </exception>
-        public static Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityInput checkEndpointNameAvailabilityInput, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkEndpointNameAvailabilityInput, nameof(checkEndpointNameAvailabilityInput));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(checkEndpointNameAvailabilityInput, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
         }
 
         #region AfdCustomDomainResource

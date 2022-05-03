@@ -1,4 +1,3 @@
-      $["x-ms-client-name"] = "PatchMode"
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
@@ -14,16 +13,16 @@ head-as-boolean: false
 mgmt-debug:
   show-request-path: true
 batch:
-  - tag: package-common-type
-  - tag: package-resources
-  - tag: package-management
+  - tag: package-common-type-2022-04
+  - tag: package-resources-2022-04
+  - tag: package-management-2022-04
 ```
 
-### Tag: package-common-type
+### Tag: package-common-type-2022-04
 
-These settings apply only when `--tag=package-common-type` is specified on the command line.
+These settings apply only when `--tag=package-common-type-2022-04` is specified on the command line.
 
-``` yaml $(tag) == 'package-common-type'
+``` yaml $(tag) == 'package-common-type-2022-04'
 output-folder: $(this-folder)/Common/Generated
 namespace: Azure.ResourceManager
 input-file:
@@ -105,11 +104,11 @@ directive:
     transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
 ```
 
-### Tag: package-resources
+### Tag: package-resources-2022-04
 
-These settings apply only when `--tag=package-resources` is specified on the command line.
+These settings apply only when `--tag=package-resources-2022-04` is specified on the command line.
 
-``` yaml $(tag) == 'package-resources'
+``` yaml $(tag) == 'package-resources-2022-04'
 output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
@@ -121,11 +120,9 @@ input-file:
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
-  - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
   # subscription does not have name and type
@@ -137,14 +134,12 @@ request-path-to-resource-data:
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
-  /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
   /tenants: Microsoft.Resources/tenants
   /: Microsoft.Resources/tenants
@@ -164,7 +159,6 @@ operation-groups-to-omit:
   - AuthorizationOperations
   - ResourceCheck
 override-operation-name:
-  ResourceLinks_ListAtSourceScope: GetAll
   Tags_List: GetAllPredefinedTags
   Tags_DeleteValue: DeletePredefinedTagValue
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
@@ -329,8 +323,8 @@ directive:
       from: Resource
       to: TrackedResourceExtendedData
   - rename-model:
-      from: ProviderRegistrationRequest
-      to: ResourceProviderRegistrationOptions
+      from: ResourcesMoveInfo
+      to: ResourcesMoveContent
   - from: resources.json
     where: $.definitions.Provider
     transform:
@@ -595,11 +589,11 @@ directive:
       $["x-ms-format"] = "azure-location"
 ```
 
-### Tag: package-management
+### Tag: package-management-2022-04
 
-These settings apply only when `--tag=package-management` is specified on the command line.
+These settings apply only when `--tag=package-management-2022-04` is specified on the command line.
 
-``` yaml $(tag) == 'package-management'
+``` yaml $(tag) == 'package-management-2022-04'
 output-folder: $(this-folder)/ManagementGroup/Generated
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
@@ -609,7 +603,7 @@ request-path-to-parent:
   /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
 operation-positions:
-  /providers/Microsoft.Management/checkNameAvailability: collection
+  ManagementGroups_CheckNameAvailability: collection
 operation-groups-to-omit:
   - HierarchySettings
   - ManagementGroupSubscriptions
@@ -638,15 +632,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-override-operation-name:
-  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
-  - rename-model:
-      from: PatchManagementGroupRequest
-      to: PatchManagementGroupOptions
-  - rename-model:
-      from: CreateManagementGroupRequest
-      to: CreateManagementGroupOptions
   - rename-model:
       from: CreateManagementGroupChildInfo
       to: ManagementGroupChildOptions
@@ -659,7 +645,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityOptions
+      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -669,10 +655,6 @@ directive:
   - rename-operation:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
-  - from: management.json
-    where: $.parameters.CheckNameAvailabilityParameter
-    transform: >
-      $['name'] = "checkNameAvailabilityOptions"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -744,4 +726,9 @@ directive:
     where: $.definitions.ManagementGroupProperties.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: management.json
+    where: $.definitions
+    transform: >
+      $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```
