@@ -29,6 +29,14 @@ depending on the requirements for the domain
 .PARAMETER OutputLocation
 Output location for unified reference yml file
 
+.PARAMETER TenantId
+The aad tenant id/object id for ms.author.
+
+.PARAMETER ClientId
+The add client id/application id for ms.author.
+
+.PARAMETER ClientSecret
+The client secret of add app for ms.author.
 #>
 
 param(
@@ -111,8 +119,8 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
   $monikers = @("latest", "preview")
 
   for($i=0; $i -lt $monikers.Length; $i++) {
-    $serviceReadme = "$pathPrefix/$($monikers[$i])/$readmeBaseName.md"
-    $overrideReadme = "$pathPrefix/$($monikers[$i])/$readmeBaseName-override.md"
+    $serviceReadme = "$DocRepoLocation/$pathPrefix/$($monikers[$i])/$readmeBaseName.md"
+    $overrideReadme = "$DocRepoLocation/$pathPrefix/$($monikers[$i])/$readmeBaseName-override.md"
     if (Test-Path $overrideReadme) {
       Copy-Item $overrideReadme -Destination $serviceReadme
       return
@@ -120,11 +128,11 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
     if(Test-Path $serviceReadme) {
       continue
     }
-    update-service-readme -serviceBaseName $readmeBaseName -readmePath $serviceReadme -moniker $monikers[$i] -clientPackageInfo $clientPackageInfo -mgmtPackageInfo $mgmtPackageInfo -serviceName $serviceName
+    update-service-readme -readmePath $serviceReadme -moniker $monikers[$i] -clientPackageInfo $clientPackageInfo -mgmtPackageInfo $mgmtPackageInfo -serviceName $serviceName
   } 
 }
 
-function update-service-readme($serviceBaseName, $readmePath, $moniker, $clientPackageInfo, $mgmtPackageInfo, $serviceName)
+function update-service-readme($readmePath, $moniker, $clientPackageInfo, $mgmtPackageInfo, $serviceName)
 {
   # Add metadata header
   $lang = &$GetLanguageDisplayNameFn
@@ -132,7 +140,8 @@ function update-service-readme($serviceBaseName, $readmePath, $moniker, $clientP
   $langDescription = "Reference for Azure $serviceName SDK for $lang"
   $githubUrl = &$GetLanguageGithubUrlFn
   # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
-  $author = GetPrimaryCodeOwner -TargetDirectory "sdk/$serviceBaseName"
+  $serviceBaseName = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
+  $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
   if (!$author) {
     LogError "Cannot fetch the author from CODEOWNER file."
     $author = "sima-zhu"
@@ -195,7 +204,7 @@ function generate-markdown-table($packageInfo, $githubUrl, $moniker) {
     $repositoryLink = &$GetPackageRepostoryFn 
     $packageLevelReame = &$GetPackageLevelReadmeFn -packageMetadata $pkg
     $referenceLink = "javascript/api/overview/azure/$packageLevelReame-readme"
-    $line = "|[$($pkg.DisplayName)]($referenceLink)|[$($pkg.Package)]('$repositoryLink/$($pkg.Package)')|[Github]($($pkg.RepoPath))|`r`n"
+    $line = "|[$($pkg.DisplayName)]($referenceLink)|[$($pkg.Package)]($repositoryLink/$($pkg.Package))|[Github]($($pkg.RepoPath))|`r`n"
     $content += $line
   }
   return $content
@@ -208,11 +217,16 @@ $onboardedPackages = &$GetOnboardedDocsMsPackagesFn `
 # because we need to generate ToCs for packages which are not necessarily "New"
 # in the metadata AND onboard legacy packages (which `Update-DocsMsPackages.ps1`
 # does not do)
-$metadata = (Get-CSVMetadata).Where({
-    $_.Package `
-      -and $onboardedPackages.ContainsKey($_.Package) `
-      -and $_.Hide -ne 'true' 
-  })
+$fullMetadata = Get-CSVMetadata
+$metadata = @()
+foreach($metadataEntry in $fullMetadata) {
+  if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
+    $pkgKey = GetPackageKey $metadataEntry
+    if($onboardedPackages.ContainsKey($pkgKey)) {
+      $metadata += $metadataEntry
+    }
+  }
+}
 
 $fileMetadata = @()
 foreach ($metadataFile in Get-ChildItem "$DocRepoLocation/metadata/*/*.json" -Recurse) {
@@ -309,13 +323,13 @@ foreach ($service in $serviceNameList) {
   }
 
   $serviceReadmeBaseName = $service.ToLower().Replace(' ', '-').Replace('/', '-')
-  $hrefPrefix = "~/docs-ref-services"
+  $hrefPrefix = "docs-ref-services"
 
   generate-service-level-readme -readmeBaseName $serviceReadmeBaseName -pathPrefix $hrefPrefix `
     -clientPackageInfo $clientPackages -mgmtPackageInfo $mgmtPackages -serviceName $service
   $serviceTocEntry = [PSCustomObject]@{
     name            = $service;
-    href            = "$hrefPrefix/{moniker}/$serviceReadmeBaseName.md"
+    href            = "~/$hrefPrefix/{moniker}/$serviceReadmeBaseName.md"
     landingPageType = 'Service'
     items           = @($packageItems)
   }
