@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        public CustomEntitiesResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomEntitiesResultDocumentsitem> documents) : base(errors, projectName, deploymentName)
+        public CustomEntitiesResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomEntitiesResultDocumentsItem> documents) : base(errors, projectName, deploymentName)
         {
             if (errors == null)
             {
@@ -49,12 +49,12 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Response by document. </param>
-        internal CustomEntitiesResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomEntitiesResultDocumentsitem> documents) : base(errors, statistics, projectName, deploymentName)
+        internal CustomEntitiesResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string projectName, string deploymentName, IList<CustomEntitiesResultDocumentsItem> documents) : base(errors, statistics, projectName, deploymentName)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<CustomEntitiesResultDocumentsitem> Documents { get; }
+        public IList<CustomEntitiesResultDocumentsItem> Documents { get; }
     }
 }
