@@ -271,15 +271,17 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-                var input = new MultiLanguageAnalysisInput();
-                foreach (var doc in documents)
+                MultiLanguageAnalysisInput analysisInput = new();
+                analysisInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
+
+                AnalyzeTextEntityRecognitionInput input = new()
                 {
-                    input.Documents.Add(doc);
-                }
-                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
+                    AnalysisInput = analysisInput,
+                    Parameters = new EntitiesTaskParameters() { StringIndexType = Constants.DefaultStringIndexType }
+                };
+
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
-                    analyzeRecognizeEntities,
+                    input,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
@@ -310,15 +312,17 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-                var input = new MultiLanguageAnalysisInput();
-                foreach (var doc in documents)
+                MultiLanguageAnalysisInput analysisInput = new();
+                analysisInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
+
+                AnalyzeTextEntityRecognitionInput input = new()
                 {
-                    input.Documents.Add(doc);
-                }
-                var analyzeRecognizeEntities = new AnalyzeTextEntityRecognitionInput { AnalysisInput = input };
+                    AnalysisInput = analysisInput,
+                    Parameters = new EntitiesTaskParameters() { StringIndexType = Constants.DefaultStringIndexType }
+                };
+
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
-                    analyzeRecognizeEntities,
+                    input,
                     cancellationToken: cancellationToken);
 
                 var entityRecognition = (EntitiesTaskResult)result.Value;
