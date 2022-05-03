@@ -130,32 +130,30 @@ namespace Azure.AI.TextAnalytics
 
         #region KeyPhrases
 
-        //internal static KeyPhraseCollection ConvertToKeyPhraseCollection(DocumentKeyPhrases documentKeyPhrases)
-        //{
-        //    return new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
-        //}
+        internal static KeyPhraseCollection ConvertToKeyPhraseCollection(KeyPhraseResultDocumentsItem documentKeyPhrases)
+        {
+            return new KeyPhraseCollection(documentKeyPhrases.KeyPhrases.ToList(), ConvertToWarnings(documentKeyPhrases.Warnings));
+        }
 
         internal static ExtractKeyPhrasesResultCollection ConvertToExtractKeyPhrasesResultCollection(KeyPhraseResult results, IDictionary<string, int> idToIndexMap)
         {
-            //var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Errors.Count);
+            var keyPhrases = new List<ExtractKeyPhrasesResult>(results.Documents.Count);
 
-            ////Read errors
-            //foreach (DocumentError error in results.Errors)
-            //{
-            //    keyPhrases.Add(new ExtractKeyPhrasesResult(error.Id, ConvertToError(error.Error)));
-            //}
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesResult(error.Id, ConvertToError(error.Error)));
+            }
 
-            ////Read Key phrases
-            //foreach (DocumentKeyPhrases docKeyPhrases in results.Documents)
-            //{
-            //    keyPhrases.Add(new ExtractKeyPhrasesResult(docKeyPhrases.Id, docKeyPhrases.Statistics ?? default, ConvertToKeyPhraseCollection(docKeyPhrases)));
-            //}
+            //Read Key phrases
+            foreach (KeyPhraseResultDocumentsItem docKeyPhrases in results.Documents)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesResult(docKeyPhrases.Id, docKeyPhrases.Statistics ?? default, ConvertToKeyPhraseCollection(docKeyPhrases)));
+            }
 
-            //keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
+            keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
 
-            //return new ExtractKeyPhrasesResultCollection(keyPhrases, results.Statistics, results.ModelVersion);
-
-            throw new NotImplementedException();
+            return new ExtractKeyPhrasesResultCollection(keyPhrases, results.Statistics, results.ModelVersion);
         }
 
         #endregion

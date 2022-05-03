@@ -120,7 +120,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void ExtractKeyPhrasesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesAsync(""));
