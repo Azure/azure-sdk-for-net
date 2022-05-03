@@ -222,7 +222,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAsync()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync(bool createIfNotExists)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -231,7 +233,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
             // Act
-            Response<PathInfo> response = await file.CreateAsync();
+            Response<PathInfo> response;
+            if (createIfNotExists)
+            {
+                response = await file.CreateIfNotExistsAsync();
+            }
+            else
+            {
+                response = await file.CreateAsync();
+            }
 
             // Assert
             AssertValidStoragePathInfo(response.Value);
@@ -255,7 +265,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAsync_HttpHeaders()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_HttpHeaders(bool createIfNotExists)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -271,8 +283,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 CacheControl = CacheControl
             };
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                HttpHeaders = headers
+            };
+
             // Act
-            await file.CreateAsync(httpHeaders: headers);
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();
@@ -284,7 +308,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAsync_Metadata()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_Metadata(bool createIfNotExists)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -293,8 +319,20 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> metadata = BuildMetadata();
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Metadata = metadata
+            };
+
             // Act
-            await file.CreateAsync(metadata: metadata);
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
 
             // Assert
             Response<PathProperties> getPropertiesResponse = await file.GetPropertiesAsync();
@@ -302,7 +340,9 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        public async Task CreateAsync_PermissionAndUmask()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_PermissionAndUmask(bool createIfNotExists)
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
@@ -312,14 +352,216 @@ namespace Azure.Storage.Files.DataLake.Tests
             string permissions = "0777";
             string umask = "0057";
 
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Permissions = permissions,
+                Umask = umask
+            };
+
             // Act
-            await file.CreateAsync(
-                permissions: permissions,
-                umask: umask);
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_Owner(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            string owner = Recording.Random.NewGuid().ToString();
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Owner = owner,
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
+
+            // Assert
+            Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Assert.AreEqual(owner, response.Value.Owner);
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_Group(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            string group = Recording.Random.NewGuid().ToString();
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Group = group,
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
+
+            // Assert
+            Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            Assert.AreEqual(group, response.Value.Group);
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_Acl(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                AccessControlList = AccessControlList
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
+
+            // Assert
+            Response<PathAccessControl> response = await file.GetAccessControlAsync();
+            AssertAccessControlListEquality(AccessControlList, response.Value.AccessControlList.ToList());
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_Lease(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                LeaseId = leaseId,
+                LeaseDuration = duration,
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
+
+            // Assert
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(DataLakeLeaseStatus.Locked, propertiesResponse.Value.LeaseStatus);
+            Assert.AreEqual(DataLakeLeaseState.Leased, propertiesResponse.Value.LeaseState);
+            Assert.AreEqual(DataLakeLeaseDuration.Fixed, propertiesResponse.Value.LeaseDuration);
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_RelativeExpiry(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                TimeToExpire = new TimeSpan(hours: 1, minutes: 0, seconds: 0)
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
+
+            // Assert
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(propertiesResponse.Value.CreatedOn.AddHours(1), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CreateAsync_AbsoluteExpiry(bool createIfNotExists)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                ExpiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero)
+            };
+
+            // Act
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync(options: options);
+            }
+            else
+            {
+                await file.CreateAsync(options: options);
+            }
+
+            // Assert
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+            Assert.AreEqual(options.ExpiresOn, propertiesResponse.Value.ExpiresOn);
         }
 
         [RecordedTest]
@@ -342,9 +584,13 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathCreateOptions options = new DataLakePathCreateOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
-                Response<PathInfo> response = await file.CreateAsync(
-                    conditions: conditions);
+                Response<PathInfo> response = await file.CreateAsync(options: options);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -368,16 +614,23 @@ namespace Azure.Storage.Files.DataLake.Tests
                     parameters: parameters,
                     lease: true);
 
+                DataLakePathCreateOptions options = new DataLakePathCreateOptions
+                {
+                    Conditions = conditions
+                };
+
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    file.CreateAsync(conditions: conditions),
+                    file.CreateAsync(options: options),
                     e => { });
             }
         }
 
         [RecordedTest]
+        [TestCase(false)]
+        [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
-        public async Task CreateAsync_CPK()
+        public async Task CreateAsync_CPK(bool createIfNotExists)
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -386,7 +639,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
 
             // Act
-            await file.CreateAsync();
+            if (createIfNotExists)
+            {
+                await file.CreateIfNotExistsAsync();
+            }
+            else
+            {
+                await file.CreateAsync();
+            }
 
             // Assert
             Response<PathProperties> response = await file.GetPropertiesAsync();

@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added ability to set file change time with ShareFileClient.StartCopy() and .StartCopyAsync().
 
 ## 12.10.0 (2022-05-02)
 - Includes all features from 12.10.0-beta.1.
