@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.0.0-preview.26 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-08-06.
 
 ## 12.0.0-preview.25 (2022-05-02)
 - Updated Change Feed to return 0 events when meta/segments.json file hasn't been created yet.
