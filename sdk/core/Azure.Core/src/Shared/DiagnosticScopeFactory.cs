@@ -18,11 +18,12 @@ namespace Azure.Core.Pipeline
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
 
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool? suppressNestedClientActivities = null)
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
-            _suppressNestedClientActivities = suppressNestedClientActivities.GetValueOrDefault(false);
+            _suppressNestedClientActivities = suppressNestedClientActivities;
+            ;
             if (IsActivityEnabled)
             {
                 var listeners = LazyInitializer.EnsureInitialized(ref _listeners);

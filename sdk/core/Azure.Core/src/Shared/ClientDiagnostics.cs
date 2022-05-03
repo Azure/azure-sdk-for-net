@@ -31,7 +31,7 @@ namespace Azure.Core.Pipeline
         }
 
         public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null)
-            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(false))
         {
             // TODO: use DiagnosticsOptions.SuppressNestedClientSpans  here after new Azure.Core ships:
             // ClientDiagnostics class is shared as a source code and used in client libraries.
