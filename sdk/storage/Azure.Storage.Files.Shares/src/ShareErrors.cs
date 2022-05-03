@@ -16,5 +16,17 @@ namespace Azure.Storage.Files.Shares
             string fileClient,
             string shareClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {fileClient} or {shareClient}");
+
+        public static void AssertAlgorithmSupport(ValidationAlgorithm? algorithm)
+        {
+            switch ((algorithm ?? ValidationAlgorithm.None).ResolveAuto())
+            {
+                case ValidationAlgorithm.None:
+                case ValidationAlgorithm.MD5:
+                    return;
+                default:
+                    throw new ArgumentException(null);
+            }
+        }
     }
 }

@@ -10,6 +10,10 @@ namespace Azure.Storage.Files.Shares
     {
         public ShareClientOptions.ServiceVersion Version { get; internal set; }
 
+        public UploadTransferValidationOptions UploadValidationOptions { get; internal set; }
+
+        public DownloadTransferValidationOptions DownloadValidationOptions { get; internal set; }
+
         public ShareClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
