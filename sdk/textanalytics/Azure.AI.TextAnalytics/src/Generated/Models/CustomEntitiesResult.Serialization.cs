@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element)
         {
-            IList<CustomEntitiesResultDocumentsitem> documents = default;
+            IList<CustomEntitiesResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
@@ -54,10 +54,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<CustomEntitiesResultDocumentsitem> array = new List<CustomEntitiesResultDocumentsitem>();
+                    List<CustomEntitiesResultDocumentsItem> array = new List<CustomEntitiesResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomEntitiesResultDocumentsitem.DeserializeCustomEntitiesResultDocumentsitem(item));
+                        array.Add(CustomEntitiesResultDocumentsItem.DeserializeCustomEntitiesResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
