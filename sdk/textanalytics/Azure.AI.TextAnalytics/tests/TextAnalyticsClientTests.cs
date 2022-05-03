@@ -74,7 +74,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void RecognizeEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesAsync(""));

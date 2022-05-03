@@ -35,57 +35,59 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore ("Not implemented yet")]
         public async Task RecognizeEntitiesResultsSorted_NoErrors()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        },
-                        {
-                            ""id"": ""2"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020-02-01""
+                    ""kind"": ""EntityRecognitionResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""1"",
+                                ""entities"": [
+                                    {
+                                        ""name"": ""Microsoft"",
+                                        ""matches"": [
+                                            {
+                                                ""text"": ""Microsoft"",
+                                                ""offset"": 0,
+                                                ""length"": 9,
+                                                ""confidenceScore"": 0.26
+                                            }
+                                        ],
+                                        ""language"": ""en"",
+                                        ""id"": ""Microsoft"",
+                                        ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
+                                        ""dataSource"": ""Wikipedia""
+                                    }
+                                ],
+                                ""warnings"": []
+                            },
+                            {
+                                ""id"": ""2"",
+                                ""entities"": [
+                                    {
+                                        ""name"": ""Microsoft"",
+                                        ""matches"": [
+                                            {
+                                                ""text"": ""Microsoft"",
+                                                ""offset"": 0,
+                                                ""length"": 9,
+                                                ""confidenceScore"": 0.26
+                                            }
+                                        ],
+                                        ""language"": ""en"",
+                                        ""id"": ""Microsoft"",
+                                        ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
+                                        ""dataSource"": ""Wikipedia""
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020-02-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -108,80 +110,82 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task RecognizeEntitiesResultsSorted_WithErrors()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""2"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
+                    ""kind"": ""EntityRecognitionResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""2"",
+                                ""entities"": [
+                                    {
+                                        ""name"": ""Microsoft"",
+                                        ""matches"": [
+                                            {
+                                                ""text"": ""Microsoft"",
+                                                ""offset"": 0,
+                                                ""length"": 9,
+                                                ""confidenceScore"": 0.26
+                                                }
+                                        ],
+                                        ""language"": ""en"",
+                                        ""id"": ""Microsoft"",
+                                        ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
+                                        ""dataSource"": ""Wikipedia""
+                                    }
+                                ],
+                                ""warnings"": []
+                            },
+                            {
+                                ""id"": ""3"",
+                                ""entities"": [
+                                    {
+                                        ""name"": ""Microsoft"",
+                                        ""matches"": [
+                                            {
+                                                ""text"": ""Microsoft"",
+                                                ""offset"": 0,
+                                                ""length"": 9,
+                                                ""confidenceScore"": 0.26
+                                            }
+                                        ],
+                                        ""language"": ""en"",
+                                        ""id"": ""Microsoft"",
+                                        ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
+                                        ""dataSource"": ""Wikipedia""
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [
+                            {
+                                ""id"": ""4"",
+                                ""error"": {
+                                    ""code"": ""InvalidArgument"",
+                                    ""message"": ""Invalid document in request."",
+                                    ""innererror"": {
+                                        ""code"": ""InvalidDocument"",
+                                        ""message"": ""Document text is empty.""
+                                    }
                                 }
-                            ],
-                            ""warnings"": []
-                        },
-                        {
-                            ""id"": ""3"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": ""Microsoft"",
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [
-                        {
-                            ""id"": ""4"",
-                            ""error"": {
-                                ""code"": ""InvalidArgument"",
-                                ""message"": ""Invalid document in request."",
-                                ""innererror"": {
-                                    ""code"": ""InvalidDocument"",
-                                    ""message"": ""Document text is empty.""
+                            },
+                            {
+                                ""id"": ""5"",
+                                ""error"": {
+                                    ""code"": ""InvalidArgument"",
+                                    ""message"": ""Invalid document in request."",
+                                    ""innererror"": {
+                                        ""code"": ""InvalidDocument"",
+                                        ""message"": ""Document text is empty.""
+                                    }
                                 }
                             }
-                        },
-                        {
-                            ""id"": ""5"",
-                            ""error"": {
-                                ""code"": ""InvalidArgument"",
-                                ""message"": ""Invalid document in request."",
-                                ""innererror"": {
-                                    ""code"": ""InvalidDocument"",
-                                    ""message"": ""Document text is empty.""
-                                }
-                            }
-                        }
-                    ],
-                    ""modelVersion"": ""2020-02-01""
+                        ],
+                        ""modelVersion"": ""2020-02-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -547,28 +551,30 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task RecognizeEntitiesNullCategory()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""0"",
-                            ""entities"": [
-                                {
-                                ""text"": ""Microsoft"",
-                                    ""category"": null,
-                                    ""offset"": 0,
-                                    ""length"": 9,
-                                    ""confidenceScore"": 0.81
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
+                    ""kind"": ""EntityRecognitionResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""0"",
+                                ""entities"": [
+                                    {
+                                        ""text"": ""Microsoft"",
+                                        ""category"": null,
+                                        ""offset"": 0,
+                                        ""length"": 9,
+                                        ""confidenceScore"": 0.81
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020 -04-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
