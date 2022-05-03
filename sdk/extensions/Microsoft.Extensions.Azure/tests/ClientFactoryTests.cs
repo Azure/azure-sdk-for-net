@@ -39,6 +39,19 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void ConvertsGuidConstructorParameters()
+        {
+            var guidValue = Guid.NewGuid().ToString();
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("guid", guidValue));
+
+            var clientOptions = new TestClientOptions();
+            var client = (TestClient)ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null);
+
+            Assert.AreEqual(guidValue, client.Guid.ToString());
+            Assert.AreSame(clientOptions, client.Options);
+        }
+
+        [Test]
         public void ConvertsCompositeObjectsConstructorParameters()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("composite:c", "http://localhost"));
