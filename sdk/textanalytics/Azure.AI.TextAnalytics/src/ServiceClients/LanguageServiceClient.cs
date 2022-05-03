@@ -901,115 +901,194 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         public override async Task<Response<LinkedEntityCollection>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
-            //scope.AddAttribute("document", document);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
 
-            //try
-            //{
-            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                AnalyzeTextEntityLinkingInput analyzeRecognizeEntities = new()
+                {
+                    AnalysisInput = input,
+                    Parameters = new EntityLinkingTaskParameters() { StringIndexType = Constants.DefaultStringIndexType }
+                };
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    analyzeRecognizeEntities,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
-            //    Response<EntityLinkingResult> result = await _serviceRestClient.EntitiesLinkingAsync(
-            //        new MultiLanguageBatchInput(documents),
-            //        stringIndexType: Constants.DefaultStringIndexType,
-            //        cancellationToken: cancellationToken).ConfigureAwait(false);
-            //    Response response = result.GetRawResponse();
+                var linkedEntities = (EntityLinkingTaskResult)result.Value;
+                Response response = result.GetRawResponse();
 
-            //    if (result.Value.Errors.Count > 0)
-            //    {
-            //        // only one document, so we can ignore the id and grab the first error message.
-            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
-            //    }
-
-            //    return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            await Task.Yield();
-            throw new NotImplementedException();
+                if (linkedEntities.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(linkedEntities.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+                return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(linkedEntities.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public override Response<LinkedEntityCollection> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
-            //scope.AddAttribute("document", document);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
 
-            //try
-            //{
-            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+            try
+            {
+                var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
+                var input = new MultiLanguageAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                AnalyzeTextEntityLinkingInput analyzeRecognizeEntities = new()
+                {
+                    AnalysisInput = input,
+                    Parameters = new EntityLinkingTaskParameters() { StringIndexType = Constants.DefaultStringIndexType }
+                };
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    analyzeRecognizeEntities,
+                    cancellationToken: cancellationToken);
 
-            //    Response<EntityLinkingResult> result = _serviceRestClient.EntitiesLinking(
-            //        new MultiLanguageBatchInput(documents),
-            //        stringIndexType: Constants.DefaultStringIndexType,
-            //        cancellationToken: cancellationToken);
-            //    Response response = result.GetRawResponse();
+                var linkedEntities = (EntityLinkingTaskResult)result.Value;
+                Response response = result.GetRawResponse();
 
-            //    if (result.Value.Errors.Count > 0)
-            //    {
-            //        // only one document, so we can ignore the id and grab the first error message.
-            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-            //        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
-            //    }
-
-            //    return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            throw new NotImplementedException();
+                if (linkedEntities.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(linkedEntities.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+                return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(linkedEntities.Results.Documents.FirstOrDefault()), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public override async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
-            //return await RecognizeLinkedEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await RecognizeLinkedEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents, language);
 
-            //return RecognizeLinkedEntitiesBatch(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return RecognizeLinkedEntitiesBatch(input, options, cancellationToken);
         }
 
         public override async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
-            //return await RecognizeLinkedEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await RecognizeLinkedEntitiesBatchAsync(input, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_defaultRequestOptions;
+            MultiLanguageAnalysisInput input = ConvertToMultiLanguageInputs(documents);
 
-            //return RecognizeLinkedEntitiesBatch(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return RecognizeLinkedEntitiesBatch(input, options, cancellationToken);
+        }
+
+        private async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextEntityLinkingInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new EntityLinkingTaskParameters(
+                                        options.DisableServiceLogs,
+                                        options.ModelVersion,
+                                        Constants.DefaultStringIndexType)
+                };
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var linkedEntities = (EntityLinkingTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                RecognizeLinkedEntitiesResultCollection results = Transforms.ConvertToLinkedEntitiesResultCollection(linkedEntities.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextEntityLinkingInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new EntityLinkingTaskParameters(
+                                        options.DisableServiceLogs,
+                                        options.ModelVersion,
+                                        Constants.DefaultStringIndexType)
+                };
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                var linkedEntities = (EntityLinkingTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                RecognizeLinkedEntitiesResultCollection results = Transforms.ConvertToLinkedEntitiesResultCollection(linkedEntities.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
