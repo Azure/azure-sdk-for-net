@@ -17,8 +17,6 @@ namespace Azure.Storage.Blobs.Models
             string name = default;
             string containerName = default;
             BlobTags tags = default;
-            string versionId = default;
-            bool? isCurrentVersion = default;
             if (element.Element("Name") is XElement nameElement)
             {
                 name = (string)nameElement;
@@ -31,15 +29,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 tags = BlobTags.DeserializeBlobTags(tagsElement);
             }
-            if (element.Element("VersionId") is XElement versionIdElement)
-            {
-                versionId = (string)versionIdElement;
-            }
-            if (element.Element("IsCurrentVersion") is XElement isCurrentVersionElement)
-            {
-                isCurrentVersion = (bool?)isCurrentVersionElement;
-            }
-            return new FilterBlobItem(name, containerName, tags, versionId, isCurrentVersion);
+            return new FilterBlobItem(name, containerName, tags);
         }
     }
 }
