@@ -22,6 +22,16 @@ namespace Azure.Core.Pipeline
 
         private readonly HttpMessageSanitizer _sanitizer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientDiagnostics"/> class.
+        /// </summary>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="suppressNestedClientActivities">Flag controlling if <see cref="System.Diagnostics.Activity"/>
+        ///  created by this <see cref="ClientDiagnostics"/> for client method calls should be suppressed when called
+        ///  by other Azure SDK client methods.  It's recommended to set it to true for new clients; use default (null) for
+        ///  for backward compatibility reasons, or set it to false to explicitly disable suppression for specific cases.
+        ///  The default value could change in the future, the flag should be only set to false if suppression for the client
+        ///  should never be enabled.</param>
         public ClientDiagnostics(ClientOptions options, bool? suppressNestedClientActivities = null)
                     : this(options.GetType().Namespace!,
                     GetResourceProviderNamespace(options.GetType().Assembly),
@@ -30,6 +40,18 @@ namespace Azure.Core.Pipeline
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientDiagnostics"/> class.
+        /// </summary>
+        /// <param name="optionsNamespace">Namespace of the client class, such as Azure.Storage or Azure.AppConfiguration.</param>
+        /// <param name="providerNamespace">Azure Resource Provider namespace of the Azure service SDK is primarily used for.</param>
+        /// <param name="diagnosticsOptions">The customer provided client diagnostics options.</param>
+        /// <param name="suppressNestedClientActivities">Flag controlling if <see cref="System.Diagnostics.Activity"/>
+        ///  created by this <see cref="ClientDiagnostics"/> for client method calls should be suppressed when called
+        ///  by other Azure SDK client methods.  It's recommended to set it to true for new clients, use default (null) for old clients
+        ///  for backward compatibility reasons, or set it to false to explicitly disable suppression for specific cases.
+        ///  The default value could change in the future, the flag should be only set to false if suppression for the client
+        ///  should never be enabled.</param>
         public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null)
             : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(false))
         {
