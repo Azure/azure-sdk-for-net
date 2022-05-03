@@ -30,7 +30,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new EventHubBufferedProducerClientOptions();
 
             Assert.That(options.RetryOptions, Is.Not.Null, "The retry options should not be null.");
-            Assert.That(options.RetryOptions.GetType().Name, Is.Not.EqualTo(typeof(EventHubsRetryOptions).Name), "The buffered retry options should be a custom type.");
             Assert.That(options.RetryOptions.MaximumRetries, Is.GreaterThan(standardRetryOptions.MaximumRetries), "The buffered retry options should allow for more retries than the standard.");
             Assert.That(options.RetryOptions.TryTimeout, Is.GreaterThan(standardRetryOptions.TryTimeout), "The buffered retry options should allow for a longer try timeout than the standard.");
         }

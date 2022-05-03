@@ -2408,7 +2408,7 @@ namespace Azure.Messaging.EventHubs.Producer
                                                           double maximumBufferDelaySeconds)
         {
             var delay = (Math.Pow(1.4, consecutiveEmptyBufferCount) * startingEmptyBufferDelaySeconds);
-            return delay > maximumBufferDelaySeconds ? TimeSpan.FromSeconds(1) : TimeSpan.FromSeconds(delay);
+            return TimeSpan.FromSeconds(delay > maximumBufferDelaySeconds ? maximumBufferDelaySeconds : delay);
         }
 
         /// <summary>
