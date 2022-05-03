@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes an outbound endpoint for a DNS resolver for PATCH operation. </summary>
-    internal partial class OutboundEndpointPatch
+    public partial class OutboundEndpointPatch
     {
         /// <summary> Initializes a new instance of OutboundEndpointPatch. </summary>
         public OutboundEndpointPatch()

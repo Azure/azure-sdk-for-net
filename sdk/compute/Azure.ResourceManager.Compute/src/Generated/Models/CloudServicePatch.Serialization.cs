@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CloudServicePatch : IUtf8JsonSerializable
+    public partial class CloudServicePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

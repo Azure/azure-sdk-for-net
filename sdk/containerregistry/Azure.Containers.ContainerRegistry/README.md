@@ -20,7 +20,7 @@ To develop .NET application code that can connect to an Azure Container Registry
 Install the Azure Container Registry client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Containers.ContainerRegistry --prerelease
+dotnet add package Azure.Containers.ContainerRegistry
 ```
 
 ### Prerequisites

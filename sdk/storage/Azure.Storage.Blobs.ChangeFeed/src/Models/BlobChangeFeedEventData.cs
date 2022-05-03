@@ -202,7 +202,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.WasBlobSoftDeleted, out object wasBlobSoftDeletedObject);
             if (wasBlobSoftDeletedObject != null)
             {
-                previousInfo.WasBlobSoftDeleted = (bool)wasBlobSoftDeletedObject;
+                previousInfo.WasBlobSoftDeleted = bool.Parse((string)wasBlobSoftDeletedObject);
             }
 
             previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.BlobVersion, out object blobVersionObject);

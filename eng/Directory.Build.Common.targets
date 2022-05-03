@@ -190,6 +190,7 @@
 
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
+    <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
@@ -224,7 +225,6 @@
   <!-- Management Client TEST Project Specific Overrides -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

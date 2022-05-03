@@ -1445,10 +1445,10 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLRS), kind: StorageKind.StorageV2);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            PrivateEndpointConnectionCollection privateEndpointConnectionCollection = account.GetPrivateEndpointConnections();
+            StoragePrivateEndpointConnectionCollection privateEndpointConnectionCollection = account.GetStoragePrivateEndpointConnections();
 
             //get all private endpoint connections
-            List<PrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<StoragePrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(privateEndpointConnections);
         }
 
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 return;
             }
 
-            Assert.Fail($"{nameof(StorageAccountResource)}.{nameof(StorageAccountResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
+            Assert.Fail($"{nameof(StorageAccountResource)}.{nameof(StorageAccountResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(StoragePrivateLinkResource)}.");
         }
 
         [Test]

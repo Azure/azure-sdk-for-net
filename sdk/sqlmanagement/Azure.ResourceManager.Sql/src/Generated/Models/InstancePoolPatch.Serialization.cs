@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class InstancePoolPatch : IUtf8JsonSerializable
+    public partial class InstancePoolPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

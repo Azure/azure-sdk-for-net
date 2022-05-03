@@ -703,7 +703,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendAllowsAPartitionHashKeyWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
-            var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions);
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, new List<EventData>(), batchOptions);
+
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
 
@@ -735,7 +736,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SendForASpecificPartitionDoesNotAllowAPartitionHashKeyWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey", PartitionId = "1" };
-            var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions);
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, new List<EventData>(), batchOptions);
+
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
 
@@ -794,7 +796,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task SendInvokesTheTransportProducerWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
+
             var transportProducer = new ObservableTransportProducerMock();
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
 
@@ -1419,19 +1422,19 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportProducer = new ObservableTransportProducerMock();
             var connection = new MockConnection(() => transportProducer);
+            var eventList = EventGenerator.CreateEvents(2).ToList();
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
                 EnableIdempotentPartitions = true
             });
 
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new CreateBatchOptions());
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, eventList);
             Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "Automatic routing cannot be used with idempotent publishing.");
 
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
-            batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
-            Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "A partition key cannot be used with idempotent publishing.");
-            ;
+            using var newBatch = EventHubsModelFactory.EventDataBatch(long.MaxValue, eventList, batchOptions);
+            Assert.That(async () => await producer.SendAsync(newBatch), Throws.InstanceOf<InvalidOperationException>(), "A partition key cannot be used with idempotent publishing.");
         }
 
         /// <summary>
@@ -1450,41 +1453,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 EnableIdempotentPartitions = true
             });
 
-            var events = EventGenerator.CreateEvents(5);
-            var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", new CreateBatchOptions { PartitionId = "0" });
-            events.ToList().ForEach(item => batch.TryAdd(item));
+            var events = EventGenerator.CreateEvents(5).ToList();
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = "0" });
 
-            batch.StartingPublishedSequenceNumber = 0;
-            Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "Resending of events cannot be done with idempotent publishing.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void SendIdempotentDoesNotAllowResendingWithABatchContainingPublishedEvents()
-        {
-            var transportProducer = new ObservableTransportProducerMock();
-            var connection = new MockConnection(() => transportProducer);
-
-            var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
-            {
-                EnableIdempotentPartitions = true
-            });
-
-            var events = EventGenerator.CreateEvents(5).Skip(4).Select(item =>
-            {
-                item.PendingPublishSequenceNumber = 5;
-                item.CommitPublishingState();
-
-                return item;
-            });
-
-            var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", new CreateBatchOptions { PartitionId = "0" });
-            events.ToList().ForEach(item => batch.TryAdd(item));
-
+            batch.ApplyBatchSequencing(0, null, null);
             Assert.That(async () => await producer.SendAsync(batch), Throws.InstanceOf<InvalidOperationException>(), "Resending of events cannot be done with idempotent publishing.");
         }
 
@@ -1503,8 +1475,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedOptions = new PartitionPublishingOptions();
             var requestedOptions = default(PartitionPublishingOptions);
             var requestedFeatures = TransportProducerFeatures.None;
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = expectedPartition });
 
             expectedOptions.ProducerGroupId = expectedProperties.ProducerGroupId;
             expectedOptions.OwnerLevel = expectedProperties.OwnerLevel;
@@ -1558,7 +1531,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedLastSequence = expectedProperties.LastPublishedSequenceNumber + eventCount;
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = expectedPartition });
 
             var clientOptions = new EventHubProducerClientOptions
             {
@@ -1607,7 +1581,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedProperties = new PartitionPublishingProperties(true, null, null, null);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = expectedPartition });
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
@@ -1639,7 +1614,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedPartition = "5";
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = expectedPartition });;
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
@@ -1664,7 +1640,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedProperties = new PartitionPublishingProperties(true, 123, 456, 798);
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = expectedPartition });
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
@@ -1698,9 +1675,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventCount = 6;
             var startingSequence = 435;
             var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
+
+            var events = EventGenerator.CreateEvents(eventCount).ToList();
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = expectedPartition });
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
@@ -1742,9 +1721,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventCount = 6;
             var startingSequence = 435;
             var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
+
+            var events = EventGenerator.CreateEvents(eventCount).ToList();
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = expectedPartition });
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
@@ -1783,9 +1764,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventCount = 5;
             var startingSequence = 435;
             var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
+
+            var events = EventGenerator.CreateEvents(eventCount).ToList();
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = expectedPartition });
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
             {
@@ -1823,11 +1806,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventCount = 5;
             var startingSequence = 435;
             var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
             var mockTransport = new Mock<TransportProducer>();
             var connection = new MockConnection(() => mockTransport.Object);
             var mockTransportProducerPool = new MockTransportProducerPool(mockTransport.Object, connection, new BasicRetryPolicy(new EventHubsRetryOptions()));
             var producer = new EventHubProducerClient(connection, mockTransport.Object, mockTransportProducerPool, new EventHubProducerClientOptions { EnableIdempotentPartitions = true });
+
+            var events = EventGenerator.CreateEvents(eventCount).ToList();
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, events, new CreateBatchOptions { PartitionId = expectedPartition });
 
             mockTransport
                 .Setup(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(It.IsAny<CancellationToken>()))
@@ -1850,50 +1835,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendIdempotentRollsOverSequenceNumbersToZeroWithABatch()
-        {
-            var expectedPartition = "5";
-            var eventCount = 6;
-            var startingSequence = int.MaxValue;
-            var expectedProperties = new PartitionPublishingProperties(true, 123, 456, startingSequence);
-            var batch = new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition });
-            var mockTransport = new Mock<TransportProducer>();
-            var connection = new MockConnection(() => mockTransport.Object);
-
-            var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
-            {
-                EnableIdempotentPartitions = true
-            });
-
-            mockTransport
-                .Setup(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expectedProperties);
-
-            mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable("The events should have been sent using the transport producer.");
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            await producer.SendAsync(batch);
-            Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(0), "The batch did not roll over the starting sequence number to zero.");
-
-            var partitionStateCollection = GetPartitionState(producer);
-            Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(batch.Count - 1), "The sequence number for partition state should have been updated.");
-
-            mockTransport.VerifyAll();
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
         public async Task SendIdempotentOrdersConcurrentRequestsWithABatch()
         {
             var expectedPartition = "5";
@@ -1905,9 +1846,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var batches = new[]
             {
-                new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition }),
-                new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition }),
-                new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = expectedPartition }),
+                EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = expectedPartition }),
+                EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = expectedPartition }),
+                EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = expectedPartition })
             };
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
@@ -1919,30 +1860,40 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedProperties);
 
-            // Each send operation will wait less time before completing to give later operations an
-            // advantage to complete first if synchronization does not take place properly.
-
-            var sendCountdown = batches.Length;
-
-            mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            await Task.WhenAll(batches.Select(batch => producer.SendAsync(batch)));
-
-            for (var index = 0; index < batches.Length; ++index)
+            try
             {
-                var batch = batches[index];
-                Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(startingSequence + 1 + (index * eventCount)), $"The batch in position `{ index }` did not have the correct starting sequence number.");
-            }
+            // Each send operation will wait less time before completing to give later operations an
+                // advantage to complete first if synchronization does not take place properly.
 
-            var partitionStateCollection = GetPartitionState(producer);
-            Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-            Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
-            Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + (batches.Length * eventCount)), "The sequence number for partition state should have been updated.");
+                var sendCountdown = batches.Length;
+
+                mockTransport
+                    .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                    .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
+
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                await Task.WhenAll(batches.Select(batch => producer.SendAsync(batch)));
+
+                for (var index = 0; index < batches.Length; ++index)
+                {
+                    var batch = batches[index];
+                    Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(startingSequence + 1 + (index * eventCount)), $"The batch in position `{ index }` did not have the correct starting sequence number.");
+                }
+
+                var partitionStateCollection = GetPartitionState(producer);
+                Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
+                Assert.That(partitionStateCollection.TryGetValue(expectedPartition, out var partitionState), Is.True, "The state collection should have an entry for the partition.");
+                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + (batches.Length * eventCount)), "The sequence number for partition state should have been updated.");
+            }
+            finally
+            {
+                foreach (var batch in batches)
+                {
+                    batch.Dispose();
+                }
+            }
         }
 
         /// <summary>
@@ -1962,9 +1913,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var batches = new[]
             {
-                new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = (++partition).ToString() }),
-                new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = (++partition).ToString() }),
-                new EventDataBatch(new MockTransportBatch(eventCount), "ns", "eh", new CreateBatchOptions { PartitionId = (++partition).ToString() }),
+                EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = (++partition).ToString() }),
+                EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = (++partition).ToString() }),
+                EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(eventCount).ToList(), new CreateBatchOptions { PartitionId = (++partition).ToString() })
             };
 
             var producer = new EventHubProducerClient(connection, new EventHubProducerClientOptions
@@ -1976,33 +1927,43 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(transportProducer => transportProducer.ReadInitializationPublishingPropertiesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expectedProperties);
 
-            // Each send operation will wait less time before completing to give later operations an
-            // advantage to complete first if synchronization does not take place properly.
-
-            var sendCountdown = batches.Length;
-
-            mockTransport
-                .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
-
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            await Task.WhenAll(batches.Select(batch => producer.SendAsync(batch)));
-
-            for (var index = 0; index < batches.Length; ++index)
+            try
             {
-                var batch = batches[index];
-                Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(startingSequence + 1), $"The batch in position `{ index }` did not have the correct starting sequence number.");
+                // Each send operation will wait less time before completing to give later operations an
+                // advantage to complete first if synchronization does not take place properly.
+
+                var sendCountdown = batches.Length;
+
+                mockTransport
+                    .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                    .Returns(Task.Delay(TimeSpan.FromMilliseconds(150 * (--sendCountdown))));
+
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+                await Task.WhenAll(batches.Select(batch => producer.SendAsync(batch)));
+
+                for (var index = 0; index < batches.Length; ++index)
+                {
+                    var batch = batches[index];
+                    Assert.That(batch.StartingPublishedSequenceNumber, Is.EqualTo(startingSequence + 1), $"The batch in position `{ index }` did not have the correct starting sequence number.");
+                }
+
+                var partitionStateCollection = GetPartitionState(producer);
+                Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
+
+                foreach (var stateKey in partitionStateCollection.Keys)
+                {
+                    Assert.That(partitionStateCollection.TryGetValue(stateKey, out var partitionState), Is.True, $"The state collection should have an entry for the partition `{ stateKey }`.");
+                    Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + eventCount), $"The sequence number for partition `{ stateKey }` state should have been updated.");
+                }
             }
-
-            var partitionStateCollection = GetPartitionState(producer);
-            Assert.That(partitionStateCollection, Is.Not.Null, "The collection for partition state should have been initialized with the client.");
-
-            foreach (var stateKey in partitionStateCollection.Keys)
+            finally
             {
-                Assert.That(partitionStateCollection.TryGetValue(stateKey, out var partitionState), Is.True, $"The state collection should have an entry for the partition `{ stateKey }`.");
-                Assert.That(partitionState.LastPublishedSequenceNumber, Is.EqualTo(startingSequence + eventCount), $"The sequence number for partition `{ stateKey }` state should have been updated.");
+                foreach (var batch in batches)
+                {
+                    batch.Dispose();
+                }
             }
         }
 
@@ -2130,9 +2091,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CloseAsyncClosesTheTransportProducers()
         {
             var transportProducer = new ObservableTransportProducerMock();
-            var mockFirstBatch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new SendEventOptions { PartitionId = "1" });
-            var mockSecondBatch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", new SendEventOptions { PartitionId = "2" });
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
+
+            using var mockFirstBatch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = "1" });
+            using var mockSecondBatch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), new CreateBatchOptions { PartitionId = "2" });
 
             await producer.SendAsync(mockFirstBatch).IgnoreExceptions();
             await producer.SendAsync(mockSecondBatch).IgnoreExceptions();
@@ -2153,8 +2115,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducer = new Mock<TransportProducer>();
             var mockConnection = new MockConnection(() => mockTransportProducer.Object);
             var mockTransportProducerPool = new Mock<TransportProducerPool>();
-            var mockBatch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", new SendEventOptions { PartitionId = "1" });
             var producer = new EventHubProducerClient(mockConnection, mockTransportProducer.Object, mockTransportProducerPool.Object);
+
+            using var mockBatch = EventHubsModelFactory.EventDataBatch(long.MaxValue, new List<EventData>(), new CreateBatchOptions { PartitionId = "1" });
 
             mockTransportProducerPool
                 .Setup(pool => pool.CloseAsync(It.IsAny<CancellationToken>()))
@@ -2228,13 +2191,14 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerClientShouldPickAnItemFromPoolWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions);
             var transportProducer = new ObservableTransportProducerMock();
             var eventHubConnection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
             var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
             var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, new List<EventData>(), batchOptions);
 
             await producerClient.SendAsync(batch);
             Assert.That(mockTransportProducerPool.GetPooledProducerWasCalled, Is.True, $"The method { nameof(TransportProducerPool.GetPooledProducer) } should have been called (for a batch).");
@@ -2255,7 +2219,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerClientShouldCloseAProducerWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new ObservableTransportProducerMock();
             var eventHubConnection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2263,7 +2226,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
 
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
             await producerClient.SendAsync(batch);
+
             Assert.That(mockPooledProducer.WasClosed, Is.True, $"A { nameof(TransportProducerPool.PooledProducer) } should be closed when disposed.");
         }
 
@@ -2341,7 +2306,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EventHubProducerClientShouldRetrySendingWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2357,6 +2321,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .SetupGet(transportProducer => transportProducer.IsClosed)
                 .Returns(true);
 
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
             Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
@@ -2406,7 +2371,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicEndsWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2427,6 +2391,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 })
                 .Returns(Task.CompletedTask);
 
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, new List<EventData>(), batchOptions);
             Assert.That(async () => await producerClient.SendAsync(batch), Throws.Nothing, $"The retry logic should not run endlessly (for a batch).");
         }
 
@@ -2469,7 +2434,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDoesNotStartWhenPartitionIdIsNullWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2482,6 +2446,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                         It.IsAny<CancellationToken>()))
                 .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed));
 
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
             Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
@@ -2535,7 +2500,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task RetryLogicDoesNotWorkForClosedConnectionsWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2551,6 +2515,8 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer
                 .SetupGet(transportProducer => transportProducer.IsClosed)
                 .Returns(true);
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
 
             await eventHubConnection.CloseAsync(CancellationToken.None);
             Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
@@ -2606,7 +2572,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDoesNotWorkForClosedEventHubProducerClientsWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2624,6 +2589,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(true);
 
             SetIsClosed(producerClient, true);
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
             Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
 
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
@@ -2667,7 +2634,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicShouldNotStartWhenCancellationTriggeredWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2677,6 +2643,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var cancellationTokenSource = new CancellationTokenSource();
 
             cancellationTokenSource.Cancel();
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
             Assert.That(async () => await producerClient.SendAsync(batch, cancellationTokenSource.Token), Throws.InstanceOf<OperationCanceledException>());
 
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
@@ -2721,7 +2689,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public void RetryLogicDetectsAnEmbeddedAmqpErrorForOperationCanceledWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
-            var batch = new EventDataBatch(new MockTransportBatch(1), "ns", "eh", batchOptions);
             var transportProducer = new Mock<TransportProducer>();
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -2730,6 +2697,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var cancellationTokenSource = new CancellationTokenSource();
+
+            using var batch = EventHubsModelFactory.EventDataBatch(long.MaxValue, EventGenerator.CreateEvents(1).ToList(), batchOptions);
 
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(batch, cancellationTokenSource.Token))
@@ -2813,7 +2782,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                             CancellationToken cancellationToken)
             {
                 CreateBatchCalledWith = options;
-                return new ValueTask<TransportEventBatch>(Task.FromResult((TransportEventBatch)new MockTransportBatch()));
+                return new ValueTask<TransportEventBatch>(Task.FromResult(Mock.Of<TransportEventBatch>()));
             }
 
             public override ValueTask<PartitionPublishingProperties> ReadInitializationPublishingPropertiesAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
@@ -2917,39 +2886,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                .Returns(true);
 
                 return Task.CompletedTask;
-            }
-        }
-
-        /// <summary>
-        ///   Serves as a non-functional transport event batch for satisfying the
-        ///   non-null constraints of the <see cref="EventDataBatch" /> created by
-        ///   the producer being tested.
-        /// </summary>
-        ///
-        private class MockTransportBatch : TransportEventBatch
-        {
-            private List<EventData> Events { get; } = new List<EventData>();
-
-            public override long MaximumSizeInBytes { get; }
-            public override long SizeInBytes { get; }
-            public override TransportProducerFeatures ActiveFeatures { get; }
-            public override int Count => Events.Count;
-            public override IReadOnlyCollection<T> AsReadOnlyCollection<T>() => Events as IReadOnlyCollection<T>;
-            public override void Clear() => Events.Clear();
-            public override void Dispose() => throw new NotImplementedException();
-
-            public MockTransportBatch()
-            {
-            }
-            public MockTransportBatch(int generatedEventCount)
-            {
-                Events.AddRange(EventGenerator.CreateEvents(generatedEventCount));
-            }
-
-            public override bool TryAdd(EventData eventData)
-            {
-                Events.Add(eventData);
-                return true;
             }
         }
 

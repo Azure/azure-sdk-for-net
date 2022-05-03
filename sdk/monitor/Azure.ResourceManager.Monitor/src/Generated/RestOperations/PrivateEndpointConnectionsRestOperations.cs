@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorPrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        MonitorPrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((MonitorPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public Response<MonitorPrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        MonitorPrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = MonitorPrivateEndpointConnectionData.DeserializeMonitorPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((MonitorPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, PrivateEndpointConnectionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, MonitorPrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="data"> The PrivateEndpointConnection to use. </param>
+        /// <param name="data"> The MonitorPrivateEndpointConnection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, PrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, MonitorPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="data"> The PrivateEndpointConnection to use. </param>
+        /// <param name="data"> The MonitorPrivateEndpointConnection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scopeName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, PrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string scopeName, string privateEndpointConnectionName, MonitorPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListByPrivateLinkScopeAsync(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorPrivateEndpointConnectionListResult>> ListByPrivateLinkScopeAsync(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        MonitorPrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = MonitorPrivateEndpointConnectionListResult.DeserializeMonitorPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListByPrivateLinkScope(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
+        public Response<MonitorPrivateEndpointConnectionListResult> ListByPrivateLinkScope(string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -355,9 +355,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        MonitorPrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = MonitorPrivateEndpointConnectionListResult.DeserializeMonitorPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListByPrivateLinkScopeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorPrivateEndpointConnectionListResult>> ListByPrivateLinkScopeNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        MonitorPrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = MonitorPrivateEndpointConnectionListResult.DeserializeMonitorPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListByPrivateLinkScopeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
+        public Response<MonitorPrivateEndpointConnectionListResult> ListByPrivateLinkScopeNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -431,9 +431,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        MonitorPrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = MonitorPrivateEndpointConnectionListResult.DeserializeMonitorPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure WebPubSub management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.WebPubSub --version 1.0.0-beta.3
+dotnet add package Azure.ResourceManager.WebPubSub --prerelease
 ```
 
 ### Prerequisites

@@ -185,5 +185,59 @@ namespace Azure.ResourceManager.Monitor
                 throw;
             }
         }
+
+        /// <summary>
+        /// Creates or updates an association.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
+        /// Operation Id: DataCollectionRuleAssociations_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> UpdateAsync(WaitUntil waitUntil, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _dataCollectionRuleAssociationRestClient.CreateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates an association.
+        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}
+        /// Operation Id: DataCollectionRuleAssociations_Create
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<DataCollectionRuleAssociationResource> Update(WaitUntil waitUntil, DataCollectionRuleAssociationData data = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _dataCollectionRuleAssociationRestClient.Create(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace Azure.Core
                 LoggedContentSizeLimit = diagnosticsOptions.LoggedContentSizeLimit;
                 IsDistributedTracingEnabled = diagnosticsOptions.IsDistributedTracingEnabled;
                 IsLoggingContentEnabled = diagnosticsOptions.IsLoggingContentEnabled;
+                SuppressNestedClientSpans  = diagnosticsOptions.SuppressNestedClientSpans;
             }
             else
             {
@@ -81,9 +82,14 @@ namespace Azure.Core
         public bool IsLoggingEnabled { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets value indicating whether distributed tracing spans are going to be created for this clients methods calls and HTTP calls.
+        /// Gets or sets value indicating whether distributed tracing spans are going to be created for the clients methods calls and HTTP calls.
         /// </summary>
         public bool IsDistributedTracingEnabled { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets value indicating whether distributed tracing spans are going to be created when this client's methods are called by other instrumented client methods.
+        /// </summary>
+        public bool SuppressNestedClientSpans  { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating whether the "User-Agent" header containing <see cref="ApplicationId"/>, client library package name and version, <see cref="RuntimeInformation.FrameworkDescription"/>
