@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Type of managed service identity. </summary>
-    internal enum ManagedServiceIdentityType
+    public enum ManagedServiceIdentityType
     {
         /// <summary> None. </summary>
         None,

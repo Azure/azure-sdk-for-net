@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="keyVersion"> Version of KeyVault. </param>
-        /// <param name="identity"></param>
-        internal KeyVaultProperties(string keyName, Uri keyVaultUri, string keyVersion, UserAssignedIdentityProperties identity)
+        /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
+        internal KeyVaultProperties(string keyName, Uri keyVaultUri, string keyVersion, string userAssignedIdentity)
         {
             KeyName = keyName;
             KeyVaultUri = keyVaultUri;
             KeyVersion = keyVersion;
-            Identity = identity;
+            UserAssignedIdentity = userAssignedIdentity;
         }
 
         /// <summary> Name of the Key from KeyVault. </summary>
@@ -36,18 +36,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public Uri KeyVaultUri { get; set; }
         /// <summary> Version of KeyVault. </summary>
         public string KeyVersion { get; set; }
-        /// <summary> Gets or sets the identity. </summary>
-        internal UserAssignedIdentityProperties Identity { get; set; }
         /// <summary> ARM ID of user Identity selected for encryption. </summary>
-        public string UserAssignedIdentity
-        {
-            get => Identity is null ? default : Identity.UserAssignedIdentity;
-            set
-            {
-                if (Identity is null)
-                    Identity = new UserAssignedIdentityProperties();
-                Identity.UserAssignedIdentity = value;
-            }
-        }
+        public string UserAssignedIdentity { get; set; }
     }
 }
