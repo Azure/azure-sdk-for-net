@@ -52,6 +52,24 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void FailsToConvertInvalidUriConfiguration()
+        {
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "no it its not"));
+
+            var clientOptions = new TestClientOptions();
+            Assert.Throws<UriFormatException>(() => ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null));
+        }
+
+        [Test]
+        public void FailsToConvertInvalidGuidConfiguration()
+        {
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("guid", "no it its not"));
+
+            var clientOptions = new TestClientOptions();
+            Assert.Throws<FormatException>(() => ClientFactory.CreateClient(typeof(TestClient), typeof(TestClientOptions), clientOptions, configuration, null));
+        }
+
+        [Test]
         public void ConvertsCompositeObjectsConstructorParameters()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("composite:c", "http://localhost"));
