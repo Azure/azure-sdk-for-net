@@ -23,7 +23,7 @@ namespace Azure.Core.Pipeline
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
             _suppressNestedClientActivities = suppressNestedClientActivities;
-            ;
+
             if (IsActivityEnabled)
             {
                 var listeners = LazyInitializer.EnsureInitialized(ref _listeners);

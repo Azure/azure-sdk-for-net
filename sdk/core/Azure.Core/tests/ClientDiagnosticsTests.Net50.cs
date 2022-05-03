@@ -104,9 +104,6 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         public void NestedClientActivitiesConfigurationClientOptions(bool? suppressNestedScopes)
         {
-            // TODO: ClientDiagnostics need new Azure.Core to ship before using
-            // DiagnosticsOptions.AreNestedClientSpansEnabled flag so we can't check it yet.
-
             using var testListener = new TestDiagnosticListener("Azure.Clients");
             DiagnosticsOptions testOptions = new DiagnosticsOptions();
 
