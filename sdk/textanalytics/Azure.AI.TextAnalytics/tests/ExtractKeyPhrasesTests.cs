@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [Ignore("Not yet implemented")]
+    [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class ExtractKeyPhrasesTests : TextAnalyticsClientLiveTestBase
     {
         public ExtractKeyPhrasesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -200,6 +200,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         [RecordedTest]
+        [Ignore("LRO not implemented")]
         public async Task ExtractKeyPhrasesWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();

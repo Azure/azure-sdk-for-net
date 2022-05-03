@@ -10,8 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    //[ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V2022_03_01_Preview)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class RecognizePiiEntitiesTests : TextAnalyticsClientLiveTestBase
     {
         public RecognizePiiEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)

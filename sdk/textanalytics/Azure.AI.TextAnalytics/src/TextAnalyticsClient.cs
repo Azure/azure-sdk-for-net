@@ -755,7 +755,7 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
         public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default) =>
-            await AnalyzeSentimentAsync(document, language, options, cancellationToken).ConfigureAwait(false);
+            await _serviceClient.AnalyzeSentimentAsync(document, language, options, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
@@ -837,7 +837,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default) =>
-            _serviceClient.AnalyzeSentimentBatch(documents, language, (options != null ? new AnalyzeSentimentOptions() : null), cancellationToken);
+            _serviceClient.AnalyzeSentimentBatch(documents, language, (options != null ? new AnalyzeSentimentOptions(options) : null), cancellationToken);
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral
@@ -935,7 +935,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default) =>
-            _serviceClient?.AnalyzeSentimentBatch(documents, (options != null ? new AnalyzeSentimentOptions() : null), cancellationToken);
+            _serviceClient?.AnalyzeSentimentBatch(documents, (options != null ? new AnalyzeSentimentOptions(options) : null), cancellationToken);
 
         /// <summary>
         /// Runs a predictive model to identify the positive, negative or neutral

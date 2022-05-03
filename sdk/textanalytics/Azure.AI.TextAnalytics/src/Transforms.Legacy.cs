@@ -131,6 +131,7 @@ namespace Azure.AI.TextAnalytics
                 Legacy.Models.DocumentSentimentValue.Neutral => TextSentiment.Neutral,
                 Legacy.Models.DocumentSentimentValue.Positive => TextSentiment.Positive,
                 Legacy.Models.DocumentSentimentValue.Negative => TextSentiment.Negative,
+                Legacy.Models.DocumentSentimentValue.Mixed => TextSentiment.Mixed,
                 _ => throw new NotSupportedException($"The document sentiment, { sentiment }, is not supported for conversion.")
             };
 

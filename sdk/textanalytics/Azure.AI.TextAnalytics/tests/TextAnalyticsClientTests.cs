@@ -10,13 +10,12 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class TextAnalyticsClientTests : ClientTestBase
     {
-        public TextAnalyticsClientTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+        public TextAnalyticsClientTests(bool isAsync)
             : base(isAsync)
         {
-            TextAnalyticsClientOptions options = new TextAnalyticsClientOptions(serviceVersion)
+            TextAnalyticsClientOptions options = new TextAnalyticsClientOptions()
             {
                 Transport = new MockTransport(),
             };
