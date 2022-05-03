@@ -80,7 +80,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static DetectLanguageResultCollection ConvertToDetectLanguageResultCollection(LanguageDetectionResult results, IDictionary<string, int> idToIndexMap)
         {
-            var detectedLanguages = new List<DetectLanguageResult>();
+            var detectedLanguages = new List<DetectLanguageResult>(results.Documents.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -172,7 +172,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(EntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizeEntitiesResult>();
+            var recognizeEntities = new List<RecognizeEntitiesResult>(results.Documents.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -235,7 +235,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static PiiEntityCollection ConvertToPiiEntityCollection(PiiResultDocumentsItem piiResult)
         {
-            var entities = new List<PiiEntity>();
+            var entities = new List<PiiEntity>(piiResult.Entities.Count);
             foreach (var entity in piiResult.Entities)
             {
                 var piiEntity = new PiiEntity(entity);
@@ -247,7 +247,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizePiiEntitiesResultCollection ConvertToRecognizePiiEntitiesResultCollection(PiiEntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Errors.Count);
+            var recognizeEntities = new List<RecognizePiiEntitiesResult>(results.Documents.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
@@ -277,7 +277,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static RecognizeLinkedEntitiesResultCollection ConvertToLinkedEntitiesResultCollection(EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
         {
-            var recognizeLinkedEntities = new List<RecognizeLinkedEntitiesResult>();
+            var recognizeLinkedEntities = new List<RecognizeLinkedEntitiesResult>(results.Documents.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)

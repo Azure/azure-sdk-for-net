@@ -906,7 +906,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     input.Documents.Add(doc);
                 }
-                var analyzeRecognizeEntities = new AnalyzeTextEntityLinkingInput { AnalysisInput = input };
+                AnalyzeTextEntityLinkingInput analyzeRecognizeEntities = new()
+                {
+                    AnalysisInput = input,
+                    Parameters = new EntityLinkingTaskParameters() { StringIndexType = Constants.DefaultStringIndexType }
+                };
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
                     analyzeRecognizeEntities,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -945,7 +949,11 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     input.Documents.Add(doc);
                 }
-                var analyzeRecognizeEntities = new AnalyzeTextEntityLinkingInput { AnalysisInput = input };
+                AnalyzeTextEntityLinkingInput analyzeRecognizeEntities = new()
+                {
+                    AnalysisInput = input,
+                    Parameters = new EntityLinkingTaskParameters() { StringIndexType = Constants.DefaultStringIndexType }
+                };
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
                     analyzeRecognizeEntities,
                     cancellationToken: cancellationToken);
