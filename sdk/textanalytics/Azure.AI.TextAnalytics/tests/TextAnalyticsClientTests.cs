@@ -135,7 +135,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesAsync(""));
