@@ -470,13 +470,12 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     input.Documents.Add(doc);
                 }
-                var analyzePiiEntities = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
-                analyzePiiEntities.Parameters = new PiiTaskParameters(
-                    options.DisableServiceLogs,
-                    options.ModelVersion,
-                    new PiiDomain(options.DomainFilter.GetString()),
-                    options.CategoriesFilter,
-                    Constants.DefaultStringIndexType);
+
+                AnalyzeTextPiiEntitiesRecognitionInput analyzePiiEntities = new()
+                {
+                    AnalysisInput = input,
+                    Parameters = PiiEntitiesParameters(options)
+                };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzePiiEntities, cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -517,13 +516,12 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     input.Documents.Add(doc);
                 }
-                var analyzePiiEntities = new AnalyzeTextPiiEntitiesRecognitionInput { AnalysisInput = input };
-                analyzePiiEntities.Parameters = new PiiTaskParameters(
-                    options.DisableServiceLogs,
-                    options.ModelVersion,
-                    new PiiDomain(options.DomainFilter.GetString()),
-                    options.CategoriesFilter,
-                    Constants.DefaultStringIndexType);
+
+                AnalyzeTextPiiEntitiesRecognitionInput analyzePiiEntities = new()
+                {
+                    AnalysisInput = input,
+                    Parameters = PiiEntitiesParameters(options)
+                };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzePiiEntities, cancellationToken: cancellationToken);
                 var piiEntities = (PiiTaskResult)result.Value;
@@ -592,12 +590,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextPiiEntitiesRecognitionInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new PiiTaskParameters(
-                                        options.DisableServiceLogs,
-                                        options.ModelVersion,
-                                        new PiiDomain(options.DomainFilter.GetString()),
-                                        options.CategoriesFilter,
-                                        Constants.DefaultStringIndexType)
+                    Parameters = PiiEntitiesParameters(options)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
@@ -629,12 +622,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextPiiEntitiesRecognitionInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new PiiTaskParameters(
-                                        options.DisableServiceLogs,
-                                        options.ModelVersion,
-                                        new PiiDomain(options.DomainFilter.GetString()),
-                                        options.CategoriesFilter,
-                                        Constants.DefaultStringIndexType)
+                    Parameters = PiiEntitiesParameters(options)
                 };
 
                 Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
@@ -654,6 +642,23 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static PiiTaskParameters PiiEntitiesParameters(RecognizePiiEntitiesOptions options)
+        {
+            PiiTaskParameters parameters = new()
+            {
+                LoggingOptOut = options.DisableServiceLogs,
+                ModelVersion = options.ModelVersion,
+                Domain = options.DomainFilter.GetString() ?? (PiiDomain?)null,
+                StringIndexType = Constants.DefaultStringIndexType
+            };
+
+            if (options.CategoriesFilter.Count > 0)
+            {
+                parameters.PiiCategories = options.CategoriesFilter;
+            }
+            return parameters;
         }
 
         #endregion
