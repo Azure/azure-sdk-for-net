@@ -1,6 +1,6 @@
 # Release History
 
-## 0.3.0-beta.3 (Unreleased)
+## 0.3.0-beta.3 (2022-05-11)
 
 ### Bugs Fixed
 
@@ -14,10 +14,6 @@
 
 - `OutputModelUri` now returns a `Uri` to a `.zip` file containing the `.ou` file instead of the `.ou` file itself when using the new default service version: `V0_3_preview_0`.
 - The value specified when creating an `AssetFileType` is now validated and must begin with a '.' character.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.3.0-beta.2 (2022-03-08)
 
