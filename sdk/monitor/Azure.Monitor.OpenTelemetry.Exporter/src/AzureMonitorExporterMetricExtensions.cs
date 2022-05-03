@@ -31,7 +31,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exporter = new AzureMonitorMetricExporter(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)));
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options))
+            { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }
 }
