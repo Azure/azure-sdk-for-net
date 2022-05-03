@@ -258,7 +258,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
-        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
+        public virtual Task CancelAsync(CancellationToken cancellationToken = default)
         {
             //using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
             //scope.Start();
@@ -272,6 +272,8 @@ namespace Azure.AI.TextAnalytics
             //     scope.Failed(e);
             //     throw;
             // }
+
+            throw new NotImplementedException();
         }
 
         /// <summary>
