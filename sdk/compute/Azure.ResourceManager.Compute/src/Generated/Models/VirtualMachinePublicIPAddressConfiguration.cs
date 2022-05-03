@@ -79,16 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (PublicIPPrefix is null)
-                        PublicIPPrefix = new WritableSubResource();
-                    PublicIPPrefix.Id = value;
-                }
-                else
-                {
-                    PublicIPPrefix = null;
-                }
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
             }
         }
 

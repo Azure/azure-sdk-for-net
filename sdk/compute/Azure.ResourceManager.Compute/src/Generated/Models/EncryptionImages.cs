@@ -36,16 +36,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => OSDiskImage is null ? default : OSDiskImage.DiskEncryptionSetId;
             set
             {
-                if (value is not null)
-                {
-                    if (OSDiskImage is null)
-                        OSDiskImage = new OSDiskImageEncryption();
-                    OSDiskImage.DiskEncryptionSetId = value;
-                }
-                else
-                {
-                    OSDiskImage = null;
-                }
+                if (OSDiskImage is null)
+                    OSDiskImage = new OSDiskImageEncryption();
+                OSDiskImage.DiskEncryptionSetId = value;
             }
         }
 

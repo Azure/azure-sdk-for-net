@@ -37,16 +37,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (DiskEncryptionSet is null)
-                        DiskEncryptionSet = new WritableSubResource();
-                    DiskEncryptionSet.Id = value;
-                }
-                else
-                {
-                    DiskEncryptionSet = null;
-                }
+                if (DiskEncryptionSet is null)
+                    DiskEncryptionSet = new WritableSubResource();
+                DiskEncryptionSet.Id = value;
             }
         }
     }

@@ -41,16 +41,9 @@ namespace Azure.ResourceManager.Network.Models
             get => Action is null ? default : Action.ActionType;
             set
             {
-                if (value is not null)
-                {
-                    if (Action is null)
-                        Action = new FirewallPolicyFilterRuleCollectionAction();
-                    Action.ActionType = value;
-                }
-                else
-                {
-                    Action = null;
-                }
+                if (Action is null)
+                    Action = new FirewallPolicyFilterRuleCollectionAction();
+                Action.ActionType = value;
             }
         }
 

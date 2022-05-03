@@ -45,16 +45,9 @@ namespace Azure.ResourceManager.Network.Models
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualNetwork is null)
-                        VirtualNetwork = new WritableSubResource();
-                    VirtualNetwork.Id = value;
-                }
-                else
-                {
-                    VirtualNetwork = null;
-                }
+                if (VirtualNetwork is null)
+                    VirtualNetwork = new WritableSubResource();
+                VirtualNetwork.Id = value;
             }
         }
 
@@ -66,16 +59,9 @@ namespace Azure.ResourceManager.Network.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Subnet is null)
-                        Subnet = new WritableSubResource();
-                    Subnet.Id = value;
-                }
-                else
-                {
-                    Subnet = null;
-                }
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
             }
         }
 
@@ -97,16 +83,9 @@ namespace Azure.ResourceManager.Network.Models
             get => LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (LoadBalancerFrontendIPConfiguration is null)
-                        LoadBalancerFrontendIPConfiguration = new WritableSubResource();
-                    LoadBalancerFrontendIPConfiguration.Id = value;
-                }
-                else
-                {
-                    LoadBalancerFrontendIPConfiguration = null;
-                }
+                if (LoadBalancerFrontendIPConfiguration is null)
+                    LoadBalancerFrontendIPConfiguration = new WritableSubResource();
+                LoadBalancerFrontendIPConfiguration.Id = value;
             }
         }
     }

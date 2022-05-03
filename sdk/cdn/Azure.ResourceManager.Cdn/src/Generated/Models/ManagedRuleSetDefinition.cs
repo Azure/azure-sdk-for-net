@@ -47,16 +47,9 @@ namespace Azure.ResourceManager.Cdn.Models
             get => Sku is null ? default : Sku.Name;
             set
             {
-                if (value is not null)
-                {
-                    if (Sku is null)
-                        Sku = new CdnSku();
-                    Sku.Name = value;
-                }
-                else
-                {
-                    Sku = null;
-                }
+                if (Sku is null)
+                    Sku = new CdnSku();
+                Sku.Name = value;
             }
         }
 

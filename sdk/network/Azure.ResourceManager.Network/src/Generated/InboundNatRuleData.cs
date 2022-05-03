@@ -63,16 +63,9 @@ namespace Azure.ResourceManager.Network
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (FrontendIPConfiguration is null)
-                        FrontendIPConfiguration = new WritableSubResource();
-                    FrontendIPConfiguration.Id = value;
-                }
-                else
-                {
-                    FrontendIPConfiguration = null;
-                }
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
             }
         }
 

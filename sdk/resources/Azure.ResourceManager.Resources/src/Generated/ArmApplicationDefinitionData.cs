@@ -119,16 +119,9 @@ namespace Azure.ResourceManager.Resources
             get => ManagementPolicy is null ? default : ManagementPolicy.Mode;
             set
             {
-                if (value is not null)
-                {
-                    if (ManagementPolicy is null)
-                        ManagementPolicy = new ArmApplicationManagementPolicy();
-                    ManagementPolicy.Mode = value;
-                }
-                else
-                {
-                    ManagementPolicy = null;
-                }
+                if (ManagementPolicy is null)
+                    ManagementPolicy = new ArmApplicationManagementPolicy();
+                ManagementPolicy.Mode = value;
             }
         }
 

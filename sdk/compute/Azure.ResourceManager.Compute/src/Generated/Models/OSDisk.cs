@@ -62,16 +62,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => Vhd is null ? default : Vhd.Uri;
             set
             {
-                if (value is not null)
-                {
-                    if (Vhd is null)
-                        Vhd = new VirtualHardDisk();
-                    Vhd.Uri = value;
-                }
-                else
-                {
-                    Vhd = null;
-                }
+                if (Vhd is null)
+                    Vhd = new VirtualHardDisk();
+                Vhd.Uri = value;
             }
         }
 
@@ -83,16 +76,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => Image is null ? default : Image.Uri;
             set
             {
-                if (value is not null)
-                {
-                    if (Image is null)
-                        Image = new VirtualHardDisk();
-                    Image.Uri = value;
-                }
-                else
-                {
-                    Image = null;
-                }
+                if (Image is null)
+                    Image = new VirtualHardDisk();
+                Image.Uri = value;
             }
         }
 

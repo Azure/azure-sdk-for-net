@@ -73,16 +73,9 @@ namespace Azure.ResourceManager.Network
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (FrontendIPConfiguration is null)
-                        FrontendIPConfiguration = new WritableSubResource();
-                    FrontendIPConfiguration.Id = value;
-                }
-                else
-                {
-                    FrontendIPConfiguration = null;
-                }
+                if (FrontendIPConfiguration is null)
+                    FrontendIPConfiguration = new WritableSubResource();
+                FrontendIPConfiguration.Id = value;
             }
         }
 
@@ -94,16 +87,9 @@ namespace Azure.ResourceManager.Network
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BackendAddressPool is null)
-                        BackendAddressPool = new WritableSubResource();
-                    BackendAddressPool.Id = value;
-                }
-                else
-                {
-                    BackendAddressPool = null;
-                }
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
             }
         }
 
@@ -117,16 +103,9 @@ namespace Azure.ResourceManager.Network
             get => Probe is null ? default : Probe.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Probe is null)
-                        Probe = new WritableSubResource();
-                    Probe.Id = value;
-                }
-                else
-                {
-                    Probe = null;
-                }
+                if (Probe is null)
+                    Probe = new WritableSubResource();
+                Probe.Id = value;
             }
         }
 

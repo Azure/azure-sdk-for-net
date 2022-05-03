@@ -31,11 +31,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("keyVersion");
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(Identity))
+            writer.WritePropertyName("identity");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("userAssignedIdentity");
+                writer.WriteStringValue(UserAssignedIdentity);
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> keyName = default;
             Optional<Uri> keyVaultUri = default;
             Optional<string> keyVersion = default;
-            Optional<UserAssignedIdentityProperties> identity = default;
+            Optional<string> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"))
@@ -74,11 +77,18 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = UserAssignedIdentityProperties.DeserializeUserAssignedIdentityProperties(property.Value);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("userAssignedIdentity"))
+                        {
+                            userAssignedIdentity = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyName.Value, keyVaultUri.Value, keyVersion.Value, identity.Value);
+            return new KeyVaultProperties(keyName.Value, keyVaultUri.Value, keyVersion.Value, userAssignedIdentity.Value);
         }
     }
 }

@@ -97,16 +97,9 @@ namespace Azure.ResourceManager.Network
             get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (PublicIPPrefix is null)
-                        PublicIPPrefix = new WritableSubResource();
-                    PublicIPPrefix.Id = value;
-                }
-                else
-                {
-                    PublicIPPrefix = null;
-                }
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
             }
         }
 
@@ -118,16 +111,9 @@ namespace Azure.ResourceManager.Network
             get => GatewayLoadBalancer is null ? default : GatewayLoadBalancer.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (GatewayLoadBalancer is null)
-                        GatewayLoadBalancer = new WritableSubResource();
-                    GatewayLoadBalancer.Id = value;
-                }
-                else
-                {
-                    GatewayLoadBalancer = null;
-                }
+                if (GatewayLoadBalancer is null)
+                    GatewayLoadBalancer = new WritableSubResource();
+                GatewayLoadBalancer.Id = value;
             }
         }
 

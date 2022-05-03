@@ -37,16 +37,9 @@ namespace Azure.ResourceManager.Network.Models
             get => WorkspaceId is null ? default : WorkspaceId.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (WorkspaceId is null)
-                        WorkspaceId = new WritableSubResource();
-                    WorkspaceId.Id = value;
-                }
-                else
-                {
-                    WorkspaceId = null;
-                }
+                if (WorkspaceId is null)
+                    WorkspaceId = new WritableSubResource();
+                WorkspaceId.Id = value;
             }
         }
     }

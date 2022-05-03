@@ -37,16 +37,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => SourceVault is null ? default : SourceVault.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (SourceVault is null)
-                        SourceVault = new WritableSubResource();
-                    SourceVault.Id = value;
-                }
-                else
-                {
-                    SourceVault = null;
-                }
+                if (SourceVault is null)
+                    SourceVault = new WritableSubResource();
+                SourceVault.Id = value;
             }
         }
 

@@ -31,16 +31,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
             set
             {
-                if (value is not null)
-                {
-                    if (DiagnosticsProfile is null)
-                        DiagnosticsProfile = new DiagnosticsProfile();
-                    DiagnosticsProfile.BootDiagnostics = value;
-                }
-                else
-                {
-                    DiagnosticsProfile = null;
-                }
+                if (DiagnosticsProfile is null)
+                    DiagnosticsProfile = new DiagnosticsProfile();
+                DiagnosticsProfile.BootDiagnostics = value;
             }
         }
 
@@ -56,16 +49,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => BillingProfile is null ? default : BillingProfile.MaxPrice;
             set
             {
-                if (value is not null)
-                {
-                    if (BillingProfile is null)
-                        BillingProfile = new BillingProfile();
-                    BillingProfile.MaxPrice = value;
-                }
-                else
-                {
-                    BillingProfile = null;
-                }
+                if (BillingProfile is null)
+                    BillingProfile = new BillingProfile();
+                BillingProfile.MaxPrice = value;
             }
         }
 
@@ -77,16 +63,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
             set
             {
-                if (value is not null)
-                {
-                    if (ScheduledEventsProfile is null)
-                        ScheduledEventsProfile = new ScheduledEventsProfile();
-                    ScheduledEventsProfile.TerminateNotificationProfile = value;
-                }
-                else
-                {
-                    ScheduledEventsProfile = null;
-                }
+                if (ScheduledEventsProfile is null)
+                    ScheduledEventsProfile = new ScheduledEventsProfile();
+                ScheduledEventsProfile.TerminateNotificationProfile = value;
             }
         }
 

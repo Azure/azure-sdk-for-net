@@ -68,16 +68,9 @@ namespace Azure.ResourceManager.Network.Models
             get => IcmpConfiguration is null ? default : IcmpConfiguration.DisableTraceRoute;
             set
             {
-                if (value is not null)
-                {
-                    if (IcmpConfiguration is null)
-                        IcmpConfiguration = new ConnectionMonitorIcmpConfiguration();
-                    IcmpConfiguration.DisableTraceRoute = value;
-                }
-                else
-                {
-                    IcmpConfiguration = null;
-                }
+                if (IcmpConfiguration is null)
+                    IcmpConfiguration = new ConnectionMonitorIcmpConfiguration();
+                IcmpConfiguration.DisableTraceRoute = value;
             }
         }
 

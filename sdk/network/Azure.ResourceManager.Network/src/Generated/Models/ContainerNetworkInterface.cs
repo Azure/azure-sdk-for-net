@@ -56,16 +56,9 @@ namespace Azure.ResourceManager.Network.Models
             get => Container is null ? default : Container.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Container is null)
-                        Container = new WritableSubResource();
-                    Container.Id = value;
-                }
-                else
-                {
-                    Container = null;
-                }
+                if (Container is null)
+                    Container = new WritableSubResource();
+                Container.Id = value;
             }
         }
 

@@ -53,16 +53,9 @@ namespace Azure.ResourceManager.Sql
             get => ReadOnlyEndpoint is null ? default : ReadOnlyEndpoint.FailoverPolicy;
             set
             {
-                if (value is not null)
-                {
-                    if (ReadOnlyEndpoint is null)
-                        ReadOnlyEndpoint = new InstanceFailoverGroupReadOnlyEndpoint();
-                    ReadOnlyEndpoint.FailoverPolicy = value;
-                }
-                else
-                {
-                    ReadOnlyEndpoint = null;
-                }
+                if (ReadOnlyEndpoint is null)
+                    ReadOnlyEndpoint = new InstanceFailoverGroupReadOnlyEndpoint();
+                ReadOnlyEndpoint.FailoverPolicy = value;
             }
         }
 

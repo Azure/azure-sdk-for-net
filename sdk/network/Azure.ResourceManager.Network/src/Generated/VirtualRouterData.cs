@@ -60,16 +60,9 @@ namespace Azure.ResourceManager.Network
             get => HostedSubnet is null ? default : HostedSubnet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (HostedSubnet is null)
-                        HostedSubnet = new WritableSubResource();
-                    HostedSubnet.Id = value;
-                }
-                else
-                {
-                    HostedSubnet = null;
-                }
+                if (HostedSubnet is null)
+                    HostedSubnet = new WritableSubResource();
+                HostedSubnet.Id = value;
             }
         }
 
@@ -81,16 +74,9 @@ namespace Azure.ResourceManager.Network
             get => HostedGateway is null ? default : HostedGateway.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (HostedGateway is null)
-                        HostedGateway = new WritableSubResource();
-                    HostedGateway.Id = value;
-                }
-                else
-                {
-                    HostedGateway = null;
-                }
+                if (HostedGateway is null)
+                    HostedGateway = new WritableSubResource();
+                HostedGateway.Id = value;
             }
         }
 

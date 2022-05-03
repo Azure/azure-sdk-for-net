@@ -45,16 +45,9 @@ namespace Azure.ResourceManager.Network.Models
             get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpProtocolConfiguration;
             set
             {
-                if (value is not null)
-                {
-                    if (ProtocolConfiguration is null)
-                        ProtocolConfiguration = new ProtocolConfiguration();
-                    ProtocolConfiguration.HttpProtocolConfiguration = value;
-                }
-                else
-                {
-                    ProtocolConfiguration = null;
-                }
+                if (ProtocolConfiguration is null)
+                    ProtocolConfiguration = new ProtocolConfiguration();
+                ProtocolConfiguration.HttpProtocolConfiguration = value;
             }
         }
 

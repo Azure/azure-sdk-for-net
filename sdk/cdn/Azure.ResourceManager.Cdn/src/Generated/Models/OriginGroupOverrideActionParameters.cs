@@ -39,16 +39,9 @@ namespace Azure.ResourceManager.Cdn.Models
             get => OriginGroup is null ? default : OriginGroup.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (OriginGroup is null)
-                        OriginGroup = new WritableSubResource();
-                    OriginGroup.Id = value;
-                }
-                else
-                {
-                    OriginGroup = null;
-                }
+                if (OriginGroup is null)
+                    OriginGroup = new WritableSubResource();
+                OriginGroup.Id = value;
             }
         }
     }

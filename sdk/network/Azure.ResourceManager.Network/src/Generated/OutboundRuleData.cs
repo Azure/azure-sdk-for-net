@@ -65,16 +65,9 @@ namespace Azure.ResourceManager.Network
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BackendAddressPool is null)
-                        BackendAddressPool = new WritableSubResource();
-                    BackendAddressPool.Id = value;
-                }
-                else
-                {
-                    BackendAddressPool = null;
-                }
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
             }
         }
 

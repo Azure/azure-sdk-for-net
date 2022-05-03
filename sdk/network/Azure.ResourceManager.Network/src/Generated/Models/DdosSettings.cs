@@ -37,16 +37,9 @@ namespace Azure.ResourceManager.Network.Models
             get => DdosCustomPolicy is null ? default : DdosCustomPolicy.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (DdosCustomPolicy is null)
-                        DdosCustomPolicy = new WritableSubResource();
-                    DdosCustomPolicy.Id = value;
-                }
-                else
-                {
-                    DdosCustomPolicy = null;
-                }
+                if (DdosCustomPolicy is null)
+                    DdosCustomPolicy = new WritableSubResource();
+                DdosCustomPolicy.Id = value;
             }
         }
 

@@ -64,16 +64,9 @@ namespace Azure.ResourceManager.Compute
             get => SoftDeletePolicy is null ? default : SoftDeletePolicy.IsSoftDeleteEnabled;
             set
             {
-                if (value is not null)
-                {
-                    if (SoftDeletePolicy is null)
-                        SoftDeletePolicy = new SoftDeletePolicy();
-                    SoftDeletePolicy.IsSoftDeleteEnabled = value;
-                }
-                else
-                {
-                    SoftDeletePolicy = null;
-                }
+                if (SoftDeletePolicy is null)
+                    SoftDeletePolicy = new SoftDeletePolicy();
+                SoftDeletePolicy.IsSoftDeleteEnabled = value;
             }
         }
     }

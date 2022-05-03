@@ -52,16 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
             get => FrontEndServiceConfiguration is null ? default : FrontEndServiceConfiguration.Kind;
             set
             {
-                if (value is not null)
-                {
-                    if (FrontEndServiceConfiguration is null)
-                        FrontEndServiceConfiguration = new FrontEndConfiguration();
-                    FrontEndServiceConfiguration.Kind = value;
-                }
-                else
-                {
-                    FrontEndServiceConfiguration = null;
-                }
+                if (FrontEndServiceConfiguration is null)
+                    FrontEndServiceConfiguration = new FrontEndConfiguration();
+                FrontEndServiceConfiguration.Kind = value;
             }
         }
 

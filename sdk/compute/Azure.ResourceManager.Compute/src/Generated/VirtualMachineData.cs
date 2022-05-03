@@ -125,16 +125,9 @@ namespace Azure.ResourceManager.Compute
             get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
             set
             {
-                if (value is not null)
-                {
-                    if (DiagnosticsProfile is null)
-                        DiagnosticsProfile = new DiagnosticsProfile();
-                    DiagnosticsProfile.BootDiagnostics = value;
-                }
-                else
-                {
-                    DiagnosticsProfile = null;
-                }
+                if (DiagnosticsProfile is null)
+                    DiagnosticsProfile = new DiagnosticsProfile();
+                DiagnosticsProfile.BootDiagnostics = value;
             }
         }
 
@@ -146,16 +139,9 @@ namespace Azure.ResourceManager.Compute
             get => AvailabilitySet is null ? default : AvailabilitySet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (AvailabilitySet is null)
-                        AvailabilitySet = new WritableSubResource();
-                    AvailabilitySet.Id = value;
-                }
-                else
-                {
-                    AvailabilitySet = null;
-                }
+                if (AvailabilitySet is null)
+                    AvailabilitySet = new WritableSubResource();
+                AvailabilitySet.Id = value;
             }
         }
 
@@ -167,16 +153,9 @@ namespace Azure.ResourceManager.Compute
             get => VirtualMachineScaleSet is null ? default : VirtualMachineScaleSet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualMachineScaleSet is null)
-                        VirtualMachineScaleSet = new WritableSubResource();
-                    VirtualMachineScaleSet.Id = value;
-                }
-                else
-                {
-                    VirtualMachineScaleSet = null;
-                }
+                if (VirtualMachineScaleSet is null)
+                    VirtualMachineScaleSet = new WritableSubResource();
+                VirtualMachineScaleSet.Id = value;
             }
         }
 
@@ -188,16 +167,9 @@ namespace Azure.ResourceManager.Compute
             get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (ProximityPlacementGroup is null)
-                        ProximityPlacementGroup = new WritableSubResource();
-                    ProximityPlacementGroup.Id = value;
-                }
-                else
-                {
-                    ProximityPlacementGroup = null;
-                }
+                if (ProximityPlacementGroup is null)
+                    ProximityPlacementGroup = new WritableSubResource();
+                ProximityPlacementGroup.Id = value;
             }
         }
 
@@ -213,16 +185,9 @@ namespace Azure.ResourceManager.Compute
             get => BillingProfile is null ? default : BillingProfile.MaxPrice;
             set
             {
-                if (value is not null)
-                {
-                    if (BillingProfile is null)
-                        BillingProfile = new BillingProfile();
-                    BillingProfile.MaxPrice = value;
-                }
-                else
-                {
-                    BillingProfile = null;
-                }
+                if (BillingProfile is null)
+                    BillingProfile = new BillingProfile();
+                BillingProfile.MaxPrice = value;
             }
         }
 
@@ -234,16 +199,9 @@ namespace Azure.ResourceManager.Compute
             get => Host is null ? default : Host.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Host is null)
-                        Host = new WritableSubResource();
-                    Host.Id = value;
-                }
-                else
-                {
-                    Host = null;
-                }
+                if (Host is null)
+                    Host = new WritableSubResource();
+                Host.Id = value;
             }
         }
 
@@ -255,16 +213,9 @@ namespace Azure.ResourceManager.Compute
             get => HostGroup is null ? default : HostGroup.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (HostGroup is null)
-                        HostGroup = new WritableSubResource();
-                    HostGroup.Id = value;
-                }
-                else
-                {
-                    HostGroup = null;
-                }
+                if (HostGroup is null)
+                    HostGroup = new WritableSubResource();
+                HostGroup.Id = value;
             }
         }
 
@@ -288,16 +239,9 @@ namespace Azure.ResourceManager.Compute
             get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
             set
             {
-                if (value is not null)
-                {
-                    if (ScheduledEventsProfile is null)
-                        ScheduledEventsProfile = new ScheduledEventsProfile();
-                    ScheduledEventsProfile.TerminateNotificationProfile = value;
-                }
-                else
-                {
-                    ScheduledEventsProfile = null;
-                }
+                if (ScheduledEventsProfile is null)
+                    ScheduledEventsProfile = new ScheduledEventsProfile();
+                ScheduledEventsProfile.TerminateNotificationProfile = value;
             }
         }
 
@@ -311,16 +255,9 @@ namespace Azure.ResourceManager.Compute
             get => CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
             set
             {
-                if (value is not null)
-                {
-                    if (CapacityReservation is null)
-                        CapacityReservation = new CapacityReservationProfile();
-                    CapacityReservation.CapacityReservationGroupId = value;
-                }
-                else
-                {
-                    CapacityReservation = null;
-                }
+                if (CapacityReservation is null)
+                    CapacityReservation = new CapacityReservationProfile();
+                CapacityReservation.CapacityReservationGroupId = value;
             }
         }
 

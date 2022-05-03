@@ -52,16 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
             get => FileSystem is null ? default : FileSystem.Directory;
             set
             {
-                if (value is not null)
-                {
-                    if (FileSystem is null)
-                        FileSystem = new FileSystemTokenStore();
-                    FileSystem.Directory = value;
-                }
-                else
-                {
-                    FileSystem = null;
-                }
+                if (FileSystem is null)
+                    FileSystem = new FileSystemTokenStore();
+                FileSystem.Directory = value;
             }
         }
 
@@ -73,16 +66,9 @@ namespace Azure.ResourceManager.AppService.Models
             get => AzureBlobStorage is null ? default : AzureBlobStorage.SasUrlSettingName;
             set
             {
-                if (value is not null)
-                {
-                    if (AzureBlobStorage is null)
-                        AzureBlobStorage = new BlobStorageTokenStore();
-                    AzureBlobStorage.SasUrlSettingName = value;
-                }
-                else
-                {
-                    AzureBlobStorage = null;
-                }
+                if (AzureBlobStorage is null)
+                    AzureBlobStorage = new BlobStorageTokenStore();
+                AzureBlobStorage.SasUrlSettingName = value;
             }
         }
     }

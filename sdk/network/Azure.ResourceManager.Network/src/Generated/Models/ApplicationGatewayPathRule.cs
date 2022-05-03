@@ -62,16 +62,9 @@ namespace Azure.ResourceManager.Network.Models
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BackendAddressPool is null)
-                        BackendAddressPool = new WritableSubResource();
-                    BackendAddressPool.Id = value;
-                }
-                else
-                {
-                    BackendAddressPool = null;
-                }
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
             }
         }
 
@@ -83,16 +76,9 @@ namespace Azure.ResourceManager.Network.Models
             get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BackendHttpSettings is null)
-                        BackendHttpSettings = new WritableSubResource();
-                    BackendHttpSettings.Id = value;
-                }
-                else
-                {
-                    BackendHttpSettings = null;
-                }
+                if (BackendHttpSettings is null)
+                    BackendHttpSettings = new WritableSubResource();
+                BackendHttpSettings.Id = value;
             }
         }
 
@@ -104,16 +90,9 @@ namespace Azure.ResourceManager.Network.Models
             get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (RedirectConfiguration is null)
-                        RedirectConfiguration = new WritableSubResource();
-                    RedirectConfiguration.Id = value;
-                }
-                else
-                {
-                    RedirectConfiguration = null;
-                }
+                if (RedirectConfiguration is null)
+                    RedirectConfiguration = new WritableSubResource();
+                RedirectConfiguration.Id = value;
             }
         }
 
@@ -125,16 +104,9 @@ namespace Azure.ResourceManager.Network.Models
             get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (RewriteRuleSet is null)
-                        RewriteRuleSet = new WritableSubResource();
-                    RewriteRuleSet.Id = value;
-                }
-                else
-                {
-                    RewriteRuleSet = null;
-                }
+                if (RewriteRuleSet is null)
+                    RewriteRuleSet = new WritableSubResource();
+                RewriteRuleSet.Id = value;
             }
         }
 
@@ -148,16 +120,9 @@ namespace Azure.ResourceManager.Network.Models
             get => FirewallPolicy is null ? default : FirewallPolicy.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (FirewallPolicy is null)
-                        FirewallPolicy = new WritableSubResource();
-                    FirewallPolicy.Id = value;
-                }
-                else
-                {
-                    FirewallPolicy = null;
-                }
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
             }
         }
     }

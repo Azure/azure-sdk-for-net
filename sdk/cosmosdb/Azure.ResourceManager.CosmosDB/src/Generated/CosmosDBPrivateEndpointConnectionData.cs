@@ -44,16 +44,9 @@ namespace Azure.ResourceManager.CosmosDB
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (PrivateEndpoint is null)
-                        PrivateEndpoint = new PrivateEndpointProperty();
-                    PrivateEndpoint.Id = value;
-                }
-                else
-                {
-                    PrivateEndpoint = null;
-                }
+                if (PrivateEndpoint is null)
+                    PrivateEndpoint = new PrivateEndpointProperty();
+                PrivateEndpoint.Id = value;
             }
         }
 

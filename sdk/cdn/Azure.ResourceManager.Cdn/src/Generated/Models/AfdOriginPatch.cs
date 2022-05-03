@@ -28,16 +28,9 @@ namespace Azure.ResourceManager.Cdn.Models
             get => AzureOrigin is null ? default : AzureOrigin.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (AzureOrigin is null)
-                        AzureOrigin = new WritableSubResource();
-                    AzureOrigin.Id = value;
-                }
-                else
-                {
-                    AzureOrigin = null;
-                }
+                if (AzureOrigin is null)
+                    AzureOrigin = new WritableSubResource();
+                AzureOrigin.Id = value;
             }
         }
 

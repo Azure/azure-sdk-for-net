@@ -80,16 +80,9 @@ namespace Azure.ResourceManager.Network
             get => BasePolicy is null ? default : BasePolicy.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BasePolicy is null)
-                        BasePolicy = new WritableSubResource();
-                    BasePolicy.Id = value;
-                }
-                else
-                {
-                    BasePolicy = null;
-                }
+                if (BasePolicy is null)
+                    BasePolicy = new WritableSubResource();
+                BasePolicy.Id = value;
             }
         }
 
@@ -128,16 +121,9 @@ namespace Azure.ResourceManager.Network
             get => TransportSecurity is null ? default : TransportSecurity.CertificateAuthority;
             set
             {
-                if (value is not null)
-                {
-                    if (TransportSecurity is null)
-                        TransportSecurity = new FirewallPolicyTransportSecurity();
-                    TransportSecurity.CertificateAuthority = value;
-                }
-                else
-                {
-                    TransportSecurity = null;
-                }
+                if (TransportSecurity is null)
+                    TransportSecurity = new FirewallPolicyTransportSecurity();
+                TransportSecurity.CertificateAuthority = value;
             }
         }
 
@@ -149,16 +135,9 @@ namespace Azure.ResourceManager.Network
             get => Sku is null ? default : Sku.Tier;
             set
             {
-                if (value is not null)
-                {
-                    if (Sku is null)
-                        Sku = new FirewallPolicySku();
-                    Sku.Tier = value;
-                }
-                else
-                {
-                    Sku = null;
-                }
+                if (Sku is null)
+                    Sku = new FirewallPolicySku();
+                Sku.Tier = value;
             }
         }
     }

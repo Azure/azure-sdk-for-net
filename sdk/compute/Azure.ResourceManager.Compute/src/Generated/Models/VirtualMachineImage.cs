@@ -95,16 +95,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => Disallowed is null ? default : Disallowed.VmDiskType;
             set
             {
-                if (value is not null)
-                {
-                    if (Disallowed is null)
-                        Disallowed = new DisallowedConfiguration();
-                    Disallowed.VmDiskType = value;
-                }
-                else
-                {
-                    Disallowed = null;
-                }
+                if (Disallowed is null)
+                    Disallowed = new DisallowedConfiguration();
+                Disallowed.VmDiskType = value;
             }
         }
 

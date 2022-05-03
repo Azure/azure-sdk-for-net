@@ -84,16 +84,9 @@ namespace Azure.ResourceManager.Network
             get => VirtualWan is null ? default : VirtualWan.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualWan is null)
-                        VirtualWan = new WritableSubResource();
-                    VirtualWan.Id = value;
-                }
-                else
-                {
-                    VirtualWan = null;
-                }
+                if (VirtualWan is null)
+                    VirtualWan = new WritableSubResource();
+                VirtualWan.Id = value;
             }
         }
 
@@ -105,16 +98,9 @@ namespace Azure.ResourceManager.Network
             get => VpnGateway is null ? default : VpnGateway.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VpnGateway is null)
-                        VpnGateway = new WritableSubResource();
-                    VpnGateway.Id = value;
-                }
-                else
-                {
-                    VpnGateway = null;
-                }
+                if (VpnGateway is null)
+                    VpnGateway = new WritableSubResource();
+                VpnGateway.Id = value;
             }
         }
 
@@ -126,16 +112,9 @@ namespace Azure.ResourceManager.Network
             get => P2SVpnGateway is null ? default : P2SVpnGateway.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (P2SVpnGateway is null)
-                        P2SVpnGateway = new WritableSubResource();
-                    P2SVpnGateway.Id = value;
-                }
-                else
-                {
-                    P2SVpnGateway = null;
-                }
+                if (P2SVpnGateway is null)
+                    P2SVpnGateway = new WritableSubResource();
+                P2SVpnGateway.Id = value;
             }
         }
 
@@ -147,16 +126,9 @@ namespace Azure.ResourceManager.Network
             get => ExpressRouteGateway is null ? default : ExpressRouteGateway.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (ExpressRouteGateway is null)
-                        ExpressRouteGateway = new WritableSubResource();
-                    ExpressRouteGateway.Id = value;
-                }
-                else
-                {
-                    ExpressRouteGateway = null;
-                }
+                if (ExpressRouteGateway is null)
+                    ExpressRouteGateway = new WritableSubResource();
+                ExpressRouteGateway.Id = value;
             }
         }
 
@@ -168,16 +140,9 @@ namespace Azure.ResourceManager.Network
             get => AzureFirewall is null ? default : AzureFirewall.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (AzureFirewall is null)
-                        AzureFirewall = new WritableSubResource();
-                    AzureFirewall.Id = value;
-                }
-                else
-                {
-                    AzureFirewall = null;
-                }
+                if (AzureFirewall is null)
+                    AzureFirewall = new WritableSubResource();
+                AzureFirewall.Id = value;
             }
         }
 
@@ -189,16 +154,9 @@ namespace Azure.ResourceManager.Network
             get => SecurityPartnerProvider is null ? default : SecurityPartnerProvider.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (SecurityPartnerProvider is null)
-                        SecurityPartnerProvider = new WritableSubResource();
-                    SecurityPartnerProvider.Id = value;
-                }
-                else
-                {
-                    SecurityPartnerProvider = null;
-                }
+                if (SecurityPartnerProvider is null)
+                    SecurityPartnerProvider = new WritableSubResource();
+                SecurityPartnerProvider.Id = value;
             }
         }
 

@@ -38,16 +38,9 @@ namespace Azure.ResourceManager.Network.Models
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BackendAddressPool is null)
-                        BackendAddressPool = new WritableSubResource();
-                    BackendAddressPool.Id = value;
-                }
-                else
-                {
-                    BackendAddressPool = null;
-                }
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
             }
         }
 
@@ -59,16 +52,9 @@ namespace Azure.ResourceManager.Network.Models
             get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (BackendHttpSettings is null)
-                        BackendHttpSettings = new WritableSubResource();
-                    BackendHttpSettings.Id = value;
-                }
-                else
-                {
-                    BackendHttpSettings = null;
-                }
+                if (BackendHttpSettings is null)
+                    BackendHttpSettings = new WritableSubResource();
+                BackendHttpSettings.Id = value;
             }
         }
     }

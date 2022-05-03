@@ -60,16 +60,9 @@ namespace Azure.ResourceManager.Network.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Subnet is null)
-                        Subnet = new WritableSubResource();
-                    Subnet.Id = value;
-                }
-                else
-                {
-                    Subnet = null;
-                }
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
             }
         }
 
@@ -81,16 +74,9 @@ namespace Azure.ResourceManager.Network.Models
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (PublicIPAddress is null)
-                        PublicIPAddress = new WritableSubResource();
-                    PublicIPAddress.Id = value;
-                }
-                else
-                {
-                    PublicIPAddress = null;
-                }
+                if (PublicIPAddress is null)
+                    PublicIPAddress = new WritableSubResource();
+                PublicIPAddress.Id = value;
             }
         }
 
@@ -102,16 +88,9 @@ namespace Azure.ResourceManager.Network.Models
             get => PrivateLinkConfiguration is null ? default : PrivateLinkConfiguration.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (PrivateLinkConfiguration is null)
-                        PrivateLinkConfiguration = new WritableSubResource();
-                    PrivateLinkConfiguration.Id = value;
-                }
-                else
-                {
-                    PrivateLinkConfiguration = null;
-                }
+                if (PrivateLinkConfiguration is null)
+                    PrivateLinkConfiguration = new WritableSubResource();
+                PrivateLinkConfiguration.Id = value;
             }
         }
 

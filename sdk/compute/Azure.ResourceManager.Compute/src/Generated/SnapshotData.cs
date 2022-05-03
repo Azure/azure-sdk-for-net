@@ -101,16 +101,9 @@ namespace Azure.ResourceManager.Compute
             get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
             set
             {
-                if (value is not null)
-                {
-                    if (SupportedCapabilities is null)
-                        SupportedCapabilities = new SupportedCapabilities();
-                    SupportedCapabilities.AcceleratedNetwork = value;
-                }
-                else
-                {
-                    SupportedCapabilities = null;
-                }
+                if (SupportedCapabilities is null)
+                    SupportedCapabilities = new SupportedCapabilities();
+                SupportedCapabilities.AcceleratedNetwork = value;
             }
         }
 

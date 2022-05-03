@@ -84,16 +84,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => PrometheusEndpoint is null ? default : PrometheusEndpoint.IPAddress;
             set
             {
-                if (value is not null)
-                {
-                    if (PrometheusEndpoint is null)
-                        PrometheusEndpoint = new SeedNode();
-                    PrometheusEndpoint.IPAddress = value;
-                }
-                else
-                {
-                    PrometheusEndpoint = null;
-                }
+                if (PrometheusEndpoint is null)
+                    PrometheusEndpoint = new SeedNode();
+                PrometheusEndpoint.IPAddress = value;
             }
         }
 

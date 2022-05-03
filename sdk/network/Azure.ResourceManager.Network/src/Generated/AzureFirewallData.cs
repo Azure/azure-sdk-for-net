@@ -93,16 +93,9 @@ namespace Azure.ResourceManager.Network
             get => VirtualHub is null ? default : VirtualHub.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualHub is null)
-                        VirtualHub = new WritableSubResource();
-                    VirtualHub.Id = value;
-                }
-                else
-                {
-                    VirtualHub = null;
-                }
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
             }
         }
 
@@ -114,16 +107,9 @@ namespace Azure.ResourceManager.Network
             get => FirewallPolicy is null ? default : FirewallPolicy.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (FirewallPolicy is null)
-                        FirewallPolicy = new WritableSubResource();
-                    FirewallPolicy.Id = value;
-                }
-                else
-                {
-                    FirewallPolicy = null;
-                }
+                if (FirewallPolicy is null)
+                    FirewallPolicy = new WritableSubResource();
+                FirewallPolicy.Id = value;
             }
         }
 

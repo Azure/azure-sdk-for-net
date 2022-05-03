@@ -53,16 +53,9 @@ namespace Azure.ResourceManager.DnsResolver
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualNetwork is null)
-                        VirtualNetwork = new WritableSubResource();
-                    VirtualNetwork.Id = value;
-                }
-                else
-                {
-                    VirtualNetwork = null;
-                }
+                if (VirtualNetwork is null)
+                    VirtualNetwork = new WritableSubResource();
+                VirtualNetwork.Id = value;
             }
         }
 

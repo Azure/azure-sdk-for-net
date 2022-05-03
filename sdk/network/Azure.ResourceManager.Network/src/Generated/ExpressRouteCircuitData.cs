@@ -92,16 +92,9 @@ namespace Azure.ResourceManager.Network
             get => ExpressRoutePort is null ? default : ExpressRoutePort.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (ExpressRoutePort is null)
-                        ExpressRoutePort = new WritableSubResource();
-                    ExpressRoutePort.Id = value;
-                }
-                else
-                {
-                    ExpressRoutePort = null;
-                }
+                if (ExpressRoutePort is null)
+                    ExpressRoutePort = new WritableSubResource();
+                ExpressRoutePort.Id = value;
             }
         }
 

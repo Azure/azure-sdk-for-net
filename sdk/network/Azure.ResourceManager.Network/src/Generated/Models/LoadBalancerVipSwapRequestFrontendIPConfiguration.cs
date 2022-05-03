@@ -28,16 +28,9 @@ namespace Azure.ResourceManager.Network.Models
             get => PublicIPAddress is null ? default : PublicIPAddress.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (PublicIPAddress is null)
-                        PublicIPAddress = new WritableSubResource();
-                    PublicIPAddress.Id = value;
-                }
-                else
-                {
-                    PublicIPAddress = null;
-                }
+                if (PublicIPAddress is null)
+                    PublicIPAddress = new WritableSubResource();
+                PublicIPAddress.Id = value;
             }
         }
     }

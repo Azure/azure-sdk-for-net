@@ -51,16 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
             get => DetectorMetaData is null ? default : DetectorMetaData.DataSource;
             set
             {
-                if (value is not null)
-                {
-                    if (DetectorMetaData is null)
-                        DetectorMetaData = new ResponseMetaData();
-                    DetectorMetaData.DataSource = value;
-                }
-                else
-                {
-                    DetectorMetaData = null;
-                }
+                if (DetectorMetaData is null)
+                    DetectorMetaData = new ResponseMetaData();
+                DetectorMetaData.DataSource = value;
             }
         }
     }

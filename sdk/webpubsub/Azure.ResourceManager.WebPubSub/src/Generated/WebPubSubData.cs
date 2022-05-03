@@ -114,16 +114,9 @@ namespace Azure.ResourceManager.WebPubSub
             get => Tls is null ? default : Tls.ClientCertEnabled;
             set
             {
-                if (value is not null)
-                {
-                    if (Tls is null)
-                        Tls = new WebPubSubTlsSettings();
-                    Tls.ClientCertEnabled = value;
-                }
-                else
-                {
-                    Tls = null;
-                }
+                if (Tls is null)
+                    Tls = new WebPubSubTlsSettings();
+                Tls.ClientCertEnabled = value;
             }
         }
 

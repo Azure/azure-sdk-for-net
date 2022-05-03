@@ -38,16 +38,9 @@ namespace Azure.ResourceManager.Network.Models
             get => AssociatedRouteTable is null ? default : AssociatedRouteTable.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (AssociatedRouteTable is null)
-                        AssociatedRouteTable = new WritableSubResource();
-                    AssociatedRouteTable.Id = value;
-                }
-                else
-                {
-                    AssociatedRouteTable = null;
-                }
+                if (AssociatedRouteTable is null)
+                    AssociatedRouteTable = new WritableSubResource();
+                AssociatedRouteTable.Id = value;
             }
         }
 

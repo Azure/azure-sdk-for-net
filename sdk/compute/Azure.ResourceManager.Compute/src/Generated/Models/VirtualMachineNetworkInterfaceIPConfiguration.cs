@@ -62,16 +62,9 @@ namespace Azure.ResourceManager.Compute.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Subnet is null)
-                        Subnet = new WritableSubResource();
-                    Subnet.Id = value;
-                }
-                else
-                {
-                    Subnet = null;
-                }
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
             }
         }
 

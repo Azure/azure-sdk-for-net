@@ -87,16 +87,9 @@ namespace Azure.ResourceManager.Resources.Models
             get => ContainerSettings is null ? default : ContainerSettings.ContainerGroupName;
             set
             {
-                if (value is not null)
-                {
-                    if (ContainerSettings is null)
-                        ContainerSettings = new ContainerConfiguration();
-                    ContainerSettings.ContainerGroupName = value;
-                }
-                else
-                {
-                    ContainerSettings = null;
-                }
+                if (ContainerSettings is null)
+                    ContainerSettings = new ContainerConfiguration();
+                ContainerSettings.ContainerGroupName = value;
             }
         }
 

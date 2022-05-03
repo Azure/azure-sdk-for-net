@@ -106,16 +106,9 @@ namespace Azure.ResourceManager.Cdn
             get => DefaultOriginGroup is null ? default : DefaultOriginGroup.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (DefaultOriginGroup is null)
-                        DefaultOriginGroup = new EndpointPropertiesUpdateParametersDefaultOriginGroup();
-                    DefaultOriginGroup.Id = value;
-                }
-                else
-                {
-                    DefaultOriginGroup = null;
-                }
+                if (DefaultOriginGroup is null)
+                    DefaultOriginGroup = new EndpointPropertiesUpdateParametersDefaultOriginGroup();
+                DefaultOriginGroup.Id = value;
             }
         }
 
@@ -131,16 +124,9 @@ namespace Azure.ResourceManager.Cdn
             get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (WebApplicationFirewallPolicyLink is null)
-                        WebApplicationFirewallPolicyLink = new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink();
-                    WebApplicationFirewallPolicyLink.Id = value;
-                }
-                else
-                {
-                    WebApplicationFirewallPolicyLink = null;
-                }
+                if (WebApplicationFirewallPolicyLink is null)
+                    WebApplicationFirewallPolicyLink = new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink();
+                WebApplicationFirewallPolicyLink.Id = value;
             }
         }
 

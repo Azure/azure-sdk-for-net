@@ -128,16 +128,9 @@ namespace Azure.ResourceManager.Compute
             get => DiagnosticsProfile is null ? default : DiagnosticsProfile.BootDiagnostics;
             set
             {
-                if (value is not null)
-                {
-                    if (DiagnosticsProfile is null)
-                        DiagnosticsProfile = new DiagnosticsProfile();
-                    DiagnosticsProfile.BootDiagnostics = value;
-                }
-                else
-                {
-                    DiagnosticsProfile = null;
-                }
+                if (DiagnosticsProfile is null)
+                    DiagnosticsProfile = new DiagnosticsProfile();
+                DiagnosticsProfile.BootDiagnostics = value;
             }
         }
 
@@ -149,16 +142,9 @@ namespace Azure.ResourceManager.Compute
             get => AvailabilitySet is null ? default : AvailabilitySet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (AvailabilitySet is null)
-                        AvailabilitySet = new WritableSubResource();
-                    AvailabilitySet.Id = value;
-                }
-                else
-                {
-                    AvailabilitySet = null;
-                }
+                if (AvailabilitySet is null)
+                    AvailabilitySet = new WritableSubResource();
+                AvailabilitySet.Id = value;
             }
         }
 

@@ -79,16 +79,9 @@ namespace Azure.ResourceManager.Network
             get => GatewayLoadBalancer is null ? default : GatewayLoadBalancer.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (GatewayLoadBalancer is null)
-                        GatewayLoadBalancer = new WritableSubResource();
-                    GatewayLoadBalancer.Id = value;
-                }
-                else
-                {
-                    GatewayLoadBalancer = null;
-                }
+                if (GatewayLoadBalancer is null)
+                    GatewayLoadBalancer = new WritableSubResource();
+                GatewayLoadBalancer.Id = value;
             }
         }
 

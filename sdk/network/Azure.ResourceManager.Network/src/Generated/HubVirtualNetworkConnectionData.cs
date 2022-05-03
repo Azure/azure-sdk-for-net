@@ -53,16 +53,9 @@ namespace Azure.ResourceManager.Network
             get => RemoteVirtualNetwork is null ? default : RemoteVirtualNetwork.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (RemoteVirtualNetwork is null)
-                        RemoteVirtualNetwork = new WritableSubResource();
-                    RemoteVirtualNetwork.Id = value;
-                }
-                else
-                {
-                    RemoteVirtualNetwork = null;
-                }
+                if (RemoteVirtualNetwork is null)
+                    RemoteVirtualNetwork = new WritableSubResource();
+                RemoteVirtualNetwork.Id = value;
             }
         }
 

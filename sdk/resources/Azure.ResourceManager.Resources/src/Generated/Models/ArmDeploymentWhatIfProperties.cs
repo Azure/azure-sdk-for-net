@@ -24,16 +24,9 @@ namespace Azure.ResourceManager.Resources.Models
             get => WhatIfSettings is null ? default : WhatIfSettings.ResultFormat;
             set
             {
-                if (value is not null)
-                {
-                    if (WhatIfSettings is null)
-                        WhatIfSettings = new ArmDeploymentWhatIfSettings();
-                    WhatIfSettings.ResultFormat = value;
-                }
-                else
-                {
-                    WhatIfSettings = null;
-                }
+                if (WhatIfSettings is null)
+                    WhatIfSettings = new ArmDeploymentWhatIfSettings();
+                WhatIfSettings.ResultFormat = value;
             }
         }
     }

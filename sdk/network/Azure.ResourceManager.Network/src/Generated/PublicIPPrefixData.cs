@@ -95,16 +95,9 @@ namespace Azure.ResourceManager.Network
             get => CustomIPPrefix is null ? default : CustomIPPrefix.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (CustomIPPrefix is null)
-                        CustomIPPrefix = new WritableSubResource();
-                    CustomIPPrefix.Id = value;
-                }
-                else
-                {
-                    CustomIPPrefix = null;
-                }
+                if (CustomIPPrefix is null)
+                    CustomIPPrefix = new WritableSubResource();
+                CustomIPPrefix.Id = value;
             }
         }
 

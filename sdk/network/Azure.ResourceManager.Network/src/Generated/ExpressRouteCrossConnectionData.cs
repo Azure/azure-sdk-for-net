@@ -73,16 +73,9 @@ namespace Azure.ResourceManager.Network
             get => ExpressRouteCircuit is null ? default : ExpressRouteCircuit.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (ExpressRouteCircuit is null)
-                        ExpressRouteCircuit = new WritableSubResource();
-                    ExpressRouteCircuit.Id = value;
-                }
-                else
-                {
-                    ExpressRouteCircuit = null;
-                }
+                if (ExpressRouteCircuit is null)
+                    ExpressRouteCircuit = new WritableSubResource();
+                ExpressRouteCircuit.Id = value;
             }
         }
 

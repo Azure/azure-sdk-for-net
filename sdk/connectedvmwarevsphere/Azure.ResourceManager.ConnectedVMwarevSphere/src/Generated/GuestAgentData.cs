@@ -58,16 +58,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             get => HttpProxyConfig is null ? default : HttpProxyConfig.HttpsProxy;
             set
             {
-                if (value is not null)
-                {
-                    if (HttpProxyConfig is null)
-                        HttpProxyConfig = new HttpProxyConfiguration();
-                    HttpProxyConfig.HttpsProxy = value;
-                }
-                else
-                {
-                    HttpProxyConfig = null;
-                }
+                if (HttpProxyConfig is null)
+                    HttpProxyConfig = new HttpProxyConfiguration();
+                HttpProxyConfig.HttpsProxy = value;
             }
         }
 

@@ -99,16 +99,9 @@ namespace Azure.ResourceManager.Network.Models
             get => VirtualNetworkGateway1 is null ? default : VirtualNetworkGateway1.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualNetworkGateway1 is null)
-                        VirtualNetworkGateway1 = new WritableSubResource();
-                    VirtualNetworkGateway1.Id = value;
-                }
-                else
-                {
-                    VirtualNetworkGateway1 = null;
-                }
+                if (VirtualNetworkGateway1 is null)
+                    VirtualNetworkGateway1 = new WritableSubResource();
+                VirtualNetworkGateway1.Id = value;
             }
         }
 
@@ -120,16 +113,9 @@ namespace Azure.ResourceManager.Network.Models
             get => VirtualNetworkGateway2 is null ? default : VirtualNetworkGateway2.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (VirtualNetworkGateway2 is null)
-                        VirtualNetworkGateway2 = new WritableSubResource();
-                    VirtualNetworkGateway2.Id = value;
-                }
-                else
-                {
-                    VirtualNetworkGateway2 = null;
-                }
+                if (VirtualNetworkGateway2 is null)
+                    VirtualNetworkGateway2 = new WritableSubResource();
+                VirtualNetworkGateway2.Id = value;
             }
         }
 
@@ -141,16 +127,9 @@ namespace Azure.ResourceManager.Network.Models
             get => LocalNetworkGateway2 is null ? default : LocalNetworkGateway2.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (LocalNetworkGateway2 is null)
-                        LocalNetworkGateway2 = new WritableSubResource();
-                    LocalNetworkGateway2.Id = value;
-                }
-                else
-                {
-                    LocalNetworkGateway2 = null;
-                }
+                if (LocalNetworkGateway2 is null)
+                    LocalNetworkGateway2 = new WritableSubResource();
+                LocalNetworkGateway2.Id = value;
             }
         }
 
@@ -180,16 +159,9 @@ namespace Azure.ResourceManager.Network.Models
             get => Peer is null ? default : Peer.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (Peer is null)
-                        Peer = new WritableSubResource();
-                    Peer.Id = value;
-                }
-                else
-                {
-                    Peer = null;
-                }
+                if (Peer is null)
+                    Peer = new WritableSubResource();
+                Peer.Id = value;
             }
         }
 

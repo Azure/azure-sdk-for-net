@@ -54,16 +54,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryptionStatus;
             set
             {
-                if (value is not null)
-                {
-                    if (EncryptionPreferences is null)
-                        EncryptionPreferences = new EncryptionPreferences();
-                    EncryptionPreferences.DoubleEncryptionStatus = value;
-                }
-                else
-                {
-                    EncryptionPreferences = null;
-                }
+                if (EncryptionPreferences is null)
+                    EncryptionPreferences = new EncryptionPreferences();
+                EncryptionPreferences.DoubleEncryptionStatus = value;
             }
         }
 
@@ -75,16 +68,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             get => ManagementResourcePreferences is null ? default : ManagementResourcePreferences.PreferredManagementResourceId;
             set
             {
-                if (value is not null)
-                {
-                    if (ManagementResourcePreferences is null)
-                        ManagementResourcePreferences = new ManagementResourcePreferences();
-                    ManagementResourcePreferences.PreferredManagementResourceId = value;
-                }
-                else
-                {
-                    ManagementResourcePreferences = null;
-                }
+                if (ManagementResourcePreferences is null)
+                    ManagementResourcePreferences = new ManagementResourcePreferences();
+                ManagementResourcePreferences.PreferredManagementResourceId = value;
             }
         }
     }

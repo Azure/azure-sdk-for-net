@@ -40,16 +40,9 @@ namespace Azure.ResourceManager.Cdn.Models
             get => WafPolicy is null ? default : WafPolicy.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (WafPolicy is null)
-                        WafPolicy = new WritableSubResource();
-                    WafPolicy.Id = value;
-                }
-                else
-                {
-                    WafPolicy = null;
-                }
+                if (WafPolicy is null)
+                    WafPolicy = new WritableSubResource();
+                WafPolicy.Id = value;
             }
         }
 

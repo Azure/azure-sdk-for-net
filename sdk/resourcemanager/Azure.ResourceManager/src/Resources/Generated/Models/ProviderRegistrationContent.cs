@@ -23,16 +23,9 @@ namespace Azure.ResourceManager.Resources.Models
             get => ThirdPartyProviderConsent is null ? default : ThirdPartyProviderConsent.ConsentToAuthorization;
             set
             {
-                if (value is not null)
-                {
-                    if (ThirdPartyProviderConsent is null)
-                        ThirdPartyProviderConsent = new ProviderConsentDefinition();
-                    ThirdPartyProviderConsent.ConsentToAuthorization = value;
-                }
-                else
-                {
-                    ThirdPartyProviderConsent = null;
-                }
+                if (ThirdPartyProviderConsent is null)
+                    ThirdPartyProviderConsent = new ProviderConsentDefinition();
+                ThirdPartyProviderConsent.ConsentToAuthorization = value;
             }
         }
     }

@@ -34,16 +34,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => AutoscaleSettings is null ? default : AutoscaleSettings.MaxThroughput;
             set
             {
-                if (value is not null)
-                {
-                    if (AutoscaleSettings is null)
-                        AutoscaleSettings = new AutoscaleSettings();
-                    AutoscaleSettings.MaxThroughput = value;
-                }
-                else
-                {
-                    AutoscaleSettings = null;
-                }
+                if (AutoscaleSettings is null)
+                    AutoscaleSettings = new AutoscaleSettings();
+                AutoscaleSettings.MaxThroughput = value;
             }
         }
     }

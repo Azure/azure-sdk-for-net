@@ -71,16 +71,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => ApiProperties is null ? default : ApiProperties.ServerVersion;
             set
             {
-                if (value is not null)
-                {
-                    if (ApiProperties is null)
-                        ApiProperties = new ApiProperties();
-                    ApiProperties.ServerVersion = value;
-                }
-                else
-                {
-                    ApiProperties = null;
-                }
+                if (ApiProperties is null)
+                    ApiProperties = new ApiProperties();
+                ApiProperties.ServerVersion = value;
             }
         }
 
@@ -94,16 +87,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => AnalyticalStorageConfiguration is null ? default : AnalyticalStorageConfiguration.SchemaType;
             set
             {
-                if (value is not null)
-                {
-                    if (AnalyticalStorageConfiguration is null)
-                        AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
-                    AnalyticalStorageConfiguration.SchemaType = value;
-                }
-                else
-                {
-                    AnalyticalStorageConfiguration = null;
-                }
+                if (AnalyticalStorageConfiguration is null)
+                    AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
+                AnalyticalStorageConfiguration.SchemaType = value;
             }
         }
 
@@ -125,16 +111,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get => Capacity is null ? default : Capacity.TotalThroughputLimit;
             set
             {
-                if (value is not null)
-                {
-                    if (Capacity is null)
-                        Capacity = new Capacity();
-                    Capacity.TotalThroughputLimit = value;
-                }
-                else
-                {
-                    Capacity = null;
-                }
+                if (Capacity is null)
+                    Capacity = new Capacity();
+                Capacity.TotalThroughputLimit = value;
             }
         }
     }

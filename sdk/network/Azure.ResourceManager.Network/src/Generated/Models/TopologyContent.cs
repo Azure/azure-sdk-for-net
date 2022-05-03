@@ -28,16 +28,9 @@ namespace Azure.ResourceManager.Network.Models
             get => TargetVirtualNetwork is null ? default : TargetVirtualNetwork.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (TargetVirtualNetwork is null)
-                        TargetVirtualNetwork = new WritableSubResource();
-                    TargetVirtualNetwork.Id = value;
-                }
-                else
-                {
-                    TargetVirtualNetwork = null;
-                }
+                if (TargetVirtualNetwork is null)
+                    TargetVirtualNetwork = new WritableSubResource();
+                TargetVirtualNetwork.Id = value;
             }
         }
 
@@ -49,16 +42,9 @@ namespace Azure.ResourceManager.Network.Models
             get => TargetSubnet is null ? default : TargetSubnet.Id;
             set
             {
-                if (value is not null)
-                {
-                    if (TargetSubnet is null)
-                        TargetSubnet = new WritableSubResource();
-                    TargetSubnet.Id = value;
-                }
-                else
-                {
-                    TargetSubnet = null;
-                }
+                if (TargetSubnet is null)
+                    TargetSubnet = new WritableSubResource();
+                TargetSubnet.Id = value;
             }
         }
     }
