@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
         /// <param name="options">The customer provided client options object.</param>
         /// <param name="suppressNestedClientActivities">Flag controlling if <see cref="System.Diagnostics.Activity"/>
         ///  created by this <see cref="ClientDiagnostics"/> for client method calls should be suppressed when called
-        ///  by other Azure SDK client methods.  It's recommended to set it to true for new clients; use default (null) for
+        ///  by other Azure SDK client methods.  It's recommended to set it to true for new clients; use default (null)
         ///  for backward compatibility reasons, or set it to false to explicitly disable suppression for specific cases.
         ///  The default value could change in the future, the flag should be only set to false if suppression for the client
         ///  should never be enabled.</param>
