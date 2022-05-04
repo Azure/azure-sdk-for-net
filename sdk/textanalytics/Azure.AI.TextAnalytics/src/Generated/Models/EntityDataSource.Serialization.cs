@@ -10,8 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class EntityDataSource
+    public partial class EntityDataSource : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("dataSource");
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(EntityId);
+            writer.WriteEndObject();
+        }
+
         internal static EntityDataSource DeserializeEntityDataSource(JsonElement element)
         {
             string dataSource = default;
