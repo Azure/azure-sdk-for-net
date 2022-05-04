@@ -589,36 +589,38 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task RecognizeLinkedEntitiesNullText()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""0"",
-                            ""entities"": [
-                                {
-                                    ""name"": ""Microsoft"",
-                                    ""matches"": [
-                                        {
-                                            ""text"": null,
-                                            ""offset"": 0,
-                                            ""length"": 9,
-                                            ""confidenceScore"": 0.26
-                                        }
-                                    ],
-                                    ""language"": ""en"",
-                                    ""id"": ""Microsoft"",
-                                    ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
-                                    ""dataSource"": ""Wikipedia""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020-02-01""
+                    ""kind"": ""EntityLinkingResults"",
+                    ""results"": {                    
+                        ""documents"": [
+                            {
+                                ""id"": ""0"",
+                                ""entities"": [
+                                    {
+                                        ""name"": ""Microsoft"",
+                                        ""matches"": [
+                                            {
+                                                ""text"": null,
+                                                ""offset"": 0,
+                                                ""length"": 9,
+                                                ""confidenceScore"": 0.26
+                                            }
+                                        ],
+                                        ""language"": ""en"",
+                                        ""id"": ""Microsoft"",
+                                        ""url"": ""https://en.wikipedia.org/wiki/Microsoft"",
+                                        ""dataSource"": ""Wikipedia""
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020-02-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
