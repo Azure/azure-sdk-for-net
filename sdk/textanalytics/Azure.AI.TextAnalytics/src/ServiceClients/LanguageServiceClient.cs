@@ -792,107 +792,178 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         public override async Task<Response<KeyPhraseCollection>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
-            //scope.AddAttribute("document", document);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
 
-            //try
-            //{
-            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-            //    Response<KeyPhraseResult> result = await _serviceRestClient.KeyPhrasesAsync(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
-            //    Response response = result.GetRawResponse();
+            try
+            {
+                MultiLanguageAnalysisInput analysisInput = new();
+                analysisInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
 
-            //    if (result.Value.Errors.Count > 0)
-            //    {
-            //        // only one document, so we can ignore the id and grab the first error message.
-            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
-            //    }
+                var input = new AnalyzeTextKeyPhraseExtractionInput { AnalysisInput = analysisInput };
 
-            //    return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            await Task.Yield();
-            throw new NotImplementedException();
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    input,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var keyPhrases = (KeyPhraseTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (keyPhrases.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(keyPhrases.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+
+                return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(keyPhrases.Results.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public override Response<KeyPhraseCollection> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
-            //scope.AddAttribute("document", document);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
 
-            //try
-            //{
-            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-            //    Response<KeyPhraseResult> result = _serviceRestClient.KeyPhrases(new MultiLanguageBatchInput(documents), cancellationToken: cancellationToken);
-            //    Response response = result.GetRawResponse();
+            try
+            {
+                MultiLanguageAnalysisInput analysisInput = new();
+                analysisInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
 
-            //    if (result.Value.Errors.Count > 0)
-            //    {
-            //        // only one document, so we can ignore the id and grab the first error message.
-            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-            //        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
-            //    }
+                var input = new AnalyzeTextKeyPhraseExtractionInput { AnalysisInput = analysisInput };
 
-            //    return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            throw new NotImplementedException();
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    input,
+                    cancellationToken: cancellationToken);
+
+                var keyPhrases = (KeyPhraseTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (keyPhrases.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+                    var error = Transforms.ConvertToError(keyPhrases.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(keyPhrases.Results.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new TextAnalyticsRequestOptions();
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new TextAnalyticsRequestOptions();
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
         }
 
         public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new TextAnalyticsRequestOptions();
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new TextAnalyticsRequestOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= new TextAnalyticsRequestOptions();
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextKeyPhraseExtractionInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs,options.ModelVersion)
+                };
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var keyPhrases = (KeyPhraseTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                ExtractKeyPhrasesResultCollection results = Transforms.ConvertToExtractKeyPhrasesResultCollection(keyPhrases.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(MultiLanguageAnalysisInput multiLanguageInput, TextAnalyticsRequestOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextKeyPhraseExtractionInput input = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs, options.ModelVersion)
+                };
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    input,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                var keyPhrases = (KeyPhraseTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                ExtractKeyPhrasesResultCollection results = Transforms.ConvertToExtractKeyPhrasesResultCollection(keyPhrases.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
