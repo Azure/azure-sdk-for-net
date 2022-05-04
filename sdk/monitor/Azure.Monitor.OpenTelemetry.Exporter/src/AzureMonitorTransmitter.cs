@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Remove this when we add an option to disable offline storage.
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
-                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingPersistentStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                    AzureMonitorExporterEventSource.Log.Write($"FailedToInitializePersistentStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"ErrorWhileTransmitting{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
 
             return result;
@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"ErrorWhileTransmittingFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                    AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
                 }
 
                 files--;
