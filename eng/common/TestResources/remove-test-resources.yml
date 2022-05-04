@@ -29,8 +29,8 @@ steps:
       "@ | ConvertFrom-Json -AsHashtable;
 
       eng/common/TestResources/Remove-TestResources.ps1 `
-        -ResourceType '${{ parameters.ResourceType }}' `
         @subscriptionConfiguration `
+        -ResourceType '${{ parameters.ResourceType }}' `
         -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
         -CI `
         -Force `
