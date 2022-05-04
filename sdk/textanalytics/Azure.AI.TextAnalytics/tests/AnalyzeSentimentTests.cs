@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class AnalyzeSentimentTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeSentimentTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -40,6 +39,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("Figure out AAD story. Issue https://github.com/Azure/azure-sdk-for-net/issues/28447")]
         public async Task AnalyzeSentimentWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
