@@ -11,6 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.TextAnalytics.Tests
 {
     [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+    [Ignore("Not yet implemented")]
     public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
         public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
