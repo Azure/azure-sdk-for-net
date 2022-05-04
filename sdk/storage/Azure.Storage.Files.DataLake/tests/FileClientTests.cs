@@ -2206,13 +2206,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             var data = GetRandomBuffer(Size);
             TestProgress progress = new TestProgress();
 
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                ProgressHandler = progress
+            };
+
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await file.AppendAsync(
                     content: stream,
                     offset: 0,
-                    progressHandler: progress);
+                    options: options);
                 ;
             }
 
@@ -2307,13 +2312,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             var duration = TimeSpan.FromSeconds(15);
             Response<DataLakeLease> response = await InstrumentClient(file.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
 
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                LeaseId = response.Value.LeaseId
+            };
+
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await file.AppendAsync(
                     content: stream,
                     offset: 0,
-                    leaseId: response.Value.LeaseId);
+                    options: options);
             }
         }
 
@@ -2327,6 +2337,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             await file.CreateIfNotExistsAsync();
             var data = GetRandomBuffer(Size);
 
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                LeaseId = Recording.Random.NewGuid().ToString()
+            };
+
             // Act
             using (var stream = new MemoryStream(data))
             {
@@ -2334,7 +2349,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     file.AppendAsync(
                         content: stream,
                         offset: 0,
-                        leaseId: Recording.Random.NewGuid().ToString()),
+                        options: options),
                         e => Assert.AreEqual("LeaseNotPresent", e.ErrorCode));
             }
         }
@@ -2358,6 +2373,40 @@ namespace Azure.Storage.Files.DataLake.Tests
                         offset: 0),
                     e => Assert.AreEqual("body", e.ParamName));
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task AppendDataAsync_Flush()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateIfNotExistsAsync();
+            var data = GetRandomBuffer(Size);
+
+            DataLakeFileAppendOptions options = new DataLakeFileAppendOptions
+            {
+                Flush = true
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.AppendAsync(
+                    content: stream,
+                    offset: 0,
+                    options: options);
+            }
+
+            // Assert
+            Response<FileDownloadInfo> response = await file.ReadAsync();
+
+            Assert.AreEqual(data.Length, response.Value.ContentLength);
+            var actual = new MemoryStream();
+            await response.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
         [RecordedTest]

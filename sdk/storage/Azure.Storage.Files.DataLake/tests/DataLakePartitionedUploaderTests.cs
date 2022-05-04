@@ -311,9 +311,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                     IsAny<byte[]>(),
                     IsAny<string>(),
                     IsAny<IProgress<long>>(),
+                    IsAny<bool?>(),
                     _async,
                     s_cancellationToken
-                )).Returns<Stream, long, byte[], string, IProgress<long>, bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, byte[], string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -394,6 +395,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 byte[] md5,
                 string leaseId,
                 IProgress<long> progressHandler,
+                bool? flush,
                 bool async,
                 CancellationToken cancellationToken)
             {
