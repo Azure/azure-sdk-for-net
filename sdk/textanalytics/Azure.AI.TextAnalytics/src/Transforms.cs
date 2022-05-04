@@ -12,16 +12,6 @@ namespace Azure.AI.TextAnalytics
 {
     internal static partial class Transforms
     {
-        #region Needs Review
-
-        //
-        // REGION: Common
-        //
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
-        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
-
-        #endregion
-
         #region Common
 
         public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
@@ -33,6 +23,17 @@ namespace Azure.AI.TextAnalytics
             return (innerError != null)
                 ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
                 : new TextAnalyticsError(error.Code.ToString(), error.Message, error.Target);
+        }
+
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<Error> internalErrors)
+        {
+            List<TextAnalyticsError> textAnalyticsErrors = new List<TextAnalyticsError>(internalErrors.Count);
+            foreach (var error in internalErrors)
+            {
+                textAnalyticsErrors.Add(Transforms.ConvertToError(error));
+            }
+
+            return textAnalyticsErrors;
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
