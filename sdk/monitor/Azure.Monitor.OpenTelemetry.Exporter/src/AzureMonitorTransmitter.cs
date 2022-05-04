@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (result == ExportResult.Success)
                         {
                             blob.Delete();
-                            AzureMonitorExporterEventSource.Log.Write($"TransmitFromStorage{EventLevelSuffix.Informational}", "Successfully transmitted a blob from storage.");
+                            AzureMonitorExporterEventSource.Log.Write($"TransmitFromStorageSuccess{EventLevelSuffix.Informational}", "Successfully transmitted a blob from storage.");
                         }
                         else
                         {
