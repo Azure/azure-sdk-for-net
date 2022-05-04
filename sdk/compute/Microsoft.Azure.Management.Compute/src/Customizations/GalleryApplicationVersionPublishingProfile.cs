@@ -20,14 +20,12 @@
             CustomInit();
         }
 
-        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, System.DateTime? publishedDate, System.DateTime? endOfLifeDate, string storageAccountType, string replicationMode, UserArtifactManage manageActions, bool? enableHealthCheck = default(bool?), UserArtifactSettings settings = default(UserArtifactSettings), IDictionary<string, string> advancedSettings = default(IDictionary<string, string>))
-            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode)
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, System.DateTime? publishedDate, System.DateTime? endOfLifeDate, string storageAccountType, string replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactManage manageActions, bool? enableHealthCheck)
+            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
             ManageActions = manageActions;
             EnableHealthCheck = enableHealthCheck;
-            Settings = settings;
-            AdvancedSettings = advancedSettings;
             CustomInit();
         }
     }
