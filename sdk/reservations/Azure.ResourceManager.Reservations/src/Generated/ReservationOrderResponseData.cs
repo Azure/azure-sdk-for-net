@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="planInformation"> Information describing the type of billing plan for this reservation. </param>
         /// <param name="reservations"></param>
-        internal ReservationOrderResponseData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, int? etag, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expiryOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IReadOnlyList<ReservationResponseData> reservations) : base(id, name, resourceType, systemData)
+        internal ReservationOrderResponseData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ETag? etag, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expiryOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IReadOnlyList<ReservationResponseData> reservations) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             DisplayName = displayName;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Gets the etag. </summary>
-        public int? Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Friendly name for user to easily identified the reservation. </summary>
         public string DisplayName { get; }
         /// <summary> This is the DateTime when the reservation was initially requested for purchase. </summary>

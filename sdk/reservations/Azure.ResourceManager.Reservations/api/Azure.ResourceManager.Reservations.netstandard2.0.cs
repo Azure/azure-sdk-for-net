@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Reservations
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public int? Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public System.DateTimeOffset? ExpiryOn { get { throw null; } }
         public int? OriginalQuantity { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation PlanInformation { get { throw null; } }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationResponseData : Azure.ResourceManager.Models.ResourceData
     {
         internal ReservationResponseData() { }
-        public int? Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public string Kind { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationsProperties Properties { get { throw null; } }

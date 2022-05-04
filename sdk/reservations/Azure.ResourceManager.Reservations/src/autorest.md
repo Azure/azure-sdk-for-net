@@ -48,11 +48,13 @@ directive:
       delete $.Location;
       $.ReservationResponse.properties.location['x-ms-format'] = 'azure-location';
       $.PurchaseRequest.properties.location['x-ms-format'] = 'azure-location';
-      $.ReservationResponse.properties.etag["x-ms-format"] = "etag";
-      $.ReservationOrderResponse.properties.etag["x-ms-format"] = "etag";
+      $.ReservationResponse.properties.etag['type'] = 'string';
+      $.ReservationResponse.properties.etag['x-ms-format'] = 'etag';
+      $.ReservationOrderResponse.properties.etag['type'] = 'string';
+      $.ReservationOrderResponse.properties.etag['x-ms-format'] = 'etag';
       $.PurchaseRequest['x-ms-client-name'] = 'PurchaseRequestContent';
-      $.Catalog.properties.resourceType["x-ms-format"] = 'resource-type';
-      $.Catalog.properties.name["x-ms-client-name"] = 'SkuName';
-      $.Catalog.properties.locations.items["x-ms-format"] = 'azure-location';
+      $.Catalog.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
+      $.Catalog.properties.locations.items['x-ms-format'] = 'azure-location';
       $.Catalog['x-ms-client-name'] = 'ReservationCatalog';
 ```
