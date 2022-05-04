@@ -14,15 +14,20 @@ namespace Azure.AI.TextAnalytics
     public readonly struct CategorizedEntity
     {
         internal CategorizedEntity(Entity entity)
+            : this(entity.Text, entity.Category, entity.Subcategory, entity.ConfidenceScore, entity.Offset, entity.Length)
+        {
+        }
+
+        internal CategorizedEntity(string text, string category, string subcategory, double confidenceScore, int offset, int length)
         {
             // We shipped TA 5.0.0 Category == string.Empty if the service returned a null value for Category.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
-            Category = entity.Category ?? string.Empty;
-            Text = entity.Text;
-            SubCategory = entity.Subcategory;
-            ConfidenceScore = entity.ConfidenceScore;
-            Offset = entity.Offset;
-            Length = entity.Length;
+            Category = category ?? string.Empty;
+            Text = text;
+            SubCategory = subcategory;
+            ConfidenceScore = confidenceScore;
+            Offset = offset;
+            Length = length;
         }
 
         /// <summary>

@@ -10,8 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareRelationEntity
+    internal partial class HealthcareRelationEntity : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("ref");
+            writer.WriteStringValue(Ref);
+            writer.WritePropertyName("role");
+            writer.WriteStringValue(Role);
+            writer.WriteEndObject();
+        }
+
         internal static HealthcareRelationEntity DeserializeHealthcareRelationEntity(JsonElement element)
         {
             string @ref = default;

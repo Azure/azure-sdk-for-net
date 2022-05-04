@@ -54,6 +54,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
+        [Ignore("Figure out AAD story. Issue https://github.com/Azure/azure-sdk-for-net/issues/28447")]
         public async Task RecognizeLinkedEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
@@ -217,6 +218,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         [RecordedTest]
+        [Ignore("LRO not implemented")]
         public async Task RecognizeLinkedEntitiesWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();

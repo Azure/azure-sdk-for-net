@@ -11,6 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
+        [Ignore("LRO not implemented")]
         public async Task ExtractSummaryConvenienceAsync()
         {
             // Create a text analytics client.

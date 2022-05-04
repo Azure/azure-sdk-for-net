@@ -13,15 +13,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of TargetConfidenceScoreLabel. </summary>
         /// <param name="positive"></param>
         /// <param name="negative"></param>
-        internal TargetConfidenceScoreLabel(double positive, double negative)
+        public TargetConfidenceScoreLabel(double positive, double negative)
         {
             Positive = positive;
             Negative = negative;
         }
 
-        /// <summary> Gets the positive. </summary>
-        public double Positive { get; }
-        /// <summary> Gets the negative. </summary>
-        public double Negative { get; }
+        /// <summary> Gets or sets the positive. </summary>
+        public double Positive { get; set; }
+        /// <summary> Gets or sets the negative. </summary>
+        public double Negative { get; set; }
     }
 }

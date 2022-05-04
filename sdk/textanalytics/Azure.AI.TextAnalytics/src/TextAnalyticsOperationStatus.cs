@@ -11,5 +11,8 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("State")]
     public partial struct TextAnalyticsOperationStatus
     {
+        /// <summary> Added for compilation. </summary>
+        /// TODO: delete later
+        public static TextAnalyticsOperationStatus Rejected { get; } = new TextAnalyticsOperationStatus(CancellingValue);
     }
 }

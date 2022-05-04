@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
+    [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class AnalyzeSentimentTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeSentimentTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -436,6 +437,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         [RecordedTest]
+        [Ignore("LRO not implemented")]
         public async Task AnalyzeSentimentWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();

@@ -10,6 +10,7 @@ using NUnit.Framework;
 namespace Azure.AI.TextAnalytics.Tests
 {
     [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
+    [Ignore("Not yet implemented")]
     public class SingleCategoryClassifyTests : TextAnalyticsClientLiveTestBase
     {
         public SingleCategoryClassifyTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)

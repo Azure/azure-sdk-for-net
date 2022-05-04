@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
@@ -25,10 +26,11 @@ namespace Azure.AI.TextAnalytics
 
         internal DocumentSentiment(DocumentSentimentInternal documentSentiment)
         {
-            Sentiment = documentSentiment.Sentiment;
-            ConfidenceScores = documentSentiment.ConfidenceScores;
-            Sentences = ConvertToSentences(documentSentiment.Sentences);
-            Warnings = Transforms.ConvertToWarnings(documentSentiment.Warnings);
+            //Sentiment = documentSentiment.Sentiment;
+            //ConfidenceScores = documentSentiment.ConfidenceScores;
+            //Sentences = ConvertToSentences(documentSentiment.Sentences);
+            //Warnings = Transforms.ConvertToWarnings(documentSentiment.Warnings);
+            throw new NotImplementedException();
         }
 
         /// <summary>
