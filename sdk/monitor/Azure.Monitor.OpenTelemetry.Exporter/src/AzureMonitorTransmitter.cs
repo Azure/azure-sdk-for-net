@@ -40,13 +40,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     _storage = new FileStorage(options.StorageDirectory);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // TODO:
-                    // log exception
                     // Remove this when we add an option to disable offline storage.
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
+                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingPersistentStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
                 }
             }
         }
@@ -79,10 +79,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     result = HandleFailures(httpMessage);
                 }
+                else
+                {
+                    AzureMonitorExporterEventSource.Log.Write($"TransmissionSuccess{EventLevelSuffix.Informational}", "Successfully transmitted a batch of telemetry Items.");
+                }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.Write($"ErrorWhileTransmitting{EventLevelSuffix.Error}", ex.LogAsyncException());
             }
 
             return result;
@@ -119,6 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (result == ExportResult.Success)
                         {
                             blob.Delete();
+                            AzureMonitorExporterEventSource.Log.Write($"TransmitFromStorage{EventLevelSuffix.Informational}", "Successfully transmitted a blob from storage.");
                         }
                         else
                         {
@@ -128,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                    AzureMonitorExporterEventSource.Log.Write($"ErrorWhileTransmittingFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
                 }
 
                 files--;
@@ -156,10 +161,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                 result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Informational}", "Network Error");
             }
             else
             {
-                switch (httpMessage.Response.Status)
+                var status = httpMessage.Response.Status;
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Informational}", $"Error code is {status}");
+                switch (status)
                 {
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
@@ -207,10 +215,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // HttpRequestException
                 // Extend lease time so that it is not picked again for retry.
                 blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Informational}", "Network Error");
             }
             else
             {
-                switch (httpMessage.Response.Status)
+                var status = httpMessage.Response.Status;
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Informational}", $"Error code is {status}");
+                switch (status)
                 {
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
