@@ -161,12 +161,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                 result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Informational}", "Network Error");
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", "Network Error");
             }
             else
             {
                 var status = httpMessage.Response.Status;
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Informational}", $"Error code is {status}");
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {status}");
                 switch (status)
                 {
                     case ResponseStatusCodes.PartialSuccess:
@@ -215,12 +215,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // HttpRequestException
                 // Extend lease time so that it is not picked again for retry.
                 blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Informational}", "Network Error");
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", "Network Error");
             }
             else
             {
                 var status = httpMessage.Response.Status;
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Informational}", $"Error code is {status}");
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", $"Error code is {status}");
                 switch (status)
                 {
                     case ResponseStatusCodes.PartialSuccess:
