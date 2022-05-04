@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
 {
     internal class TestResource : ArmResource
     {
-        private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+        private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
         private static MockResponse mockResponse = new(200);
         private Func<MockResponse> mockResponseFactory = () => mockResponse;
 
