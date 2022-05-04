@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Catalog>>> GetCatalogAsync(string subscriptionId, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<ReservationCatalog>>> GetCatalogAsync(string subscriptionId, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        IReadOnlyList<Catalog> value = default;
+                        IReadOnlyList<ReservationCatalog> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Catalog> array = new List<Catalog>();
+                        List<ReservationCatalog> array = new List<ReservationCatalog>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Catalog.DeserializeCatalog(item));
+                            array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Catalog>> GetCatalog(string subscriptionId, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ReservationCatalog>> GetCatalog(string subscriptionId, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        IReadOnlyList<Catalog> value = default;
+                        IReadOnlyList<ReservationCatalog> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Catalog> array = new List<Catalog>();
+                        List<ReservationCatalog> array = new List<ReservationCatalog>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Catalog.DeserializeCatalog(item));
+                            array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class PurchaseRequest : IUtf8JsonSerializable
+    public partial class PurchaseRequestContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteEndObject();
         }
 
-        internal static PurchaseRequest DeserializePurchaseRequest(JsonElement element)
+        internal static PurchaseRequestContent DeserializePurchaseRequestContent(JsonElement element)
         {
             Optional<ReservationsSkuName> sku = default;
             Optional<AzureLocation> location = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new PurchaseRequest(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), Optional.ToNullable(renew), reservedResourceProperties.Value);
+            return new PurchaseRequestContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), Optional.ToNullable(renew), reservedResourceProperties.Value);
         }
     }
 }

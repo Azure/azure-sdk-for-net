@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/calculatePrice
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(PurchaseRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderResponseReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
             scope.Start();
             try
             {
-                var response = await ReservationOrderResponseReservationOrderRestClient.CalculateAsync(body, cancellationToken).ConfigureAwait(false);
+                var response = await ReservationOrderResponseReservationOrderRestClient.CalculateAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -191,15 +191,15 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/calculatePrice
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CalculatePriceResponse> CalculateReservationOrder(PurchaseRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<CalculatePriceResponse> CalculateReservationOrder(PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderResponseReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
             scope.Start();
             try
             {
-                var response = ReservationOrderResponseReservationOrderRestClient.Calculate(body, cancellationToken);
+                var response = ReservationOrderResponseReservationOrderRestClient.Calculate(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

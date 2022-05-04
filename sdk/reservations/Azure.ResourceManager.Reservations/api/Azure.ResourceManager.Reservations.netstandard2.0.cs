@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationOrderResponseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Reservations.ReservationOrderResponseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.ReservationOrderResponseResource>, System.Collections.IEnumerable
     {
         protected ReservationOrderResponseCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string reservationOrderId, Azure.ResourceManager.Reservations.Models.PurchaseRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string reservationOrderId, Azure.ResourceManager.Reservations.Models.PurchaseRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string reservationOrderId, Azure.ResourceManager.Reservations.Models.PurchaseRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string reservationOrderId, Azure.ResourceManager.Reservations.Models.PurchaseRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string reservationOrderId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string reservationOrderId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.ReservationOrderResponseResource> Get(string reservationOrderId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Reservations
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationResponseData>>> MergeReservationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.MergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationResponseData>> SplitReservation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationResponseData>>> SplitReservationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.PurchaseRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.PurchaseRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.PurchaseRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResponseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.PurchaseRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ReservationResponseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Reservations.ReservationResponseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.ReservationResponseResource>, System.Collections.IEnumerable
     {
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.Reservations
     }
     public static partial class ReservationsExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Reservations.Models.CalculatePriceResponse> CalculateReservationOrder(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.PurchaseRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.CalculatePriceResponse>> CalculateReservationOrderAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.PurchaseRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Reservations.Models.CalculatePriceResponse> CalculateReservationOrder(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.PurchaseRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.CalculatePriceResponse>> CalculateReservationOrderAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.PurchaseRequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Reservations.Models.AppliedReservations> GetAppliedReservationList(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.AppliedReservations>> GetAppliedReservationListAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Reservations.Models.Catalog> GetCatalog(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Reservations.Models.Catalog> GetCatalogAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Reservations.Models.ReservationCatalog> GetCatalog(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Reservations.Models.ReservationCatalog> GetCatalogAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Reservations.CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string providerId, string location, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string providerId, string location, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Reservations.CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         public CalculateExchangeRequestProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationToReturn> ReservationsToExchange { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.PurchaseRequest> ReservationsToPurchase { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.PurchaseRequestContent> ReservationsToPurchase { get { throw null; } }
     }
     public partial class CalculateExchangeResponseProperties
     {
@@ -314,21 +314,6 @@ namespace Azure.ResourceManager.Reservations.Models
         internal CalculatePriceResponsePropertiesPricingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
-    }
-    public partial class Catalog
-    {
-        internal Catalog() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationBillingPlan>> BillingPlans { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuCapability> Capabilities { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.Price MsrpP1Y { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuRestriction> Restrictions { get { throw null; } }
-        public string Size { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuProperty> SkuProperties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationTerm> Terms { get { throw null; } }
-        public string Tier { get { throw null; } }
     }
     public partial class ChangeDirectoryContent
     {
@@ -539,9 +524,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ProvisioningState left, Azure.ResourceManager.Reservations.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PurchaseRequest
+    public partial class PurchaseRequestContent
     {
-        public PurchaseRequest() { }
+        public PurchaseRequestContent() { }
         public System.Collections.Generic.IList<string> AppliedScopes { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeType? AppliedScopeType { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } set { } }
@@ -592,7 +577,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal RenewPropertiesResponse() { }
         public Azure.ResourceManager.Reservations.Models.RenewPropertiesResponseBillingCurrencyTotal BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.RenewPropertiesResponsePricingCurrencyTotal PricingCurrencyTotal { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchaseRequest PurchaseProperties { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchaseRequestContent PurchaseProperties { get { throw null; } }
     }
     public partial class RenewPropertiesResponseBillingCurrencyTotal
     {
@@ -624,6 +609,21 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationBillingPlan left, Azure.ResourceManager.Reservations.Models.ReservationBillingPlan right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ReservationCatalog
+    {
+        internal ReservationCatalog() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationBillingPlan>> BillingPlans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuCapability> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.Price MsrpP1Y { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuRestriction> Restrictions { get { throw null; } }
+        public string Size { get { throw null; } }
+        public string SkuName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuProperty> SkuProperties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationTerm> Terms { get { throw null; } }
+        public string Tier { get { throw null; } }
+    }
     public partial class ReservationMergeProperties
     {
         internal ReservationMergeProperties() { }
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.InstanceFlexibility? InstanceFlexibility { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? Renew { get { throw null; } set { } }
-        public Azure.ResourceManager.Reservations.Models.PurchaseRequest RenewPurchaseProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.Reservations.Models.PurchaseRequestContent RenewPurchaseProperties { get { throw null; } set { } }
     }
     public partial class ReservationSplitProperties
     {
@@ -751,13 +751,13 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal ReservationToPurchaseCalculateExchange() { }
         public Azure.ResourceManager.Reservations.Models.Price BillingCurrencyTotal { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchaseRequest Properties { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchaseRequestContent Properties { get { throw null; } }
     }
     public partial class ReservationToPurchaseExchange
     {
         internal ReservationToPurchaseExchange() { }
         public Azure.ResourceManager.Reservations.Models.Price BillingCurrencyTotal { get { throw null; } }
-        public Azure.ResourceManager.Reservations.Models.PurchaseRequest Properties { get { throw null; } }
+        public Azure.ResourceManager.Reservations.Models.PurchaseRequestContent Properties { get { throw null; } }
         public string ReservationId { get { throw null; } }
         public string ReservationOrderId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.OperationStatus? Status { get { throw null; } }

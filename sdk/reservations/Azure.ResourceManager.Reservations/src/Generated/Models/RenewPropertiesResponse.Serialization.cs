@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static RenewPropertiesResponse DeserializeRenewPropertiesResponse(JsonElement element)
         {
-            Optional<PurchaseRequest> purchaseProperties = default;
+            Optional<PurchaseRequestContent> purchaseProperties = default;
             Optional<RenewPropertiesResponsePricingCurrencyTotal> pricingCurrencyTotal = default;
             Optional<RenewPropertiesResponseBillingCurrencyTotal> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    purchaseProperties = PurchaseRequest.DeserializePurchaseRequest(property.Value);
+                    purchaseProperties = PurchaseRequestContent.DeserializePurchaseRequestContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("pricingCurrencyTotal"))

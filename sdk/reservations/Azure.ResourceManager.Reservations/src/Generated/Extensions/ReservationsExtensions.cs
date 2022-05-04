@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public static async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(this TenantResource tenantResource, PurchaseRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(this TenantResource tenantResource, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).CalculateReservationOrderAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).CalculateReservationOrderAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: ReservationOrder_Calculate
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public static Response<CalculatePriceResponse> CalculateReservationOrder(this TenantResource tenantResource, PurchaseRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<CalculatePriceResponse> CalculateReservationOrder(this TenantResource tenantResource, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).CalculateReservationOrder(body, cancellationToken);
+            return GetExtensionClient(tenantResource).CalculateReservationOrder(content, cancellationToken);
         }
 
         /// <summary>
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Catalog" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Catalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
         }
@@ -379,8 +379,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Catalog" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Catalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
         }

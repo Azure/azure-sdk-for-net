@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCalculateRequest(PurchaseRequest body)
+        internal HttpMessage CreateCalculateRequest(PurchaseRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.Reservations
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Calculate price for placing a `ReservationOrder`. </summary>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<CalculatePriceResponse>> CalculateAsync(PurchaseRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<CalculatePriceResponse>> CalculateAsync(PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCalculateRequest(body);
+            using var message = CreateCalculateRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary> Calculate price for placing a `ReservationOrder`. </summary>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<CalculatePriceResponse> Calculate(PurchaseRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<CalculatePriceResponse> Calculate(PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCalculateRequest(body);
+            using var message = CreateCalculateRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        internal HttpMessage CreatePurchaseRequest(string reservationOrderId, PurchaseRequest body)
+        internal HttpMessage CreatePurchaseRequest(string reservationOrderId, PurchaseRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -172,25 +172,25 @@ namespace Azure.ResourceManager.Reservations
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Purchase `ReservationOrder` and create resource under the specified URI. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PurchaseAsync(string reservationOrderId, PurchaseRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response> PurchaseAsync(string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePurchaseRequest(reservationOrderId, body);
+            using var message = CreatePurchaseRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -204,16 +204,16 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> Purchase `ReservationOrder` and create resource under the specified URI. </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Purchase(string reservationOrderId, PurchaseRequest body, CancellationToken cancellationToken = default)
+        public Response Purchase(string reservationOrderId, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePurchaseRequest(reservationOrderId, body);
+            using var message = CreatePurchaseRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

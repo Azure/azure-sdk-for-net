@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The PurchaseRequest. </summary>
-    public partial class PurchaseRequest
+    /// <summary> The PurchaseRequestContent. </summary>
+    public partial class PurchaseRequestContent
     {
-        /// <summary> Initializes a new instance of PurchaseRequest. </summary>
-        public PurchaseRequest()
+        /// <summary> Initializes a new instance of PurchaseRequestContent. </summary>
+        public PurchaseRequestContent()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PurchaseRequest. </summary>
+        /// <summary> Initializes a new instance of PurchaseRequestContent. </summary>
         /// <param name="sku"></param>
         /// <param name="location"> The Azure Region where the reserved resource lives. </param>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. </param>
         /// <param name="renew"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        internal PurchaseRequest(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, string billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, bool? renew, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties)
+        internal PurchaseRequestContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, string billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, bool? renew, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties)
         {
             Sku = sku;
             Location = location;

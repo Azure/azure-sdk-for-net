@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class Catalog
+    public partial class ReservationCatalog
     {
-        internal static Catalog DeserializeCatalog(JsonElement element)
+        internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<Core.ResourceType> resourceType = default;
             Optional<string> name = default;
             Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
             Optional<IReadOnlyList<ReservationTerm>> terms = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
             Optional<CatalogMsrp> msrp = default;
             Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
@@ -30,7 +30,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -80,10 +85,10 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -154,7 +159,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new Catalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities));
+            return new ReservationCatalog(Optional.ToNullable(resourceType), name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities));
         }
     }
 }

@@ -189,19 +189,19 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: ReservationOrder_Purchase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationOrderResponseResource>> UpdateAsync(WaitUntil waitUntil, PurchaseRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ReservationOrderResponseResource>> UpdateAsync(WaitUntil waitUntil, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationOrderResponseReservationOrderClientDiagnostics.CreateScope("ReservationOrderResponseResource.Update");
             scope.Start();
             try
             {
-                var response = await _reservationOrderResponseReservationOrderRestClient.PurchaseAsync(Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationOrderResponseResource>(new ReservationOrderResponseOperationSource(Client), _reservationOrderResponseReservationOrderClientDiagnostics, Pipeline, _reservationOrderResponseReservationOrderRestClient.CreatePurchaseRequest(Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = await _reservationOrderResponseReservationOrderRestClient.PurchaseAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<ReservationOrderResponseResource>(new ReservationOrderResponseOperationSource(Client), _reservationOrderResponseReservationOrderClientDiagnostics, Pipeline, _reservationOrderResponseReservationOrderRestClient.CreatePurchaseRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,19 +219,19 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: ReservationOrder_Purchase
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<ReservationOrderResponseResource> Update(WaitUntil waitUntil, PurchaseRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ReservationOrderResponseResource> Update(WaitUntil waitUntil, PurchaseRequestContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationOrderResponseReservationOrderClientDiagnostics.CreateScope("ReservationOrderResponseResource.Update");
             scope.Start();
             try
             {
-                var response = _reservationOrderResponseReservationOrderRestClient.Purchase(Id.Name, body, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationOrderResponseResource>(new ReservationOrderResponseOperationSource(Client), _reservationOrderResponseReservationOrderClientDiagnostics, Pipeline, _reservationOrderResponseReservationOrderRestClient.CreatePurchaseRequest(Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                var response = _reservationOrderResponseReservationOrderRestClient.Purchase(Id.Name, content, cancellationToken);
+                var operation = new ReservationsArmOperation<ReservationOrderResponseResource>(new ReservationOrderResponseOperationSource(Client), _reservationOrderResponseReservationOrderClientDiagnostics, Pipeline, _reservationOrderResponseReservationOrderRestClient.CreatePurchaseRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

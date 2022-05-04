@@ -10,23 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The Catalog. </summary>
-    public partial class Catalog
+    /// <summary> The ReservationCatalog. </summary>
+    public partial class ReservationCatalog
     {
-        /// <summary> Initializes a new instance of Catalog. </summary>
-        internal Catalog()
+        /// <summary> Initializes a new instance of ReservationCatalog. </summary>
+        internal ReservationCatalog()
         {
             BillingPlans = new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>();
             Terms = new ChangeTrackingList<ReservationTerm>();
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             SkuProperties = new ChangeTrackingList<SkuProperty>();
             Restrictions = new ChangeTrackingList<SkuRestriction>();
             Capabilities = new ChangeTrackingList<SkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of Catalog. </summary>
+        /// <summary> Initializes a new instance of ReservationCatalog. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
-        /// <param name="name"> The name of SKU. </param>
+        /// <param name="skuName"> The name of SKU. </param>
         /// <param name="billingPlans"> The billing plan options available for this SKU. </param>
         /// <param name="terms"> Available reservation terms for this resource. </param>
         /// <param name="locations"></param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="tier"> The tier of this SKU. </param>
         /// <param name="size"> The size of this SKU. </param>
         /// <param name="capabilities"></param>
-        internal Catalog(string resourceType, string name, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<string> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
+        internal ReservationCatalog(Core.ResourceType? resourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
         {
             ResourceType = resourceType;
-            Name = name;
+            SkuName = skuName;
             BillingPlans = billingPlans;
             Terms = terms;
             Locations = locations;
@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
-        public string ResourceType { get; }
+        public Core.ResourceType? ResourceType { get; }
         /// <summary> The name of SKU. </summary>
-        public string Name { get; }
+        public string SkuName { get; }
         /// <summary> The billing plan options available for this SKU. </summary>
         public IReadOnlyDictionary<string, IList<ReservationBillingPlan>> BillingPlans { get; }
         /// <summary> Available reservation terms for this resource. </summary>
         public IReadOnlyList<ReservationTerm> Terms { get; }
         /// <summary> Gets the locations. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Gets the sku properties. </summary>
         public IReadOnlyList<SkuProperty> SkuProperties { get; }
         /// <summary> Pricing information about the SKU. </summary>

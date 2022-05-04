@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Catalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Catalog> GetCatalogAsync(string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Catalog>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ReservationCatalog>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCatalog");
                 scope.Start();
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Catalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Catalog> GetCatalog(string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
-            Page<Catalog> FirstPageFunc(int? pageSizeHint)
+            Page<ReservationCatalog> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCatalog");
                 scope.Start();
