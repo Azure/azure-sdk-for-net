@@ -108,8 +108,12 @@ namespace Azure.Storage.Files.DataLake
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual int MaxUploadBytes { get { throw null; } }
         public virtual long MaxUploadLongBytes { get { throw null; } }
-        public virtual Azure.Response Append(System.IO.Stream content, long offset, byte[] contentHash = null, string leaseId = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AppendAsync(System.IO.Stream content, long offset, byte[] contentHash = null, string leaseId = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Append(System.IO.Stream content, long offset, Azure.Storage.Files.DataLake.Models.DataLakeFileAppendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response Append(System.IO.Stream content, long offset, byte[] contentHash, string leaseId, System.IProgress<long> progressHandler, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AppendAsync(System.IO.Stream content, long offset, Azure.Storage.Files.DataLake.Models.DataLakeFileAppendOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response> AppendAsync(System.IO.Stream content, long offset, byte[] contentHash, string leaseId, System.IProgress<long> progressHandler, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Create(Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Create(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -513,6 +517,14 @@ namespace Azure.Storage.Files.DataLake.Models
     public enum DataLakeEncryptionAlgorithmType
     {
         Aes256 = 0,
+    }
+    public partial class DataLakeFileAppendOptions
+    {
+        public DataLakeFileAppendOptions() { }
+        public byte[] ContentHash { get { throw null; } set { } }
+        public bool? Flush { get { throw null; } set { } }
+        public string LeaseId { get { throw null; } set { } }
+        public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
     }
     public enum DataLakeFileExpirationOrigin
     {
