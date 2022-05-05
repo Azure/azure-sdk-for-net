@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The location. </param>
         public ServiceBusNamespacePatch(AzureLocation location) : base(location)
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
             PrivateEndpointConnections = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
-            KeyVaultProperties = new ChangeTrackingList<KeyVaultProperties>();
-            KeySource = "Microsoft.KeyVault";
         }
 
         /// <summary> Initializes a new instance of ServiceBusNamespacePatch. </summary>
@@ -34,10 +31,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of SKU. </param>
-        /// <param name="principalId"> ObjectId from the KeyVault. </param>
-        /// <param name="tenantId"> TenantId from the KeyVault. </param>
-        /// <param name="typeIdentityType"> Type of managed service identity. </param>
-        /// <param name="userAssignedIdentities"> Properties for User Assigned Identities. </param>
+        /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace. </param>
         /// <param name="status"> Status of the namespace. </param>
         /// <param name="createdOn"> The time the namespace was created. </param>
@@ -45,18 +39,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="zoneRedundant"> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </param>
+        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        internal ServiceBusNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, string principalId, string tenantId, ManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? zoneRedundant, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, IList<KeyVaultProperties> keyVaultProperties, string keySource, bool? requireInfrastructureEncryption) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceBusNamespacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? zoneRedundant, EncryptionProperties encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            TypeIdentityType = typeIdentityType;
-            UserAssignedIdentities = userAssignedIdentities;
+            Identity = identity;
             ProvisioningState = provisioningState;
             Status = status;
             CreatedOn = createdOn;
@@ -64,23 +53,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
             ZoneRedundant = zoneRedundant;
+            Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
-            KeyVaultProperties = keyVaultProperties;
-            KeySource = keySource;
-            RequireInfrastructureEncryption = requireInfrastructureEncryption;
         }
 
         /// <summary> Properties of SKU. </summary>
         public ServiceBusSku Sku { get; set; }
-        /// <summary> ObjectId from the KeyVault. </summary>
-        public string PrincipalId { get; }
-        /// <summary> TenantId from the KeyVault. </summary>
-        public string TenantId { get; }
-        /// <summary> Type of managed service identity. </summary>
-        public ManagedServiceIdentityType? TypeIdentityType { get; set; }
-        /// <summary> Properties for User Assigned Identities. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
+        /// <summary> Properties of BYOK Identity description. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the namespace. </summary>
         public string ProvisioningState { get; }
         /// <summary> Status of the namespace. </summary>
@@ -95,15 +76,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string MetricId { get; }
         /// <summary> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </summary>
         public bool? ZoneRedundant { get; set; }
+        /// <summary> Properties of BYOK Encryption description. </summary>
+        public EncryptionProperties Encryption { get; set; }
         /// <summary> List of private endpoint connections. </summary>
         public IList<ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Service Bus namespace. </summary>
         public bool? DisableLocalAuth { get; set; }
-        /// <summary> Properties of KeyVault. </summary>
-        public IList<KeyVaultProperties> KeyVaultProperties { get; }
-        /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
-        public string KeySource { get; set; }
-        /// <summary> Enable Infrastructure Encryption (Double Encryption). </summary>
-        public bool? RequireInfrastructureEncryption { get; set; }
     }
 }

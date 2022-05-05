@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JitRequestResource> GetJitRequestsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<JitRequestResource> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<JitRequestResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJitRequests");
+                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JitRequestResource> GetJitRequests(CancellationToken cancellationToken = default)
+        public virtual Pageable<JitRequestResource> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
         {
             Page<JitRequestResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJitRequests");
+                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJitRequestDefinitions");
                 scope.Start();
                 try
                 {

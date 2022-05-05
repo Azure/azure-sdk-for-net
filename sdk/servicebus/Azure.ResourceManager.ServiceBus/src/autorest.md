@@ -38,6 +38,15 @@ rename-rules:
   URI: Uri
 
 directive:
+    - from: namespace-preview.json
+      where: $.definitions.Encryption
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.Identity
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.userAssignedIdentityProperties
+      transform: $['x-ms-client-flatten'] = false
     - rename-model:
         from: SBNamespace
         to: ServiceBusNamespace

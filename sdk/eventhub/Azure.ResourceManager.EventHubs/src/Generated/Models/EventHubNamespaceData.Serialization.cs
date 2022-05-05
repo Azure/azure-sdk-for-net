@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
+            }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
             foreach (var item in Tags)
@@ -61,6 +66,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("zoneRedundant");
                 writer.WriteBooleanValue(ZoneRedundant.Value);
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption");
+                writer.WriteObjectValue(Encryption);
+            }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections");
@@ -81,48 +91,6 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("alternateName");
                 writer.WriteStringValue(AlternateName);
             }
-            writer.WritePropertyName("encryption");
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(KeyVaultProperties))
-            {
-                writer.WritePropertyName("keyVaultProperties");
-                writer.WriteStartArray();
-                foreach (var item in KeyVaultProperties)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(KeySource))
-            {
-                writer.WritePropertyName("keySource");
-                writer.WriteStringValue(KeySource);
-            }
-            if (Optional.IsDefined(RequireInfrastructureEncryption))
-            {
-                writer.WritePropertyName("requireInfrastructureEncryption");
-                writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.WritePropertyName("identity");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TypeIdentityType))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(TypeIdentityType.Value.ToSerialString());
-            }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
-            {
-                writer.WritePropertyName("userAssignedIdentities");
-                writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentities)
-                {
-                    writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -130,6 +98,7 @@ namespace Azure.ResourceManager.EventHubs
         internal static EventHubNamespaceData DeserializeEventHubNamespaceData(JsonElement element)
         {
             Optional<EventHubsSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -147,16 +116,10 @@ namespace Azure.ResourceManager.EventHubs
             Optional<int> maximumThroughputUnits = default;
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
+            Optional<EventHubEncryption> encryption = default;
             Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
-            Optional<IList<Models.KeyVaultProperties>> keyVaultProperties = default;
-            Optional<string> keySource = default;
-            Optional<bool> requireInfrastructureEncryption = default;
-            Optional<string> principalId = default;
-            Optional<string> tenantId = default;
-            Optional<ResourceIdentityType> type0 = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -167,6 +130,16 @@ namespace Azure.ResourceManager.EventHubs
                         continue;
                     }
                     sku = EventHubsSku.DeserializeEventHubsSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -298,6 +271,16 @@ namespace Azure.ResourceManager.EventHubs
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("encryption"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            encryption = EventHubEncryption.DeserializeEventHubEncryption(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("privateEndpointConnections"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -328,100 +311,11 @@ namespace Azure.ResourceManager.EventHubs
                             alternateName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("keyVaultProperties"))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        property1.ThrowNonNullablePropertyIsNull();
-                                        continue;
-                                    }
-                                    List<Models.KeyVaultProperties> array = new List<Models.KeyVaultProperties>();
-                                    foreach (var item in property1.Value.EnumerateArray())
-                                    {
-                                        array.Add(Models.KeyVaultProperties.DeserializeKeyVaultProperties(item));
-                                    }
-                                    keyVaultProperties = array;
-                                    continue;
-                                }
-                                if (property1.NameEquals("keySource"))
-                                {
-                                    keySource = property1.Value.GetString();
-                                    continue;
-                                }
-                                if (property1.NameEquals("requireInfrastructureEncryption"))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        property1.ThrowNonNullablePropertyIsNull();
-                                        continue;
-                                    }
-                                    requireInfrastructureEncryption = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                            }
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("principalId"))
-                        {
-                            principalId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantId"))
-                        {
-                            tenantId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("type"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            type0 = property0.Value.GetString().ToResourceIdentityType();
-                            continue;
-                        }
-                        if (property0.NameEquals("userAssignedIdentities"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.ToString()));
-                            }
-                            userAssignedIdentities = dictionary;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new EventHubNamespaceData(id, name, type, systemData, tags, location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption), principalId.Value, tenantId.Value, Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities));
+            return new EventHubNamespaceData(id, name, type, systemData, tags, location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
         }
     }
 }
