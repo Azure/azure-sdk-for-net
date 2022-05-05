@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages = new();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBusMessageActions"/> class for mocking use in testing.
+        /// Initializes a new instance of the <see cref="ServiceBusReceiveActions"/> class for mocking use in testing.
         /// </summary>
         /// <remarks>
         /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
@@ -50,11 +50,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         /// <summary>
-        /// Receives a list of <see cref="ServiceBusReceivedMessage"/> from the entity using <see cref="ServiceBusReceiveMode"/> mode
-        /// configured in <see cref="ServiceBusProcessorOptions.ReceiveMode"/>, which defaults to PeekLock mode.
+        /// Receives a list of <see cref="ServiceBusReceivedMessage"/> from the entity.
         /// This method doesn't guarantee to return exact `maxMessages` messages, even if there are `maxMessages` messages available in the queue or topic.
-        /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/>
-        /// and <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> properties.
+        /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusOptions.AutoCompleteMessages"/>.
+        /// When this method is used in a single-dispatch functions, messages received are subject to <see cref="ServiceBusOptions.MaxAutoLockRenewalDuration"/>.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
@@ -89,8 +88,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         /// <summary>
         /// Receives a list of deferred <see cref="ServiceBusReceivedMessage"/> identified by <paramref name="sequenceNumbers"/>.
-        /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/>
-        /// and <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/> properties.
+        /// Messages received using this method are subject to the behavior defined in the <see cref="ServiceBusOptions.AutoCompleteMessages"/>.
+        /// When this method is used in a single-dispatch functions, messages received are subject to <see cref="ServiceBusOptions.MaxAutoLockRenewalDuration"/>.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
