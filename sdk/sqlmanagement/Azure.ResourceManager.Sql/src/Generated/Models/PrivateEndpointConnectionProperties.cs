@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint?.Id;
+            get => PrivateEndpoint.Id;
+            set => PrivateEndpoint.Id = value;
         }
 
         /// <summary> Connection state of the private endpoint connection. </summary>

@@ -45,21 +45,14 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> object which contains secret parameters. </summary>
         internal SecretParameters Parameters { get; set; }
         /// <summary> The type of the secret resource. </summary>
-        internal SecretType? ParametersSecretType
+        internal SecretType ParametersSecretType
         {
             get => Parameters is null ? default : Parameters.SecretType;
             set
             {
-                if (value.HasValue)
-                {
-                    if (Parameters is null)
-                        Parameters = new SecretParameters();
-                    Parameters.SecretType = value.Value;
-                }
-                else
-                {
-                    Parameters = null;
-                }
+                if (Parameters is null)
+                    Parameters = new SecretParameters();
+                Parameters.SecretType = value;
             }
         }
     }

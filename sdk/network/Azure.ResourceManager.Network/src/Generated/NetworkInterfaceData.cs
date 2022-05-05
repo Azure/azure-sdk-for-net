@@ -82,7 +82,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualMachineId
         {
-            get => VirtualMachine?.Id;
+            get => VirtualMachine.Id;
+            set => VirtualMachine.Id = value;
         }
 
         /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
@@ -110,7 +111,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier DscpConfigurationId
         {
-            get => DscpConfiguration?.Id;
+            get => DscpConfiguration.Id;
+            set => DscpConfiguration.Id = value;
         }
 
         /// <summary> The resource GUID property of the network interface resource. </summary>

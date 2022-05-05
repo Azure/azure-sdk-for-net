@@ -76,7 +76,8 @@ namespace Azure.ResourceManager.Compute
         /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
         public bool? AcceleratedNetwork
         {
-            get => SupportedCapabilities?.AcceleratedNetwork;
+            get => SupportedCapabilities.AcceleratedNetwork;
+            set => SupportedCapabilities.AcceleratedNetwork = value;
         }
 
         /// <summary> id of the backing snapshot&apos;s MIS family. </summary>

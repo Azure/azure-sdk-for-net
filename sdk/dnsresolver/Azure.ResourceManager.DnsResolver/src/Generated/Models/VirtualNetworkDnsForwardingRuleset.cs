@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkLinkId
         {
-            get => VirtualNetworkLink?.Id;
+            get => VirtualNetworkLink.Id;
+            set => VirtualNetworkLink.Id = value;
         }
     }
 }

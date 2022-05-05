@@ -293,15 +293,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary>
         /// Gets the private link resources supported for the managed hsm pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources
-        /// Operation Id: MHSMPrivateLinkResources_ListByMHSMResource
+        /// Operation Id: MHSMPrivateLinkResources_ListByMhsmResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MhsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MhsmPrivateLinkResource> GetMHSMPrivateLinkResourcesByMhsmResourceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MhsmPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByMhsmResource");
+                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMhsmPrivateLinkResources");
                 scope.Start();
                 try
                 {
@@ -320,15 +320,15 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary>
         /// Gets the private link resources supported for the managed hsm pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources
-        /// Operation Id: MHSMPrivateLinkResources_ListByMHSMResource
+        /// Operation Id: MHSMPrivateLinkResources_ListByMhsmResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MhsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MhsmPrivateLinkResource> GetMHSMPrivateLinkResourcesByMhsmResource(CancellationToken cancellationToken = default)
+        public virtual Pageable<MhsmPrivateLinkResource> GetMhsmPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             Page<MhsmPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByMhsmResource");
+                using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMhsmPrivateLinkResources");
                 scope.Start();
                 try
                 {

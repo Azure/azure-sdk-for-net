@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretSourceId
         {
-            get => SecretSource?.Id;
+            get => SecretSource.Id;
+            set => SecretSource.Id = value;
         }
 
         /// <summary> Secret version, if customer is using a specific version. </summary>

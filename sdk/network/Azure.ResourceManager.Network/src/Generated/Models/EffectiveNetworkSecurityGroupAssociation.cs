@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkManagerId
         {
-            get => NetworkManager?.Id;
+            get => NetworkManager.Id;
+            set => NetworkManager.Id = value;
         }
 
         /// <summary> The ID of the subnet if assigned. </summary>
@@ -42,7 +43,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {
-            get => Subnet?.Id;
+            get => Subnet.Id;
+            set => Subnet.Id = value;
         }
 
         /// <summary> The ID of the network interface if assigned. </summary>
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkInterfaceId
         {
-            get => NetworkInterface?.Id;
+            get => NetworkInterface.Id;
+            set => NetworkInterface.Id = value;
         }
     }
 }

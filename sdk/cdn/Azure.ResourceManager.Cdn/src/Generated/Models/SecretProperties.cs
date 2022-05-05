@@ -20,9 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> object which contains secret parameters. </summary>
         internal SecretParameters Parameters { get; }
         /// <summary> The type of the secret resource. </summary>
-        internal SecretType? ParametersSecretType
+        internal SecretType ParametersSecretType
         {
-            get => Parameters?.SecretType;
+            get => Parameters.SecretType;
+            set => Parameters.SecretType = value;
         }
     }
 }

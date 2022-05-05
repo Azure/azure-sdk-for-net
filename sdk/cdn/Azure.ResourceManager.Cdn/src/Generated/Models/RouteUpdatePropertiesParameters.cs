@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId
         {
-            get => OriginGroup?.Id;
+            get => OriginGroup.Id;
+            set => OriginGroup.Id = value;
         }
 
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
