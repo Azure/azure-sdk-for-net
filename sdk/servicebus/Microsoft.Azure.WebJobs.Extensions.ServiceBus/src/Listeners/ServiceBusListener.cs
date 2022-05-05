@@ -265,11 +265,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return;
                 }
 
-                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, _client.Value);
+                var receiveActions = new ServiceBusReceiveActions(args);
+                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, receiveActions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
                 await _messageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+                receiveActions.EndExecutionScope();
             }
         }
 
@@ -287,7 +289,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     return;
                 }
 
-                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, _client.Value);
+                var receiveActions = new ServiceBusReceiveActions(args);
+                ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, receiveActions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
@@ -298,6 +301,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
 
                 await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+                receiveActions.EndExecutionScope();
             }
         }
 
@@ -366,16 +370,20 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     if (messages.Count > 0)
                     {
-                        var actions = _isSessionsEnabled
+                        var messageActions = _isSessionsEnabled
                             ? new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver)
                             : new ServiceBusMessageActions(receiver);
+                        var receiveActions = new ServiceBusReceiveActions(receiver);
+
                         ServiceBusReceivedMessage[] messagesArray = messages.ToArray();
                         ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(
                             messagesArray,
-                            actions,
+                            messageActions,
+                            receiveActions,
                             _client.Value);
 
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
+                        receiveActions.EndExecutionScope();
 
                         // Complete batch of messages only if the execution was successful
                         if (_autoCompleteMessagesOptionEvaluatedValue)
@@ -383,7 +391,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             if (result.Succeeded)
                             {
                                 List<Task> completeTasks = new List<Task>();
-                                foreach (ServiceBusReceivedMessage message in messagesArray)
+                                foreach (ServiceBusReceivedMessage message in messagesArray.Concat(receiveActions.Messages.Keys))
                                 {
                                     // skip messages that were settled in the user's function
                                     if (input.MessageActions.SettledMessages.ContainsKey(message))
@@ -418,7 +426,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                         if (_isSessionsEnabled)
                         {
-                            if (((ServiceBusSessionMessageActions)actions).ShouldReleaseSession)
+                            if (((ServiceBusSessionMessageActions)messageActions).ShouldReleaseSession)
                             {
                                 // Use CancellationToken.None to attempt to close the receiver even when shutting down
                                 await receiver.CloseAsync(CancellationToken.None).ConfigureAwait(false);

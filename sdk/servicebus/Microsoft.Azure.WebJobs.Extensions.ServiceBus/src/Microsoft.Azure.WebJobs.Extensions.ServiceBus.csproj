@@ -29,4 +29,8 @@
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Resources.Designer.cs" LinkBase="Shared" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\WebJobsConfigurationExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
+  </ItemGroup>
 </Project>
