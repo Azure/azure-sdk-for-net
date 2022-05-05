@@ -39,7 +39,6 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        [Ignore("Figure out AAD story. Issue https://github.com/Azure/azure-sdk-for-net/issues/28447")]
         public async Task ExtractKeyPhrasesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
