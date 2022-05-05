@@ -262,8 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             await getResult.Value.DeleteAsync(WaitUntil.Completed);
         }
 
-        [RecordedTest]
-        [PlaybackOnly("Live test for MHSM is not necessary")]
+        [Test]
         public async Task KeyVaultManagementListDeletedVaults()
         {
             int n = 3;
