@@ -71,6 +71,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
             string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();
 
+
             #endregion
 
             #region Snippet:RetrieveRoleAssignment
