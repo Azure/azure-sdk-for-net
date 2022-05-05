@@ -105,25 +105,23 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
         {
-            //var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Errors.Count);
+            var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Documents.Count);
 
-            ////Read errors
-            //foreach (DocumentError error in results.Errors)
-            //{
-            //    analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
-            //}
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
+            }
 
-            ////Read sentiments
-            //foreach (DocumentSentimentInternal docSentiment in results.Documents)
-            //{
-            //    analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
-            //}
+            //Read sentiments
+            foreach (var docSentiment in results.Documents)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
+            }
 
-            //analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
+            analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
 
-            //return new AnalyzeSentimentResultCollection(analyzedSentiments, results.Statistics, results.ModelVersion);
-
-            throw new NotImplementedException();
+            return new AnalyzeSentimentResultCollection(analyzedSentiments, results.Statistics, results.ModelVersion);
         }
 
         #endregion

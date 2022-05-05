@@ -300,38 +300,40 @@ namespace Azure.AI.TextAnalytics.Tests
         // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
         // We want to verify behavior is the same after code auto generated.
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task AnalyzeSentimentNullText()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""neutral"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.1,
-                                ""neutral"": 0.88,
-                                ""negative"": 0.02
-                            },
-                            ""sentences"": [
-                                {
+                    ""kind"": ""SentimentAnalysisResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""1"",
                                 ""sentiment"": ""neutral"",
-                                    ""confidenceScores"": {
+                                ""confidenceScores"": {
                                     ""positive"": 0.1,
-                                        ""neutral"": 0.88,
-                                        ""negative"": 0.02
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 18,
-                                    ""text"": null
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
+                                    ""neutral"": 0.88,
+                                    ""negative"": 0.02
+                                },
+                                ""sentences"": [
+                                    {
+                                    ""sentiment"": ""neutral"",
+                                        ""confidenceScores"": {
+                                        ""positive"": 0.1,
+                                            ""neutral"": 0.88,
+                                            ""negative"": 0.02
+                                        },
+                                        ""offset"": 0,
+                                        ""length"": 18,
+                                        ""text"": null
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020 -04-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -346,38 +348,40 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public void AnalyzeSentimentNotSupportedSentenceSentiment()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""neutral"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.1,
-                                ""neutral"": 0.88,
-                                ""negative"": 0.02
-                            },
-                            ""sentences"": [
-                                {
-                                ""sentiment"": ""confusion"",
-                                    ""confidenceScores"": {
+                    ""kind"": ""SentimentAnalysisResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""1"",
+                                ""sentiment"": ""neutral"",
+                                ""confidenceScores"": {
                                     ""positive"": 0.1,
-                                        ""neutral"": 0.88,
-                                        ""negative"": 0.02
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 18,
-                                    ""text"": ""today is a hot day""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
+                                    ""neutral"": 0.88,
+                                    ""negative"": 0.02
+                                },
+                                ""sentences"": [
+                                    {
+                                    ""sentiment"": ""confusion"",
+                                        ""confidenceScores"": {
+                                        ""positive"": 0.1,
+                                            ""neutral"": 0.88,
+                                            ""negative"": 0.02
+                                        },
+                                        ""offset"": 0,
+                                        ""length"": 18,
+                                        ""text"": ""today is a hot day""
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020 -04-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -390,38 +394,40 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task AnalyzeSentimentMixedSentenceSentiment()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""neutral"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.1,
-                                ""neutral"": 0.88,
-                                ""negative"": 0.02
-                            },
-                            ""sentences"": [
-                                {
-                                ""sentiment"": ""mixed"",
-                                    ""confidenceScores"": {
+                    ""kind"": ""SentimentAnalysisResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""1"",
+                                ""sentiment"": ""neutral"",
+                                ""confidenceScores"": {
                                     ""positive"": 0.1,
-                                        ""neutral"": 0.88,
-                                        ""negative"": 0.02
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 18,
-                                    ""text"": ""today is a hot day""
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020 -04-01""
+                                    ""neutral"": 0.88,
+                                    ""negative"": 0.02
+                                },
+                                ""sentences"": [
+                                    {
+                                    ""sentiment"": ""mixed"",
+                                        ""confidenceScores"": {
+                                            ""positive"": 0.1,
+                                            ""neutral"": 0.88,
+                                            ""negative"": 0.02
+                                        },
+                                        ""offset"": 0,
+                                        ""length"": 18,
+                                        ""text"": ""today is a hot day""
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020 -04-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
@@ -436,99 +442,101 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task AnalyzeSentimentAssessmentInOtherSentence()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""1"",
-                            ""sentiment"": ""positive"",
-                            ""confidenceScores"": {
-                                ""positive"": 0.5,
-                                ""neutral"": 0.0,
-                                ""negative"": 0.5
-                            },
-                            ""sentences"": [
-                                {
-                                    ""sentiment"": ""positive"",
-                                    ""confidenceScores"": {
-                                        ""positive"": 1.0,
-                                        ""neutral"": 0.0,
-                                        ""negative"": 0.0
-                                    },
-                                    ""offset"": 0,
-                                    ""length"": 30,
-                                    ""text"": ""The park was clean."",
-                                    ""targets"": [
-                                        {
-                                            ""sentiment"": ""positive"",
-                                            ""confidenceScores"": {
-                                                ""positive"": 1.0,
-                                                ""negative"": 0.0
-                                            },
-                                            ""offset"": 4,
-                                            ""length"": 4,
-                                            ""text"": ""park"",
-                                            ""relations"": [
-                                                {
-                                                    ""relationType"": ""assessment"",
-                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    ""assessments"": [
-                                        {
-                                            ""sentiment"": ""positive"",
-                                            ""confidenceScores"": {
-                                                ""positive"": 1.0,
-                                                ""negative"": 0.0
-                                            },
-                                            ""offset"": 13,
-                                            ""length"": 5,
-                                            ""text"": ""clean"",
-                                            ""isNegated"": false
-                                        }
-                                    ]
+                    ""kind"": ""SentimentAnalysisResults"",
+                    ""results"": {
+                        ""documents"": [
+                            {
+                                ""id"": ""1"",
+                                ""sentiment"": ""positive"",
+                                ""confidenceScores"": {
+                                    ""positive"": 0.5,
+                                    ""neutral"": 0.0,
+                                    ""negative"": 0.5
                                 },
-                                {
-                                    ""sentiment"": ""positive"",
-                                    ""confidenceScores"": {
-                                        ""positive"": 0.0,
-                                        ""neutral"": 0.0,
-                                        ""negative"": 1.0
+                                ""sentences"": [
+                                    {
+                                        ""sentiment"": ""positive"",
+                                        ""confidenceScores"": {
+                                            ""positive"": 1.0,
+                                            ""neutral"": 0.0,
+                                            ""negative"": 0.0
+                                        },
+                                        ""offset"": 0,
+                                        ""length"": 30,
+                                        ""text"": ""The park was clean."",
+                                        ""targets"": [
+                                            {
+                                                ""sentiment"": ""positive"",
+                                                ""confidenceScores"": {
+                                                    ""positive"": 1.0,
+                                                    ""negative"": 0.0
+                                                },
+                                                ""offset"": 4,
+                                                ""length"": 4,
+                                                ""text"": ""park"",
+                                                ""relations"": [
+                                                    {
+                                                        ""relationType"": ""assessment"",
+                                                        ""ref"": ""#/documents/0/sentences/0/assessments/0""
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        ""assessments"": [
+                                            {
+                                                ""sentiment"": ""positive"",
+                                                ""confidenceScores"": {
+                                                    ""positive"": 1.0,
+                                                    ""negative"": 0.0
+                                                },
+                                                ""offset"": 13,
+                                                ""length"": 5,
+                                                ""text"": ""clean"",
+                                                ""isNegated"": false
+                                            }
+                                        ]
                                     },
-                                    ""offset"": 31,
-                                    ""length"": 23,
-                                    ""text"": ""It was clean."",
-                                    ""targets"": [
-                                        {
-                                            ""sentiment"": ""positive"",
-                                            ""confidenceScores"": {
-                                                ""positive"": 0.0,
-                                                ""negative"": 1.0
-                                            },
-                                            ""offset"": 35,
-                                            ""length"": 4,
-                                            ""text"": ""park"",
-                                            ""relations"": [
-                                                {
-                                                    ""relationType"": ""assessment"",
-                                                    ""ref"": ""#/documents/0/sentences/0/assessments/0""
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    ""assessments"": []
-                                }
-                            ],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [],
-                    ""modelVersion"": ""2020-04-01""
+                                    {
+                                        ""sentiment"": ""positive"",
+                                        ""confidenceScores"": {
+                                            ""positive"": 0.0,
+                                            ""neutral"": 0.0,
+                                            ""negative"": 1.0
+                                        },
+                                        ""offset"": 31,
+                                        ""length"": 23,
+                                        ""text"": ""It was clean."",
+                                        ""targets"": [
+                                            {
+                                                ""sentiment"": ""positive"",
+                                                ""confidenceScores"": {
+                                                    ""positive"": 0.0,
+                                                    ""negative"": 1.0
+                                                },
+                                                ""offset"": 35,
+                                                ""length"": 4,
+                                                ""text"": ""park"",
+                                                ""relations"": [
+                                                    {
+                                                        ""relationType"": ""assessment"",
+                                                        ""ref"": ""#/documents/0/sentences/0/assessments/0""
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        ""assessments"": []
+                                    }
+                                ],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [],
+                        ""modelVersion"": ""2020-04-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);

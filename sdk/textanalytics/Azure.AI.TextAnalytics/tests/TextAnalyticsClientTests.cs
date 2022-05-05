@@ -99,7 +99,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void AnalyzeSentimentArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentAsync(""));

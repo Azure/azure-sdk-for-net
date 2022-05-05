@@ -21,8 +21,9 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal class LanguageServiceClient : ServiceClient
     {
-        private static readonly TextAnalyticsRequestOptions s_defaultRequestOptions = new TextAnalyticsRequestOptions();
-        private static readonly RecognizePiiEntitiesOptions s_piiEntitiesOptions = new RecognizePiiEntitiesOptions();
+        private static readonly TextAnalyticsRequestOptions s_defaultRequestOptions = new();
+        private static readonly RecognizePiiEntitiesOptions s_piiEntitiesOptions = new();
+        private static readonly AnalyzeSentimentOptions s_analyzeSentimentOptions = new();
 
         private readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         private readonly TextAnalyticsClientOptions _options;
@@ -487,7 +488,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                     // only one document, so we can ignore the id and grab the first error message.
 
                     var error = Transforms.ConvertToError(piiEntities.Results.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(piiEntities.Results.Documents.FirstOrDefault()), response);
@@ -667,123 +668,197 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         public override async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(document, nameof(document));
-            //options ??= new AnalyzeSentimentOptions();
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            options ??= s_analyzeSentimentOptions;
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
-            //scope.AddAttribute("document", document);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
 
-            //try
-            //{
-            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-            //    Response<SentimentResponse> result = await _serviceRestClient.SentimentAsync(
-            //        new MultiLanguageBatchInput(documents),
-            //        options.ModelVersion,
-            //        options.IncludeStatistics,
-            //        options.DisableServiceLogs,
-            //        options.IncludeOpinionMining,
-            //        Constants.DefaultStringIndexType,
-            //        cancellationToken).ConfigureAwait(false);
-            //    Response response = result.GetRawResponse();
+            try
+            {
+                MultiLanguageAnalysisInput analysisInput = new();
+                analysisInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
 
-            //    if (result.Value.Errors.Count > 0)
-            //    {
-            //        // only one document, so we can ignore the id and grab the first error message.
-            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-            //        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
-            //    }
+                AnalyzeTextSentimentAnalysisInput analyzePiiEntities = new()
+                {
+                    AnalysisInput = analysisInput,
+                    Parameters = AnalyzeSentimentParameters(options)
+                };
 
-            //    return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            await Task.Yield();
-            throw new NotImplementedException();
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(analyzePiiEntities, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var sentimentResult = (SentimentTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (sentimentResult.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+
+                    var error = Transforms.ConvertToError(sentimentResult.Results.Errors[0].Error);
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                }
+
+                return Response.FromValue(new DocumentSentiment(sentimentResult.Results.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public override Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, AnalyzeSentimentOptions options = null, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(document, nameof(document));
-            //options ??= new AnalyzeSentimentOptions();
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
+            options ??= s_analyzeSentimentOptions;
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
-            //scope.AddAttribute("document", document);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
+            scope.AddAttribute("document", document);
+            scope.Start();
 
-            //try
-            //{
-            //    var documents = new List<MultiLanguageInput>() { ConvertToMultiLanguageInput(document, language) };
-            //    Response<SentimentResponse> result = _serviceRestClient.Sentiment(
-            //        new MultiLanguageBatchInput(documents),
-            //        options.ModelVersion,
-            //        options.IncludeStatistics,
-            //        options.DisableServiceLogs,
-            //        options.IncludeOpinionMining,
-            //        Constants.DefaultStringIndexType,
-            //        cancellationToken);
-            //    Response response = result.GetRawResponse();
+            try
+            {
+                MultiLanguageAnalysisInput analysisInput = new();
+                analysisInput.Documents.Add(ConvertToMultiLanguageInput(document, language));
 
-            //    if (result.Value.Errors.Count > 0)
-            //    {
-            //        // only one document, so we can ignore the id and grab the first error message.
-            //        var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-            //        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
-            //    }
+                AnalyzeTextSentimentAnalysisInput analyzePiiEntities = new()
+                {
+                    AnalysisInput = analysisInput,
+                    Parameters = AnalyzeSentimentParameters(options)
+                };
 
-            //    return Response.FromValue(new DocumentSentiment(result.Value.Documents[0]), response);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            throw new NotImplementedException();
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(analyzePiiEntities, cancellationToken: cancellationToken);
+
+                var sentimentResult = (SentimentTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                if (sentimentResult.Results.Errors.Count > 0)
+                {
+                    // only one document, so we can ignore the id and grab the first error message.
+
+                    var error = Transforms.ConvertToError(sentimentResult.Results.Errors[0].Error);
+                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                }
+
+                return Response.FromValue(new DocumentSentiment(sentimentResult.Results.Documents[0]), response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public override async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new AnalyzeSentimentOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_analyzeSentimentOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new AnalyzeSentimentOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_analyzeSentimentOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
         }
 
         public override async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new AnalyzeSentimentOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_analyzeSentimentOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await AnalyzeSentimentBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, AnalyzeSentimentOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new AnalyzeSentimentOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_analyzeSentimentOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return AnalyzeSentimentBatch(documentInputs, options, cancellationToken);
+        }
+
+        private async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeSentimentOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextSentimentAnalysisInput analyzeSentiment = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = AnalyzeSentimentParameters(options)
+                };
+
+                Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
+                    analyzeSentiment,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                var sentimentResult = (SentimentTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(sentimentResult.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(MultiLanguageAnalysisInput multiLanguageInput, AnalyzeSentimentOptions options, CancellationToken cancellationToken)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextSentimentAnalysisInput analyzeSentiment = new()
+                {
+                    AnalysisInput = multiLanguageInput,
+                    Parameters = AnalyzeSentimentParameters(options)
+                };
+
+                Response<AnalyzeTextTaskResult> result = _languageRestClient.Analyze(
+                    analyzeSentiment,
+                    options.IncludeStatistics,
+                    cancellationToken: cancellationToken);
+
+                var sentimentResult = (SentimentTaskResult)result.Value;
+                Response response = result.GetRawResponse();
+
+                IDictionary<string, int> map = CreateIdToIndexMap(multiLanguageInput.Documents);
+                AnalyzeSentimentResultCollection results = Transforms.ConvertToAnalyzeSentimentResultCollection(sentimentResult.Results, map);
+                return Response.FromValue(results, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static SentimentAnalysisTaskParameters AnalyzeSentimentParameters(AnalyzeSentimentOptions options)
+        {
+            return new SentimentAnalysisTaskParameters()
+            {
+                LoggingOptOut = options.DisableServiceLogs,
+                ModelVersion = options.ModelVersion,
+                OpinionMining = options.IncludeOpinionMining,
+                StringIndexType = Constants.DefaultStringIndexType
+            };
         }
 
         #endregion
@@ -869,7 +944,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -878,7 +953,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
             return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
@@ -887,7 +962,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return await ExtractKeyPhrasesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
@@ -896,7 +971,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public override Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
+            options ??= s_defaultRequestOptions;
             MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
             return ExtractKeyPhrasesBatch(documentInputs, options, cancellationToken);
