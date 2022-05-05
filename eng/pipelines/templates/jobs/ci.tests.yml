@@ -64,7 +64,7 @@ jobs:
         parameters:
           NuGetCacheKey: Test
       - script: >-
-          dotnet test eng/service.proj --filter "(TestCategory!=Manually)" --framework $(TestTargetFramework)
+          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           /p:SDKType=${{ parameters.SDKType }}
           /p:ServiceDirectory=${{ parameters.ServiceToTest }}
