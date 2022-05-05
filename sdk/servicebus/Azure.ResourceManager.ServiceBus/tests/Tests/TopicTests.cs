@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task CreateDeleteTopic()
         {
             IgnoreTestInLiveMode();
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task GetAllTopics()
         {
             IgnoreTestInLiveMode();
@@ -85,7 +83,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task UpdateTopic()
         {
             IgnoreTestInLiveMode();
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task TopicCreateGetUpdateDeleteAuthorizationRule()
         {
             IgnoreTestInLiveMode();
@@ -160,7 +156,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task TopicAuthorizationRuleRegenerateKey()
         {
             IgnoreTestInLiveMode();

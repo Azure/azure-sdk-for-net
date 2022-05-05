@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
         {
             IgnoreTestInLiveMode();

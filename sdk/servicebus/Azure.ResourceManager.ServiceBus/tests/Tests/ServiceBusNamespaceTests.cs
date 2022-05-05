@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task CreateDeleteNamespace()
         {
             IgnoreTestInLiveMode();
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task CreateNamespaceWithZoneRedundant()
         {
             IgnoreTestInLiveMode();
@@ -77,7 +75,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task UpdateNamespace()
         {
             IgnoreTestInLiveMode();
@@ -105,7 +102,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task GetAllNamespaces()
         {
             IgnoreTestInLiveMode();
@@ -136,7 +132,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task GetNamespacesInSubscription()
         {
             IgnoreTestInLiveMode();
@@ -170,7 +165,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task GetPrivateLinkResources()
         {
             IgnoreTestInLiveMode();
@@ -234,7 +228,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task NamespaceCreateGetUpdateDeleteAuthorizationRule()
         {
             IgnoreTestInLiveMode();
@@ -300,7 +293,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task NamespaceAuthorizationRuleRegenerateKey()
         {
             IgnoreTestInLiveMode();
@@ -343,7 +335,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task SetGetNetworkRuleSets()
         {
             IgnoreTestInLiveMode();
@@ -426,7 +417,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Flattening issue after autorest core 3.8.4")]
         public async Task StandardToPremiumMigration()
         {
             IgnoreTestInLiveMode();
