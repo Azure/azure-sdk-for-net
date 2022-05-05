@@ -24,6 +24,34 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface IServerTrustCertificatesOperations
     {
         /// <summary>
+        /// Gets a list of server trust certificates that were uploaded from
+        /// box to the given Sql Managed Instance.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group that contains the resource. You can
+        /// obtain this value from the Azure Resource Manager API or the
+        /// portal.
+        /// </param>
+        /// <param name='managedInstanceName'>
+        /// The name of the managed instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ServerTrustCertificate>>> ListByInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a server trust certificate that was uploaded from box to Sql
         /// Managed Instance.
         /// </summary>
@@ -117,35 +145,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of the server trust certificates which are used for
-        /// secure communication between SQL On-Prem instance and the given Sql
-        /// Managed Instance
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains the resource. You can
-        /// obtain this value from the Azure Resource Manager API or the
-        /// portal.
-        /// </param>
-        /// <param name='managedInstanceName'>
-        /// The name of the managed instance.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ServerTrustCertificate>>> ListByInstanceWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Uploads a server trust certificate from box to Sql Managed
         /// Instance.
         /// </summary>
@@ -208,9 +207,8 @@ namespace Microsoft.Azure.Management.Sql
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string managedInstanceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a list of the server trust certificates which are used for
-        /// secure communication between SQL On-Prem instance and the given Sql
-        /// Managed Instance
+        /// Gets a list of server trust certificates that were uploaded from
+        /// box to the given Sql Managed Instance.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
