@@ -37,6 +37,9 @@ The add client id/application id for ms.author.
 
 .PARAMETER ClientSecret
 The client secret of add app for ms.author.
+
+.PARAMETER EnableServiceReadmeGen
+Use the switch to enable the service level readme automation.
 #>
 
 param(
@@ -117,55 +120,19 @@ function GetPackageLookup($packageList) {
 
 function update-service-readme($readmePath, $moniker, $clientPackageInfo, $mgmtPackageInfo, $serviceName)
 {
-  # Add metadata header
+  
   $lang = $LanguageDisplayName
   $langTitle = "Azure $serviceName SDK for $lang"
-  $langDescription = "Reference for Azure $serviceName SDK for $lang"
-  $githubUrl = $GithubUri
-  # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
-  $serviceBaseName = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
-  $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
-  $msauthor = "sizhu"
-  if (!$author) {
-    LogError "Cannot fetch the author from CODEOWNER file."
-    $author = "sima-zhu"
-  }
-  elseif ($TenantId -and $ClientId -and $ClientSecret) {
-    $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
-  }
-  # Default value
-  if (!$msauthor) {
-    LogWarning "No ms.author found for $author. Please check your app credential."
-    $msauthor = $author
-  }
-  $date = Get-Date -Format "MM/dd/yyyy"
-  if ($clientPackageInfo -and $clientPackageInfo.MSDocService) {
-    # Use MSDocService in csv metadata to override the service directory
-    # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
-    $service = $clientPackageInfo.MSDocService
-  }
-  elseif ($mgmtPackageInfo -and $mgmtPackageInfo.MSDocService) {
-    $service = $mgmtPackageInfo.MSDocService
-  }
-  Write-Host "The service of package: $service"
-  $header = @"
----
-title: $langTitle
-description: $langDescription
-author: $author
-ms.author: $msauthor
-ms.date: $date
-ms.topic: reference
-ms.devlang: $lang
-ms.service: $service
----
-"@
+  $header = GenerateDocsMsMetadata -language $lang -serviceName $serviceName `
+    -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
+    -clientInfo $clientPackageInfo -mgmtInfo $mgmtPackageInfo
 
   Add-Content -Path $readmePath -Value $header
 
   # Add tables, seperate client and mgmt.
-  $tableHeader = "## $langTitle - $moniker"
+  $tableHeader = "# $langTitle - $moniker"
   Add-Content -Path $readmePath -Value $tableHeader
+  $githubUrl = $GithubUri
   if ($clientPackageInfo) {
     $clientTableHeader = "## Client packages - $moniker"
     Add-Content -Path $readmePath -Value $clientTableHeader
