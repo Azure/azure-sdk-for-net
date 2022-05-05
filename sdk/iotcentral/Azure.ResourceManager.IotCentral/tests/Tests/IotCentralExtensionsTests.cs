@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             }
 
             // Get and delete IoT Central apps.
-            await foreach (var rgApp in rg.GetIotCentralApps())
+            await foreach (var rgApp in appsCollection.GetAllAsync())
             {
                 if (appNames.Contains(rgApp.Data.Name))
                 {
