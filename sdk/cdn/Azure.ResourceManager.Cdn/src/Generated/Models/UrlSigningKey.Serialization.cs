@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static UrlSigningKey DeserializeUrlSigningKey(JsonElement element)
         {
             string keyId = default;
-            KeyVaultSigningKeyParameters keySourceParameters = default;
+            KeyVaultSigningKeyDefinition keySourceParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyId"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("keySourceParameters"))
                 {
-                    keySourceParameters = KeyVaultSigningKeyParameters.DeserializeKeyVaultSigningKeyParameters(property.Value);
+                    keySourceParameters = KeyVaultSigningKeyDefinition.DeserializeKeyVaultSigningKeyDefinition(property.Value);
                     continue;
                 }
             }

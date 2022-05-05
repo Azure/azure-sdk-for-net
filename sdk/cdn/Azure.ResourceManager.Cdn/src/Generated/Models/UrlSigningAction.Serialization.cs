@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UrlSigningAction DeserializeUrlSigningAction(JsonElement element)
         {
-            UrlSigningActionParameters parameters = default;
+            UrlSigningActionDefinition parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = UrlSigningActionParameters.DeserializeUrlSigningActionParameters(property.Value);
+                    parameters = UrlSigningActionDefinition.DeserializeUrlSigningActionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

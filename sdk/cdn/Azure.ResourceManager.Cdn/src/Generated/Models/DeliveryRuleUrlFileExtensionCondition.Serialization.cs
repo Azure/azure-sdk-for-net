@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleUrlFileExtensionCondition DeserializeDeliveryRuleUrlFileExtensionCondition(JsonElement element)
         {
-            UrlFileExtensionMatchConditionParameters parameters = default;
+            UrlFileExtensionMatchConditionDefinition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = UrlFileExtensionMatchConditionParameters.DeserializeUrlFileExtensionMatchConditionParameters(property.Value);
+                    parameters = UrlFileExtensionMatchConditionDefinition.DeserializeUrlFileExtensionMatchConditionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static DeepCreatedOriginGroup DeserializeDeepCreatedOriginGroup(JsonElement element)
         {
             string name = default;
-            Optional<HealthProbeParameters> healthProbeSettings = default;
+            Optional<HealthProbeSettings> healthProbeSettings = default;
             Optional<IList<WritableSubResource>> origins = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedOriginErrorDetectionSettings = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeParameters.DeserializeHealthProbeParameters(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("origins"))

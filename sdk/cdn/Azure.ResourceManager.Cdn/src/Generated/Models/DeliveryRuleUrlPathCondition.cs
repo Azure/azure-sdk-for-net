@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleUrlPathCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleUrlPathCondition(UrlPathMatchConditionParameters parameters)
+        public DeliveryRuleUrlPathCondition(UrlPathMatchConditionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleUrlPathCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleUrlPathCondition(MatchVariable name, UrlPathMatchConditionParameters parameters) : base(name)
+        internal DeliveryRuleUrlPathCondition(MatchVariable name, UrlPathMatchConditionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public UrlPathMatchConditionParameters Parameters { get; set; }
+        public UrlPathMatchConditionDefinition Parameters { get; set; }
     }
 }

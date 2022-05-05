@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UrlSigningAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public UrlSigningAction(UrlSigningActionParameters parameters)
+        public UrlSigningAction(UrlSigningActionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UrlSigningAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal UrlSigningAction(DeliveryRuleActionType name, UrlSigningActionParameters parameters) : base(name)
+        internal UrlSigningAction(DeliveryRuleActionType name, UrlSigningActionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public UrlSigningActionParameters Parameters { get; set; }
+        public UrlSigningActionDefinition Parameters { get; set; }
     }
 }

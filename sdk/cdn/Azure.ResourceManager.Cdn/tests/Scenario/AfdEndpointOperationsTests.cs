@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             int count = 0;
-            await foreach (var tempUsage in afdEndpointInstance.GetResourceUsageAsync())
+            await foreach (var tempUsage in afdEndpointInstance.GetAfdEndpointResourceUsageAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.CurrentValue, 0);
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
-            ValidateCustomDomainInput validateCustomDomainInput = new ValidateCustomDomainInput("customdomain4afd.azuretest.net");
-            ValidateCustomDomainOutput validateCustomDomainOutput  = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainInput);
+            ValidateCustomDomainContent validateCustomDomainContent = new ValidateCustomDomainContent("customdomain4afd.azuretest.net");
+            ValidateCustomDomainResult validateCustomDomainOutput  = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainContent);
             Assert.False(validateCustomDomainOutput.CustomDomainValidated);
         }
     }

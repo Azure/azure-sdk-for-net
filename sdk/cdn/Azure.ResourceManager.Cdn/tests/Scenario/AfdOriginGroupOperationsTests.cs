@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             AfdOriginGroupPatch updateOptions = new AfdOriginGroupPatch
             {
-                LoadBalancingSettings = new LoadBalancingSettingsParameters
+                LoadBalancingSettings = new LoadBalancingSettings
                 {
                     SampleSize = 10,
                     SuccessfulSamplesRequired = 5,

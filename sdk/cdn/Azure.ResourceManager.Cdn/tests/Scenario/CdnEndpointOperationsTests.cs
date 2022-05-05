@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
-            ValidateCustomDomainInput validateCustomDomainInput1 = new ValidateCustomDomainInput("customdomainrecord.azuretest.net");
-            ValidateCustomDomainOutput validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainInput1);
+            ValidateCustomDomainContent validateCustomDomainContent1 = new ValidateCustomDomainContent("customdomainrecord.azuretest.net");
+            ValidateCustomDomainResult validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent1);
             Assert.True(validateResult.CustomDomainValidated);
-            ValidateCustomDomainInput validateCustomDomainInput2 = new ValidateCustomDomainInput("customdomainvirtual.azuretest.net");
-            validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainInput2);
+            ValidateCustomDomainContent validateCustomDomainContent2 = new ValidateCustomDomainContent("customdomainvirtual.azuretest.net");
+            validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent2);
             Assert.False(validateResult.CustomDomainValidated);
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleSocketAddrCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleSocketAddrCondition(SocketAddrMatchConditionParameters parameters)
+        public DeliveryRuleSocketAddrCondition(SocketAddrMatchConditionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleSocketAddrCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleSocketAddrCondition(MatchVariable name, SocketAddrMatchConditionParameters parameters) : base(name)
+        internal DeliveryRuleSocketAddrCondition(MatchVariable name, SocketAddrMatchConditionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public SocketAddrMatchConditionParameters Parameters { get; set; }
+        public SocketAddrMatchConditionDefinition Parameters { get; set; }
     }
 }

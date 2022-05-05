@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleSocketAddrCondition DeserializeDeliveryRuleSocketAddrCondition(JsonElement element)
         {
-            SocketAddrMatchConditionParameters parameters = default;
+            SocketAddrMatchConditionDefinition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = SocketAddrMatchConditionParameters.DeserializeSocketAddrMatchConditionParameters(property.Value);
+                    parameters = SocketAddrMatchConditionDefinition.DeserializeSocketAddrMatchConditionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

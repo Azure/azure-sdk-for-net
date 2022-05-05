@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UrlRedirectAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public UrlRedirectAction(UrlRedirectActionParameters parameters)
+        public UrlRedirectAction(UrlRedirectActionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UrlRedirectAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal UrlRedirectAction(DeliveryRuleActionType name, UrlRedirectActionParameters parameters) : base(name)
+        internal UrlRedirectAction(DeliveryRuleActionType name, UrlRedirectActionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public UrlRedirectActionParameters Parameters { get; set; }
+        public UrlRedirectActionDefinition Parameters { get; set; }
     }
 }

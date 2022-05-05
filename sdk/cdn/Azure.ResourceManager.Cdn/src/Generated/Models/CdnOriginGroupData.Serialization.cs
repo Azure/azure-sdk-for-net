@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn
             string name = default;
             Core.ResourceType type = default;
             SystemData systemData = default;
-            Optional<HealthProbeParameters> healthProbeSettings = default;
+            Optional<HealthProbeSettings> healthProbeSettings = default;
             Optional<IList<WritableSubResource>> origins = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedOriginErrorDetectionSettings = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeParameters.DeserializeHealthProbeParameters(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("origins"))
