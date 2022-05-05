@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions(TextAnalyticsClientOptions.ServiceVersion.V2022_03_01_Preview));
 
             #region Snippet:DetectLanguage
             string document = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar
