@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
         public ServiceSpecification CsmOperationDescriptionServiceSpecification
         {
-            get => Properties.ServiceSpecification;
+            get => Properties?.ServiceSpecification;
         }
     }
 }
