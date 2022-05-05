@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         public async Task CreateDeleteEventHub()
         {
             //create eventhub
@@ -132,7 +131,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         public async Task GetAllEventhubs()
         {
             //create two eventhubs
@@ -160,7 +158,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         public async Task EventhubCreateGetUpdateDeleteAuthorizationRule()
         {
             //create eventhub
@@ -216,7 +213,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         public async Task EventhubAuthorizationRuleRegenerateKey()
         {
             //create eventhub

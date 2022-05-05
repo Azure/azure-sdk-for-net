@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         public async Task CreateDeleteConsumerGroup()
         {
             //create consumer group
@@ -78,7 +77,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         public async Task GetAllConsumerGroups()
         {
             //create ten consumer groups
@@ -97,7 +95,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
         }
 
         [Test]
-        [Ignore("Issue with flattening due to new 3.8.4")]
         [RecordedTest]
         public async Task UpdateConsumerGroup()
         {
