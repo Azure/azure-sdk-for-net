@@ -242,23 +242,18 @@ namespace Azure.ResourceManager.EventHubs
         public string ClusterArmId { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubEncryption Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAutoInflateEnabled { get { throw null; } set { } }
         public bool? KafkaEnabled { get { throw null; } set { } }
-        public string KeySource { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public int? MaximumThroughputUnits { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
-        public string PrincipalId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
-        public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.EventHubs.Models.ResourceIdentityType? TypeIdentityType { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class EventHubNamespaceResource : Azure.ResourceManager.ArmResource
@@ -640,6 +635,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string Name { get { throw null; } set { } }
         public string StorageAccountResourceId { get { throw null; } set { } }
     }
+    public partial class EventHubEncryption
+    {
+        public EventHubEncryption() { }
+        public string KeySource { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.KeyVaultProperties> KeyVaultProperties { get { throw null; } }
+        public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
+    }
     public partial class EventHubsPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
     {
         internal EventHubsPrivateLinkResource() { }
@@ -801,13 +803,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public RegenerateAccessKeyOptions(Azure.ResourceManager.EventHubs.Models.KeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.KeyType KeyType { get { throw null; } }
-    }
-    public enum ResourceIdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
-        SystemAssignedUserAssigned = 3,
     }
     public enum RoleDisasterRecovery
     {
