@@ -12,7 +12,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.KeyVault.Tests
 {
     [NonParallelizable]
-    [RunFrequency(RunTestFrequency.Manually)]
     public class VaultOperationsTests : VaultOperationsTestsBase
     {
         public VaultOperationsTests(bool isAsync)
