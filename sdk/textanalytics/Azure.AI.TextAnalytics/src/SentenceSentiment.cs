@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
             Opinions = new List<SentenceOpinion>(opinions);
         }
 
-        internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment, IReadOnlyList<SentenceSentimentInternal> allSentences)
+        internal SentenceSentiment(SentenceSentimentInternal sentenceSentiment, IList<SentenceSentimentInternal> allSentences)
         {
             // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
             // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public int Length { get; }
 
-        private static IReadOnlyCollection<SentenceOpinion> ConvertToOpinion(SentenceSentimentInternal sentence, IReadOnlyList<SentenceSentimentInternal> allSentences)
+        private static IReadOnlyCollection<SentenceOpinion> ConvertToOpinion(SentenceSentimentInternal sentence, IList<SentenceSentimentInternal> allSentences)
         {
             var opinions = new List<SentenceOpinion>();
 
@@ -93,7 +93,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         private static Regex _assessmentRegex = new Regex(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/assessments/(?<assessmentIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
-        internal static AssessmentSentiment ResolveAssessmentReference(IReadOnlyList<SentenceSentimentInternal> sentences, string reference)
+        internal static AssessmentSentiment ResolveAssessmentReference(IList<SentenceSentimentInternal> sentences, string reference)
         {
             // Example: the following should result in sentenceIndex = 2, assessmentIndex = 1. There will not be cases where sentences from other documents are referenced.
             // "#/documents/0/sentences/2/assessments/1"

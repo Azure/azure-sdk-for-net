@@ -10,7 +10,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
     public class AnalyzeSentimentTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeSentimentTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
