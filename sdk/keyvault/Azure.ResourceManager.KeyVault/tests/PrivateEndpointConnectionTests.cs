@@ -11,7 +11,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.KeyVault.Tests
 {
     [NonParallelizable]
-    [RunFrequency(RunTestFrequency.Manually)]
     public class PrivateEndpointConnectionTests : VaultOperationsTestsBase
     {
         public PrivateEndpointConnectionTests(bool isAsync)
@@ -29,6 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [Test]
+        [PlaybackOnly("Live test for MHSM is not necessary")]
         [RecordedTest]
         public async Task PrivateEndpointConnectionCreateAndUpdate()
         {
