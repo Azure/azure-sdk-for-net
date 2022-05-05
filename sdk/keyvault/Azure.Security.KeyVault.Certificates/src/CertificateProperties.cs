@@ -19,6 +19,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string X509ThumprintPropertyName = "x5t";
         private const string TagsPropertyName = "tags";
         private const string AttributesPropertyName = "attributes";
+        private const string EntityIdPropertyName = "entityId";
 
         private CertificateAttributes _attributes;
         private Dictionary<string, string> _tags;
@@ -89,6 +90,11 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
+        /// Gets the system-generated ID for this certificate.
+        /// </summary>
+        public string EntityId { get; internal set; }
+
+        /// <summary>
         /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate will be valid.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; internal set => _attributes.NotBefore = value; }
@@ -154,6 +160,10 @@ namespace Azure.Security.KeyVault.Certificates
 
                 case AttributesPropertyName:
                     _attributes.ReadProperties(prop.Value);
+                    break;
+
+                case EntityIdPropertyName:
+                    EntityId = prop.Value.GetString();
                     break;
             }
         }

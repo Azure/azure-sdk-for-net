@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `EntityId` to `KeyProperties`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

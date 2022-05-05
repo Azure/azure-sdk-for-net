@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `EntityId` to `SecretProperties`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

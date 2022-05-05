@@ -20,6 +20,7 @@ namespace Azure.Security.KeyVault.Secrets
         private const string ManagedPropertyName = "managed";
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
+        private const string EntityIdPropertyName = "entityId";
 
         private static readonly JsonEncodedText s_contentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
@@ -102,6 +103,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// Gets or sets a value indicating whether the secret is enabled and useable.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
+
+        /// <summary>
+        /// Gets the system-generated ID for this certificate.
+        /// </summary>
+        public string EntityId { get; internal set; }
 
         /// <summary>
         /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the secret will be valid and can be used.
@@ -194,6 +200,10 @@ namespace Azure.Security.KeyVault.Secrets
                     {
                         Tags[tag.Name] = tag.Value.GetString();
                     }
+                    break;
+
+                case EntityIdPropertyName:
+                    EntityId = prop.Value.GetString();
                     break;
             }
         }

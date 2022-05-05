@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core;
@@ -20,6 +19,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string AttributesPropertyName = "attributes";
         private const string TagsPropertyName = "tags";
         private const string ReleasePolicyPropertyName = "release_policy";
+        private const string EntityIdPropertyName = "entityId";
 
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
@@ -91,6 +91,11 @@ namespace Azure.Security.KeyVault.Keys
         /// Gets or sets a value indicating whether the key is enabled and useable for cryptographic operations.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
+
+        /// <summary>
+        /// Gets the system-generated ID for this certificate.
+        /// </summary>
+        public string EntityId { get; internal set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the private key can be exported.
@@ -173,6 +178,9 @@ namespace Azure.Security.KeyVault.Keys
                 case ReleasePolicyPropertyName:
                     ReleasePolicy = new();
                     ReleasePolicy.ReadProperties(prop.Value);
+                    break;
+                case EntityIdPropertyName:
+                    EntityId = prop.Value.GetString();
                     break;
             }
         }

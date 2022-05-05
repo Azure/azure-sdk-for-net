@@ -120,6 +120,7 @@ namespace Azure.Security.KeyVault.Secrets
         public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
+        public string EntityId { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
         public System.Uri KeyId { get { throw null; } }

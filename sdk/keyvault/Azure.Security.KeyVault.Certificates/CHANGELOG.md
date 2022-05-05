@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `EntityId` to `CertificateProperties`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

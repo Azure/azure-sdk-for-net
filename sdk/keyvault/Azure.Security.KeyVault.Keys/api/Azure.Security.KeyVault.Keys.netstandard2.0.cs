@@ -248,6 +248,7 @@ namespace Azure.Security.KeyVault.Keys
         public KeyProperties(System.Uri id) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? Enabled { get { throw null; } set { } }
+        public string EntityId { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public bool? Exportable { get { throw null; } set { } }
         public System.Uri Id { get { throw null; } }
