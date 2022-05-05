@@ -47,6 +47,10 @@ override-operation-name:
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
+  Metrics_ListDatabase: GetMetrics
+  MetricDefinitions_ListDatabase: GetMetricDefinitions
+  Metrics_ListElasticPool: GetMetrics
+  MetricDefinitions_ListElasticPool: GetMetricDefinitions
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
 request-path-to-resource-name:
@@ -73,6 +77,18 @@ directive:
     - rename-operation:
         from: DataMaskingRules_ListByDatabase
         to: DataMaskingRules_List
+    - rename-operation:
+        from: Databases_ListMetrics
+        to: Metrics_ListDatabase
+    - rename-operation:
+        from: Databases_ListMetricDefinitions
+        to: MetricDefinitions_ListDatabase
+    - rename-operation:
+        from: ElasticPools_ListMetrics
+        to: Metrics_ListElasticPool
+    - rename-operation:
+        from: ElasticPools_ListMetricDefinitions
+        to: MetricDefinitions_ListElasticPool
     - rename-model:
         from: UnlinkParameters
         to: UnlinkOptions
