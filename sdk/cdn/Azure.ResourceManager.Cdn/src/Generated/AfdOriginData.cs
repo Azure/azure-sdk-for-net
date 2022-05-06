@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             OriginGroupName = originGroupName;
             Origin = origin;

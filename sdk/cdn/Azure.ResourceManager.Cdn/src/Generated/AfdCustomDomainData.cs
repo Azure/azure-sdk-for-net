@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        internal AfdCustomDomainData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
+        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="parameters"> object which contains secret parameters. </param>
-        internal AfdSecretData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecretParameters parameters) : base(id, name, resourceType, systemData)
+        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecretParameters parameters) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;

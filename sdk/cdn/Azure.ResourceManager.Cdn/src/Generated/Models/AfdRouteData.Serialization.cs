@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> endpointName = default;
             Optional<IList<ActivatedResourceReference>> customDomains = default;

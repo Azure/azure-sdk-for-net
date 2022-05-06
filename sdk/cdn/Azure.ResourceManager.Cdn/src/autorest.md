@@ -75,6 +75,7 @@ directive:
       $.CacheExpirationActionParameters.properties.cacheBehavior['x-ms-enum'].name = 'cacheBehaviorSettings';
       $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
       $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
+      $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
   - from: cdn.json
     where: $.definitions
     transform: >

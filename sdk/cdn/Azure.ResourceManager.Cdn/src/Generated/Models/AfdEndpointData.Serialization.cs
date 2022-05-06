@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> profileName = default;
             Optional<EnabledState> enabledState = default;
