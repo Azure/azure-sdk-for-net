@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,8 +18,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// The configuration settings of the Azure Active Directory login flow.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class AzureActiveDirectoryLogin : ProxyOnlyResource
+    public partial class AzureActiveDirectoryLogin
     {
         /// <summary>
         /// Initializes a new instance of the AzureActiveDirectoryLogin class.
@@ -34,19 +31,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the AzureActiveDirectoryLogin class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="loginParameters">Login parameters to send to the
         /// OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form
         /// "key=value".</param>
-        public AzureActiveDirectoryLogin(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? disableWWWAuthenticate = default(bool?), IList<string> loginParameters = default(IList<string>))
-            : base(id, name, kind, type)
+        /// <param name="disableWWWAuthenticate">&lt;code&gt;true&lt;/code&gt;
+        /// if the www-authenticate provider should be omitted from the
+        /// request; otherwise, &lt;code&gt;false&lt;/code&gt;.</param>
+        public AzureActiveDirectoryLogin(IList<string> loginParameters = default(IList<string>), bool? disableWWWAuthenticate = default(bool?))
         {
-            DisableWWWAuthenticate = disableWWWAuthenticate;
             LoginParameters = loginParameters;
+            DisableWWWAuthenticate = disableWWWAuthenticate;
             CustomInit();
         }
 
@@ -56,17 +51,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.disableWWWAuthenticate")]
-        public bool? DisableWWWAuthenticate { get; set; }
-
-        /// <summary>
         /// Gets or sets login parameters to send to the OpenID Connect
         /// authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loginParameters")]
+        [JsonProperty(PropertyName = "loginParameters")]
         public IList<string> LoginParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if the
+        /// www-authenticate provider should be omitted from the request;
+        /// otherwise, &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableWWWAuthenticate")]
+        public bool? DisableWWWAuthenticate { get; set; }
 
     }
 }
