@@ -269,9 +269,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, receiveActions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
+
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
-                await _messageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
-                receiveActions.EndExecutionScope();
+                try
+                {
+                    await _messageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token)
+                        .ConfigureAwait(false);
+                }
+                finally
+                {
+                    receiveActions.EndExecutionScope();
+                }
             }
         }
 
@@ -281,10 +289,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _concurrencyUpdateManager?.MessageProcessed();
 
-            using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
+            using (CancellationTokenSource linkedCts =
+                CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
             {
                 var actions = new ServiceBusSessionMessageActions(args);
-                if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
+                if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token)
+                    .ConfigureAwait(false))
                 {
                     return;
                 }
@@ -300,8 +310,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     args.ReleaseSession();
                 }
 
-                await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
-                receiveActions.EndExecutionScope();
+                try
+                {
+                    await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token)
+                        .ConfigureAwait(false);
+                }
+                finally
+                {
+                    receiveActions.EndExecutionScope();
+                }
             }
         }
 
