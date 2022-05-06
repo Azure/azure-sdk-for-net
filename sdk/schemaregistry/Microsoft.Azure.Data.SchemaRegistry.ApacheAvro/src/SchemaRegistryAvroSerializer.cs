@@ -95,11 +95,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// </summary>
         /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TEnvelope">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
+        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryAvroSerializer"/>.
-        ///   It can also occur if the <typeparamref name="TEnvelope"/> type does not have a public parameterless constructor.
+        ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The <typeparamref name="TData"/> is not convertible to ISpecificRecord or GenericRecord.
@@ -111,10 +111,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
         /// </exception>
-        public TEnvelope Serialize<TEnvelope, TData>(
+        public TMessage Serialize<TMessage, TData>(
             TData data,
-            CancellationToken cancellationToken = default) where TEnvelope : MessageContent, new()
-            => (TEnvelope) SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), false, cancellationToken).EnsureCompleted();
+            CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
+            => (TMessage) SerializeInternalAsync(data, typeof(TData), typeof(TMessage), false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
@@ -122,11 +122,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// </summary>
         /// <param name="data">The data to serialize to Avro and serialize into the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /// <typeparam name="TEnvelope">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
+        /// <typeparam name="TMessage">The <see cref="MessageContent"/> type to serialize the data into.</typeparam>
         /// <typeparam name="TData">The type of the data to serialize.</typeparam>
         /// <exception cref="InvalidOperationException">
         ///   This can occur if the <code>groupName</code> was not specified when constructing the <see cref="SchemaRegistryAvroSerializer"/>.
-        ///   It can also occur if the <typeparamref name="TEnvelope"/> type does not have a public parameterless constructor.
+        ///   It can also occur if the <typeparamref name="TMessage"/> type does not have a public parameterless constructor.
         /// </exception>
         /// <exception cref="ArgumentException">
         ///   The <typeparamref name="TData"/> is not convertible to ISpecificRecord or GenericRecord.
@@ -138,10 +138,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         ///   The data did not adhere to the Avro schema, or the schema itself was invalid.
         ///   The <see cref="Exception.InnerException"/> will contain the underlying exception from the Apache Avro library.
         /// </exception>
-        public async ValueTask<TEnvelope> SerializeAsync<TEnvelope, TData>(
+        public async ValueTask<TMessage> SerializeAsync<TMessage, TData>(
             TData data,
-            CancellationToken cancellationToken = default) where TEnvelope : MessageContent, new()
-            => (TEnvelope) await SerializeInternalAsync(data, typeof(TData), typeof(TEnvelope), true, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default) where TMessage : MessageContent, new()
+            => (TMessage) await SerializeInternalAsync(data, typeof(TData), typeof(TMessage), true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// serializes the message data as Avro and stores it in <see cref="MessageContent.Data"/>. The <see cref="MessageContent.ContentType"/>
