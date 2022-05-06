@@ -2,6 +2,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
     public partial class SchemaRegistryAvroSerializer
     {
+        protected SchemaRegistryAvroSerializer() { }
         public SchemaRegistryAvroSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client) { }
         public SchemaRegistryAvroSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName) { }
         public SchemaRegistryAvroSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.SchemaRegistryAvroSerializerOptions options) { }

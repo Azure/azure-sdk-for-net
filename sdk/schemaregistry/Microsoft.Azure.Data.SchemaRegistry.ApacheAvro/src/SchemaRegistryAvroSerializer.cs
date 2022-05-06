@@ -68,6 +68,17 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             _options = options?.Clone() ?? new SchemaRegistryAvroSerializerOptions();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryAvroSerializer"/> class for mocking use in testing.
+        /// </summary>
+        /// <remarks>
+        /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
+        /// will not function correctly; virtual members are meant to be mocked.
+        ///</remarks>
+        protected SchemaRegistryAvroSerializer()
+        {
+        }
+
         private readonly LruCache<string, Schema> _idToSchemaMap = new(CacheCapacity);
         private readonly LruCache<Schema, string> _schemaToIdMap = new(CacheCapacity);
 
