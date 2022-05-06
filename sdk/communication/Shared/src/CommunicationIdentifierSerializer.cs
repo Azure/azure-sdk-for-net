@@ -68,6 +68,7 @@ namespace Azure.Communication
             {
                 CommunicationUserIdentifier u => new CommunicationIdentifierModel
                 {
+                    RawId = u.Id,
                     CommunicationUser = new CommunicationUserIdentifierModel(u.Id),
                 },
                 PhoneNumberIdentifier p => new CommunicationIdentifierModel
