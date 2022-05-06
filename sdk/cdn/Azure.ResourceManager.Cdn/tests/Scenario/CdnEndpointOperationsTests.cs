@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
             ValidateCustomDomainContent validateCustomDomainContent1 = new ValidateCustomDomainContent("customdomainrecord.azuretest.net");
             ValidateCustomDomainResult validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent1);
-            Assert.True(validateResult.CustomDomainValidated);
+            Assert.True(validateResult.IsCustomDomainValid);
             ValidateCustomDomainContent validateCustomDomainContent2 = new ValidateCustomDomainContent("customdomainvirtual.azuretest.net");
             validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent2);
-            Assert.False(validateResult.CustomDomainValidated);
+            Assert.False(validateResult.IsCustomDomainValid);
         }
 
         [TestCase]

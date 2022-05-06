@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardVerizon);
             SsoUri ssoUri = await cdnProfile.GenerateSsoUriAsync();
             Assert.NotNull(ssoUri);
-            Assert.True(ssoUri.SsoUriValue.StartsWith("https://"));
+            Assert.True(ssoUri.AvailableSsoUri.ToString().StartsWith("https://"));
         }
 
         [TestCase]

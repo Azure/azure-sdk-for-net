@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             ValidateCustomDomainContent validateCustomDomainContent = new ValidateCustomDomainContent("customdomain4afd.azuretest.net");
             ValidateCustomDomainResult validateCustomDomainOutput  = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainContent);
-            Assert.False(validateCustomDomainOutput.CustomDomainValidated);
+            Assert.False(validateCustomDomainOutput.IsCustomDomainValid);
         }
     }
 }
