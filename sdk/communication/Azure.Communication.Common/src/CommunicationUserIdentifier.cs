@@ -11,6 +11,9 @@ namespace Azure.Communication
         /// <summary>The id of the communication user.</summary>
         public string Id { get; }
 
+        /// <inheritdoc />
+        public override string RawId => Id;
+
         /// <summary>
         /// Initializes a new instance of <see cref="CommunicationUserIdentifier"/>.
         /// </summary>
@@ -31,10 +34,10 @@ namespace Azure.Communication
         public override string ToString() => Id;
 
         /// <inheritdoc />
-        public override int GetHashCode() => Id.GetHashCode();
+        public override int GetHashCode() => RawId.GetHashCode();
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is CommunicationUserIdentifier otherId && otherId.Id == Id;
+            => other is CommunicationUserIdentifier otherId && otherId.RawId == RawId;
     }
 }

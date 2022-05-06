@@ -8,8 +8,34 @@ namespace Azure.Communication
     /// <summary>Represents a Microsoft Teams user.</summary>
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
+        private readonly string _rawId;
+
         /// <summary>The optional raw id of the Microsoft Teams User identifier.</summary>
-        public string RawId { get; }
+        public override string RawId
+        {
+            get
+            {
+                if (_rawId != null)
+                    return _rawId;
+
+                if (IsAnonymous)
+                {
+                    return $"8:teamsvisitor:{UserId}";
+                }
+                else if (Cloud == CommunicationCloudEnvironment.Dod)
+                {
+                    return $"8:dod:{UserId}";
+                }
+                else if (Cloud == CommunicationCloudEnvironment.Gcch)
+                {
+                    return $"8:gcch:{UserId}";
+                }
+                else
+                {
+                    return $"8:orgid:{UserId}";
+                }
+            }
+        }
 
         /// <summary>The id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</summary>
         public string UserId { get; }
@@ -39,21 +65,18 @@ namespace Azure.Communication
             UserId = userId;
             IsAnonymous = isAnonymous;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
-            RawId = rawId;
+            _rawId = rawId;
         }
 
         /// <inheritdoc />
         public override string ToString() => UserId;
 
         /// <inheritdoc />
-        public override int GetHashCode() => UserId.GetHashCode();
+        public override int GetHashCode() => RawId.GetHashCode();
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
             => other is MicrosoftTeamsUserIdentifier otherId
-            && otherId.UserId == UserId
-            && otherId.IsAnonymous == IsAnonymous
-            && otherId.Cloud == Cloud
-            && (RawId is null || otherId.RawId is null || RawId == otherId.RawId);
+            && otherId.RawId == RawId;
     }
 }

@@ -8,8 +8,16 @@ namespace Azure.Communication
     /// <summary>Represents a Phone Number.</summary>
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
+        private readonly string _rawId;
+
         /// <summary>The optional raw id of the phone number.</summary>
-        public string RawId { get; }
+        public override string RawId
+        {
+            get
+            {
+                return _rawId ?? $"4:{PhoneNumber.TrimStart('+')}";
+            }
+        }
 
         /// <summary>The phone number in E.164 format.</summary>
         public string PhoneNumber { get; }
@@ -27,17 +35,17 @@ namespace Azure.Communication
         {
             Argument.AssertNotNullOrEmpty(phoneNumber, nameof(phoneNumber));
             PhoneNumber = phoneNumber;
-            RawId = rawId;
+            _rawId = rawId;
         }
 
         /// <inheritdoc />
         public override string ToString() => PhoneNumber;
 
         /// <inheritdoc />
-        public override int GetHashCode() => PhoneNumber.GetHashCode();
+        public override int GetHashCode() => RawId.GetHashCode();
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is PhoneNumberIdentifier otherId && otherId.PhoneNumber == PhoneNumber && (RawId is null || otherId.RawId is null || RawId == otherId.RawId);
+            => other is PhoneNumberIdentifier otherId && otherId.RawId == RawId;
     }
 }
