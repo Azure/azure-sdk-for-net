@@ -230,40 +230,40 @@ namespace Azure.Messaging.EventGrid
 
         /// <summary> Publishes a CloudEvent to an Event Grid topic. </summary>
         /// <param name="cloudEvent"> The set of events to be published to Event Grid.</param>
-        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="channelName">The partner topic channel to publish the event to.</param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
         [ForwardsClientCalls]
-        public virtual async Task<Response> SendEventAsync(CloudEvent cloudEvent, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
-            => await SendEventsAsync(new CloudEvent[] { cloudEvent }, options, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> SendEventAsync(CloudEvent cloudEvent, string channelName, CancellationToken cancellationToken = default)
+            => await SendEventsAsync(new CloudEvent[] { cloudEvent }, channelName, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a CloudEvent to an Event Grid topic. </summary>
         /// <param name="cloudEvent"> The set of events to be published to Event Grid.</param>
-        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="channelName">The partner topic channel to publish the event to.</param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
         [ForwardsClientCalls]
-        public virtual Response SendEvent(CloudEvent cloudEvent, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
-            => SendEvents(new CloudEvent[] { cloudEvent }, options, cancellationToken);
+        public virtual Response SendEvent(CloudEvent cloudEvent, string channelName, CancellationToken cancellationToken = default)
+            => SendEvents(new CloudEvent[] { cloudEvent }, channelName, cancellationToken);
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic.</summary>
         /// <param name="cloudEvents"> The set of events to be published to Event Grid.</param>
-        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="channelName">The partner topic channel to publish the event to.</param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> cloudEvents, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
-            => await SendCloudEventsInternal(cloudEvents, options, true /*async*/, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response> SendEventsAsync(IEnumerable<CloudEvent> cloudEvents, string channelName, CancellationToken cancellationToken = default)
+            => await SendCloudEventsInternal(cloudEvents, channelName, true /*async*/, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="cloudEvents"> The set of events to be published to Event Grid. </param>
-        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="channelName">The partner topic channel to publish the event to.</param>
         /// <param name="cancellationToken"> An optional cancellation token instance to signal the request to cancel the operation.</param>
-        public virtual Response SendEvents(IEnumerable<CloudEvent> cloudEvents, SendCloudEventsOptions options, CancellationToken cancellationToken = default)
-            => SendCloudEventsInternal(cloudEvents, options, false /*async*/, cancellationToken).EnsureCompleted();
+        public virtual Response SendEvents(IEnumerable<CloudEvent> cloudEvents, string channelName, CancellationToken cancellationToken = default)
+            => SendCloudEventsInternal(cloudEvents, channelName, false /*async*/, cancellationToken).EnsureCompleted();
 
         /// <summary> Publishes a set of CloudEvents to an Event Grid topic. </summary>
         /// <param name="events"> The set of events to be published to Event Grid. </param>
-        /// <param name="options">The set of options to use when sending the CloudEvent.</param>
+        /// <param name="channelName">The partner topic channel to publish the event to.</param>
         /// <param name="async">Whether to invoke the operation asynchronously.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async Task<Response> SendCloudEventsInternal(IEnumerable<CloudEvent> events, SendCloudEventsOptions options, bool async, CancellationToken cancellationToken = default)
+        private async Task<Response> SendCloudEventsInternal(IEnumerable<CloudEvent> events, string channelName, bool async, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EventGridPublisherClient)}.{nameof(SendEvents)}");
             scope.Start();
@@ -275,7 +275,6 @@ namespace Azure.Messaging.EventGrid
                 using HttpMessage message = _pipeline.CreateMessage();
                 Request request = CreateEventRequest(message, "application/cloudevents-batch+json; charset=utf-8");
 
-                string channelName = options?.ChannelName;
                 if (channelName != null)
                 {
                     request.Headers.Add("aeg-channel-name", channelName);
