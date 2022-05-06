@@ -31,7 +31,7 @@ namespace Azure.Communication
         /// <summary> Determines if two <see cref="CommunicationCloudEnvironment"/> values are not the same. </summary>
         public static bool operator !=(CommunicationCloudEnvironment left, CommunicationCloudEnvironment right) => !left.Equals(right);
         /// <summary> Converts a string to a <see cref="CommunicationCloudEnvironment"/>. </summary>
-        public static implicit operator CommunicationCloudEnvironment(string value) => new CommunicationCloudEnvironment(value);
+        public static implicit operator CommunicationCloudEnvironment(string value) => new(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

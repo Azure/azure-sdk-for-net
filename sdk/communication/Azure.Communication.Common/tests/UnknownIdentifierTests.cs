@@ -8,7 +8,7 @@ namespace Azure.Communication
 {
     public class UnknownIdentifierTests
     {
-        private String _id = "some id";
+        private readonly string _id = "some id";
         [Test]
         public void constructWithNullOrEmptyIdShouldThrow()
         {
@@ -19,8 +19,8 @@ namespace Azure.Communication
         [Test]
         public void compareEqualUnknownIdentifiers()
         {
-            UnknownIdentifier identifier1 = new UnknownIdentifier(_id);
-            UnknownIdentifier identifier2 = new UnknownIdentifier(_id);
+            UnknownIdentifier identifier1 = new(_id);
+            UnknownIdentifier identifier2 = new(_id);
 
             Assert.True(identifier1.Equals(identifier1));
             Assert.True(identifier1.Equals(identifier2));
@@ -29,15 +29,15 @@ namespace Azure.Communication
         [Test]
         public void compareWithNonUnknownIdentifier()
         {
-            UnknownIdentifier identifier1 = new UnknownIdentifier(_id);
-            Object identifier2 = new Object();
+            UnknownIdentifier identifier1 = new(_id);
+            object identifier2 = new();
             Assert.False(identifier1.Equals(identifier2));
         }
 
         [Test]
         public void constructWithValidId()
         {
-            UnknownIdentifier result = new UnknownIdentifier(_id);
+            UnknownIdentifier result = new(_id);
             Assert.NotNull(result.Id);
             Assert.NotNull(result.GetHashCode());
         }

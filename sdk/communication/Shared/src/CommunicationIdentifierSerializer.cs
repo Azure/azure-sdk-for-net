@@ -38,7 +38,7 @@ namespace Azure.Communication
 
             static void AssertMaximumOneNestedModel(CommunicationIdentifierModel identifier)
             {
-                List<string> presentProperties = new List<string>();
+                List<string> presentProperties = new();
                 if (identifier.CommunicationUser is not null)
                     presentProperties.Add(nameof(identifier.CommunicationUser));
                 if (identifier.PhoneNumber is not null)

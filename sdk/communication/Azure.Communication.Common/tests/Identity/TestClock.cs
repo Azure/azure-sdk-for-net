@@ -14,7 +14,7 @@ namespace Azure.Communication.Identity
     /// </summary>
     internal class TestClock
     {
-        private readonly List<ScheduledAction> _scheduledActions = new List<ScheduledAction>();
+        private readonly List<ScheduledAction> _scheduledActions = new();
         public IEnumerable<IScheduledAction> ScheduledActions => _scheduledActions.Where(x => !x.IsDisposed && !x.HasExecuted).Cast<IScheduledAction>();
 
         public IScheduledAction Schedule(Action action, TimeSpan period)
