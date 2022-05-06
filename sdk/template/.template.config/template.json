@@ -25,7 +25,6 @@
       "modifiers": [
         {
           "exclude": [
-            ".content/**/*",
             "api/**/*",
             "samples/**/*.md",
             "tests/**/*.cs",
@@ -41,7 +40,7 @@
       ]
     },
     {
-      "source": "./Azure.Template/.content",
+      "source": "./.content",
       "target": "./Azure.Template",
       "modifiers": [
         {
@@ -53,12 +52,12 @@
       ]
     },
     {
-      "source": "Azure.Template/.content/testResource",
+      "source": "./.content/testResource",
       "target": "./",
       "condition": "(includeCI)"
     },
     {
-      "source": "Azure.Template/.content/packageResource",
+      "source": "./.content/packageResource",
       "target": "./Azure.Template/"
     }
   ],
