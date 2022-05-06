@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.ServiceClients;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -329,59 +330,55 @@ namespace Azure.AI.TextAnalytics
             throw new NotImplementedException();
         }
 
-#pragma warning disable CS1998 // async await needed
         async ValueTask<OperationState<AsyncPageable<AnalyzeActionsResult>>> IOperation<AsyncPageable<AnalyzeActionsResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
-#pragma warning restore CS1998 // async await needed
         {
             //Response<AnalyzeJobState> response = async
             //    ? await _serviceClient.AnalyzeStatusAsync(_jobId, _showStats, null, null, cancellationToken).ConfigureAwait(false)
             //    : _serviceClient.AnalyzeStatus(_jobId, _showStats, null, null, cancellationToken);
 
-            //// Add lock to avoid race condition?
-            //_displayName = response.Value.DisplayName;
-            //_createdOn = response.Value.CreatedDateTime;
-            //_expiresOn = response.Value.ExpirationDateTime;
-            //_lastModified = response.Value.LastUpdateDateTime;
-            //_status = response.Value.Status;
-            //_actionsFailed = response.Value.Tasks.Failed;
-            //_actionsInProgress = response.Value.Tasks.InProgress;
-            //_actionSucceeded = response.Value.Tasks.Completed;
-            //_actionsTotal = response.Value.Tasks.Total;
+            // Add lock to avoid race condition?
+            _displayName = response.Value.DisplayName;
+            _createdOn = response.Value.CreatedDateTime;
+            _expiresOn = response.Value.ExpirationDateTime;
+            _lastModified = response.Value.LastUpdateDateTime;
+            _status = response.Value.Status;
+            _actionsFailed = response.Value.Tasks.Failed;
+            _actionsInProgress = response.Value.Tasks.InProgress;
+            _actionSucceeded = response.Value.Tasks.Completed;
+            _actionsTotal = response.Value.Tasks.Total;
 
-            //Response rawResponse = response.GetRawResponse();
+            Response rawResponse = response.GetRawResponse();
 
-            //if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            //{
-            //    if (CheckIfGenericError(response.Value))
-            //    {
-            //        RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors).ConfigureAwait(false);
-            //        return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
-            //    }
-            //}
+            if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            {
+                if (CheckIfGenericError(response.Value))
+                {
+                    RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors).ConfigureAwait(false);
+                    return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
+                }
+            }
 
-            //if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
-            //    response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            //{
-            //    string nextLink = response.Value.NextLink;
-            //    AnalyzeActionsResult value = Transforms.ConvertToAnalyzeActionsResult(response.Value, _idToIndexMap);
-            //    _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { value }, nextLink, rawResponse);
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
+                response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            {
+                string nextLink = response.Value.NextLink;
+                AnalyzeActionsResult value = Transforms.ConvertToAnalyzeActionsResult(response.Value, _idToIndexMap);
+                _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { value }, nextLink, rawResponse);
 
-            //    return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
-            //}
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
+            }
 
-            //return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
-
-            throw new NotImplementedException();
+            return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
         }
 
-        //private static bool CheckIfGenericError(AnalyzeJobState jobState)
-        //{
-        //    foreach (TextAnalyticsErrorInternal error in jobState.Errors)
-        //    {
-        //        if (string.IsNullOrEmpty(error.Target))
-        //            return true;
-        //    }
-        //    return false;
-        //}
+        private static bool CheckIfGenericError(AnalyzeTextJobState jobState)
+        {
+            foreach (Error error in jobState.Errors)
+            {
+                if (string.IsNullOrEmpty(error.Target))
+                    return true;
+            }
+            return false;
+        }
     }
 }
