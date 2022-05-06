@@ -469,241 +469,241 @@ namespace Azure.AI.TextAnalytics
 
         #region Analyze Operation
 
-        //internal static PiiTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
-        //{
-        //    var parameters = new PiiTaskParameters()
-        //    {
-        //        Domain = action.DomainFilter.GetString() ?? (PiiTaskParametersDomain?)null,
-        //        ModelVersion = action.ModelVersion,
-        //        StringIndexType = Constants.DefaultStringIndexType,
-        //        LoggingOptOut = action.DisableServiceLogs
-        //    };
+        internal static PiiLROTask ConvertToPiiTask(RecognizePiiEntitiesAction action)
+        {
+            var parameters = new PiiTaskParameters()
+            {
+                Domain = action.DomainFilter.GetString() ?? (PiiDomain?)null,
+                ModelVersion = action.ModelVersion,
+                StringIndexType = Constants.DefaultStringIndexType,
+                LoggingOptOut = action.DisableServiceLogs
+            };
 
-        //    if (action.CategoriesFilter.Count > 0)
-        //    {
-        //        parameters.PiiCategories = action.CategoriesFilter;
-        //    }
+            if (action.CategoriesFilter.Count > 0)
+            {
+                parameters.PiiCategories = action.CategoriesFilter;
+            }
 
-        //    return new PiiTask()
-        //    {
-        //        Parameters = parameters,
-        //        TaskName = action.ActionName
-        //    };
-        //}
+            return new PiiLROTask()
+            {
+                Parameters = parameters,
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static EntityLinkingTask ConvertToLinkedEntitiesTask(RecognizeLinkedEntitiesAction action)
-        //{
-        //    return new EntityLinkingTask()
-        //    {
-        //        Parameters = new EntityLinkingTaskParameters()
-        //        {
-        //            ModelVersion = action.ModelVersion,
-        //            StringIndexType = Constants.DefaultStringIndexType,
-        //            LoggingOptOut = action.DisableServiceLogs
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static EntityLinkingLROTask ConvertToLinkedEntitiesTask(RecognizeLinkedEntitiesAction action)
+        {
+            return new EntityLinkingLROTask()
+            {
+                Parameters = new EntityLinkingTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static EntitiesTask ConvertToEntitiesTask(RecognizeEntitiesAction action)
-        //{
-        //    return new EntitiesTask()
-        //    {
-        //        Parameters = new EntitiesTaskParameters()
-        //        {
-        //            ModelVersion = action.ModelVersion,
-        //            StringIndexType = Constants.DefaultStringIndexType,
-        //            LoggingOptOut = action.DisableServiceLogs
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static EntitiesLROTask ConvertToEntitiesTask(RecognizeEntitiesAction action)
+        {
+            return new EntitiesLROTask()
+            {
+                Parameters = new EntitiesTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static KeyPhrasesTask ConvertToKeyPhrasesTask(ExtractKeyPhrasesAction action)
-        //{
-        //    return new KeyPhrasesTask()
-        //    {
-        //        Parameters = new KeyPhrasesTaskParameters()
-        //        {
-        //            ModelVersion = action.ModelVersion,
-        //            LoggingOptOut = action.DisableServiceLogs
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static KeyPhraseLROTask ConvertToKeyPhrasesTask(ExtractKeyPhrasesAction action)
+        {
+            return new KeyPhraseLROTask()
+            {
+                Parameters = new KeyPhraseTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    LoggingOptOut = action.DisableServiceLogs
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static SentimentAnalysisTask ConvertToSentimentAnalysisTask(AnalyzeSentimentAction action)
-        //{
-        //    return new SentimentAnalysisTask()
-        //    {
-        //        Parameters = new SentimentAnalysisTaskParameters()
-        //        {
-        //            ModelVersion = action.ModelVersion,
-        //            StringIndexType = Constants.DefaultStringIndexType,
-        //            LoggingOptOut = action.DisableServiceLogs,
-        //            OpinionMining = action.IncludeOpinionMining
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static SentimentAnalysisLROTask ConvertToSentimentAnalysisTask(AnalyzeSentimentAction action)
+        {
+            return new SentimentAnalysisLROTask()
+            {
+                Parameters = new SentimentAnalysisTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
+                    OpinionMining = action.IncludeOpinionMining
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static ExtractiveSummarizationTask ConvertToExtractiveSummarizationTask(ExtractSummaryAction action)
-        //{
-        //    return new ExtractiveSummarizationTask()
-        //    {
-        //        Parameters = new ExtractiveSummarizationTaskParameters()
-        //        {
-        //            ModelVersion = action.ModelVersion,
-        //            StringIndexType = Constants.DefaultStringIndexType,
-        //            LoggingOptOut = action.DisableServiceLogs,
-        //            SentenceCount = action.MaxSentenceCount,
-        //            SortBy = action.OrderBy
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static ExtractiveSummarizationLROTask ConvertToExtractiveSummarizationTask(ExtractSummaryAction action)
+        {
+            return new ExtractiveSummarizationLROTask()
+            {
+                Parameters = new ExtractiveSummarizationTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
+                    SentenceCount = action.MaxSentenceCount,
+                    SortBy = action.OrderBy.ToString() ?? (ExtractiveSummarizationSortingCriteria?)null,
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
-        //{
-        //    return new CustomEntitiesTask()
-        //    {
-        //        Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
-        //        {
-        //            LoggingOptOut = action.DisableServiceLogs,
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static CustomEntitiesLROTask ConvertToCustomEntitiesLROTask(RecognizeCustomEntitiesAction action)
+        {
+            return new CustomEntitiesLROTask()
+            {
+                Parameters = new CustomEntitiesTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static CustomSingleClassificationTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
-        //{
-        //    return new CustomSingleClassificationTask()
-        //    {
-        //        Parameters = new CustomSingleClassificationTaskParameters(action.ProjectName, action.DeploymentName)
-        //        {
-        //            LoggingOptOut = action.DisableServiceLogs,
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static CustomSingleLabelClassificationLROTask ConvertToCustomSingleClassificationTask(SingleCategoryClassifyAction action)
+        {
+            return new CustomSingleLabelClassificationLROTask()
+            {
+                Parameters = new CustomSingleLabelClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static CustomMultiClassificationTask ConvertToCustomMultiClassificationTask(MultiCategoryClassifyAction action)
-        //{
-        //    return new CustomMultiClassificationTask()
-        //    {
-        //        Parameters = new CustomMultiClassificationTaskParameters(action.ProjectName, action.DeploymentName)
-        //        {
-        //            LoggingOptOut = action.DisableServiceLogs,
-        //        },
-        //        TaskName = action.ActionName
-        //    };
-        //}
+        internal static CustomMultiLabelClassificationLROTask ConvertToCustomMultiClassificationTask(MultiCategoryClassifyAction action)
+        {
+            return new CustomMultiLabelClassificationLROTask()
+            {
+                Parameters = new CustomMultiLabelClassificationTaskParameters(action.ProjectName, action.DeploymentName)
+                {
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName
+            };
+        }
 
-        //internal static IList<EntityLinkingTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
-        //{
-        //    List<EntityLinkingTask> list = new List<EntityLinkingTask>(recognizeLinkedEntitiesActions.Count);
+        internal static IList<EntityLinkingLROTask> ConvertFromRecognizeLinkedEntitiesActionsToTasks(IReadOnlyCollection<RecognizeLinkedEntitiesAction> recognizeLinkedEntitiesActions)
+        {
+            List<EntityLinkingLROTask> list = new(recognizeLinkedEntitiesActions.Count);
 
-        //    foreach (RecognizeLinkedEntitiesAction action in recognizeLinkedEntitiesActions)
-        //    {
-        //        list.Add(ConvertToLinkedEntitiesTask(action));
-        //    }
+            foreach (RecognizeLinkedEntitiesAction action in recognizeLinkedEntitiesActions)
+            {
+                list.Add(ConvertToLinkedEntitiesTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
-        //internal static IList<EntitiesTask> ConvertFromRecognizeEntitiesActionsToTasks(IReadOnlyCollection<RecognizeEntitiesAction> recognizeEntitiesActions)
-        //{
-        //    List<EntitiesTask> list = new List<EntitiesTask>(recognizeEntitiesActions.Count);
+        internal static IList<EntitiesLROTask> ConvertFromRecognizeEntitiesActionsToTasks(IReadOnlyCollection<RecognizeEntitiesAction> recognizeEntitiesActions)
+        {
+            List<EntitiesLROTask> list = new(recognizeEntitiesActions.Count);
 
-        //    foreach (RecognizeEntitiesAction action in recognizeEntitiesActions)
-        //    {
-        //        list.Add(ConvertToEntitiesTask(action));
-        //    }
+            foreach (RecognizeEntitiesAction action in recognizeEntitiesActions)
+            {
+                list.Add(ConvertToEntitiesTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
-        //internal static IList<KeyPhrasesTask> ConvertFromExtractKeyPhrasesActionsToTasks(IReadOnlyCollection<ExtractKeyPhrasesAction> extractKeyPhrasesActions)
-        //{
-        //    List<KeyPhrasesTask> list = new List<KeyPhrasesTask>(extractKeyPhrasesActions.Count);
+        internal static IList<KeyPhraseLROTask> ConvertFromExtractKeyPhrasesActionsToTasks(IReadOnlyCollection<ExtractKeyPhrasesAction> extractKeyPhrasesActions)
+        {
+            List<KeyPhraseLROTask> list = new(extractKeyPhrasesActions.Count);
 
-        //    foreach (ExtractKeyPhrasesAction action in extractKeyPhrasesActions)
-        //    {
-        //        list.Add(ConvertToKeyPhrasesTask(action));
-        //    }
+            foreach (ExtractKeyPhrasesAction action in extractKeyPhrasesActions)
+            {
+                list.Add(ConvertToKeyPhrasesTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
-        //internal static IList<PiiTask> ConvertFromRecognizePiiEntitiesActionsToTasks(IReadOnlyCollection<RecognizePiiEntitiesAction> recognizePiiEntitiesActions)
-        //{
-        //    List <PiiTask> list = new List<PiiTask>(recognizePiiEntitiesActions.Count);
+        internal static IList<PiiLROTask> ConvertFromRecognizePiiEntitiesActionsToTasks(IReadOnlyCollection<RecognizePiiEntitiesAction> recognizePiiEntitiesActions)
+        {
+            List<PiiLROTask> list = new(recognizePiiEntitiesActions.Count);
 
-        //    foreach (RecognizePiiEntitiesAction action in recognizePiiEntitiesActions)
-        //    {
-        //        list.Add(ConvertToPiiTask(action));
-        //    }
+            foreach (RecognizePiiEntitiesAction action in recognizePiiEntitiesActions)
+            {
+                list.Add(ConvertToPiiTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
-        //internal static IList<SentimentAnalysisTask> ConvertFromAnalyzeSentimentActionsToTasks(IReadOnlyCollection<AnalyzeSentimentAction> analyzeSentimentActions)
-        //{
-        //    List<SentimentAnalysisTask> list = new List<SentimentAnalysisTask>(analyzeSentimentActions.Count);
+        internal static IList<SentimentAnalysisLROTask> ConvertFromAnalyzeSentimentActionsToTasks(IReadOnlyCollection<AnalyzeSentimentAction> analyzeSentimentActions)
+        {
+            List<SentimentAnalysisLROTask> list = new(analyzeSentimentActions.Count);
 
-        //    foreach (AnalyzeSentimentAction action in analyzeSentimentActions)
-        //    {
-        //        list.Add(ConvertToSentimentAnalysisTask(action));
-        //    }
+            foreach (AnalyzeSentimentAction action in analyzeSentimentActions)
+            {
+                list.Add(ConvertToSentimentAnalysisTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
-        //internal static IList<ExtractiveSummarizationTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
-        //{
-        //    List<ExtractiveSummarizationTask> list = new List<ExtractiveSummarizationTask>(extractSummaryActions.Count);
+        internal static IList<ExtractiveSummarizationLROTask> ConvertFromExtractSummaryActionsToTasks(IReadOnlyCollection<ExtractSummaryAction> extractSummaryActions)
+        {
+            List<ExtractiveSummarizationLROTask> list = new(extractSummaryActions.Count);
 
-        //    foreach (ExtractSummaryAction action in extractSummaryActions)
-        //    {
-        //        list.Add(ConvertToExtractiveSummarizationTask(action));
-        //    }
+            foreach (ExtractSummaryAction action in extractSummaryActions)
+            {
+                list.Add(ConvertToExtractiveSummarizationTask(action));
+            }
 
-        //    return list;
-        //}
-        //internal static IList<CustomSingleClassificationTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
-        //{
-        //    List<CustomSingleClassificationTask> list = new List<CustomSingleClassificationTask>(singleCategoryClassifyActions.Count);
+            return list;
+        }
+        internal static IList<CustomSingleLabelClassificationLROTask> ConvertFromSingleCategoryClassifyActionsToTasks(IReadOnlyCollection<SingleCategoryClassifyAction> singleCategoryClassifyActions)
+        {
+            List<CustomSingleLabelClassificationLROTask> list = new(singleCategoryClassifyActions.Count);
 
-        //    foreach (SingleCategoryClassifyAction action in singleCategoryClassifyActions)
-        //    {
-        //        list.Add(ConvertToCustomSingleClassificationTask(action));
-        //    }
+            foreach (SingleCategoryClassifyAction action in singleCategoryClassifyActions)
+            {
+                list.Add(ConvertToCustomSingleClassificationTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
-        //internal static IList<CustomMultiClassificationTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
-        //{
-        //    List<CustomMultiClassificationTask> list = new List<CustomMultiClassificationTask>(MultiCategoryClassifyActions.Count);
+        internal static IList<CustomMultiLabelClassificationLROTask> ConvertFromMultiCategoryClassifyActionsToTasks(IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions)
+        {
+            List<CustomMultiLabelClassificationLROTask> list = new(MultiCategoryClassifyActions.Count);
 
-        //    foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
-        //    {
-        //        list.Add(ConvertToCustomMultiClassificationTask(action));
-        //    }
+            foreach (MultiCategoryClassifyAction action in MultiCategoryClassifyActions)
+            {
+                list.Add(ConvertToCustomMultiClassificationTask(action));
+            }
 
-        //    return list;
-        //}
-        //internal static IList<CustomEntitiesTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
-        //{
-        //    var list = new List<CustomEntitiesTask>(recognizeCustomEntitiesActions.Count);
+            return list;
+        }
+        internal static IList<CustomEntitiesLROTask> ConvertFromRecognizeCustomEntitiesActionsToTasks(IReadOnlyCollection<RecognizeCustomEntitiesAction> recognizeCustomEntitiesActions)
+        {
+            List<CustomEntitiesLROTask> list = new(recognizeCustomEntitiesActions.Count);
 
-        //    foreach (var action in recognizeCustomEntitiesActions)
-        //    {
-        //        list.Add(ConvertToCustomEntitiesTask(action));
-        //    }
+            foreach (var action in recognizeCustomEntitiesActions)
+            {
+                list.Add(ConvertToCustomEntitiesLROTask(action));
+            }
 
-        //    return list;
-        //}
+            return list;
+        }
 
         //private static string[] parseActionErrorTarget(string targetReference)
         //{
