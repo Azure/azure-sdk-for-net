@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (Optional.IsCollectionDefined(UrlSigningKeys))
+            if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                if (UrlSigningKeys != null)
+                if (UriSigningKeys != null)
                 {
                     writer.WritePropertyName("urlSigningKeys");
                     writer.WriteStartArray();
-                    foreach (var item in UrlSigningKeys)
+                    foreach (var item in UriSigningKeys)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> probePath = default;
             Optional<IList<GeoFilter>> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UrlSigningKey>> urlSigningKeys = default;
+            Optional<IList<UriSigningKey>> urlSigningKeys = default;
             Optional<EndpointPropertiesUpdateParametersDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<string> hostName = default;
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Cdn
                                 urlSigningKeys = null;
                                 continue;
                             }
-                            List<UrlSigningKey> array = new List<UrlSigningKey>();
+                            List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UrlSigningKey.DeserializeUrlSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
                             }
                             urlSigningKeys = array;
                             continue;

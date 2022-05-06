@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
-        private const string UrlDecodeValue = "UrlDecode";
-        private const string UrlEncodeValue = "UrlEncode";
+        private const string UriDecodeValue = "UrlDecode";
+        private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Lowercase. </summary>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Trim. </summary>
         public static PreTransformCategory Trim { get; } = new PreTransformCategory(TrimValue);
         /// <summary> UrlDecode. </summary>
-        public static PreTransformCategory UrlDecode { get; } = new PreTransformCategory(UrlDecodeValue);
+        public static PreTransformCategory UriDecode { get; } = new PreTransformCategory(UriDecodeValue);
         /// <summary> UrlEncode. </summary>
-        public static PreTransformCategory UrlEncode { get; } = new PreTransformCategory(UrlEncodeValue);
+        public static PreTransformCategory UriEncode { get; } = new PreTransformCategory(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are the same. </summary>
