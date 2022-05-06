@@ -8,33 +8,32 @@ namespace Azure.Communication
 {
     public class CommunicationIdentifierTest
     {
-        private const string TestUserId = "User Id";
-        private const string TestRawId = "Raw Id";
-        private const string TestPhoneNumber = "+14255550123";
-        private const string TestTeamsUserId = "Microsoft Teams User Id";
-
         [Test]
-        public void IfIdIsOptional_EqualityOnlyTestIfPresentOnBothSide()
+        public void RawIdTakesPrecendenceInEqualityCheck()
         {
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: TestRawId), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true));
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true));
-            Assert.AreEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: TestRawId));
-            Assert.AreNotEqual(new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: TestRawId), new MicrosoftTeamsUserIdentifier(TestUserId, isAnonymous: true, rawId: "Another Raw Id"));
+            // Teams users
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true));
+            Assert.AreNotEqual(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Raw Id"), new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Another Raw Id"));
 
-            Assert.AreEqual(new PhoneNumberIdentifier(TestPhoneNumber, TestRawId), new PhoneNumberIdentifier(TestPhoneNumber));
-            Assert.AreEqual(new PhoneNumberIdentifier(TestPhoneNumber), new PhoneNumberIdentifier(TestPhoneNumber));
-            Assert.AreEqual(new PhoneNumberIdentifier(TestPhoneNumber), new PhoneNumberIdentifier(TestPhoneNumber, TestRawId));
-            Assert.AreNotEqual(new PhoneNumberIdentifier(TestPhoneNumber, TestRawId), new PhoneNumberIdentifier(TestPhoneNumber, "Another Raw Id"));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("override", isAnonymous: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"), new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true));
+            Assert.AreEqual(new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true), new MicrosoftTeamsUserIdentifier("override", isAnonymous: true, rawId: "8:teamsvisitor:45ab2481-1c1c-4005-be24-0ffb879b1130"));
+
+            // Phone numbers
+            Assert.AreEqual(new PhoneNumberIdentifier("+14255550123"), new PhoneNumberIdentifier("+14255550123"));
+            Assert.AreNotEqual(new PhoneNumberIdentifier("+14255550123", "Raw Id"), new PhoneNumberIdentifier("+14255550123", "Another Raw Id"));
+
+            Assert.AreEqual(new PhoneNumberIdentifier("+override", "4:14255550123"), new PhoneNumberIdentifier("+14255550123"));
+            Assert.AreEqual(new PhoneNumberIdentifier("+14255550123"), new PhoneNumberIdentifier("+override", "4:14255550123"));
         }
 
         [Test]
         public void MicrosoftTeamsUserIdentifier_DefaultCloudIsPublic()
-            => Assert.AreEqual(CommunicationCloudEnvironment.Public, new MicrosoftTeamsUserIdentifier(TestTeamsUserId, isAnonymous: true, rawId: TestRawId).Cloud);
+            => Assert.AreEqual(CommunicationCloudEnvironment.Public, new MicrosoftTeamsUserIdentifier("45ab2481-1c1c-4005-be24-0ffb879b1130", isAnonymous: true, rawId: "Raw Id").Cloud);
 
         [Test]
         public void GetRawIdOfIdentifier()
         {
-            void AssertRawId(CommunicationIdentifier identifier, string expectedRawId) => Assert.AreEqual(identifier.RawId, expectedRawId);
+            static void AssertRawId(CommunicationIdentifier identifier, string expectedRawId) => Assert.AreEqual(identifier.RawId, expectedRawId);
 
             AssertRawId(new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), "8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRawId(new CommunicationUserIdentifier("8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"), "8:gcch-acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
@@ -55,7 +54,7 @@ namespace Azure.Communication
         [Test]
         public void CreateIdentifierFromRawId()
         {
-            void AssertIdentifier(string rawId, CommunicationIdentifier expectedIdentifier) => Assert.AreEqual(CommunicationIdentifier.FromRawId(rawId), expectedIdentifier);
+            static void AssertIdentifier(string rawId, CommunicationIdentifier expectedIdentifier) => Assert.AreEqual(CommunicationIdentifier.FromRawId(rawId), expectedIdentifier);
 
             AssertIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
             AssertIdentifier("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130", new CommunicationUserIdentifier("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130"));
@@ -77,7 +76,7 @@ namespace Azure.Communication
         [Test]
         public void RawIdStaysTheSameAfterConversionToIdentifierAndBack()
         {
-            void AssertRoundtrip(string rawId) => Assert.AreEqual(CommunicationIdentifier.FromRawId(rawId).RawId, rawId);
+            static void AssertRoundtrip(string rawId) => Assert.AreEqual(CommunicationIdentifier.FromRawId(rawId).RawId, rawId);
 
             AssertRoundtrip("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
             AssertRoundtrip("8:spool:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
