@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Cdn.Models
             string vaultName = default;
             string secretName = default;
             Optional<string> secretVersion = default;
-            UpdateRule updateRule = default;
-            DeleteRule deleteRule = default;
+            CertificateUpdateAction updateRule = default;
+            CertificateDeleteAction deleteRule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"))
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("updateRule"))
                 {
-                    updateRule = new UpdateRule(property.Value.GetString());
+                    updateRule = new CertificateUpdateAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deleteRule"))
                 {
-                    deleteRule = new DeleteRule(property.Value.GetString());
+                    deleteRule = new CertificateDeleteAction(property.Value.GetString());
                     continue;
                 }
             }

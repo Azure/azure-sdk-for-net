@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             TypeDefinition = typeDefinition;
             Operator = @operator;
-            Transforms = new ChangeTrackingList<TransformCategory>();
+            Transforms = new ChangeTrackingList<PreTransformCategory>();
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionParametersMatchValuesItem>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestMethodMatchConditionDefinition(RequestMethodMatchConditionType typeDefinition, RequestMethodOperator @operator, bool? negateCondition, IList<TransformCategory> transforms, IList<RequestMethodMatchConditionParametersMatchValuesItem> matchValues)
+        internal RequestMethodMatchConditionDefinition(RequestMethodMatchConditionType typeDefinition, RequestMethodOperator @operator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionParametersMatchValuesItem> matchValues)
         {
             TypeDefinition = typeDefinition;
             Operator = @operator;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> List of transforms. </summary>
-        public IList<TransformCategory> Transforms { get; }
+        public IList<PreTransformCategory> Transforms { get; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
         public IList<RequestMethodMatchConditionParametersMatchValuesItem> MatchValues { get; }
     }

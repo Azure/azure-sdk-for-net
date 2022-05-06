@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
             TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
-            Transforms = new ChangeTrackingList<TransformCategory>();
+            Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of SocketAddressMatchConditionDefinition. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal SocketAddressMatchConditionDefinition(SocketAddressMatchConditionType typeDefinition, SocketAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal SocketAddressMatchConditionDefinition(SocketAddressMatchConditionType typeDefinition, SocketAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             TypeDefinition = typeDefinition;
             Operator = @operator;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The match value for the condition of the delivery rule. </summary>
         public IList<string> MatchValues { get; }
         /// <summary> List of transforms. </summary>
-        public IList<TransformCategory> Transforms { get; }
+        public IList<PreTransformCategory> Transforms { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
             TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
-            Transforms = new ChangeTrackingList<TransformCategory>();
+            Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RemoteAddressMatchConditionDefinition. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RemoteAddressMatchConditionDefinition(RemoteAddressMatchConditionType typeDefinition, RemoteAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal RemoteAddressMatchConditionDefinition(RemoteAddressMatchConditionType typeDefinition, RemoteAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
         {
             TypeDefinition = typeDefinition;
             Operator = @operator;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </summary>
         public IList<string> MatchValues { get; }
         /// <summary> List of transforms. </summary>
-        public IList<TransformCategory> Transforms { get; }
+        public IList<PreTransformCategory> Transforms { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
+        public KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, CertificateUpdateAction updateRule, CertificateDeleteAction deleteRule)
         {
             if (subscriptionId == null)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretVersion"> The version(GUID) of Key Vault Secret in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
-        internal KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, UpdateRule updateRule, DeleteRule deleteRule)
+        internal KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, CertificateUpdateAction updateRule, CertificateDeleteAction deleteRule)
         {
             TypeDefinition = typeDefinition;
             SubscriptionId = subscriptionId;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The version(GUID) of Key Vault Secret in Key Vault. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
-        public UpdateRule UpdateRule { get; set; }
+        public CertificateUpdateAction UpdateRule { get; set; }
         /// <summary> Describes the action that shall be taken when the certificate is removed from Key Vault. </summary>
-        public DeleteRule DeleteRule { get; set; }
+        public CertificateDeleteAction DeleteRule { get; set; }
     }
 }

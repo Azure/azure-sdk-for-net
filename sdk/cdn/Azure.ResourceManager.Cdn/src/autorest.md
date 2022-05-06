@@ -105,6 +105,24 @@ directive:
       $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
       $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
       $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
+      $.SslProtocol['x-ms-enum'].values = [
+                                {
+                                    "value": "TLSv1",
+                                    "name": "TLS10"
+                                },
+                                {
+                                    "value": "TLSv1.1",
+                                    "name": "TLS11"
+                                },
+                                {
+                                    "value": "TLSv1.2",
+                                    "name": "TLS12"
+                                }
+                            ]
+      $.SsoUri.properties.ssoUriValue['x-ms-client-name'] = 'availableSsoUri';
+      $.transform['x-ms-enum'].name = 'preTransformCategory';
+      $.KeyVaultCertificateSourceParameters.properties.updateRule['x-ms-enum'].name = 'certificateUpdateAction';
+      $.KeyVaultCertificateSourceParameters.properties.deleteRule['x-ms-enum'].name = 'certificateDeleteAction';
   - from: afdx.json
     where: $.definitions
     transform: >
@@ -333,13 +351,6 @@ directive:
     transform: >
       $['x-ms-enum'] = {
           "name": "matchOperator",
-          "modelAsString": true
-      }
-  - from: swagger-document
-    where: $.definitions.transform
-    transform: >
-      $['x-ms-enum'] = {
-          "name": "transformCategory",
           "modelAsString": true
       }
   - from: swagger-document

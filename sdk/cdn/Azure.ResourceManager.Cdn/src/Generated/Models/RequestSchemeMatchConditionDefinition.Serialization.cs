@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeMatchConditionParametersOperator @operator = default;
             Optional<bool> negateCondition = default;
-            Optional<IList<TransformCategory>> transforms = default;
+            Optional<IList<PreTransformCategory>> transforms = default;
             Optional<IList<RequestSchemeMatchConditionParametersMatchValuesItem>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TransformCategory> array = new List<TransformCategory>();
+                    List<PreTransformCategory> array = new List<PreTransformCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new TransformCategory(item.GetString()));
+                        array.Add(new PreTransformCategory(item.GetString()));
                     }
                     transforms = array;
                     continue;
