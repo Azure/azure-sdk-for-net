@@ -132,6 +132,11 @@ function New-DataPlanePackageFolder() {
     }
   }
 
+  $serviceFolder = (Join-Path $sdkPath "sdk" $service)
+  if (!(Test-Path -Path $serviceFolder)) {
+    Write-Host "service folder does not exist! create the folder $serviceFolder"
+    New-Item -Path $serviceFolder -ItemType Directory
+  }
   $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
   $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
   $apifolder = (Join-Path $projectFolder "api")
@@ -148,19 +153,22 @@ function New-DataPlanePackageFolder() {
         Write-Error "Error: input file should not be empty."
         exit 1
     }
-    dotnet new -i $sdkPath/sdk/template/Azure.Template
+    dotnet new -i $sdkPath/sdk/template
     Write-Host "Create project folder $projectFolder"
-    New-Item -Path $projectFolder -ItemType Directory
-    Push-Location $projectFolder
+    if (Test-Path -Path $projectFolder) {
+        Remove-Item -Path $projectFolder -ItemType Directory
+    }
+
+    Push-Location $serviceFolder
     $namespaceArray = $namespace.Split(".")
     if ( $namespaceArray.Count -lt 3) {
         Write-Error "Error: invalid namespace name."
         exit 1
     }
 
-    $libraryName = $namespaceArray[-1]
+    $clientName = $namespaceArray[-1]
     $groupName = $namespaceArray[1]
-    $dotnetNewCmd = "dotnet new azsdkdpg --libraryName $libraryName --groupName $groupName --force"
+    $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
     if ($inputfile -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
     }
@@ -175,17 +183,18 @@ function New-DataPlanePackageFolder() {
     if (Test-Path -Path $ciymlFilePath) {
         Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
         Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
-    } else {
-        $dotnetNewCmd = $dotnetNewCmd + " --includeCI true"
-    }
 
-    # dotnet new azsdkdpg --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
+        $dotnetNewCmd = $dotnetNewCmd + " --includeCI false"
+    }
+    # dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
     Write-Host "Invote dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
     Update-AutorestConfigFile -autorestFilePath $file -readme $readme
+    Pop-Location
     # dotnet sln
+    Push-Location $projectFolder
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
     dotnet sln remove tests\$namespace.Tests.csproj

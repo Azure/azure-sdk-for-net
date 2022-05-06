@@ -8,7 +8,7 @@ namespace Azure.Template
     }
     public partial class TemplateClientOptions : Azure.Core.ClientOptions
     {
-        public TemplateClientOptions(Azure.Template.Generated.TemplateServiceClientOptions.ServiceVersion version = Azure.Template.Generated.TemplateServiceClientOptions.ServiceVersion.V1_0_0) { }
+        public TemplateClientOptions(Azure.Template.Generated.TemplateClientOptions.ServiceVersion version = Azure.Template.Generated.TemplateClientOptions.ServiceVersion.V1_0_0) { }
         public enum ServiceVersion
         {
             V1_0_0 = 1,
