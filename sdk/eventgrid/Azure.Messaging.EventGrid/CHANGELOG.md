@@ -1,14 +1,10 @@
 # Release History
 
-## 4.11.0-beta.2 (Unreleased)
-
-### Features Added
+## 4.11.0-beta.2 (2022-05-10)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed `SendCloudEventsOptions` type in favor of a string parameter that can be used to specify the channel name.
 
 ## 4.11.0-beta.1 (2022-04-07)
 
