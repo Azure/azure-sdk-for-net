@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName");
-            writer.WriteStringValue(TypeName.ToString());
+            writer.WriteStringValue(TypeDefinition.ToString());
             writer.WritePropertyName("cacheBehavior");
             writer.WriteStringValue(CacheBehavior.ToString());
             writer.WritePropertyName("cacheType");

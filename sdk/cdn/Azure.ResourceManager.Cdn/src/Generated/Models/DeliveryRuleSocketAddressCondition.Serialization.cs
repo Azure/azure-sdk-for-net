@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRuleSocketAddrCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleSocketAddressCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static DeliveryRuleSocketAddrCondition DeserializeDeliveryRuleSocketAddrCondition(JsonElement element)
+        internal static DeliveryRuleSocketAddressCondition DeserializeDeliveryRuleSocketAddressCondition(JsonElement element)
         {
-            SocketAddrMatchConditionDefinition parameters = default;
+            SocketAddressMatchConditionDefinition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = SocketAddrMatchConditionDefinition.DeserializeSocketAddrMatchConditionDefinition(property.Value);
+                    parameters = SocketAddressMatchConditionDefinition.DeserializeSocketAddressMatchConditionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new DeliveryRuleSocketAddrCondition(name, parameters);
+            return new DeliveryRuleSocketAddressCondition(name, parameters);
         }
     }
 }

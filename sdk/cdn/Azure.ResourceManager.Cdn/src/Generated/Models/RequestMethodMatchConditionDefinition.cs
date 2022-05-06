@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestMethodMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of RequestMethodMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestMethodMatchConditionDefinition(RequestMethodMatchConditionType typeName, RequestMethodOperator @operator)
+        public RequestMethodMatchConditionDefinition(RequestMethodMatchConditionType typeDefinition, RequestMethodOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             Transforms = new ChangeTrackingList<TransformCategory>();
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionParametersMatchValuesItem>();
         }
 
         /// <summary> Initializes a new instance of RequestMethodMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestMethodMatchConditionDefinition(RequestMethodMatchConditionType typeName, RequestMethodOperator @operator, bool? negateCondition, IList<TransformCategory> transforms, IList<RequestMethodMatchConditionParametersMatchValuesItem> matchValues)
+        internal RequestMethodMatchConditionDefinition(RequestMethodMatchConditionType typeDefinition, RequestMethodOperator @operator, bool? negateCondition, IList<TransformCategory> transforms, IList<RequestMethodMatchConditionParametersMatchValuesItem> matchValues)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public RequestMethodMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public RequestMethodMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestMethodOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

@@ -11,27 +11,27 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheKeyQueryStringActionDefinition
     {
         /// <summary> Initializes a new instance of CacheKeyQueryStringActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
-        public CacheKeyQueryStringActionDefinition(CacheKeyQueryStringActionType typeName, QueryStringBehavior queryStringBehavior)
+        public CacheKeyQueryStringActionDefinition(CacheKeyQueryStringActionType typeDefinition, QueryStringBehavior queryStringBehavior)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             QueryStringBehavior = queryStringBehavior;
         }
 
         /// <summary> Initializes a new instance of CacheKeyQueryStringActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionDefinition(CacheKeyQueryStringActionType typeName, QueryStringBehavior queryStringBehavior, string queryParameters)
+        internal CacheKeyQueryStringActionDefinition(CacheKeyQueryStringActionType typeDefinition, QueryStringBehavior queryStringBehavior, string queryParameters)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             QueryStringBehavior = queryStringBehavior;
             QueryParameters = queryParameters;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public CacheKeyQueryStringActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public CacheKeyQueryStringActionType TypeDefinition { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public QueryStringBehavior QueryStringBehavior { get; set; }
         /// <summary> query parameters to include or exclude (comma separated). </summary>

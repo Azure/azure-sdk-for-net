@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SocketAddrMatchConditionDefinition : IUtf8JsonSerializable
+    public partial class SocketAddressMatchConditionDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName");
-            writer.WriteStringValue(TypeName.ToString());
+            writer.WriteStringValue(TypeDefinition.ToString());
             writer.WritePropertyName("operator");
             writer.WriteStringValue(Operator.ToString());
             if (Optional.IsDefined(NegateCondition))
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SocketAddrMatchConditionDefinition DeserializeSocketAddrMatchConditionDefinition(JsonElement element)
+        internal static SocketAddressMatchConditionDefinition DeserializeSocketAddressMatchConditionDefinition(JsonElement element)
         {
-            SocketAddrMatchConditionType typeName = default;
-            SocketAddrOperator @operator = default;
+            SocketAddressMatchConditionType typeName = default;
+            SocketAddressOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<string>> matchValues = default;
             Optional<IList<TransformCategory>> transforms = default;
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("typeName"))
                 {
-                    typeName = new SocketAddrMatchConditionType(property.Value.GetString());
+                    typeName = new SocketAddressMatchConditionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("operator"))
                 {
-                    @operator = new SocketAddrOperator(property.Value.GetString());
+                    @operator = new SocketAddressOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("negateCondition"))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SocketAddrMatchConditionDefinition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            return new SocketAddressMatchConditionDefinition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
         }
     }
 }

@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestHeaderMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of RequestHeaderMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestHeaderMatchConditionDefinition(RequestHeaderMatchConditionType typeName, RequestHeaderOperator @operator)
+        public RequestHeaderMatchConditionDefinition(RequestHeaderMatchConditionType typeDefinition, RequestHeaderOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RequestHeaderMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="selector"> Name of Header to be matched. </param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestHeaderMatchConditionDefinition(RequestHeaderMatchConditionType typeName, string selector, RequestHeaderOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal RequestHeaderMatchConditionDefinition(RequestHeaderMatchConditionType typeDefinition, string selector, RequestHeaderOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Selector = selector;
             Operator = @operator;
             NegateCondition = negateCondition;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public RequestHeaderMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public RequestHeaderMatchConditionType TypeDefinition { get; set; }
         /// <summary> Name of Header to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>

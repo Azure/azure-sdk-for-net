@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName");
-            writer.WriteStringValue(TypeName.ToString());
+            writer.WriteStringValue(TypeDefinition.ToString());
             if (Optional.IsDefined(OriginGroupOverride))
             {
                 if (OriginGroupOverride != null)

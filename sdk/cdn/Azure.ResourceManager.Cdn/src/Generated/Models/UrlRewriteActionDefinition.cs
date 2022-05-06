@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlRewriteActionDefinition
     {
         /// <summary> Initializes a new instance of UrlRewriteActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePattern"/> or <paramref name="destination"/> is null. </exception>
-        public UrlRewriteActionDefinition(UrlRewriteActionType typeName, string sourcePattern, string destination)
+        public UrlRewriteActionDefinition(UrlRewriteActionType typeDefinition, string sourcePattern, string destination)
         {
             if (sourcePattern == null)
             {
@@ -28,26 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             SourcePattern = sourcePattern;
             Destination = destination;
         }
 
         /// <summary> Initializes a new instance of UrlRewriteActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
         /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
         /// <param name="preserveUnmatchedPath"> Whether to preserve unmatched path. Default value is true. </param>
-        internal UrlRewriteActionDefinition(UrlRewriteActionType typeName, string sourcePattern, string destination, bool? preserveUnmatchedPath)
+        internal UrlRewriteActionDefinition(UrlRewriteActionType typeDefinition, string sourcePattern, string destination, bool? preserveUnmatchedPath)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             SourcePattern = sourcePattern;
             Destination = destination;
             PreserveUnmatchedPath = preserveUnmatchedPath;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public UrlRewriteActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public UrlRewriteActionType TypeDefinition { get; set; }
         /// <summary> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </summary>
         public string SourcePattern { get; set; }
         /// <summary> Define the relative URL to which the above requests will be rewritten by. </summary>

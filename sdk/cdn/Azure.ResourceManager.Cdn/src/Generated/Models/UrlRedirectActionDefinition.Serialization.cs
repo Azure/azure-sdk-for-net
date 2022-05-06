@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName");
-            writer.WriteStringValue(TypeName.ToString());
+            writer.WriteStringValue(TypeDefinition.ToString());
             writer.WritePropertyName("redirectType");
             writer.WriteStringValue(RedirectType.ToString());
             if (Optional.IsDefined(DestinationProtocol))

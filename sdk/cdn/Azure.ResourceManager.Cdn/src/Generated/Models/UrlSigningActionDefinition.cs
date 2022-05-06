@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlSigningActionDefinition
     {
         /// <summary> Initializes a new instance of UrlSigningActionDefinition. </summary>
-        /// <param name="typeName"></param>
-        public UrlSigningActionDefinition(UrlSigningActionType typeName)
+        /// <param name="typeDefinition"></param>
+        public UrlSigningActionDefinition(UrlSigningActionType typeDefinition)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             ParameterNameOverride = new ChangeTrackingList<UrlSigningParamIdentifier>();
         }
 
         /// <summary> Initializes a new instance of UrlSigningActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        internal UrlSigningActionDefinition(UrlSigningActionType typeName, UrlSigningAlgorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride)
+        internal UrlSigningActionDefinition(UrlSigningActionType typeDefinition, UrlSigningAlgorithm? algorithm, IList<UrlSigningParamIdentifier> parameterNameOverride)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Algorithm = algorithm;
             ParameterNameOverride = parameterNameOverride;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public UrlSigningActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public UrlSigningActionType TypeDefinition { get; set; }
         /// <summary> Algorithm to use for URL signing. </summary>
         public UrlSigningAlgorithm? Algorithm { get; set; }
         /// <summary> Defines which query string parameters in the url to be considered for expires, key id etc. </summary>

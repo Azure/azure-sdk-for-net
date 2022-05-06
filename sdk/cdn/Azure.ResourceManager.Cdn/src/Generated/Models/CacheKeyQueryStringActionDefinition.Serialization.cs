@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName");
-            writer.WriteStringValue(TypeName.ToString());
+            writer.WriteStringValue(TypeDefinition.ToString());
             writer.WritePropertyName("queryStringBehavior");
             writer.WriteStringValue(QueryStringBehavior.ToString());
             if (Optional.IsDefined(QueryParameters))

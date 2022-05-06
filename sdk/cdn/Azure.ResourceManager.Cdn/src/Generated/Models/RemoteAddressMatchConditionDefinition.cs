@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RemoteAddressMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of RemoteAddressMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RemoteAddressMatchConditionDefinition(RemoteAddressMatchConditionType typeName, RemoteAddressOperator @operator)
+        public RemoteAddressMatchConditionDefinition(RemoteAddressMatchConditionType typeDefinition, RemoteAddressOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of RemoteAddressMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RemoteAddressMatchConditionDefinition(RemoteAddressMatchConditionType typeName, RemoteAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal RemoteAddressMatchConditionDefinition(RemoteAddressMatchConditionType typeDefinition, RemoteAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public RemoteAddressMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public RemoteAddressMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RemoteAddressOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

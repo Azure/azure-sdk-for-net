@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class UrlFileExtensionMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of UrlFileExtensionMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public UrlFileExtensionMatchConditionDefinition(UrlFileExtensionMatchConditionType typeName, UrlFileExtensionOperator @operator)
+        public UrlFileExtensionMatchConditionDefinition(UrlFileExtensionMatchConditionType typeDefinition, UrlFileExtensionOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of UrlFileExtensionMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal UrlFileExtensionMatchConditionDefinition(UrlFileExtensionMatchConditionType typeName, UrlFileExtensionOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal UrlFileExtensionMatchConditionDefinition(UrlFileExtensionMatchConditionType typeDefinition, UrlFileExtensionOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public UrlFileExtensionMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public UrlFileExtensionMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public UrlFileExtensionOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

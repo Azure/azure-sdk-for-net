@@ -11,38 +11,38 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for SocketAddress match conditions. </summary>
-    public partial class SocketAddrMatchConditionDefinition
+    public partial class SocketAddressMatchConditionDefinition
     {
-        /// <summary> Initializes a new instance of SocketAddrMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <summary> Initializes a new instance of SocketAddressMatchConditionDefinition. </summary>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public SocketAddrMatchConditionDefinition(SocketAddrMatchConditionType typeName, SocketAddrOperator @operator)
+        public SocketAddressMatchConditionDefinition(SocketAddressMatchConditionType typeDefinition, SocketAddressOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of SocketAddrMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <summary> Initializes a new instance of SocketAddressMatchConditionDefinition. </summary>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal SocketAddrMatchConditionDefinition(SocketAddrMatchConditionType typeName, SocketAddrOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal SocketAddressMatchConditionDefinition(SocketAddressMatchConditionType typeDefinition, SocketAddressOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public SocketAddrMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public SocketAddressMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public SocketAddrOperator Operator { get; set; }
+        public SocketAddressOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

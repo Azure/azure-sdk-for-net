@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the SocketAddress condition for the delivery rule. </summary>
-    public partial class DeliveryRuleSocketAddrCondition : DeliveryRuleCondition
+    public partial class DeliveryRuleSocketAddressCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleSocketAddrCondition. </summary>
+        /// <summary> Initializes a new instance of DeliveryRuleSocketAddressCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleSocketAddrCondition(SocketAddrMatchConditionDefinition parameters)
+        public DeliveryRuleSocketAddressCondition(SocketAddressMatchConditionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.SocketAddr;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleSocketAddrCondition. </summary>
+        /// <summary> Initializes a new instance of DeliveryRuleSocketAddressCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleSocketAddrCondition(MatchVariable name, SocketAddrMatchConditionDefinition parameters) : base(name)
+        internal DeliveryRuleSocketAddressCondition(MatchVariable name, SocketAddressMatchConditionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public SocketAddrMatchConditionDefinition Parameters { get; set; }
+        public SocketAddressMatchConditionDefinition Parameters { get; set; }
     }
 }

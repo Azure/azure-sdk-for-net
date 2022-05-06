@@ -61,6 +61,30 @@ directive:
   - from: cdn.json
     where: $.definitions
     transform: >
+        for (var key in $) {
+            if (key.endsWith('Parameters')) {
+                for (var property in $[key].properties) {
+                    if (property === 'typeName' && $[key].properties[property].enum.length === 1) {
+                        const newKey = key.replace('Parameters', '');
+                        $[key]['x-ms-client-name'] = newKey + 'Definition';
+                        $[key].properties.typeName['x-ms-client-name'] = 'typeDefinition';
+                        $[key].properties.typeName['x-ms-enum'] = {
+                            "name": newKey + 'Type',
+                            "modelAsString": true,
+                            "values": [
+                                {
+                                    "value": $[key].properties.typeName.enum[0],
+                                    "name": $[key].properties.typeName.enum[0].replace(/^(DeliveryRule)/, '').replace(/(Parameters)$/, '')
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+  - from: cdn.json
+    where: $.definitions
+    transform: >
       $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
       $.OriginUpdatePropertiesParameters.properties.privateLinkResourceId['x-nullable'] = true;
       $.DeepCreatedOriginProperties.properties.privateLinkResourceId['x-ms-format'] = 'arm-id';
@@ -76,29 +100,11 @@ directive:
       $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
       $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
       $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
-  - from: cdn.json
-    where: $.definitions
-    transform: >
-        for (var key in $) {
-            if (key.endsWith('Parameters')) {
-                for (var property in $[key].properties) {
-                    if (property === 'typeName' && $[key].properties[property].enum.length === 1) {
-                        const newKey = key.replace('Parameters', '');
-                        $[key]['x-ms-client-name'] = newKey + 'Definition';
-                        $[key].properties.typeName['x-ms-enum'] = {
-                            "name": newKey + 'Type',
-                            "modelAsString": true,
-                            "values": [
-                                {
-                                    "value": $[key].properties.typeName.enum[0],
-                                    "name": $[key].properties.typeName.enum[0].replace(/^(DeliveryRule)/, '').replace(/(Parameters)$/, '')
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        }
+      $.DeliveryRuleSocketAddrCondition['x-ms-client-name'] = 'DeliveryRuleSocketAddressCondition';
+      $.SocketAddrMatchConditionParameters['x-ms-client-name'] = 'SocketAddressMatchConditionDefinition';
+      $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
+      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].name = 'SocketAddressMatchConditionType';
+      $.SocketAddrMatchConditionParameters.properties.typeName['x-ms-enum'].values[0].name = 'SocketAddressCondition';
   - from: afdx.json
     where: $.definitions
     transform: >

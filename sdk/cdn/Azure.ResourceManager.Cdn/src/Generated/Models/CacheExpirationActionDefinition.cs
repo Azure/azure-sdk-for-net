@@ -13,31 +13,31 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CacheExpirationActionDefinition
     {
         /// <summary> Initializes a new instance of CacheExpirationActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        public CacheExpirationActionDefinition(CacheExpirationActionType typeName, CacheBehaviorSettings cacheBehavior, CacheLevel cacheType)
+        public CacheExpirationActionDefinition(CacheExpirationActionType typeDefinition, CacheBehaviorSettings cacheBehavior, CacheLevel cacheType)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
         }
 
         /// <summary> Initializes a new instance of CacheExpirationActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionDefinition(CacheExpirationActionType typeName, CacheBehaviorSettings cacheBehavior, CacheLevel cacheType, TimeSpan? cacheDuration)
+        internal CacheExpirationActionDefinition(CacheExpirationActionType typeDefinition, CacheBehaviorSettings cacheBehavior, CacheLevel cacheType, TimeSpan? cacheDuration)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
             CacheDuration = cacheDuration;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public CacheExpirationActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public CacheExpirationActionType TypeDefinition { get; set; }
         /// <summary> Caching behavior for the requests. </summary>
         public CacheBehaviorSettings CacheBehavior { get; set; }
         /// <summary> The level at which the content needs to be cached. </summary>

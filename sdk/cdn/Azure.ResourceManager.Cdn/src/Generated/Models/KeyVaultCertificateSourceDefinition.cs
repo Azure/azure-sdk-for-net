@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class KeyVaultCertificateSourceDefinition
     {
         /// <summary> Initializes a new instance of KeyVaultCertificateSourceDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the SSL certificate. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
+        public KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, UpdateRule updateRule, DeleteRule deleteRule)
         {
             if (subscriptionId == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             VaultName = vaultName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultCertificateSourceDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="vaultName"> The name of the user&apos;s Key Vault containing the SSL certificate. </param>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretVersion"> The version(GUID) of Key Vault Secret in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
-        internal KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeName, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, UpdateRule updateRule, DeleteRule deleteRule)
+        internal KeyVaultCertificateSourceDefinition(KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, UpdateRule updateRule, DeleteRule deleteRule)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             VaultName = vaultName;
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Cdn.Models
             DeleteRule = deleteRule;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public KeyVaultCertificateSourceType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public KeyVaultCertificateSourceType TypeDefinition { get; set; }
         /// <summary> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </summary>
         public string SubscriptionId { get; set; }
         /// <summary> Resource group of the user&apos;s Key Vault containing the SSL certificate. </summary>

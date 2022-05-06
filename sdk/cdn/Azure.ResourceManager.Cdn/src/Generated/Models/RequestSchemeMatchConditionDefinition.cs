@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RequestSchemeMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of RequestSchemeMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public RequestSchemeMatchConditionDefinition(RequestSchemeMatchConditionType typeName, RequestSchemeMatchConditionParametersOperator @operator)
+        public RequestSchemeMatchConditionDefinition(RequestSchemeMatchConditionType typeDefinition, RequestSchemeMatchConditionParametersOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             Transforms = new ChangeTrackingList<TransformCategory>();
             MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionParametersMatchValuesItem>();
         }
 
         /// <summary> Initializes a new instance of RequestSchemeMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestSchemeMatchConditionDefinition(RequestSchemeMatchConditionType typeName, RequestSchemeMatchConditionParametersOperator @operator, bool? negateCondition, IList<TransformCategory> transforms, IList<RequestSchemeMatchConditionParametersMatchValuesItem> matchValues)
+        internal RequestSchemeMatchConditionDefinition(RequestSchemeMatchConditionType typeDefinition, RequestSchemeMatchConditionParametersOperator @operator, bool? negateCondition, IList<TransformCategory> transforms, IList<RequestSchemeMatchConditionParametersMatchValuesItem> matchValues)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public RequestSchemeMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public RequestSchemeMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public RequestSchemeMatchConditionParametersOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

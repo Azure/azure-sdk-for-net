@@ -13,37 +13,37 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class HeaderActionDefinition
     {
         /// <summary> Initializes a new instance of HeaderActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
-        public HeaderActionDefinition(HeaderActionType typeName, HeaderAction headerAction, string headerName)
+        public HeaderActionDefinition(HeaderActionType typeDefinition, HeaderAction headerAction, string headerName)
         {
             if (headerName == null)
             {
                 throw new ArgumentNullException(nameof(headerName));
             }
 
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             HeaderAction = headerAction;
             HeaderName = headerName;
         }
 
         /// <summary> Initializes a new instance of HeaderActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
         /// <param name="value"> Value for the specified action. </param>
-        internal HeaderActionDefinition(HeaderActionType typeName, HeaderAction headerAction, string headerName, string value)
+        internal HeaderActionDefinition(HeaderActionType typeDefinition, HeaderAction headerAction, string headerName, string value)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             HeaderAction = headerAction;
             HeaderName = headerName;
             Value = value;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public HeaderActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public HeaderActionType TypeDefinition { get; set; }
         /// <summary> Action to perform. </summary>
         public HeaderAction HeaderAction { get; set; }
         /// <summary> Name of the header to modify. </summary>

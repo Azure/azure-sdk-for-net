@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class OriginGroupOverrideActionDefinition
     {
         /// <summary> Initializes a new instance of OriginGroupOverrideActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
-        public OriginGroupOverrideActionDefinition(OriginGroupOverrideActionType typeName, WritableSubResource originGroup)
+        public OriginGroupOverrideActionDefinition(OriginGroupOverrideActionType typeDefinition, WritableSubResource originGroup)
         {
             if (originGroup == null)
             {
                 throw new ArgumentNullException(nameof(originGroup));
             }
 
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             OriginGroup = originGroup;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public OriginGroupOverrideActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public OriginGroupOverrideActionType TypeDefinition { get; set; }
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>

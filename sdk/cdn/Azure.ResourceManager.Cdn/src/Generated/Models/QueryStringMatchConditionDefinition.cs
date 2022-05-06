@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class QueryStringMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of QueryStringMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public QueryStringMatchConditionDefinition(QueryStringMatchConditionType typeName, QueryStringOperator @operator)
+        public QueryStringMatchConditionDefinition(QueryStringMatchConditionType typeDefinition, QueryStringOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of QueryStringMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal QueryStringMatchConditionDefinition(QueryStringMatchConditionType typeName, QueryStringOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal QueryStringMatchConditionDefinition(QueryStringMatchConditionType typeDefinition, QueryStringOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public QueryStringMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public QueryStringMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public QueryStringOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

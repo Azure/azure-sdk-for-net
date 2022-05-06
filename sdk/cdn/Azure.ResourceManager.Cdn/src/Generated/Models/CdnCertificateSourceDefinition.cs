@@ -11,16 +11,16 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CdnCertificateSourceDefinition
     {
         /// <summary> Initializes a new instance of CdnCertificateSourceDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="certificateType"> Type of certificate used. </param>
-        public CdnCertificateSourceDefinition(CdnCertificateSourceType typeName, CdnManagedCertificateType certificateType)
+        public CdnCertificateSourceDefinition(CdnCertificateSourceType typeDefinition, CdnManagedCertificateType certificateType)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             CertificateType = certificateType;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public CdnCertificateSourceType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public CdnCertificateSourceType TypeDefinition { get; set; }
         /// <summary> Type of certificate used. </summary>
         public CdnManagedCertificateType CertificateType { get; set; }
     }

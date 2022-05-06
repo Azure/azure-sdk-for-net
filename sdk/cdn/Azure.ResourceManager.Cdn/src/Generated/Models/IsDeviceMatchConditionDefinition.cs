@@ -14,33 +14,33 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class IsDeviceMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of IsDeviceMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public IsDeviceMatchConditionDefinition(IsDeviceMatchConditionType typeName, IsDeviceOperator @operator)
+        public IsDeviceMatchConditionDefinition(IsDeviceMatchConditionType typeDefinition, IsDeviceOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<IsDeviceMatchConditionParametersMatchValuesItem>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of IsDeviceMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal IsDeviceMatchConditionDefinition(IsDeviceMatchConditionType typeName, IsDeviceOperator @operator, bool? negateCondition, IList<IsDeviceMatchConditionParametersMatchValuesItem> matchValues, IList<TransformCategory> transforms)
+        internal IsDeviceMatchConditionDefinition(IsDeviceMatchConditionType typeDefinition, IsDeviceOperator @operator, bool? negateCondition, IList<IsDeviceMatchConditionParametersMatchValuesItem> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public IsDeviceMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public IsDeviceMatchConditionType TypeDefinition { get; set; }
         /// <summary> Describes operator to be matched. </summary>
         public IsDeviceOperator Operator { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>

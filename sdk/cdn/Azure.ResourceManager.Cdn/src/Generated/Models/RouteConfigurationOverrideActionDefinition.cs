@@ -11,25 +11,25 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RouteConfigurationOverrideActionDefinition
     {
         /// <summary> Initializes a new instance of RouteConfigurationOverrideActionDefinition. </summary>
-        /// <param name="typeName"></param>
-        public RouteConfigurationOverrideActionDefinition(RouteConfigurationOverrideActionType typeName)
+        /// <param name="typeDefinition"></param>
+        public RouteConfigurationOverrideActionDefinition(RouteConfigurationOverrideActionType typeDefinition)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
         }
 
         /// <summary> Initializes a new instance of RouteConfigurationOverrideActionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="originGroupOverride"> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </param>
-        internal RouteConfigurationOverrideActionDefinition(RouteConfigurationOverrideActionType typeName, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration)
+        internal RouteConfigurationOverrideActionDefinition(RouteConfigurationOverrideActionType typeDefinition, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             OriginGroupOverride = originGroupOverride;
             CacheConfiguration = cacheConfiguration;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public RouteConfigurationOverrideActionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public RouteConfigurationOverrideActionType TypeDefinition { get; set; }
         /// <summary> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </summary>
         public OriginGroupOverride OriginGroupOverride { get; set; }
         /// <summary> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </summary>

@@ -14,26 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CookiesMatchConditionDefinition
     {
         /// <summary> Initializes a new instance of CookiesMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="operator"> Describes operator to be matched. </param>
-        public CookiesMatchConditionDefinition(CookiesMatchConditionType typeName, CookiesOperator @operator)
+        public CookiesMatchConditionDefinition(CookiesMatchConditionType typeDefinition, CookiesOperator @operator)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Operator = @operator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<TransformCategory>();
         }
 
         /// <summary> Initializes a new instance of CookiesMatchConditionDefinition. </summary>
-        /// <param name="typeName"></param>
+        /// <param name="typeDefinition"></param>
         /// <param name="selector"> Name of Cookies to be matched. </param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal CookiesMatchConditionDefinition(CookiesMatchConditionType typeName, string selector, CookiesOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
+        internal CookiesMatchConditionDefinition(CookiesMatchConditionType typeDefinition, string selector, CookiesOperator @operator, bool? negateCondition, IList<string> matchValues, IList<TransformCategory> transforms)
         {
-            TypeName = typeName;
+            TypeDefinition = typeDefinition;
             Selector = selector;
             Operator = @operator;
             NegateCondition = negateCondition;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = transforms;
         }
 
-        /// <summary> Gets or sets the type name. </summary>
-        public CookiesMatchConditionType TypeName { get; set; }
+        /// <summary> Gets or sets the type definition. </summary>
+        public CookiesMatchConditionType TypeDefinition { get; set; }
         /// <summary> Name of Cookies to be matched. </summary>
         public string Selector { get; set; }
         /// <summary> Describes operator to be matched. </summary>
