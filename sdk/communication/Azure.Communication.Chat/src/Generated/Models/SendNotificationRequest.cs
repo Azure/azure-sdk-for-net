@@ -7,11 +7,11 @@
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> Details of the broadcast chat message to send. </summary>
-    internal partial class SendBroadcastChatMessageRequest
+    /// <summary> Details of the Cross-platform messaging notification to send. </summary>
+    internal partial class SendNotificationRequest
     {
-        /// <summary> Initializes a new instance of SendBroadcastChatMessageRequest. </summary>
-        public SendBroadcastChatMessageRequest()
+        /// <summary> Initializes a new instance of SendNotificationRequest. </summary>
+        public SendNotificationRequest()
         {
         }
 
@@ -19,13 +19,13 @@ namespace Azure.Communication.Chat
         public string From { get; set; }
         /// <summary> The channel user identifiers of the recipient. </summary>
         public string To { get; set; }
-        /// <summary> The broadcast chat message type. </summary>
-        public BroadcastChatMessageType? Type { get; set; }
+        /// <summary> The cross-platform messaging notification type. </summary>
+        public NotificationType? Type { get; set; }
         /// <summary> Broadcasr chat message content. </summary>
         public string Content { get; set; }
         /// <summary> The media Object. </summary>
-        public ChatMedia Media { get; set; }
-        /// <summary> The template object used to create message templates. </summary>
-        public ChatTemplate Template { get; set; }
+        public NotificationMedia Media { get; set; }
+        /// <summary> The template object used to create notification templates. </summary>
+        public NotificationTemplate Template { get; set; }
     }
 }

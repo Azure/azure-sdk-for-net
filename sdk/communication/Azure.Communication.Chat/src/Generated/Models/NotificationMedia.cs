@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.Chat
 {
     /// <summary> The media Object. </summary>
-    public partial class ChatMedia
+    public partial class NotificationMedia
     {
-        /// <summary> Initializes a new instance of ChatMedia. </summary>
+        /// <summary> Initializes a new instance of NotificationMedia. </summary>
         /// <param name="link"> A media url for the file. Required if the type is image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="link"/> is null. </exception>
-        public ChatMedia(string link)
+        public NotificationMedia(string link)
         {
             if (link == null)
             {

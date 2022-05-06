@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> Result of the send broadcast chat message operation. </summary>
-    public partial class SendBroadcastChatMessageResult
+    /// <summary> Result of the send cross-platform messaging notification operation. </summary>
+    public partial class SendNotificationResult
     {
-        /// <summary> Initializes a new instance of SendBroadcastChatMessageResult. </summary>
+        /// <summary> Initializes a new instance of SendNotificationResult. </summary>
         /// <param name="id"> A server-generated message id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal SendBroadcastChatMessageResult(string id)
+        internal SendNotificationResult(string id)
         {
             if (id == null)
             {

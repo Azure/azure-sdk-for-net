@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The template object used to create message templates. </summary>
-    public partial class ChatTemplate
+    /// <summary> The template object used to create notification templates. </summary>
+    public partial class NotificationTemplate
     {
-        /// <summary> Initializes a new instance of ChatTemplate. </summary>
-        public ChatTemplate()
+        /// <summary> Initializes a new instance of NotificationTemplate. </summary>
+        public NotificationTemplate()
         {
             Parameters = new ChangeTrackingList<string>();
         }
 
         /// <summary> Name of the template. </summary>
         public string Name { get; set; }
-        /// <summary> The codes for the supported languages for message templates. </summary>
+        /// <summary> The codes for the supported languages for notification templates. </summary>
         public string Language { get; set; }
-        /// <summary> Array of parameters for the content of the message. </summary>
+        /// <summary> Array of parameters for the content of the notification. </summary>
         public IList<string> Parameters { get; }
     }
 }

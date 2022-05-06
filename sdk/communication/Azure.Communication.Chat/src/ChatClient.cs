@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ChatRestClient _chatRestClient;
-        private readonly BroadcastRestClient _broadcastRestClient;
+        private readonly CrossPlatformMessagingRestClient _crossPlatformMessagingRestClient;
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
-            _broadcastRestClient = new BroadcastRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _crossPlatformMessagingRestClient = new CrossPlatformMessagingRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -46,24 +46,24 @@ namespace Azure.Communication.Chat
         {
             _clientDiagnostics = null!;
             _chatRestClient = null!;
-            _broadcastRestClient = null;
+            _crossPlatformMessagingRestClient = null;
             _endpointUrl = null!;
             _communicationTokenCredential = null!;
             _chatClientOptions = null!;
         }
 
-        #region Broadcast Messaging Operations
-        /// <summary> Sends a Fire and Forget/Threadless/CPM message asynchronously. </summary>
+        #region Cross-platform messaging notification Operations
+        /// <summary> Sends a Fire and Forget/Threadless/CPM notification message asynchronously. </summary>
         /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendBroadcastChatMessageResult>> SendBroadcastMessageAsync(SendBroadcastMessageOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendNotificationResult>> SendCrossPlatformMessagingNotificationAsync(SendNotificationOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendBroadcastMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CrossPlatformMessagingClient)}.{nameof(SendCrossPlatformMessagingNotification)}");
             scope.Start();
             try
             {
-                return await _broadcastRestClient.SendChatMessageAsync(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken).ConfigureAwait(false);
+                return await _crossPlatformMessagingRestClient.SendNotificationAsync(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -72,17 +72,17 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Sends a Fire and Forget/Threadless/CPM message. </summary>
+        /// <summary> Sends a Fire and Forget/Threadless/CPM notification message. </summary>
         /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendBroadcastChatMessageResult> SendBroadcastMessage(SendBroadcastMessageOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SendNotificationResult> SendCrossPlatformMessagingNotification(SendNotificationOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(BroadcastClient)}.{nameof(SendBroadcastMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CrossPlatformMessagingClient)}.{nameof(SendCrossPlatformMessagingNotification)}");
             scope.Start();
             try
             {
-                return _broadcastRestClient.SendChatMessage(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken);
+                return _crossPlatformMessagingRestClient.SendNotification(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken);
             }
             catch (Exception ex)
             {
