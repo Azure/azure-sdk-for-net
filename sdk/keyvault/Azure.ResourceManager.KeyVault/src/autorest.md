@@ -14,7 +14,7 @@ modelerfour:
   flatten-payloads: false
 override-operation-name:
   Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
-  MHSMPrivateLinkResources_ListByMHSMResource: GetMhsmPrivateLinkResources
+  MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResources
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}

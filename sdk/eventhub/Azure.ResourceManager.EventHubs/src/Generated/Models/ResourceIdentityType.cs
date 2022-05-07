@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Type of managed service identity. </summary>
-    internal enum ResourceIdentityType
+    public enum ResourceIdentityType
     {
         /// <summary> None. </summary>
         None,
