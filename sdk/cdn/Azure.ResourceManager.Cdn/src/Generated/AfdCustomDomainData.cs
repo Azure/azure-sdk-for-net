@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
+        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
+        internal AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             set
             {
                 if (PreValidatedCustomDomainResource is null)
-                    PreValidatedCustomDomainResource = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResource = new AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
                 PreValidatedCustomDomainResource.Id = value;
             }
         }

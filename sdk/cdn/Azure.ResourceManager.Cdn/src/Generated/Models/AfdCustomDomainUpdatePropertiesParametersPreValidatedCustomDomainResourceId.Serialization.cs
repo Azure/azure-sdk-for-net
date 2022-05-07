@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId : IUtf8JsonSerializable
+    internal partial class AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId DeserializeAfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(JsonElement element)
+        internal static AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId DeserializeAfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(id.Value);
+            return new AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(id.Value);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> profileName = default;
             Optional<AfdCustomDomainHttpsContent> tlsSettings = default;
             Optional<WritableSubResource> azureDnsZone = default;
-            Optional<AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
+            Optional<AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<AfdDeploymentStatus> deploymentStatus = default;
             Optional<DomainValidationState> domainValidationState = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
                                 preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeAfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
+                            preValidatedCustomDomainResourceId = AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeAfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

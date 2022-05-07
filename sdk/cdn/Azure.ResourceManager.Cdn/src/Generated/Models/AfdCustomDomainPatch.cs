@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
+        internal AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
             set
             {
                 if (PreValidatedCustomDomainResource is null)
-                    PreValidatedCustomDomainResource = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResource = new AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
                 PreValidatedCustomDomainResource.Id = value;
             }
         }
