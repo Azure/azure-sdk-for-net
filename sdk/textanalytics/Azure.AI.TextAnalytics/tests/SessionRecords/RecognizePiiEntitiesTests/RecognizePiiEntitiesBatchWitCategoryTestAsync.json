@@ -1,88 +1,94 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=PhoneNumber",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "316",
+        "Accept": "application/json",
+        "Content-Length": "445",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2e0d4915cd467d408d9e080b97a8ad12-76274b449d9df041-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "be97255b3654fe9185dbe071fa756db5",
+        "traceparent": "00-50cec4a0e7ecd240a93f05d16b0b7281-73fc4b69907e074f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220501.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1dafbd3320441bbc136bf1f75766cd5b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "1",
-            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
-            "language": "en"
-          },
-          {
-            "id": "2",
-            "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "piiCategories": [
+            "PhoneNumber"
+          ],
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "PiiEntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "70a21c4b-7294-417b-a890-7c1b1a0e2eda",
+        "apim-request-id": "ef921aad-28e4-4b32-8627-5ab67058bbcb",
+        "Content-Length": "629",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Mon, 25 Oct 2021 21:22:50 GMT",
+        "Date": "Sun, 01 May 2022 20:17:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "38"
+        "x-envoy-upstream-service-time": "42"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "redactedText": "A developer with SSN 859-98-0987 whose phone number is ************ is building tools with our APIs. They work at Microsoft",
-            "id": "1",
-            "entities": [
-              {
-                "text": "800-102-1100",
-                "category": "PhoneNumber",
-                "offset": 55,
-                "length": 12,
-                "confidenceScore": 0.8
-              }
-            ],
-            "warnings": []
-          },
-          {
-            "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check",
-            "id": "2",
-            "entities": [
-              {
-                "text": "111000025",
-                "category": "PhoneNumber",
-                "offset": 18,
-                "length": 9,
-                "confidenceScore": 0.8
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2021-01-15"
+        "kind": "PiiEntityRecognitionResults",
+        "results": {
+          "documents": [
+            {
+              "redactedText": "A developer with SSN 859-98-0987 whose phone number is ************ is building tools with our APIs. They work at Microsoft",
+              "id": "1",
+              "entities": [
+                {
+                  "text": "800-102-1100",
+                  "category": "PhoneNumber",
+                  "offset": 55,
+                  "length": 12,
+                  "confidenceScore": 0.8
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "redactedText": "Your ABA number - ********* - is the first 9 digits in the lower left hand corner of your personal check",
+              "id": "2",
+              "entities": [
+                {
+                  "text": "111000025",
+                  "category": "PhoneNumber",
+                  "offset": 18,
+                  "length": 9,
+                  "confidenceScore": 0.8
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-01-15"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1066247175",
+    "RandomSeed": "1645239437",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

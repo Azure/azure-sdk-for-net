@@ -319,6 +319,11 @@ namespace Microsoft.Extensions.Azure
                 return TryConvertFromString(configuration, parameterName, s => new Uri(s), out value);
             }
 
+            if (parameterType == typeof(Guid))
+            {
+                return TryConvertFromString(configuration, parameterName, s => Guid.Parse(s), out value);
+            }
+
             return TryCreateObject(parameterType, configuration.GetSection(parameterName), out value);
         }
 

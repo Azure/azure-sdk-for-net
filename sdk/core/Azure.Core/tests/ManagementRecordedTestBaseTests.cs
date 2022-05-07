@@ -191,7 +191,7 @@ namespace Azure.Core.Tests.Management
             TestResource testResource = client.GetTestResource();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallFalseAsync());
-            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace Azure.Core.Tests.Management
             TestResource testResource = client.GetTestResource();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
-            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
 
         [TestCase(RecordedTestMode.Record)]
