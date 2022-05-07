@@ -69,6 +69,7 @@ directive:
       $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
       $.ManagedHsmResource.properties.location['x-ms-format'] = 'azure-location';
       $.DeletedManagedHsmProperties.properties.location['x-ms-format'] = 'azure-location';
+      $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
       $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'HsmProvisioningState';
@@ -85,6 +86,7 @@ directive:
       $.Resource['x-ms-client-name'] = 'KeyVaultResourceData';
       $.IPRule.properties.value['x-ms-client-name'] = 'AddressRange';
       $.DeletedVaultProperties.properties.location['x-ms-format'] = 'azure-location';
+      $.DeletedVaultProperties.properties.vaultId['x-ms-format'] = 'arm-id';
       $.VaultCreateOrUpdateParameters.properties.location['x-ms-format'] = 'azure-location';
       $.VaultAccessPolicyParameters.properties.location['x-ms-format'] = 'azure-location';
       $.Vault.properties.location['x-ms-format'] = 'azure-location';
@@ -93,6 +95,7 @@ directive:
       $.PrivateEndpointConnectionItem.properties.etag['x-ms-format'] = 'etag';
       $.PrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.PrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ActionsRequiredMessage';
+      $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule

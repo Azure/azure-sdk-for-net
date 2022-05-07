@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         internal DeletedManagedHsmProperties() { }
         public System.DateTimeOffset? DeletionOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public string ManagedHsmId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedHsmId { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public string VaultId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier VaultId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HsmProvisioningState : System.IEquatable<Azure.ResourceManager.KeyVault.Models.HsmProvisioningState>
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public VaultCheckNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
     }
     public enum VaultCreateMode
     {

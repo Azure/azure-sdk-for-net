@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
-        internal DeletedManagedHsmProperties(string managedHsmId, AzureLocation? location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
+        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
         {
             ManagedHsmId = managedHsmId;
             Location = location;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The resource id of the original managed HSM. </summary>
-        public string ManagedHsmId { get; }
+        public ResourceIdentifier ManagedHsmId { get; }
         /// <summary> The location of the original managed HSM. </summary>
         public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
