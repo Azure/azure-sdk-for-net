@@ -72,12 +72,14 @@ eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicen
 e.g.
 
 ```powershell
-pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service sample -namespace Azure.Template.Sample -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
+pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 ```
 
 **Note**:
 
+- `-service` takes Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file.
 - For `- namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
+- `-sdkPath` takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
 - `-inputfiles` takes the address of the Open API spec files,  separated by semicolon if there is more than one file.  The Open API spec file can be local file, e.g. ./swagger/compute.json, or the web address of the file in the `azure-rest-api-specs` repo.  When pointing to a file in the `azure-rest-api-specs` repo, make sure to include the commit id in the URI, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json`.  This ensures that you can choose the time to upgrade to new swagger file versions.
 - `-readme` takes the address of the readme configuration file. The configuration can be local file, e.g. ./swagger/readme.md or the web address of the file in the `azure-rest-api-specs` repo, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/readme.md`
 - You need to provide one of `-inputfiles` and `-readme` parameters. If you provide both, `-inputfiles` will be ignored.
@@ -90,9 +92,9 @@ When you run the `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1`
 
     These files are created following the guidance for the [Azure SDK Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
 
-- Generate the library source code files to the directory `<sdkPath>/<service>/<namespace>/src/Generated`
+- Generate the library source code files to the directory `<sdkPath>/sdk/<service>/<namespace>/src/Generated`
 - Build the library project to create the starter package binary.
-- Export the library's public API to the directory `<sdkPath>/<service>/<namespace>/api`
+- Export the library's public API to the directory `<sdkPath>/sdk/<service>/<namespace>/api`
 
 ## Add package ship requirements
 
