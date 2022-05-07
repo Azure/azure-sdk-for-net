@@ -1,14 +1,11 @@
 # Azure Template client library for .NET
 
-Azure Template is a managed service that helps developers get secret simply and securely.
+This section should give out brief introduction of the client library.
 
-Use the client library for to:
+* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
+* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
 
-* [Get secret](https://docs.microsoft.com/azure)
-
-[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
-
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Template) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -61,19 +58,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template/samples).
 
-### Get secret
+### <scenario>
 
-The `GetSecret` method retrieves a secret from the service.
+You can create a client and call the client's `<operation>` method.
 
-```C# Snippet:Azure_Template_GetSecret
-string endpoint = "https://myvault.vault.azure.net";
-var client = new TemplateClient(endpoint, new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecretValue("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
+```C# Snippet:Azure_Template_Scenario
 ```
 
 ## Troubleshooting
