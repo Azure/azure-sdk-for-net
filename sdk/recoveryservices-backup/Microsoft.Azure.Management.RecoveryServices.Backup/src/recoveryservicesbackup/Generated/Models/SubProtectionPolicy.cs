@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,11 +38,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// backup policy.</param>
         /// <param name="retentionPolicy">Retention policy with the details on
         /// backup copy retention ranges.</param>
-        public SubProtectionPolicy(string policyType = default(string), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy))
+        /// <param name="tieringPolicy">Tiering policy to automatically move
+        /// RPs to another tier.
+        /// Key is Target Tier, defined in RecoveryPointTierType enum.
+        /// Tiering policy specifies the criteria to move RP to the target
+        /// tier.</param>
+        public SubProtectionPolicy(string policyType = default(string), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), IDictionary<string, TieringPolicy> tieringPolicy = default(IDictionary<string, TieringPolicy>))
         {
             PolicyType = policyType;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
+            TieringPolicy = tieringPolicy;
             CustomInit();
         }
 
@@ -69,6 +77,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "retentionPolicy")]
         public RetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets tiering policy to automatically move RPs to another
+        /// tier.
+        /// Key is Target Tier, defined in RecoveryPointTierType enum.
+        /// Tiering policy specifies the criteria to move RP to the target
+        /// tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "tieringPolicy")]
+        public IDictionary<string, TieringPolicy> TieringPolicy { get; set; }
 
     }
 }

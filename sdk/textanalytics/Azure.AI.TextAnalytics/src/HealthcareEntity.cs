@@ -11,17 +11,21 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class HealthcareEntity
     {
+#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable CA1801 // Review unused parameters
         internal HealthcareEntity(HealthcareEntityInternal entity)
+#pragma warning restore CA1801 // Review unused parameters
+#pragma warning restore IDE0060 // Remove unused parameter
         {
-            Category = entity.Category;
-            Text = entity.Text;
-            SubCategory = entity.Subcategory;
-            ConfidenceScore = entity.ConfidenceScore;
-            Offset = entity.Offset;
-            Length = entity.Length;
-            DataSources = entity.Links;
-            Assertion = entity.Assertion;
-            NormalizedText = entity.Name;
+            //Category = entity.Category;
+            //Text = entity.Text;
+            //SubCategory = entity.Subcategory;
+            //ConfidenceScore = entity.ConfidenceScore;
+            //Offset = entity.Offset;
+            //Length = entity.Length;
+            //DataSources = entity.Links;
+            //Assertion = entity.Assertion;
+            //NormalizedText = entity.Name;
         }
         /// <summary>
         /// Gets the entity text as it appears in the input document.
