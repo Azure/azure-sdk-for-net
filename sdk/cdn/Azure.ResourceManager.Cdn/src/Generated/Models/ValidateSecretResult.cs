@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Output of the validated secret. </summary>
-    internal partial class ValidateSecretOutput
+    internal partial class ValidateSecretResult
     {
-        /// <summary> Initializes a new instance of ValidateSecretOutput. </summary>
-        internal ValidateSecretOutput()
+        /// <summary> Initializes a new instance of ValidateSecretResult. </summary>
+        internal ValidateSecretResult()
         {
         }
 
