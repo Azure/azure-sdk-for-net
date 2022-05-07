@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of SkuLocationInfo. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
-        internal SkuLocationInfo(string location, IReadOnlyList<string> zones)
+        internal SkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones)
         {
             Location = location;
             Zones = zones;
         }
 
         /// <summary> The location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The zones. </summary>
         public IReadOnlyList<string> Zones { get; }
     }

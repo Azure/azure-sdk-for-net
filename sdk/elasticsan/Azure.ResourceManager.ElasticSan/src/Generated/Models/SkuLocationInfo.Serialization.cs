@@ -15,13 +15,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         internal static SkuLocationInfo DeserializeSkuLocationInfo(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SkuLocationInfo(location.Value, Optional.ToList(zones));
+            return new SkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones));
         }
     }
 }

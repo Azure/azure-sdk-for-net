@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public partial class SkuLocationInfo
     {
         internal SkuLocationInfo() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     public partial class SourceCreationData

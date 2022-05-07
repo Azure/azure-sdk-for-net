@@ -45,5 +45,6 @@ directive:
       $.Sku.properties.name['x-ms-enum']['name'] = 'ElasticSanSkuName';
       $.Sku.properties.tier['x-ms-enum']['name'] = 'ElasticSanTier';
       $.VirtualNetworkRule.properties.state['x-ms-enum']['name'] = 'VirtualNetworkRuleState';
+      $.SkuLocationInfo.properties.location['x-ms-format'] = 'azure-location';
 
 ```
