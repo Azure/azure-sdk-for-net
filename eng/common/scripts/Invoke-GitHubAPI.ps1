@@ -37,10 +37,9 @@ function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allow
 
 function Get-GitHubPullRequests {
   param (
-    [Parameter(Mandatory = $true)]
     $RepoOwner,
-    [Parameter(Mandatory = $true)]
     $RepoName,
+    $RepoId = "$RepoOwner/$RepoName",
     [ValidateSet("open","closed","all")]
     $State = "open",
     $Head,
@@ -53,8 +52,7 @@ function Get-GitHubPullRequests {
     [ValidateNotNullOrEmpty()]
     $AuthToken
   )
-
-  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls"
+  $uri = "$GithubAPIBaseURI/$RepoId/pulls"
   if ($State -or $Head -or $Base -or $Sort -or $Direction) { $uri += '?' }
   if ($State) { $uri += "state=$State&" }
   if ($Head) { $uri += "head=$Head&" }
@@ -77,17 +75,15 @@ Pass 'heads/<branchame> ,tags/<tag name>, or nothing
 #>
 function Get-GitHubSourceReferences {
   param (
-    [Parameter(Mandatory = $true)]
     $RepoOwner,
-    [Parameter(Mandatory = $true)]
     $RepoName,
+    $RepoId = "$RepoOwner/$RepoName",
     $Ref,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
   )
-
-  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/git/matching-refs/"
+  $uri = "$GithubAPIBaseURI/$RepoId/git/matching-refs/"
   if ($Ref) { $uri += "$Ref" }
 
   return Invoke-RestMethod `
@@ -121,7 +117,6 @@ function Get-GitHubPullRequest {
 
 function New-GitHubPullRequest {
   param (
-    [Parameter(Mandatory = $true)]
     $RepoOwner,
     [Parameter(Mandatory = $true)]
     $RepoName,
@@ -392,28 +387,47 @@ function Update-GitHubIssue {
 
 function Remove-GitHubSourceReferences  {
   param (
-    [Parameter(Mandatory = $true)]
     $RepoOwner,
-    [Parameter(Mandatory = $true)]
     $RepoName,
+    $RepoId = "$RepoOwner/$RepoName",
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
-    $Ref,
+    $Ref, # Using the format of "refs/heads/<branch>" or "heads/<branch>" for branch, and "tags/<tag>" for tag
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
   )
-
   if ($Ref.Trim().Length -eq 0)
   {
     throw "You must supply a valid 'Ref' Parameter to 'Delete-GithubSourceReferences'."
   }
-
-  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/git/refs/$Ref"
+  # Github is using branch in format of "heads/{branch_name}". Trim the "refs/heads/..." to "heads/..."
+  $Ref = $Ref -replace "refs/"
+  $uri = "$GithubAPIBaseURI/$RepoId/git/refs/$Ref"
 
   return Invoke-RestMethod `
           -Method DELETE `
           -Uri $uri `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
           -MaximumRetryCount 3
+}
+
+
+function Get-GithubReferenceCommitDate($commitUrl, $AuthToken) {
+  $commitResponse = ""
+  if ($AuthToken) 
+  {
+    $commitResponse = Invoke-RestMethod $commitUrl `
+                        -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+                        -MaximumRetryCount 3 
+  }
+  else 
+  {
+    $commitResponse = Invoke-RestMethod $commitUrl -MaximumRetryCount 3 
+  }
+  if (!$commitResponse.committer -or !$commitResponse.committer.date) {
+    LogDebug "No date returned from the commit sha. "
+    return $null
+  }
+  return $commitResponse.committer.date
 }
