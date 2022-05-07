@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
         /// <param name="volumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
-        /// <param name="totalMBps"> Total Provisioned MBps Elastic San appliance. </param>
-        /// <param name="provisionedMBps"> Provisioned MBps Elastic San appliance. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningStates? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMBps, long? provisionedMBps) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
+        /// <param name="provisionedMbps"> Provisioned MBps Elastic San appliance. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ProvisioningStates? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? provisionedMbps) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ElasticSan
             TotalVolumeSizeGiB = totalVolumeSizeGiB;
             VolumeGroupCount = volumeGroupCount;
             TotalIops = totalIops;
-            TotalMBps = totalMBps;
-            ProvisionedMBps = provisionedMBps;
+            TotalMbps = totalMbps;
+            ProvisionedMbps = provisionedMbps;
         }
 
         /// <summary> resource sku. </summary>
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Total Provisioned IOPS of the Elastic San appliance. </summary>
         public long? TotalIops { get; }
         /// <summary> Total Provisioned MBps Elastic San appliance. </summary>
-        public long? TotalMBps { get; }
+        public long? TotalMbps { get; }
         /// <summary> Provisioned MBps Elastic San appliance. </summary>
-        public long? ProvisionedMBps { get; }
+        public long? ProvisionedMbps { get; }
     }
 }

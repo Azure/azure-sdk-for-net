@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="minSizeGiB"> Minimum volume capacity in GiB. </param>
         /// <param name="minIncrementSizeGiB"> Increment volume capacity in GiB. </param>
         /// <param name="maxIopsPerGiB"> Maximum IOPS per GiB. </param>
-        /// <param name="maxMBpsPerGiB"> Maximum MBps. </param>
+        /// <param name="maxMbpsPerGiB"> Maximum MBps. </param>
         /// <param name="maxIops"> Maximum IOPS. </param>
-        /// <param name="maxMBps"> Maximum MBps. </param>
+        /// <param name="maxMbps"> Maximum MBps. </param>
         /// <param name="maxConnectedClientCount"> Maximum number of connected clients count per Volume. </param>
-        internal VolumeTierInfo(long? maxSizeGiB, long? minSizeGiB, long? minIncrementSizeGiB, long? maxIopsPerGiB, long? maxMBpsPerGiB, long? maxIops, long? maxMBps, long? maxConnectedClientCount)
+        internal VolumeTierInfo(long? maxSizeGiB, long? minSizeGiB, long? minIncrementSizeGiB, long? maxIopsPerGiB, long? maxMbpsPerGiB, long? maxIops, long? maxMbps, long? maxConnectedClientCount)
         {
             MaxSizeGiB = maxSizeGiB;
             MinSizeGiB = minSizeGiB;
             MinIncrementSizeGiB = minIncrementSizeGiB;
             MaxIopsPerGiB = maxIopsPerGiB;
-            MaxMBpsPerGiB = maxMBpsPerGiB;
+            MaxMbpsPerGiB = maxMbpsPerGiB;
             MaxIops = maxIops;
-            MaxMBps = maxMBps;
+            MaxMbps = maxMbps;
             MaxConnectedClientCount = maxConnectedClientCount;
         }
 
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Maximum IOPS per GiB. </summary>
         public long? MaxIopsPerGiB { get; }
         /// <summary> Maximum MBps. </summary>
-        public long? MaxMBpsPerGiB { get; }
+        public long? MaxMbpsPerGiB { get; }
         /// <summary> Maximum IOPS. </summary>
         public long? MaxIops { get; }
         /// <summary> Maximum MBps. </summary>
-        public long? MaxMBps { get; }
+        public long? MaxMbps { get; }
         /// <summary> Maximum number of connected clients count per Volume. </summary>
         public long? MaxConnectedClientCount { get; }
     }

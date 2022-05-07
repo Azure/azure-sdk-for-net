@@ -35,6 +35,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  MBps: Mbps
 directive:
   - from: elasticsan.json
     where: "$.definitions"

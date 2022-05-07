@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.ElasticSan
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public long? BaseSizeTiB { get { throw null; } set { } }
         public long? ExtendedCapacitySizeTiB { get { throw null; } set { } }
-        public long? ProvisionedMBps { get { throw null; } }
+        public long? ProvisionedMbps { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.ProvisioningStates? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanSku Sku { get { throw null; } set { } }
         public long? TotalIops { get { throw null; } }
-        public long? TotalMBps { get { throw null; } }
+        public long? TotalMbps { get { throw null; } }
         public long? TotalVolumeSizeGiB { get { throw null; } }
         public long? VolumeGroupCount { get { throw null; } }
     }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         internal SanTierInfo() { }
         public long? IopsPerBaseTiB { get { throw null; } }
         public long? MaxIops { get { throw null; } }
-        public long? MaxMBps { get { throw null; } }
+        public long? MaxMbps { get { throw null; } }
         public long? MaxSizeTiB { get { throw null; } }
         public long? MaxVolumeGroupCount { get { throw null; } }
         public long? MbpsPerBaseTiB { get { throw null; } }
@@ -377,8 +377,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? MaxConnectedClientCount { get { throw null; } }
         public long? MaxIops { get { throw null; } }
         public long? MaxIopsPerGiB { get { throw null; } }
-        public long? MaxMBps { get { throw null; } }
-        public long? MaxMBpsPerGiB { get { throw null; } }
+        public long? MaxMbps { get { throw null; } }
+        public long? MaxMbpsPerGiB { get { throw null; } }
         public long? MaxSizeGiB { get { throw null; } }
         public long? MinIncrementSizeGiB { get { throw null; } }
         public long? MinSizeGiB { get { throw null; } }
