@@ -22,9 +22,16 @@ $outputJson = Get-Content $outputJsonFile | Out-String | ConvertFrom-Json
 $projectFolder = $outputJson.projectFolder
 Write-Host "projectFolder:$projectFolder"
 Remove-Item $outputJsonFile
+# Generate Code
 Invoke-Generate -sdkfolder $projectFolder
-if ( $? -ne $True) {
-  Write-Error "Failed to create generate sdk."
+if ( !$? ) {
+  Write-Error "Failed to generate sdk."
+  exit 1
+}
+# Build
+Invoke-Build -sdkfolder $projectFolder
+if ( !$? ) {
+  Write-Error "Failed to build sdk. exit code: $?"
   exit 1
 }
 # Generate APIs

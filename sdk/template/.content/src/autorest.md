@@ -6,10 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-- $(this-folder)/swagger/mini-secrets.json
+input-file: SwaggerFileLink
 namespace: Azure.Template
-security: AADToken
-security-scopes: https://template/.default
- 
+securityTypes
+securityScopePrefix: securityScopes
+securityHeaderNamePrefix: securityHeaderName
 ```
