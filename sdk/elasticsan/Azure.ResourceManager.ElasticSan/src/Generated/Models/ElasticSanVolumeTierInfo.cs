@@ -8,14 +8,14 @@
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Volume scalability target. </summary>
-    public partial class VolumeTierInfo
+    public partial class ElasticSanVolumeTierInfo
     {
-        /// <summary> Initializes a new instance of VolumeTierInfo. </summary>
-        internal VolumeTierInfo()
+        /// <summary> Initializes a new instance of ElasticSanVolumeTierInfo. </summary>
+        internal ElasticSanVolumeTierInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeTierInfo. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVolumeTierInfo. </summary>
         /// <param name="maxSizeGiB"> Maximum volume capacity in GiB. </param>
         /// <param name="minSizeGiB"> Minimum volume capacity in GiB. </param>
         /// <param name="minIncrementSizeGiB"> Increment volume capacity in GiB. </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="maxIops"> Maximum IOPS. </param>
         /// <param name="maxMbps"> Maximum MBps. </param>
         /// <param name="maxConnectedClientCount"> Maximum number of connected clients count per Volume. </param>
-        internal VolumeTierInfo(long? maxSizeGiB, long? minSizeGiB, long? minIncrementSizeGiB, long? maxIopsPerGiB, long? maxMbpsPerGiB, long? maxIops, long? maxMbps, long? maxConnectedClientCount)
+        internal ElasticSanVolumeTierInfo(long? maxSizeGiB, long? minSizeGiB, long? minIncrementSizeGiB, long? maxIopsPerGiB, long? maxMbpsPerGiB, long? maxIops, long? maxMbps, long? maxConnectedClientCount)
         {
             MaxSizeGiB = maxSizeGiB;
             MinSizeGiB = minSizeGiB;

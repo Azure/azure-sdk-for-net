@@ -159,39 +159,39 @@ namespace Azure.ResourceManager.ElasticSan
         }
         #endregion
 
-        #region VolumeGroupResource
+        #region ElasticSanVolumeGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VolumeGroupResource.CreateResourceIdentifier" /> to create a <see cref="VolumeGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ElasticSanVolumeGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticSanVolumeGroupResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanVolumeGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VolumeGroupResource" /> object. </returns>
-        public static VolumeGroupResource GetVolumeGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticSanVolumeGroupResource" /> object. </returns>
+        public static ElasticSanVolumeGroupResource GetElasticSanVolumeGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VolumeGroupResource.ValidateResourceId(id);
-                return new VolumeGroupResource(client, id);
+                ElasticSanVolumeGroupResource.ValidateResourceId(id);
+                return new ElasticSanVolumeGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VolumeResource
+        #region ElasticSanVolumeResource
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VolumeResource.CreateResourceIdentifier" /> to create a <see cref="VolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ElasticSanVolumeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticSanVolumeResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VolumeResource" /> object. </returns>
-        public static VolumeResource GetVolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticSanVolumeResource" /> object. </returns>
+        public static ElasticSanVolumeResource GetElasticSanVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VolumeResource.ValidateResourceId(id);
-                return new VolumeResource(client, id);
+                ElasticSanVolumeResource.ValidateResourceId(id);
+                return new ElasticSanVolumeResource(client, id);
             }
             );
         }

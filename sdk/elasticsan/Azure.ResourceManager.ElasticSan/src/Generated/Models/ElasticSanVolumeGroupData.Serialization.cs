@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class VolumeData : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,21 +30,26 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationData))
+            if (Optional.IsDefined(ProtocolType))
             {
-                writer.WritePropertyName("creationData");
-                writer.WriteObjectValue(CreationData);
+                writer.WritePropertyName("protocolType");
+                writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Optional.IsDefined(SizeGiB))
+            if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("sizeGiB");
-                writer.WriteNumberValue(SizeGiB.Value);
+                writer.WritePropertyName("encryption");
+                writer.WriteStringValue(Encryption.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                writer.WritePropertyName("networkAcls");
+                writer.WriteObjectValue(NetworkAcls);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static VolumeData DeserializeVolumeData(JsonElement element)
+        internal static ElasticSanVolumeGroupData DeserializeElasticSanVolumeGroupData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -52,10 +57,10 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> volumeId = default;
-            Optional<SourceCreationData> creationData = default;
-            Optional<long> sizeGiB = default;
-            Optional<IscsiTargetInfo> storageTarget = default;
+            Optional<ProvisioningStates> provisioningState = default;
+            Optional<StorageTargetType> protocolType = default;
+            Optional<EncryptionType> encryption = default;
+            Optional<NetworkRuleSet> networkAcls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -102,46 +107,51 @@ namespace Azure.ResourceManager.ElasticSan
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("volumeId"))
-                        {
-                            volumeId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("creationData"))
+                        if (property0.NameEquals("provisioningState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            creationData = SourceCreationData.DeserializeSourceCreationData(property0.Value);
+                            provisioningState = new ProvisioningStates(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("sizeGiB"))
+                        if (property0.NameEquals("protocolType"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sizeGiB = property0.Value.GetInt64();
+                            protocolType = new StorageTargetType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageTarget"))
+                        if (property0.NameEquals("encryption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageTarget = IscsiTargetInfo.DeserializeIscsiTargetInfo(property0.Value);
+                            encryption = new EncryptionType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VolumeData(id, name, type, systemData, tags, location, volumeId.Value, creationData.Value, Optional.ToNullable(sizeGiB), storageTarget.Value);
+            return new ElasticSanVolumeGroupData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), networkAcls.Value);
         }
     }
 }

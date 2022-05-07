@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> This enumerates the possible sources of a volume creation. </summary>
-    public enum VolumeCreateOption
+    public enum ElasticSanVolumeCreateOption
     {
         /// <summary> None. </summary>
         None,
         /// <summary> FromVolume. </summary>
-        FromVolume,
+        FromElasticSanVolume,
         /// <summary> FromDiskSnapshot. </summary>
         FromDiskSnapshot,
         /// <summary> Export. </summary>

@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> A class representing the VolumeGroup data model. </summary>
-    public partial class VolumeGroupData : TrackedResourceData
+    /// <summary> A class representing the ElasticSanVolumeGroup data model. </summary>
+    public partial class ElasticSanVolumeGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
         /// <param name="location"> The location. </param>
-        public VolumeGroupData(AzureLocation location) : base(location)
+        public ElasticSanVolumeGroupData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="protocolType"> Type of storage target. </param>
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        internal VolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningStates? provisioningState, StorageTargetType? protocolType, EncryptionType? encryption, NetworkRuleSet networkAcls) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningStates? provisioningState, StorageTargetType? protocolType, EncryptionType? encryption, NetworkRuleSet networkAcls) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;

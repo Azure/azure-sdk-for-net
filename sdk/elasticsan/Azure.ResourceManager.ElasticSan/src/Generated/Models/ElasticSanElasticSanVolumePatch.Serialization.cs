@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class VolumeGroupPatch : IUtf8JsonSerializable
+    public partial class ElasticSanElasticSanVolumePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,20 +28,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtocolType))
+            if (Optional.IsDefined(SizeGiB))
             {
-                writer.WritePropertyName("protocolType");
-                writer.WriteStringValue(ProtocolType.Value.ToString());
-            }
-            if (Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption");
-                writer.WriteStringValue(Encryption.Value.ToString());
-            }
-            if (Optional.IsDefined(NetworkAcls))
-            {
-                writer.WritePropertyName("networkAcls");
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WritePropertyName("sizeGiB");
+                writer.WriteNumberValue(SizeGiB.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

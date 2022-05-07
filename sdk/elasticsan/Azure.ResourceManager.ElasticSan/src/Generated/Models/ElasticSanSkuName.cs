@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
         private const string StandardZRSValue = "Standard_ZRS";
 
         /// <summary> Standard locally redundant storage. </summary>
-        public static ElasticSanSkuName StandardLRS { get; } = new ElasticSanSkuName(StandardLRSValue);
+        public static ElasticSanSkuName StandardLrs { get; } = new ElasticSanSkuName(StandardLrsValue);
         /// <summary> Premium locally redundant storage. </summary>
-        public static ElasticSanSkuName PremiumLRS { get; } = new ElasticSanSkuName(PremiumLRSValue);
+        public static ElasticSanSkuName PremiumLrs { get; } = new ElasticSanSkuName(PremiumLrsValue);
         /// <summary> Standard zone redundant storage. </summary>
         public static ElasticSanSkuName StandardZRS { get; } = new ElasticSanSkuName(StandardZRSValue);
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are the same. </summary>

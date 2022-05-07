@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class VolumeTierInfo
+    public partial class ElasticSanVolumeTierInfo
     {
-        internal static VolumeTierInfo DeserializeVolumeTierInfo(JsonElement element)
+        internal static ElasticSanVolumeTierInfo DeserializeElasticSanVolumeTierInfo(JsonElement element)
         {
             Optional<long> maxSizeGiB = default;
             Optional<long> minSizeGiB = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new VolumeTierInfo(Optional.ToNullable(maxSizeGiB), Optional.ToNullable(minSizeGiB), Optional.ToNullable(minIncrementSizeGiB), Optional.ToNullable(maxIopsPerGiB), Optional.ToNullable(maxMBpsPerGiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMBps), Optional.ToNullable(maxConnectedClientCount));
+            return new ElasticSanVolumeTierInfo(Optional.ToNullable(maxSizeGiB), Optional.ToNullable(minSizeGiB), Optional.ToNullable(minIncrementSizeGiB), Optional.ToNullable(maxIopsPerGiB), Optional.ToNullable(maxMBpsPerGiB), Optional.ToNullable(maxIops), Optional.ToNullable(maxMBps), Optional.ToNullable(maxConnectedClientCount));
         }
     }
 }

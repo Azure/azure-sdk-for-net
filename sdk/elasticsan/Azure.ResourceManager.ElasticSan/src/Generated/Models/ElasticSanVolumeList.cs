@@ -12,13 +12,13 @@ using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> List of Volume Groups. </summary>
-    internal partial class VolumeGroupList
+    /// <summary> List of Volumes. </summary>
+    internal partial class ElasticSanVolumeList
     {
-        /// <summary> Initializes a new instance of VolumeGroupList. </summary>
-        /// <param name="value"> An array of Volume Groups objects. </param>
+        /// <summary> Initializes a new instance of ElasticSanVolumeList. </summary>
+        /// <param name="value"> An array of Volume objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VolumeGroupList(IEnumerable<VolumeGroupData> value)
+        internal ElasticSanVolumeList(IEnumerable<ElasticSanVolumeData> value)
         {
             if (value == null)
             {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VolumeGroupList. </summary>
-        /// <param name="value"> An array of Volume Groups objects. </param>
+        /// <summary> Initializes a new instance of ElasticSanVolumeList. </summary>
+        /// <param name="value"> An array of Volume objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal VolumeGroupList(IReadOnlyList<VolumeGroupData> value, string nextLink)
+        internal ElasticSanVolumeList(IReadOnlyList<ElasticSanVolumeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> An array of Volume Groups objects. </summary>
-        public IReadOnlyList<VolumeGroupData> Value { get; }
+        /// <summary> An array of Volume objects. </summary>
+        public IReadOnlyList<ElasticSanVolumeData> Value { get; }
         /// <summary> URI to fetch the next section of the paginated response. </summary>
         public string NextLink { get; }
     }

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ElasticSan
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VolumeGroupResources in the ElasticSan. </summary>
-        /// <returns> An object representing collection of VolumeGroupResources and their operations over a VolumeGroupResource. </returns>
-        public virtual VolumeGroupCollection GetVolumeGroups()
+        /// <summary> Gets a collection of ElasticSanVolumeGroupResources in the ElasticSan. </summary>
+        /// <returns> An object representing collection of ElasticSanVolumeGroupResources and their operations over a ElasticSanVolumeGroupResource. </returns>
+        public virtual ElasticSanVolumeGroupCollection GetElasticSanVolumeGroups()
         {
-            return GetCachedClient(Client => new VolumeGroupCollection(Client, Id));
+            return GetCachedClient(Client => new ElasticSanVolumeGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}
         /// Operation Id: VolumeGroups_Get
         /// </summary>
-        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="elasticSanVolumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanVolumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VolumeGroupResource>> GetVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticSanVolumeGroupResource>> GetElasticSanVolumeGroupAsync(string elasticSanVolumeGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetVolumeGroups().GetAsync(volumeGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetElasticSanVolumeGroups().GetAsync(elasticSanVolumeGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}
         /// Operation Id: VolumeGroups_Get
         /// </summary>
-        /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
+        /// <param name="elasticSanVolumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanVolumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VolumeGroupResource> GetVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticSanVolumeGroupResource> GetElasticSanVolumeGroup(string elasticSanVolumeGroupName, CancellationToken cancellationToken = default)
         {
-            return GetVolumeGroups().Get(volumeGroupName, cancellationToken);
+            return GetElasticSanVolumeGroups().Get(elasticSanVolumeGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -180,16 +180,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// Operation Id: ElasticSans_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceDeleteVolumeGroups"> Required if the San has associated Volume Groups. </param>
+        /// <param name="forceDeleteElasticSanVolumeGroups"> Required if the San has associated Volume Groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDeleteVolumeGroups = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDeleteElasticSanVolumeGroups = null, CancellationToken cancellationToken = default)
         {
             using var scope = _elasticSanClientDiagnostics.CreateScope("ElasticSanResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticSanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteVolumeGroups, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteVolumeGroups).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _elasticSanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteElasticSanVolumeGroups, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteElasticSanVolumeGroups).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,16 +207,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// Operation Id: ElasticSans_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceDeleteVolumeGroups"> Required if the San has associated Volume Groups. </param>
+        /// <param name="forceDeleteElasticSanVolumeGroups"> Required if the San has associated Volume Groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDeleteVolumeGroups = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDeleteElasticSanVolumeGroups = null, CancellationToken cancellationToken = default)
         {
             using var scope = _elasticSanClientDiagnostics.CreateScope("ElasticSanResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticSanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteVolumeGroups, cancellationToken);
-                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteVolumeGroups).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _elasticSanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteElasticSanVolumeGroups, cancellationToken);
+                var operation = new ElasticSanArmOperation(_elasticSanClientDiagnostics, Pipeline, _elasticSanRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceDeleteElasticSanVolumeGroups).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

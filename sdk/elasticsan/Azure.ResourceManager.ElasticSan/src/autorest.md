@@ -36,12 +36,14 @@ rename-rules:
   SSO: Sso
   URI: Uri
   MBps: Mbps
+  LRS: Lrs
+  Volume: ElasticSanVolume
 directive:
   - from: elasticsan.json
-    where: "$.definitions"
+    where: '$.definitions'
     transform: >
-      $.Sku.properties.name["x-ms-enum"]["name"] = "ElasticSanSkuName";
-      $.Sku.properties.tier["x-ms-enum"]["name"] = "ElasticSanTier";
-      $.VirtualNetworkRule.properties.state["x-ms-enum"]["name"] = "VirtualNetworkRuleState";
+      $.Sku.properties.name['x-ms-enum']['name'] = 'ElasticSanSkuName';
+      $.Sku.properties.tier['x-ms-enum']['name'] = 'ElasticSanTier';
+      $.VirtualNetworkRule.properties.state['x-ms-enum']['name'] = 'VirtualNetworkRuleState';
 
 ```

@@ -19,46 +19,46 @@ using Azure.ResourceManager.ElasticSan.Models;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A Class representing a VolumeGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VolumeGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVolumeGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource" /> using the GetVolumeGroup method.
+    /// A Class representing an ElasticSanVolumeGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanVolumeGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanVolumeGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource" /> using the GetElasticSanVolumeGroup method.
     /// </summary>
-    public partial class VolumeGroupResource : ArmResource
+    public partial class ElasticSanVolumeGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="VolumeGroupResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
+        /// <summary> Generate the resource identifier of a <see cref="ElasticSanVolumeGroupResource"/> instance. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string elasticSanVolumeGroupName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{elasticSanVolumeGroupName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _volumeGroupClientDiagnostics;
-        private readonly VolumeGroupsRestOperations _volumeGroupRestClient;
-        private readonly VolumeGroupData _data;
+        private readonly ClientDiagnostics _elasticSanVolumeGroupVolumeGroupsClientDiagnostics;
+        private readonly VolumeGroupsRestOperations _elasticSanVolumeGroupVolumeGroupsRestClient;
+        private readonly ElasticSanVolumeGroupData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="VolumeGroupResource"/> class for mocking. </summary>
-        protected VolumeGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class for mocking. </summary>
+        protected ElasticSanVolumeGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VolumeGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ElasticSanVolumeGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VolumeGroupResource(ArmClient client, VolumeGroupData data) : this(client, data.Id)
+        internal ElasticSanVolumeGroupResource(ArmClient client, ElasticSanVolumeGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VolumeGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VolumeGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ElasticSanVolumeGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _volumeGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string volumeGroupApiVersion);
-            _volumeGroupRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, volumeGroupApiVersion);
+            _elasticSanVolumeGroupVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string elasticSanVolumeGroupVolumeGroupsApiVersion);
+            _elasticSanVolumeGroupVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeGroupVolumeGroupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VolumeGroupData Data
+        public virtual ElasticSanVolumeGroupData Data
         {
             get
             {
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.ElasticSan
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VolumeResources in the VolumeGroup. </summary>
-        /// <returns> An object representing collection of VolumeResources and their operations over a VolumeResource. </returns>
-        public virtual VolumeCollection GetVolumes()
+        /// <summary> Gets a collection of ElasticSanVolumeResources in the ElasticSanVolumeGroup. </summary>
+        /// <returns> An object representing collection of ElasticSanVolumeResources and their operations over a ElasticSanVolumeResource. </returns>
+        public virtual ElasticSanVolumeCollection GetElasticSanVolumes()
         {
-            return GetCachedClient(Client => new VolumeCollection(Client, Id));
+            return GetCachedClient(Client => new ElasticSanVolumeCollection(Client, Id));
         }
 
         /// <summary>
@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}
         /// Operation Id: Volumes_Get
         /// </summary>
-        /// <param name="volumeName"> The name of the Volume. </param>
+        /// <param name="elasticSanVolumeName"> The name of the Volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanVolumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VolumeResource>> GetVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticSanVolumeResource>> GetElasticSanVolumeAsync(string elasticSanVolumeName, CancellationToken cancellationToken = default)
         {
-            return await GetVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+            return await GetElasticSanVolumes().GetAsync(elasticSanVolumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}
         /// Operation Id: Volumes_Get
         /// </summary>
-        /// <param name="volumeName"> The name of the Volume. </param>
+        /// <param name="elasticSanVolumeName"> The name of the Volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanVolumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanVolumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VolumeResource> GetVolume(string volumeName, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticSanVolumeResource> GetElasticSanVolume(string elasticSanVolumeName, CancellationToken cancellationToken = default)
         {
-            return GetVolumes().Get(volumeName, cancellationToken);
+            return GetElasticSanVolumes().Get(elasticSanVolumeName, cancellationToken);
         }
 
         /// <summary>
@@ -131,16 +131,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// Operation Id: VolumeGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VolumeGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticSanVolumeGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.Get");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _volumeGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticSanVolumeGroupVolumeGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,16 +155,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// Operation Id: VolumeGroups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VolumeGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ElasticSanVolumeGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.Get");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _volumeGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _elasticSanVolumeGroupVolumeGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VolumeGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDeleteVolumes = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.Delete");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _volumeGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDeleteVolumes, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation(_volumeGroupClientDiagnostics, Pipeline, _volumeGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDeleteVolumes).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _elasticSanVolumeGroupVolumeGroupsRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, forceDeleteVolumes, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation(_elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _elasticSanVolumeGroupVolumeGroupsRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, forceDeleteVolumes).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDeleteVolumes = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.Delete");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _volumeGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDeleteVolumes, cancellationToken);
-                var operation = new ElasticSanArmOperation(_volumeGroupClientDiagnostics, Pipeline, _volumeGroupRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDeleteVolumes).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _elasticSanVolumeGroupVolumeGroupsRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, forceDeleteVolumes, cancellationToken);
+                var operation = new ElasticSanArmOperation(_elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _elasticSanVolumeGroupVolumeGroupsRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, forceDeleteVolumes).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -236,16 +236,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="patch"> Volume Group object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<VolumeGroupResource>> UpdateAsync(WaitUntil waitUntil, VolumeGroupPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticSanVolumeGroupResource>> UpdateAsync(WaitUntil waitUntil, ElasticSanElasticSanVolumeGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.Update");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _volumeGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<VolumeGroupResource>(new VolumeGroupOperationSource(Client), _volumeGroupClientDiagnostics, Pipeline, _volumeGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _elasticSanVolumeGroupVolumeGroupsRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(new ElasticSanVolumeGroupOperationSource(Client), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _elasticSanVolumeGroupVolumeGroupsRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,16 +266,16 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="patch"> Volume Group object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<VolumeGroupResource> Update(WaitUntil waitUntil, VolumeGroupPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticSanVolumeGroupResource> Update(WaitUntil waitUntil, ElasticSanElasticSanVolumeGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.Update");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _volumeGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ElasticSanArmOperation<VolumeGroupResource>(new VolumeGroupOperationSource(Client), _volumeGroupClientDiagnostics, Pipeline, _volumeGroupRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _elasticSanVolumeGroupVolumeGroupsRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch, cancellationToken);
+                var operation = new ElasticSanArmOperation<ElasticSanVolumeGroupResource>(new ElasticSanVolumeGroupOperationSource(Client), _elasticSanVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _elasticSanVolumeGroupVolumeGroupsRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -296,20 +296,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<VolumeGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticSanVolumeGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.AddTag");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _volumeGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _elasticSanVolumeGroupVolumeGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -327,20 +327,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<VolumeGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticSanVolumeGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.AddTag");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _volumeGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new VolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _elasticSanVolumeGroupVolumeGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -357,11 +357,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<VolumeGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticSanVolumeGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.SetTags");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -369,8 +369,8 @@ namespace Azure.ResourceManager.ElasticSan
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _volumeGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _elasticSanVolumeGroupVolumeGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -387,11 +387,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<VolumeGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticSanVolumeGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.SetTags");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.SetTags");
             scope.Start();
             try
             {
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.ElasticSan
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _volumeGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new VolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _elasticSanVolumeGroupVolumeGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -417,19 +417,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<VolumeGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticSanVolumeGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.RemoveTag");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _volumeGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _elasticSanVolumeGroupVolumeGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -446,19 +446,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<VolumeGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticSanVolumeGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _volumeGroupClientDiagnostics.CreateScope("VolumeGroupResource.RemoveTag");
+            using var scope = _elasticSanVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("ElasticSanVolumeGroupResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _volumeGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new VolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _elasticSanVolumeGroupVolumeGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                return Response.FromValue(new ElasticSanVolumeGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

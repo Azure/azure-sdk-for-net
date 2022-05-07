@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static SourceCreationData DeserializeSourceCreationData(JsonElement element)
         {
-            VolumeCreateOption createSource = default;
+            ElasticSanVolumeCreateOption createSource = default;
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"))
                 {
-                    createSource = property.Value.GetString().ToVolumeCreateOption();
+                    createSource = property.Value.GetString().ToElasticSanVolumeCreateOption();
                     continue;
                 }
                 if (property.NameEquals("sourceUri"))

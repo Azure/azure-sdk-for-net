@@ -12,20 +12,20 @@ using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class VolumeGroupList
+    internal partial class ElasticSanVolumeGroupList
     {
-        internal static VolumeGroupList DeserializeVolumeGroupList(JsonElement element)
+        internal static ElasticSanVolumeGroupList DeserializeElasticSanVolumeGroupList(JsonElement element)
         {
-            IReadOnlyList<VolumeGroupData> value = default;
+            IReadOnlyList<ElasticSanVolumeGroupData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<VolumeGroupData> array = new List<VolumeGroupData>();
+                    List<ElasticSanVolumeGroupData> array = new List<ElasticSanVolumeGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeGroupData.DeserializeVolumeGroupData(item));
+                        array.Add(ElasticSanVolumeGroupData.DeserializeElasticSanVolumeGroupData(item));
                     }
                     value = array;
                     continue;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new VolumeGroupList(value, nextLink.Value);
+            return new ElasticSanVolumeGroupList(value, nextLink.Value);
         }
     }
 }

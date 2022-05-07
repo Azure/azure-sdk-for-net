@@ -12,36 +12,36 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> A class representing the Volume data model. </summary>
-    public partial class VolumeData : TrackedResourceData
+    /// <summary> A class representing the ElasticSanVolume data model. </summary>
+    public partial class ElasticSanVolumeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VolumeData. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
         /// <param name="location"> The location. </param>
-        public VolumeData(AzureLocation location) : base(location)
+        public ElasticSanVolumeData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeData. </summary>
+        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
+        /// <param name="elasticSanVolumeId"> Unique Id of the volume in GUID format. </param>
         /// <param name="creationData"> State of the operation on the resource. </param>
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="storageTarget"> Storage target information. </param>
-        internal VolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string volumeId, SourceCreationData creationData, long? sizeGiB, IscsiTargetInfo storageTarget) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string elasticSanVolumeId, SourceCreationData creationData, long? sizeGiB, IscsiTargetInfo storageTarget) : base(id, name, resourceType, systemData, tags, location)
         {
-            VolumeId = volumeId;
+            ElasticSanVolumeId = elasticSanVolumeId;
             CreationData = creationData;
             SizeGiB = sizeGiB;
             StorageTarget = storageTarget;
         }
 
         /// <summary> Unique Id of the volume in GUID format. </summary>
-        public string VolumeId { get; }
+        public string ElasticSanVolumeId { get; }
         /// <summary> State of the operation on the resource. </summary>
         public SourceCreationData CreationData { get; set; }
         /// <summary> Volume size. </summary>

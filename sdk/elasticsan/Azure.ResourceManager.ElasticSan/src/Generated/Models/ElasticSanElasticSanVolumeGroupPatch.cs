@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Volume Group request. </summary>
-    public partial class VolumeGroupPatch
+    public partial class ElasticSanElasticSanVolumeGroupPatch
     {
-        /// <summary> Initializes a new instance of VolumeGroupPatch. </summary>
-        public VolumeGroupPatch()
+        /// <summary> Initializes a new instance of ElasticSanElasticSanVolumeGroupPatch. </summary>
+        public ElasticSanElasticSanVolumeGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

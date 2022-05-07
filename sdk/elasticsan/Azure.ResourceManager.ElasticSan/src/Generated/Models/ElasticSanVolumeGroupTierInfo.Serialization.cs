@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    internal partial class VolumeGroupTierInfo
+    internal partial class ElasticSanVolumeGroupTierInfo
     {
-        internal static VolumeGroupTierInfo DeserializeVolumeGroupTierInfo(JsonElement element)
+        internal static ElasticSanVolumeGroupTierInfo DeserializeElasticSanVolumeGroupTierInfo(JsonElement element)
         {
             Optional<long> maxVolumeCount = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new VolumeGroupTierInfo(Optional.ToNullable(maxVolumeCount));
+            return new ElasticSanVolumeGroupTierInfo(Optional.ToNullable(maxVolumeCount));
         }
     }
 }

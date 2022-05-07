@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="sku"> The Sku tier. </param>
         /// <param name="locationInfo"> Availability of the SKU for the location/zone. </param>
         /// <param name="san"> Scalability targets for the San account for a given tier. </param>
-        /// <param name="volumeGroup"> Volume Group targets for the San account for a given tier. </param>
-        /// <param name="volume"> Volume targets for the San account for a given tier. </param>
-        internal ResourceTypeSku(ElasticSanSku sku, IReadOnlyList<SkuLocationInfo> locationInfo, SanTierInfo san, VolumeGroupTierInfo volumeGroup, VolumeTierInfo volume)
+        /// <param name="elasticSanVolumeGroup"> Volume Group targets for the San account for a given tier. </param>
+        /// <param name="elasticSanVolume"> Volume targets for the San account for a given tier. </param>
+        internal ResourceTypeSku(ElasticSanSku sku, IReadOnlyList<SkuLocationInfo> locationInfo, SanTierInfo san, ElasticSanVolumeGroupTierInfo elasticSanVolumeGroup, ElasticSanVolumeTierInfo elasticSanVolume)
         {
             Sku = sku;
             LocationInfo = locationInfo;
             San = san;
-            VolumeGroup = volumeGroup;
-            Volume = volume;
+            ElasticSanVolumeGroup = elasticSanVolumeGroup;
+            ElasticSanVolume = elasticSanVolume;
         }
 
         /// <summary> The Sku tier. </summary>
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Scalability targets for the San account for a given tier. </summary>
         public SanTierInfo San { get; }
         /// <summary> Volume Group targets for the San account for a given tier. </summary>
-        internal VolumeGroupTierInfo VolumeGroup { get; }
+        internal ElasticSanVolumeGroupTierInfo ElasticSanVolumeGroup { get; }
         /// <summary> Maximum number of Volumes per Volume Groups per San account. </summary>
-        public long? MaxVolumeCount
+        public long? MaxElasticSanVolumeCount
         {
-            get => VolumeGroup.MaxVolumeCount;
+            get => ElasticSanVolumeGroup.MaxElasticSanVolumeCount;
         }
 
         /// <summary> Volume targets for the San account for a given tier. </summary>
-        public VolumeTierInfo Volume { get; }
+        public ElasticSanVolumeTierInfo ElasticSanVolume { get; }
     }
 }
