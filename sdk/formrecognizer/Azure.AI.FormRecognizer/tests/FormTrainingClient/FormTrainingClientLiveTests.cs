@@ -561,7 +561,7 @@ namespace Azure.AI.FormRecognizer.Tests
                     break;
                 case "https://login.chinacloudapi.cn/":
                     regionA = "chinaeast2";
-                    regionB = "chinanorth";
+                    regionB = "chinanorth2";
                     break;
                 default:
                     regionA = "westcentralus";
