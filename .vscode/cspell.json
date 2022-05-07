@@ -172,7 +172,8 @@
     {
       "filename": "**/sdk/elasticsan/**/*.cs",
       "words": [
-        "iscsi"
+        "iscsi",
+        "mbps"
       ]
     },
     {
