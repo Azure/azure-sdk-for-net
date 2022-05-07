@@ -8,14 +8,15 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class OperationsHealthListResult
+    internal partial class ServerTrustCertificatesListResult
     {
-        internal static OperationsHealthListResult DeserializeOperationsHealthListResult(JsonElement element)
+        internal static ServerTrustCertificatesListResult DeserializeServerTrustCertificatesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationsHealth>> value = default;
+            Optional<IReadOnlyList<ServerTrustCertificateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationsHealth> array = new List<OperationsHealth>();
+                    List<ServerTrustCertificateData> array = new List<ServerTrustCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationsHealth.DeserializeOperationsHealth(item));
+                        array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new OperationsHealthListResult(Optional.ToList(value), nextLink.Value);
+            return new ServerTrustCertificatesListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
