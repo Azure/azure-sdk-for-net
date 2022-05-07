@@ -11,18 +11,18 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint connection item. </summary>
-    public partial class MhsmPrivateEndpointConnectionItem
+    public partial class ManagedHsmPrivateEndpointConnectionItem
     {
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionItem. </summary>
-        internal MhsmPrivateEndpointConnectionItem()
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItem. </summary>
+        internal ManagedHsmPrivateEndpointConnectionItem()
         {
         }
 
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionItem. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItem. </summary>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal MhsmPrivateEndpointConnectionItem(SubResource privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal ManagedHsmPrivateEndpointConnectionItem(SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Approval state of the private link connection. </summary>
-        public MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

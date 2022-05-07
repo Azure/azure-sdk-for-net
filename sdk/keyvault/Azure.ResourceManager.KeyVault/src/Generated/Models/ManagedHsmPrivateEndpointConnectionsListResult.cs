@@ -12,25 +12,25 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> List of private endpoint connections associated with a managed HSM Pools. </summary>
-    internal partial class MhsmPrivateEndpointConnectionsListResult
+    internal partial class ManagedHsmPrivateEndpointConnectionsListResult
     {
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionsListResult. </summary>
-        internal MhsmPrivateEndpointConnectionsListResult()
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionsListResult. </summary>
+        internal ManagedHsmPrivateEndpointConnectionsListResult()
         {
-            Value = new ChangeTrackingList<MhsmPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionsListResult. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionsListResult. </summary>
         /// <param name="value"> The private endpoint connection associated with a managed HSM Pools. </param>
         /// <param name="nextLink"> The URL to get the next set of managed HSM Pools. </param>
-        internal MhsmPrivateEndpointConnectionsListResult(IReadOnlyList<MhsmPrivateEndpointConnectionData> value, string nextLink)
+        internal ManagedHsmPrivateEndpointConnectionsListResult(IReadOnlyList<ManagedHsmPrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The private endpoint connection associated with a managed HSM Pools. </summary>
-        public IReadOnlyList<MhsmPrivateEndpointConnectionData> Value { get; }
+        public IReadOnlyList<ManagedHsmPrivateEndpointConnectionData> Value { get; }
         /// <summary> The URL to get the next set of managed HSM Pools. </summary>
         public string NextLink { get; }
     }

@@ -12,11 +12,11 @@ using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal partial class MhsmPrivateEndpointConnectionsListResult
+    internal partial class ManagedHsmPrivateEndpointConnectionsListResult
     {
-        internal static MhsmPrivateEndpointConnectionsListResult DeserializeMhsmPrivateEndpointConnectionsListResult(JsonElement element)
+        internal static ManagedHsmPrivateEndpointConnectionsListResult DeserializeManagedHsmPrivateEndpointConnectionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MhsmPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MhsmPrivateEndpointConnectionData> array = new List<MhsmPrivateEndpointConnectionData>();
+                    List<ManagedHsmPrivateEndpointConnectionData> array = new List<ManagedHsmPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MhsmPrivateEndpointConnectionData.DeserializeMhsmPrivateEndpointConnectionData(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new MhsmPrivateEndpointConnectionsListResult(Optional.ToList(value), nextLink.Value);
+            return new ManagedHsmPrivateEndpointConnectionsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal partial class MhsmPrivateLinkResourceListResult
+    internal partial class ManagedHsmPrivateLinkResourceListResult
     {
-        internal static MhsmPrivateLinkResourceListResult DeserializeMhsmPrivateLinkResourceListResult(JsonElement element)
+        internal static ManagedHsmPrivateLinkResourceListResult DeserializeManagedHsmPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MhsmPrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<ManagedHsmPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MhsmPrivateLinkResource> array = new List<MhsmPrivateLinkResource>();
+                    List<ManagedHsmPrivateLinkResource> array = new List<ManagedHsmPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MhsmPrivateLinkResource.DeserializeMhsmPrivateLinkResource(item));
+                        array.Add(ManagedHsmPrivateLinkResource.DeserializeManagedHsmPrivateLinkResource(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new MhsmPrivateLinkResourceListResult(Optional.ToList(value));
+            return new ManagedHsmPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

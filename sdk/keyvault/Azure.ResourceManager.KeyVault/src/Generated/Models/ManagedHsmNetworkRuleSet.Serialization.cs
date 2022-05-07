@@ -8,11 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class MhsmNetworkRuleSet : IUtf8JsonSerializable
+    public partial class ManagedHsmNetworkRuleSet : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,19 +42,19 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
-        internal static MhsmNetworkRuleSet DeserializeMhsmNetworkRuleSet(JsonElement element)
+        internal static ManagedHsmNetworkRuleSet DeserializeManagedHsmNetworkRuleSet(JsonElement element)
         {
             Optional<NetworkRuleBypassOptions> bypass = default;
             Optional<NetworkRuleAction> defaultAction = default;
-            Optional<IList<MhsmIPRule>> ipRules = default;
-            Optional<IList<WritableSubResource>> virtualNetworkRules = default;
+            Optional<IList<ManagedHsmIPRule>> ipRules = default;
+            Optional<IList<ManagedHsmVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"))
@@ -85,10 +84,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MhsmIPRule> array = new List<MhsmIPRule>();
+                    List<ManagedHsmIPRule> array = new List<ManagedHsmIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MhsmIPRule.DeserializeMhsmIPRule(item));
+                        array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item));
                     }
                     ipRules = array;
                     continue;
@@ -100,16 +99,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<ManagedHsmVirtualNetworkRule> array = new List<ManagedHsmVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item));
                     }
                     virtualNetworkRules = array;
                     continue;
                 }
             }
-            return new MhsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
+            return new ManagedHsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
         }
     }
 }
