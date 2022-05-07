@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="reservationOrderIds"></param>
-        internal AppliedReservations(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds) : base(id, name, resourceType, systemData)
+        internal AppliedReservations(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds) : base(id, name, resourceType, systemData)
         {
             ReservationOrderIds = reservationOrderIds;
         }

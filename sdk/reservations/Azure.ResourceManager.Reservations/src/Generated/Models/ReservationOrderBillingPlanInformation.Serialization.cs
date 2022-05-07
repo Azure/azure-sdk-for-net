@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element)
         {
-            Optional<Price> pricingCurrencyTotal = default;
+            Optional<PurchasePrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
             Optional<IReadOnlyList<PaymentDetail>> transactions = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pricingCurrencyTotal = Price.DeserializePrice(property.Value);
+                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startDate"))

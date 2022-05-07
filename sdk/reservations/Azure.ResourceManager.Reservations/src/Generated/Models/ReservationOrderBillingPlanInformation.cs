@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
-        internal ReservationOrderBillingPlanInformation(Price pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IReadOnlyList<PaymentDetail> transactions)
+        internal ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IReadOnlyList<PaymentDetail> transactions)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>
-        public Price PricingCurrencyTotal { get; }
+        public PurchasePrice PricingCurrencyTotal { get; }
         /// <summary> Date when the billing plan has started. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
         /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"></param>
-        internal PaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, Price pricingCurrencyTotal, Price billingCurrencyTotal, string billingAccount, PaymentStatus? status, ExtendedStatusInfo extendedStatusInfo)
+        internal PaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? paymentOn, PurchasePrice pricingCurrencyTotal, PurchasePrice billingCurrencyTotal, string billingAccount, PaymentStatus? status, ExtendedStatusInfo extendedStatusInfo)
         {
             DueOn = dueOn;
             PaymentOn = paymentOn;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Date when the transaction is completed. Is null when it is scheduled. </summary>
         public DateTimeOffset? PaymentOn { get; }
         /// <summary> Amount in pricing currency. Tax not included. </summary>
-        public Price PricingCurrencyTotal { get; }
+        public PurchasePrice PricingCurrencyTotal { get; }
         /// <summary> Amount charged in Billing currency. Tax not included. Is null for future payments. </summary>
-        public Price BillingCurrencyTotal { get; }
+        public PurchasePrice BillingCurrencyTotal { get; }
         /// <summary> Shows the Account that is charged for this payment. </summary>
         public string BillingAccount { get; }
         /// <summary> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </summary>

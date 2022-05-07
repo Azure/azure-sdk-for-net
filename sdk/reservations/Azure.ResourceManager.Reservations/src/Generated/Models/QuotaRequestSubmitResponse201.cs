@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The details of the quota request status. </param>
         /// <param name="message"> A user friendly message. </param>
-        internal QuotaRequestSubmitResponse201(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message) : base(id, name, resourceType, systemData)
+        internal QuotaRequestSubmitResponse201(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;

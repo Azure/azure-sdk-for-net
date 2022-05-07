@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> requestDateTime = default;

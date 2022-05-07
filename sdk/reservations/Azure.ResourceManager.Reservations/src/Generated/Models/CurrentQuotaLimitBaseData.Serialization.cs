@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Reservations
             Optional<QuotaProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {

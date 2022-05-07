@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of CatalogMsrp. </summary>
         /// <param name="p1Y"> Amount in pricing currency. Tax not included. </param>
-        internal CatalogMsrp(Price p1Y)
+        internal CatalogMsrp(PurchasePrice p1Y)
         {
             P1Y = p1Y;
         }
 
         /// <summary> Amount in pricing currency. Tax not included. </summary>
-        public Price P1Y { get; }
+        public PurchasePrice P1Y { get; }
     }
 }

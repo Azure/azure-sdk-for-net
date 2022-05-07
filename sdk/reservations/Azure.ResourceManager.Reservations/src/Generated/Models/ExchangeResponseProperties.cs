@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="reservationsToPurchase"> Details of the reservations being purchased. </param>
         /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
         /// <param name="policyResult"> Exchange policy errors. </param>
-        internal ExchangeResponseProperties(string sessionId, Price netPayable, Price refundsTotal, Price purchasesTotal, IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase, IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange, ExchangePolicyErrors policyResult)
+        internal ExchangeResponseProperties(string sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseExchange> reservationsToPurchase, IReadOnlyList<ReservationToReturnForExchange> reservationsToExchange, ExchangePolicyErrors policyResult)
         {
             SessionId = sessionId;
             NetPayable = netPayable;
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Exchange session identifier. </summary>
         public string SessionId { get; }
         /// <summary> Gets the net payable. </summary>
-        public Price NetPayable { get; }
+        public PurchasePrice NetPayable { get; }
         /// <summary> Gets the refunds total. </summary>
-        public Price RefundsTotal { get; }
+        public PurchasePrice RefundsTotal { get; }
         /// <summary> Gets the purchases total. </summary>
-        public Price PurchasesTotal { get; }
+        public PurchasePrice PurchasesTotal { get; }
         /// <summary> Details of the reservations being purchased. </summary>
         public IReadOnlyList<ReservationToPurchaseExchange> ReservationsToPurchase { get; }
         /// <summary> Details of the reservations being returned. </summary>

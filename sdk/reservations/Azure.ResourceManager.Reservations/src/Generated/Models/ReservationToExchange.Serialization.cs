@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             Optional<string> reservationId = default;
             Optional<int> quantity = default;
-            Optional<Price> billingRefundAmount = default;
+            Optional<PurchasePrice> billingRefundAmount = default;
             Optional<BillingInformation> billingInformation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingRefundAmount = Price.DeserializePrice(property.Value);
+                    billingRefundAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingInformation"))

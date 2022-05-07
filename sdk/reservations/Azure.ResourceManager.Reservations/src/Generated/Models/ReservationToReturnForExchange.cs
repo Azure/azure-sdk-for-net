@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="billingRefundAmount"></param>
         /// <param name="billingInformation"> billing information. </param>
         /// <param name="status"> Status of the individual operation. </param>
-        internal ReservationToReturnForExchange(string reservationId, int? quantity, Price billingRefundAmount, BillingInformation billingInformation, OperationStatus? status)
+        internal ReservationToReturnForExchange(string reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation, OperationStatus? status)
         {
             ReservationId = reservationId;
             Quantity = quantity;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Quantity to be returned. </summary>
         public int? Quantity { get; }
         /// <summary> Gets the billing refund amount. </summary>
-        public Price BillingRefundAmount { get; }
+        public PurchasePrice BillingRefundAmount { get; }
         /// <summary> billing information. </summary>
         public BillingInformation BillingInformation { get; }
         /// <summary> Status of the individual operation. </summary>

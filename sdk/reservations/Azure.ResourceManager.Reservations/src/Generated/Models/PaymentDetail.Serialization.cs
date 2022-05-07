@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             Optional<DateTimeOffset> dueDate = default;
             Optional<DateTimeOffset> paymentDate = default;
-            Optional<Price> pricingCurrencyTotal = default;
-            Optional<Price> billingCurrencyTotal = default;
+            Optional<PurchasePrice> pricingCurrencyTotal = default;
+            Optional<PurchasePrice> billingCurrencyTotal = default;
             Optional<string> billingAccount = default;
             Optional<PaymentStatus> status = default;
             Optional<ExtendedStatusInfo> extendedStatusInfo = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pricingCurrencyTotal = Price.DeserializePrice(property.Value);
+                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingCurrencyTotal = Price.DeserializePrice(property.Value);
+                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"))

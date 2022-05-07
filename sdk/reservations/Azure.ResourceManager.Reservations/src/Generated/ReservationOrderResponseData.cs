@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="billingPlan"> Represent the billing plans. </param>
         /// <param name="planInformation"> Information describing the type of billing plan for this reservation. </param>
         /// <param name="reservations"></param>
-        internal ReservationOrderResponseData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ETag? etag, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expiryOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IReadOnlyList<ReservationResponseData> reservations) : base(id, name, resourceType, systemData)
+        internal ReservationOrderResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? expiryOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IReadOnlyList<ReservationResponseData> reservations) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             DisplayName = displayName;

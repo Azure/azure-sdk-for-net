@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Reservations.Models
         internal static ExchangeResponseProperties DeserializeExchangeResponseProperties(JsonElement element)
         {
             Optional<string> sessionId = default;
-            Optional<Price> netPayable = default;
-            Optional<Price> refundsTotal = default;
-            Optional<Price> purchasesTotal = default;
+            Optional<PurchasePrice> netPayable = default;
+            Optional<PurchasePrice> refundsTotal = default;
+            Optional<PurchasePrice> purchasesTotal = default;
             Optional<IReadOnlyList<ReservationToPurchaseExchange>> reservationsToPurchase = default;
             Optional<IReadOnlyList<ReservationToReturnForExchange>> reservationsToExchange = default;
             Optional<ExchangePolicyErrors> policyResult = default;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    netPayable = Price.DeserializePrice(property.Value);
+                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("refundsTotal"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    refundsTotal = Price.DeserializePrice(property.Value);
+                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("purchasesTotal"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    purchasesTotal = Price.DeserializePrice(property.Value);
+                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reservationsToPurchase"))

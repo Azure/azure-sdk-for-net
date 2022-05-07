@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Quota properties for the resource. </param>
-        internal CurrentQuotaLimitBaseData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, QuotaProperties properties) : base(id, name, resourceType, systemData)
+        internal CurrentQuotaLimitBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

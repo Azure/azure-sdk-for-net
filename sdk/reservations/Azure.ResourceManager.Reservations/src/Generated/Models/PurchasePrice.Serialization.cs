@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class Price
+    public partial class PurchasePrice
     {
-        internal static Price DeserializePrice(JsonElement element)
+        internal static PurchasePrice DeserializePurchasePrice(JsonElement element)
         {
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new Price(currencyCode.Value, Optional.ToNullable(amount));
+            return new PurchasePrice(currencyCode.Value, Optional.ToNullable(amount));
         }
     }
 }

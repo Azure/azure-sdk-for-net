@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("unit");
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType");
-                writer.WriteStringValue(ResourceType.Value.ToString());
+                writer.WriteStringValue(ResourceTypeName.Value.ToString());
             }
             if (Optional.IsDefined(Properties))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<int> currentValue = default;
             Optional<string> unit = default;
             Optional<ResourceName> name = default;
-            Optional<ResourceType> resourceType = default;
+            Optional<ResourceTypeName> resourceType = default;
             Optional<string> quotaPeriod = default;
             Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new ResourceType(property.Value.GetString());
+                    resourceType = new ResourceTypeName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"))

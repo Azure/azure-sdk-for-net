@@ -42,6 +42,9 @@ directive:
     where: $.definitions
     transform: >
       $.QuotaRequestProperties.properties.value['x-ms-client-name'] = 'QuotaRequestValue';
+      $.ResourceTypesName['x-ms-enum']['name'] = 'ResourceTypeName';
+      $.QuotaProperties.properties.name['x-ms-client-name'] = 'ResourceName';
+      $.QuotaProperties.properties.resourceType['x-ms-client-name'] = 'ResourceTypeName';
   - from: reservations.json
     where: $.definitions
     transform: >
@@ -53,6 +56,7 @@ directive:
       $.ReservationOrderResponse.properties.etag['type'] = 'string';
       $.ReservationOrderResponse.properties.etag['x-ms-format'] = 'etag';
       $.PurchaseRequest['x-ms-client-name'] = 'PurchaseRequestContent';
+      $.Price['x-ms-client-name'] = 'PurchasePrice';
       $.Catalog.properties.resourceType['x-ms-format'] = 'resource-type';
       $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
       $.Catalog.properties.locations.items['x-ms-format'] = 'azure-location';

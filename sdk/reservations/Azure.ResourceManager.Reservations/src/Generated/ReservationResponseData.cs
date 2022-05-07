@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="sku"> The sku information associated to this reservation. </param>
         /// <param name="properties"> The properties associated to this reservation. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
-        internal ReservationResponseData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, ETag? etag, ReservationsSkuName sku, ReservationsProperties properties, string kind) : base(id, name, resourceType, systemData)
+        internal ReservationResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ETag? etag, ReservationsSkuName sku, ReservationsProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Etag = etag;

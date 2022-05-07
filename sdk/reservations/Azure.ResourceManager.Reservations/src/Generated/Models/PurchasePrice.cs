@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The Price. </summary>
-    public partial class Price
+    /// <summary> The PurchasePrice. </summary>
+    public partial class PurchasePrice
     {
-        /// <summary> Initializes a new instance of Price. </summary>
-        internal Price()
+        /// <summary> Initializes a new instance of PurchasePrice. </summary>
+        internal PurchasePrice()
         {
         }
 
-        /// <summary> Initializes a new instance of Price. </summary>
+        /// <summary> Initializes a new instance of PurchasePrice. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
-        internal Price(string currencyCode, double? amount)
+        internal PurchasePrice(string currencyCode, double? amount)
         {
             CurrencyCode = currencyCode;
             Amount = amount;

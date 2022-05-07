@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static CatalogMsrp DeserializeCatalogMsrp(JsonElement element)
         {
-            Optional<Price> p1Y = default;
+            Optional<PurchasePrice> p1Y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("p1Y"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    p1Y = Price.DeserializePrice(property.Value);
+                    p1Y = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
             }

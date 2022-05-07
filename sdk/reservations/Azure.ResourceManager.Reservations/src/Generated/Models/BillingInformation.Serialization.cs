@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static BillingInformation DeserializeBillingInformation(JsonElement element)
         {
-            Optional<Price> billingCurrencyTotalPaidAmount = default;
-            Optional<Price> billingCurrencyProratedAmount = default;
-            Optional<Price> billingCurrencyRemainingCommitmentAmount = default;
+            Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
+            Optional<PurchasePrice> billingCurrencyProratedAmount = default;
+            Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingCurrencyTotalPaidAmount"))
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingCurrencyTotalPaidAmount = Price.DeserializePrice(property.Value);
+                    billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyProratedAmount"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingCurrencyProratedAmount = Price.DeserializePrice(property.Value);
+                    billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyRemainingCommitmentAmount"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    billingCurrencyRemainingCommitmentAmount = Price.DeserializePrice(property.Value);
+                    billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
             }

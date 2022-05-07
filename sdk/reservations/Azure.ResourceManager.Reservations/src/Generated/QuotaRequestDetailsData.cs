@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="message"> User friendly status message. </param>
         /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="quotaRequestValue"> The quotaRequests. </param>
-        internal QuotaRequestDetailsData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubRequest> quotaRequestValue) : base(id, name, resourceType, systemData)
+        internal QuotaRequestDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestState? provisioningState, string message, DateTimeOffset? requestSubmitOn, IReadOnlyList<SubRequest> quotaRequestValue) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Message = message;

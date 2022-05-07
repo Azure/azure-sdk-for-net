@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="tier"> The tier of this SKU. </param>
         /// <param name="size"> The size of this SKU. </param>
         /// <param name="capabilities"></param>
-        internal ReservationCatalog(Core.ResourceType? resourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
+        internal ReservationCatalog(ResourceType? resourceType, string skuName, IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans, IReadOnlyList<ReservationTerm> terms, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuProperty> skuProperties, CatalogMsrp msrp, IReadOnlyList<SkuRestriction> restrictions, string tier, string size, IReadOnlyList<SkuCapability> capabilities)
         {
             ResourceType = resourceType;
             SkuName = skuName;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
-        public Core.ResourceType? ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The name of SKU. </summary>
         public string SkuName { get; }
         /// <summary> The billing plan options available for this SKU. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Pricing information about the SKU. </summary>
         internal CatalogMsrp Msrp { get; }
         /// <summary> Amount in pricing currency. Tax not included. </summary>
-        public Price MsrpP1Y
+        public PurchasePrice MsrpP1Y
         {
             get => Msrp.P1Y;
         }

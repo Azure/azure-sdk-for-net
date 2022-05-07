@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
         {
-            Optional<Core.ResourceType> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<string> name = default;
             Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
             Optional<IReadOnlyList<ReservationTerm>> terms = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new Core.ResourceType(property.Value.GetString());
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

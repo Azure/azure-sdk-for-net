@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Reservations
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<QuotaRequestState> provisioningState = default;
             Optional<string> message = default;

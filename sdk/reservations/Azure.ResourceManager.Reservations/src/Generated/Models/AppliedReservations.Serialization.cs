@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<AppliedReservationList> reservationOrderIds = default;
             foreach (var property in element.EnumerateObject())
