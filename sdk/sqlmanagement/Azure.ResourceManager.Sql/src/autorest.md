@@ -140,6 +140,10 @@ directive:
       where: $.definitions.DatabaseProperties.properties.sampleName['x-ms-enum']
       transform: >
           $['name'] = "SampleSchemaName"
+    - from: Databases.json
+      where: $.definitions.DatabaseUpdateProperties.properties.sampleName['x-ms-enum']
+      transform: >
+          $['name'] = "SampleSchemaName"
     - from: MaintenanceWindows.json
       where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
       transform: >
