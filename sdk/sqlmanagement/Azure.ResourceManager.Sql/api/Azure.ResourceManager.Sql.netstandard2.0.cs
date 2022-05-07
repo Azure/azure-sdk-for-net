@@ -6721,25 +6721,6 @@ namespace Azure.ResourceManager.Sql.Models
         Discrete = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SampleName : System.IEquatable<Azure.ResourceManager.Sql.Models.SampleName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SampleName(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.SampleName AdventureWorksLT { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.SampleName WideWorldImportersFull { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.SampleName WideWorldImportersStd { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.SampleName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.SampleName left, Azure.ResourceManager.Sql.Models.SampleName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.SampleName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.SampleName left, Azure.ResourceManager.Sql.Models.SampleName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SampleSchemaName : System.IEquatable<Azure.ResourceManager.Sql.Models.SampleSchemaName>
     {
         private readonly object _dummy;
@@ -7135,7 +7116,7 @@ namespace Azure.ResourceManager.Sql.Models
         public string RestorableDroppedDatabaseId { get { throw null; } set { } }
         public System.DateTimeOffset? RestorePointInOn { get { throw null; } set { } }
         public System.DateTimeOffset? ResumedOn { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.SampleName? SampleName { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SampleSchemaName? SampleName { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SecondaryType? SecondaryType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? SourceDatabaseDeletionOn { get { throw null; } set { } }
