@@ -170,6 +170,13 @@
       "words": ["Fqdns"]
     },
     {
+      "filename": "**/sdk/elasticsan/**/*.cs",
+      "words": [
+        "iscsi",
+        "mbps"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
     },
@@ -286,7 +293,7 @@
     {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
-        "Iscsi"
+        "iscsi"
       ]
     },
     {
