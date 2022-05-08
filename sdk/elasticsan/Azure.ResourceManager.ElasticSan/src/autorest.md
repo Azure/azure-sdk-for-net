@@ -40,7 +40,7 @@ rename-rules:
   Volume: ElasticSanVolume
 directive:
   - from: elasticsan.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.Sku.properties.name['x-ms-enum']['name'] = 'ElasticSanSkuName';
       $.Sku.properties.tier['x-ms-enum']['name'] = 'ElasticSanTier';
