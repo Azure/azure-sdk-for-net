@@ -221,6 +221,13 @@
       ]
     },
     {
+      "filename": "**/sdk/reservations/**/*.cs",
+      "words": [
+        "msrp",
+        "hana"
+      ]
+    },
+    {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
       "words": ["Puid"]
     },
