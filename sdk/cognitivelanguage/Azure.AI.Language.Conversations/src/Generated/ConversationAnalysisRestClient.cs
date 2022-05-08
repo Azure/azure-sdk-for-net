@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/:analyze-conversation", false);
+            uri.AppendPath("/:analyze-conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Conversations
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/analyze-conversation/jobs", false);
+            uri.AppendPath("/analyze-conversations/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -184,7 +184,7 @@ namespace Azure.AI.Language.Conversations
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
-            uri.AppendPath("/analyze-conversation/jobs/", false);
+            uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (showStats != null)

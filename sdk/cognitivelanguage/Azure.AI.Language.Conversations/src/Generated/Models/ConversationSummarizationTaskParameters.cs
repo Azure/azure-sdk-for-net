@@ -5,10 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> Supported parameters for an conversational summarization task. </summary>
@@ -16,27 +12,21 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary> Initializes a new instance of ConversationSummarizationTaskParameters. </summary>
         /// <param name="summaryAspects"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summaryAspects"/> is null. </exception>
-        public ConversationSummarizationTaskParameters(IEnumerable<SummaryAspect> summaryAspects)
+        public ConversationSummarizationTaskParameters(SummaryAspectEnum summaryAspects)
         {
-            if (summaryAspects == null)
-            {
-                throw new ArgumentNullException(nameof(summaryAspects));
-            }
-
-            SummaryAspects = summaryAspects.ToList();
+            SummaryAspects = summaryAspects;
         }
 
         /// <summary> Initializes a new instance of ConversationSummarizationTaskParameters. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="summaryAspects"></param>
-        internal ConversationSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, IList<SummaryAspect> summaryAspects) : base(loggingOptOut, modelVersion)
+        internal ConversationSummarizationTaskParameters(bool? loggingOptOut, string modelVersion, SummaryAspectEnum summaryAspects) : base(loggingOptOut, modelVersion)
         {
             SummaryAspects = summaryAspects;
         }
 
-        /// <summary> Gets the summary aspects. </summary>
-        public IList<SummaryAspect> SummaryAspects { get; }
+        /// <summary> Gets or sets the summary aspects. </summary>
+        public SummaryAspectEnum SummaryAspects { get; set; }
     }
 }

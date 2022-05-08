@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations
             }
 
             Results = results;
-            Kind = AnalyzeConversationResultsKind.ConversationalPIIResults;
+            Kind = AnalyzeConversationResultsKind.ConversationPIIResults;
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationPIIResult. </summary>

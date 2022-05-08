@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations
             }
 
             Results = results;
-            Kind = AnalyzeConversationResultsKind.ConversationalSummarizationResults;
+            Kind = AnalyzeConversationResultsKind.IssueResolutionSummaryResults;
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationSummarizationResult. </summary>

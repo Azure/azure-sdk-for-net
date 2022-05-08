@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         private const string ConversationalPIITaskValue = "ConversationalPIITask";
-        private const string ConversationalSummarizationTaskValue = "IssueResolutionSummarization";
+        private const string ConversationalSummarizationTaskValue = "ConversationalSummarizationTask";
 
         /// <summary> ConversationalPIITask. </summary>
         public static AnalyzeConversationLROTaskKind ConversationalPIITask { get; } = new AnalyzeConversationLROTaskKind(ConversationalPIITaskValue);

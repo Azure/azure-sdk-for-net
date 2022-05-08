@@ -15,23 +15,10 @@ namespace Azure.AI.Language.Conversations
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("itn");
-            writer.WriteStringValue(Itn);
-            writer.WritePropertyName("maskedItn");
-            writer.WriteStringValue(MaskedItn);
-            writer.WritePropertyName("text");
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("lexical");
-            writer.WriteStringValue(Lexical);
-            if (Optional.IsCollectionDefined(AudioTimings))
+            if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("audioTimings");
-                writer.WriteStartArray();
-                foreach (var item in AudioTimings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("content");
+                writer.WriteObjectValue(Content);
             }
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
@@ -42,11 +29,8 @@ namespace Azure.AI.Language.Conversations
                 writer.WritePropertyName("language");
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(Modality))
-            {
-                writer.WritePropertyName("modality");
-                writer.WriteStringValue(Modality.Value.ToString());
-            }
+            writer.WritePropertyName("modality");
+            writer.WriteStringValue(Modality.ToString());
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role");

@@ -31,8 +31,8 @@ namespace Azure.AI.Language.Conversations
             {
                 switch (discriminator.GetString())
                 {
-                    case "ConversationalPIITask": return AnalyzeConversationPIITask.DeserializeAnalyzeConversationPIITask(element);
-                    case "ConversationalSummarizationTask": return AnalyzeConversationSummarizationTask.DeserializeAnalyzeConversationSummarizationTask(element);
+                    case "ConversationPII": return AnalyzeConversationPIITask.DeserializeAnalyzeConversationPIITask(element);
+                    case "IssueResolutionSummarization": return AnalyzeConversationSummarizationTask.DeserializeAnalyzeConversationSummarizationTask(element);
                 }
             }
             AnalyzeConversationLROTaskKind kind = default;

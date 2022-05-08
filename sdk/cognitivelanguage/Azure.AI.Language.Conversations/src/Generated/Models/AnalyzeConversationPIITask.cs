@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of AnalyzeConversationPIITask. </summary>
         public AnalyzeConversationPIITask()
         {
-            Kind = AnalyzeConversationLROTaskKind.ConversationalPIITask;
+            Kind = new AnalyzeConversationLROTaskKind("ConversationPII");
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationPIITask. </summary>

@@ -33,6 +33,7 @@ namespace Azure.AI.Language.Conversations
             }
 
             Text = text;
+            Modality = InputModality.Text;
         }
 
         /// <summary> The single input query. </summary>

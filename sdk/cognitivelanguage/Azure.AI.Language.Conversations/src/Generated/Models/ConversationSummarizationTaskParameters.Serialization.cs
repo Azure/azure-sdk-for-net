@@ -5,25 +5,18 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class  ConversationSummarizationTaskParameters : IUtf8JsonSerializable
+    public partial class ConversationSummarizationTaskParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("summaryAspects");
-            /*writer.WriteStartArray();
-            foreach (var item in SummaryAspects)
-            {
-                writer.WriteStringValue(item.ToString());
-            }
-            writer.WriteEndArray();*/
-            writer.WriteStringValue("issue, resolution");
+            writer.WriteStringValue(SummaryAspects.ToString());
             if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion");
@@ -39,19 +32,14 @@ namespace Azure.AI.Language.Conversations
 
         internal static ConversationSummarizationTaskParameters DeserializeConversationSummarizationTaskParameters(JsonElement element)
         {
-            IList<SummaryAspect> summaryAspects = default;
+            SummaryAspectEnum summaryAspects = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summaryAspects"))
                 {
-                    List<SummaryAspect> array = new List<SummaryAspect>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new SummaryAspect(item.GetString()));
-                    }
-                    summaryAspects = array;
+                    summaryAspects = new SummaryAspectEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("modelVersion"))
