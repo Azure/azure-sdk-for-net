@@ -92,7 +92,6 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
     MaintenanceConfigurationId = "/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
     ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
     TimezoneId = "UTC",
-    StorageAccountType = new StorageAccountType("GRS"),
     ZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";

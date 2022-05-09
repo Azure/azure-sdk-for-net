@@ -7,35 +7,47 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Sql.Models
+namespace Azure.ResourceManager.Sql
 {
-    public partial class OperationsHealth : IUtf8JsonSerializable
+    public partial class IPv6FirewallRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(StartIPv6Address))
+            {
+                writer.WritePropertyName("startIPv6Address");
+                writer.WriteStringValue(StartIPv6Address);
+            }
+            if (Optional.IsDefined(EndIPv6Address))
+            {
+                writer.WritePropertyName("endIPv6Address");
+                writer.WriteStringValue(EndIPv6Address);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static OperationsHealth DeserializeOperationsHealth(JsonElement element)
+        internal static IPv6FirewallRuleData DeserializeIPv6FirewallRuleData(JsonElement element)
         {
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> name0 = default;
-            Optional<string> health = default;
-            Optional<string> description = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<string> startIPv6Address = default;
+            Optional<string> endIPv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -48,11 +60,6 @@ namespace Azure.ResourceManager.Sql.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -62,26 +69,21 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("startIPv6Address"))
                         {
-                            name0 = property0.Value.GetString();
+                            startIPv6Address = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("health"))
+                        if (property0.NameEquals("endIPv6Address"))
                         {
-                            health = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"))
-                        {
-                            description = property0.Value.GetString();
+                            endIPv6Address = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new OperationsHealth(id, name, type, systemData, name0.Value, health.Value, description.Value);
+            return new IPv6FirewallRuleData(id.Value, name.Value, type.Value, startIPv6Address.Value, endIPv6Address.Value);
         }
     }
 }

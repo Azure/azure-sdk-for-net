@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A database resource. </summary>
+    /// <summary> A database update resource. </summary>
     public partial class SqlDatabasePatch
     {
         /// <summary> Initializes a new instance of SqlDatabasePatch. </summary>
@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The name and tier of the SKU. </summary>
         public SqlSku Sku { get; set; }
+        /// <summary> Database identity. </summary>
+        public DatabaseIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary>
@@ -90,9 +92,9 @@ namespace Azure.ResourceManager.Sql.Models
         public long? MaxLogSizeBytes { get; }
         /// <summary> This records the earliest start date and time that restore is available for this database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
-        /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. </summary>
+        /// <summary> The state of read-only routing. If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica in the same region. Not applicable to a Hyperscale database within an elastic pool. </summary>
         public DatabaseReadScale? ReadScale { get; set; }
-        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. </summary>
+        /// <summary> The number of secondary replicas associated with the database that are used to provide high availability. Not applicable to a Hyperscale database within an elastic pool. </summary>
         public int? HighAvailabilityReplicaCount { get; set; }
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
         public SecondaryType? SecondaryType { get; set; }
@@ -101,9 +103,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>
-        public CurrentBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public BackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
         /// <summary> The storage account type to be used to store backups for this database. </summary>
-        public RequestedBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Minimal capacity that database will always have allocated, if not paused. </summary>
         public double? MinCapacity { get; set; }
         /// <summary> The date when database was paused by user configuration or action(ISO8601 format). Null if the database is ready. </summary>
@@ -116,5 +118,7 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsLedgerOn { get; set; }
         /// <summary> Infra encryption is enabled for this database. </summary>
         public bool? IsInfraEncryptionEnabled { get; }
+        /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
+        public Guid? FederatedClientId { get; set; }
     }
 }

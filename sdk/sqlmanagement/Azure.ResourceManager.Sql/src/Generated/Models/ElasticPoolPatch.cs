@@ -33,5 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public ElasticPoolLicenseType? LicenseType { get; set; }
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
         public string MaintenanceConfigurationId { get; set; }
+        /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
+        public int? HighAvailabilityReplicaCount { get; set; }
     }
 }

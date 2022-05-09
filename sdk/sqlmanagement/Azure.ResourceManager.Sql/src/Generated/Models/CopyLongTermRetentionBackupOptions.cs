@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The name of the database owns the copied backup. </summary>
         public string TargetDatabaseName { get; set; }
         /// <summary> The storage redundancy type of the copied backup. </summary>
-        public TargetBackupStorageRedundancy? TargetBackupStorageRedundancy { get; set; }
+        public BackupStorageRedundancy? TargetBackupStorageRedundancy { get; set; }
     }
 }

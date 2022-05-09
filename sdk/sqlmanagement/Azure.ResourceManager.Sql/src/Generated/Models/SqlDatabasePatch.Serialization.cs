@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -147,6 +152,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("isLedgerOn");
                 writer.WriteBooleanValue(IsLedgerOn.Value);
+            }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

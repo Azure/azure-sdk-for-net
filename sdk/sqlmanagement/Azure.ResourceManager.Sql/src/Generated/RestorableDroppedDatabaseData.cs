@@ -32,19 +32,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> Resource tags. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
-        /// <param name="elasticPoolId"> DEPRECATED: The resource name of the elastic pool containing this database. This property is deprecated and the value will always be null. </param>
         /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="deletionOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, DateTimeOffset? earliestRestoreOn, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, DateTimeOffset? earliestRestoreOn, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Location = location;
             Tags = tags;
             DatabaseName = databaseName;
             MaxSizeBytes = maxSizeBytes;
-            ElasticPoolId = elasticPoolId;
             CreationOn = creationOn;
             DeletionOn = deletionOn;
             EarliestRestoreOn = earliestRestoreOn;
@@ -61,8 +59,6 @@ namespace Azure.ResourceManager.Sql
         public string DatabaseName { get; }
         /// <summary> The max size of the database expressed in bytes. </summary>
         public long? MaxSizeBytes { get; }
-        /// <summary> DEPRECATED: The resource name of the elastic pool containing this database. This property is deprecated and the value will always be null. </summary>
-        public string ElasticPoolId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         public DateTimeOffset? CreationOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
@@ -70,6 +66,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The storage account type used to store backups for this database. </summary>
-        public RestorableDroppedDatabasePropertiesBackupStorageRedundancy? BackupStorageRedundancy { get; }
+        public BackupStorageRedundancy? BackupStorageRedundancy { get; }
     }
 }
