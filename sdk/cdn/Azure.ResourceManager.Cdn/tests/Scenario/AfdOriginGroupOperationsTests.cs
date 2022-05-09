@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             int count = 0;
-            await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsageAsync())
+            await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);

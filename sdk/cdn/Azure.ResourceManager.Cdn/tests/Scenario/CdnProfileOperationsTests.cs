@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
             int count = 0;
-            await foreach (var tempResourceUsage in cdnProfile.GetResourceUsageAsync())
+            await foreach (var tempResourceUsage in cdnProfile.GetResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempResourceUsage.ResourceType, "endpoint");

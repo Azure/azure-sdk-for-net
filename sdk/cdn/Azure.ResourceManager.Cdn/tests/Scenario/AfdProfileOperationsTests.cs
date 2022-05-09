@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             int count = 0;
-            await foreach (var tempUsage in afdProfile.GetResourceUsageAfdProfilesAsync())
+            await foreach (var tempUsage in afdProfile.GetAfdProfileResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);

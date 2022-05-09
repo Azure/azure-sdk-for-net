@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             int count = 0;
-            await foreach (var tempUsage in afdEndpointInstance.GetAfdEndpointResourceUsageAsync())
+            await foreach (var tempUsage in afdEndpointInstance.GetResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.CurrentValue, 0);

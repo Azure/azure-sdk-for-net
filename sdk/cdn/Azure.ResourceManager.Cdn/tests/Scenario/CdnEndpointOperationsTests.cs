@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             int count = 0;
-            await foreach (var tempResourceUsage in cdnEndpoint.GetResourceUsageAsync())
+            await foreach (var tempResourceUsage in cdnEndpoint.GetResourceUsagesAsync())
             {
                 count++;
             }
