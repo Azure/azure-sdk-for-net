@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The type of the Security policy to create. </summary>
         internal SecurityPolicyType? ParametersPolicyType
         {
-            get => Parameters is null ? default : Parameters.PolicyType;
+            get => Parameters is null ? default(SecurityPolicyType?) : Parameters.PolicyType;
             set
             {
                 if (value.HasValue)

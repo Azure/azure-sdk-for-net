@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Value indicating the age in days after creation. </summary>
         public float? TierToCoolDaysAfterCreationGreaterThan
         {
-            get => TierToCool is null ? default : TierToCool.DaysAfterCreationGreaterThan;
+            get => TierToCool is null ? default(float?) : TierToCool.DaysAfterCreationGreaterThan;
             set
             {
                 TierToCool = value.HasValue ? new DateAfterCreation(value.Value) : null;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Value indicating the age in days after creation. </summary>
         public float? TierToArchiveDaysAfterCreationGreaterThan
         {
-            get => TierToArchive is null ? default : TierToArchive.DaysAfterCreationGreaterThan;
+            get => TierToArchive is null ? default(float?) : TierToArchive.DaysAfterCreationGreaterThan;
             set
             {
                 TierToArchive = value.HasValue ? new DateAfterCreation(value.Value) : null;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Value indicating the age in days after creation. </summary>
         public float? DeleteDaysAfterCreationGreaterThan
         {
-            get => Delete is null ? default : Delete.DaysAfterCreationGreaterThan;
+            get => Delete is null ? default(float?) : Delete.DaysAfterCreationGreaterThan;
             set
             {
                 Delete = value.HasValue ? new DateAfterCreation(value.Value) : null;

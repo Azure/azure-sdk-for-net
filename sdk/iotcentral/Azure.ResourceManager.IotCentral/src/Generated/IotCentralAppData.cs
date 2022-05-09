@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <summary> The name of the SKU. </summary>
         public AppSku? SkuName
         {
-            get => Sku is null ? default : Sku.Name;
+            get => Sku is null ? default(AppSku?) : Sku.Name;
             set
             {
                 Sku = value.HasValue ? new AppSkuInfo(value.Value) : null;

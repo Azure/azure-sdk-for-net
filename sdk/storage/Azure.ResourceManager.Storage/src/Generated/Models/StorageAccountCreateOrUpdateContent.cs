@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The key expiration period in days. </summary>
         public int? KeyExpirationPeriodInDays
         {
-            get => KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
+            get => KeyPolicy is null ? default(int?) : KeyPolicy.KeyExpirationPeriodInDays;
             set
             {
                 KeyPolicy = value.HasValue ? new KeyPolicy(value.Value) : null;

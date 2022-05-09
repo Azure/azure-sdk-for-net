@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The type of the secret resource. </summary>
         internal SecretType? ParametersSecretType
         {
-            get => Parameters is null ? default : Parameters.SecretType;
+            get => Parameters is null ? default(SecretType?) : Parameters.SecretType;
             set
             {
                 if (value.HasValue)
