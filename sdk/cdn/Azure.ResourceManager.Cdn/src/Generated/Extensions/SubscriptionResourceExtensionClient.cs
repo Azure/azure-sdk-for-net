@@ -239,11 +239,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceUsage> GetResourceUsageUnderSubscriptionAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
+                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsageUnderSubscription");
                 scope.Start();
                 try
                 {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
+                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsageUnderSubscription");
                 scope.Start();
                 try
                 {
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceUsage> GetResourceUsages(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceUsage> GetResourceUsageUnderSubscription(CancellationToken cancellationToken = default)
         {
             Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
+                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsageUnderSubscription");
                 scope.Start();
                 try
                 {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
+                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsageUnderSubscription");
                 scope.Start();
                 try
                 {

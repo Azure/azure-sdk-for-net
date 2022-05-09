@@ -352,11 +352,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetAfdEndpointResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetResourceUsageUnderAfdEndpointAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetAfdEndpointResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsageUnderAfdEndpoint");
                 scope.Start();
                 try
                 {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetAfdEndpointResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsageUnderAfdEndpoint");
                 scope.Start();
                 try
                 {
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetAfdEndpointResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetResourceUsageUnderAfdEndpoint(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetAfdEndpointResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsageUnderAfdEndpoint");
                 scope.Start();
                 try
                 {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetAfdEndpointResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsageUnderAfdEndpoint");
                 scope.Start();
                 try
                 {

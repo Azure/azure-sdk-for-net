@@ -66,7 +66,13 @@ override-operation-name:
   LogAnalytics_GetLogAnalyticsLocations: GetLogAnalyticsLocations
   LogAnalytics_GetWafLogAnalyticsMetrics: GetWafLogAnalyticsMetrics
   LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
-  AfdEndpoints_ListResourceUsage: GetAfdEndpointResourceUsage
+  ResourceUsage_List: GetResourceUsageUnderSubscription
+  Profiles_ListResourceUsage: GetResourceUsageUnderProfile
+  CdnEndpoints_ListResourceUsage: GetResourceUsageUnderCdnEndpoint
+  AfdProfiles_ListResourceUsage: GetResourceUsageUnderAfdProfile
+  AfdEndpoints_ListResourceUsage: GetResourceUsageUnderAfdEndpoint
+  AfdOriginGroups_ListResourceUsage: GetResourceUsageUnderAfdOriginGroup
+  AfdRuleSets_ListResourceUsage: GetResourceUsageUnderAfdRuleSet
 directive:
   - from: cdn.json
     where: $.definitions

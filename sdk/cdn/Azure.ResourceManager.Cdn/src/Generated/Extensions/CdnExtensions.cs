@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceUsage> GetResourceUsagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceUsage> GetResourceUsageUnderSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourceUsageUnderSubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceUsage> GetResourceUsages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceUsage> GetResourceUsageUnderSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetResourceUsages(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetResourceUsageUnderSubscription(cancellationToken);
         }
 
         /// <summary>
