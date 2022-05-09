@@ -81,36 +81,42 @@ function GetPrimaryCodeOwner ([string]$TargetDirectory)
     return $null
 }
 
-function GenerateDocsMsMetadata($language, $serviceName, $tenantId, $clientId, $clientSecret, $clientInfo, $mgmtInfo) 
+function GetDocsMsService($clientPackageInfo, $mgmtPackageInfo, $serviceName) 
+{
+  $service = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
+  if ($clientPackageInfo -and $clientPackageInfo.MSDocService) {
+    # Use MSDocService in csv metadata to override the service directory
+    # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
+    $service = $clientPackageInfo.MSDocService
+  }
+  elseif ($mgmtPackageInfo -and $mgmtPackageInfo.MSDocService) {
+    $service = $mgmtPackageInfo.MSDocService
+  }
+  Write-Host "The service of package: $service"
+  return $service
+}
+
+function GenerateDocsMsMetadata($language, $serviceName, $tenantId, $clientId, $clientSecret, $msService) 
 {
   $langTitle = "Azure $serviceName SDK for $language"
   $langDescription = "Reference for Azure $serviceName SDK for $language"
   # Github url for source code: e.g. https://github.com/Azure/azure-sdk-for-js
   $serviceBaseName = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
   $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
-  $msauthor = "sizhu"
+  $msauthor = ""
   if (!$author) {
     LogError "Cannot fetch the author from CODEOWNER file."
-    $author = "sima-zhu"
+    exit 1
   }
   elseif ($TenantId -and $ClientId -and $ClientSecret) {
     $msauthor = GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author
   }
   # Default value
   if (!$msauthor) {
-    LogWarning "No ms.author found for $author. Please check your app credential."
+    LogError "No ms.author found for $author. "
     $msauthor = $author
   }
   $date = Get-Date -Format "MM/dd/yyyy"
-  if ($clientInfo -and $clientInfo.MSDocService) {
-    # Use MSDocService in csv metadata to override the service directory
-    # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
-    $service = $clientInfo.MSDocService
-  }
-  elseif ($mgmtInfo -and $mgmtInfo.MSDocService) {
-    $service = $mgmtInfo.MSDocService
-  }
-  Write-Host "The service of package: $service"
   $header = @"
 ---
 title: $langTitle
@@ -120,7 +126,7 @@ ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
 ms.devlang: $language
-ms.service: $service
+ms.service: $msService
 ---
 "@
   return $header
