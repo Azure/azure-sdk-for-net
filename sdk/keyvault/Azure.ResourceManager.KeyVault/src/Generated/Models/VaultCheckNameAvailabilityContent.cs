@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -29,6 +30,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The vault name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>
-        public string ResourceType { get; }
+        public ResourceType ResourceType { get; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class AccessPermissions : IUtf8JsonSerializable
+    public partial class IdentityAccessPermissions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static AccessPermissions DeserializeAccessPermissions(JsonElement element)
+        internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element)
         {
             Optional<IList<KeyPermission>> keys = default;
             Optional<IList<SecretPermission>> secrets = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new AccessPermissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage));
+            return new IdentityAccessPermissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage));
         }
     }
 }

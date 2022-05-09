@@ -14,16 +14,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing the MhsmPrivateEndpointConnection data model. </summary>
-    public partial class MhsmPrivateEndpointConnectionData : KeyVaultTrackedResourceData
+    /// <summary> A class representing the ManagedHsmPrivateEndpointConnection data model. </summary>
+    public partial class ManagedHsmPrivateEndpointConnectionData : KeyVaultTrackedResourceData
     {
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>
         /// <param name="location"> The location. </param>
-        public MhsmPrivateEndpointConnectionData(AzureLocation location) : base(location)
+        public ManagedHsmPrivateEndpointConnectionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal MhsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, ETag? etag, SubResource privateEndpoint, MhsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location, sku)
+        internal ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location, sku)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Approval state of the private link connection. </summary>
-        public MhsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
     }

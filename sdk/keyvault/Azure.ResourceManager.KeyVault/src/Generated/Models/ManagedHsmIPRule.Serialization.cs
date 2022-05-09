@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class MhsmIPRule : IUtf8JsonSerializable
+    public partial class ManagedHsmIPRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static MhsmIPRule DeserializeMhsmIPRule(JsonElement element)
+        internal static ManagedHsmIPRule DeserializeManagedHsmIPRule(JsonElement element)
         {
             string value = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new MhsmIPRule(value);
+            return new ManagedHsmIPRule(value);
         }
     }
 }
