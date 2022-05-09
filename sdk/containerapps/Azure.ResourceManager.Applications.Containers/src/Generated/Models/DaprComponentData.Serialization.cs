@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Applications.Containers
             Optional<string> version = default;
             Optional<bool> ignoreErrors = default;
             Optional<string> initTimeout = default;
-            Optional<IList<Secret>> secrets = default;
+            Optional<IList<AppSecret>> secrets = default;
             Optional<IList<DaprMetadata>> metadata = default;
             Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Applications.Containers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Secret> array = new List<Secret>();
+                            List<AppSecret> array = new List<AppSecret>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Secret.DeserializeSecret(item));
+                                array.Add(AppSecret.DeserializeAppSecret(item));
                             }
                             secrets = array;
                             continue;

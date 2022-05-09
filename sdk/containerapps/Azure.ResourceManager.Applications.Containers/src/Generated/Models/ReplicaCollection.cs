@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Initializes a new instance of ReplicaCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ReplicaCollection(IEnumerable<ReplicaData> value)
+        internal ReplicaCollection(IEnumerable<ContainerAppReplicaData> value)
         {
             if (value == null)
             {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
 
         /// <summary> Initializes a new instance of ReplicaCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
-        internal ReplicaCollection(IReadOnlyList<ReplicaData> value)
+        internal ReplicaCollection(IReadOnlyList<ContainerAppReplicaData> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<ReplicaData> Value { get; }
+        public IReadOnlyList<ContainerAppReplicaData> Value { get; }
     }
 }

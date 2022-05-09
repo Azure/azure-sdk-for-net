@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Applications.Containers
             Optional<AuthPlatform> platform = default;
             Optional<GlobalValidation> globalValidation = default;
             Optional<IdentityProviders> identityProviders = default;
-            Optional<Login> login = default;
+            Optional<ContainerAppLogin> login = default;
             Optional<HttpSettings> httpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Applications.Containers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            login = Login.DeserializeLogin(property0.Value);
+                            login = ContainerAppLogin.DeserializeContainerAppLogin(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"))

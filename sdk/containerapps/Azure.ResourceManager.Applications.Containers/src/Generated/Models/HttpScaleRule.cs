@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public HttpScaleRule()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Auth = new ChangeTrackingList<ScaleRuleAuth>();
+            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of HttpScaleRule. </summary>
         /// <param name="metadata"> Metadata properties to describe http scale rule. </param>
         /// <param name="auth"> Authentication secrets for the custom scale rule. </param>
-        internal HttpScaleRule(IDictionary<string, string> metadata, IList<ScaleRuleAuth> auth)
+        internal HttpScaleRule(IDictionary<string, string> metadata, IList<ContainerAppScaleRuleAuth> auth)
         {
             Metadata = metadata;
             Auth = auth;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Metadata properties to describe http scale rule. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> Authentication secrets for the custom scale rule. </summary>
-        public IList<ScaleRuleAuth> Auth { get; }
+        public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

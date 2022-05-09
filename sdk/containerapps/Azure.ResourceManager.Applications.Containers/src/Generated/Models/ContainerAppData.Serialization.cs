@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Applications.Containers
             Optional<string> latestRevisionName = default;
             Optional<string> latestRevisionFqdn = default;
             Optional<string> customDomainVerificationId = default;
-            Optional<Configuration> configuration = default;
-            Optional<Template> template = default;
+            Optional<ContainerAppConfiguration> configuration = default;
+            Optional<ContainerAppTemplate> template = default;
             Optional<IReadOnlyList<string>> outboundIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Applications.Containers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            configuration = Configuration.DeserializeConfiguration(property0.Value);
+                            configuration = ContainerAppConfiguration.DeserializeContainerAppConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("template"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Applications.Containers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            template = Template.DeserializeTemplate(property0.Value);
+                            template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outboundIPAddresses"))

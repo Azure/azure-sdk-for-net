@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.Applications.Containers
             return GetDaprComponents().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateResources in the ManagedEnvironment. </summary>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public virtual CertificateCollection GetCertificates()
+        /// <summary> Gets a collection of ContainerAppCertificateResources in the ManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppCertificateResources and their operations over a ContainerAppCertificateResource. </returns>
+        public virtual ContainerAppCertificateCollection GetContainerAppCertificates()
         {
-            return GetCachedClient(Client => new CertificateCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerAppCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateResource>> GetCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppCertificateResource>> GetContainerAppCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateResource> GetCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppCertificateResource> GetContainerAppCertificate(string name, CancellationToken cancellationToken = default)
         {
-            return GetCertificates().Get(name, cancellationToken);
+            return GetContainerAppCertificates().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedEnvironmentStorageResources in the ManagedEnvironment. </summary>

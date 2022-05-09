@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     {
         internal static RevisionCollection DeserializeRevisionCollection(JsonElement element)
         {
-            IReadOnlyList<RevisionData> value = default;
+            IReadOnlyList<ContainerAppRevisionData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<RevisionData> array = new List<RevisionData>();
+                    List<ContainerAppRevisionData> array = new List<ContainerAppRevisionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RevisionData.DeserializeRevisionData(item));
+                        array.Add(ContainerAppRevisionData.DeserializeContainerAppRevisionData(item));
                     }
                     value = array;
                     continue;

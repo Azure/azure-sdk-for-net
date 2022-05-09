@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <summary> Initializes a new instance of DaprComponentData. </summary>
         public DaprComponentData()
         {
-            Secrets = new ChangeTrackingList<Secret>();
+            Secrets = new ChangeTrackingList<AppSecret>();
             Metadata = new ChangeTrackingList<DaprMetadata>();
             Scopes = new ChangeTrackingList<string>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="secrets"> Collection of secrets used by a Dapr component. </param>
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
-        internal DaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<Secret> secrets, IList<DaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
+        internal DaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<AppSecret> secrets, IList<DaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <summary> Initialization timeout. </summary>
         public string InitTimeout { get; set; }
         /// <summary> Collection of secrets used by a Dapr component. </summary>
-        public IList<Secret> Secrets { get; }
+        public IList<AppSecret> Secrets { get; }
         /// <summary> Component metadata. </summary>
         public IList<DaprMetadata> Metadata { get; }
         /// <summary> Names of container apps that can use this Dapr component. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Initializes a new instance of RevisionCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RevisionCollection(IEnumerable<RevisionData> value)
+        internal RevisionCollection(IEnumerable<ContainerAppRevisionData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Initializes a new instance of RevisionCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal RevisionCollection(IReadOnlyList<RevisionData> value, string nextLink)
+        internal RevisionCollection(IReadOnlyList<ContainerAppRevisionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<RevisionData> Value { get; }
+        public IReadOnlyList<ContainerAppRevisionData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

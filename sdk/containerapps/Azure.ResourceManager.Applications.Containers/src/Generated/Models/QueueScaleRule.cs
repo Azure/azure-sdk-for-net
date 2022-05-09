@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Initializes a new instance of QueueScaleRule. </summary>
         public QueueScaleRule()
         {
-            Auth = new ChangeTrackingList<ScaleRuleAuth>();
+            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of QueueScaleRule. </summary>
         /// <param name="queueName"> Queue name. </param>
         /// <param name="queueLength"> Queue length. </param>
         /// <param name="auth"> Authentication secrets for the queue scale rule. </param>
-        internal QueueScaleRule(string queueName, int? queueLength, IList<ScaleRuleAuth> auth)
+        internal QueueScaleRule(string queueName, int? queueLength, IList<ContainerAppScaleRuleAuth> auth)
         {
             QueueName = queueName;
             QueueLength = queueLength;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Queue length. </summary>
         public int? QueueLength { get; set; }
         /// <summary> Authentication secrets for the queue scale rule. </summary>
-        public IList<ScaleRuleAuth> Auth { get; }
+        public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

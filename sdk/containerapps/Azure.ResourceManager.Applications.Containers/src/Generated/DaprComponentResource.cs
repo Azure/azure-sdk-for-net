@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: DaprComponents_ListSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Secret" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Secret> GetSecretsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppSecret" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Secret>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppSecret>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _daprComponentClientDiagnostics.CreateScope("DaprComponentResource.GetSecrets");
                 scope.Start();
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.Applications.Containers
         /// Operation Id: DaprComponents_ListSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Secret" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Secret> GetSecrets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppSecret" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
-            Page<Secret> FirstPageFunc(int? pageSizeHint)
+            Page<AppSecret> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _daprComponentClientDiagnostics.CreateScope("DaprComponentResource.GetSecrets");
                 scope.Start();

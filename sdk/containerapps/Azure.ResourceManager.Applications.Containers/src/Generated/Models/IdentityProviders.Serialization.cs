@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         internal static IdentityProviders DeserializeIdentityProviders(JsonElement element)
         {
             Optional<AzureActiveDirectory> azureActiveDirectory = default;
-            Optional<Facebook> facebook = default;
-            Optional<GitHub> gitHub = default;
-            Optional<Google> google = default;
-            Optional<Twitter> twitter = default;
-            Optional<Apple> apple = default;
+            Optional<FacebookProvider> facebook = default;
+            Optional<GitHubProvider> gitHub = default;
+            Optional<GoogleProvider> google = default;
+            Optional<TwitterProvider> twitter = default;
+            Optional<AppleProvider> apple = default;
             Optional<AzureStaticWebApps> azureStaticWebApps = default;
             Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    facebook = Facebook.DeserializeFacebook(property.Value);
+                    facebook = FacebookProvider.DeserializeFacebookProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHub"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gitHub = GitHub.DeserializeGitHub(property.Value);
+                    gitHub = GitHubProvider.DeserializeGitHubProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("google"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    google = Google.DeserializeGoogle(property.Value);
+                    google = GoogleProvider.DeserializeGoogleProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("twitter"))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    twitter = Twitter.DeserializeTwitter(property.Value);
+                    twitter = TwitterProvider.DeserializeTwitterProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apple"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    apple = Apple.DeserializeApple(property.Value);
+                    apple = AppleProvider.DeserializeAppleProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"))

@@ -36,8 +36,42 @@ rename-rules:
   SSO: Sso
   URI: Uri
 directive:
+  - from: AuthConfigs.json
+    where: '$.definitions'
+    transform: >
+      $.Login['x-ms-client-name'] = 'ContainerAppLogin';
+      $.Nonce['x-ms-client-name'] = 'LoginNonce';
+      $.Facebook['x-ms-client-name'] = 'FacebookProvider';
+      $.GitHub['x-ms-client-name'] = 'GitHubProvider';
+      $.Google['x-ms-client-name'] = 'GoogleProvider';
+      $.Twitter['x-ms-client-name'] = 'TwitterProvider';
+      $.Apple['x-ms-client-name'] = 'AppleProvider';
   - from: CommonDefinitions.json
     where: '$.definitions'
     transform: >
       $.ContainerAppProbe.properties.type['x-ms-client-name'] = 'ProbeType';
+      $.Container['x-ms-client-name'] = 'ContainerAppContainer';
+      $.Scale['x-ms-client-name'] = 'ContainerAppScale';
+      $.ScaleRule['x-ms-client-name'] = 'ContainerAppScaleRule';
+      $.ScaleRuleAuth['x-ms-client-name'] = 'ContainerAppScaleRuleAuth';
+      $.Secret['x-ms-client-name'] = 'AppSecret';
+      $.Template['x-ms-client-name'] = 'ContainerAppTemplate';
+      $.Volume['x-ms-client-name'] = 'ContainerAppVolume';
+      $.VolumeMount['x-ms-client-name'] = 'ContainerAppVolumeMount';
+  - from: ContainerApps.json
+    where: '$.definitions'
+    transform: >
+      $.Configuration['x-ms-client-name'] = 'ContainerAppConfiguration';
+      $.Dapr['x-ms-client-name'] = 'DaprProvider';
+      $.Ingress['x-ms-client-name'] = 'IngressProvider';
+  - from: ContainerAppsRevisions.json
+    where: '$.definitions'
+    transform: >
+      $.Revision['x-ms-client-name'] = 'ContainerAppRevision';
+      $.Replica['x-ms-client-name'] = 'ContainerAppReplica';
+  - from: ManagedEnvironments.json
+    where: '$.definitions'
+    transform: >
+      $.Certificate['x-ms-client-name'] = 'ContainerAppCertificate';
+
 ```

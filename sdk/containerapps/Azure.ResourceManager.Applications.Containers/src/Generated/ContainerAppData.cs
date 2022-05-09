@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="configuration"> Non versioned Container App configuration properties. </param>
         /// <param name="template"> Container App versioned application definition. </param>
         /// <param name="outboundIPAddresses"> Outbound IP Addresses for container app. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, string managedEnvironmentId, string latestRevisionName, string latestRevisionFqdn, string customDomainVerificationId, Configuration configuration, Template template, IReadOnlyList<string> outboundIPAddresses) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, string managedEnvironmentId, string latestRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<string> outboundIPAddresses) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <summary> Id used to verify domain name ownership. </summary>
         public string CustomDomainVerificationId { get; }
         /// <summary> Non versioned Container App configuration properties. </summary>
-        public Configuration Configuration { get; set; }
+        public ContainerAppConfiguration Configuration { get; set; }
         /// <summary> Container App versioned application definition. </summary>
-        public Template Template { get; set; }
+        public ContainerAppTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses for container app. </summary>
         public IReadOnlyList<string> OutboundIPAddresses { get; }
     }

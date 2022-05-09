@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         {
             Optional<string> type = default;
             Optional<IDictionary<string, string>> metadata = default;
-            Optional<IList<ScaleRuleAuth>> auth = default;
+            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScaleRuleAuth> array = new List<ScaleRuleAuth>();
+                    List<ContainerAppScaleRuleAuth> array = new List<ContainerAppScaleRuleAuth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScaleRuleAuth.DeserializeScaleRuleAuth(item));
+                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item));
                     }
                     auth = array;
                     continue;

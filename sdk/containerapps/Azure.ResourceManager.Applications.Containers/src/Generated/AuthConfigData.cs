@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </param>
         /// <param name="login"> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </param>
-        internal AuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, Login login, HttpSettings httpSettings) : base(id, name, resourceType, systemData)
+        internal AuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, ContainerAppLogin login, HttpSettings httpSettings) : base(id, name, resourceType, systemData)
         {
             Platform = platform;
             GlobalValidation = globalValidation;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
         public IdentityProviders IdentityProviders { get; set; }
         /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
-        public Login Login { get; set; }
+        public ContainerAppLogin Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
         public HttpSettings HttpSettings { get; set; }
     }

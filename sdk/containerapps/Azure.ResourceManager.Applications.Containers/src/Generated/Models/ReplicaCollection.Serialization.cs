@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     {
         internal static ReplicaCollection DeserializeReplicaCollection(JsonElement element)
         {
-            IReadOnlyList<ReplicaData> value = default;
+            IReadOnlyList<ContainerAppReplicaData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ReplicaData> array = new List<ReplicaData>();
+                    List<ContainerAppReplicaData> array = new List<ContainerAppReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaData.DeserializeReplicaData(item));
+                        array.Add(ContainerAppReplicaData.DeserializeContainerAppReplicaData(item));
                     }
                     value = array;
                     continue;

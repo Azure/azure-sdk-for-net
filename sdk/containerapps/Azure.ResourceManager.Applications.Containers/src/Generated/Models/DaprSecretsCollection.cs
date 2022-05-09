@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DaprSecretsCollection(IEnumerable<Secret> value)
+        internal DaprSecretsCollection(IEnumerable<AppSecret> value)
         {
             if (value == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
 
         /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
-        internal DaprSecretsCollection(IReadOnlyList<Secret> value)
+        internal DaprSecretsCollection(IReadOnlyList<AppSecret> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of secrets used by a Dapr component. </summary>
-        public IReadOnlyList<Secret> Value { get; }
+        public IReadOnlyList<AppSecret> Value { get; }
     }
 }

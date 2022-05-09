@@ -206,39 +206,39 @@ namespace Azure.ResourceManager.Applications.Containers
         }
         #endregion
 
-        #region RevisionResource
+        #region ContainerAppRevisionResource
         /// <summary>
-        /// Gets an object representing a <see cref="RevisionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RevisionResource.CreateResourceIdentifier" /> to create a <see cref="RevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppRevisionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RevisionResource" /> object. </returns>
-        public static RevisionResource GetRevisionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppRevisionResource" /> object. </returns>
+        public static ContainerAppRevisionResource GetContainerAppRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RevisionResource.ValidateResourceId(id);
-                return new RevisionResource(client, id);
+                ContainerAppRevisionResource.ValidateResourceId(id);
+                return new ContainerAppRevisionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ReplicaResource
+        #region ContainerAppReplicaResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ReplicaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppReplicaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppReplicaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicaResource" /> object. </returns>
-        public static ReplicaResource GetReplicaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppReplicaResource" /> object. </returns>
+        public static ContainerAppReplicaResource GetContainerAppReplicaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicaResource.ValidateResourceId(id);
-                return new ReplicaResource(client, id);
+                ContainerAppReplicaResource.ValidateResourceId(id);
+                return new ContainerAppReplicaResource(client, id);
             }
             );
         }
@@ -282,20 +282,20 @@ namespace Azure.ResourceManager.Applications.Containers
         }
         #endregion
 
-        #region CertificateResource
+        #region ContainerAppCertificateResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContainerAppCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerAppCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateResource" /> object. </returns>
-        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppCertificateResource" /> object. </returns>
+        public static ContainerAppCertificateResource GetContainerAppCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateResource.ValidateResourceId(id);
-                return new CertificateResource(client, id);
+                ContainerAppCertificateResource.ValidateResourceId(id);
+                return new ContainerAppCertificateResource(client, id);
             }
             );
         }

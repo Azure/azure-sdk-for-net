@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
         /// </param>
-        internal IdentityProviders(AzureActiveDirectory azureActiveDirectory, Facebook facebook, GitHub gitHub, Google google, Twitter twitter, Apple apple, AzureStaticWebApps azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders)
+        internal IdentityProviders(AzureActiveDirectory azureActiveDirectory, FacebookProvider facebook, GitHubProvider gitHub, GoogleProvider google, TwitterProvider twitter, AppleProvider apple, AzureStaticWebApps azureStaticWebApps, IDictionary<string, CustomOpenIdConnectProvider> customOpenIdConnectProviders)
         {
             AzureActiveDirectory = azureActiveDirectory;
             Facebook = facebook;
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> The configuration settings of the Azure Active directory provider. </summary>
         public AzureActiveDirectory AzureActiveDirectory { get; set; }
         /// <summary> The configuration settings of the Facebook provider. </summary>
-        public Facebook Facebook { get; set; }
+        public FacebookProvider Facebook { get; set; }
         /// <summary> The configuration settings of the GitHub provider. </summary>
-        public GitHub GitHub { get; set; }
+        public GitHubProvider GitHub { get; set; }
         /// <summary> The configuration settings of the Google provider. </summary>
-        public Google Google { get; set; }
+        public GoogleProvider Google { get; set; }
         /// <summary> The configuration settings of the Twitter provider. </summary>
-        public Twitter Twitter { get; set; }
+        public TwitterProvider Twitter { get; set; }
         /// <summary> The configuration settings of the Apple provider. </summary>
-        public Apple Apple { get; set; }
+        public AppleProvider Apple { get; set; }
         /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
         public AzureStaticWebApps AzureStaticWebApps { get; set; }
         /// <summary>
