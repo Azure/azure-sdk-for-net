@@ -29,7 +29,11 @@ namespace Azure.Storage.Files.Shares.Tests
             ClientBuilder = ClientBuilderExtensions.GetNewShareClientBuilder(Tenants, serviceVersion);
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default)
             => await ClientBuilder.GetTestShareAsync(service: service, shareName: containerName);
 
         protected override async Task<ShareFileClient> GetResourceClientAsync(
@@ -37,9 +41,15 @@ namespace Azure.Storage.Files.Shares.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
             ShareClientOptions options = null)
         {
-            container = InstrumentClient(new ShareClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
+            options ??= ClientBuilder.GetOptions();
+            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
+            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+
+            container = InstrumentClient(new ShareClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
             var file = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(resourceName ?? GetNewResourceName()));
             if (createResource)
             {

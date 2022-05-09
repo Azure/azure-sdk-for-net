@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    validationOptions: _validationOptions,
+                    validationOptionsOverride: _validationOptions,
                     leaseId: _conditions.LeaseId,
                     progressHandler: _progressHandler,
                     async: async,

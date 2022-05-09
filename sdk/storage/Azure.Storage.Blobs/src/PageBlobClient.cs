@@ -1347,7 +1347,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// to be written as a page.  Given that pages must be aligned with
         /// 512-byte boundaries, the start offset must be a modulus of 512.
         /// </param>
-        /// <param name="validationOptions">
+        /// <param name="validationOptionsOverride">
         /// Optional transfer validation options for uploading the page range.
         /// </param>
         /// <param name="conditions">
@@ -1374,12 +1374,14 @@ namespace Azure.Storage.Blobs.Specialized
         internal async Task<Response<PageInfo>> UploadPagesInternal(
             Stream content,
             long offset,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions validationOptionsOverride,
             PageBlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(

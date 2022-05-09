@@ -33,8 +33,17 @@ namespace Azure.Storage.Blobs.Tests
 
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetDisposingContainerAsync(
             BlobServiceClient service = null,
-            string containerName = null)
-            => await ClientBuilder.GetTestContainerAsync(service: service, containerName: containerName);
+            string containerName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default)
+        {
+            var disposingContainer = await ClientBuilder.GetTestContainerAsync(service: service, containerName: containerName);
+
+            disposingContainer.Container.ClientConfiguration.UploadTransferValidationOptions = uploadTransferValidationOptions;
+            disposingContainer.Container.ClientConfiguration.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+
+            return disposingContainer;
+        }
 
         protected override async Task<Response> DownloadPartitionAsync(
             TBlobClient client,

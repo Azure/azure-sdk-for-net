@@ -29,17 +29,32 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         protected override async Task<IDisposingContainer<DataLakeFileSystemClient>> GetDisposingContainerAsync(
             DataLakeServiceClient service = null,
-            string containerName = null)
-            => await ClientBuilder.GetNewFileSystem(service: service, fileSystemName: containerName);
+            string containerName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default)
+        {
+            var disposingFileSystem = await ClientBuilder.GetNewFileSystem(service: service, fileSystemName: containerName);
+
+            disposingFileSystem.FileSystem.ClientConfiguration.UploadTransferValidationOptions = uploadTransferValidationOptions;
+            disposingFileSystem.FileSystem.ClientConfiguration.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+
+            return disposingFileSystem;
+        }
 
         protected override async Task<DataLakeFileClient> GetResourceClientAsync(
             DataLakeFileSystemClient container,
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
             DataLakeClientOptions options = null)
         {
-            container = InstrumentClient(new DataLakeFileSystemClient(container.Uri, Tenants.GetNewHnsSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
+            options ??= ClientBuilder.GetOptions();
+            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
+            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+
+            container = InstrumentClient(new DataLakeFileSystemClient(container.Uri, Tenants.GetNewHnsSharedKeyCredentials(), options));
             var file = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(resourceName ?? GetNewResourceName()));
             if (createResource)
             {

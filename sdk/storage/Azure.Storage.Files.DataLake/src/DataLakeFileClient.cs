@@ -1967,7 +1967,7 @@ namespace Azure.Storage.Files.DataLake
         /// To flush, the previously uploaded data must be contiguous, the position parameter must be specified and equal to the length
         /// of the file after all data has been written, and there must not be a request entity body included with the request.
         /// </param>
-        /// <param name="validationOptions">
+        /// <param name="validationOptionsOverride">
         /// Optional settings for transfer validation.
         /// </param>
         /// <param name="leaseId">
@@ -1994,12 +1994,14 @@ namespace Azure.Storage.Files.DataLake
         internal virtual async Task<Response> AppendInternal(
             Stream content,
             long? offset,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions validationOptionsOverride,
             string leaseId,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler

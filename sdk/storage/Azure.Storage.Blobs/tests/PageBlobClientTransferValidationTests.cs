@@ -23,8 +23,14 @@ namespace Azure.Storage.Blobs.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
             BlobClientOptions options = null)
         {
+            options ??= ClientBuilder.GetOptions();
+            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
+            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+
             container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
             var pageBlob = InstrumentClient(container.GetPageBlobClient(resourceName ?? GetNewResourceName()));
             if (createResource)

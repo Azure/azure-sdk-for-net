@@ -23,14 +23,21 @@ namespace Azure.Storage.Blobs.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
             BlobClientOptions options = null)
         {
-            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options ?? ClientBuilder.GetOptions()));
+            options ??= ClientBuilder.GetOptions();
+            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
+            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+
+            container = InstrumentClient(new BlobContainerClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
             var appendBlob = InstrumentClient(container.GetAppendBlobClient(resourceName ?? GetNewResourceName()));
             if (createResource)
             {
                 await appendBlob.CreateAsync();
             }
+
             return appendBlob;
         }
 

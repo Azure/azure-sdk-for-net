@@ -13,16 +13,24 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
+        public virtual UploadTransferValidationOptions UploadTransferValidationOptions { get; internal set; }
+
+        public virtual DownloadTransferValidationOptions DownloadTransferValidationOptions { get; internal set; }
+
         public DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions.ServiceVersion version,
-            DataLakeCustomerProvidedKey? customerProvidedKey)
+            DataLakeCustomerProvidedKey? customerProvidedKey,
+            UploadTransferValidationOptions uploadTransferValidationOptions,
+            DownloadTransferValidationOptions downloadTransferValidationOptions)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
+            UploadTransferValidationOptions = uploadTransferValidationOptions;
+            DownloadTransferValidationOptions = downloadTransferValidationOptions;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
@@ -31,6 +39,8 @@ namespace Azure.Storage.Files.DataLake
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
-                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
+                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
+                uploadTransferValidationOptions: originalClientConfiguration.UploadTransferValidationOptions,
+                downloadTransferValidationOptions: originalClientConfiguration.DownloadTransferValidationOptions);
     }
 }

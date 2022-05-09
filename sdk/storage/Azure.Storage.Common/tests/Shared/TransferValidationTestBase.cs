@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Record)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -42,9 +42,13 @@ namespace Azure.Storage.Test.Shared
         /// </summary>
         /// <param name="service">Optionally specified service client to get container from.</param>
         /// <param name="containerName">Optional container name specification.</param>
+        /// <param name="clientUploadTransferOptions">Default upload transfer validation options to set on the client.</param>
+        /// <param name="clientDownloadTransferOptions">Default download transfer validation options to set on the client.</param>
         protected abstract Task<IDisposingContainer<TContainerClient>> GetDisposingContainerAsync(
             TServiceClient service = default,
-            string containerName = default);
+            string containerName = default,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default);
 
         /// <summary>
         /// Gets a new service-specific resource client from a given container, e.g. a BlobClient from a
@@ -54,12 +58,16 @@ namespace Azure.Storage.Test.Shared
         /// <param name="resourceLength">Sets the resource size in bytes, for resources that require this upfront.</param>
         /// <param name="createResource">Whether to call CreateAsync on the resource, if necessary.</param>
         /// <param name="resourceName">Optional name for the resource.</param>
+        /// <param name="uploadTransferValidationOptions">Default upload transfer validation options to set on the client.</param>
+        /// <param name="downloadTransferValidationOptions">Default download transfer validation options to set on the client.</param>
         /// <param name="options">ClientOptions for the resource client.</param>
         protected abstract Task<TResourceClient> GetResourceClientAsync(
             TContainerClient container,
             int resourceLength = default,
             bool createResource = default,
             string resourceName = default,
+            UploadTransferValidationOptions uploadTransferValidationOptions = default,
+            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
             TClientOptions options = default);
 
         /// <summary>
@@ -432,6 +440,137 @@ namespace Azure.Storage.Test.Shared
                 AssertWriteChecksumMismatch(operation, algorithm);
             }
         }
+
+        [Test]
+        public virtual async Task UploadPartitionUsesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(clientAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await UploadPartitionAsync(client, stream, validationOptions: null);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        [Combinatorial]
+        public virtual async Task UploadPartitionOverwritesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = overrideAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(overrideAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await UploadPartitionAsync(client, stream, overrideValidationOptions);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        public virtual async Task UploadPartitionDisablesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = ValidationAlgorithm.None // disable
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: request =>
+            {
+                if (request.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await UploadPartitionAsync(client, stream, overrideValidationOptions);
+            }
+
+            // Assert
+            // Assertion was in the pipeline
+        }
         #endregion
 
         #region OpenWrite Tests
@@ -800,6 +939,7 @@ namespace Azure.Storage.Test.Shared
         }
         #endregion
 
+        #region Auto-Algorithm Tests
         [Test]
         public void TestDefaults()
         {
@@ -852,7 +992,9 @@ namespace Azure.Storage.Test.Shared
             // Assert
             // Assertion was in the pipeline and the service returning success means the checksum was correct
         }
+        #endregion
 
+        #region Nunit ResultStateException Handlers
         /// <summary>
         /// Replicates <c>ThrowsOrInconclusiveAsync&lt;<typeparamref name="TException"/>&gt;</c> while allowing
         /// NUnit <see cref="ResultStateException"/>s to bubble up to the test framework.
@@ -887,5 +1029,6 @@ namespace Azure.Storage.Test.Shared
                 Assert.Fail($"Expected: No Exception to be thrown\nBut was: {e}");
             }
         }
+        #endregion
     }
 }

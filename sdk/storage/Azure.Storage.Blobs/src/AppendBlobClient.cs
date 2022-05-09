@@ -1193,7 +1193,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="Stream"/> containing the content of the block to
         /// append.
         /// </param>
-        /// <param name="validationOptions">
+        /// <param name="validationOptionsOverride">
         /// Validation options for content verification.
         /// </param>
         /// <param name="conditions">
@@ -1219,12 +1219,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response<BlobAppendInfo>> AppendBlockInternal(
             Stream content,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions validationOptionsOverride,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
                 Argument.AssertNotNull(content, nameof(content));
