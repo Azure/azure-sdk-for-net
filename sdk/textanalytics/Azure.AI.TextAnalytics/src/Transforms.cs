@@ -12,16 +12,6 @@ namespace Azure.AI.TextAnalytics
 {
     internal static partial class Transforms
     {
-        #region Needs Review
-
-        //
-        // REGION: Common
-        //
-        internal static TextAnalyticsError ConvertToError(TextAnalyticsErrorInternal error) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
-        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<TextAnalyticsErrorInternal> internalErrors) => throw new NotImplementedException("I think the TextAnalyticsInternalType is no longer used.");
-
-        #endregion
-
         #region Common
 
         public static readonly Regex _targetRegex = new Regex("#/tasks/(keyPhraseExtractionTasks|entityRecognitionPiiTasks|entityRecognitionTasks|entityLinkingTasks|sentimentAnalysisTasks|extractiveSummarizationTasks|customSingleClassificationTasks|customMultiClassificationTasks|customEntityRecognitionTasks)/(\\d+)", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
@@ -33,6 +23,17 @@ namespace Azure.AI.TextAnalytics
             return (innerError != null)
                 ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
                 : new TextAnalyticsError(error.Code.ToString(), error.Message, error.Target);
+        }
+
+        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<Error> internalErrors)
+        {
+            List<TextAnalyticsError> textAnalyticsErrors = new List<TextAnalyticsError>(internalErrors.Count);
+            foreach (var error in internalErrors)
+            {
+                textAnalyticsErrors.Add(Transforms.ConvertToError(error));
+            }
+
+            return textAnalyticsErrors;
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<TextAnalyticsWarningInternal> internalWarnings)
@@ -105,25 +106,23 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeSentimentResultCollection ConvertToAnalyzeSentimentResultCollection(SentimentResponse results, IDictionary<string, int> idToIndexMap)
         {
-            //var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Errors.Count);
+            var analyzedSentiments = new List<AnalyzeSentimentResult>(results.Documents.Count);
 
-            ////Read errors
-            //foreach (DocumentError error in results.Errors)
-            //{
-            //    analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
-            //}
+            //Read errors
+            foreach (DocumentError error in results.Errors)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(error.Id, ConvertToError(error.Error)));
+            }
 
-            ////Read sentiments
-            //foreach (DocumentSentimentInternal docSentiment in results.Documents)
-            //{
-            //    analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
-            //}
+            //Read sentiments
+            foreach (var docSentiment in results.Documents)
+            {
+                analyzedSentiments.Add(new AnalyzeSentimentResult(docSentiment.Id, docSentiment.Statistics ?? default, new DocumentSentiment(docSentiment)));
+            }
 
-            //analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
+            analyzedSentiments = SortHeterogeneousCollection(analyzedSentiments, idToIndexMap);
 
-            //return new AnalyzeSentimentResultCollection(analyzedSentiments, results.Statistics, results.ModelVersion);
-
-            throw new NotImplementedException();
+            return new AnalyzeSentimentResultCollection(analyzedSentiments, results.Statistics, results.ModelVersion);
         }
 
         #endregion

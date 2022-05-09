@@ -974,7 +974,7 @@ namespace Azure.AI.TextAnalytics
     }
     public partial class TextAnalyticsClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V2022_03_01_Preview) { }
+        public TextAnalyticsClientOptions(Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion version = Azure.AI.TextAnalytics.TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview) { }
         public Azure.AI.TextAnalytics.TextAnalyticsAudience? Audience { get { throw null; } set { } }
         public string DefaultCountryHint { get { throw null; } set { } }
         public string DefaultLanguage { get { throw null; } set { } }
@@ -983,7 +983,7 @@ namespace Azure.AI.TextAnalytics
             V3_0 = 1,
             V3_1 = 2,
             V3_2_Preview_2 = 3,
-            V2022_03_01_Preview = 4,
+            V2022_04_01_Preview = 4,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1248,6 +1248,26 @@ namespace Azure.AI.TextAnalytics
         Neutral = 1,
         Negative = 2,
         Mixed = 3,
+    }
+}
+namespace Azure.AI.TextAnalytics.Models
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthcareTaskParametersFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthcareTaskParametersFhirVersion(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion Four01 { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion left, Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion left, Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
