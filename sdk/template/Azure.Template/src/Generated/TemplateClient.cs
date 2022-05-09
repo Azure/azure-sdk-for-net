@@ -44,7 +44,7 @@ namespace Azure.Template
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TemplateClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _vaultBaseUrl = vaultBaseUrl;
