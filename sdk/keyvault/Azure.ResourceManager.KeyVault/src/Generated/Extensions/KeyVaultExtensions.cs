@@ -436,20 +436,20 @@ namespace Azure.ResourceManager.KeyVault
         }
         #endregion
 
-        #region MhsmPrivateEndpointConnectionResource
+        #region ManagedHsmPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MhsmPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MhsmPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MhsmPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedHsmPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedHsmPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHsmPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MhsmPrivateEndpointConnectionResource" /> object. </returns>
-        public static MhsmPrivateEndpointConnectionResource GetMhsmPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedHsmPrivateEndpointConnectionResource" /> object. </returns>
+        public static ManagedHsmPrivateEndpointConnectionResource GetManagedHsmPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MhsmPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MhsmPrivateEndpointConnectionResource(client, id);
+                ManagedHsmPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new ManagedHsmPrivateEndpointConnectionResource(client, id);
             }
             );
         }

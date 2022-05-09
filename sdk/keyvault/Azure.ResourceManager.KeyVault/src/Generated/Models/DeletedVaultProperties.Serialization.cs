@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedVaultProperties DeserializeDeletedVaultProperties(JsonElement element)
         {
-            Optional<string> vaultId = default;
+            Optional<ResourceIdentifier> vaultId = default;
             Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("vaultId"))
                 {
-                    vaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> An object that represents the approval state of the private link connection. </summary>
-    public partial class MhsmPrivateLinkServiceConnectionState
+    public partial class ManagedHsmPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of MhsmPrivateLinkServiceConnectionState. </summary>
-        public MhsmPrivateLinkServiceConnectionState()
+        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkServiceConnectionState. </summary>
+        public ManagedHsmPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of MhsmPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal MhsmPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, ActionsRequired? actionsRequired)
+        internal ManagedHsmPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status, string description, ActionsRequired? actionsRequired)
         {
             Status = status;
             Description = description;

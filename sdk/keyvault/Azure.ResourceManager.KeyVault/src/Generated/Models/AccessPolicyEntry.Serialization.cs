@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Guid tenantId = default;
             string objectId = default;
             Optional<Guid> applicationId = default;
-            AccessPermissions permissions = default;
+            IdentityAccessPermissions permissions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (property.NameEquals("permissions"))
                 {
-                    permissions = AccessPermissions.DeserializeAccessPermissions(property.Value);
+                    permissions = IdentityAccessPermissions.DeserializeIdentityAccessPermissions(property.Value);
                     continue;
                 }
             }

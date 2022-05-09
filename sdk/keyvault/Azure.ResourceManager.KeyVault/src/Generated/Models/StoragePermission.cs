@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string DeleteValue = "delete";
         private const string SetValue = "set";
         private const string UpdateValue = "update";
-        private const string RegeneratekeyValue = "regeneratekey";
+        private const string RegenerateKeyValue = "regeneratekey";
         private const string RecoverValue = "recover";
         private const string PurgeValue = "purge";
         private const string BackupValue = "backup";
         private const string RestoreValue = "restore";
-        private const string SetsasValue = "setsas";
-        private const string ListsasValue = "listsas";
-        private const string GetsasValue = "getsas";
-        private const string DeletesasValue = "deletesas";
+        private const string SetSasValue = "setsas";
+        private const string ListSasValue = "listsas";
+        private const string GetSasValue = "getsas";
+        private const string DeleteSasValue = "deletesas";
 
         /// <summary> all. </summary>
         public static StoragePermission All { get; } = new StoragePermission(AllValue);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> update. </summary>
         public static StoragePermission Update { get; } = new StoragePermission(UpdateValue);
         /// <summary> regeneratekey. </summary>
-        public static StoragePermission Regeneratekey { get; } = new StoragePermission(RegeneratekeyValue);
+        public static StoragePermission RegenerateKey { get; } = new StoragePermission(RegenerateKeyValue);
         /// <summary> recover. </summary>
         public static StoragePermission Recover { get; } = new StoragePermission(RecoverValue);
         /// <summary> purge. </summary>
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> restore. </summary>
         public static StoragePermission Restore { get; } = new StoragePermission(RestoreValue);
         /// <summary> setsas. </summary>
-        public static StoragePermission Setsas { get; } = new StoragePermission(SetsasValue);
+        public static StoragePermission SetSas { get; } = new StoragePermission(SetSasValue);
         /// <summary> listsas. </summary>
-        public static StoragePermission Listsas { get; } = new StoragePermission(ListsasValue);
+        public static StoragePermission ListSas { get; } = new StoragePermission(ListSasValue);
         /// <summary> getsas. </summary>
-        public static StoragePermission Getsas { get; } = new StoragePermission(GetsasValue);
+        public static StoragePermission GetSas { get; } = new StoragePermission(GetSasValue);
         /// <summary> deletesas. </summary>
-        public static StoragePermission Deletesas { get; } = new StoragePermission(DeletesasValue);
+        public static StoragePermission DeleteSas { get; } = new StoragePermission(DeleteSasValue);
         /// <summary> Determines if two <see cref="StoragePermission"/> values are the same. </summary>
         public static bool operator ==(StoragePermission left, StoragePermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StoragePermission"/> values are not the same. </summary>

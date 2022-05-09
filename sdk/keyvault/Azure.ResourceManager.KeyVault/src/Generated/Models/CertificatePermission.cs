@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string CreateValue = "create";
         private const string ImportValue = "import";
         private const string UpdateValue = "update";
-        private const string ManagecontactsValue = "managecontacts";
-        private const string GetissuersValue = "getissuers";
+        private const string ManageContactsValue = "managecontacts";
+        private const string GetIssuersValue = "getissuers";
         private const string ListissuersValue = "listissuers";
-        private const string SetissuersValue = "setissuers";
-        private const string DeleteissuersValue = "deleteissuers";
-        private const string ManageissuersValue = "manageissuers";
+        private const string SetIssuersValue = "setissuers";
+        private const string DeleteIssuersValue = "deleteissuers";
+        private const string ManageIssuersValue = "manageissuers";
         private const string RecoverValue = "recover";
         private const string PurgeValue = "purge";
         private const string BackupValue = "backup";
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> update. </summary>
         public static CertificatePermission Update { get; } = new CertificatePermission(UpdateValue);
         /// <summary> managecontacts. </summary>
-        public static CertificatePermission Managecontacts { get; } = new CertificatePermission(ManagecontactsValue);
+        public static CertificatePermission ManageContacts { get; } = new CertificatePermission(ManageContactsValue);
         /// <summary> getissuers. </summary>
-        public static CertificatePermission Getissuers { get; } = new CertificatePermission(GetissuersValue);
+        public static CertificatePermission GetIssuers { get; } = new CertificatePermission(GetIssuersValue);
         /// <summary> listissuers. </summary>
         public static CertificatePermission Listissuers { get; } = new CertificatePermission(ListissuersValue);
         /// <summary> setissuers. </summary>
-        public static CertificatePermission Setissuers { get; } = new CertificatePermission(SetissuersValue);
+        public static CertificatePermission SetIssuers { get; } = new CertificatePermission(SetIssuersValue);
         /// <summary> deleteissuers. </summary>
-        public static CertificatePermission Deleteissuers { get; } = new CertificatePermission(DeleteissuersValue);
+        public static CertificatePermission DeleteIssuers { get; } = new CertificatePermission(DeleteIssuersValue);
         /// <summary> manageissuers. </summary>
-        public static CertificatePermission Manageissuers { get; } = new CertificatePermission(ManageissuersValue);
+        public static CertificatePermission ManageIssuers { get; } = new CertificatePermission(ManageIssuersValue);
         /// <summary> recover. </summary>
         public static CertificatePermission Recover { get; } = new CertificatePermission(RecoverValue);
         /// <summary> purge. </summary>

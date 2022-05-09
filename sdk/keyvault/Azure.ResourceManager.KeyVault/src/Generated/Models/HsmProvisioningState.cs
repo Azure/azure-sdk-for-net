@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Provisioning state. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct HsmProvisioningState : IEquatable<HsmProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HsmProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public HsmProvisioningState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -32,33 +32,33 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string RestoringValue = "Restoring";
 
         /// <summary> The managed HSM Pool has been full provisioned. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static HsmProvisioningState Succeeded { get; } = new HsmProvisioningState(SucceededValue);
         /// <summary> The managed HSM Pool is currently being provisioned. </summary>
-        public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+        public static HsmProvisioningState Provisioning { get; } = new HsmProvisioningState(ProvisioningValue);
         /// <summary> Provisioning of the managed HSM Pool has failed. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static HsmProvisioningState Failed { get; } = new HsmProvisioningState(FailedValue);
         /// <summary> The managed HSM Pool is currently being updated. </summary>
-        public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        public static HsmProvisioningState Updating { get; } = new HsmProvisioningState(UpdatingValue);
         /// <summary> The managed HSM Pool is currently being deleted. </summary>
-        public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+        public static HsmProvisioningState Deleting { get; } = new HsmProvisioningState(DeletingValue);
         /// <summary> The managed HSM pool is ready for normal use. </summary>
-        public static ProvisioningState Activated { get; } = new ProvisioningState(ActivatedValue);
+        public static HsmProvisioningState Activated { get; } = new HsmProvisioningState(ActivatedValue);
         /// <summary> The managed HSM pool is waiting for a security domain restore action. </summary>
-        public static ProvisioningState SecurityDomainRestore { get; } = new ProvisioningState(SecurityDomainRestoreValue);
+        public static HsmProvisioningState SecurityDomainRestore { get; } = new HsmProvisioningState(SecurityDomainRestoreValue);
         /// <summary> The managed HSM pool is being restored from full HSM backup. </summary>
-        public static ProvisioningState Restoring { get; } = new ProvisioningState(RestoringValue);
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static HsmProvisioningState Restoring { get; } = new HsmProvisioningState(RestoringValue);
+        /// <summary> Determines if two <see cref="HsmProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(HsmProvisioningState left, HsmProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="HsmProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(HsmProvisioningState left, HsmProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="HsmProvisioningState"/>. </summary>
+        public static implicit operator HsmProvisioningState(string value) => new HsmProvisioningState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is HsmProvisioningState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HsmProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

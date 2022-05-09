@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             AccessPolicy.Permissions.Storage.Clear();
             AccessPolicy.Permissions.Storage.Add(StoragePermission.Get);
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.Regeneratekey);
+            AccessPolicy.Permissions.Storage.Add(StoragePermission.RegenerateKey);
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Delete
             await getResult.Value.DeleteAsync(WaitUntil.Completed);
 
-            VaultProperties.CreateMode = CreateMode.Recover;
+            VaultProperties.CreateMode = VaultCreateMode.Recover;
             parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
 
             // Recover in recover mode

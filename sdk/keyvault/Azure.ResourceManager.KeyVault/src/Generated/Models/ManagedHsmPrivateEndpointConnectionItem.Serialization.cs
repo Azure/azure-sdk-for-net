@@ -11,12 +11,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class MhsmPrivateEndpointConnectionItem
+    public partial class ManagedHsmPrivateEndpointConnectionItem
     {
-        internal static MhsmPrivateEndpointConnectionItem DeserializeMhsmPrivateEndpointConnectionItem(JsonElement element)
+        internal static ManagedHsmPrivateEndpointConnectionItem DeserializeManagedHsmPrivateEndpointConnectionItem(JsonElement element)
         {
             Optional<SubResource> privateEndpoint = default;
-            Optional<MhsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MhsmPrivateLinkServiceConnectionState.DeserializeMhsmPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new MhsmPrivateEndpointConnectionItem(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ManagedHsmPrivateEndpointConnectionItem(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

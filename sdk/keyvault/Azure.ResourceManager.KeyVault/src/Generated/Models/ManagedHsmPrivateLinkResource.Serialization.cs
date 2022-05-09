@@ -7,24 +7,16 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class MhsmPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class ManagedHsmPrivateLinkResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag.Value.ToString());
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku");
@@ -42,28 +34,22 @@ namespace Azure.ResourceManager.KeyVault
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
-                writer.WritePropertyName("privateEndpoint");
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
-            }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
-            }
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("requiredZoneNames");
+                writer.WriteStartArray();
+                foreach (var item in RequiredZoneNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static MhsmPrivateEndpointConnectionData DeserializeMhsmPrivateEndpointConnectionData(JsonElement element)
+        internal static ManagedHsmPrivateLinkResource DeserializeManagedHsmPrivateLinkResource(JsonElement element)
         {
-            Optional<ETag> etag = default;
             Optional<ManagedHsmSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -71,21 +57,11 @@ namespace Azure.ResourceManager.KeyVault
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<MhsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("sku"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -140,41 +116,46 @@ namespace Azure.ResourceManager.KeyVault
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("groupId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            groupId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("requiredMembers"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MhsmPrivateLinkServiceConnectionState.DeserializeMhsmPrivateLinkServiceConnectionState(property0.Value);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredMembers = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("requiredZoneNames"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KeyVaultPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredZoneNames = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MhsmPrivateEndpointConnectionData(id, name, type, systemData, tags, location, sku.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ManagedHsmPrivateLinkResource(id, name, type, systemData, tags, location, sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }
