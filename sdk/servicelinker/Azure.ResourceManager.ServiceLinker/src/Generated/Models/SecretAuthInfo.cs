@@ -32,14 +32,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Password or key vault secret for secret auth. </summary>
         internal SecretInfoBase SecretInfo { get; set; }
         /// <summary> The secret type. </summary>
-        internal SecretType SecretType
+        internal SecretType? SecretType
         {
-            get => SecretInfo is null ? default : SecretInfo.SecretType;
+            get => SecretInfo is null ? default(SecretType?) : SecretInfo.SecretType;
             set
             {
-                if (SecretInfo is null)
-                    SecretInfo = new SecretInfoBase();
-                SecretInfo.SecretType = value;
+                if (value.HasValue)
+                {
+                    if (SecretInfo is null)
+                        SecretInfo = new SecretInfoBase();
+                    SecretInfo.SecretType = value.Value;
+                }
+                else
+                {
+                    SecretInfo = null;
+                }
             }
         }
     }

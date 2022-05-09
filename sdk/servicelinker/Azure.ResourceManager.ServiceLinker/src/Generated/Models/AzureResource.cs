@@ -32,14 +32,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The azure resource connection related properties. </summary>
         internal AzureResourcePropertiesBase ResourceProperties { get; set; }
         /// <summary> The azure resource type. </summary>
-        internal AzureResourceType AzureResourceType
+        internal AzureResourceType? AzureResourceType
         {
-            get => ResourceProperties is null ? default : ResourceProperties.AzureResourceType;
+            get => ResourceProperties is null ? default(AzureResourceType?) : ResourceProperties.AzureResourceType;
             set
             {
-                if (ResourceProperties is null)
-                    ResourceProperties = new AzureResourcePropertiesBase();
-                ResourceProperties.AzureResourceType = value;
+                if (value.HasValue)
+                {
+                    if (ResourceProperties is null)
+                        ResourceProperties = new AzureResourcePropertiesBase();
+                    ResourceProperties.AzureResourceType = value.Value;
+                }
+                else
+                {
+                    ResourceProperties = null;
+                }
             }
         }
     }

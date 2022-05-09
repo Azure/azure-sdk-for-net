@@ -18,28 +18,42 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> The target service properties. </summary>
         internal TargetServiceBase TargetService { get; set; }
         /// <summary> The target service type. </summary>
-        internal TargetServiceType ServiceType
+        internal TargetServiceType? ServiceType
         {
-            get => TargetService is null ? default : TargetService.ServiceType;
+            get => TargetService is null ? default(TargetServiceType?) : TargetService.ServiceType;
             set
             {
-                if (TargetService is null)
-                    TargetService = new TargetServiceBase();
-                TargetService.ServiceType = value;
+                if (value.HasValue)
+                {
+                    if (TargetService is null)
+                        TargetService = new TargetServiceBase();
+                    TargetService.ServiceType = value.Value;
+                }
+                else
+                {
+                    TargetService = null;
+                }
             }
         }
 
         /// <summary> The authentication type. </summary>
         internal AuthInfoBase AuthInfo { get; set; }
         /// <summary> The authentication type. </summary>
-        internal AuthType AuthType
+        internal AuthType? AuthType
         {
-            get => AuthInfo is null ? default : AuthInfo.AuthType;
+            get => AuthInfo is null ? default(AuthType?) : AuthInfo.AuthType;
             set
             {
-                if (AuthInfo is null)
-                    AuthInfo = new AuthInfoBase();
-                AuthInfo.AuthType = value;
+                if (value.HasValue)
+                {
+                    if (AuthInfo is null)
+                        AuthInfo = new AuthInfoBase();
+                    AuthInfo.AuthType = value.Value;
+                }
+                else
+                {
+                    AuthInfo = null;
+                }
             }
         }
 
