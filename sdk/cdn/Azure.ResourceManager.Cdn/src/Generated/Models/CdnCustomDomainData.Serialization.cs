@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("hostName");
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(CustomHttpsParameters))
+            if (Optional.IsDefined(CustomDomainHttpsContent))
             {
-                if (CustomHttpsParameters != null)
+                if (CustomDomainHttpsContent != null)
                 {
                     writer.WritePropertyName("customHttpsParameters");
-                    writer.WriteObjectValue(CustomHttpsParameters);
+                    writer.WriteObjectValue(CustomDomainHttpsContent);
                 }
                 else
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> hostName = default;
             Optional<CustomDomainResourceState> resourceState = default;
             Optional<CustomHttpsProvisioningState> customHttpsProvisioningState = default;
-            Optional<CustomHttpsProvisioningSubstate> customHttpsProvisioningSubstate = default;
+            Optional<CustomHttpsAvailabilityState> customHttpsProvisioningSubstate = default;
             Optional<CustomDomainHttpsContent> customHttpsParameters = default;
             Optional<string> validationData = default;
             Optional<string> provisioningState = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customHttpsProvisioningSubstate = new CustomHttpsProvisioningSubstate(property0.Value.GetString());
+                            customHttpsProvisioningSubstate = new CustomHttpsAvailabilityState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("customHttpsParameters"))

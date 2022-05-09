@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleRouteConfigurationOverrideAction DeserializeDeliveryRuleRouteConfigurationOverrideAction(JsonElement element)
         {
-            RouteConfigurationOverrideActionParameters parameters = default;
+            RouteConfigurationOverrideActionDefinition parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = RouteConfigurationOverrideActionParameters.DeserializeRouteConfigurationOverrideActionParameters(property.Value);
+                    parameters = RouteConfigurationOverrideActionDefinition.DeserializeRouteConfigurationOverrideActionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

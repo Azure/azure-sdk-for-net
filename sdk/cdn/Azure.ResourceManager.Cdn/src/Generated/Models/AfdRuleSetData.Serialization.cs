@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<AfdProvisioningState> provisioningState = default;
-            Optional<DeploymentStatus> deploymentStatus = default;
+            Optional<AfdDeploymentStatus> deploymentStatus = default;
             Optional<string> profileName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deploymentStatus = new DeploymentStatus(property0.Value.GetString());
+                            deploymentStatus = new AfdDeploymentStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("profileName"))

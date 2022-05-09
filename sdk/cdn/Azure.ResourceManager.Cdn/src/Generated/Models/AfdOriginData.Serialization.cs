@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureOrigin))
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin");
-                JsonSerializer.Serialize(writer, AzureOrigin);
+                JsonSerializer.Serialize(writer, Origin);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> originGroupName = default;
             Optional<WritableSubResource> azureOrigin = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<EnabledState> enabledState = default;
             Optional<bool> enforceCertificateNameCheck = default;
             Optional<AfdProvisioningState> provisioningState = default;
-            Optional<DeploymentStatus> deploymentStatus = default;
+            Optional<AfdDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deploymentStatus = new DeploymentStatus(property0.Value.GetString());
+                            deploymentStatus = new AfdDeploymentStatus(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureOrigin))
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin");
-                JsonSerializer.Serialize(writer, AzureOrigin);
+                JsonSerializer.Serialize(writer, Origin);
             }
             if (Optional.IsDefined(HostName))
             {

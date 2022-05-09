@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The resource name to validate. </param>
         /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityInput(string name, ResourceType resourceType)
+        public CheckNameAvailabilityInput(string name, CdnResourceType resourceType)
         {
             if (name == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The resource name to validate. </summary>
         public string Name { get; }
         /// <summary> The type of the resource whose name is to be validated. </summary>
-        public ResourceType ResourceType { get; }
+        public CdnResourceType ResourceType { get; }
     }
 }

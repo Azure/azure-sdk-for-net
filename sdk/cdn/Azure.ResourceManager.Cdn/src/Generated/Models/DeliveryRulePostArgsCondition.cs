@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRulePostArgsCondition(PostArgsMatchConditionParameters parameters)
+        public DeliveryRulePostArgsCondition(PostArgsMatchConditionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRulePostArgsCondition(MatchVariable name, PostArgsMatchConditionParameters parameters) : base(name)
+        internal DeliveryRulePostArgsCondition(MatchVariable name, PostArgsMatchConditionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public PostArgsMatchConditionParameters Parameters { get; set; }
+        public PostArgsMatchConditionDefinition Parameters { get; set; }
     }
 }

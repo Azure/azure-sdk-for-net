@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateParameters.DeserializeAzureFirstPartyManagedCertificateParameters(element);
                     case "CustomerCertificate": return CustomerCertificateParameters.DeserializeCustomerCertificateParameters(element);
                     case "ManagedCertificate": return ManagedCertificateParameters.DeserializeManagedCertificateParameters(element);
-                    case "UrlSigningKey": return UrlSigningKeyParameters.DeserializeUrlSigningKeyParameters(element);
+                    case "UrlSigningKey": return UriSigningKeyParameters.DeserializeUriSigningKeyParameters(element);
                 }
             }
             SecretType type = default;

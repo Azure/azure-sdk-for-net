@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/profiles/originGroups";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/originGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -291,11 +291,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsage");
+                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsage");
+                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -333,11 +333,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsage");
+                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsage");
+                using var scope = _afdOriginGroupClientDiagnostics.CreateScope("AfdOriginGroupResource.GetResourceUsages");
                 scope.Start();
                 try
                 {

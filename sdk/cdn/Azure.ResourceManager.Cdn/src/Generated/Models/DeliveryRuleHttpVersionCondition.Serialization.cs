@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleHttpVersionCondition DeserializeDeliveryRuleHttpVersionCondition(JsonElement element)
         {
-            HttpVersionMatchConditionParameters parameters = default;
+            HttpVersionMatchConditionDefinition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = HttpVersionMatchConditionParameters.DeserializeHttpVersionMatchConditionParameters(property.Value);
+                    parameters = HttpVersionMatchConditionDefinition.DeserializeHttpVersionMatchConditionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

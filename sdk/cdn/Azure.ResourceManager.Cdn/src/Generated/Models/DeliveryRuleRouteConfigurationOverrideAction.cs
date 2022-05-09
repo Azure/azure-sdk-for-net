@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleRouteConfigurationOverrideAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionParameters parameters)
+        public DeliveryRuleRouteConfigurationOverrideAction(RouteConfigurationOverrideActionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleRouteConfigurationOverrideAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionType name, RouteConfigurationOverrideActionParameters parameters) : base(name)
+        internal DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionType name, RouteConfigurationOverrideActionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public RouteConfigurationOverrideActionParameters Parameters { get; set; }
+        public RouteConfigurationOverrideActionDefinition Parameters { get; set; }
     }
 }

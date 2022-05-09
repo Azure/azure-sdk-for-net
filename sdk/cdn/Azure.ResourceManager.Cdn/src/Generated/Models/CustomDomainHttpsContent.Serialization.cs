@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureKeyVault": return UserManagedHttpsOptions.DeserializeUserManagedHttpsOptions(element);
-                    case "Cdn": return CdnManagedHttpsOptions.DeserializeCdnManagedHttpsOptions(element);
+                    case "AzureKeyVault": return UserManagedHttpsContent.DeserializeUserManagedHttpsContent(element);
+                    case "Cdn": return CdnManagedHttpsContent.DeserializeCdnManagedHttpsContent(element);
                 }
             }
             CertificateSource certificateSource = default;

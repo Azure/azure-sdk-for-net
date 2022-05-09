@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // With UpdateAsync(), we can update the origin group
             CdnOriginGroupPatch input = new CdnOriginGroupPatch()
             {
-                HealthProbeSettings = new HealthProbeParameters
+                HealthProbeSettings = new HealthProbeSettings
                 {
                     ProbePath = "/healthz",
                     ProbeRequestType = HealthProbeRequestType.Head,

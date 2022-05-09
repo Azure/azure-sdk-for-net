@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRuleData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string ruleSetName, int? order, IList<DeliveryRuleCondition> conditions, IList<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ruleSetName, int? order, IList<DeliveryRuleCondition> conditions, IList<DeliveryRuleAction> actions, MatchProcessingBehavior? matchProcessingBehavior, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             RuleSetName = ruleSetName;
             Order = order;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

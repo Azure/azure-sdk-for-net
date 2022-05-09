@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The name of the profile which holds the domain. </summary>
         public string ProfileName { get; }
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
-        public AfdCustomDomainHttpsParameters TlsSettings { get; }
+        public AfdCustomDomainHttpsContent TlsSettings { get; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        internal WritableSubResource AzureDnsZone { get; }
+        internal WritableSubResource DnsZone { get; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier AzureDnsZoneId
+        public ResourceIdentifier DnsZoneId
         {
-            get => AzureDnsZone.Id;
-            set => AzureDnsZone.Id = value;
+            get => DnsZone.Id;
+            set => DnsZone.Id = value;
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; }
+        internal AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; }
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {

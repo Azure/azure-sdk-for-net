@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdCustomDomainResource afdCustomDomain = await afdProfile.GetAfdCustomDomains().GetAsync("customdomain4afd-azuretest-net");
             AfdCustomDomainPatch updateOptions = new AfdCustomDomainPatch
             {
-                TlsSettings = new AfdCustomDomainHttpsParameters(AfdCertificateType.ManagedCertificate)
+                TlsSettings = new AfdCustomDomainHttpsContent(AfdCertificateType.ManagedCertificate)
                 {
                     MinimumTlsVersion = AfdMinimumTlsVersion.Tls10
                 },

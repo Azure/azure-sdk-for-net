@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleRequestBodyCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleRequestBodyCondition(RequestBodyMatchConditionParameters parameters)
+        public DeliveryRuleRequestBodyCondition(RequestBodyMatchConditionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleRequestBodyCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRequestBodyCondition(MatchVariable name, RequestBodyMatchConditionParameters parameters) : base(name)
+        internal DeliveryRuleRequestBodyCondition(MatchVariable name, RequestBodyMatchConditionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public RequestBodyMatchConditionParameters Parameters { get; set; }
+        public RequestBodyMatchConditionDefinition Parameters { get; set; }
     }
 }

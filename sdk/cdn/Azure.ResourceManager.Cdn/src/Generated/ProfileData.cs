@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
         /// <param name="frontDoorId"> The Id of the frontdoor. </param>
         /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
-        internal ProfileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ProfileResourceState? resourceState, string provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, resourceType, systemData, tags, location)
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, string kind, ProfileResourceState? resourceState, string provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
             AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             int count = 0;
-            await foreach (var tempUsage in afdRuleSet.GetResourceUsageAsync())
+            await foreach (var tempUsage in afdRuleSet.GetResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);

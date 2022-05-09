@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of OriginGroupOverrideAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public OriginGroupOverrideAction(OriginGroupOverrideActionParameters parameters)
+        public OriginGroupOverrideAction(OriginGroupOverrideActionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of OriginGroupOverrideAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal OriginGroupOverrideAction(DeliveryRuleActionType name, OriginGroupOverrideActionParameters parameters) : base(name)
+        internal OriginGroupOverrideAction(DeliveryRuleActionType name, OriginGroupOverrideActionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public OriginGroupOverrideActionParameters Parameters { get; set; }
+        public OriginGroupOverrideActionDefinition Parameters { get; set; }
     }
 }

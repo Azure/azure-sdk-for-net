@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/profiles";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -523,11 +523,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageAfdProfilesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetAfdProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetAfdProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetAfdProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -565,11 +565,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsageAfdProfiles(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetAfdProfileResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetAfdProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageAfdProfiles");
+                using var scope = _afdProfilesClientDiagnostics.CreateScope("ProfileResource.GetAfdProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1101,11 +1101,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1120,7 +1120,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1143,11 +1143,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsage");
+                using var scope = _profileClientDiagnostics.CreateScope("ProfileResource.GetResourceUsages");
                 scope.Start();
                 try
                 {

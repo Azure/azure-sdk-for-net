@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, CdnSku sku, PolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, PolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, ProvisioningState? provisioningState, PolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
             Sku = sku;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; set; }
+        public ETag? Etag { get; set; }
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </summary>
         internal CdnSku Sku { get; set; }
         /// <summary> Name of the pricing tier. </summary>

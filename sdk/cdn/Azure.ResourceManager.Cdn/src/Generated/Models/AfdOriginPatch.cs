@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The name of the origin group which contains this origin. </summary>
         public string OriginGroupName { get; }
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        internal WritableSubResource AzureOrigin { get; set; }
+        internal WritableSubResource Origin { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier AzureOriginId
+        public ResourceIdentifier OriginId
         {
-            get => AzureOrigin is null ? default : AzureOrigin.Id;
+            get => Origin is null ? default : Origin.Id;
             set
             {
-                if (AzureOrigin is null)
-                    AzureOrigin = new WritableSubResource();
-                AzureOrigin.Id = value;
+                if (Origin is null)
+                    Origin = new WritableSubResource();
+                Origin.Id = value;
             }
         }
 

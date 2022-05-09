@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal CdnUsage(UsageUnit unit, long currentValue, long limit, UsageName name)
+        internal CdnUsage(UsageUnit unit, long currentValue, long limit, CdnUsageResourceName name)
         {
             if (name == null)
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal CdnUsage(ResourceIdentifier id, UsageUnit unit, long currentValue, long limit, UsageName name)
+        internal CdnUsage(ResourceIdentifier id, UsageUnit unit, long currentValue, long limit, CdnUsageResourceName name)
         {
             Id = id;
             Unit = unit;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The limit of usage. </summary>
         public long Limit { get; }
         /// <summary> The name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public CdnUsageResourceName Name { get; }
     }
 }
