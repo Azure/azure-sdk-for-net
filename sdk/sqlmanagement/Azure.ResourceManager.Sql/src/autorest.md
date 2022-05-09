@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4946dbb5b2893a77ce52d08e2a855056e1acd361/specification/sql/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 model-namespace: false
@@ -47,6 +47,10 @@ override-operation-name:
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
+  Metrics_ListDatabase: GetMetrics
+  MetricDefinitions_ListDatabase: GetMetricDefinitions
+  Metrics_ListElasticPool: GetMetrics
+  MetricDefinitions_ListElasticPool: GetMetricDefinitions
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
 request-path-to-resource-name:
@@ -73,6 +77,18 @@ directive:
     - rename-operation:
         from: DataMaskingRules_ListByDatabase
         to: DataMaskingRules_List
+    - rename-operation:
+        from: Databases_ListMetrics
+        to: Metrics_ListDatabase
+    - rename-operation:
+        from: Databases_ListMetricDefinitions
+        to: MetricDefinitions_ListDatabase
+    - rename-operation:
+        from: ElasticPools_ListMetrics
+        to: Metrics_ListElasticPool
+    - rename-operation:
+        from: ElasticPools_ListMetricDefinitions
+        to: MetricDefinitions_ListElasticPool
     - rename-model:
         from: UnlinkParameters
         to: UnlinkOptions
@@ -122,6 +138,10 @@ directive:
           }
     - from: Databases.json
       where: $.definitions.DatabaseProperties.properties.sampleName['x-ms-enum']
+      transform: >
+          $['name'] = "SampleSchemaName"
+    - from: Databases.json
+      where: $.definitions.DatabaseUpdateProperties.properties.sampleName['x-ms-enum']
       transform: >
           $['name'] = "SampleSchemaName"
     - from: MaintenanceWindows.json
