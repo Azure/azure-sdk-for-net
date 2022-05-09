@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object containing security policy parameters. </summary>
-    internal partial class SecurityPolicyPropertiesParameters
+    public partial class SecurityPolicyPropertiesParameters
     {
         /// <summary> Initializes a new instance of SecurityPolicyPropertiesParameters. </summary>
         public SecurityPolicyPropertiesParameters()

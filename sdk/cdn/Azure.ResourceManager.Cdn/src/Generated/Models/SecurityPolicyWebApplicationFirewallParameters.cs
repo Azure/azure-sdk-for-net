@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object containing security policy waf parameters. </summary>
-    internal partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyPropertiesParameters
+    public partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyPropertiesParameters
     {
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallParameters. </summary>
         public SecurityPolicyWebApplicationFirewallParameters()
