@@ -30,11 +30,12 @@
         "x-ms-client-request-id": "fbc68bc12c3dc3845fed5c7c01ffddd1",
         "X-Processing-Time": "82ms"
       },
-      "ResponseBody": {
-        "identity": {
-          "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000c-2373-c2aa-47b4-a43a0d0049a8"
+        "ResponseBody": {
+            "rawId": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000c-2373-c2aa-47b4-a43a0d0049a8",
+            "identity": {
+                "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000c-2373-c2aa-47b4-a43a0d0049a8"
+            }
         }
-      }
     },
     {
       "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections?api-version=2021-08-30-preview",
@@ -56,16 +57,18 @@
           "value": "Sanitized"
         },
         "targets": [
-          {
-            "phoneNumber": {
-              "value": "Sanitized"
+            {
+                "rawId": "4:Sanitized",
+                "phoneNumber": {
+                    "value": "Sanitized"
+                }
             }
-          }
         ],
         "source": {
-          "communicationUser": {
-            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000c-2373-c2aa-47b4-a43a0d0049a8"
-          }
+            "rawId": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000c-2373-c2aa-47b4-a43a0d0049a8",
+            "communicationUser": {
+                "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000c-2373-c2aa-47b4-a43a0d0049a8"
+            }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
         "requestedMediaTypes": [

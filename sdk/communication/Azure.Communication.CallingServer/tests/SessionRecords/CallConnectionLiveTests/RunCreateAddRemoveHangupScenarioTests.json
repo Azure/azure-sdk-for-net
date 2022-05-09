@@ -30,11 +30,12 @@
         "x-ms-client-request-id": "500420ef7b1dbfd0659302bbf1a9c676",
         "X-Processing-Time": "24ms"
       },
-      "ResponseBody": {
-        "identity": {
-          "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b22f-b8c5-99c6-593a0d001c83"
+        "ResponseBody": {
+            "rawId": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b22f-b8c5-99c6-593a0d001c83",
+            "identity": {
+                "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b22f-b8c5-99c6-593a0d001c83"
+            }
         }
-      }
     },
     {
       "RequestUri": "https://acstestbot1.communication.azure.com/calling/callConnections?api-version=2021-08-30-preview",
@@ -56,16 +57,18 @@
           "value": "Sanitized"
         },
         "targets": [
-          {
-            "phoneNumber": {
-              "value": "Sanitized"
+            {
+                "rawId": "4:Sanitized",
+                "phoneNumber": {
+                    "value": "Sanitized"
+                }
             }
-          }
         ],
         "source": {
-          "communicationUser": {
-            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b22f-b8c5-99c6-593a0d001c83"
-          }
+            "rawId": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b22f-b8c5-99c6-593a0d001c83",
+            "communicationUser": {
+                "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b22f-b8c5-99c6-593a0d001c83"
+            }
         },
         "callbackUri": "https://dummy.ngrok.io/api/incident/callback?SecretKey=helloworld",
         "requestedMediaTypes": [
@@ -107,9 +110,10 @@
         },
       "RequestBody": {
         "participant": {
-          "communicationUser": {
-            "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b200-7a0d-570c-113a0d00288d"
-          }
+            "rawId": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b200-7a0d-570c-113a0d00288d",
+            "communicationUser": {
+                "id": "8:acs:016a7064-0581-40b9-be73-6dde64d69d72_0000000a-b200-7a0d-570c-113a0d00288d"
+            }
         }
       },
       "StatusCode": 202,
