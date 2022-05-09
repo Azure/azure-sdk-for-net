@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Applications.Containers.Tests
 {
-    public class containerappManagementTestEnvironment : TestEnvironment
+    public class ContainerAppsManagementTestEnvironment : TestEnvironment
     {
     }
 }
