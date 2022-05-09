@@ -10,8 +10,6 @@
 
 - `ServiceBusTransportMetrics` and `ServiceBusRuleManager` have been removed from the prior beta versions. These will be evaluated for inclusion in a future GA release.
 
-### Other Changes
-
 ## 7.8.0-beta.2 (2022-04-07)
 
 ### Acknowledgments
