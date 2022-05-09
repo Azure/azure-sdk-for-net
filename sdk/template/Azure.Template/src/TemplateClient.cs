@@ -6,8 +6,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Template.Models;
 
@@ -21,7 +19,7 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecretBundle>> GetSecretValueAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(TemplateClient)}.{nameof(GetSecretValue)}");
             scope.Start();
 
             try
@@ -46,7 +44,7 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecretBundle> GetSecretValue(string secretName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TemplateClient.GetSecretValue");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(TemplateClient)}.{nameof(GetSecretValue)}");
             scope.Start();
 
             try

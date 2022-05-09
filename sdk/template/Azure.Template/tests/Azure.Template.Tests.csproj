@@ -22,9 +22,4 @@
   <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>
-
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-  </ItemGroup>
 </Project>
