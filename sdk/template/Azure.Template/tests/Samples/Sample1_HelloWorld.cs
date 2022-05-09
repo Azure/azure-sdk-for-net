@@ -5,6 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Template
+using Azure.Identity;
 using Azure.Template.Models;
 #endregion
 using NUnit.Framework;
