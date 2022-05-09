@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
         /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
         /// <param name="probeType"> The type of probe. </param>
-        internal ContainerAppProbe(int? failureThreshold, ContainerAppProbeHttpGet httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppProbeTcpSocket tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, Type? probeType)
+        internal ContainerAppProbe(int? failureThreshold, ContainerAppProbeHttpGet httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppProbeTcpSocket tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ProbeType? probeType)
         {
             FailureThreshold = failureThreshold;
             HttpGet = httpGet;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </summary>
         public int? TimeoutSeconds { get; set; }
         /// <summary> The type of probe. </summary>
-        public Type? ProbeType { get; set; }
+        public ProbeType? ProbeType { get; set; }
     }
 }

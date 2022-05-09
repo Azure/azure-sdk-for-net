@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Optional<ContainerAppProbeTcpSocket> tcpSocket = default;
             Optional<long> terminationGracePeriodSeconds = default;
             Optional<int> timeoutSeconds = default;
-            Optional<Type> type = default;
+            Optional<ProbeType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new Type(property.Value.GetString());
+                    type = new ProbeType(property.Value.GetString());
                     continue;
                 }
             }

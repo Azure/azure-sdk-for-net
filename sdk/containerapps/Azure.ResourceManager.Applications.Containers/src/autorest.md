@@ -37,7 +37,7 @@ rename-rules:
   URI: Uri
 directive:
   - from: AuthConfigs.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.Login['x-ms-client-name'] = 'ContainerAppLogin';
       $.Nonce['x-ms-client-name'] = 'LoginNonce';
@@ -47,9 +47,9 @@ directive:
       $.Twitter['x-ms-client-name'] = 'TwitterProvider';
       $.Apple['x-ms-client-name'] = 'AppleProvider';
   - from: CommonDefinitions.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
-      $.ContainerAppProbe.properties.type['x-ms-client-name'] = 'ProbeType';
+      $.ContainerAppProbe.properties.type['x-ms-enum']['name'] = 'ProbeType';
       $.Container['x-ms-client-name'] = 'ContainerAppContainer';
       $.Scale['x-ms-client-name'] = 'ContainerAppScale';
       $.ScaleRule['x-ms-client-name'] = 'ContainerAppScaleRule';
@@ -59,18 +59,18 @@ directive:
       $.Volume['x-ms-client-name'] = 'ContainerAppVolume';
       $.VolumeMount['x-ms-client-name'] = 'ContainerAppVolumeMount';
   - from: ContainerApps.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.Configuration['x-ms-client-name'] = 'ContainerAppConfiguration';
       $.Dapr['x-ms-client-name'] = 'DaprProvider';
       $.Ingress['x-ms-client-name'] = 'IngressProvider';
   - from: ContainerAppsRevisions.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.Revision['x-ms-client-name'] = 'ContainerAppRevision';
       $.Replica['x-ms-client-name'] = 'ContainerAppReplica';
   - from: ManagedEnvironments.json
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.Certificate['x-ms-client-name'] = 'ContainerAppCertificate';
 

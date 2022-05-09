@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public Azure.ResourceManager.Applications.Containers.Models.ContainerAppProbeHttpGet HttpGet { get { throw null; } set { } }
         public int? InitialDelaySeconds { get { throw null; } set { } }
         public int? PeriodSeconds { get { throw null; } set { } }
-        public Azure.ResourceManager.Applications.Containers.Models.Type? ProbeType { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.ProbeType? ProbeType { get { throw null; } set { } }
         public int? SuccessThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.Applications.Containers.Models.ContainerAppProbeTcpSocket TcpSocket { get { throw null; } set { } }
         public long? TerminationGracePeriodSeconds { get { throw null; } set { } }
@@ -1074,6 +1074,25 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public string ClientId { get { throw null; } set { } }
         public Azure.ResourceManager.Applications.Containers.Models.OpenIdConnectConfig OpenIdConnectConfiguration { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProbeType : System.IEquatable<Azure.ResourceManager.Applications.Containers.Models.ProbeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProbeType(string value) { throw null; }
+        public static Azure.ResourceManager.Applications.Containers.Models.ProbeType Liveness { get { throw null; } }
+        public static Azure.ResourceManager.Applications.Containers.Models.ProbeType Readiness { get { throw null; } }
+        public static Azure.ResourceManager.Applications.Containers.Models.ProbeType Startup { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Applications.Containers.Models.ProbeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Applications.Containers.Models.ProbeType left, Azure.ResourceManager.Applications.Containers.Models.ProbeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Applications.Containers.Models.ProbeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.ProbeType left, Azure.ResourceManager.Applications.Containers.Models.ProbeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class QueueScaleRule
     {
         public QueueScaleRule() { }
@@ -1220,25 +1239,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public TwitterRegistration() { }
         public string ConsumerKey { get { throw null; } set { } }
         public string ConsumerSecretSettingName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Type : System.IEquatable<Azure.ResourceManager.Applications.Containers.Models.Type>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Type(string value) { throw null; }
-        public static Azure.ResourceManager.Applications.Containers.Models.Type Liveness { get { throw null; } }
-        public static Azure.ResourceManager.Applications.Containers.Models.Type Readiness { get { throw null; } }
-        public static Azure.ResourceManager.Applications.Containers.Models.Type Startup { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Applications.Containers.Models.Type other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Applications.Containers.Models.Type left, Azure.ResourceManager.Applications.Containers.Models.Type right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Applications.Containers.Models.Type (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.Type left, Azure.ResourceManager.Applications.Containers.Models.Type right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum UnauthenticatedClientActionV2
     {
