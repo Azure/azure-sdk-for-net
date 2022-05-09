@@ -539,7 +539,7 @@ namespace Azure.Storage.Test.Shared
                 Algorithm = ValidationAlgorithm.None // disable
             };
 
-            // make pipeline assertion for checking checksum was present on upload
+            // make pipeline assertion for checking checksum was not present on upload
             var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: request =>
             {
                 if (request.Headers.Contains("Content-MD5"))
@@ -654,6 +654,146 @@ namespace Azure.Storage.Test.Shared
                     await writeStream.WriteAsync(data, 0, data.Length);
                 }
             }, algorithm);
+        }
+
+        [Test]
+        public virtual async Task OpenWriteUsesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            const int streamBufferSize = Constants.KB;
+            const int streamWrites = 10;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(clientAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var writeStream = await OpenWriteAsync(client, default, streamBufferSize);
+
+            // Assert
+            checksumPipelineAssertion.CheckRequest = true;
+            foreach (var _ in Enumerable.Range(0, streamWrites))
+            {
+                // triggers pipeline assertion
+                await writeStream.WriteAsync(data, 0, data.Length);
+            }
+        }
+
+        [Test]
+        [Combinatorial]
+        public virtual async Task OpenWriteOverwritesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            const int streamBufferSize = Constants.KB;
+            const int streamWrites = 10;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = overrideAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(overrideAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
+
+            // Assert
+            checksumPipelineAssertion.CheckRequest = true;
+            foreach (var _ in Enumerable.Range(0, streamWrites))
+            {
+                // triggers pipeline assertion
+                await writeStream.WriteAsync(data, 0, data.Length);
+            }
+        }
+
+        [Test]
+        public virtual async Task OpenWriteDisablesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            const int streamBufferSize = Constants.KB;
+            const int streamWrites = 10;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = ValidationAlgorithm.None // disable
+            };
+
+            // make pipeline assertion for checking checksum was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: request =>
+            {
+                if (request.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: streamBufferSize * streamWrites,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var writeStream = await OpenWriteAsync(client, overrideValidationOptions, streamBufferSize);
+
+            // Assert
+            checksumPipelineAssertion.CheckRequest = true;
+            foreach (var _ in Enumerable.Range(0, streamWrites))
+            {
+                // triggers pipeline assertion
+                await writeStream.WriteAsync(data, 0, data.Length);
+            }
         }
         #endregion
 
