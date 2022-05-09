@@ -1,0 +1,1 @@
+﻿Start-AutoRestCodeGeneration -ResourceProvider "app/resource-manager" -AutoRestVersion "v2"
