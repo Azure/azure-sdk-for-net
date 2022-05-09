@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<IList<GeoFilter>> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
             Optional<IList<UriSigningKey>> urlSigningKeys = default;
-            Optional<EndpointPropertiesUpdateParametersDeliveryPolicy> deliveryPolicy = default;
+            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<string> hostName = default;
             Optional<IList<DeepCreatedOrigin>> origins = default;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Cdn
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointPropertiesUpdateParametersDeliveryPolicy.DeserializeEndpointPropertiesUpdateParametersDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"))

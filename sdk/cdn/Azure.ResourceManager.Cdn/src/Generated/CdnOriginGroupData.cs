@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </param>
         /// <param name="resourceState"> Resource status of the origin group. </param>
         /// <param name="provisioningState"> Provisioning status of the origin group. </param>
-        internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData)
+        internal CdnOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings, OriginGroupResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData)
         {
             HealthProbeSettings = healthProbeSettings;
             Origins = origins;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported. </summary>
-        public ResponseBasedOriginErrorDetectionParameters ResponseBasedOriginErrorDetectionSettings { get; set; }
+        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
         /// <summary> Resource status of the origin group. </summary>
         public OriginGroupResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the origin group. </summary>

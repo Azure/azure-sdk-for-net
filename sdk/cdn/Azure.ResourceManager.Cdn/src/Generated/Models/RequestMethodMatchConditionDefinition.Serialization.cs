@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
             RequestMethodOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<PreTransformCategory>> transforms = default;
-            Optional<IList<RequestMethodMatchConditionParametersMatchValuesItem>> matchValues = default;
+            Optional<IList<RequestMethodMatchConditionDefinitionMatchValue>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"))
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RequestMethodMatchConditionParametersMatchValuesItem> array = new List<RequestMethodMatchConditionParametersMatchValuesItem>();
+                    List<RequestMethodMatchConditionDefinitionMatchValue> array = new List<RequestMethodMatchConditionDefinitionMatchValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RequestMethodMatchConditionParametersMatchValuesItem(item.GetString()));
+                        array.Add(new RequestMethodMatchConditionDefinitionMatchValue(item.GetString()));
                     }
                     matchValues = array;
                     continue;

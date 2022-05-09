@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<HealthProbeSettings> healthProbeSettings = default;
             Optional<IList<WritableSubResource>> origins = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedOriginErrorDetectionSettings = default;
+            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
-                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionParameters.DeserializeResponseBasedOriginErrorDetectionParameters(property0.Value);
+                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value);
                             continue;
                         }
                     }

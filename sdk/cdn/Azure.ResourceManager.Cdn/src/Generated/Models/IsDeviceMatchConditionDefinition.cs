@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             TypeDefinition = typeDefinition;
             Operator = @operator;
-            MatchValues = new ChangeTrackingList<IsDeviceMatchConditionParametersMatchValuesItem>();
+            MatchValues = new ChangeTrackingList<IsDeviceMatchConditionDefinitionMatchValue>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal IsDeviceMatchConditionDefinition(IsDeviceMatchConditionType typeDefinition, IsDeviceOperator @operator, bool? negateCondition, IList<IsDeviceMatchConditionParametersMatchValuesItem> matchValues, IList<PreTransformCategory> transforms)
+        internal IsDeviceMatchConditionDefinition(IsDeviceMatchConditionType typeDefinition, IsDeviceOperator @operator, bool? negateCondition, IList<IsDeviceMatchConditionDefinitionMatchValue> matchValues, IList<PreTransformCategory> transforms)
         {
             TypeDefinition = typeDefinition;
             Operator = @operator;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>
-        public IList<IsDeviceMatchConditionParametersMatchValuesItem> MatchValues { get; }
+        public IList<IsDeviceMatchConditionDefinitionMatchValue> MatchValues { get; }
         /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }

@@ -48,6 +48,7 @@ rename-rules:
   TLS10: Tls10
   TLS12: Tls12
   SHA256: Sha256
+  EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
 
 no-property-type-replacement: 
   - ContinentsResponseContinentsItem
@@ -108,6 +109,8 @@ directive:
       $.SocketAddrMatchConditionParameters['x-ms-client-name'] = 'SocketAddressMatchConditionDefinition';
       $.CdnManagedHttpsParameters['x-ms-client-name'] = 'CdnManagedHttpsContent';
       $.UserManagedHttpsParameters['x-ms-client-name'] = 'UserManagedHttpsContent';
+      $.ResponseBasedOriginErrorDetectionParameters['x-ms-client-name'] = 'ResponseBasedOriginErrorDetectionSettings';
+      $.HttpErrorRangeParameters['x-ms-client-name'] = 'HttpErrorRange';
       $.ValidateCustomDomainOutput.properties.customDomainValidated['x-ms-client-name'] = 'isCustomDomainValid';
       $.CustomDomainProperties.properties.customHttpsParameters['x-ms-client-name'] = 'customDomainHttpsContent';
       $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-client-name'] = 'customHttpsAvailabilityState';
@@ -125,6 +128,22 @@ directive:
       $.KeyVaultCertificateSourceParameters.properties.deleteRule['x-ms-enum'].name = 'certificateDeleteAction';
       $.DeliveryRuleAction.properties.name['x-ms-enum'].name = 'DeliveryRuleActionType';
       $.UrlSigningActionParameters.properties.algorithm['x-ms-enum'].name = 'urlSigningAlgorithm';
+      $.IsDeviceMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
+            "name": "IsDeviceMatchConditionDefinitionMatchValue",
+            "modelAsString": true
+        }
+      $.RequestMethodMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
+            "name": "RequestMethodMatchConditionDefinitionMatchValue",
+            "modelAsString": true
+        }
+      $.RequestSchemeMatchConditionParameters.properties.operator['x-ms-enum'] = {
+            "name": "RequestSchemeOperator",
+            "modelAsString": true
+        }
+      $.RequestSchemeMatchConditionParameters.properties.matchValues.items['x-ms-enum'] = {
+            "name": "RequestSchemeMatchConditionDefinitionMatchValue",
+            "modelAsString": true
+        }
       $.EndpointPropertiesUpdateParameters.properties.defaultOriginGroup = {
             "description": "A reference to the origin group.",
             "type": "object",

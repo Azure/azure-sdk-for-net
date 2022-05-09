@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
             IsDeviceMatchConditionType typeName = default;
             IsDeviceOperator @operator = default;
             Optional<bool> negateCondition = default;
-            Optional<IList<IsDeviceMatchConditionParametersMatchValuesItem>> matchValues = default;
+            Optional<IList<IsDeviceMatchConditionDefinitionMatchValue>> matchValues = default;
             Optional<IList<PreTransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IsDeviceMatchConditionParametersMatchValuesItem> array = new List<IsDeviceMatchConditionParametersMatchValuesItem>();
+                    List<IsDeviceMatchConditionDefinitionMatchValue> array = new List<IsDeviceMatchConditionDefinitionMatchValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IsDeviceMatchConditionParametersMatchValuesItem(item.GetString()));
+                        array.Add(new IsDeviceMatchConditionDefinitionMatchValue(item.GetString()));
                     }
                     matchValues = array;
                     continue;

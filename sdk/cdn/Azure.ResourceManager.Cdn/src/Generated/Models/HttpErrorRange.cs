@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that represents the range for http status codes. </summary>
-    public partial class HttpErrorRangeParameters
+    public partial class HttpErrorRange
     {
-        /// <summary> Initializes a new instance of HttpErrorRangeParameters. </summary>
-        public HttpErrorRangeParameters()
+        /// <summary> Initializes a new instance of HttpErrorRange. </summary>
+        public HttpErrorRange()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpErrorRangeParameters. </summary>
+        /// <summary> Initializes a new instance of HttpErrorRange. </summary>
         /// <param name="begin"> The inclusive start of the http status code range. </param>
         /// <param name="end"> The inclusive end of the http status code range. </param>
-        internal HttpErrorRangeParameters(int? begin, int? end)
+        internal HttpErrorRange(int? begin, int? end)
         {
             Begin = begin;
             End = end;

@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static RequestSchemeMatchConditionDefinition DeserializeRequestSchemeMatchConditionDefinition(JsonElement element)
         {
             RequestSchemeMatchConditionType typeName = default;
-            RequestSchemeMatchConditionParametersOperator @operator = default;
+            RequestSchemeOperator @operator = default;
             Optional<bool> negateCondition = default;
             Optional<IList<PreTransformCategory>> transforms = default;
-            Optional<IList<RequestSchemeMatchConditionParametersMatchValuesItem>> matchValues = default;
+            Optional<IList<RequestSchemeMatchConditionDefinitionMatchValue>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("operator"))
                 {
-                    @operator = new RequestSchemeMatchConditionParametersOperator(property.Value.GetString());
+                    @operator = new RequestSchemeOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("negateCondition"))
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RequestSchemeMatchConditionParametersMatchValuesItem> array = new List<RequestSchemeMatchConditionParametersMatchValuesItem>();
+                    List<RequestSchemeMatchConditionDefinitionMatchValue> array = new List<RequestSchemeMatchConditionDefinitionMatchValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RequestSchemeMatchConditionParametersMatchValuesItem(item.GetString()));
+                        array.Add(new RequestSchemeMatchConditionDefinitionMatchValue(item.GetString()));
                     }
                     matchValues = array;
                     continue;

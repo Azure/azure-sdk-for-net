@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
-    public partial class EndpointPropertiesUpdateParametersDeliveryPolicy
+    public partial class EndpointDeliveryPolicy
     {
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDeliveryPolicy. </summary>
+        /// <summary> Initializes a new instance of EndpointDeliveryPolicy. </summary>
         /// <param name="rules"> A list of the delivery rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public EndpointPropertiesUpdateParametersDeliveryPolicy(IEnumerable<DeliveryRule> rules)
+        public EndpointDeliveryPolicy(IEnumerable<DeliveryRule> rules)
         {
             if (rules == null)
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Cdn.Models
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDeliveryPolicy. </summary>
+        /// <summary> Initializes a new instance of EndpointDeliveryPolicy. </summary>
         /// <param name="description"> User-friendly description of the policy. </param>
         /// <param name="rules"> A list of the delivery rules. </param>
-        internal EndpointPropertiesUpdateParametersDeliveryPolicy(string description, IList<DeliveryRule> rules)
+        internal EndpointDeliveryPolicy(string description, IList<DeliveryRule> rules)
         {
             Description = description;
             Rules = rules;

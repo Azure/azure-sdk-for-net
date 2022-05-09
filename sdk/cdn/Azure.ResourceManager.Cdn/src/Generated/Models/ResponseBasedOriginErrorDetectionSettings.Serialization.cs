@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ResponseBasedOriginErrorDetectionParameters : IUtf8JsonSerializable
+    public partial class ResponseBasedOriginErrorDetectionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static ResponseBasedOriginErrorDetectionParameters DeserializeResponseBasedOriginErrorDetectionParameters(JsonElement element)
+        internal static ResponseBasedOriginErrorDetectionSettings DeserializeResponseBasedOriginErrorDetectionSettings(JsonElement element)
         {
             Optional<ResponseBasedDetectedErrorTypes> responseBasedDetectedErrorTypes = default;
             Optional<int> responseBasedFailoverThresholdPercentage = default;
-            Optional<IList<HttpErrorRangeParameters>> httpErrorRanges = default;
+            Optional<IList<HttpErrorRange>> httpErrorRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("responseBasedDetectedErrorTypes"))
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HttpErrorRangeParameters> array = new List<HttpErrorRangeParameters>();
+                    List<HttpErrorRange> array = new List<HttpErrorRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpErrorRangeParameters.DeserializeHttpErrorRangeParameters(item));
+                        array.Add(HttpErrorRange.DeserializeHttpErrorRange(item));
                     }
                     httpErrorRanges = array;
                     continue;
                 }
             }
-            return new ResponseBasedOriginErrorDetectionParameters(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), Optional.ToList(httpErrorRanges));
+            return new ResponseBasedOriginErrorDetectionSettings(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), Optional.ToList(httpErrorRanges));
         }
     }
 }

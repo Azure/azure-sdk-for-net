@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HttpErrorRangeParameters : IUtf8JsonSerializable
+    public partial class HttpErrorRange : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpErrorRangeParameters DeserializeHttpErrorRangeParameters(JsonElement element)
+        internal static HttpErrorRange DeserializeHttpErrorRange(JsonElement element)
         {
             Optional<int> begin = default;
             Optional<int> end = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new HttpErrorRangeParameters(Optional.ToNullable(begin), Optional.ToNullable(end));
+            return new HttpErrorRange(Optional.ToNullable(begin), Optional.ToNullable(end));
         }
     }
 }

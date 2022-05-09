@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>
         /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="responseBasedOriginErrorDetectionSettings"> The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported. </param>
-        internal DeepCreatedOriginGroup(string name, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionParameters responseBasedOriginErrorDetectionSettings)
+        internal DeepCreatedOriginGroup(string name, HealthProbeSettings healthProbeSettings, IList<WritableSubResource> origins, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings)
         {
             Name = name;
             HealthProbeSettings = healthProbeSettings;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
         public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
         /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses.This property is currently not supported. </summary>
-        public ResponseBasedOriginErrorDetectionParameters ResponseBasedOriginErrorDetectionSettings { get; set; }
+        public ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings { get; set; }
     }
 }
