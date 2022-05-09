@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "RequestScheme": return DeliveryRuleRequestSchemeCondition.DeserializeDeliveryRuleRequestSchemeCondition(element);
                     case "RequestUri": return DeliveryRuleRequestUriCondition.DeserializeDeliveryRuleRequestUriCondition(element);
                     case "ServerPort": return DeliveryRuleServerPortCondition.DeserializeDeliveryRuleServerPortCondition(element);
-                    case "SocketAddr": return DeliveryRuleSocketAddrCondition.DeserializeDeliveryRuleSocketAddrCondition(element);
+                    case "SocketAddr": return DeliveryRuleSocketAddressCondition.DeserializeDeliveryRuleSocketAddressCondition(element);
                     case "SslProtocol": return DeliveryRuleSslProtocolCondition.DeserializeDeliveryRuleSslProtocolCondition(element);
-                    case "UrlFileExtension": return DeliveryRuleUrlFileExtensionCondition.DeserializeDeliveryRuleUrlFileExtensionCondition(element);
-                    case "UrlFileName": return DeliveryRuleUrlFileNameCondition.DeserializeDeliveryRuleUrlFileNameCondition(element);
-                    case "UrlPath": return DeliveryRuleUrlPathCondition.DeserializeDeliveryRuleUrlPathCondition(element);
+                    case "UrlFileExtension": return DeliveryRuleUriFileExtensionCondition.DeserializeDeliveryRuleUriFileExtensionCondition(element);
+                    case "UrlFileName": return DeliveryRuleUriFileNameCondition.DeserializeDeliveryRuleUriFileNameCondition(element);
+                    case "UrlPath": return DeliveryRuleUriPathCondition.DeserializeDeliveryRuleUriPathCondition(element);
                 }
             }
             MatchVariable name = default;
