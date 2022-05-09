@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<bool> enableSoftDelete = default;
             Optional<int> softDeleteRetentionInDays = default;
             Optional<bool> enableRbacAuthorization = default;
-            Optional<CreateMode> createMode = default;
+            Optional<VaultCreateMode> createMode = default;
             Optional<bool> enablePurgeProtection = default;
             Optional<NetworkRuleSet> networkAcls = default;
             Optional<VaultProvisioningState> provisioningState = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createMode = property.Value.GetString().ToCreateMode();
+                    createMode = property.Value.GetString().ToVaultCreateMode();
                     continue;
                 }
                 if (property.NameEquals("enablePurgeProtection"))

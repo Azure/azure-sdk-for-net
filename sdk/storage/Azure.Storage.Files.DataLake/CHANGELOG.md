@@ -1,5 +1,9 @@
 # Release History
 
+## 12.11.0-beta.1 (Unreleased)
+- Added support for service version 2021-08-06.
+- Added ability to set permission, umask, owner, group, ACL, lease, and expiry time on DataLakeFileClient.Create() and .CreateAsync(), DataLakeDirectoryClient.Create() and .CreateAsync(), and DataLakePathClient.Create() and .CreateAsync().
+
 ## 12.10.0 (2022-05-02)
 - Includes all features from 12.10.0-beta.1.
 

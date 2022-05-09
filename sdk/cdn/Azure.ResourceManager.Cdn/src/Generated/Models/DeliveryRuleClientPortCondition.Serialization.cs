@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleClientPortCondition DeserializeDeliveryRuleClientPortCondition(JsonElement element)
         {
-            ClientPortMatchConditionParameters parameters = default;
+            ClientPortMatchConditionDefinition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = ClientPortMatchConditionParameters.DeserializeClientPortMatchConditionParameters(property.Value);
+                    parameters = ClientPortMatchConditionDefinition.DeserializeClientPortMatchConditionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Azure.AI.TextAnalytics.Models;
@@ -23,7 +24,7 @@ namespace Azure.AI.TextAnalytics
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
-        internal DocumentSentiment(DocumentSentimentInternal documentSentiment)
+        internal DocumentSentiment(SentimentDocumentResult documentSentiment)
         {
             Sentiment = documentSentiment.Sentiment;
             ConfidenceScores = documentSentiment.ConfidenceScores;
@@ -53,7 +54,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
-        private static List<SentenceSentiment> ConvertToSentences(IReadOnlyList<SentenceSentimentInternal> internalSentences)
+        private static List<SentenceSentiment> ConvertToSentences(IList<SentenceSentimentInternal> internalSentences)
         {
             var sentences = new List<SentenceSentiment>();
             foreach (var sentence in internalSentences)
