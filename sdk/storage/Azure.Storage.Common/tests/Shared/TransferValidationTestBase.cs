@@ -897,6 +897,175 @@ namespace Azure.Storage.Test.Shared
             // Assert
             Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
         }
+
+        [Test]
+        public virtual async Task ParallelUploadUsesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [Values(true, false)] bool split)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            StorageTransferOptions transferOptions = split
+                ? new StorageTransferOptions
+                {
+                    InitialTransferSize = dataLength/2,
+                    MaximumTransferSize = dataLength/2
+                }
+                : new StorageTransferOptions
+                {
+                    InitialTransferSize = dataLength * 2,
+                    MaximumTransferSize = dataLength * 2
+                };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(
+                clientAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, default, transferOptions);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        [Combinatorial]
+        public virtual async Task ParallelUploadOverwritesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm,
+            [Values(true, false)] bool split)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = overrideAlgorithm
+            };
+            StorageTransferOptions transferOptions = split
+              ? new StorageTransferOptions
+              {
+                  InitialTransferSize = dataLength / 2,
+                  MaximumTransferSize = dataLength / 2
+              }
+              : new StorageTransferOptions
+              {
+                  InitialTransferSize = dataLength * 2,
+                  MaximumTransferSize = dataLength * 2
+              };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: GetRequestChecksumAssertion(
+                overrideAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, overrideValidationOptions, transferOptions);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        public virtual async Task ParallelUploadDisablesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [Values(true, false)] bool split)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var clientValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = ValidationAlgorithm.None // disable
+            };
+            StorageTransferOptions transferOptions = split
+              ? new StorageTransferOptions
+              {
+                  InitialTransferSize = dataLength / 2,
+                  MaximumTransferSize = dataLength / 2
+              }
+              : new StorageTransferOptions
+              {
+                  InitialTransferSize = dataLength * 2,
+                  MaximumTransferSize = dataLength * 2
+              };
+
+            // make pipeline assertion for checking checksum was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkRequest: request =>
+            {
+                if (request.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (request.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                uploadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, overrideValidationOptions, transferOptions);
+            }
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
         #endregion
 
         #region Parallel Download Tests
