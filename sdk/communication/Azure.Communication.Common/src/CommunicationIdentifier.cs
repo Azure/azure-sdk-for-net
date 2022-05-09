@@ -32,7 +32,7 @@ namespace Azure.Communication
         /// When storing rawIds, use this function to restore the identifier that was encoded in the rawId.
         /// </summary>
         /// <param name="rawId">The rawId to be translated to its identifier representation.</param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
         public static CommunicationIdentifier FromRawId(string rawId)
         {
             Argument.AssertNotNullOrEmpty(rawId, nameof(rawId));
