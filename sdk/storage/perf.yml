@@ -1,3 +1,21 @@
+parameters:
+  - name: services
+    displayName: Services (regex of services to run)
+    type: string
+    default: '^storage-blob$'
+  - name: tests
+    displayName: Tests (regex of tests to run)
+    type: string
+    default: '^(download|upload|list-blobs)$'
+  - name: arguments
+    displayName: Arguments (regex of arguments to run)
+    type: string
+    default: '(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )' 
+  - name: iterations
+    displayName: Iterations (times to run each test)
+    type: number
+    default: '5'
+
 variables:
   - name: NugetSecurityAnalysisWarningLevel
     value: 'none'
@@ -45,10 +63,10 @@ jobs:
         dotnet run -- run
         --no-sync
         --languages net
-        --services "^storage-blob$"
-        --tests "^(download|upload|list-blobs)$"
-        --arguments "(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )"
-        --iterations 5
+        --services "${{ parameters.services }}"
+        --tests "^${{ parameters.tests }}"
+        --arguments "${{ parameters.arguments }}"
+        --iterations ${{ parameters.iterations }}
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
       env:
         AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
