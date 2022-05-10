@@ -11,7 +11,10 @@ namespace Azure.Communication
         /// <summary>The id of the communication user.</summary>
         public string Id { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Returns the canonical string representation of the <see cref="CommunicationUserIdentifier"/>.
+        /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
+        /// </summary>
         public override string RawId => Id;
 
         /// <summary>

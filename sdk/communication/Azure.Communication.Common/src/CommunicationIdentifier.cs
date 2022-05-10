@@ -11,8 +11,8 @@ namespace Azure.Communication
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
         /// <summary>
-        /// Returns the RawId representation of the CommunicationIdentifier.
-        /// You can use the RawId for encoding the identifier and then use it as a key in a database.
+        /// Returns the canonical string representation of the <see cref="CommunicationIdentifier"/>.
+        /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
         /// </summary>
         public virtual string RawId { get; }
 

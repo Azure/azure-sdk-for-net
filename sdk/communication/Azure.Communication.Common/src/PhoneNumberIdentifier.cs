@@ -10,7 +10,10 @@ namespace Azure.Communication
     {
         private readonly string _rawId;
 
-        /// <summary>The optional raw id of the phone number.</summary>
+        /// <summary>
+        /// Returns the canonical string representation of the <see cref="PhoneNumberIdentifier"/>.
+        /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
+        /// </summary>
         public override string RawId
         {
             get
