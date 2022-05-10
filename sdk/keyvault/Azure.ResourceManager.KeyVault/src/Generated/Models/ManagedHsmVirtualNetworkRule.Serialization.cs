@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(VnetSubnetId);
+            writer.WriteStringValue(SubnetId);
             writer.WriteEndObject();
         }
 

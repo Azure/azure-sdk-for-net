@@ -5,30 +5,39 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint connection item. </summary>
-    public partial class ManagedHsmPrivateEndpointConnectionItem
+    public partial class PrivateEndpointConnectionItemData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItem. </summary>
-        internal ManagedHsmPrivateEndpointConnectionItem()
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionItemData. </summary>
+        internal PrivateEndpointConnectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItem. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionItemData. </summary>
+        /// <param name="id"> Id of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal ManagedHsmPrivateEndpointConnectionItem(SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal PrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
+            Id = id;
+            Etag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Id of private endpoint connection. </summary>
+        public string Id { get; }
+        /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        public ETag? Etag { get; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>
@@ -38,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Approval state of the private link connection. </summary>
-        public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public KeyVaultPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
