@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Reservations
         public string Kind { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationsProperties Properties { get { throw null; } }
-        public string SkuName { get { throw null; } set { } }
+        public string SkuName { get { throw null; } }
     }
     public partial class ReservationResponseResource : Azure.ResourceManager.ArmResource
     {

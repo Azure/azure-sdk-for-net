@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Resource provider namespace. </summary>
         public string ManagementRpDetailsResourceProviderNamespace
         {
-            get => ManagementRpDetails.ResourceProviderNamespace;
+            get => ManagementRpDetails?.ResourceProviderNamespace;
         }
 
         /// <summary> List of parent RP details supported for configuration. </summary>

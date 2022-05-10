@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal VirtualNetworkDnsForwardingRuleset() { }
         public string Id { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VirtualNetworkLinkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkLinkId { get { throw null; } }
     }
     public partial class VirtualNetworkLinkPatch
     {

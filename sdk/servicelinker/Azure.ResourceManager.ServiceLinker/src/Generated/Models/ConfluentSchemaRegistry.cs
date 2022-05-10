@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The service properties when target service type is ConfluentSchemaRegistry. </summary>
-    internal partial class ConfluentSchemaRegistry : TargetServiceBase
+    public partial class ConfluentSchemaRegistry : TargetServiceBase
     {
         /// <summary> Initializes a new instance of ConfluentSchemaRegistry. </summary>
         public ConfluentSchemaRegistry()

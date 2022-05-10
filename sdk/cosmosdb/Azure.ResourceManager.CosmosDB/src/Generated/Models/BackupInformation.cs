@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The latest restorable timestamp for a resource. </summary>
         public string ContinuousBackupInformationLatestRestorableTimestamp
         {
-            get => ContinuousBackupInformation.LatestRestorableTimestamp;
+            get => ContinuousBackupInformation?.LatestRestorableTimestamp;
         }
     }
 }

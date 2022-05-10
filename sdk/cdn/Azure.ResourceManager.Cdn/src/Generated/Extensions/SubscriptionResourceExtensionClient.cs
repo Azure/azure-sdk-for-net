@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
         /// Operation Id: CheckNameAvailabilityWithSubscription
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityWithSubscriptionAsync(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckNameAvailabilityWithSubscriptionAsync(Id.SubscriptionId, input, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckNameAvailabilityWithSubscriptionAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability
         /// Operation Id: CheckNameAvailabilityWithSubscription
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityOutput> CheckCdnNameAvailabilityWithSubscription(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCdnNameAvailabilityWithSubscription");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckNameAvailabilityWithSubscription(Id.SubscriptionId, input, cancellationToken);
+                var response = DefaultRestClient.CheckNameAvailabilityWithSubscription(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateProbeOutput>> ValidateProbeAsync(ValidateProbeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateProbeResult>> ValidateProbeAsync(ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateProbe");
             scope.Start();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateProbeOutput> ValidateProbe(ValidateProbeContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateProbeResult> ValidateProbe(ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateProbe");
             scope.Start();

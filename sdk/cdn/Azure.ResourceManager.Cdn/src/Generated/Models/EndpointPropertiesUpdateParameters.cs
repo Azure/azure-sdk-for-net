@@ -46,8 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier DefaultOriginGroupId
         {
-            get => DefaultOriginGroup.Id;
-            set => DefaultOriginGroup.Id = value;
+            get => DefaultOriginGroup?.Id;
         }
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
@@ -59,8 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
-            get => WebApplicationFirewallPolicyLink.Id;
-            set => WebApplicationFirewallPolicyLink.Id = value;
+            get => WebApplicationFirewallPolicyLink?.Id;
         }
     }
 }

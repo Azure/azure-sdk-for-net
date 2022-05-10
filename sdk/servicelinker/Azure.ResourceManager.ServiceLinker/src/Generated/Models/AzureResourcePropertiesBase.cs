@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The azure resource properties. </summary>
-    internal partial class AzureResourcePropertiesBase
+    public partial class AzureResourcePropertiesBase
     {
         /// <summary> Initializes a new instance of AzureResourcePropertiesBase. </summary>
         public AzureResourcePropertiesBase()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class SecurityPolicyWebApplicationFirewallParameters : IUtf8JsonSerializable
+    public partial class SecurityPolicyWebApplicationFirewallDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityPolicyWebApplicationFirewallParameters DeserializeSecurityPolicyWebApplicationFirewallParameters(JsonElement element)
+        internal static SecurityPolicyWebApplicationFirewallDefinition DeserializeSecurityPolicyWebApplicationFirewallDefinition(JsonElement element)
         {
             Optional<WritableSubResource> wafPolicy = default;
             Optional<IList<SecurityPolicyWebApplicationFirewallAssociation>> associations = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecurityPolicyWebApplicationFirewallParameters(type, wafPolicy, Optional.ToList(associations));
+            return new SecurityPolicyWebApplicationFirewallDefinition(type, wafPolicy, Optional.ToList(associations));
         }
     }
 }

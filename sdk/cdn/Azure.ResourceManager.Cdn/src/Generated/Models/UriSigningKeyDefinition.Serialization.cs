@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UriSigningKeyParameters : IUtf8JsonSerializable
+    public partial class UriSigningKeyDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static UriSigningKeyParameters DeserializeUriSigningKeyParameters(JsonElement element)
+        internal static UriSigningKeyDefinition DeserializeUriSigningKeyDefinition(JsonElement element)
         {
             string keyId = default;
             WritableSubResource secretSource = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UriSigningKeyParameters(type, keyId, secretSource, secretVersion.Value);
+            return new UriSigningKeyDefinition(type, keyId, secretSource, secretVersion.Value);
         }
     }
 }

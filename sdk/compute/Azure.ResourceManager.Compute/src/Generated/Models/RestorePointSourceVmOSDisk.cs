@@ -54,8 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier DiskRestorePointId
         {
-            get => DiskRestorePoint.Id;
-            set => DiskRestorePoint.Id = value;
+            get => DiskRestorePoint?.Id;
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class ManagedCertificateParameters : IUtf8JsonSerializable
+    public partial class ManagedCertificateDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedCertificateParameters DeserializeManagedCertificateParameters(JsonElement element)
+        internal static ManagedCertificateDefinition DeserializeManagedCertificateDefinition(JsonElement element)
         {
             Optional<string> subject = default;
             Optional<string> expirationDate = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ManagedCertificateParameters(type, subject.Value, expirationDate.Value);
+            return new ManagedCertificateDefinition(type, subject.Value, expirationDate.Value);
         }
     }
 }

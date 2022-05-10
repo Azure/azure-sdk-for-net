@@ -49,8 +49,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Gets or sets the sku name. </summary>
         public string SkuName
         {
-            get => Sku.Name;
-            set => Sku.Name = value;
+            get => Sku?.Name;
         }
 
         /// <summary> The properties associated to this reservation. </summary>

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> List of instance view of the capacity reservations under the capacity reservation group. </summary>
         public IReadOnlyList<CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations
         {
-            get => InstanceView.CapacityReservations;
+            get => InstanceView?.CapacityReservations;
         }
     }
 }

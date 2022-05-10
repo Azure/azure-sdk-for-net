@@ -13,12 +13,12 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Customer Certificate used for https. </summary>
-    internal partial class CustomerCertificateParameters : SecretParameters
+    public partial class CustomerCertificateDefinition : SecretDefinition
     {
-        /// <summary> Initializes a new instance of CustomerCertificateParameters. </summary>
+        /// <summary> Initializes a new instance of CustomerCertificateDefinition. </summary>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
-        public CustomerCertificateParameters(WritableSubResource secretSource)
+        public CustomerCertificateDefinition(WritableSubResource secretSource)
         {
             if (secretSource == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType = SecretType.CustomerCertificate;
         }
 
-        /// <summary> Initializes a new instance of CustomerCertificateParameters. </summary>
+        /// <summary> Initializes a new instance of CustomerCertificateDefinition. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal CustomerCertificateParameters(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType)
+        internal CustomerCertificateDefinition(SecretType secretType, WritableSubResource secretSource, string secretVersion, bool? useLatestVersion, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;

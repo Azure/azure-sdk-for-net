@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Gets the scopes. </summary>
         public IReadOnlyList<ScopeProperties> Scopes
         {
-            get => Properties.Scopes;
+            get => Properties?.Scopes;
         }
     }
 }

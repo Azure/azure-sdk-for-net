@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The service properties when target service type is ConfluentBootstrapServer. </summary>
-    internal partial class ConfluentBootstrapServer : TargetServiceBase
+    public partial class ConfluentBootstrapServer : TargetServiceBase
     {
         /// <summary> Initializes a new instance of ConfluentBootstrapServer. </summary>
         public ConfluentBootstrapServer()

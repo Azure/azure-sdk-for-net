@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Amount in pricing currency. Tax not included. </summary>
         public PurchasePrice MsrpP1Y
         {
-            get => Msrp.P1Y;
+            get => Msrp?.P1Y;
         }
 
         /// <summary> Gets the restrictions. </summary>

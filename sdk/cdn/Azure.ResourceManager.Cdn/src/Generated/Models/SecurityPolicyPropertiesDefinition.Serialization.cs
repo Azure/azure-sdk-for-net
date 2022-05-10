@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class SecurityPolicyPropertiesParameters : IUtf8JsonSerializable
+    public partial class SecurityPolicyPropertiesDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityPolicyPropertiesParameters DeserializeSecurityPolicyPropertiesParameters(JsonElement element)
+        internal static SecurityPolicyPropertiesDefinition DeserializeSecurityPolicyPropertiesDefinition(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewallParameters.DeserializeSecurityPolicyWebApplicationFirewallParameters(element);
+                    case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewallDefinition.DeserializeSecurityPolicyWebApplicationFirewallDefinition(element);
                 }
             }
             SecurityPolicyType type = default;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecurityPolicyPropertiesParameters(type);
+            return new SecurityPolicyPropertiesDefinition(type);
         }
     }
 }

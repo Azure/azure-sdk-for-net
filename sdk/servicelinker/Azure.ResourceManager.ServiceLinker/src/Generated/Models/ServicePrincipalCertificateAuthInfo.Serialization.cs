@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class ServicePrincipalCertificateAuthInfo : IUtf8JsonSerializable
+    public partial class ServicePrincipalCertificateAuthInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

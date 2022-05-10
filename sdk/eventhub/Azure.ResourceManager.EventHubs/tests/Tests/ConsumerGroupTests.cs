@@ -17,9 +17,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
         private ResourceGroupResource _resourceGroup;
         private EventHubResource _eventHub;
         private ConsumerGroupCollection _consumerGroupCollection;
-        public ConsumerGroupTests(bool isAsync) : base(isAsync)
+
+        public ConsumerGroupTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
+
         [SetUp]
         public async Task CreateNamespaceAndGetEventhubCollection()
         {
@@ -32,6 +35,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _eventHub = (await eventhubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
             _consumerGroupCollection = _eventHub.GetConsumerGroups();
         }
+
         [TearDown]
         public async Task ClearNamespaces()
         {
@@ -47,6 +51,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 _resourceGroup = null;
             }
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteConsumerGroup()

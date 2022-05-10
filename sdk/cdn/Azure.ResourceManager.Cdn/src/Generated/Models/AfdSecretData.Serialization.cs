@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<AfdDeploymentStatus> deploymentStatus = default;
             Optional<string> profileName = default;
-            Optional<SecretParameters> parameters = default;
+            Optional<SecretDefinition> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecretParameters.DeserializeSecretParameters(property0.Value);
+                            parameters = SecretDefinition.DeserializeSecretDefinition(property0.Value);
                             continue;
                         }
                     }

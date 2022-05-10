@@ -5933,7 +5933,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ManagedInstancePrivateEndpointConnectionProperties
     {
         internal ManagedInstancePrivateEndpointConnectionProperties() { }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -6300,7 +6300,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class PrivateEndpointConnectionProperties
     {
         internal PrivateEndpointConnectionProperties() { }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PrivateEndpointProvisioningState? ProvisioningState { get { throw null; } }
     }

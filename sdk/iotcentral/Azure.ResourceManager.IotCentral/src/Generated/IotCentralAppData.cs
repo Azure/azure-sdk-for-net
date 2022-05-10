@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.IotCentral
         /// <summary> A valid instance SKU. </summary>
         internal AppSkuInfo Sku { get; set; }
         /// <summary> The name of the SKU. </summary>
-        public AppSku SkuName
+        public AppSku? SkuName
         {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new AppSkuInfo(value);
+            get => Sku is null ? default(AppSku?) : Sku.Name;
+            set
+            {
+                Sku = value.HasValue ? new AppSkuInfo(value.Value) : null;
+            }
         }
 
         /// <summary> The managed identities for the IoT Central application. </summary>

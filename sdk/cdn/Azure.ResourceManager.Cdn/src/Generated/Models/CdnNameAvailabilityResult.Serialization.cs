@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CheckNameAvailabilityOutput
+    public partial class CdnNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityOutput DeserializeCheckNameAvailabilityOutput(JsonElement element)
+        internal static CdnNameAvailabilityResult DeserializeCdnNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityOutput(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new CdnNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

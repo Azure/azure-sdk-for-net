@@ -34,19 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the condition that results in the alert rule being activated. </summary>
         public RuleCondition Condition { get; set; }
         /// <summary> action that is performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
-        internal RuleAction Action { get; set; }
-        /// <summary> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </summary>
-        internal string ActionOdataType
-        {
-            get => Action is null ? default : Action.OdataType;
-            set
-            {
-                if (Action is null)
-                    Action = new RuleAction();
-                Action.OdataType = value;
-            }
-        }
-
+        public RuleAction Action { get; set; }
         /// <summary> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </summary>
         public IList<RuleAction> Actions { get; }
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>

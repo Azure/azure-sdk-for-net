@@ -84,8 +84,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
-            get => LoadBalancerFrontendIPConfiguration.Id;
-            set => LoadBalancerFrontendIPConfiguration.Id = value;
+            get => LoadBalancerFrontendIPConfiguration?.Id;
         }
 
         /// <summary> The customIpPrefix that this prefix is associated with. </summary>

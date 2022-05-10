@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public RuleTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteRule()

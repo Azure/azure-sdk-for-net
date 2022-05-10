@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public QueueTests(bool isAsync) : base(isAsync)
         {
         }
+
         [SetUp]
         public async Task CreateNamespaceAndGetQueueCollection()
         {
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             _queueCollection = serviceBusNamespace.GetServiceBusQueues();
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateDeleteQueue()

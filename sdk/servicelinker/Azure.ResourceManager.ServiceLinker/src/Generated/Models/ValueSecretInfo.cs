@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The secret info when type is rawValue. It&apos;s for scenarios that user input the secret. </summary>
-    internal partial class ValueSecretInfo : SecretInfoBase
+    public partial class ValueSecretInfo : SecretInfoBase
     {
         /// <summary> Initializes a new instance of ValueSecretInfo. </summary>
         public ValueSecretInfo()

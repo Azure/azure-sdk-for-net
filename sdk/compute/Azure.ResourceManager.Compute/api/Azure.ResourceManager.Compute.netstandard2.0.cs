@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskRestorePointData : Azure.ResourceManager.Models.ResourceData
     {
         internal DiskRestorePointData() { }
-        public bool? AcceleratedNetwork { get { throw null; } set { } }
+        public bool? AcceleratedNetwork { get { throw null; } }
         public float? CompletionPercent { get { throw null; } }
         public string DiskAccessId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.Encryption Encryption { get { throw null; } }
@@ -4264,7 +4264,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointSourceMetadata
     {
         internal RestorePointSourceMetadata() { }
-        public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HardwareProfile HardwareProfile { get { throw null; } }
         public string LicenseType { get { throw null; } }
         public string Location { get { throw null; } }
@@ -4277,7 +4277,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal RestorePointSourceVmDataDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingTypes? Caching { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } }
         public int? DiskSizeGB { get { throw null; } }
         public int? Lun { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ManagedDiskParameters ManagedDisk { get { throw null; } }
@@ -4287,7 +4287,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal RestorePointSourceVmOSDisk() { }
         public Azure.ResourceManager.Compute.Models.CachingTypes? Caching { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DiskRestorePointId { get { throw null; } }
         public int? DiskSizeGB { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryptionSettings EncryptionSettings { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ManagedDiskParameters ManagedDisk { get { throw null; } }
@@ -4884,12 +4884,12 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineImage : Azure.ResourceManager.Compute.Models.VirtualMachineImageResource
     {
         public VirtualMachineImage(string name, string location) : base (default(string), default(string)) { }
-        public bool AutomaticOSUpgradeSupported { get { throw null; } set { } }
+        public bool? AutomaticOSUpgradeSupported { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.DataDiskImage> DataDiskImages { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VmDiskTypes? DisallowedVmDiskType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineImageFeature> Features { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.HyperVGenerationTypes? HyperVGeneration { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes OSDiskImageOperatingSystem { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? OSDiskImageOperatingSystem { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PurchasePlan Plan { get { throw null; } set { } }
     }
     public partial class VirtualMachineImageFeature

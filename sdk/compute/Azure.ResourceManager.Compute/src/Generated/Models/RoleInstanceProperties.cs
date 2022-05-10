@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the role instance. </summary>
         public IReadOnlyList<WritableSubResource> NetworkInterfaces
         {
-            get => NetworkProfile.NetworkInterfaces;
+            get => NetworkProfile?.NetworkInterfaces;
         }
 
         /// <summary> The instance view of the role instance. </summary>

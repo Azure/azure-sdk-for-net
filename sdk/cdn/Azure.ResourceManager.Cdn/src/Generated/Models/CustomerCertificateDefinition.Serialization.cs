@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class CustomerCertificateParameters : IUtf8JsonSerializable
+    public partial class CustomerCertificateDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomerCertificateParameters DeserializeCustomerCertificateParameters(JsonElement element)
+        internal static CustomerCertificateDefinition DeserializeCustomerCertificateDefinition(JsonElement element)
         {
             WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CustomerCertificateParameters(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, expirationDate.Value, certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            return new CustomerCertificateDefinition(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, expirationDate.Value, certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
         }
     }
 }

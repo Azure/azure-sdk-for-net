@@ -56,8 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {
-            get => Subnet.Id;
-            set => Subnet.Id = value;
+            get => Subnet?.Id;
         }
 
         /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
@@ -65,8 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkId
         {
-            get => VirtualNetwork.Id;
-            set => VirtualNetwork.Id = value;
+            get => VirtualNetwork?.Id;
         }
 
         /// <summary> The type for the IpAllocation. </summary>

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies the ID which uniquely identifies a cloud service role. </summary>
         public string CloudServiceRoleUniqueId
         {
-            get => Properties.UniqueId;
+            get => Properties?.UniqueId;
         }
     }
 }

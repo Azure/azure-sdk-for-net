@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public partial class PrivateEndpointConnectionReference : Azure.ResourceManager.Models.ResourceData
     {
         internal PrivateEndpointConnectionReference() { }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }

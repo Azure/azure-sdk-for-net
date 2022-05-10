@@ -12,13 +12,13 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Url signing key parameters. </summary>
-    internal partial class UriSigningKeyParameters : SecretParameters
+    public partial class UriSigningKeyDefinition : SecretDefinition
     {
-        /// <summary> Initializes a new instance of UriSigningKeyParameters. </summary>
+        /// <summary> Initializes a new instance of UriSigningKeyDefinition. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="secretSource"/> is null. </exception>
-        public UriSigningKeyParameters(string keyId, WritableSubResource secretSource)
+        public UriSigningKeyDefinition(string keyId, WritableSubResource secretSource)
         {
             if (keyId == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType = SecretType.UriSigningKey;
         }
 
-        /// <summary> Initializes a new instance of UriSigningKeyParameters. </summary>
+        /// <summary> Initializes a new instance of UriSigningKeyDefinition. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UriSigningKeyParameters(SecretType secretType, string keyId, WritableSubResource secretSource, string secretVersion) : base(secretType)
+        internal UriSigningKeyDefinition(SecretType secretType, string keyId, WritableSubResource secretSource, string secretVersion) : base(secretType)
         {
             KeyId = keyId;
             SecretSource = secretSource;

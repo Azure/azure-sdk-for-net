@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)
         {
         }
+
         [Test]
         [RecordedTest]
         public async Task CreateGetUpdateDeleteDisasterRecovery()

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CheckEndpointNameAvailabilityOutput
+    public partial class EndpointNameAvailabilityResult
     {
-        internal static CheckEndpointNameAvailabilityOutput DeserializeCheckEndpointNameAvailabilityOutput(JsonElement element)
+        internal static EndpointNameAvailabilityResult DeserializeEndpointNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> availableHostname = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CheckEndpointNameAvailabilityOutput(Optional.ToNullable(nameAvailable), availableHostname.Value, reason.Value, message.Value);
+            return new EndpointNameAvailabilityResult(Optional.ToNullable(nameAvailable), availableHostname.Value, reason.Value, message.Value);
         }
     }
 }

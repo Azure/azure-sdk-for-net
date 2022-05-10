@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
         public string Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OutboundRuleId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OutboundRuleId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> OutboundRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceType { get { throw null; } }
@@ -1570,9 +1570,9 @@ namespace Azure.ResourceManager.Network
         public string Prefix { get { throw null; } set { } }
         public int? PrefixLength { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.IPVersion? PrefixType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public Azure.ResourceManager.Network.Models.IPAllocationType? TypePropertiesType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } }
     }
     public partial class IPAllocationResource : Azure.ResourceManager.ArmResource
     {
@@ -2215,7 +2215,7 @@ namespace Azure.ResourceManager.Network
     {
         public NetworkInterfaceData() { }
         public Azure.ResourceManager.Network.Models.NetworkInterfaceDnsSettings DnsSettings { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
         public bool? EnableIPForwarding { get { throw null; } set { } }
         public string Etag { get { throw null; } }
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceGuid { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.NetworkInterfaceTapConfigurationData> TapConfigurations { get { throw null; } }
-        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
         public string WorkloadType { get { throw null; } set { } }
     }
     public partial class NetworkInterfaceIPConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationResource>, System.Collections.IEnumerable
@@ -3093,7 +3093,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string IPPrefix { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.IPTag> IPTags { get { throw null; } }
-        public Azure.Core.ResourceIdentifier LoadBalancerFrontendIPConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LoadBalancerFrontendIPConfigurationId { get { throw null; } }
         public Azure.ResourceManager.Network.NatGatewayData NatGateway { get { throw null; } set { } }
         public int? PrefixLength { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
@@ -6467,15 +6467,15 @@ namespace Azure.ResourceManager.Network.Models
         internal EffectiveNetworkSecurityGroup() { }
         public Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityGroupAssociation Association { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.EffectiveNetworkSecurityRule> EffectiveSecurityRules { get { throw null; } }
-        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkSecurityGroupId { get { throw null; } }
         public string TagMap { get { throw null; } }
     }
     public partial class EffectiveNetworkSecurityGroupAssociation
     {
         internal EffectiveNetworkSecurityGroupAssociation() { }
-        public Azure.Core.ResourceIdentifier NetworkInterfaceId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier NetworkManagerId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkInterfaceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier NetworkManagerId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
     }
     public partial class EffectiveNetworkSecurityGroupListResult
     {
@@ -7739,7 +7739,7 @@ namespace Azure.ResourceManager.Network.Models
         public string IPAddress { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LoadBalancerFrontendIPConfigurationId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier NetworkInterfaceIPConfigurationId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkInterfaceIPConfigurationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
     }

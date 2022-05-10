@@ -41,8 +41,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint.Id;
-            set => PrivateEndpoint.Id = value;
+            get => PrivateEndpoint?.Id;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

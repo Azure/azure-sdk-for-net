@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application resource usage Id. </summary>
         public string BillingDetailsResourceUsageId
         {
-            get => BillingDetails.ResourceUsageId;
+            get => BillingDetails?.ResourceUsageId;
         }
 
         /// <summary> The managed application Jit access policy. </summary>

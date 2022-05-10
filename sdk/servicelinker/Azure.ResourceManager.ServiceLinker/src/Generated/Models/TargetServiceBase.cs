@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The target service properties. </summary>
-    internal partial class TargetServiceBase
+    public partial class TargetServiceBase
     {
         /// <summary> Initializes a new instance of TargetServiceBase. </summary>
         public TargetServiceBase()
