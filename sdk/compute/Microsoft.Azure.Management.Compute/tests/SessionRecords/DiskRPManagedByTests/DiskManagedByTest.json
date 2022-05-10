@@ -1695,7 +1695,7 @@
           "Mon, 28 Feb 2022 17:24:52 GMT"
         ],
         "Content-Length": [
-          "2772"
+          "134"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1820,6 +1820,13 @@
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11991"
         ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
         "x-ms-correlation-request-id": [
           "17e20297-9645-44ba-8e54-fec2a7bef61e"
         ],
@@ -1831,6 +1838,9 @@
         ],
         "Date": [
           "Mon, 28 Feb 2022 17:24:52 GMT"
+        ],
+        "Content-Length": [
+          "134"
         ],
         "Content-Length": [
           "134"
@@ -2397,6 +2407,12 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eb8e6e5e-5b20-4ff0-b335-b63c4724c1f9"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.700.21.47003",
           "OSName/Windows",
@@ -2452,6 +2468,12 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "46046349-9868-4540-b635-87ffaf6be65a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.700.21.47003",
           "OSName/Windows",

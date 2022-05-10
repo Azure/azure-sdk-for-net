@@ -2193,7 +2193,7 @@
           "Mon, 28 Feb 2022 18:28:27 GMT"
         ],
         "Content-Length": [
-          "134"
+          "133"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -4886,8 +4886,8 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11972"
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
         ],
         "x-ms-correlation-request-id": [
           "e02588a0-2407-4b55-a130-e091f25b6cb3"
