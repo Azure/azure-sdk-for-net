@@ -14,7 +14,7 @@ resources:
 
 jobs:
 - job: Perf
-  timeoutInMinutes: 180
+  timeoutInMinutes: 360
   pool:
     name: "azsdk-pool-mms-ubuntu-2004-perf"
     vmImage: "MMSUbuntu20.04"  
