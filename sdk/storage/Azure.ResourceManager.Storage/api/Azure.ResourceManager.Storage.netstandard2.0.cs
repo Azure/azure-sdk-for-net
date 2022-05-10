@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Storage
         public bool? IsLocalUserEnabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.KeyCreationTime KeyCreationTime { get { throw null; } }
-        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
+        public int? KeyExpirationPeriodInDays { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageKind? Kind { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
         public System.DateTimeOffset? LastGeoFailoverOn { get { throw null; } }
@@ -1611,16 +1611,16 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ManagementPolicySnapShot
     {
         public ManagementPolicySnapShot() { }
-        public float DeleteDaysAfterCreationGreaterThan { get { throw null; } set { } }
-        public float TierToArchiveDaysAfterCreationGreaterThan { get { throw null; } set { } }
-        public float TierToCoolDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float? DeleteDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float? TierToArchiveDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float? TierToCoolDaysAfterCreationGreaterThan { get { throw null; } set { } }
     }
     public partial class ManagementPolicyVersion
     {
         public ManagementPolicyVersion() { }
-        public float DeleteDaysAfterCreationGreaterThan { get { throw null; } set { } }
-        public float TierToArchiveDaysAfterCreationGreaterThan { get { throw null; } set { } }
-        public float TierToCoolDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float? DeleteDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float? TierToArchiveDaysAfterCreationGreaterThan { get { throw null; } set { } }
+        public float? TierToCoolDaysAfterCreationGreaterThan { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MigrationState : System.IEquatable<Azure.ResourceManager.Storage.Models.MigrationState>
@@ -2088,7 +2088,7 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsHnsEnabled { get { throw null; } set { } }
         public bool? IsLocalUserEnabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
-        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
+        public int? KeyExpirationPeriodInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageKind Kind { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
         public string Location { get { throw null; } }
@@ -2153,7 +2153,7 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ImmutableStorageAccount ImmutableStorageWithVersioning { get { throw null; } set { } }
         public bool? IsLocalUserEnabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
-        public int KeyExpirationPeriodInDays { get { throw null; } set { } }
+        public int? KeyExpirationPeriodInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.MinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
