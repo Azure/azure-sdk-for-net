@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = (Core.ResourceType)property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

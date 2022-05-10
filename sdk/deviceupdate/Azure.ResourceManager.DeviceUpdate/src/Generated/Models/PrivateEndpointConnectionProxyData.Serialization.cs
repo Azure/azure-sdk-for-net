@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = (ResourceType)property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
