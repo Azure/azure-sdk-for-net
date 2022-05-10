@@ -193,7 +193,7 @@
 #/<NotInRepo>/            @ms-premp @qiaozha
 
 # PRLabel: %Communication - Calling Server
-/sdk/communication/Azure.Communication.CallingServer/   
+/sdk/communication/Azure.Communication.CallingServer/   @minwoolee-msft
 
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/   @LuChen-Microsoft
