@@ -16,7 +16,7 @@ Azure Cognitive Services Text Analytics is one of the three services that are pa
 * Extract Information: Use Natural Language Understanding (NLU) to extract information from unstructured text. For example:
   * Key Phrase Extraction
   * Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)
-  * Healthcare Recognition
+  * Healthcare Entities Recognition
   * Extractive Text Summarization
   * Custom Named Entity Recognition
 * Classify Text: Use Natural Language Understanding (NLU) to detect the language or classify the sentiment of text you have

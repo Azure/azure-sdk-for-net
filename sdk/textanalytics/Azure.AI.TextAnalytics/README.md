@@ -4,10 +4,10 @@ Azure Cognitive Services Text Analytics is one of the three services that are pa
 * Extract Information: Use Natural Language Understanding (NLU) to extract information from unstructured text. For example:
   * Key Phrase Extraction
   * Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)
-  * Healthcare Recognition
+  * Healthcare Entities Recognition
   * Extractive Text Summarization
   * Custom Named Entity Recognition
-* Classify Text: Use Natural Language Understanding (NLU) to detect the language or classify the sentiment of text you have
+* Classify Text: Use NLU to detect the language, analyze sentiment, or classify the text you have
   * Language Detection
   * Sentiment Analysis
   * Custom Text Classification
@@ -196,7 +196,7 @@ For samples on using the production recommended option `DetectLanguageBatch` see
 Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
 ### Analyze Sentiment
-Run a predictive model to determinesthe positive, negative, neutral or mixed sentiment contained in the passed-in document or batch of documents.
+Run a predictive model to determine the positive, negative, neutral or mixed sentiment contained in the passed-in document or batch of documents.
 
 ```C# Snippet:AnalyzeSentiment
 string document = @"I had the best day of my life. I decided to go sky-diving and it

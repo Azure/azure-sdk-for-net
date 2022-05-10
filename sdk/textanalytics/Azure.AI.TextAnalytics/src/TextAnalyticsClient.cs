@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The client to use for interacting with the Azure Cognitive Servicefor Language, which includes Text Analytics.
+    /// The client to use for interacting with the Azure Cognitive Service for Language, which includes Text Analytics.
     /// </summary>
     public class TextAnalyticsClient
     {
