@@ -49,7 +49,6 @@ namespace Azure.Communication
         public string Id { get { throw null; } }
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
-        public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MicrosoftTeamsUserIdentifier : Azure.Communication.CommunicationIdentifier
@@ -60,7 +59,6 @@ namespace Azure.Communication
         public override string RawId { get { throw null; } }
         public string UserId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
-        public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PhoneNumberIdentifier : Azure.Communication.CommunicationIdentifier
@@ -69,7 +67,6 @@ namespace Azure.Communication
         public string PhoneNumber { get { throw null; } }
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
-        public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class UnknownIdentifier : Azure.Communication.CommunicationIdentifier
@@ -78,7 +75,6 @@ namespace Azure.Communication
         public string Id { get { throw null; } }
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
-        public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
 }
