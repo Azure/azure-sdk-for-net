@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
+### Changes in 1.16.0-preview
+**Notes**
+
+* Updated Reservations APIs(get) .
+
 ### Changes in 1.15.0-preview
 **Notes**
 

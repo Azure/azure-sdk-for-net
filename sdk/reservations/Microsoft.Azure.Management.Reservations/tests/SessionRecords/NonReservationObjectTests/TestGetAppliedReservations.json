@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/appliedReservations?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvYXBwbGllZFJlc2VydmF0aW9ucz9hcGktdmVyc2lvbj0yMDE5LTA0LTAx",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/appliedReservations?api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvYXBwbGllZFJlc2VydmF0aW9ucz9hcGktdmVyc2lvbj0yMDIyLTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
