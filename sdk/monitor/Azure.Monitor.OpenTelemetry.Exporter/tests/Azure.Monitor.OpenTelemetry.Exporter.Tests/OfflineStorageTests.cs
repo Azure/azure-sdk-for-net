@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -71,9 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
-
-            // Delete the blob
-            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact]
@@ -93,9 +88,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
-
-            // Delete the blob
-            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact]
@@ -128,9 +120,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             //Assert
             Assert.Equal(2, items.Count());
-
-            // Delete the blob
-            transmitter._storage.GetBlob().Lease(1000).Delete();
         }
 
         [Fact]
