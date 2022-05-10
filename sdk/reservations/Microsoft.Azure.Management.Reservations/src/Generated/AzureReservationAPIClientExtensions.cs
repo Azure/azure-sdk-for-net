@@ -23,97 +23,115 @@ namespace Microsoft.Azure.Management.Reservations
     /// </summary>
     public static partial class AzureReservationAPIClientExtensions
     {
-            /// <summary>
-            /// Get the regions and skus that are available for RI purchase for the
-            /// specified Azure subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            /// <param name='reservedResourceType'>
-            /// The type of the resource for which the skus should be provided.
-            /// </param>
-            /// <param name='location'>
-            /// Filters the skus based on the location specified in this parameter. This
-            /// can be an azure region or global
-            /// </param>
-            public static IList<Catalog> GetCatalog(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string))
-            {
-                return operations.GetCatalogAsync(subscriptionId, reservedResourceType, location).GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the
+        /// specified Azure subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Id of the subscription
+        /// </param>
+        /// <param name='reservedResourceType'>
+        /// The type of the resource for which the skus should be provided.
+        /// </param>
+        /// <param name='location'>
+        /// Filters the skus based on the location specified in this parameter. This
+        /// can be an azure region or global
+        /// </param>
+        /// <param name='publisherId'>
+        /// Id of the publisher for 3pp products. This can be optional
+        /// </param>
+        /// <param name='planId'>
+        /// Id of the planId for 3pp products. This can be optional
+        /// </param>
+        /// <param name='offerId'>
+        /// Id of the offerId for 3pp products. This can be optional
+        /// </param>
+        public static IList<Catalog> GetCatalog(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string), string publisherId = null, string offerId = null, string planId = null)
+        {
+            return operations.GetCatalogAsync(subscriptionId, reservedResourceType, location, publisherId, planId, offerId).GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// Get the regions and skus that are available for RI purchase for the
-            /// specified Azure subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            /// <param name='reservedResourceType'>
-            /// The type of the resource for which the skus should be provided.
-            /// </param>
-            /// <param name='location'>
-            /// Filters the skus based on the location specified in this parameter. This
-            /// can be an azure region or global
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IList<Catalog>> GetCatalogAsync(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the
+        /// specified Azure subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Id of the subscription
+        /// </param>
+        /// <param name='reservedResourceType'>
+        /// The type of the resource for which the skus should be provided.
+        /// </param>
+        /// <param name='location'>
+        /// Filters the skus based on the location specified in this parameter. This
+        /// can be an azure region or global
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>  
+        /// <param name='publisherId'>
+        /// Id of the publisher for 3pp products. This can be optional
+        /// </param>
+        /// <param name='offerId'>
+        /// Id of the offerId for 3pp products. This can be optional
+        /// </param>
+        /// <param name='planId'>
+        /// Id of the planId for 3pp products. This can be optional
+        /// </param>
+        public static async Task<IList<Catalog>> GetCatalogAsync(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string), string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetCatalogWithHttpMessagesAsync(subscriptionId, reservedResourceType, location, publisherId, planId, offerId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetCatalogWithHttpMessagesAsync(subscriptionId, reservedResourceType, location, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <summary>
-            /// Get list of applicable `Reservation`s.
-            /// </summary>
-            /// <remarks>
-            /// Get applicable `Reservation`s that are applied to this subscription or a
-            /// resource group under this subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            public static AppliedReservations GetAppliedReservationList(this IAzureReservationAPIClient operations, string subscriptionId)
-            {
-                return operations.GetAppliedReservationListAsync(subscriptionId).GetAwaiter().GetResult();
-            }
+        /// <summary>
+        /// Get list of applicable `Reservation`s.
+        /// </summary>
+        /// <remarks>
+        /// Get applicable `Reservation`s that are applied to this subscription or a
+        /// resource group under this subscription.
+        /// </remarks>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Id of the subscription
+        /// </param>
+        public static AppliedReservations GetAppliedReservationList(this IAzureReservationAPIClient operations, string subscriptionId)
+        {
+            return operations.GetAppliedReservationListAsync(subscriptionId).GetAwaiter().GetResult();
+        }
 
-            /// <summary>
-            /// Get list of applicable `Reservation`s.
-            /// </summary>
-            /// <remarks>
-            /// Get applicable `Reservation`s that are applied to this subscription or a
-            /// resource group under this subscription.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of the subscription
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AppliedReservations> GetAppliedReservationListAsync(this IAzureReservationAPIClient operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Get list of applicable `Reservation`s.
+        /// </summary>
+        /// <remarks>
+        /// Get applicable `Reservation`s that are applied to this subscription or a
+        /// resource group under this subscription.
+        /// </remarks>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='subscriptionId'>
+        /// Id of the subscription
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<AppliedReservations> GetAppliedReservationListAsync(this IAzureReservationAPIClient operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetAppliedReservationListWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetAppliedReservationListWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
     }
 }

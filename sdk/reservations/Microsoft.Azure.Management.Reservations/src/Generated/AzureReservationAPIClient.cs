@@ -394,6 +394,15 @@ namespace Microsoft.Azure.Management.Reservations
         /// Filters the skus based on the location specified in this parameter. This
         /// can be an azure region or global
         /// </param>
+        /// <param name='publisherId'>
+        /// Id of the publisher for 3pp products. This can be optional
+        /// </param>
+        /// <param name='offerId'>
+        /// Id of the offerId for 3pp products. This can be optional
+        /// </param>
+        /// <param name='planId'>
+        /// Id of the planId for 3pp products. This can be optional
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -415,7 +424,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), string publisherId = null, string offerId = null, string planId = null, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
@@ -438,6 +447,18 @@ namespace Microsoft.Azure.Management.Reservations
                 tracingParameters.Add("reservedResourceType", reservedResourceType);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
+                if (publisherId != null)
+                {
+                    tracingParameters.Add("publisherId", publisherId);
+                }
+                if (offerId != null)
+                {
+                    tracingParameters.Add("offerId", offerId);
+                }
+                if (planId != null)
+                {
+                    tracingParameters.Add("planId", planId);
+                }
                 ServiceClientTracing.Enter(_invocationId, this, "GetCatalog", tracingParameters);
             }
             // Construct URL
@@ -456,6 +477,18 @@ namespace Microsoft.Azure.Management.Reservations
             if (location != null)
             {
                 _queryParameters.Add(string.Format("location={0}", System.Uri.EscapeDataString(location)));
+            }
+            if (publisherId != null)
+            {
+                _queryParameters.Add(string.Format("publisherId={0}", System.Uri.EscapeDataString(publisherId)));
+            }
+            if (offerId != null)
+            {
+                _queryParameters.Add(string.Format("offerId={0}", System.Uri.EscapeDataString(offerId)));
+            }
+            if (planId != null)
+            {
+                _queryParameters.Add(string.Format("planId={0}", System.Uri.EscapeDataString(planId)));
             }
             if (_queryParameters.Count > 0)
             {

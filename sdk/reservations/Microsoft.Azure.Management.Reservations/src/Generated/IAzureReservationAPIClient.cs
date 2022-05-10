@@ -111,13 +111,22 @@ namespace Microsoft.Azure.Management.Reservations
         /// Filters the skus based on the location specified in this parameter.
         /// This can be an azure region or global
         /// </param>
+        /// <param name='publisherId'>
+        /// Id of the publisher for 3pp products. This can be optional
+        /// </param>
+        /// <param name='offerId'>
+        /// Id of the offerId for 3pp products. This can be optional
+        /// </param>
+        /// <param name='planId'>
+        /// Id of the planId for 3pp products. This can be optional
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), string publisherId = null, string offerId = null, string planId = null, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get list of applicable `Reservation`s.

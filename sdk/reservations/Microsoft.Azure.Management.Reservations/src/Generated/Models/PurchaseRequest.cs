@@ -38,8 +38,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'RedHat', 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa',
         /// 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob',
         /// 'RedisCache', 'AzureDataExplorer', 'MySql', 'MariaDb',
-        /// 'PostgreSql', 'DedicatedHost', 'SapHana',
-        /// 'SqlAzureHybridBenefit'</param>
+        /// 'PostgreSql', 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit',
+        /// 'AVS', 'DataFactory', 'NetAppStorage', 'AzureFiles'
+        /// 'SqlEdge', 'VirtualMachineSoftware'</param>
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
         /// <param name="billingPlan">Possible values include: 'Upfront',
         /// 'Monthly'</param>
@@ -88,7 +89,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks',
         /// 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache',
         /// 'AzureDataExplorer', 'MySql', 'MariaDb', 'PostgreSql',
-        /// 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit'
+        /// 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit',
+        /// 'AVS', 'DataFactory', 'NetAppStorage', 'AzureFiles'
+        /// 'SqlEdge', 'VirtualMachineSoftware'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservedResourceType")]
         public string ReservedResourceType { get; set; }
