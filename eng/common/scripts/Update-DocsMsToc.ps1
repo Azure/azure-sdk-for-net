@@ -130,12 +130,12 @@ function create-metadata-table($readmePath, $moniker, $msService, $clientTableLi
   Add-Content -Path $readmePath -Value $readmeHeader
   if ($clientExists) {
     $clientTable = "## Client packages - $moniker`r`n"
-    $clientTable += "[!INCLUDE [client-packages](/$clientTableLink)]`r`n"
+    $clientTable += "[!INCLUDE [client-packages]($clientTableLink)]`r`n"
     Add-Content -Path $readmePath -Value $clientTable
   }
   if ($mgmtExists) {
     $mgmtTable = "## Management packages - $moniker`r`n"
-    $mgmtTable += "[!INCLUDE [mgmt-packages](/$mgmtTableLink)]`r`n"
+    $mgmtTable += "[!INCLUDE [mgmt-packages]($mgmtTableLink)]`r`n"
     Add-Content -Path $readmePath -Value $mgmtTable
   }
 }
