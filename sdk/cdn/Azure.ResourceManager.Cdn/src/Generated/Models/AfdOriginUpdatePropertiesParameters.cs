@@ -25,8 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginId
         {
-            get => Origin.Id;
-            set => Origin.Id = value;
+            get => Origin?.Id;
         }
 
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>

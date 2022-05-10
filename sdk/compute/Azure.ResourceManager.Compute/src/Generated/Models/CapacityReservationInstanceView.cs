@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
         public IReadOnlyList<Resources.Models.SubResource> UtilizationInfoVirtualMachinesAllocated
         {
-            get => UtilizationInfo.VirtualMachinesAllocated;
+            get => UtilizationInfo?.VirtualMachinesAllocated;
         }
 
         /// <summary> The resource status information. </summary>

@@ -43,17 +43,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the profile which holds the security policy. </summary>
         public string ProfileName { get; }
         /// <summary> object which contains security policy parameters. </summary>
-        internal SecurityPolicyPropertiesParameters Parameters { get; set; }
-        /// <summary> The type of the Security policy to create. </summary>
-        internal SecurityPolicyType ParametersPolicyType
-        {
-            get => Parameters is null ? default : Parameters.PolicyType;
-            set
-            {
-                if (Parameters is null)
-                    Parameters = new SecurityPolicyPropertiesParameters();
-                Parameters.PolicyType = value;
-            }
-        }
+        public SecurityPolicyPropertiesParameters Parameters { get; set; }
     }
 }
