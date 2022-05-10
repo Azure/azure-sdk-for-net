@@ -1027,7 +1027,7 @@ namespace Compute.Tests
             return vm;
         }
 
-        protected DedicatedHostGroup CreateDedicatedHostGroup(string rgName, string dedicatedHostGroupName, int? availabilityZone = 1, bool ultraSSDCapability = false)
+        protected DedicatedHostGroup CreateDedicatedHostGroup( string rgName, string dedicatedHostGroupName, int? availabilityZone = 1, bool ultraSSDCapability = false)
         {
             m_ResourcesClient.ResourceGroups.CreateOrUpdate(
                    rgName,
@@ -1043,9 +1043,9 @@ namespace Compute.Tests
                 Zones = availabilityZone == null ? null : new List<string> { availabilityZone.ToString() },
                 PlatformFaultDomainCount = 1,
                 SupportAutomaticPlacement = true,
-                AdditionalCapabilities = new DedicatedHostGroupPropertiesAdditionalCapabilities
+                AdditionalCapabilities = ultraSSDCapability == false ? null : new DedicatedHostGroupPropertiesAdditionalCapabilities
                 {
-                    UltraSSDEnabled = ultraSSDCapability
+                    UltraSSDEnabled = true
                 }
             };
             return m_CrpClient.DedicatedHostGroups.CreateOrUpdate(rgName, dedicatedHostGroupName, dedicatedHostGroup);
