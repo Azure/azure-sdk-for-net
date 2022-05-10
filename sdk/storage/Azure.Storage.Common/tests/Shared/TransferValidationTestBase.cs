@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Record)
+            : base(async, RecordedTestMode.Playback)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -1350,6 +1350,163 @@ namespace Azure.Storage.Test.Shared
             checksumPipelineAssertion.CheckResponse = true;
             await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
         }
+
+        [Test]
+        public virtual async Task OpenReadUsesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            const int bufferSize = Constants.KB / 2;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
+                clientAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var readStream = await OpenReadAsync(client, default, bufferSize);
+
+            // Assert
+            checksumPipelineAssertion.CheckResponse = true;
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        }
+
+        [Test]
+        [Combinatorial]
+        public virtual async Task OpenReadOverwritesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            const int bufferSize = Constants.KB / 2;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = overrideAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
+                overrideAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var readStream = await OpenReadAsync(client, overrideValidationOptions, bufferSize);
+
+            // Assert
+            checksumPipelineAssertion.CheckResponse = true;
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        }
+
+        [Test]
+        public virtual async Task OpenReadDisablesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            const int bufferSize = Constants.KB / 2;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = ValidationAlgorithm.None // disable
+            };
+
+            // make pipeline assertion for checking checksum was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: response =>
+            {
+                if (response.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (response.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var readStream = await OpenReadAsync(client, overrideValidationOptions, bufferSize);
+
+            // Assert
+            checksumPipelineAssertion.CheckResponse = true;
+            await DoesNotThrowOrInconclusiveAsync(async () => await readStream.CopyToAsync(Stream.Null));
+        }
         #endregion
 
         #region Download Streaming/Content Tests
@@ -1435,6 +1592,183 @@ namespace Azure.Storage.Test.Shared
                 // bad checksum is for caller to find. Don't throw.
                 await DoesNotThrowOrInconclusiveAsync(operation);
             }
+        }
+
+        [Test]
+        public virtual async Task DownloadUsesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
+                clientAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var response = await DownloadPartitionAsync(client, Stream.Null, default, new HttpRange(length: data.Length));
+
+            // Assert
+            // no policies this time; just check response headers
+            switch (clientAlgorithm.ResolveAuto())
+            {
+                case ValidationAlgorithm.MD5:
+                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    break;
+                case ValidationAlgorithm.StorageCrc64:
+                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
+        }
+
+        [Test]
+        [Combinatorial]
+        public virtual async Task DownloadOverwritesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = overrideAlgorithm
+            };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
+                overrideAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var response = await DownloadPartitionAsync(client, Stream.Null, overrideValidationOptions, new HttpRange(length: data.Length));
+
+            // Assert
+            // no policies this time; just check response headers
+            switch (overrideAlgorithm.ResolveAuto())
+            {
+                case ValidationAlgorithm.MD5:
+                    Assert.True(response.Headers.Contains("Content-MD5"));
+                    break;
+                case ValidationAlgorithm.StorageCrc64:
+                    Assert.True(response.Headers.Contains("x-ms-content-crc64"));
+                    break;
+                default:
+                    Assert.Fail("Test can't validate given algorithm type.");
+                    break;
+            }
+        }
+
+        [Test]
+        public virtual async Task DownloadDisablesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = ValidationAlgorithm.None // disable
+            };
+
+            // make pipeline assertion for checking checksum was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: response =>
+            {
+                if (response.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (response.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            var response = await DownloadPartitionAsync(client, Stream.Null, overrideValidationOptions, new HttpRange(length: data.Length));
+
+            // Assert
+            // no policies this time; just check response headers
+            Assert.False(response.Headers.Contains("Content-MD5"));
+            Assert.False(response.Headers.Contains("x-ms-content-crc64"));
         }
         #endregion
 

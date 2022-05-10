@@ -2166,7 +2166,7 @@ namespace Azure.Storage.Files.Shares
                     // buffer response stream and ensure it matches the transactional hash if any
                     // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
                     // hashing is opt-in, so this buffer is part of that opt-in
-                    if (validationOptions != default && validationOptions.Validate)
+                    if (validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None && validationOptions.Validate)
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
