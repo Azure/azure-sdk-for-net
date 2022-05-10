@@ -44,11 +44,11 @@ jobs:
     - script: >-
         dotnet run -- run
         --no-sync
-        -l net
-        -s "^storage-blob$"
-        -t "^(download|upload|list-blobs)$"
-        -a "(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )"
-        -i 5
+        --languages net
+        --services "^storage-blob$"
+        --tests "^(download|upload|list-blobs)$"
+        --arguments "(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )"
+        --iterations 5
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
       env:
         AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
