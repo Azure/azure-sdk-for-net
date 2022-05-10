@@ -1,14 +1,11 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.4.0 (2022-05-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added the `ServiceBusReceiveActions` type to support receiving additional messages from a function invocation.
+- Added the ability to bind to the `SessionId` property.
 
 ## 5.3.0 (2022-03-09)
 
