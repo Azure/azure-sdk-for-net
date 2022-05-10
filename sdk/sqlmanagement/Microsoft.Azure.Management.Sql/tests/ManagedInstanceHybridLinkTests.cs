@@ -9,6 +9,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace Sql.Tests
@@ -64,6 +65,11 @@ namespace Sql.Tests
         {
             return managedInstanceId + "/serverTrustCertificates/" + certificateName;
         };
+
+        private const string endpointTypeDatabaseMirroring = "DATABASE_MIRRORING";
+        private const string endpointTypeServiceBroker = "SERVICE_BROKER";
+        private const string endpointCertType = "Microsoft.Sql/managedInstances/endpointCertificates";
+        private static readonly Func<string, string, string> makeEndpointCertID = (managedInstanceId, endpointType) => { return managedInstanceId + "/endpointCertificates/" + endpointType; };
 
         [Fact]
         public void TestServerTrustCertificates()
@@ -131,8 +137,8 @@ namespace Sql.Tests
                 Assert.Contains("MissingPublicBlob", exception4.Body.Code);
                 Assert.Contains("MethodNotAllowed", exception6.Body.Code);
 
-                sqlClient.ServerTrustCertificates.BeginDelete(resourceGroupName, managedInstanceName, certificateName1);
-                sqlClient.ServerTrustCertificates.BeginDelete(resourceGroupName, managedInstanceName, certificateName2);
+                sqlClient.ServerTrustCertificates.Delete(resourceGroupName, managedInstanceName, certificateName1);
+                sqlClient.ServerTrustCertificates.Delete(resourceGroupName, managedInstanceName, certificateName2);
             }
         }
 
@@ -224,6 +230,60 @@ namespace Sql.Tests
                 Assert.Empty(listRespEmpty);
                 var exceptionGet = Assert.Throws<CloudException>(() => sqlClient.DistributedAvailabilityGroups.Get(resourceGroupName, managedInstanceName, dagName));
                 Assert.Equal("ResourceNotFound", exceptionGet.Body.Code);
+            }
+        }
+
+
+        [Fact]
+        public void TestEndpointCertificates()
+        {
+            string suiteName = this.GetType().Name;
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                // Test setup (rg, mi):
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                //ResourceGroup rg = new ResourceGroup(location: "eastus2euap", id: "/subscriptions/8313371e-0879-428e-b1da-6353575a9192/resourceGroups/CustomerExperienceTeam_RG", name: "CustomerExperienceTeam_RG");
+                //ManagedInstance managedInstance = sqlClient.ManagedInstances.Get(rg.Name, "chimera-ps-cli-v2");
+                ResourceGroup rg = context.CreateResourceGroup(ManagedInstanceTestUtilities.Region);
+                ManagedInstance managedInstance = context.CreateManagedInstance(rg);
+                Assert.NotNull(managedInstance);
+
+                var resourceGroupName = rg.Name;
+                var managedInstanceName = managedInstance.Name;
+
+                var exceptionGet = Assert.Throws<CloudException>(() => sqlClient.EndpointCertificates.Get(resourceGroupName, managedInstanceName, "invalid_endpoint_type"));
+                Assert.Equal("ResourceNotFound", exceptionGet.Body.Code);
+
+                var certServiceBroker = sqlClient.EndpointCertificates.Get(resourceGroupName, managedInstanceName, endpointTypeServiceBroker);
+                Assert.NotNull(certServiceBroker);
+                Assert.NotNull(certServiceBroker.PublicBlob);
+                Assert.True(Regex.Match(certServiceBroker.PublicBlob, @"^[0-9a-fA-F]+$").Success);
+                Assert.Equal(endpointTypeServiceBroker, certServiceBroker.Name);
+                Assert.Equal(makeEndpointCertID(managedInstance.Id, endpointTypeServiceBroker), certServiceBroker.Id);
+                Assert.Equal(endpointCertType, certServiceBroker.Type);
+
+                var certDatabaseMirroring = sqlClient.EndpointCertificates.Get(resourceGroupName, managedInstanceName, endpointTypeDatabaseMirroring);
+                Assert.NotNull(certDatabaseMirroring);
+                Assert.NotNull(certDatabaseMirroring.PublicBlob);
+                Assert.True(Regex.Match(certDatabaseMirroring.PublicBlob, @"^[0-9a-fA-F]+$").Success);
+                Assert.Equal(endpointTypeDatabaseMirroring, certDatabaseMirroring.Name);
+                Assert.Equal(makeEndpointCertID(managedInstance.Id, endpointTypeDatabaseMirroring), certDatabaseMirroring.Id);
+                Assert.Equal(endpointCertType, certDatabaseMirroring.Type);
+
+                var certList = sqlClient.EndpointCertificates.ListByInstance(resourceGroupName, managedInstanceName);
+                Assert.NotNull(certList);
+                var listCertDBM = certList.Where(cert => cert.Name.Equals(endpointTypeDatabaseMirroring)).FirstOrDefault();
+                var listCertSB = certList.Where(cert => cert.Name.Equals(endpointTypeServiceBroker)).FirstOrDefault();
+                Assert.NotNull(listCertDBM.PublicBlob);
+                Assert.True(Regex.Match(listCertDBM.PublicBlob, @"^[0-9a-fA-F]+$").Success);
+                Assert.Equal(endpointTypeDatabaseMirroring, listCertDBM.Name);
+                Assert.Equal(makeEndpointCertID(managedInstance.Id, endpointTypeDatabaseMirroring), listCertDBM.Id);
+                Assert.Equal(endpointCertType, listCertDBM.Type);
+                Assert.NotNull(listCertSB.PublicBlob);
+                Assert.True(Regex.Match(listCertSB.PublicBlob, @"^[0-9a-fA-F]+$").Success);
+                Assert.Equal(endpointTypeServiceBroker, listCertSB.Name);
+                Assert.Equal(makeEndpointCertID(managedInstance.Id, endpointTypeServiceBroker), listCertSB.Id);
+                Assert.Equal(endpointCertType, listCertSB.Type);
             }
         }
     }

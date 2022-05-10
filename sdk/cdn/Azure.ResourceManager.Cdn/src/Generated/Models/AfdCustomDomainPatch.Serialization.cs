@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("tlsSettings");
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (Optional.IsDefined(AzureDnsZone))
+            if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone");
-                JsonSerializer.Serialize(writer, AzureDnsZone);
+                JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (Optional.IsDefined(PreValidatedCustomDomainResourceId))
+            if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
-                if (PreValidatedCustomDomainResourceId != null)
+                if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId");
-                    writer.WriteObjectValue(PreValidatedCustomDomainResourceId);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource);
                 }
                 else
                 {

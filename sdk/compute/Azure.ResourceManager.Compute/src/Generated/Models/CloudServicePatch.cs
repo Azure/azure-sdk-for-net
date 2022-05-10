@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The CloudServicePatch. </summary>
-    internal partial class CloudServicePatch
+    public partial class CloudServicePatch
     {
         /// <summary> Initializes a new instance of CloudServicePatch. </summary>
         public CloudServicePatch()

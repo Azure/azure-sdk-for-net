@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
                 data.ProbePath,
                 data.GeoFilters,
                 data.DefaultOriginGroup,
-                data.UrlSigningKeys,
+                data.UriSigningKeys,
                 data.DeliveryPolicy,
                 data.WebApplicationFirewallPolicyLink,
                 data.HostName,

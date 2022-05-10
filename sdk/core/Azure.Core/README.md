@@ -26,6 +26,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 - Calling long-running operations (`Operation<T>`).
 - Paging and asynchronous streams (```AsyncPageable<T>```).
 - Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`).
+- Customizing request (`RequestContext`).
 - Abstractions for representing Azure SDK credentials. (`TokenCredentials`).
 
 Below, you will find sections explaining these shared concepts in more detail.
@@ -83,8 +84,8 @@ SecretClient client = new SecretClient(new Uri("http://example.com"), new Defaul
 More on client configuration in [client configuration samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md)
 
 ### Accessing HTTP Response Details Using ```Response<T>```
-_Service clients_ have methods that can be used to call Azure services. 
-We refer to these client methods _service methods_.
+
+_Service clients_ have methods that can be used to call Azure services. We refer to these client methods _service methods_.
 _Service methods_ return a shared Azure.Core type ```Response<T>``` (in rare cases its non-generic sibling, a raw ```Response```).
 This type provides access to both the deserialized result of the service call, 
 and to the details of the HTTP response returned from the server.
@@ -182,6 +183,20 @@ Console.WriteLine(value.ScheduledPurgeDate);
 ```
 
 More on long-running operations in [long-running operation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md)
+
+### Customzing Request Using `RequestContext`
+
+Besides general configuration of _service clients_ through `ClientOptions`, it is possible to customize the requests sent by _service clients_
+using protocol methods or convenience APIs that expose `RequestContext` as a parameter.
+
+```C# Snippet:SetRequestContext
+var context = new RequestContext();
+context.AddClassifier(404, isError: false);
+
+Response response = await client.GetPetAsync("pet1", context);
+```
+
+More on request customization in [RequestContext samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/RequestContext.md)
 
 ### Mocking
 One of the most important cross-cutting features of our new client libraries using Azure.Core is that they are designed for mocking.

@@ -9,9 +9,10 @@ using System;
 using System.Threading.Tasks;
 using Avro.Specific;
 using Azure;
-using Azure.Data.SchemaRegistry;
 using Azure.Messaging;
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
@@ -101,29 +102,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
                 async () => await serializer.DeserializeAsync<Employee_V2>(content),
-                Throws.InstanceOf<SchemaRegistryAvroException>()
-                    .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>()
-                    .And.Property(nameof(SchemaRegistryAvroException.SchemaId)).EqualTo(schemaId));
-
-            #region Snippet:SchemaRegistryAvroException
-            try
-            {
-                Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
-            }
-            catch (SchemaRegistryAvroException exception)
-            {
-                // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
-                // serialize the data.
-                Console.WriteLine(exception);
-
-                // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
-                if (exception.SchemaId != null)
-                {
-                    SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
-                    Console.WriteLine(schema.Definition);
-                }
-            }
-            #endregion
+                Throws.InstanceOf<Exception>()
+                    .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
         }
 
         [RecordedTest]
@@ -136,7 +116,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.That(
                 async () => await serializer.SerializeAsync<MessageContent, InvalidAvroModel>(invalid),
-                Throws.InstanceOf<SchemaRegistryAvroException>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
+                Throws.InstanceOf<Exception>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 
         [RecordedTest]
@@ -148,13 +128,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             var employee = new Employee { Age = 42, Name = "Caketown" };
             var content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
-            var schemaId = content.ContentType.ToString().Split('+')[1];
 
             Assert.That(
                 async () => await serializer.DeserializeAsync<InvalidAvroModel>(content),
-                Throws.InstanceOf<SchemaRegistryAvroException>()
-                    .And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>()
-                    .And.Property(nameof(SchemaRegistryAvroException.SchemaId)).EqualTo(schemaId));
+                Throws.InstanceOf<Exception>()
+                    .And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
         }
 
         [RecordedTest]
@@ -217,6 +195,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
+        [LiveOnly] // due to Event Hubs integration
         public async Task CanUseEncoderWithEventData()
         {
             var client = CreateClient();
@@ -235,6 +214,19 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             // the serialized Avro data will be stored in the EventBody
             Console.WriteLine(eventData.EventBody);
 #endif
+
+            // construct a publisher and publish the events to our event hub
+#if SNIPPET
+            var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var credential = new DefaultAzureCredential();
+#else
+            var fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;
+            var eventHubName = TestEnvironment.SchemaRegistryEventHubName;
+            var credential = TestEnvironment.Credential;
+#endif
+            await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+            await producer.SendAsync(new EventData[] { eventData });
             #endregion
 
             Assert.IsFalse(eventData.IsReadOnly);
@@ -244,23 +236,29 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryAvroDecodeEventData
-            Employee deserialized = (Employee) await serializer.DeserializeAsync(eventData, typeof(Employee));
+            // construct a consumer and consume the event from our event hub
+            await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
+            await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
+            {
+                Employee deserialized = (Employee) await serializer.DeserializeAsync(eventData, typeof(Employee));
 #if SNIPPET
-            Console.WriteLine(deserialized.Age);
-            Console.WriteLine(deserialized.Name);
+                Console.WriteLine(deserialized.Age);
+                Console.WriteLine(deserialized.Name);
+#else
+                // decoding should not alter the message
+                contentType = eventData.ContentType.Split('+');
+                Assert.AreEqual(2, contentType.Length);
+                Assert.AreEqual("avro/binary", contentType[0]);
+                Assert.IsNotEmpty(contentType[1]);
+
+                // verify the payload was decoded correctly
+                Assert.IsNotNull(deserialized);
+                Assert.AreEqual("Caketown", deserialized.Name);
+                Assert.AreEqual(42, deserialized.Age);
 #endif
+                break;
+            }
             #endregion
-
-            // decoding should not alter the message
-            contentType = eventData.ContentType.Split('+');
-            Assert.AreEqual(2, contentType.Length);
-            Assert.AreEqual("avro/binary", contentType[0]);
-            Assert.IsNotEmpty(contentType[1]);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
         }
 
         [RecordedTest]

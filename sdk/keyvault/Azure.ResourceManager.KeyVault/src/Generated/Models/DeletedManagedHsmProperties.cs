@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
-        /// <param name="mhsmId"> The resource id of the original managed HSM. </param>
+        /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
         /// <param name="deletionOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
-        internal DeletedManagedHsmProperties(string mhsmId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
+        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
         {
-            MhsmId = mhsmId;
+            ManagedHsmId = managedHsmId;
             Location = location;
             DeletionOn = deletionOn;
             ScheduledPurgeOn = scheduledPurgeOn;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The resource id of the original managed HSM. </summary>
-        public string MhsmId { get; }
+        public ResourceIdentifier ManagedHsmId { get; }
         /// <summary> The location of the original managed HSM. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
         public DateTimeOffset? DeletionOn { get; }
         /// <summary> The scheduled purged date. </summary>

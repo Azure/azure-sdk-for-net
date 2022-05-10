@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Properties required to update a CdnWebApplicationFirewallPolicy. </summary>
-    internal partial class CdnWebApplicationFirewallPolicyPatch
+    public partial class CdnWebApplicationFirewallPolicyPatch
     {
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyPatch. </summary>
         public CdnWebApplicationFirewallPolicyPatch()

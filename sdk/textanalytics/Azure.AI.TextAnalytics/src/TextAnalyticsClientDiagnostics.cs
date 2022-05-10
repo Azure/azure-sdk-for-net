@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
@@ -41,7 +42,7 @@ namespace Azure.Core.Pipeline
                     using JsonDocument doc = JsonDocument.Parse(content);
                     if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
                     {
-                        TextAnalyticsError error = Transforms.ConvertToError(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(errorElement));
+                        TextAnalyticsError error = Transforms.ConvertToError(Error.DeserializeError(errorElement));
 
                         return new ResponseError(error.ErrorCode.ToString(), error.Message);
                     }

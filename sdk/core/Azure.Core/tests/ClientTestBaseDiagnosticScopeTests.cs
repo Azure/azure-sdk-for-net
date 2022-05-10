@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -23,7 +23,15 @@ namespace Azure.Core.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.NoScopeAsync());
-            StringAssert.Contains("Expected some diagnostic scopes to be created, found none", ex.Message);
+            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
+        }
+
+        [Test]
+        public void ThrowsWhenOnlyAzureCoreDiagnosticScopesPresent()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.AzureCoreScopeAsync());
+            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
 
         [Test]
@@ -89,6 +97,13 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task DoesNotThrowForForwardedDiagnosticScopeContainingCorrectScopeAndAzureCoreScope()
+        {
+            InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
+            await client.ForwardsAsync(true);
+        }
+
+        [Test]
         public async Task DoesNotThrowForCorrectDiagnosticScope()
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
@@ -99,7 +114,7 @@ namespace Azure.Core.Tests
         {
             private DiagnosticScope CreateScope(string method)
             {
-                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Core.Tests", "random", true);
+                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Core.Tests", "random", true, false);
                 string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).Name}.{method}";
                 DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
                 return scope;
@@ -107,9 +122,21 @@ namespace Azure.Core.Tests
 
             private void CreateAndFireScope(string method)
             {
-                DiagnosticScope scope = CreateScope(method);
+                using DiagnosticScope scope = CreateScope(method);
                 scope.Start();
-                scope.Dispose();
+            }
+
+            private void CreateAndFireCoreScope()
+            {
+                // copied from RequestActivityPolicy
+                using DiagnosticScope coreScope = new DiagnosticScope(
+                    "Azure.Core.Http.Request",
+                    new DiagnosticListener("Azure.Core"),
+                    null,
+                    ActivityExtensions.CreateActivitySource("Azure.Core.Http"),
+                    DiagnosticScope.ActivityKind.Client,
+                    false);
+                coreScope.Start();
             }
 
             [ForwardsClientCalls]
@@ -121,6 +148,20 @@ namespace Azure.Core.Tests
             [ForwardsClientCalls]
             public virtual bool NoScope()
             {
+                return true;
+            }
+
+            [ForwardsClientCalls]
+            public virtual Task<bool> AzureCoreScopeAsync()
+            {
+                CreateAndFireCoreScope();
+                return Task.FromResult(true);
+            }
+
+            [ForwardsClientCalls]
+            public virtual bool AzureCoreScope()
+            {
+                CreateAndFireCoreScope();
                 return true;
             }
 
@@ -194,17 +235,32 @@ namespace Azure.Core.Tests
             }
 
             [ForwardsClientCalls]
-            public virtual Task<bool> ForwardsAsync()
+            public virtual Task<bool> ForwardsAsync(bool includeCoreScope = false)
             {
-                CreateAndFireScope(nameof(CorrectScope));
+                ForwardsInternal(includeCoreScope);
                 return Task.FromResult(true);
             }
 
             [ForwardsClientCalls]
-            public virtual bool Forwards()
+            public virtual bool Forwards(bool includeCoreScope = false)
             {
-                CreateAndFireScope(nameof(CorrectScope));
+                ForwardsInternal(includeCoreScope);
                 return true;
+            }
+
+            private void ForwardsInternal(bool includeCoreScope)
+            {
+                if (includeCoreScope)
+                {
+                    using DiagnosticScope libraryScope = CreateScope(nameof(CorrectScope));
+                    libraryScope.Start();
+
+                    CreateAndFireCoreScope();
+                }
+                else
+                {
+                    CreateAndFireScope(nameof(CorrectScope));
+                }
             }
 
             public virtual AsyncPageable<int> GetPageableNoPageableScopesAsync()

@@ -1,14 +1,14 @@
 # Release History
 
-## 7.8.0-beta.3 (Unreleased)
+## 7.8.0 (2022-05-09)
 
 ### Features Added
 
+- Added the `GetReceiveActions` method to `ProcessMessageEventArgs` and `ProcessSessionMessageEventArgs` to allow for receiving additional messages from the processor callback.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `ServiceBusTransportMetrics` and `ServiceBusRuleManager` have been removed from the prior beta versions. These will be evaluated for inclusion in a future GA release.
 
 ## 7.8.0-beta.2 (2022-04-07)
 

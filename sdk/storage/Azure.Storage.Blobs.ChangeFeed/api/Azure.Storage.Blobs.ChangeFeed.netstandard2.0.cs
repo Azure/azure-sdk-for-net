@@ -4,17 +4,22 @@ namespace Azure.Storage.Blobs.ChangeFeed
     {
         protected BlobChangeFeedClient() { }
         public BlobChangeFeedClient(string connectionString) { }
-        public BlobChangeFeedClient(string connectionString, Azure.Storage.Blobs.BlobClientOptions options) { }
-        public BlobChangeFeedClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
-        public BlobChangeFeedClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
-        public BlobChangeFeedClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options = null) { }
-        public BlobChangeFeedClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null) { }
+        public BlobChangeFeedClient(string connectionString, Azure.Storage.Blobs.BlobClientOptions options, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions changeFeedOptions) { }
+        public BlobChangeFeedClient(System.Uri serviceUri, Azure.AzureSasCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions changeFeedOptions = null) { }
+        public BlobChangeFeedClient(System.Uri serviceUri, Azure.Core.TokenCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions changeFeedOptions = null) { }
+        public BlobChangeFeedClient(System.Uri serviceUri, Azure.Storage.Blobs.BlobClientOptions options = null, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions changeFeedOptions = null) { }
+        public BlobChangeFeedClient(System.Uri serviceUri, Azure.Storage.StorageSharedKeyCredential credential, Azure.Storage.Blobs.BlobClientOptions options = null, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions changeFeedOptions = null) { }
         public virtual Azure.Pageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChanges() { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChanges(System.DateTimeOffset? start = default(System.DateTimeOffset?), System.DateTimeOffset? end = default(System.DateTimeOffset?)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChanges(string continuationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChangesAsync() { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChangesAsync(System.DateTimeOffset? start = default(System.DateTimeOffset?), System.DateTimeOffset? end = default(System.DateTimeOffset?)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEvent> GetChangesAsync(string continuationToken) { throw null; }
+    }
+    public partial class BlobChangeFeedClientOptions
+    {
+        public BlobChangeFeedClientOptions() { }
+        public long? MaximumTransferSize { get { throw null; } set { } }
     }
     public partial class BlobChangeFeedEvent
     {
@@ -81,7 +86,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     }
     public static partial class BlobChangeFeedExtensions
     {
-        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClient GetChangeFeedClient(this Azure.Storage.Blobs.BlobServiceClient serviceClient) { throw null; }
+        public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClient GetChangeFeedClient(this Azure.Storage.Blobs.BlobServiceClient serviceClient, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedClientOptions options = null) { throw null; }
     }
     public static partial class BlobChangeFeedModelFactory
     {

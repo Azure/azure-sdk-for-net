@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the application gateway private endpoint connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The consumer link id. </summary>

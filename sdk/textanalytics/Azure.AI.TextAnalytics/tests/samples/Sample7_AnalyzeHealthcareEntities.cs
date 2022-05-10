@@ -11,6 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
+        [Ignore("LRO not implemented")]
         public void AnalyzeHealthcareEntities()
         {
             // create a text analytics client

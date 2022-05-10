@@ -17,13 +17,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultCreateOrUpdateContent. </summary>
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="properties"> Properties of the vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="properties"/> is null. </exception>
-        public VaultCreateOrUpdateContent(string location, VaultProperties properties)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public VaultCreateOrUpdateContent(AzureLocation location, VaultProperties properties)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
             if (properties == null)
             {
                 throw new ArgumentNullException(nameof(properties));
@@ -35,7 +31,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The supported Azure location where the key vault should be created. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
         /// <summary> The tags that will be assigned to the key vault. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the vault. </summary>

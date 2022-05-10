@@ -52,6 +52,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="uploadedInputAssetUri"> The Uri to the Asset to be ingested by the AOA Asset Conversion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
         /// <param name="accountId"> Identifier for the Account owning the AOA asset conversion Job. </param>
         /// <param name="assetConversionConfiguration"> The configuration of the AOA asset conversion job. </param>
+        /// <param name="scaledAssetDimensions">The scaled dimensions of the asset.</param>
         /// <returns> A new instance of the <see cref="AssetConversionProperties"/> for mocking purposes. </returns>
         public static AssetConversionProperties AssetConversionProperties(
             string clientErrorDetails,
@@ -63,7 +64,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             AssetFileType assetFileType,
             Uri uploadedInputAssetUri,
             Guid? accountId,
-            AssetConversionConfiguration assetConversionConfiguration)
+            AssetConversionConfiguration assetConversionConfiguration,
+            System.Numerics.Vector3 scaledAssetDimensions)
         {
             return new AssetConversionProperties(
             clientErrorDetails,
@@ -75,7 +77,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             assetFileType.ToString(),
             uploadedInputAssetUri.AbsoluteUri,
             accountId,
-            assetConversionConfiguration);
+            assetConversionConfiguration,
+            new Vector3(scaledAssetDimensions));
         }
 
         /// <summary>

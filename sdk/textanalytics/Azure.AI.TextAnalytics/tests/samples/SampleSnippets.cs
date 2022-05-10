@@ -42,6 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
         }
 
         [Test]
+        [Ignore("LRO not implemented")]
         public async Task ExtractSummaryWithoutErrorHandling()
         {
             // Shorter than other Extractive Summarization samples. Used in README for simplicity.

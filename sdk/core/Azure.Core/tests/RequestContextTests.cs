@@ -27,7 +27,9 @@ namespace Azure.Core.Tests
         [Test]
         public void CanSetErrorOptions()
         {
+            #region Snippet:ErrorOptionsNoThrow
             RequestContext context = new RequestContext { ErrorOptions = ErrorOptions.NoThrow };
+            #endregion
 
             Assert.IsTrue(context.ErrorOptions == ErrorOptions.NoThrow);
         }
@@ -42,8 +44,10 @@ namespace Azure.Core.Tests
             };
             var pipeline = HttpPipelineBuilder.Build(clientOptions);
 
+            #region Snippet:AddPolicyPerCall
             var context = new RequestContext();
             context.AddPolicy(new AddHeaderPolicy("PerCallHeader", "Value"), HttpPipelinePosition.PerCall);
+            #endregion
 
             var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
@@ -66,8 +70,10 @@ namespace Azure.Core.Tests
             };
             var pipeline = HttpPipelineBuilder.Build(clientOptions);
 
+            #region Snippet:AddPolicyPerRetry
             var context = new RequestContext();
             context.AddPolicy(new AddHeaderPolicy("PerRetryHeader", "Value"), HttpPipelinePosition.PerRetry);
+            #endregion
 
             var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
@@ -93,8 +99,10 @@ namespace Azure.Core.Tests
             };
             var pipeline = HttpPipelineBuilder.Build(clientOptions);
 
+            #region Snippet:AddPolicyBeforeTransport
             var context = new RequestContext();
             context.AddPolicy(new AddHeaderPolicy("BeforeTransportHeader", "Value"), HttpPipelinePosition.BeforeTransport);
+            #endregion
 
             var message = pipeline.CreateMessage(context);
             await pipeline.SendAsync(message, message.CancellationToken);
@@ -230,8 +238,10 @@ namespace Azure.Core.Tests
             var classifier = new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 304 });
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, HttpMessageSanitizer.Default, "Test SDK") });
 
+            #region Snippet:Change404Category
             var context = new RequestContext();
             context.AddClassifier(404, isError: false);
+            #endregion
 
             var message = pipeline.CreateMessage(context, classifier);
 

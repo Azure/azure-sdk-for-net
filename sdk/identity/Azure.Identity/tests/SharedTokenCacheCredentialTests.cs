@@ -75,6 +75,25 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void RespectsTokenCachePersistenceOptions()
+        {
+            bool cacheDelegateCalled = false;
+
+            var cachePersistenceOptions = new MockTokenCache(refreshDelegate: () =>
+            {
+                cacheDelegateCalled = true;
+
+                return Task.FromResult<ReadOnlyMemory<byte>>(null);
+            });
+
+            var credential = InstrumentClient(new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions(cachePersistenceOptions)));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsTrue(cacheDelegateCalled);
+        }
+
+        [Test]
         public async Task OneAccountNoTentantNoUsername()
         {
             string expToken = Guid.NewGuid().ToString();

@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
@@ -16,6 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class LogsHelper
     {
         private const int Version = 2;
+        private static readonly ConcurrentDictionary<int, string> DepthCache = new ConcurrentDictionary<int, string>();
+        private static readonly Func<int, string> ConvertDepthToStringRef = ConvertDepthToString;
 
         internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, string roleName, string roleInstance, string instrumentationKey)
         {
@@ -67,6 +71,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 ExtractProperties(ref message, properties, logRecord.StateValues);
             }
 
+            WriteScopeInformation(logRecord, properties);
+
             if (logRecord.EventId.Id != 0)
             {
                 properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
@@ -78,6 +84,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return message;
+        }
+
+        internal static void WriteScopeInformation(LogRecord logRecord, IDictionary<string, string> properties)
+        {
+            StringBuilder builder = null;
+            int originalScopeDepth = 1;
+            logRecord.ForEachScope(ProcessScope, properties);
+
+            void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
+            {
+                int valueDepth = 1;
+                foreach (KeyValuePair<string, object> scopeItem in scope)
+                {
+                    if (string.IsNullOrEmpty(scopeItem.Key))
+                    {
+                        builder ??= new StringBuilder();
+                        builder.Append(" => ").Append(scope.Scope);
+                    }
+                    else if (scopeItem.Key == "{OriginalFormat}")
+                    {
+                        properties.Add($"OriginalFormatScope_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
+                    }
+                    else if (!properties.TryGetValue(scopeItem.Key, out _))
+                    {
+                        properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        properties.Add($"{scopeItem.Key}_{DepthCache.GetOrAdd(originalScopeDepth, ConvertDepthToStringRef)}_{DepthCache.GetOrAdd(valueDepth, ConvertDepthToStringRef)}",
+                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                        valueDepth++;
+                    }
+                }
+
+                originalScopeDepth++;
+            }
+
+            if (builder?.Length > 0)
+            {
+                properties.Add("Scope", builder.ToString());
+            }
         }
 
         internal static string GetProblemId(Exception exception)
@@ -156,5 +203,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
         }
+
+        private static string ConvertDepthToString(int depth) => $"{depth}";
     }
 }
