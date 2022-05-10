@@ -223,6 +223,13 @@ directive:
       $.LoadBalancingSettingsParameters['x-ms-client-name'] = 'LoadBalancingSettings';
       $.CompressionSettings['x-ms-client-name'] = 'RouteCacheCompressionSettings';
       $.UsageName['x-ms-client-name'] = 'CdnUsageResourceName';
+      $.SecretParameters['x-ms-client-name'] = 'SecretDefinition';
+      $.SecurityPolicyPropertiesParameters['x-ms-client-name'] = 'SecurityPolicyPropertiesDefinition';
+      $.AzureFirstPartyManagedCertificateParameters['x-ms-client-name'] = 'AzureFirstPartyManagedCertificateDefinition';
+      $.CustomerCertificateParameters['x-ms-client-name'] = 'CustomerCertificateDefinition';
+      $.ManagedCertificateParameters['x-ms-client-name'] = 'ManagedCertificateDefinition';
+      $.UrlSigningKeyParameters['x-ms-client-name'] = 'UriSigningKeyDefinition';
+      $.SecurityPolicyWebApplicationFirewallParameters['x-ms-client-name'] = 'SecurityPolicyWebApplicationFirewallDefinition';
       $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';

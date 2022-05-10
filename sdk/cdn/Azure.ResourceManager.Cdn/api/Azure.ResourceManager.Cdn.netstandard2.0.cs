@@ -336,6 +336,7 @@ namespace Azure.ResourceManager.Cdn
     {
         public AfdSecretData() { }
         public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecretDefinition Parameters { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -372,6 +373,7 @@ namespace Azure.ResourceManager.Cdn
     {
         public AfdSecurityPolicyData() { }
         public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesDefinition Parameters { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -994,6 +996,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class AfdSecurityPolicyPatch
     {
         public AfdSecurityPolicyPatch() { }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesDefinition Parameters { get { throw null; } set { } }
+    }
+    public partial class AzureFirstPartyManagedCertificateDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    {
+        public AzureFirstPartyManagedCertificateDefinition() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CacheBehaviorSettings : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings>
@@ -1492,6 +1499,18 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.CustomDomainResourceState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CustomDomainResourceState left, Azure.ResourceManager.Cdn.Models.CustomDomainResourceState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class CustomerCertificateDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    {
+        public CustomerCertificateDefinition(Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
+        public string CertificateAuthority { get { throw null; } }
+        public string ExpirationDate { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SecretSourceId { get { throw null; } set { } }
+        public string SecretVersion { get { throw null; } set { } }
+        public string Subject { get { throw null; } }
+        public System.Collections.Generic.IList<string> SubjectAlternativeNames { get { throw null; } }
+        public string Thumbprint { get { throw null; } }
+        public bool? UseLatestVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomHttpsAvailabilityState : System.IEquatable<Azure.ResourceManager.Cdn.Models.CustomHttpsAvailabilityState>
@@ -2316,6 +2335,12 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.LogRankingMetric (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.LogRankingMetric left, Azure.ResourceManager.Cdn.Models.LogRankingMetric right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ManagedCertificateDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    {
+        public ManagedCertificateDefinition() { }
+        public string ExpirationDate { get { throw null; } }
+        public string Subject { get { throw null; } }
     }
     public partial class ManagedRuleDefinition
     {
@@ -3468,6 +3493,26 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SecretDefinition
+    {
+        public SecretDefinition() { }
+    }
+    public partial class SecurityPolicyPropertiesDefinition
+    {
+        public SecurityPolicyPropertiesDefinition() { }
+    }
+    public partial class SecurityPolicyWebApplicationFirewallAssociation
+    {
+        public SecurityPolicyWebApplicationFirewallAssociation() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ActivatedResourceReference> Domains { get { throw null; } }
+        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
+    }
+    public partial class SecurityPolicyWebApplicationFirewallDefinition : Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesDefinition
+    {
+        public SecurityPolicyWebApplicationFirewallDefinition() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> Associations { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WafPolicyId { get { throw null; } set { } }
+    }
     public partial class ServerPortMatchConditionDefinition
     {
         public ServerPortMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.ServerPortOperator @operator) { }
@@ -3946,6 +3991,13 @@ namespace Azure.ResourceManager.Cdn.Models
         public UriSigningKey(string keyId, Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyDefinition keySourceParameters) { }
         public string KeyId { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyDefinition KeySourceParameters { get { throw null; } set { } }
+    }
+    public partial class UriSigningKeyDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    {
+        public UriSigningKeyDefinition(string keyId, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
+        public string KeyId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SecretSourceId { get { throw null; } set { } }
+        public string SecretVersion { get { throw null; } set { } }
     }
     public partial class UriSigningParamIdentifier
     {

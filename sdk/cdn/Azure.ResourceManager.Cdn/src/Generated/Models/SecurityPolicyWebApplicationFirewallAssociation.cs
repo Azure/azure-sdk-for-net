@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> settings for security policy patterns to match. </summary>
-    internal partial class SecurityPolicyWebApplicationFirewallAssociation
+    public partial class SecurityPolicyWebApplicationFirewallAssociation
     {
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
         public SecurityPolicyWebApplicationFirewallAssociation()

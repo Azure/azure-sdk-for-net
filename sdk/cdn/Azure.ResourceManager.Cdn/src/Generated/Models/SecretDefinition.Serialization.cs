@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class SecretParameters : IUtf8JsonSerializable
+    public partial class SecretDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static SecretParameters DeserializeSecretParameters(JsonElement element)
+        internal static SecretDefinition DeserializeSecretDefinition(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateParameters.DeserializeAzureFirstPartyManagedCertificateParameters(element);
-                    case "CustomerCertificate": return CustomerCertificateParameters.DeserializeCustomerCertificateParameters(element);
-                    case "ManagedCertificate": return ManagedCertificateParameters.DeserializeManagedCertificateParameters(element);
-                    case "UrlSigningKey": return UriSigningKeyParameters.DeserializeUriSigningKeyParameters(element);
+                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateDefinition.DeserializeAzureFirstPartyManagedCertificateDefinition(element);
+                    case "CustomerCertificate": return CustomerCertificateDefinition.DeserializeCustomerCertificateDefinition(element);
+                    case "ManagedCertificate": return ManagedCertificateDefinition.DeserializeManagedCertificateDefinition(element);
+                    case "UrlSigningKey": return UriSigningKeyDefinition.DeserializeUriSigningKeyDefinition(element);
                 }
             }
             SecretType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecretParameters(type);
+            return new SecretDefinition(type);
         }
     }
 }
