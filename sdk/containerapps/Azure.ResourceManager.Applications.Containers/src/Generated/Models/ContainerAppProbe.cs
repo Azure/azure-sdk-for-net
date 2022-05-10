@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
     /// <summary> Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic. </summary>
@@ -13,11 +16,11 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
         public ContainerAppProbe()
         {
+            HttpHeaders = new ChangeTrackingList<HttpHeaderData>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppProbe. </summary>
         /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </param>
-        /// <param name="httpGet"> HTTPGet specifies the http request to perform. </param>
         /// <param name="initialDelaySeconds"> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </param>
         /// <param name="periodSeconds"> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </param>
         /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </param>
@@ -25,10 +28,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="terminationGracePeriodSeconds"> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod&apos;s terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </param>
         /// <param name="timeoutSeconds"> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </param>
         /// <param name="probeType"> The type of probe. </param>
-        internal ContainerAppProbe(int? failureThreshold, ContainerAppProbeHttpGet httpGet, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppProbeTcpSocket tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ProbeType? probeType)
+        /// <param name="httpHost"> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </param>
+        /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
+        /// <param name="path"> Path to access on the HTTP server. </param>
+        /// <param name="httpPort"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
+        /// <param name="scheme"> Scheme to use for connecting to the host. Defaults to HTTP. </param>
+        internal ContainerAppProbe(int? failureThreshold, int? initialDelaySeconds, int? periodSeconds, int? successThreshold, ContainerAppProbeTcpSocket tcpSocket, long? terminationGracePeriodSeconds, int? timeoutSeconds, ProbeType? probeType, string httpHost, IList<HttpHeaderData> httpHeaders, string path, int? httpPort, Scheme? scheme)
         {
             FailureThreshold = failureThreshold;
-            HttpGet = httpGet;
             InitialDelaySeconds = initialDelaySeconds;
             PeriodSeconds = periodSeconds;
             SuccessThreshold = successThreshold;
@@ -36,12 +43,15 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
             TimeoutSeconds = timeoutSeconds;
             ProbeType = probeType;
+            HttpHost = httpHost;
+            HttpHeaders = httpHeaders;
+            Path = path;
+            HttpPort = httpPort;
+            Scheme = scheme;
         }
 
         /// <summary> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </summary>
         public int? FailureThreshold { get; set; }
-        /// <summary> HTTPGet specifies the http request to perform. </summary>
-        public ContainerAppProbeHttpGet HttpGet { get; set; }
         /// <summary> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </summary>
         public int? InitialDelaySeconds { get; set; }
         /// <summary> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </summary>
@@ -56,5 +66,15 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public int? TimeoutSeconds { get; set; }
         /// <summary> The type of probe. </summary>
         public ProbeType? ProbeType { get; set; }
+        /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </summary>
+        public string HttpHost { get; set; }
+        /// <summary> Custom headers to set in the request. HTTP allows repeated headers. </summary>
+        public IList<HttpHeaderData> HttpHeaders { get; }
+        /// <summary> Path to access on the HTTP server. </summary>
+        public string Path { get; set; }
+        /// <summary> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </summary>
+        public int? HttpPort { get; set; }
+        /// <summary> Scheme to use for connecting to the host. Defaults to HTTP. </summary>
+        public Scheme? Scheme { get; set; }
     }
 }

@@ -690,29 +690,18 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     {
         public ContainerAppProbe() { }
         public int? FailureThreshold { get { throw null; } set { } }
-        public Azure.ResourceManager.Applications.Containers.Models.ContainerAppProbeHttpGet HttpGet { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.HttpHeaderData> HttpHeaders { get { throw null; } }
+        public string HttpHost { get { throw null; } set { } }
+        public int? HttpPort { get { throw null; } set { } }
         public int? InitialDelaySeconds { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
         public int? PeriodSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.Applications.Containers.Models.ProbeType? ProbeType { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.Scheme? Scheme { get { throw null; } set { } }
         public int? SuccessThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.Applications.Containers.Models.ContainerAppProbeTcpSocket TcpSocket { get { throw null; } set { } }
         public long? TerminationGracePeriodSeconds { get { throw null; } set { } }
         public int? TimeoutSeconds { get { throw null; } set { } }
-    }
-    public partial class ContainerAppProbeHttpGet
-    {
-        public ContainerAppProbeHttpGet(int port) { }
-        public string Host { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.ContainerAppProbeHttpGetHttpHeadersItem> HttpHeaders { get { throw null; } }
-        public string Path { get { throw null; } set { } }
-        public int Port { get { throw null; } set { } }
-        public Azure.ResourceManager.Applications.Containers.Models.Scheme? Scheme { get { throw null; } set { } }
-    }
-    public partial class ContainerAppProbeHttpGetHttpHeadersItem
-    {
-        public ContainerAppProbeHttpGetHttpHeadersItem(string name, string value) { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
     }
     public partial class ContainerAppProbeTcpSocket
     {
@@ -972,6 +961,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.Applications.Containers.Models.ClientRegistration Registration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ValidationAllowedAudiences { get { throw null; } }
+    }
+    public partial class HttpHeaderData
+    {
+        public HttpHeaderData(string name, string value) { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
     }
     public partial class HttpScaleRule
     {
