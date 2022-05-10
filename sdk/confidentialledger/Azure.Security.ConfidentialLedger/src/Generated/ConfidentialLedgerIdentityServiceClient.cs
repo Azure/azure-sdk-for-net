@@ -49,8 +49,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <code>{
         ///   error: {
         ///     code: string,
-        ///     message: string,
-        ///     innererror: ConfidentialLedgerErrorBody
+        ///     message: string
         ///   }
         /// }
         /// </code>
@@ -90,8 +89,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <code>{
         ///   error: {
         ///     code: string,
-        ///     message: string,
-        ///     innererror: ConfidentialLedgerErrorBody
+        ///     message: string
         ///   }
         /// }
         /// </code>
