@@ -30,6 +30,7 @@ steps:
   - template: ../../eng/common/TestResources/deploy-test-resources.yml
     parameters:
       ServiceDirectory: storage
+      Location: westus
       ResourceType: perf
 
   - pwsh: |
