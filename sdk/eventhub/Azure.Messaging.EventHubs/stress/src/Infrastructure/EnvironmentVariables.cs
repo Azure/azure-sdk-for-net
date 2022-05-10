@@ -16,5 +16,9 @@ namespace Azure.Messaging.EventHubs.Stress
         public const string EventHubEventProducerTest = "EVENTHUB_NAME_EVENT_PRODUCER_TEST";
         public const string EventHubBurstBufferedProducerTest = "EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST";
         public const string EventHubConcurrentBufferedProducerTest = "EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST";
+
+        // Job Index Information
+        public const string JobCompletionIndex = "JOB_COMPLETION_INDEX";
+        public const string RoleList = "ROLE_LIST";
     }
 }

@@ -1,14 +1,60 @@
-{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "stress.event-hub") -}}
-{{- define "stress.event-hub" -}}
-metadata:
-  labels:
-    testName: "net-eh-stress-{{ .Scenario }}"
-    testInstance: "eventhubs-{{.Scenario }}-{{ .Release.Name }}-{{ .Release.Revision }}"
+{{- include "stress.deploy-job-template.from-job" (list . "stress.deploy-example") -}}
+{{- define "stress.deploy-example" -}}
 spec:
-  containers:
-    - name: net-eh-stress
-      image: {{ .Values.image }}
-      imagePullPolicy: Always
-      command: ['dotnet', 'Azure.Messaging.EventHubs.Stress.dll', '--tests', {{ .Scenario }}]
-      {{- include "stress-test-addons.container-env" . | nindent 6 }}
+  completions: 2
+  parallelism: 2
+  completionMode: Indexed
+  template:
+    metadata:
+      labels:
+        testName: "net-eh-stress-{{ lower .Stress.Scenario }}"
+        testInstance: "eventhubs-{{ lower .Stress.Scenario }}-{{ .Release.Name }}-{{ .Release.Revision }}"
+    spec:
+      containers:
+        - name: role
+          image: {{ .Values.image }}
+          command: ['dotnet', 'Azure.Messaging.EventHubs.Stress.dll']
+          {{- include "stress.container-env" . | nindent 10 }}
+{{- end -}}
+
+{{- define "stress.deploy-job-template.from-job" -}}
+{{- $global := index . 0 -}}
+{{- $jobOverrideDefinition := index . 1 -}}
+# Configmap template that adds the stress test ARM template for mounting
+{{- include "stress-test-addons.deploy-configmap" $global }}
+{{- range (default (list "stress") $global.Values.scenarios) }}
+---
+{{ $jobCtx := fromYaml (include "stress-test-addons.util.mergeStressContext" (list $global . )) }}
+{{- $jobOverride := fromYaml (include $jobOverrideDefinition $jobCtx) -}}
+{{- $tpl := fromYaml (include "stress-test-addons.deploy-job-template.tpl" $jobCtx) -}}
+{{- toYaml (merge $jobOverride $tpl) -}}
+{{- end }}
+{{- end -}}
+
+{{- define "stress.container-env" -}}
+env:
+  - name: ROLE_LIST
+    valueFrom:
+      configMapKeyRef:
+        name: "{{ lower .Stress.Scenario }}-configmap-3"
+        key: roles
+  - name: ENV_FILE
+    value: /mnt/outputs/.env
+  - name: POD_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.name
+  - name: POD_NAMESPACE
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.namespace
+  - name: DEBUG_SHARE
+    value: /mnt/share/$(POD_NAMESPACE)/$(POD_NAME)/
+  - name: DEBUG_SHARE_ROOT
+    value: /mnt/share/
+volumeMounts:
+  - name: test-env-{{ lower .Stress.Scenario }}-{{ .Release.Name }}-{{ .Release.Revision }}
+    mountPath: /mnt/outputs
+  - name: debug-file-share-{{ .Release.Name }}
+    mountPath: /mnt/share
 {{- end -}}

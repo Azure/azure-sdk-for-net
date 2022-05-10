@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
@@ -16,5 +17,8 @@ namespace Azure.Messaging.EventHubs.Stress
         // Buffered Producer Configuration
 
         public TimeSpan MaxWaitTime = TimeSpan.FromSeconds(5);
+
+        private static string[] _roles = { "bufferedpublisher", "bufferedpublisher" };
+        public new List<string> Roles = new List<string>(_roles);
     }
 }

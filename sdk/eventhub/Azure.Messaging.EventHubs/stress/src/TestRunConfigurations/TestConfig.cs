@@ -2,23 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventHubs.Stress
 {
     internal class TestConfig
     {
         // true if the given test should be run.
-        public bool Run;
+        public bool Run = true;
 
         // Resource Configurations
 
-        public string EventHubsConnectionString;
-        public string EventHub;
-        public string InstrumentationKey;
+        public string EventHubsConnectionString = String.Empty;
+        public string EventHub = String.Empty;
+        public string InstrumentationKey = String.Empty;
 
         // Test Run Configurations
 
         public int DurationInHours = 120;
+        public List<string> Roles = new List<string>();
 
         // Publishing Configurations
 
