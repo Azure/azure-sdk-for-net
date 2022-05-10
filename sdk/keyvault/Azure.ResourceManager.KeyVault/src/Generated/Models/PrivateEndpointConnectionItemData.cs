@@ -12,20 +12,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint connection item. </summary>
-    public partial class PrivateEndpointConnectionItem
+    public partial class PrivateEndpointConnectionItemData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionItem. </summary>
-        internal PrivateEndpointConnectionItem()
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionItemData. </summary>
+        internal PrivateEndpointConnectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionItem. </summary>
+        /// <summary> Initializes a new instance of PrivateEndpointConnectionItemData. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal PrivateEndpointConnectionItem(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal PrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             Id = id;
             Etag = etag;

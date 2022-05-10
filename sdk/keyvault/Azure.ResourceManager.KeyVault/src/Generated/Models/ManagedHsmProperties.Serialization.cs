@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> statusMessage = default;
             Optional<HsmProvisioningState> provisioningState = default;
             Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
-            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItem>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             foreach (var property in element.EnumerateObject())
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedHsmPrivateEndpointConnectionItem> array = new List<ManagedHsmPrivateEndpointConnectionItem>();
+                    List<ManagedHsmPrivateEndpointConnectionItemData> array = new List<ManagedHsmPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateEndpointConnectionItem.DeserializeManagedHsmPrivateEndpointConnectionItem(item));
+                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item));
                     }
                     privateEndpointConnections = array;
                     continue;

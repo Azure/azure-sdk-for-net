@@ -296,10 +296,10 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: MHSMPrivateLinkResources_ListByManagedHsmResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedHsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedHsmPrivateLinkResource> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedHsmPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedHsmPrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
                 scope.Start();
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: MHSMPrivateLinkResources_ListByManagedHsmResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedHsmPrivateLinkResource> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
         {
-            Page<ManagedHsmPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedHsmPrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mhsmPrivateLinkResourcesClientDiagnostics.CreateScope("ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource");
                 scope.Start();

@@ -73,7 +73,7 @@ directive:
       $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'HsmProvisioningState';
-      $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'VnetSubnetId';
+      $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
   - from: keyvault.json
     where: '$.definitions'
@@ -105,6 +105,18 @@ directive:
   - rename-model:
       from: Permissions
       to: IdentityAccessPermissions
+  - rename-model:
+      from: MHSMPrivateLinkResource
+      to: MHSMPrivateLinkResourceData
+  - rename-model:
+      from: PrivateLinkResource
+      to: PrivateLinkResourceData
+  - rename-model:
+      from: MHSMPrivateEndpointConnectionItem
+      to: MHSMPrivateEndpointConnectionItemData
+  - rename-model:
+      from: PrivateEndpointConnectionItem
+      to: PrivateEndpointConnectionItemData
 ```
 
 ### Tag: package-2021-10

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmPrivateLinkResource : IUtf8JsonSerializable
+    public partial class ManagedHsmPrivateLinkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmPrivateLinkResource DeserializeManagedHsmPrivateLinkResource(JsonElement element)
+        internal static ManagedHsmPrivateLinkResourceData DeserializeManagedHsmPrivateLinkResourceData(JsonElement element)
         {
             Optional<ManagedHsmSku> sku = default;
             IDictionary<string, string> tags = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmPrivateLinkResource(id, name, type, systemData, tags, location, sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData, tags, location, sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

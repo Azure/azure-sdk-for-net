@@ -11,18 +11,18 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Private endpoint connection item. </summary>
-    public partial class ManagedHsmPrivateEndpointConnectionItem
+    public partial class ManagedHsmPrivateEndpointConnectionItemData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItem. </summary>
-        internal ManagedHsmPrivateEndpointConnectionItem()
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        internal ManagedHsmPrivateEndpointConnectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItem. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal ManagedHsmPrivateEndpointConnectionItem(SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal ManagedHsmPrivateEndpointConnectionItemData(SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
