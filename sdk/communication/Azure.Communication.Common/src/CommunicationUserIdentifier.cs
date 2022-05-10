@@ -37,9 +37,6 @@ namespace Azure.Communication
         public override string ToString() => Id;
 
         /// <inheritdoc />
-        public override int GetHashCode() => RawId.GetHashCode();
-
-        /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
             => other is CommunicationUserIdentifier otherId && otherId.RawId == RawId;
     }
