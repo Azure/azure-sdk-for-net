@@ -187,12 +187,13 @@ function New-DataPlanePackageFolder() {
         $dotnetNewCmd = $dotnetNewCmd + " --includeCI false"
     }
     # dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
-    Write-Host "Invote dotnet new command: $dotnetNewCmd"
+    Write-Host "Invoke dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
+    Pop-Location
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
+    Write-Host "Generating configuration file: $file"
     Update-AutorestConfigFile -autorestFilePath $file -readme $readme
-    Pop-Location
     # dotnet sln
     Push-Location $projectFolder
     dotnet sln remove src\$namespace.csproj
