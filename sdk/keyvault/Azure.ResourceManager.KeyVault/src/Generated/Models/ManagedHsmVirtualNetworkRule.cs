@@ -14,19 +14,19 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class ManagedHsmVirtualNetworkRule
     {
         /// <summary> Initializes a new instance of ManagedHsmVirtualNetworkRule. </summary>
-        /// <param name="vnetSubnetId"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetSubnetId"/> is null. </exception>
-        public ManagedHsmVirtualNetworkRule(ResourceIdentifier vnetSubnetId)
+        /// <param name="subnetId"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
+        public ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId)
         {
-            if (vnetSubnetId == null)
+            if (subnetId == null)
             {
-                throw new ArgumentNullException(nameof(vnetSubnetId));
+                throw new ArgumentNullException(nameof(subnetId));
             }
 
-            VnetSubnetId = vnetSubnetId;
+            SubnetId = subnetId;
         }
 
         /// <summary> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </summary>
-        public ResourceIdentifier VnetSubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

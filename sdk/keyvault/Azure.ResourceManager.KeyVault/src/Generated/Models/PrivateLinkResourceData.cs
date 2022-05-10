@@ -12,28 +12,26 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class ManagedHsmPrivateLinkResource : KeyVaultTrackedResourceData
+    public partial class PrivateLinkResourceData : KeyVaultResourceData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResource. </summary>
-        /// <param name="location"> The location. </param>
-        public ManagedHsmPrivateLinkResource(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
+        public PrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> SKU details. </param>
+        /// <param name="location"> Azure location of the key vault resource. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal ManagedHsmPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData, tags, location, sku)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData, location, tags)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
