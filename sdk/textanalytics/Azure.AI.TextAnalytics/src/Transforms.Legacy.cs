@@ -19,6 +19,58 @@ namespace Azure.AI.TextAnalytics
 
         #region Common
 
+        internal static Models.InnerErrorModel ConvertToLanguageError(Legacy.InnerError error)
+        {
+            if (error == null)
+            {
+                return null;
+            }
+
+            // The legacy details are a read-only dictionary.  It cannot be assumed that
+            // casting to IDictionary is safe; attempt a cast and fall back to making a copy,
+            // if needed.
+
+            var errorDetails = error.Details switch
+            {
+                IDictionary<string, string> dictionary => dictionary,
+                _=> error.Details.ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            return new Models.InnerErrorModel(
+                error.Code.ToString(),
+                error.Message,
+                errorDetails,
+                error.Target,
+                ConvertToLanguageError(error.Innererror));
+        }
+
+        internal static Models.Error ConvertToLanguageError(Legacy.TextAnalyticsError error)
+        {
+            if (error == null)
+            {
+                return null;
+            }
+
+            var errorDetails = default(List<Models.Error>);
+
+            if (error.Details != null)
+            {
+                errorDetails = new List<Models.Error>(error.Details.Count);
+
+                foreach (var errorDetail in error.Details)
+                {
+                    errorDetails.Add(ConvertToLanguageError(errorDetail));
+                }
+            }
+
+            return new Models.Error(
+                error.Code.ToString(),
+                error.Message,
+                error.Target,
+                errorDetails,
+                ConvertToLanguageError(error.Innererror), null);
+        }
+
         internal static TextAnalyticsError ConvertToError(Legacy.TextAnalyticsError error)
         {
             var innerError = error.Innererror;
@@ -26,23 +78,6 @@ namespace Azure.AI.TextAnalytics
             return (innerError != null)
                 ? new TextAnalyticsError(innerError.Code.ToString(), innerError.Message, innerError.Target)
                 : new TextAnalyticsError(error.Code.ToString(), error.Message, error.Target);
-        }
-
-        internal static List<TextAnalyticsError> ConvertToErrors(IReadOnlyList<Legacy.TextAnalyticsError> internalErrors)
-        {
-            var errors = new List<TextAnalyticsError>();
-
-            if (internalErrors == null)
-            {
-                return errors;
-            }
-
-            foreach (var error in internalErrors)
-            {
-                errors.Add(ConvertToError(error));
-            }
-
-            return errors;
         }
 
         internal static List<TextAnalyticsWarning> ConvertToWarnings(IReadOnlyList<Legacy.TextAnalyticsWarning> internalWarnings)
@@ -71,6 +106,22 @@ namespace Azure.AI.TextAnalytics
             (legacyStatistics != null)
                 ? new TextDocumentBatchStatistics(legacyStatistics.DocumentsCount, legacyStatistics.ValidDocumentsCount, legacyStatistics.ErroneousDocumentsCount, legacyStatistics.TransactionsCount)
                 : default;
+
+        internal static ClassificationCategory ConvertToClassificationCategory(Legacy.ClassificationResult legacyClassification) =>
+            new ClassificationCategory(new Models.ClassificationResult(legacyClassification.Category, legacyClassification.ConfidenceScore));
+
+        internal static TextAnalyticsOperationStatus ConvertToTextAnalyticsOperationStatus(Legacy.Models.State legacyState) =>
+            legacyState switch
+            {
+                Legacy.Models.State.Cancelling => TextAnalyticsOperationStatus.Cancelling,
+                Legacy.Models.State.Cancelled => TextAnalyticsOperationStatus.Cancelled,
+                Legacy.Models.State.Failed => TextAnalyticsOperationStatus.Failed,
+                Legacy.Models.State.Running => TextAnalyticsOperationStatus.Running,
+                Legacy.Models.State.Succeeded => TextAnalyticsOperationStatus.Succeeded,
+                Legacy.Models.State.NotStarted => TextAnalyticsOperationStatus.NotStarted,
+                Legacy.Models.State.Rejected => TextAnalyticsOperationStatus.Rejected,
+                _ => new TextAnalyticsOperationStatus(legacyState.ToString())
+            };
 
         #endregion
 
@@ -295,7 +346,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             keyPhrases = SortHeterogeneousCollection(keyPhrases, idToIndexMap);
-
             return new ExtractKeyPhrasesResultCollection(keyPhrases, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
         }
 
@@ -322,6 +372,31 @@ namespace Azure.AI.TextAnalytics
             }
 
             return list;
+        }
+
+        internal static ExtractKeyPhrasesResult ConvertToExtractKeyPhrasesResult(string id, Legacy.KeyPhraseResult legacyResult)
+        {
+            if (legacyResult.Errors.Count > 0)
+            {
+                var docError = default(Legacy.DocumentError);
+
+                foreach (var error in legacyResult.Errors)
+                {
+                    if (docError.Id == id)
+                    {
+                        docError = error;
+                        break;
+                    }
+                }
+
+                if (docError != null)
+                {
+                    return new ExtractKeyPhrasesResult(id, ConvertToError(docError.Error));
+                }
+            }
+
+            throw new NotImplementedException();
+            //var x = new ExtractKeyPhrasesResult(id, ConvertToDocumentStatistics(legacyResult.Statistics), ConvertToKeyPhraseCollection(legacyResult.Documents))
         }
 
         #endregion
@@ -413,6 +488,7 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region Recognize Custom Entities
+
         internal static Legacy.CustomEntitiesTask ConvertToCustomEntitiesTask(RecognizeCustomEntitiesAction action)
         {
             return new Legacy.CustomEntitiesTask()
@@ -435,6 +511,26 @@ namespace Azure.AI.TextAnalytics
             }
 
             return list;
+        }
+
+        internal static RecognizeCustomEntitiesResultCollection ConvertToRecognizeCustomEntitiesResultCollection(Legacy.CustomEntitiesResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var recognizeEntities = new List<RecognizeEntitiesResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document entities
+            foreach (var docEntities in results.Documents)
+            {
+                recognizeEntities.Add(new RecognizeEntitiesResult(docEntities.Id, ConvertToDocumentStatistics(docEntities.Statistics), ConvertToCategorizedEntityCollection(docEntities)));
+            }
+
+            recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
+            return new RecognizeCustomEntitiesResultCollection(recognizeEntities, ConvertToBatchStatistics(results.Statistics), results.ProjectName, results.DeploymentName);
         }
 
         #endregion
@@ -470,7 +566,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
-
             return new RecognizePiiEntitiesResultCollection(recognizeEntities, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
         }
 
@@ -540,7 +635,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             recognizeEntities = SortHeterogeneousCollection(recognizeEntities, idToIndexMap);
-
             return new RecognizeLinkedEntitiesResultCollection(recognizeEntities, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
         }
 
@@ -610,9 +704,42 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static ExtractSummaryResultCollection ConvertToExtractSummaryResultCollection(Legacy.ExtractiveSummarizationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var extractedSummaries = new List<ExtractSummaryResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                extractedSummaries.Add(new ExtractSummaryResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read document summaries
+            foreach (var docSummary in results.Documents)
+            {
+                extractedSummaries.Add(new ExtractSummaryResult(docSummary.Id, ConvertToDocumentStatistics(docSummary.Statistics), ConvertToSummarySentenceCollection(docSummary)));
+            }
+
+            extractedSummaries = SortHeterogeneousCollection(extractedSummaries, idToIndexMap);
+            return new ExtractSummaryResultCollection(extractedSummaries, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
+
+        internal static SummarySentenceCollection ConvertToSummarySentenceCollection(Legacy.ExtractedDocumentSummary documentSummary)
+        {
+            var sentences = new List<SummarySentence>(documentSummary.Sentences.Count);
+
+            foreach (var sentence in documentSummary.Sentences)
+            {
+                sentences.Add(new SummarySentence(new Models.ExtractedSummarySentence(sentence.Text, sentence.RankScore, sentence.Offset, sentence.Length)));
+            }
+
+            return new SummarySentenceCollection(sentences, ConvertToWarnings(documentSummary.Warnings));
+        }
+
         #endregion
 
         #region Multi-Category Classify
+
         internal static Legacy.CustomSingleClassificationTask ConvertToLegacyCustomSingleClassificationTask(SingleCategoryClassifyAction action)
         {
             return new Legacy.CustomSingleClassificationTask()
@@ -637,9 +764,46 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static ClassificationCategoryCollection ConvertToClassificationCategoryCollection(Legacy.MultiClassificationDocument legacyDocument)
+        {
+            var results = new List<ClassificationCategory>(legacyDocument.Classifications.Count);
+
+            foreach (var classification in legacyDocument.Classifications)
+            {
+                results.Add(ConvertToClassificationCategory(classification));
+            }
+
+            return new ClassificationCategoryCollection(results, ConvertToWarnings(legacyDocument.Warnings));
+        }
+
+        internal static MultiCategoryClassifyResultCollection ConvertToMultiCategoryClassifyResultCollection(Legacy.CustomMultiClassificationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var classifiedCustomCategoryResults = new List<MultiCategoryClassifyResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                classifiedCustomCategoryResults.Add(new MultiCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read classifications
+            foreach (var classificationsDocument in results.Documents)
+            {
+                classifiedCustomCategoryResults.Add(new MultiCategoryClassifyResult(
+                    classificationsDocument.Id,
+                    ConvertToDocumentStatistics(classificationsDocument.Statistics),
+                    ConvertToClassificationCategoryCollection(classificationsDocument),
+                    ConvertToWarnings(classificationsDocument.Warnings)));
+            }
+
+            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
+            return new MultiCategoryClassifyResultCollection(classifiedCustomCategoryResults, ConvertToBatchStatistics(results.Statistics), results.ProjectName, results.DeploymentName);
+        }
+
         #endregion
 
         #region Single Category Classify
+
         internal static Legacy.CustomMultiClassificationTask ConvertToLegacyCustomMultiClassificationTask(MultiCategoryClassifyAction action)
         {
             return new Legacy.CustomMultiClassificationTask()
@@ -662,6 +826,127 @@ namespace Azure.AI.TextAnalytics
             }
 
             return list;
+        }
+
+        internal static SingleCategoryClassifyResultCollection ConvertToSingleCategoryClassifyResultCollection(Legacy.CustomSingleClassificationResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var classifiedCustomCategoryResults = new List<SingleCategoryClassifyResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read classifications
+            foreach (var classificationDocument in results.Documents)
+            {
+                classifiedCustomCategoryResults.Add(new SingleCategoryClassifyResult(
+                    classificationDocument.Id,
+                    ConvertToDocumentStatistics(classificationDocument.Statistics),
+                    ConvertToClassificationCategory(classificationDocument.Classification),
+                    ConvertToWarnings(classificationDocument.Warnings)));
+            }
+
+            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
+            return new SingleCategoryClassifyResultCollection(classifiedCustomCategoryResults, ConvertToBatchStatistics(results.Statistics), results.ProjectName, results.DeploymentName);
+        }
+
+        #endregion
+
+        #region Long Running Operations
+
+        internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(Legacy.AnalyzeJobState jobState, IDictionary<string, int> map)
+        {
+            List<ExtractKeyPhrasesActionResult> keyPhrases = new();
+            List<RecognizeEntitiesActionResult> entitiesRecognition = new();
+            List<RecognizePiiEntitiesActionResult> entitiesPiiRecognition = new();
+            List<RecognizeLinkedEntitiesActionResult> entitiesLinkingRecognition = new();
+            List<AnalyzeSentimentActionResult> analyzeSentiment = new();
+            List<ExtractSummaryActionResult> extractSummary = new();
+            List<RecognizeCustomEntitiesActionResult> customEntitiesRecognition = new();
+            List<SingleCategoryClassifyActionResult> singleCategoryClassify = new();
+            List<MultiCategoryClassifyActionResult> multiCategoryClassify = new();
+
+            foreach (var task in jobState.Tasks.KeyPhraseExtractionTasks)
+            {
+                keyPhrases.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.EntityRecognitionTasks)
+            {
+                entitiesRecognition.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.EntityRecognitionPiiTasks)
+            {
+                entitiesPiiRecognition.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.EntityLinkingTasks)
+            {
+                entitiesLinkingRecognition.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.SentimentAnalysisTasks)
+            {
+                analyzeSentiment.Add(new AnalyzeSentimentActionResult(ConvertToAnalyzeSentimentResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.ExtractiveSummarizationTasks)
+            {
+                extractSummary.Add(new ExtractSummaryActionResult(ConvertToExtractSummaryResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.CustomEntityRecognitionTasks)
+            {
+                customEntitiesRecognition.Add(new RecognizeCustomEntitiesActionResult(ConvertToRecognizeCustomEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.CustomSingleClassificationTasks)
+            {
+                singleCategoryClassify.Add(new SingleCategoryClassifyActionResult(ConvertToSingleCategoryClassifyResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            foreach (var task in jobState.Tasks.CustomMultiClassificationTasks)
+            {
+                multiCategoryClassify.Add(new MultiCategoryClassifyActionResult(ConvertToMultiCategoryClassifyResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+            }
+
+            return new AnalyzeActionsResult(
+                keyPhrases,
+                entitiesRecognition,
+                entitiesPiiRecognition,
+                entitiesLinkingRecognition,
+                analyzeSentiment,
+                extractSummary,
+                customEntitiesRecognition,
+                singleCategoryClassify,
+                multiCategoryClassify);
+        }
+
+        internal static Models.AnalyzeTextJobStatusResult ConvertToAnalyzeTextJobStatusResult(Legacy.AnalyzeJobState legacyJobState, IDictionary<string, int> map)
+        {
+            var result = new Models.AnalyzeTextJobStatusResult
+            {
+                DisplayName = legacyJobState.DisplayName,
+                NextLink = legacyJobState.NextLink,
+                CreatedOn = legacyJobState.CreatedDateTime,
+                LatModifiedOn = legacyJobState.LastUpdateDateTime,
+                ExpiresOn = legacyJobState.ExpirationDateTime,
+                AcionsSucceeded = legacyJobState.Tasks.Completed,
+                AcionsInProgress = legacyJobState.Tasks.InProgress,
+                ActionsFailed = legacyJobState.Tasks.Failed,
+                ActionsTotal = legacyJobState.Tasks.Total,
+                Result = ConvertToAnalyzeActionsResult(legacyJobState, map)
+            };
+
+            foreach (var error in legacyJobState.Errors)
+            {
+                result.Errors.Add(ConvertToLanguageError(error));
+            }
+
+            return result;
         }
 
         #endregion

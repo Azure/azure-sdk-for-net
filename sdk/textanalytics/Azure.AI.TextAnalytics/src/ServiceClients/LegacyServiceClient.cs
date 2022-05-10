@@ -1202,6 +1202,90 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
+        public override async Task<Response<Models.AnalyzeTextJobStatusResult>> AnalyzeStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatus)}");
+            scope.Start();
+
+            try
+            {
+                var result = await _serviceRestClient.AnalyzeStatusAsync(jobId, showStats, top, skip, cancellationToken).ConfigureAwait(false);
+                var status = Transforms.ConvertToAnalyzeTextJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<Models.AnalyzeTextJobStatusResult> AnalyzeStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatus)}");
+            scope.Start();
+
+            try
+            {
+                var result = _serviceRestClient.AnalyzeStatus(jobId, showStats, top, skip, cancellationToken);
+                var status = Transforms.ConvertToAnalyzeTextJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override async Task<Response<Models.AnalyzeTextJobStatusResult>> AnalyzeStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                var result = await _serviceRestClient.AnalyzeStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                var status = Transforms.ConvertToAnalyzeTextJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<Models.AnalyzeTextJobStatusResult> AnalyzeStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                var result = _serviceRestClient.AnalyzeStatusNextPage(nextLink, cancellationToken);
+                var status = Transforms.ConvertToAnalyzeTextJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageBatchInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
             options ??= new AnalyzeActionsOptions();

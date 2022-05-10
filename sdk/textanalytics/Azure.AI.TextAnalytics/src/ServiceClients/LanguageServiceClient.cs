@@ -987,7 +987,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextKeyPhraseExtractionInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs,options.ModelVersion)
+                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs, options.ModelVersion)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
@@ -1333,49 +1333,197 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             throw new NotImplementedException();
         }
 
-        private static JobManifestTasks CreateTasks(TextAnalyticsActions actions)
+        public override async Task<Response<AnalyzeTextJobStatusResult>> AnalyzeStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
         {
-            //JobManifestTasks tasks = new();
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
-            //if (actions.RecognizePiiEntitiesActions != null)
-            //{
-            //    tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
-            //}
-            //if (actions.RecognizeEntitiesActions != null)
-            //{
-            //    tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
-            //}
-            //if (actions.RecognizeCustomEntitiesActions != null)
-            //{
-            //    tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions);
-            //}
-            //if (actions.ExtractKeyPhrasesActions != null)
-            //{
-            //    tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
-            //}
-            //if (actions.RecognizeLinkedEntitiesActions != null)
-            //{
-            //    tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
-            //}
-            //if (actions.AnalyzeSentimentActions != null)
-            //{
-            //    tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
-            //}
-            //if (actions.ExtractSummaryActions != null)
-            //{
-            //    tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
-            //}
-            //if (actions.SingleCategoryClassifyActions != null)
-            //{
-            //    tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions);
-            //}
-            //if (actions.MultiCategoryClassifyActions != null)
-            //{
-            //    tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions);
-            //}
-            //return tasks;
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatus)}");
+            scope.Start();
+
+            try
+            {
+                var response = await _languageRestClient.AnalyzeBatchJobStatusAsync(id, showStats, top, skip, cancellationToken).ConfigureAwait(false);
+                var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<AnalyzeTextJobStatusResult> AnalyzeStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatus)}");
+            scope.Start();
+
+            try
+            {
+                var response = _languageRestClient.AnalyzeBatchJobStatus(id, showStats, top, skip, cancellationToken);
+                var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override async Task<Response<AnalyzeTextJobStatusResult>> AnalyzeStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var response = << NO SERVICE METHOD... WHAT GOES HERE??? >>
+                //var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                //return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<AnalyzeTextJobStatusResult> AnalyzeStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                throw new NotImplementedException();
+                //var response = << NO SERVICE METHOD... WHAT GOES HERE??? >>
+                //var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                //return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeActionsOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeActionsOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
+        {
+            List<AnalyzeTextLROTask> analyzeTasks = new();
+
+            if (actions.RecognizePiiEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions));
+            }
+            if (actions.RecognizeEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions));
+            }
+            if (actions.RecognizeCustomEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions));
+            }
+            if (actions.ExtractKeyPhrasesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions));
+            }
+            if (actions.RecognizeLinkedEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions));
+            }
+            if (actions.AnalyzeSentimentActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions));
+            }
+            if (actions.ExtractSummaryActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions));
+            }
+            if (actions.SingleCategoryClassifyActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions));
+            }
+            if (actions.MultiCategoryClassifyActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions));
+            }
+
+            return analyzeTasks;
         }
 
         #endregion

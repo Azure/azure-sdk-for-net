@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Models;
 using Azure.AI.TextAnalytics.ServiceClients;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -16,6 +17,18 @@ namespace Azure.AI.TextAnalytics
     /// <summary> Pageable operation class for analyzing multiple healthcare documents using long running operation. </summary>
     public class AnalyzeHealthcareEntitiesOperation : PageableOperation<AnalyzeHealthcareEntitiesResultCollection>, IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>
     {
+        private readonly ServiceClient _serviceClient;
+        private readonly ClientDiagnostics _diagnostics;
+        private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
+
+        private readonly bool? _showStats;
+        private readonly string _jobId;
+        private TextAnalyticsOperationStatus _status;
+        private DateTimeOffset? _expiresOn;
+        private DateTimeOffset _lastModified;
+        private DateTimeOffset _createdOn;
+        internal readonly IDictionary<string, int> _idToIndexMap;
+
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
         /// of the long-running operation.
@@ -61,59 +74,6 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         public override bool HasValue => _operationInternal.HasValue;
 
-        ///// <summary>
-        ///// Provides communication with the Text Analytics Azure Cognitive Service through its REST API.
-        ///// </summary>
-        private readonly ServiceClient _serviceClient;
-#pragma warning disable CS0649 // Add readonly modifier
-        private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
-
-        /// <summary>
-        /// Provides tools for exception creation in case of failure.
-        /// </summary>
-        private readonly ClientDiagnostics _diagnostics;
-
-        /// <summary>
-        /// Represents the desire of the user to request statistics.
-        /// This is used in every GET request.
-        /// </summary>
-        private readonly bool? _showStats;
-
-        /// <summary>
-        /// Represents the job Id the service assigned to the operation.
-        /// </summary>
-        private readonly string _jobId;
-
-        /// <summary>
-        /// Represents the status of the long-running operation.
-        /// </summary>
-        private TextAnalyticsOperationStatus _status;
-
-        ///// <summary>
-        ///// Provides the results for the first page.
-        ///// </summary>
-        //private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
-
-        /// <summary>
-        /// Time when the operation will expire.
-        /// </summary>
-        private DateTimeOffset? _expiresOn;
-
-        /// <summary>
-        /// Time when the operation was last modified on.
-        /// </summary>
-        private DateTimeOffset _lastModified;
-
-        /// <summary>
-        /// Time when the operation was created on.
-        /// </summary>
-        private DateTimeOffset _createdOn;
-#pragma warning restore CS0649 // Add readonly modifier
-        /// <summary>
-        /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
-        /// </summary>
-        internal readonly IDictionary<string, int> _idToIndexMap;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
         /// </summary>
@@ -138,8 +98,8 @@ namespace Azure.AI.TextAnalytics
             }
 
             Id = operationId;
-            //_serviceClient = client._serviceRestClient;
-            _diagnostics = client._serviceClient.Diagnostics;
+            _serviceClient = client.ServiceClient;
+            _diagnostics = _serviceClient.Diagnostics;
             _operationInternal = new(_diagnostics, this, rawResponse: null);
         }
 
@@ -307,7 +267,7 @@ namespace Azure.AI.TextAnalytics
             //    {
             //        Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, cancellationToken);
 
-            //        AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+            //AnalyzeHealthcareEntitiesResultCollection result = ExtractHealthcareActionResult(jobState.Value.Results, _idToIndexMap);
             //        return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
             //    }
             //    catch (Exception)
@@ -337,7 +297,7 @@ namespace Azure.AI.TextAnalytics
             //    {
             //        Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
 
-            //        AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
+            //AnalyzeHealthcareEntitiesResultCollection result = ExtractHealthcareActionResult(jobState.Value.Results, _idToIndexMap);
             //        return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
             //    }
             //    catch (Exception)
@@ -364,12 +324,19 @@ namespace Azure.AI.TextAnalytics
             //_expiresOn = response.Value.ExpirationDateTime;
             //_lastModified = response.Value.LastUpdateDateTime;
 
+            // TEMP:  Just to stop warnings
+            _status = TextAnalyticsOperationStatus.NotStarted;
+            _createdOn = default;
+            _expiresOn = default;
+            _lastModified = default;
+            // END TEMP
+
             //Response rawResponse = response.GetRawResponse();
 
             //if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             //{
             //    string nextLink = response.Value.NextLink;
-            //    AnalyzeHealthcareEntitiesResultCollection value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
+            //AnalyzeHealthcareEntitiesResultCollection value = ExtractHealthcareActionResult(response.Value.Results, _idToIndexMap);
             //    _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, rawResponse);
 
             //    return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
@@ -390,6 +357,16 @@ namespace Azure.AI.TextAnalytics
 
             //return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
             throw new NotImplementedException();
+        }
+
+        private static AnalyzeHealthcareEntitiesResultCollection ExtractHealthcareActionResult(AnalyzeTextJobState jobState, IDictionary<string, int> map)
+        {
+            var healthcareTask = jobState.Tasks.Items[0];
+            if (healthcareTask.Kind == AnalyzeTextLROResultsKind.HealthcareLROResults)
+            {
+                return Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection((healthcareTask as HealthcareLROResult).Results, map);
+            }
+            throw new InvalidOperationException($"Invalid task executed. Expected a HealthcareLROResults but instead got {healthcareTask.Kind}.");
         }
     }
 }
