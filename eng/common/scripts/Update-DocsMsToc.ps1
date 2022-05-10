@@ -117,6 +117,7 @@ function GetPackageLookup($packageList) {
 
 function create-metadata-table($readmePath, $moniker, $msService, $clientTableLink, $mgmtTableLink, $clientExists, $mgmtExists, $serviceName)
 {
+  New-Item -Path $readmePath -Force
   $lang = $LanguageDisplayName
   $langTitle = "Azure $serviceName SDK for $lang"
   $header = GenerateDocsMsMetadata -language $lang -serviceName $serviceName `
