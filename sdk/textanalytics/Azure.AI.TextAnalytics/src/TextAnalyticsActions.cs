@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see>.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/> and up.
         /// </remarks>
         public IReadOnlyCollection<SingleCategoryClassifyAction> SingleCategoryClassifyActions { get; set; }
 
@@ -81,7 +81,7 @@ namespace Azure.AI.TextAnalytics
         /// <see href="https://aka.ms/azsdk/textanalytics/customfunctionalities">documentation</see>.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/>, and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview"/> and up.
         /// </remarks>
         public IReadOnlyCollection<MultiCategoryClassifyAction> MultiCategoryClassifyActions { get; set; }
     }
