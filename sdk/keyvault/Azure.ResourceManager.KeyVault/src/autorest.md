@@ -111,7 +111,12 @@ directive:
   - rename-model:
       from: PrivateLinkResource
       to: PrivateLinkResourceData
-
+  - rename-model:
+      from: MHSMPrivateEndpointConnectionItem
+      to: MHSMPrivateEndpointConnectionItemData
+  - rename-model:
+      from: PrivateEndpointConnectionItem
+      to: PrivateEndpointConnectionItemData
 ```
 
 ### Tag: package-2021-10
