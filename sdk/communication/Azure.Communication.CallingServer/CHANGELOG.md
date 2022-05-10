@@ -3,8 +3,10 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- concept of in-call and out-call removed 
 
 ### Breaking Changes
+- CallConnection object removed due to everything now being out-call
 
 ### Bugs Fixed
 

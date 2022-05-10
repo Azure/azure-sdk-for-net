@@ -1,0 +1,305 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2022-04-07-preview",
+        "title": "Azure Communication ServerCalling APIs"
+    },
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/calls/{serverCallId}::terminate": {
+            "post": {
+                "tags": [
+                    "ServerCall"
+                ],
+                "summary": "Terminate a call using ServerCallId.",
+                "description": "Terminate a call using ServerCallId.",
+                "operationId": "ServerCalls_TerminateCall",
+                "parameters": [
+                    {
+                        "name": "serverCallId",
+                        "in": "path",
+                        "description": "The terminate call request.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "terminateCallRequest",
+                        "in": "body",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/TerminateCallRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the terminate call response."
+                    }
+                },
+                "x-ms-examples": {
+                    "Terminate a call using ServerCallId.": {
+                        "$ref": "./examples/ServerCalls_TerminateCall.json"
+                    }
+                }
+            }
+        },
+        "/calls:answer": {
+            "post": {
+                "tags": [
+                    "ServerCall"
+                ],
+                "summary": "Answer a Call.",
+                "description": "Answer a call using the IncomingCallContext from Event Grid.",
+                "operationId": "ServerCalls_AnswerCall",
+                "parameters": [
+                    {
+                        "name": "answerCallRequest",
+                        "in": "body",
+                        "description": "The answer call request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AnswerCallRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the answer call response.",
+                        "schema": {
+                            "$ref": "#/definitions/AnswerCallResponse"
+                        }
+                    }
+                },
+                "x-ms-examples": {
+                    "Answer a Call.": {
+                        "$ref": "./examples/ServerCalls_AnswerCall.json"
+                    }
+                }
+            }
+        },
+        "/calls:redirect": {
+            "post": {
+                "tags": [
+                    "ServerCall"
+                ],
+                "summary": "Redirect a call.",
+                "description": "Redirect a call.",
+                "operationId": "ServerCalls_RedirectCall",
+                "parameters": [
+                    {
+                        "name": "redirectCallRequest",
+                        "in": "body",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RedirectCallRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the redirect call response."
+                    }
+                },
+                "x-ms-examples": {
+                    "Redirect a call.": {
+                        "$ref": "./examples/ServerCalls_RedirectCall.json"
+                    }
+                }
+            }
+        },
+        "/calls:reject": {
+            "post": {
+                "tags": [
+                    "ServerCall"
+                ],
+                "summary": "Reject the call.",
+                "operationId": "ServerCalls_RejectCall",
+                "parameters": [
+                    {
+                        "name": "rejectCallRequest",
+                        "in": "body",
+                        "description": "The reject call request.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RejectCallRequest"
+                        }
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Returns the reject call response."
+                    }
+                },
+                "x-ms-examples": {
+                    "Reject the call.": {
+                        "$ref": "./examples/ServerCalls_RejectCall.json"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "TerminateCallRequest": {
+            "description": "The request payload for terminating the call.",
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                }
+            }
+        },
+        "AnswerCallRequest": {
+            "description": "The request payload for answering the call.",
+            "required": [
+                "incomingCallContext"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback uri.",
+                    "type": "string"
+                }
+            }
+        },
+        "AnswerCallResponse": {
+            "description": "The response payload of the answer call operation.",
+            "type": "object",
+            "properties": {
+                "serverCallId": {
+                    "description": "The server call id.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "subscriptionId": {
+                    "description": "The subscription id.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "RedirectCallRequest": {
+            "description": "The request payload for redirecting the call.",
+            "required": [
+                "incomingCallContext",
+                "target"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback uri.",
+                    "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The target identity to redirect the call to."
+                }
+            }
+        },
+        "CommunicationIdentifierModel": {
+            "$ref": "../../../Common/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
+        },
+        "CommunicationUserIdentifierModel": {
+            "$ref": "../../../Common/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
+        },
+        "PhoneNumberIdentifierModel": {
+            "$ref": "../../../Common/stable/2021-03-07/common.json#/definitions/PhoneNumberIdentifierModel"
+        },
+        "CommunicationCloudEnvironmentModel": {
+            "$ref": "../../../Common/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
+        },
+        "MicrosoftTeamsUserIdentifierModel": {
+            "$ref": "../../../Common/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
+        },
+        "CallRejectReason": {
+            "description": "The rejection reason.",
+            "enum": [
+                "none",
+                "busy",
+                "forbidden"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CallRejectReason",
+                "modelAsString": true
+            }
+        },
+        "RejectCallRequest": {
+            "description": "The request payload for rejecting the call.",
+            "required": [
+                "incomingCallContext"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback uri.",
+                    "type": "string"
+                },
+                "callRejectReason": {
+                    "$ref": "#/definitions/CallRejectReason"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "ApiVersionParameter": {
+            "name": "api-version",
+            "in": "query",
+            "description": "Version of API to invoke.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "Endpoint": {
+            "name": "endpoint",
+            "in": "path",
+            "description": "The endpoint of the Azure Communication resource.",
+            "required": true,
+            "type": "string",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        }
+    },
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "$ref": "#/parameters/Endpoint"
+            }
+        ]
+    }
+}
