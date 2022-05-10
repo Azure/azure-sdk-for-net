@@ -116,6 +116,9 @@ directive:
       $.UserManagedHttpsParameters['x-ms-client-name'] = 'UserManagedHttpsContent';
       $.ResponseBasedOriginErrorDetectionParameters['x-ms-client-name'] = 'ResponseBasedOriginErrorDetectionSettings';
       $.HttpErrorRangeParameters['x-ms-client-name'] = 'HttpErrorRange';
+      $.CheckNameAvailabilityInput['x-ms-client-name'] = 'CdnNameAvailabilityContent';
+      $.CheckNameAvailabilityOutput['x-ms-client-name'] = 'CdnNameAvailabilityResult';
+      $.ValidateProbeOutput['x-ms-client-name'] = 'ValidateProbeResult';
       $.ValidateCustomDomainOutput.properties.customDomainValidated['x-ms-client-name'] = 'isCustomDomainValid';
       $.CustomDomainProperties.properties.customHttpsParameters['x-ms-client-name'] = 'customDomainHttpsContent';
       $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-client-name'] = 'customHttpsAvailabilityState';
@@ -229,6 +232,9 @@ directive:
       $.CustomerCertificateParameters['x-ms-client-name'] = 'CustomerCertificateDefinition';
       $.ManagedCertificateParameters['x-ms-client-name'] = 'ManagedCertificateDefinition';
       $.UrlSigningKeyParameters['x-ms-client-name'] = 'UriSigningKeyDefinition';
+      $.CheckHostNameAvailabilityInput['x-ms-client-name'] = 'HostNameAvailabilityContent';
+      $.CheckEndpointNameAvailabilityInput['x-ms-client-name'] = 'EndpointNameAvailabilityContent';
+      $.CheckEndpointNameAvailabilityOutput['x-ms-client-name'] = 'EndpointNameAvailabilityResult';
       $.SecurityPolicyWebApplicationFirewallParameters['x-ms-client-name'] = 'SecurityPolicyWebApplicationFirewallDefinition';
       $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
