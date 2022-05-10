@@ -1,17 +1,11 @@
 # Release History
 
-## 12.6.0-beta.1 (Unreleased)
+## 12.6.0-beta.1 (2022-05-10)
 
 ### Features Added
 - TenantId can now be discovered through the service OAuth challenge response, when using a TokenCredential for authorization against a Storage Table Service.
 - A new property is now available on the `TableClientOptions` called `EnableTenantDiscovery`. If set to true, the client will attempt an initial unauthorized request to the service to prompt an OAuth challenge containing the tenantId of the resource. This tenantId will then be used by the TokenCredential.
 - Diagnostics logging no longer redacts the following query parameters: '$format', '$filter', '$top', '$select'
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 12.5.0 (2022-03-10)
 
