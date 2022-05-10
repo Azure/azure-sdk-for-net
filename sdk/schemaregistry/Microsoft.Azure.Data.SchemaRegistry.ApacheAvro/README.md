@@ -89,13 +89,26 @@ Console.WriteLine(eventData.ContentType);
 
 // the serialized Avro data will be stored in the EventBody
 Console.WriteLine(eventData.EventBody);
+
+// construct a publisher and publish the events to our event hub
+var fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var credential = new DefaultAzureCredential();
+await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+await producer.SendAsync(new EventData[] { eventData });
 ```
 
 To deserialize an `EventData` event that you are consuming:
 ```C# Snippet:SchemaRegistryAvroDecodeEventData
-Employee deserialized = (Employee) await serializer.DeserializeAsync(eventData, typeof(Employee));
-Console.WriteLine(deserialized.Age);
-Console.WriteLine(deserialized.Name);
+// construct a consumer and consume the event from our event hub
+await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential);
+await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync())
+{
+    Employee deserialized = (Employee) await serializer.DeserializeAsync(eventData, typeof(Employee));
+    Console.WriteLine(deserialized.Age);
+    Console.WriteLine(deserialized.Name);
+    break;
+}
 ```
 
 You can also use generic methods to serialize and deserialize the data. This may be more convenient if you are not building a library on top of the Avro serializer, as you won't have to worry about the virality of generics:

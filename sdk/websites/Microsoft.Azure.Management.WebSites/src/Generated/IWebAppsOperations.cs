@@ -758,6 +758,36 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<SiteAuthSettings>> GetAuthSettingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets site's Authentication / Authorization settings for apps via
+        /// the V2 format
+        /// </summary>
+        /// <remarks>
+        /// Description for Gets site's Authentication / Authorization settings
+        /// for apps via the V2 format
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SiteAuthSettingsV2>> GetAuthSettingsV2WithoutSecretsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Updates site's Authentication / Authorization settings for apps via
         /// the V2 format
         /// </summary>
@@ -2251,6 +2281,64 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<MSDeployLog>> GetMSDeployLogWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Invoke onedeploy status API /api/deployments and gets the
+        /// deployment status for the site
+        /// </summary>
+        /// <remarks>
+        /// Description for Invoke onedeploy status API /api/deployments and
+        /// gets the deployment status for the site
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<object>> GetOneDeployStatusWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Invoke the OneDeploy publish web app extension.
+        /// </summary>
+        /// <remarks>
+        /// Description for Invoke the OneDeploy publish web app extension.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<object>> CreateOneDeployOperationWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List the functions for a web site, or a deployment slot.
         /// </summary>
@@ -6054,6 +6142,36 @@ namespace Microsoft.Azure.Management.WebSites
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SiteAuthSettings>> GetAuthSettingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets site's Authentication / Authorization settings for apps via
+        /// the V2 format
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='name'>
+        /// Name of the app.
+        /// </param>
+        /// <param name='slot'>
+        /// Name of the deployment slot. If a slot is not specified, the API
+        /// will get the settings for the production slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DefaultErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SiteAuthSettingsV2>> GetAuthSettingsV2WithoutSecretsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates site's Authentication / Authorization settings for apps via
         /// the V2 format
@@ -11693,7 +11811,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<VnetInfo>>> ListVnetConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VnetInfoResource>>> ListVnetConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a virtual network the app (or deployment slot) is connected to
         /// by name.
@@ -11730,7 +11848,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VnetInfo>> GetVnetConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetInfoResource>> GetVnetConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a Virtual Network connection to an app or slot (PUT) or
         /// updates the connection properties (PATCH).
@@ -11770,7 +11888,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VnetInfo>> CreateOrUpdateVnetConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetInfoResource>> CreateOrUpdateVnetConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a connection from an app (or deployment slot to a named
         /// virtual network.
@@ -11844,7 +11962,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VnetInfo>> UpdateVnetConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetInfoResource>> UpdateVnetConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets an app's Virtual Network gateway.
         /// </summary>
@@ -12697,7 +12815,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<VnetInfo>>> ListVnetConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<VnetInfoResource>>> ListVnetConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a virtual network the app (or deployment slot) is connected to
         /// by name.
@@ -12730,7 +12848,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VnetInfo>> GetVnetConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetInfoResource>> GetVnetConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds a Virtual Network connection to an app or slot (PUT) or
         /// updates the connection properties (PATCH).
@@ -12766,7 +12884,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VnetInfo>> CreateOrUpdateVnetConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetInfoResource>> CreateOrUpdateVnetConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a connection from an app (or deployment slot to a named
         /// virtual network.
@@ -12832,7 +12950,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VnetInfo>> UpdateVnetConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VnetInfoResource>> UpdateVnetConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfoResource connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets an app's Virtual Network gateway.
         /// </summary>

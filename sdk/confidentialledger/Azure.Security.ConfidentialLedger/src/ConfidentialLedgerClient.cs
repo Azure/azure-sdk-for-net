@@ -31,7 +31,7 @@ namespace Azure.Security.ConfidentialLedger
 
             var actualOptions = options ?? new ConfidentialLedgerClientOptions();
             var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri, actualOptions);
-            ClientDiagnostics = new ClientDiagnostics(actualOptions);
+            ClientDiagnostics = new ClientDiagnostics(actualOptions, true);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(

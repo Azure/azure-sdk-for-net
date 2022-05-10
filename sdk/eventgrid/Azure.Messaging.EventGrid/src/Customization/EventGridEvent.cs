@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventGrid
             Argument.AssertNotNull(json, nameof(json));
 
             EventGridEvent[] egEvents = null;
-            JsonDocument requestDocument = JsonDocument.Parse(json);
+            using JsonDocument requestDocument = JsonDocument.Parse(json);
 
             // Parse JsonElement into separate events, deserialize event envelope properties
             if (requestDocument.RootElement.ValueKind == JsonValueKind.Object)

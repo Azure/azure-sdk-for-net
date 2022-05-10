@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<IList<IPAddressGroup>> ipAddressGroups = default;
             foreach (var property in element.EnumerateObject())

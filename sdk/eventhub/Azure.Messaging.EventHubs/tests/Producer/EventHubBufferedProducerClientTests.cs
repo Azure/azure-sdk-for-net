@@ -4433,7 +4433,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task PublishBatchToPartitionDoesNotInvokeTheHandlerWhenCreatingTheBatchIsCanceled()
+        public async Task PublishBatchToPartitionDoesNotInvokesTheHandlerWhenCreatingTheBatchIsCanceled()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -4653,6 +4653,90 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.Is<EventDataBatch>(value => value.SendOptions.PartitionId == expectedPartition),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the background management task.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PublishBatchToPartitionRetriesWhenThrottled()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedPartition = "4";
+            var throttled = false;
+            var throttleException = new EventHubsException("fake", "Throttle!", EventHubsException.FailureReason.ServiceBusy);
+            var terminalException = new DivideByZeroException("Uh oh.  Did I do that?");
+            var extraEvent = EventGenerator.CreateSmallEvents(1).First();
+            var expectedEvents = EventGenerator.CreateSmallEvents(2).ToList();
+            var batchedEvents = new List<EventData>();
+            var handlerArgs = default(SendEventBatchFailedEventArgs);
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var noRetryOptions = new EventHubsRetryOptions { MaximumRetries = 0 };
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit, RetryOptions = noRetryOptions };
+            var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { expectedPartition, "6" });
+
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1_048_576, batchedEvents, options, _ => batchedEvents.Count < expectedEvents.Count)));
+
+            mockProducer
+                .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                   if (!throttled)
+                   {
+                       throttled = true;
+                       throw throttleException;
+                   }
+
+                   throw terminalException;
+                });
+
+            // Wire up the handler.
+
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += args =>
+            {
+                handlerArgs = args;
+                completionSource.TrySetResult(true);
+                return Task.CompletedTask;
+            };
+
+            // Enqueue the events that are expected to be returned.
+
+            foreach (var eventData in expectedEvents)
+            {
+                await partitionState.PendingEventsWriter.WriteAsync(eventData, cancellationSource.Token);
+                partitionState.BufferedEventCount += 1;
+            }
+
+            // Enqueue the extra events that will trigger the batch being considered as full.
+
+            await partitionState.PendingEventsWriter.WriteAsync(extraEvent, cancellationSource.Token);
+            partitionState.BufferedEventCount += 1;
+
+            // Publish and verify.
+
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            Assert.That(throttled, Is.True, "The first send call should have throttled.");
+            Assert.That(handlerArgs.Exception, Is.SameAs(terminalException), "The terminal exception should have triggered a final failure.");
+
+            mockProducer
+                .Verify(producer => producer.SendAsync(
+                    It.Is<EventDataBatch>(value => value.SendOptions.PartitionId == expectedPartition),
+                    It.IsAny<CancellationToken>()),
+                Times.Exactly(2));
         }
 
         /// <summary>
@@ -4930,6 +5014,94 @@ namespace Azure.Messaging.EventHubs.Tests
                     expectedPartition,
                     It.IsAny<string>(),
                     It.IsAny<string>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the background management task.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PublishBatchToPartitionLogsWhenThrottled()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedPartition = "4";
+            var throttled = false;
+            var throttleException = new EventHubsException("fake", "Throttle!", EventHubsException.FailureReason.ServiceBusy);
+            var terminalException = new DivideByZeroException("Uh oh.  Did I do that?");
+            var extraEvent = EventGenerator.CreateSmallEvents(1).First();
+            var expectedEvents = EventGenerator.CreateSmallEvents(2).ToList();
+            var batchedEvents = new List<EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var noRetryOptions = new EventHubsRetryOptions { MaximumRetries = 0 };
+            var options = new EventHubBufferedProducerClientOptions { MaximumWaitTime = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit, RetryOptions = noRetryOptions };
+            var partitionState = new EventHubBufferedProducerClient.PartitionPublishingState(expectedPartition, options);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new[] { expectedPartition, "6" });
+
+            mockProducer
+                .Setup(producer => producer.CreateBatchAsync(It.IsAny<CreateBatchOptions>(), It.IsAny<CancellationToken>()))
+                .Returns<CreateBatchOptions, CancellationToken>((options, token) => new ValueTask<EventDataBatch>(EventHubsModelFactory.EventDataBatch(1_048_576, batchedEvents, options, _ => batchedEvents.Count < expectedEvents.Count)));
+
+            mockProducer
+                .Setup(producer => producer.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    if (!throttled)
+                    {
+                        throttled = true;
+                        throw throttleException;
+                    }
+
+                    throw terminalException;
+                });
+
+            mockBufferedProducer.Object.Logger = mockLogger.Object;
+
+            // Wire up the handler.
+
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += args =>
+            {
+                completionSource.TrySetResult(true);
+                return Task.CompletedTask;
+            };
+
+            // Enqueue the events that are expected to be returned.
+
+            foreach (var eventData in expectedEvents)
+            {
+                await partitionState.PendingEventsWriter.WriteAsync(eventData, cancellationSource.Token);
+                partitionState.BufferedEventCount += 1;
+            }
+
+            // Enqueue the extra events that will trigger the batch being considered as full.
+
+            await partitionState.PendingEventsWriter.WriteAsync(extraEvent, cancellationSource.Token);
+            partitionState.BufferedEventCount += 1;
+
+            // Publish and verify.
+
+            await mockBufferedProducer.Object.PublishBatchToPartition(partitionState, false, cancellationSource.Token);
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been requested.");
+            Assert.That(throttled, Is.True, "The first send call should have throttled.");
+
+            mockLogger
+                .Verify(log => log.BufferedProducerThrottleDelay(
+                    mockBufferedProducer.Object.Identifier,
+                    mockBufferedProducer.Object.EventHubName,
+                    expectedPartition,
+                    It.IsAny<string>(),
+                    It.IsAny<double>(),
+                    1),
                 Times.Once);
         }
 

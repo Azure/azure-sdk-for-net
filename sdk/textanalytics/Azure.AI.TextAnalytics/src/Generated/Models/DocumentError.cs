@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="id"> Document Id. </param>
         /// <param name="error"> Document Error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
-        internal DocumentError(string id, TextAnalyticsErrorInternal error)
+        public DocumentError(string id, Error error)
         {
             if (id == null)
             {
@@ -32,8 +32,8 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Document Id. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> Document Error. </summary>
-        public TextAnalyticsErrorInternal Error { get; }
+        public Error Error { get; set; }
     }
 }

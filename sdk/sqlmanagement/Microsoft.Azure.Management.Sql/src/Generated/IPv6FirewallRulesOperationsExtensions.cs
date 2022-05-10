@@ -22,6 +22,48 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class IPv6FirewallRulesOperationsExtensions
     {
             /// <summary>
+            /// Gets a list of IPv6 firewall rules.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            public static IPage<IPv6FirewallRule> ListByServer(this IIPv6FirewallRulesOperations operations, string resourceGroupName, string serverName)
+            {
+                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of IPv6 firewall rules.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<IPv6FirewallRule>> ListByServerAsync(this IIPv6FirewallRulesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets an IPv6 firewall rule.
             /// </summary>
             /// <param name='operations'>
@@ -166,48 +208,6 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task DeleteAsync(this IIPv6FirewallRulesOperations operations, string resourceGroupName, string serverName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a list of IPv6 firewall rules.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            public static IPage<IPv6FirewallRule> ListByServer(this IIPv6FirewallRulesOperations operations, string resourceGroupName, string serverName)
-            {
-                return operations.ListByServerAsync(resourceGroupName, serverName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of IPv6 firewall rules.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<IPv6FirewallRule>> ListByServerAsync(this IIPv6FirewallRulesOperations operations, string resourceGroupName, string serverName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByServerWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

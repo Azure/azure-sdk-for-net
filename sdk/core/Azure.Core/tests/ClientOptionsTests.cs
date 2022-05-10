@@ -200,7 +200,6 @@ namespace Azure.Core.Tests
             yield return M(o => o.Diagnostics.IsLoggingContentEnabled = true, o => o.Diagnostics.IsLoggingContentEnabled);
             yield return M(o => o.Diagnostics.LoggedContentSizeLimit = 100, o => o.Diagnostics.LoggedContentSizeLimit);
             yield return M(o => o.Diagnostics.IsDistributedTracingEnabled = false, o => o.Diagnostics.IsDistributedTracingEnabled);
-            yield return M(o => o.Diagnostics.SuppressNestedClientSpans = true, o => o.Diagnostics.SuppressNestedClientSpans);
 
             yield return M(o =>
             {

@@ -80,13 +80,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (BackupIntervalInMinutes < 0)
+            if (BackupIntervalInMinutes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "BackupIntervalInMinutes", 0);
+                if (BackupIntervalInMinutes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "BackupIntervalInMinutes", 0);
+                }
             }
-            if (BackupRetentionIntervalInHours < 0)
+            if (BackupRetentionIntervalInHours != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "BackupRetentionIntervalInHours", 0);
+                if (BackupRetentionIntervalInHours < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "BackupRetentionIntervalInHours", 0);
+                }
             }
         }
     }
