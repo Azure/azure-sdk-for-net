@@ -50,12 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(200).SetContent("Ok");
             var transmitter = GetTransmitter(mockResponse);
-            // Clean up existing files from previous run if exists.
-            ClearFiles(transmitter);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            // Wait for maintenance job to run atleast once
-            Task.Delay(10000).Wait();
 
             //Assert
             Assert.Empty(transmitter._storage.GetBlobs());
@@ -72,12 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             var transmitter = GetTransmitter(mockResponse);
-            // Clean up existing files from previous run if exists.
-            ClearFiles(transmitter);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            // Wait for maintenance job to run atleast once
-            Task.Delay(10000).Wait();
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
@@ -99,12 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("Too Many Requests");
             var transmitter = GetTransmitter(mockResponse);
-            // Clean up existing files from previous run if exists.
-            ClearFiles(transmitter);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            // Wait for maintenance job to run atleast once
-            Task.Delay(10000).Wait();
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
@@ -132,12 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                                     .AddHeader("Retry-After", "6")
                                     .SetContent("{\"itemsReceived\": 3,\"itemsAccepted\": 1,\"errors\":[{\"index\": 0,\"statusCode\": 429,\"message\": \"Throttle\"},{\"index\": 1,\"statusCode\": 429,\"message\": \"Throttle\"}]}");
             var transmitter = GetTransmitter(mockResponse);
-            // Clean up existing files from previous run if exists.
-            ClearFiles(transmitter);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            // Wait for maintenance job to run atleast once
-            Task.Delay(10000).Wait();
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
@@ -164,12 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             var transmitter = GetTransmitter(mockResponse);
-            // Clean up existing files from previous run if exists.
-            ClearFiles(transmitter);
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-
-            // Wait for maintenance job to run atleast once
-            Task.Delay(10000).Wait();
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
@@ -194,22 +169,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             options.Transport = mockTransport;
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
-            // Overwrite storage to reduce maintenance period
-            var fileStorage = new FileStorage(options.StorageDirectory, 5000, 1000);
-            transmitter._storage = fileStorage;
+            // Overwrite storage with mock
+            transmitter._storage = new MockFileStorage();
 
             return transmitter;
-        }
-
-        private static void ClearFiles(AzureMonitorTransmitter transmitter)
-        {
-            // clean if there are files in directory
-            var fileBlob = transmitter._storage.GetBlob();
-            if (fileBlob != null)
-            {
-                var blob = (FileBlob)fileBlob;
-                Array.ForEach(Directory.GetFiles(Path.GetDirectoryName(blob.FullPath)), File.Delete);
-            }
         }
 
         private static Activity CreateActivity(string activityName)
@@ -229,6 +192,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             return new TelemetryItem(activity, ref monitorTags, null, null, null);
+        }
+
+        private class MockFileStorage : IPersistentStorage
+        {
+            private readonly List<IPersistentBlob> _mockStorage = new();
+
+            public IEnumerable<IPersistentBlob> GetBlobs() => this._mockStorage.AsEnumerable();
+
+            public IPersistentBlob GetBlob() => this.GetBlobs().FirstOrDefault();
+
+            public IPersistentBlob CreateBlob(byte[] buffer, int leasePeriodMilliseconds = 0)
+            {
+                var blob = new MockFileBlob().Write(buffer);
+                this._mockStorage.Add(blob);
+                return blob;
+            }
+        }
+
+        private class MockFileBlob : IPersistentBlob
+        {
+            private byte[] _buffer;
+
+            public void Delete() { }
+
+            public IPersistentBlob Lease(int leasePeriodMilliseconds) => this;
+
+            public byte[] Read() => this._buffer;
+
+            public IPersistentBlob Write(byte[] buffer, int leasePeriodMilliseconds = 0)
+            {
+                this._buffer = buffer;
+                return this;
+            }
         }
     }
 }
