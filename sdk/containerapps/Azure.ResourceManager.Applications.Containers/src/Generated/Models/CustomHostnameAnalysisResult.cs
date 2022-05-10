@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Error model. </summary>
         public DefaultErrorResponseError CustomDomainVerificationFailureInfoError
         {
-            get => CustomDomainVerificationFailureInfo.Error;
+            get => CustomDomainVerificationFailureInfo?.Error;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on the Container App&apos;s managed environment; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
