@@ -21,7 +21,7 @@ namespace Azure.Security.ConfidentialLedger
         public ConfidentialLedgerIdentityServiceClient(Uri identityServiceUri) : this(identityServiceUri, new ConfidentialLedgerClientOptions())
         {
         }
-        
+
         /// <summary> Initializes a new instance of ConfidentialLedgerIdentityServiceClient. </summary>
         /// <param name="identityServiceUri"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
         /// <param name="options"> The options for configuring the client. </param>
