@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The secret info when type is keyVaultSecretReference. It&apos;s for scenario that user provides a secret stored in user&apos;s keyvault and source is Azure Kubernetes. The key Vault&apos;s resource id is linked to secretStore.keyVaultId. </summary>
-    internal partial class KeyVaultSecretReferenceSecretInfo : SecretInfoBase
+    public partial class KeyVaultSecretReferenceSecretInfo : SecretInfoBase
     {
         /// <summary> Initializes a new instance of KeyVaultSecretReferenceSecretInfo. </summary>
         public KeyVaultSecretReferenceSecretInfo()

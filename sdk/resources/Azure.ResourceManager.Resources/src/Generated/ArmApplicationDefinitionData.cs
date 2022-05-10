@@ -111,10 +111,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application deployment policy. </summary>
         internal ArmApplicationDeploymentPolicy DeploymentPolicy { get; set; }
         /// <summary> The managed application deployment mode. </summary>
-        public ArmApplicationDeploymentMode DeploymentMode
+        public ArmApplicationDeploymentMode? DeploymentMode
         {
-            get => DeploymentPolicy is null ? default : DeploymentPolicy.DeploymentMode;
-            set => DeploymentPolicy = new ArmApplicationDeploymentPolicy(value);
+            get => DeploymentPolicy is null ? default(ArmApplicationDeploymentMode?) : DeploymentPolicy.DeploymentMode;
+            set
+            {
+                DeploymentPolicy = value.HasValue ? new ArmApplicationDeploymentPolicy(value.Value) : null;
+            }
         }
 
         /// <summary> The managed application management policy that determines publisher&apos;s access to the managed resource group. </summary>

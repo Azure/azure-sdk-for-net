@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Managed Certificate used for https. </summary>
-    internal partial class ManagedCertificateParameters : SecretParameters
+    public partial class ManagedCertificateParameters : SecretParameters
     {
         /// <summary> Initializes a new instance of ManagedCertificateParameters. </summary>
         public ManagedCertificateParameters()
