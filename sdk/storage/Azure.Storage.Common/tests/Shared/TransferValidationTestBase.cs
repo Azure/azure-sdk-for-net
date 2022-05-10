@@ -1112,6 +1112,196 @@ namespace Azure.Storage.Test.Shared
             // Assert
             // Assertion was in the pipeline and the SDK not throwing means the checksum was validated
         }
+
+        [Test]
+        public virtual async Task ParallelDownloadUsesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [Values(true, false)] bool split)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            StorageTransferOptions transferOptions = split
+                ? new StorageTransferOptions
+                {
+                    InitialTransferSize = dataLength / 2,
+                    MaximumTransferSize = dataLength / 2
+                }
+                : new StorageTransferOptions
+                {
+                    InitialTransferSize = dataLength,
+                    MaximumTransferSize = dataLength
+                };
+
+            // make pipeline assertion for checking checksum was present on download
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
+                clientAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, default, transferOptions);
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        [Combinatorial]
+        public virtual async Task ParallelDownloadOverwritesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm overrideAlgorithm,
+            [Values(true, false)] bool split)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = overrideAlgorithm
+            };
+            StorageTransferOptions transferOptions = split
+                ? new StorageTransferOptions
+                {
+                    InitialTransferSize = dataLength / 2,
+                    MaximumTransferSize = dataLength / 2
+                }
+                : new StorageTransferOptions
+                {
+                    InitialTransferSize = dataLength,
+                    MaximumTransferSize = dataLength
+                };
+
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: GetResponseChecksumAssertion(
+                overrideAlgorithm));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, overrideValidationOptions, transferOptions);
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
+
+        [Test]
+        public virtual async Task ParallelDownloadDisablesDefaultClientValidationOptions(
+            [ValueSource("GetValidationAlgorithms")] ValidationAlgorithm clientAlgorithm,
+            [Values(true, false)] bool split)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+
+            var resourceName = GetNewResourceName();
+            var client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                createResource: true,
+                resourceName: resourceName);
+            await SetupDataAsync(client, new MemoryStream(data));
+
+            var clientValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = clientAlgorithm
+            };
+            var overrideValidationOptions = new DownloadTransferValidationOptions
+            {
+                Algorithm = ValidationAlgorithm.None // disable
+            };
+            StorageTransferOptions transferOptions = split
+              ? new StorageTransferOptions
+              {
+                  InitialTransferSize = dataLength / 2,
+                  MaximumTransferSize = dataLength / 2
+              }
+              : new StorageTransferOptions
+              {
+                  InitialTransferSize = dataLength,
+                  MaximumTransferSize = dataLength
+              };
+
+            // make pipeline assertion for checking checksum was not present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(checkResponse: response =>
+            {
+                if (response.Headers.Contains("Content-MD5"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+                if (response.Headers.Contains("x-ms-content-crc64"))
+                {
+                    Assert.Fail($"Hash found when none expected.");
+                }
+            });
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+
+            client = await GetResourceClientAsync(
+                disposingContainer.Container,
+                resourceLength: dataLength,
+                resourceName: resourceName,
+                createResource: false,
+                downloadTransferValidationOptions: clientValidationOptions,
+                options: clientOptions);
+
+            // Act
+            checksumPipelineAssertion.CheckResponse = true;
+            await ParallelDownloadAsync(client, Stream.Null, overrideValidationOptions, transferOptions);
+
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
         #endregion
 
         #region OpenRead Tests
