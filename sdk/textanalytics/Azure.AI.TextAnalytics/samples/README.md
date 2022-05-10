@@ -19,7 +19,7 @@ Azure Cognitive Services Text Analytics is one of the three services that are pa
   * Healthcare Entities Recognition
   * Extractive Text Summarization
   * Custom Named Entity Recognition
-* Classify Text: Use Natural Language Understanding (NLU) to detect the language or classify the sentiment of text you have
+* Classify Text: Use NLU to detect the language, analyze sentiment, or classify the text you have
   * Language Detection
   * Sentiment Analysis
   * Custom Text Classification
