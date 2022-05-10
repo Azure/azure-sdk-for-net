@@ -987,7 +987,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 AnalyzeTextKeyPhraseExtractionInput input = new()
                 {
                     AnalysisInput = multiLanguageInput,
-                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs,options.ModelVersion)
+                    Parameters = new KeyPhraseTaskParameters(options.DisableServiceLogs, options.ModelVersion)
                 };
 
                 Response<AnalyzeTextTaskResult> result = await _languageRestClient.AnalyzeAsync(
@@ -1287,95 +1287,342 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             throw new NotImplementedException();
         }
 
+        // NEEDS IMPLEMENTATION
+        public override async Task<Response<HealthcareJobStatusResult>> HealthStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override Response<HealthcareJobStatusResult> HealthStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            scope.Start();
+
+            try
+            {
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override async Task<Response<HealthcareJobStatusResult>> HealthStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override Response<HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Analyze Operation
 
         public override async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //Argument.AssertNotNull(actions, nameof(actions));
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(actions, nameof(actions));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<string> documents, TextAnalyticsActions actions, string language = default, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //Argument.AssertNotNull(actions, nameof(actions));
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(actions, nameof(actions));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
-            throw new NotImplementedException();
+            return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
         }
 
         public override AnalyzeActionsOperation StartAnalyzeActions(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //Argument.AssertNotNull(actions, nameof(actions));
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(actions, nameof(actions));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
-            throw new NotImplementedException();
+            return StartAnalyzeActions(documentInputs, actions, options, cancellationToken);
         }
 
         public override async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //Argument.AssertNotNull(actions, nameof(actions));
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            Argument.AssertNotNull(actions, nameof(actions));
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await StartAnalyzeActionsAsync(documentInputs, actions, options, cancellationToken).ConfigureAwait(false);
         }
 
-        private static JobManifestTasks CreateTasks(TextAnalyticsActions actions)
+        public override async Task<Response<AnalyzeTextJobStatusResult>> AnalyzeStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
         {
-            //JobManifestTasks tasks = new();
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
-            //if (actions.RecognizePiiEntitiesActions != null)
-            //{
-            //    tasks.EntityRecognitionPiiTasks = Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions);
-            //}
-            //if (actions.RecognizeEntitiesActions != null)
-            //{
-            //    tasks.EntityRecognitionTasks = Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions);
-            //}
-            //if (actions.RecognizeCustomEntitiesActions != null)
-            //{
-            //    tasks.CustomEntityRecognitionTasks = Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions);
-            //}
-            //if (actions.ExtractKeyPhrasesActions != null)
-            //{
-            //    tasks.KeyPhraseExtractionTasks = Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions);
-            //}
-            //if (actions.RecognizeLinkedEntitiesActions != null)
-            //{
-            //    tasks.EntityLinkingTasks = Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions);
-            //}
-            //if (actions.AnalyzeSentimentActions != null)
-            //{
-            //    tasks.SentimentAnalysisTasks = Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions);
-            //}
-            //if (actions.ExtractSummaryActions != null)
-            //{
-            //    tasks.ExtractiveSummarizationTasks = Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions);
-            //}
-            //if (actions.SingleCategoryClassifyActions != null)
-            //{
-            //    tasks.CustomSingleClassificationTasks = Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions);
-            //}
-            //if (actions.MultiCategoryClassifyActions != null)
-            //{
-            //    tasks.CustomMultiClassificationTasks = Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions);
-            //}
-            //return tasks;
+            // Issue https://github.com/Azure/azure-sdk-for-net/issues/28355
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatus)}");
+            scope.Start();
+
+            try
+            {
+                var response = await _languageRestClient.AnalyzeBatchJobStatusAsync(id, showStats, top, skip, cancellationToken).ConfigureAwait(false);
+                var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<AnalyzeTextJobStatusResult> AnalyzeStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatus)}");
+            scope.Start();
+
+            try
+            {
+                var response = _languageRestClient.AnalyzeBatchJobStatus(id, showStats, top, skip, cancellationToken);
+                var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override async Task<Response<AnalyzeTextJobStatusResult>> AnalyzeStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var response = << NO SERVICE METHOD... WHAT GOES HERE??? >>
+                //var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                //return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<AnalyzeTextJobStatusResult> AnalyzeStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                throw new NotImplementedException();
+                //var response = << NO SERVICE METHOD... WHAT GOES HERE??? >>
+                //var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+
+                //return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private AnalyzeActionsOperation StartAnalyzeActions(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeActionsOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<AnalyzeActionsOperation> StartAnalyzeActionsAsync(MultiLanguageAnalysisInput batchInput, TextAnalyticsActions actions, AnalyzeActionsOptions options = default, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeActionsOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeActions)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(batchInput, CreateTasks(actions)) { DisplayName = actions.DisplayName };
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeActionsOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static IList<AnalyzeTextLROTask> CreateTasks(TextAnalyticsActions actions)
+        {
+            List<AnalyzeTextLROTask> analyzeTasks = new();
+
+            if (actions.RecognizePiiEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizePiiEntitiesActionsToTasks(actions.RecognizePiiEntitiesActions));
+            }
+            if (actions.RecognizeEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizeEntitiesActionsToTasks(actions.RecognizeEntitiesActions));
+            }
+            if (actions.RecognizeCustomEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizeCustomEntitiesActionsToTasks(actions.RecognizeCustomEntitiesActions));
+            }
+            if (actions.ExtractKeyPhrasesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromExtractKeyPhrasesActionsToTasks(actions.ExtractKeyPhrasesActions));
+            }
+            if (actions.RecognizeLinkedEntitiesActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromRecognizeLinkedEntitiesActionsToTasks(actions.RecognizeLinkedEntitiesActions));
+            }
+            if (actions.AnalyzeSentimentActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromAnalyzeSentimentActionsToTasks(actions.AnalyzeSentimentActions));
+            }
+            if (actions.ExtractSummaryActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromExtractSummaryActionsToTasks(actions.ExtractSummaryActions));
+            }
+            if (actions.SingleCategoryClassifyActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromSingleCategoryClassifyActionsToTasks(actions.SingleCategoryClassifyActions));
+            }
+            if (actions.MultiCategoryClassifyActions != null)
+            {
+                analyzeTasks.AddRange(Transforms.ConvertFromMultiCategoryClassifyActionsToTasks(actions.MultiCategoryClassifyActions));
+            }
+
+            return analyzeTasks;
         }
 
         #endregion
