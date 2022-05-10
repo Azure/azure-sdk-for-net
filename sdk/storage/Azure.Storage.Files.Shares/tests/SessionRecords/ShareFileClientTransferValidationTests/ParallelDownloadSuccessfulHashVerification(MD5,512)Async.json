@@ -1,0 +1,150 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://jaschrepragrs.file.core.windows.net/test-share-43b29d76-a83b-a7a8-9cb2-f015dea4693e?restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-efb47943dcc7214cb7e7f6261724d39d-145a2cfe6d7a6c42-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.10.0-alpha.20220503.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "adc61620-1dcd-1329-75e1-01fac44feb48",
+        "x-ms-date": "Tue, 03 May 2022 17:55:34 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-06-08"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 03 May 2022 17:55:33 GMT",
+        "ETag": "\u00220x8DA2D2E1F106258\u0022",
+        "Last-Modified": "Tue, 03 May 2022 17:55:33 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "adc61620-1dcd-1329-75e1-01fac44feb48",
+        "x-ms-request-id": "dee20989-e01a-0026-6416-5f7b1f000000",
+        "x-ms-version": "2021-06-08"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://jaschrepragrs.file.core.windows.net/test-share-43b29d76-a83b-a7a8-9cb2-f015dea4693e/test-file-ee9ea031-8053-a85e-c134-2d7eb6e2efe2",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-b3e65609c303fc46b73df6b2513f7cfa-b8c4b33605bb4a4d-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.10.0-alpha.20220503.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "f9573171-b017-02aa-dfb3-7c33f46b4179",
+        "x-ms-content-length": "2048",
+        "x-ms-date": "Tue, 03 May 2022 17:55:34 GMT",
+        "x-ms-file-attributes": "None",
+        "x-ms-file-creation-time": "Now",
+        "x-ms-file-last-write-time": "Now",
+        "x-ms-file-permission": "Inherit",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-type": "file",
+        "x-ms-version": "2021-06-08"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 03 May 2022 17:55:33 GMT",
+        "ETag": "\u00220x8DA2D2E1F221AA9\u0022",
+        "Last-Modified": "Tue, 03 May 2022 17:55:34 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "f9573171-b017-02aa-dfb3-7c33f46b4179",
+        "x-ms-file-attributes": "Archive",
+        "x-ms-file-change-time": "2022-05-03T17:55:34.0420777Z",
+        "x-ms-file-creation-time": "2022-05-03T17:55:34.0420777Z",
+        "x-ms-file-id": "13835128424026341376",
+        "x-ms-file-last-write-time": "2022-05-03T17:55:34.0420777Z",
+        "x-ms-file-parent-id": "0",
+        "x-ms-file-permission-key": "10117549752055461719*2650414171312005081",
+        "x-ms-request-id": "dee2098b-e01a-0026-6516-5f7b1f000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2021-06-08"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://jaschrepragrs.file.core.windows.net/test-share-43b29d76-a83b-a7a8-9cb2-f015dea4693e/test-file-ee9ea031-8053-a85e-c134-2d7eb6e2efe2?comp=range",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "Content-Length": "2048",
+        "Content-Type": "application/octet-stream",
+        "traceparent": "00-14a8db899fa4e6448b7df3e4f1186e7a-8fd5fb1b80597540-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.10.0-alpha.20220503.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "840cad31-f68a-caca-e99a-36b1cc98a1a6",
+        "x-ms-date": "Tue, 03 May 2022 17:55:34 GMT",
+        "x-ms-range": "bytes=0-2047",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-06-08",
+        "x-ms-write": "update"
+      },
+      "RequestBody": "u\u002BL\u002B55d0UhJLTsImRSYi5JT/9MjevHBvw36YyGNXnzEoGsajujZaq8OzYX9bAs1Pvx1lxFojav9xjyMY3Imv9K6Q/ipgfylepEkEKlrxE8CwSAhG8drXBLDGMSsSQc46BG3QywSj70DzByARH0ClgHtjaJOAaQLTuPl6mU3\u002BS2J6yiXtIEi8DVnIUuq6xeVvIbCvr9k6uZtq/BIKKFXy9Ly9llUauGAzp1o6uBYYGfMTCnicT5yJQBCKgiM1seUD1V4u/C\u002BQVGlQfAd\u002BAAGEUeMf9h3dVqUfNFZEkDU8/fZ1N\u002BK36hzDg7YPS9OVCj8PBTE/FrrHJn\u002B5DsfZTMMzFH4RCckezGfGW3NnzQrRiioWNYsD/OY7rRBj/ttU6jby2zdUgwB28DjJebtGYFl154Odwhc4LxeY1Vu4u86LcnE9dPHSfQYpn0RSOoMr9E237RZYtycfuasgu66lvTRqPgdKCetnoml9dCLS5fWTbOANAc23M7pJHbtGssFYg\u002BEP6Pt84ephUEus2kIFTNO1jE/Nl7xmsgtMAOwwIO\u002BoJPBBwv36F4v1rLGCClh4Q9DnkCZyi\u002BwlqDXwMOD\u002BMS9bBLZSxInWu3XD1\u002BsL5Kiz1L0bSJDJNZkEGxrHCuaq93qCJwahJX9GEdWxrrMAGcSNPVwj4\u002Biekc4dTqhvDrCOGeBwib2iEa491De7GIflAwFVOc2KhxSS45U3hNfX1gIkIpXTj5AH6yuu5g6w43lGN0umGtXjBJHM3qYnaozXZf01lvXyEnNxTk6h3KAF4f8c8E2LMLwtQB4DBrHq34Cf1oAQe0yDVCTYNcyGQifwxv2mC3o\u002BSzRBCFbX7wzChm7NAQUg9WazmZsps/vvpv72Ej\u002BzRNQGYItMznP2q2UXFa5euUAi0NGW83LeFZc5UWFX4NzMDkKaxqF51CbzvO02EZ1Mkey\u002B1EFuHFFiKEv0En0RnsuISwdsw/OfqPyqozaEqAP57L91mQybXfHwOJ1VhcGp4R4ircaW3834HytFxHkb3YBI\u002Bia9mwW/7e0WfItVSSM7AMEXYvo9YwzxfHngVpl41VodDIqa7EYZYsDYf2NBotUICcO3A3qGC5cayx\u002BL3pdTnqYxOD2YoBR7/v86ZOOosNmk10zWwdHflwHzgCEmjYQoheG8EGqYcGmvOwR6S6a0cRtF5wZLfN3UUaE7pR/yVXF7Ed8C659vDGfiJ4XNZUtaPw8G4aZ93QgE6L/JXMtJvOaT/jnHsoV71tueaFVXB\u002BxV4WYQ7HTK/jTW/QPgpa\u002BcmWufOWYRko2KigrL3nWzrODTc3plOc9yyAAF8bSBmzArAs7puM2GQ07YhWJp/yC\u002BIlAiDTI0N2CcLXBlC6HYCO7Zn9ymyfQSTS8sjLNtCMngRs5jXo7\u002B9spuTYpdIDitAH1zj2BEGFlcEMACCKusLiSnhcTSdapg26gRN3xptSz3fow2\u002BXlpnC51B07O/O4fwh5mtZpz2orSE7S3MuHc8lqTCokfdjWrPumWXW5bkd668nVdA/\u002BRhKMBY\u002BXEsmlNmBTzO/Jk/0vpunex3H0cd4HV/EBrf\u002B5bAYXlHhNP5ox/ScRZaFbsVfMqdEmH4Kcm5Otj77Up4RkmmDlsfuE3mdPrMZO4wg8r6KZNQQql0yDdvzkn6/fWVmerM88cgNcR8tp1nK8UbiLcOAYO3KAOgcUZjr\u002BoEK3cFNorDI8/DmjPO04vLzZxyVAXSrPwx3rHnbEJA/IXaeItmYfU6GGSnSmeP6BR3lGOp8VukcX67E1gZG/dNQt2t9FsApaunODvhK2JUYjZdb5fe1ssqNgdMq06dIPytGceKIfO5du73wrkfwwXcZrFhu\u002BwfbqvSQ75T9DodChc/c9GaygACpDjpJtRSCnMBcESde2UQTesbt941ZYK0mvhh4I80QVxxHxfzdkfXgDlLUkP1v47x7uYmfxJhzT52NEvb8CnjzS7obBwNXRdjQ/fk6hM\u002B/xspb/GozcJKD1HZfQI7\u002B8/Pp0UVDRNy5JGOwzsafSMrdzUw8kA4Ov9snhzKdB/VJ4gn1QKOKfHHtotf2grHL5JurcXNCwlPl6yF6G82qHBx\u002BZty8qfgXQ1DKTu02CC0Za5KW4YZyBy\u002B2D2WCAFC0Q5bLiCvVD0qjlC4ieINmv9L0ULArAzqF/F\u002B9BpqClUMABftWenABRFxX811YX46sT1\u002BSnb\u002BQmTBsNZvMJ/igIQ7rEmKIEEVS4xxjwx/dPZzBEMdK7/eTf3zK\u002BjTkNRxjp9JefT0cJC8KP7qjPMYgjwf/CxchZTEHV6L1zSYAfq3/8Cs9jsBfpPyYMLBM4DK2mms85ToFMkKhRxWaJlcI\u002BbEMozyq8wA3n1YqmSSAymdgTyK6w5lz6r3YnDeqxY6Vn0b/ME0GC6da9VXT6qkeEIyuKec0TjYniMh\u002BwlbYnMnXlPntgYoqajOLX85DoAAUunurDJuXUUEA16d0hzlAgmiL/FWvMJ8Cc8\u002BjqO5n4\u002BjIagfbLYA\u002BMDOo3LnSpdMKOt1Vt6OqZYnsqIjb86hSqOPOvC0hdVTYTbwiBmPlL93smX4RAixFHgSN/oUHUkyLVjPGE/m12MV4jXn3iG8l93i671o6Qaa3iZ4Yk3bP0Ot/pqAwHxvUNsC4mISyXZWVaAcMXHLiQRSNDppbnTVeqKyOd9G\u002B5ehs1riZgakSBSv4gzt/w3R4nVWbowCBeJmbWf/YM9Wz5nIer4W6SM9rewluU=",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Content-MD5": "GJXQM\u002BpkLA4kiv5qqwzS3A==",
+        "Date": "Tue, 03 May 2022 17:55:33 GMT",
+        "ETag": "\u00220x8DA2D2E1F315A90\u0022",
+        "Last-Modified": "Tue, 03 May 2022 17:55:34 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "840cad31-f68a-caca-e99a-36b1cc98a1a6",
+        "x-ms-file-last-write-time": "2022-05-03T17:55:34.1420176Z",
+        "x-ms-request-id": "dee2098c-e01a-0026-6616-5f7b1f000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2021-06-08"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://jaschrepragrs.file.core.windows.net/test-share-43b29d76-a83b-a7a8-9cb2-f015dea4693e?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2ff3a9fe839b334dbd1b9b2e421dd543-ce0918b17022df4d-00",
+        "User-Agent": "azsdk-net-Storage.Files.Shares/12.10.0-alpha.20220503.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "46011e53-bd5f-beef-e0b1-39794ad01b3c",
+        "x-ms-date": "Tue, 03 May 2022 17:55:34 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-06-08"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 03 May 2022 17:55:33 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "46011e53-bd5f-beef-e0b1-39794ad01b3c",
+        "x-ms-request-id": "dee2098d-e01a-0026-6716-5f7b1f000000",
+        "x-ms-version": "2021-06-08"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1564281362",
+    "Storage_TestConfigDefault": "ProductionTenant\njaschrepragrs\nU2FuaXRpemVk\nhttps://jaschrepragrs.blob.core.windows.net\nhttps://jaschrepragrs.file.core.windows.net\nhttps://jaschrepragrs.queue.core.windows.net\nhttps://jaschrepragrs.table.core.windows.net\n\n\n\n\nhttps://jaschrepragrs-secondary.blob.core.windows.net\nhttps://jaschrepragrs-secondary.file.core.windows.net\nhttps://jaschrepragrs-secondary.queue.core.windows.net\nhttps://jaschrepragrs-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://jaschrepragrs.blob.core.windows.net/;QueueEndpoint=https://jaschrepragrs.queue.core.windows.net/;FileEndpoint=https://jaschrepragrs.file.core.windows.net/;BlobSecondaryEndpoint=https://jaschrepragrs-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://jaschrepragrs-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://jaschrepragrs-secondary.file.core.windows.net/;AccountName=jaschrepragrs;AccountKey=Sanitized\n[encryption scope]\n\n"
+  }
+}
