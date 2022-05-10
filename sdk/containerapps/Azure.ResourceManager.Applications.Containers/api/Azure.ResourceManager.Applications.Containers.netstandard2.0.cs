@@ -690,24 +690,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     {
         public ContainerAppProbe() { }
         public int? FailureThreshold { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.HttpHeaderData> HttpHeaders { get { throw null; } }
-        public string HttpHost { get { throw null; } set { } }
-        public int? HttpPort { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.HttpRequestData HttpRequest { get { throw null; } set { } }
         public int? InitialDelaySeconds { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
         public int? PeriodSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.Applications.Containers.Models.ProbeType? ProbeType { get { throw null; } set { } }
-        public Azure.ResourceManager.Applications.Containers.Models.Scheme? Scheme { get { throw null; } set { } }
         public int? SuccessThreshold { get { throw null; } set { } }
-        public Azure.ResourceManager.Applications.Containers.Models.ContainerAppProbeTcpSocket TcpSocket { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.TcpSocketRequestData TcpSocketRequest { get { throw null; } set { } }
         public long? TerminationGracePeriodSeconds { get { throw null; } set { } }
         public int? TimeoutSeconds { get { throw null; } set { } }
-    }
-    public partial class ContainerAppProbeTcpSocket
-    {
-        public ContainerAppProbeTcpSocket(int port) { }
-        public string Host { get { throw null; } set { } }
-        public int Port { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppProvisioningState : System.IEquatable<Azure.ResourceManager.Applications.Containers.Models.ContainerAppProvisioningState>
@@ -962,9 +952,18 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public Azure.ResourceManager.Applications.Containers.Models.ClientRegistration Registration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ValidationAllowedAudiences { get { throw null; } }
     }
-    public partial class HttpHeaderData
+    public partial class HttpRequestData
     {
-        public HttpHeaderData(string name, string value) { }
+        public HttpRequestData(int port) { }
+        public string Host { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.HttpRequestDataHttpHeadersItem> HttpHeaders { get { throw null; } }
+        public string Path { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.Scheme? Scheme { get { throw null; } set { } }
+    }
+    public partial class HttpRequestDataHttpHeadersItem
+    {
+        public HttpRequestDataHttpHeadersItem(string name, string value) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
@@ -1214,6 +1213,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public static implicit operator Azure.ResourceManager.Applications.Containers.Models.StorageType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.StorageType left, Azure.ResourceManager.Applications.Containers.Models.StorageType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class TcpSocketRequestData
+    {
+        public TcpSocketRequestData(int port) { }
+        public string Host { get { throw null; } set { } }
+        public int Port { get { throw null; } set { } }
     }
     public partial class TrafficWeight
     {
