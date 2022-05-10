@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ResultStatus.
+    /// Defines values for LinuxVMGuestPatchAutomaticByPlatformRebootSetting.
     /// </summary>
-    public static class ResultStatus
+    public static class LinuxVMGuestPatchAutomaticByPlatformRebootSetting
     {
-        public const string Success = "Success";
-        public const string Failed = "Failed";
+        public const string Unknown = "Unknown";
+        public const string IfRequired = "IfRequired";
+        public const string Never = "Never";
+        public const string Always = "Always";
     }
 }

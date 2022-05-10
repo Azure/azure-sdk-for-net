@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="ultraSSDEnabled">The flag that enables or disables a
         /// capability to have UltraSSD Enabled Virtual Machines on Dedicated
         /// Hosts of the Dedicated Host Group. For the Virtual Machines to be
-        /// UltraSSD Enabled, UltraSSDEnabled flag for the resoure needs to be
+        /// UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be
         /// set true as well. The value is defaulted to 'false' when not
         /// provided. Please refer to
         /// https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the flag that enables or disables a capability to have
         /// UltraSSD Enabled Virtual Machines on Dedicated Hosts of the
         /// Dedicated Host Group. For the Virtual Machines to be UltraSSD
-        /// Enabled, UltraSSDEnabled flag for the resoure needs to be set true
+        /// Enabled, UltraSSDEnabled flag for the resource needs to be set true
         /// as well. The value is defaulted to 'false' when not provided.
         /// Please refer to
         /// https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd
