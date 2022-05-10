@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
-    public partial class ContainerAppProbeTcpSocket : IUtf8JsonSerializable
+    public partial class TcpSocketRequestData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppProbeTcpSocket DeserializeContainerAppProbeTcpSocket(JsonElement element)
+        internal static TcpSocketRequestData DeserializeTcpSocketRequestData(JsonElement element)
         {
             Optional<string> host = default;
             int port = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                     continue;
                 }
             }
-            return new ContainerAppProbeTcpSocket(host.Value, port);
+            return new TcpSocketRequestData(host.Value, port);
         }
     }
 }

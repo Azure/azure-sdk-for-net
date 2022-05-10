@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
     /// <summary> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </summary>
-    public partial class ContainerAppProbeTcpSocket
+    public partial class TcpSocketRequestData
     {
-        /// <summary> Initializes a new instance of ContainerAppProbeTcpSocket. </summary>
+        /// <summary> Initializes a new instance of TcpSocketRequestData. </summary>
         /// <param name="port"> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
-        public ContainerAppProbeTcpSocket(int port)
+        public TcpSocketRequestData(int port)
         {
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppProbeTcpSocket. </summary>
+        /// <summary> Initializes a new instance of TcpSocketRequestData. </summary>
         /// <param name="host"> Optional: Host name to connect to, defaults to the pod IP. </param>
         /// <param name="port"> Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
-        internal ContainerAppProbeTcpSocket(string host, int port)
+        internal TcpSocketRequestData(string host, int port)
         {
             Host = host;
             Port = port;

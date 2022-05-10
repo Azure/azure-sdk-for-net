@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,6 +19,11 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             {
                 writer.WritePropertyName("failureThreshold");
                 writer.WriteNumberValue(FailureThreshold.Value);
+            }
+            if (Optional.IsDefined(HttpRequest))
+            {
+                writer.WritePropertyName("httpGet");
+                writer.WriteObjectValue(HttpRequest);
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -36,10 +40,10 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                 writer.WritePropertyName("successThreshold");
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TcpSocket))
+            if (Optional.IsDefined(TcpSocketRequest))
             {
                 writer.WritePropertyName("tcpSocket");
-                writer.WriteObjectValue(TcpSocket);
+                writer.WriteObjectValue(TcpSocketRequest);
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
@@ -56,57 +60,20 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(ProbeType.Value.ToString());
             }
-            writer.WritePropertyName("httpGet");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HttpHost))
-            {
-                writer.WritePropertyName("host");
-                writer.WriteStringValue(HttpHost);
-            }
-            if (Optional.IsCollectionDefined(HttpHeaders))
-            {
-                writer.WritePropertyName("httpHeaders");
-                writer.WriteStartArray();
-                foreach (var item in HttpHeaders)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path");
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsDefined(HttpPort))
-            {
-                writer.WritePropertyName("port");
-                writer.WriteNumberValue(HttpPort.Value);
-            }
-            if (Optional.IsDefined(Scheme))
-            {
-                writer.WritePropertyName("scheme");
-                writer.WriteStringValue(Scheme.Value.ToString());
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ContainerAppProbe DeserializeContainerAppProbe(JsonElement element)
         {
             Optional<int> failureThreshold = default;
+            Optional<HttpRequestData> httpGet = default;
             Optional<int> initialDelaySeconds = default;
             Optional<int> periodSeconds = default;
             Optional<int> successThreshold = default;
-            Optional<ContainerAppProbeTcpSocket> tcpSocket = default;
+            Optional<TcpSocketRequestData> tcpSocket = default;
             Optional<long> terminationGracePeriodSeconds = default;
             Optional<int> timeoutSeconds = default;
             Optional<ProbeType> type = default;
-            Optional<string> host = default;
-            Optional<IList<HttpHeaderData>> httpHeaders = default;
-            Optional<string> path = default;
-            Optional<int> port = default;
-            Optional<Scheme> scheme = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"))
@@ -117,6 +84,16 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         continue;
                     }
                     failureThreshold = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("httpGet"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    httpGet = HttpRequestData.DeserializeHttpRequestData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"))
@@ -156,7 +133,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tcpSocket = ContainerAppProbeTcpSocket.DeserializeContainerAppProbeTcpSocket(property.Value);
+                    tcpSocket = TcpSocketRequestData.DeserializeTcpSocketRequestData(property.Value);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"))
@@ -189,65 +166,8 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                     type = new ProbeType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpGet"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("host"))
-                        {
-                            host = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpHeaders"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<HttpHeaderData> array = new List<HttpHeaderData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(HttpHeaderData.DeserializeHttpHeaderData(item));
-                            }
-                            httpHeaders = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("path"))
-                        {
-                            path = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("port"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            port = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("scheme"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            scheme = new Scheme(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type), host.Value, Optional.ToList(httpHeaders), path.Value, Optional.ToNullable(port), Optional.ToNullable(scheme));
+            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type));
         }
     }
 }
