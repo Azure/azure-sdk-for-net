@@ -84,13 +84,13 @@ function GetPrimaryCodeOwner ([string]$TargetDirectory)
 function GetDocsMsService($clientPackageInfo, $mgmtPackageInfo, $serviceName) 
 {
   $service = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
-  if ($clientPackageInfo -and $clientPackageInfo.MSDocService) {
+  if ($clientPackageInfo -and $clientPackageInfo[0].MSDocService) {
     # Use MSDocService in csv metadata to override the service directory
     # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
-    $service = $clientPackageInfo.MSDocService
+    $service = $clientPackageInfo[0].MSDocService
   }
-  elseif ($mgmtPackageInfo -and $mgmtPackageInfo.MSDocService) {
-    $service = $mgmtPackageInfo.MSDocService
+  elseif ($mgmtPackageInfo -and $mgmtPackageInfo[0].MSDocService) {
+    $service = $mgmtPackageInfo[0].MSDocService
   }
   Write-Host "The service of package: $service"
   return $service
