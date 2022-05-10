@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/75b53c0708590483bb2166b9e2751f1bdf5adefa/specification/azurestackhci/resource-manager/readme.md
-tag: package-2021-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
+tag: package-2022-05
 output-folder: Generated/
 clear-output-folder: true
 
