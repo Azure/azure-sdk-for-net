@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Linq;
 
     /// <summary>
-    /// Description of a namespace authorization rule.
+    /// Single item in a List or Get AuthorizationRule operation
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AuthorizationRule : Resource
+    public partial class AuthorizationRule : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the AuthorizationRule class.
@@ -35,13 +35,21 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// Initializes a new instance of the AuthorizationRule class.
         /// </summary>
         /// <param name="rights">The rights associated with the rule.</param>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        public AuthorizationRule(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public AuthorizationRule(IList<string> rights, string id = default(string), string name = default(string), string type = default(string), string location = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             Rights = rights;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -54,7 +62,13 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// Gets or sets the rights associated with the rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        public IList<string> Rights { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,13 +81,6 @@ namespace Microsoft.Azure.Management.Relay.Models
             if (Rights == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
-            }
-            if (Rights != null)
-            {
-                if (Rights.Count != System.Linq.Enumerable.Count(System.Linq.Enumerable.Distinct(Rights)))
-                {
-                    throw new ValidationException(ValidationRules.UniqueItems, "Rights");
-                }
             }
         }
     }

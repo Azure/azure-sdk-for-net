@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Relay.Models
     /// Description of hybrid connection resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class HybridConnection : Resource
+    public partial class HybridConnection : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the HybridConnection class.
@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// <summary>
         /// Initializes a new instance of the HybridConnection class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="createdAt">The time the hybrid connection was
         /// created.</param>
         /// <param name="updatedAt">The time the namespace was updated.</param>
@@ -48,14 +53,17 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// For example, it can be used to store descriptive data, such as a
         /// list of teams and their contact information. Also, user-defined
         /// configuration settings can be stored.</param>
-        public HybridConnection(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), int? listenerCount = default(int?), bool? requiresClientAuthorization = default(bool?), string userMetadata = default(string))
-            : base(id, name, type)
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public HybridConnection(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), int? listenerCount = default(int?), bool? requiresClientAuthorization = default(bool?), string userMetadata = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ListenerCount = listenerCount;
             RequiresClientAuthorization = requiresClientAuthorization;
             UserMetadata = userMetadata;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -99,6 +107,12 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.userMetadata")]
         public string UserMetadata { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

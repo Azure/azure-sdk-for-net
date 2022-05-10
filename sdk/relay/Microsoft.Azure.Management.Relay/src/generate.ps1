@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "relay/resource-manager" -AutoRestVersion "v2"

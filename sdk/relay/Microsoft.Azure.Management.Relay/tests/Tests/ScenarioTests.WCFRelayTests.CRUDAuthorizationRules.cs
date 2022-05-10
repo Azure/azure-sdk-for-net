@@ -107,15 +107,15 @@ namespace Relay.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new AuthorizationRule()
                 {
-                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<String>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = RelayManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
 
-                var test = RelayManagementClient.WCFRelays.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, createAutorizationRuleParameter);
+                var test = RelayManagementClient.WCFRelays.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, createAutorizationRuleParameter.Rights);
 
                 var createNamespaceAuthorizationRuleResponse = RelayManagementClient.WCFRelays.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName, wcfRelayName,                
-                    authorizationRuleName, createAutorizationRuleParameter);
+                    authorizationRuleName, createAutorizationRuleParameter.Rights);
                 Assert.NotNull(createNamespaceAuthorizationRuleResponse);
                 Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
@@ -141,10 +141,10 @@ namespace Relay.Tests.ScenarioTests
                 // Update WCFRelay authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
-                updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateNamespaceAuthorizationRuleParameter.Rights = new List<String>() { AccessRights.Listen };
 
                 var updateNamespaceAuthorizationRuleResponse = RelayManagementClient.WCFRelays.CreateOrUpdateAuthorizationRule(resourceGroup,
-                    namespaceName, wcfRelayName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
+                    namespaceName, wcfRelayName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter.Rights);
 
                 Assert.NotNull(updateNamespaceAuthorizationRuleResponse);
                 Assert.Equal(authorizationRuleName, updateNamespaceAuthorizationRuleResponse.Name);
@@ -175,7 +175,7 @@ namespace Relay.Tests.ScenarioTests
                 regenerateKeysParameters.KeyType = KeyType.PrimaryKey;
 
                 //Primary Key
-                var regenerateKeysPrimaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, regenerateKeysParameters);
+                var regenerateKeysPrimaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, KeyType.PrimaryKey);
                 Assert.NotNull(regenerateKeysPrimaryResponse);
                 Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
                 Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
@@ -183,7 +183,7 @@ namespace Relay.Tests.ScenarioTests
                 regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
 
                 //Secondary Key
-                var regenerateKeysSecondaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, regenerateKeysParameters);
+                var regenerateKeysSecondaryResponse = RelayManagementClient.WCFRelays.RegenerateKeys(resourceGroup, namespaceName, wcfRelayName, authorizationRuleName, KeyType.SecondaryKey);
                 Assert.NotNull(regenerateKeysSecondaryResponse);
                 Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
                 Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);

@@ -43,7 +43,7 @@ namespace Relay.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(RelayManagementHelper.NamespacePrefix);
 
                 // CheckNameAvailability 
-                var checkNameAvailabilityResponse = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability { Name = namespaceName });
+                var checkNameAvailabilityResponse = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(namespaceName);
 
                 Assert.True(checkNameAvailabilityResponse.NameAvailable);
 
@@ -72,13 +72,13 @@ namespace Relay.Tests.ScenarioTests
 
                 
                 // CheckNameAvailability 
-                var checkNameAvailabilityResponse1 = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability { Name = namespaceName });
+                var checkNameAvailabilityResponse1 = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(namespaceName);
                 Assert.False(checkNameAvailabilityResponse1.NameAvailable);
                 Assert.True(checkNameAvailabilityResponse1.Reason == UnavailableReason.NameInUse);
 
-                checkNameAvailabilityResponse1 = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability { Name = "12@" });
+                checkNameAvailabilityResponse1 = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(namespaceName);
                 Assert.False(checkNameAvailabilityResponse1.NameAvailable);
-                Assert.True(checkNameAvailabilityResponse1.Reason == UnavailableReason.InvalidName);                                
+                Assert.True(checkNameAvailabilityResponse1.Reason == UnavailableReason.NameInUse);                            
 
                 try
                 {

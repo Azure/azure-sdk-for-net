@@ -45,7 +45,7 @@ namespace Relay.Tests.ScenarioTests
 
                 var responseOperationlist = this.RelayManagementClient.Operations.List();
 
-                var responseCheckNameAvailability = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability { Name = namespaceName });
+                var responseCheckNameAvailability = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(namespaceName);
 
                 var createNamespaceResponse = this.RelayManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new RelayNamespace()
@@ -89,10 +89,7 @@ namespace Relay.Tests.ScenarioTests
 
                 // Create HybridConnections Relay  - 
                 var hybridConnectionsName = TestUtilities.GenerateName(RelayManagementHelper.HybridPrefix);
-                var createdWCFRelayResponse = RelayManagementClient.HybridConnections.CreateOrUpdate(resourceGroup, namespaceName, hybridConnectionsName, new HybridConnection()
-                {                                       
-                    RequiresClientAuthorization = true
-                });
+                var createdWCFRelayResponse = RelayManagementClient.HybridConnections.CreateOrUpdate(resourceGroup, namespaceName, hybridConnectionsName, requiresClientAuthorization: true);
 
                 Assert.NotNull(createdWCFRelayResponse);
                 Assert.Equal(createdWCFRelayResponse.Name, hybridConnectionsName);
@@ -108,7 +105,7 @@ namespace Relay.Tests.ScenarioTests
                 string strUserMetadata = "usermetadata is a placeholder to store user-defined string data for the HybridConnection endpoint.e.g. it can be used to store  descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored.";
                 createdWCFRelayResponse.UserMetadata = strUserMetadata;
                 
-                var updateWCFRelays = RelayManagementClient.HybridConnections.CreateOrUpdate(resourceGroup, namespaceName, hybridConnectionsName, createdWCFRelayResponse);
+                var updateWCFRelays = RelayManagementClient.HybridConnections.CreateOrUpdate(resourceGroup, namespaceName, hybridConnectionsName, userMetadata: createdWCFRelayResponse.UserMetadata);
                 Assert.Equal(createdWCFRelayResponse.Name, hybridConnectionsName);
                 Assert.True(createdWCFRelayResponse.RequiresClientAuthorization);
                 Assert.Equal(createdWCFRelayResponse.UserMetadata, strUserMetadata);

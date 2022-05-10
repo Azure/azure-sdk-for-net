@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Linq;
 
     /// <summary>
-    /// A Relay REST API operation.
+    /// A Relay REST API operation
     /// </summary>
     public partial class Operation
     {
@@ -31,12 +31,18 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// </summary>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
+        /// <param name="display">Display of the operation</param>
+        /// <param name="origin">Origin of the operation</param>
+        /// <param name="properties">Properties of the operation</param>
+        public Operation(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), object properties = default(object))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
+            Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -52,10 +58,28 @@ namespace Microsoft.Azure.Management.Relay.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the object that represents the operation.
+        /// Gets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; private set; }
+
+        /// <summary>
+        /// Gets display of the operation
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        public OperationDisplay Display { get; private set; }
+
+        /// <summary>
+        /// Gets origin of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "origin")]
+        public string Origin { get; private set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
     }
 }

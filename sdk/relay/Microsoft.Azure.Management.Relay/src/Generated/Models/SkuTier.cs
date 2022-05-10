@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.Relay.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuTier.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuTier
+    public static class SkuTier
     {
-        [EnumMember(Value = "Standard")]
-        Standard
-    }
-    internal static class SkuTierEnumExtension
-    {
-        internal static string ToSerializedValue(this SkuTier? value)
-        {
-            return value == null ? null : ((SkuTier)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this SkuTier value)
-        {
-            switch( value )
-            {
-                case SkuTier.Standard:
-                    return "Standard";
-            }
-            return null;
-        }
-
-        internal static SkuTier? ParseSkuTier(this string value)
-        {
-            switch( value )
-            {
-                case "Standard":
-                    return SkuTier.Standard;
-            }
-            return null;
-        }
+        public const string Standard = "Standard";
     }
 }

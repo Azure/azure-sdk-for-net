@@ -39,23 +39,32 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">SKU of the namespace.</param>
-        /// <param name="provisioningState">Possible values include: 'Created',
-        /// 'Succeeded', 'Deleted', 'Failed', 'Updating', 'Unknown'</param>
+        /// <param name="provisioningState">Provisioning state of the
+        /// Namespace.</param>
+        /// <param name="status">Status of the Namespace.</param>
         /// <param name="createdAt">The time the namespace was created.</param>
         /// <param name="updatedAt">The time the namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics.</param>
-        public RelayUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), ProvisioningStateEnum? provisioningState = default(ProvisioningStateEnum?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string))
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections.</param>
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled. Possible
+        /// values include: 'Enabled', 'Disabled', 'SecuredByPerimeter'</param>
+        public RelayUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string publicNetworkAccess = default(string))
             : base(id, name, type, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
+            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
+            PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
             CustomInit();
         }
 
@@ -71,11 +80,16 @@ namespace Microsoft.Azure.Management.Relay.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets possible values include: 'Created', 'Succeeded', 'Deleted',
-        /// 'Failed', 'Updating', 'Unknown'
+        /// Gets provisioning state of the Namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningStateEnum? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets status of the Namespace.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets the time the namespace was created.
@@ -100,6 +114,20 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricId")]
         public string MetricId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of private endpoint connections.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled. Possible values include:
+        /// 'Enabled', 'Disabled', 'SecuredByPerimeter'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
     }
 }

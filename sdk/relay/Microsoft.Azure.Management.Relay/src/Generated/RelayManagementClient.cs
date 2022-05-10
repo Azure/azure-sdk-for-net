@@ -78,11 +78,6 @@ namespace Microsoft.Azure.Management.Relay
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
@@ -96,6 +91,21 @@ namespace Microsoft.Azure.Management.Relay
         /// Gets the IWCFRelaysOperations.
         /// </summary>
         public virtual IWCFRelaysOperations WCFRelays { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the RelayManagementClient class.
@@ -338,12 +348,14 @@ namespace Microsoft.Azure.Management.Relay
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
             HybridConnections = new HybridConnectionsOperations(this);
             WCFRelays = new WCFRelaysOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-04-01";
+            ApiVersion = "2021-11-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

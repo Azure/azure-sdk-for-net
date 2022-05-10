@@ -42,11 +42,11 @@ namespace Relay.Tests.ScenarioTests
 
                 // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(RelayManagementHelper.NamespacePrefix);
-                
-                // CheckNameAvailability 
-                var checkNameAvailabilityResponse = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability { Name = namespaceName });
 
-                Assert.True(checkNameAvailabilityResponse.NameAvailable);
+                // CheckNameAvailability 
+                // var checkNameAvailabilityResponse = this.RelayManagementClient.Namespaces.CheckNameAvailabilityMethod(namespaceName);
+
+                //Assert.True(checkNameAvailabilityResponse.NameAvailable);
 
                 var createNamespaceResponse = this.RelayManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new RelayNamespace()

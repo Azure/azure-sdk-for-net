@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Relay.Models
     /// Description of the WCF relay resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class WcfRelay : Resource
+    public partial class WcfRelay : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the WcfRelay class.
@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// <summary>
         /// Initializes a new instance of the WcfRelay class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="isDynamic">Returns true if the relay is dynamic;
         /// otherwise, false.</param>
         /// <param name="createdAt">The time the WCF relay was created.</param>
@@ -52,8 +57,10 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// example, it can be used to store descriptive data, such as list of
         /// teams and their contact information. Also, user-defined
         /// configuration settings can be stored.</param>
-        public WcfRelay(string id = default(string), string name = default(string), string type = default(string), bool? isDynamic = default(bool?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), int? listenerCount = default(int?), Relaytype? relayType = default(Relaytype?), bool? requiresClientAuthorization = default(bool?), bool? requiresTransportSecurity = default(bool?), string userMetadata = default(string))
-            : base(id, name, type)
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public WcfRelay(string id = default(string), string name = default(string), string type = default(string), string location = default(string), bool? isDynamic = default(bool?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), int? listenerCount = default(int?), Relaytype? relayType = default(Relaytype?), bool? requiresClientAuthorization = default(bool?), bool? requiresTransportSecurity = default(bool?), string userMetadata = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             IsDynamic = isDynamic;
             CreatedAt = createdAt;
@@ -63,6 +70,7 @@ namespace Microsoft.Azure.Management.Relay.Models
             RequiresClientAuthorization = requiresClientAuthorization;
             RequiresTransportSecurity = requiresTransportSecurity;
             UserMetadata = userMetadata;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -126,6 +134,12 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.userMetadata")]
         public string UserMetadata { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

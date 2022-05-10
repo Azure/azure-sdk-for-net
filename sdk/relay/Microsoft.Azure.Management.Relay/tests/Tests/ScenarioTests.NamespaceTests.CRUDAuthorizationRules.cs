@@ -72,13 +72,13 @@ namespace Relay.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new AuthorizationRule()
                 {
-                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<String>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = RelayManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
 
                 var createNamespaceAuthorizationRuleResponse = RelayManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,
-                    authorizationRuleName, createAutorizationRuleParameter);
+                    authorizationRuleName, createAutorizationRuleParameter.Rights);
                 Assert.NotNull(createNamespaceAuthorizationRuleResponse);
                 Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
@@ -113,9 +113,9 @@ namespace Relay.Tests.ScenarioTests
                 // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 AuthorizationRule updateNamespaceAuthorizationRuleParameter = new AuthorizationRule();
-                updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateNamespaceAuthorizationRuleParameter.Rights = new List<String>() { AccessRights.Listen };
                 var updateNamespaceAuthorizationRuleResponse = RelayManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
-                    namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
+                    namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter.Rights);
 
                 Assert.NotNull(updateNamespaceAuthorizationRuleResponse);
                 Assert.Equal(authorizationRuleName, updateNamespaceAuthorizationRuleResponse.Name);
@@ -146,7 +146,7 @@ namespace Relay.Tests.ScenarioTests
                 regenerateKeysParameters.KeyType = KeyType.PrimaryKey;
 
                 //Primary Key
-                var regenerateKeysPrimaryResponse = RelayManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
+                var regenerateKeysPrimaryResponse = RelayManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.PrimaryKey);
                 Assert.NotNull(regenerateKeysPrimaryResponse);
                 Assert.NotEqual(regenerateKeysPrimaryResponse.PrimaryKey, listKeysResponse.PrimaryKey);
                 Assert.Equal(regenerateKeysPrimaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
@@ -154,7 +154,7 @@ namespace Relay.Tests.ScenarioTests
 
                 regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
                 //Secondary Key
-                var regenerateKeysSecondaryResponse = RelayManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
+                var regenerateKeysSecondaryResponse = RelayManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.SecondaryKey);
                 Assert.NotNull(regenerateKeysSecondaryResponse);
                 Assert.NotEqual(regenerateKeysSecondaryResponse.SecondaryKey, listKeysResponse.SecondaryKey);
                 Assert.Equal(regenerateKeysSecondaryResponse.PrimaryKey, regenerateKeysPrimaryResponse.PrimaryKey);

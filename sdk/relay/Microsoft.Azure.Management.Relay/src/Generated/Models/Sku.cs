@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// </summary>
         /// <param name="tier">The tier of this SKU. Possible values include:
         /// 'Standard'</param>
-        public Sku(SkuTier? tier = default(SkuTier?))
+        public Sku(string tier = default(string))
         {
             Tier = tier;
             CustomInit();
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Relay.Models
         /// 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public SkuTier? Tier { get; set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Name of this SKU.
