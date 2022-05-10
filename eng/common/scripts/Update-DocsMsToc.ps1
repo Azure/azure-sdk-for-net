@@ -186,6 +186,7 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
   # Fetch the service readme name
   $monikers = @("latest", "preview")
 
+  $msService = GetDocsMsService -clientPackageInfo $clientPackageInfo -mgmtPackageInfo $mgmtPackageInfo -serviceName $serviceName
   for($i=0; $i -lt $monikers.Length; $i++) {
     $absolutePath = "$DocRepoLocation/$pathPrefix/$($monikers[$i])/"
     $serviceReadme = "$readmeBaseName.md"
@@ -201,7 +202,6 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
       $mgmtExists = $true
       generate-markdown-table -readmePath "$absolutePath$mgmtIndexReadme" -packageInfo $mgmtPackageInfo
     }
-    $msService = GetDocsMsService -clientPackageInfo $clientPackageInfo -mgmtPackageInfo $mgmtPackageInfo -serviceName $serviceName
     if (!(Test-Path $serviceReadme)) {
       create-metadata-table -readmePath "$absolutePath$serviceReadme" -moniker $monikers[$i] -msService $msService `
         -clientExists $clientExists -mgmtExists $mgmtExists `
@@ -209,7 +209,7 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
         -serviceName $serviceName
     }
     else {
-      update-matadata-table -readmePath "$absolutePath$serviceReadme" -serviceName $serviceName -msService $msService
+      update-metadata-table -readmePath "$absolutePath$serviceReadme" -serviceName $serviceName -msService $msService
     }
   } 
 }
