@@ -8,7 +8,7 @@ namespace Azure.Communication
     /// <summary>Represents a Microsoft Teams user.</summary>
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
-        private readonly string _rawId;
+        private string _rawId;
 
         /// <summary>
         /// Returns the canonical string representation of the <see cref="MicrosoftTeamsUserIdentifier"/>.
@@ -18,25 +18,26 @@ namespace Azure.Communication
         {
             get
             {
-                if (_rawId != null)
-                    return _rawId;
-
-                if (IsAnonymous)
+                if (_rawId == null)
                 {
-                    return $"8:teamsvisitor:{UserId}";
+                    if (IsAnonymous)
+                    {
+                        _rawId = $"8:teamsvisitor:{UserId}";
+                    }
+                    else if (Cloud == CommunicationCloudEnvironment.Dod)
+                    {
+                        _rawId = $"8:dod:{UserId}";
+                    }
+                    else if (Cloud == CommunicationCloudEnvironment.Gcch)
+                    {
+                        _rawId = $"8:gcch:{UserId}";
+                    }
+                    else
+                    {
+                        _rawId = $"8:orgid:{UserId}";
+                    }
                 }
-                else if (Cloud == CommunicationCloudEnvironment.Dod)
-                {
-                    return $"8:dod:{UserId}";
-                }
-                else if (Cloud == CommunicationCloudEnvironment.Gcch)
-                {
-                    return $"8:gcch:{UserId}";
-                }
-                else
-                {
-                    return $"8:orgid:{UserId}";
-                }
+                return _rawId;
             }
         }
 

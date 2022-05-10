@@ -8,7 +8,7 @@ namespace Azure.Communication
     /// <summary>Represents a Phone Number.</summary>
     public class PhoneNumberIdentifier : CommunicationIdentifier
     {
-        private readonly string _rawId;
+        private string _rawId;
 
         /// <summary>
         /// Returns the canonical string representation of the <see cref="PhoneNumberIdentifier"/>.
@@ -18,7 +18,7 @@ namespace Azure.Communication
         {
             get
             {
-                return _rawId ?? $"4:{PhoneNumber.TrimStart('+')}";
+                return _rawId ??= $"4:{PhoneNumber.TrimStart('+')}";
             }
         }
 
