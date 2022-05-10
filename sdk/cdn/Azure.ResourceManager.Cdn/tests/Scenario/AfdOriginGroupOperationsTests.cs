@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             AfdOriginGroupPatch updateOptions = new AfdOriginGroupPatch
             {
-                LoadBalancingSettings = new LoadBalancingSettingsParameters
+                LoadBalancingSettings = new LoadBalancingSettings
                 {
                     SampleSize = 10,
                     SuccessfulSamplesRequired = 5,
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
             AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             int count = 0;
-            await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsageAsync())
+            await foreach (var tempUsage in afdOriginGroupInstance.GetResourceUsagesAsync())
             {
                 count++;
                 Assert.AreEqual(tempUsage.Unit, UsageUnit.Count);

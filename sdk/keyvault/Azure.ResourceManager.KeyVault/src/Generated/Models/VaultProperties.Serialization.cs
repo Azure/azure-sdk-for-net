@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<bool> enablePurgeProtection = default;
             Optional<NetworkRuleSet> networkAcls = default;
             Optional<VaultProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionItem>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionItemData>> privateEndpointConnections = default;
             Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnectionItem> array = new List<PrivateEndpointConnectionItem>();
+                    List<PrivateEndpointConnectionItemData> array = new List<PrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionItem.DeserializePrivateEndpointConnectionItem(item));
+                        array.Add(PrivateEndpointConnectionItemData.DeserializePrivateEndpointConnectionItemData(item));
                     }
                     privateEndpointConnections = array;
                     continue;

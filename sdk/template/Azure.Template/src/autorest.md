@@ -10,6 +10,5 @@ input-file:
 - $(this-folder)/swagger/mini-secrets.json
 namespace: Azure.Template
 security: AADToken
-security-scopes: https://template/.default
- 
+security-scopes: https://vault.azure.net/.default
 ```

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             TenantId = tenantId;
             Sku = sku;
             AccessPolicies = new ChangeTrackingList<AccessPolicyEntry>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionItem>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionItemData>();
         }
 
         /// <summary> Initializes a new instance of VaultProperties. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<AccessPolicyEntry> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, NetworkRuleSet networkAcls, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItem> privateEndpointConnections, string publicNetworkAccess)
+        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<AccessPolicyEntry> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, NetworkRuleSet networkAcls, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Provisioning state of the vault. </summary>
         public VaultProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of private endpoint connections associated with the key vault. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionItem> PrivateEndpointConnections { get; }
+        public IReadOnlyList<PrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
         /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
         public string PublicNetworkAccess { get; set; }
     }

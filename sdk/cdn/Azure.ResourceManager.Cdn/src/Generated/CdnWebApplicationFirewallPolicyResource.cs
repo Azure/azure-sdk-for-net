@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/cdnWebApplicationFirewallPolicies";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/cdnWebApplicationFirewallPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
