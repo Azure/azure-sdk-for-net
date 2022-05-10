@@ -12,7 +12,7 @@
 
 ### Bugs Fixed
 
-- Prevent exception when stopping processor that can occur if custom registrations were added to the CancellationToken that is exposed via event args.
+- Prevent exception when stopping processor that can occur if custom registrations were added to the `CancellationToken` that is exposed via the event args.
 - Don't close entire AMQP session when closing individual AMQP links when `EnableCrossEntityTransactions` is set to `true`, since with this configuration, all links will share the same session.
 
 ### Other Changes
