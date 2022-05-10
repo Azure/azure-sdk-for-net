@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ArmDeploymentPropertiesExtended() { }
         public string CorrelationId { get { throw null; } }
-        public string DebugSettingDetailLevel { get { throw null; } set { } }
+        public string DebugSettingDetailLevel { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmDependency> Dependencies { get { throw null; } }
         public System.TimeSpan? Duration { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }

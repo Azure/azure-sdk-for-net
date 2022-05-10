@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckEndpointNameAvailabilityOutput>> CheckEndpointNameAvailabilityAsync(CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckEndpointNameAvailability");
             scope.Start();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckEndpointNameAvailabilityOutput> CheckEndpointNameAvailability(CheckEndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckEndpointNameAvailability");
             scope.Start();

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ValidateProbeOutput
+    public partial class ValidateProbeResult
     {
-        internal static ValidateProbeOutput DeserializeValidateProbeOutput(JsonElement element)
+        internal static ValidateProbeResult DeserializeValidateProbeResult(JsonElement element)
         {
             Optional<bool> isValid = default;
             Optional<string> errorCode = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ValidateProbeOutput(Optional.ToNullable(isValid), errorCode.Value, message.Value);
+            return new ValidateProbeResult(Optional.ToNullable(isValid), errorCode.Value, message.Value);
         }
     }
 }

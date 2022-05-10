@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class AzureFirstPartyManagedCertificateParameters : IUtf8JsonSerializable
+    public partial class AzureFirstPartyManagedCertificateDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureFirstPartyManagedCertificateParameters DeserializeAzureFirstPartyManagedCertificateParameters(JsonElement element)
+        internal static AzureFirstPartyManagedCertificateDefinition DeserializeAzureFirstPartyManagedCertificateDefinition(JsonElement element)
         {
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new AzureFirstPartyManagedCertificateParameters(type);
+            return new AzureFirstPartyManagedCertificateDefinition(type);
         }
     }
 }

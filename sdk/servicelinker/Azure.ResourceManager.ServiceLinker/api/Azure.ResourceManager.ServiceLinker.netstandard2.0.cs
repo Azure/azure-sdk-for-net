@@ -36,11 +36,13 @@ namespace Azure.ResourceManager.ServiceLinker
     public partial class LinkerResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public LinkerResourceData() { }
+        public Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase AuthInfo { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.ClientType? ClientType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public string SecretStoreKeyVaultId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType? SolutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase TargetService { get { throw null; } set { } }
     }
     public static partial class ServiceLinkerExtensions
     {
@@ -52,6 +54,10 @@ namespace Azure.ResourceManager.ServiceLinker
 }
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
+    public partial class AuthInfoBase
+    {
+        public AuthInfoBase() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AuthType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.AuthType>
     {
@@ -72,6 +78,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static implicit operator Azure.ResourceManager.ServiceLinker.Models.AuthType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.AuthType left, Azure.ResourceManager.ServiceLinker.Models.AuthType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class AzureKeyVaultProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourcePropertiesBase
+    {
+        public AzureKeyVaultProperties() { }
+        public bool? ConnectAsKubernetesCsiDriver { get { throw null; } set { } }
+    }
+    public partial class AzureResource : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase
+    {
+        public AzureResource() { }
+        public string Id { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.AzureResourcePropertiesBase ResourceProperties { get { throw null; } set { } }
+    }
+    public partial class AzureResourcePropertiesBase
+    {
+        public AzureResourcePropertiesBase() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.ClientType>
@@ -99,14 +120,61 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.ClientType left, Azure.ResourceManager.ServiceLinker.Models.ClientType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ConfluentBootstrapServer : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase
+    {
+        public ConfluentBootstrapServer() { }
+        public string Endpoint { get { throw null; } set { } }
+    }
+    public partial class ConfluentSchemaRegistry : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase
+    {
+        public ConfluentSchemaRegistry() { }
+        public string Endpoint { get { throw null; } set { } }
+    }
+    public partial class KeyVaultSecretReferenceSecretInfo : Azure.ResourceManager.ServiceLinker.Models.SecretInfoBase
+    {
+        public KeyVaultSecretReferenceSecretInfo() { }
+        public string Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+    }
+    public partial class KeyVaultSecretUriSecretInfo : Azure.ResourceManager.ServiceLinker.Models.SecretInfoBase
+    {
+        public KeyVaultSecretUriSecretInfo() { }
+        public string Value { get { throw null; } set { } }
+    }
     public partial class LinkerResourcePatch
     {
         public LinkerResourcePatch() { }
+        public Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase AuthInfo { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.ClientType? ClientType { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public string SecretStoreKeyVaultId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType? SolutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase TargetService { get { throw null; } set { } }
+    }
+    public partial class SecretAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase
+    {
+        public SecretAuthInfo() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.SecretInfoBase SecretInfo { get { throw null; } set { } }
+    }
+    public partial class SecretInfoBase
+    {
+        public SecretInfoBase() { }
+    }
+    public partial class ServicePrincipalCertificateAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase
+    {
+        public ServicePrincipalCertificateAuthInfo(string clientId, string principalId, string certificate) { }
+        public string Certificate { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public string PrincipalId { get { throw null; } set { } }
+    }
+    public partial class ServicePrincipalSecretAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase
+    {
+        public ServicePrincipalSecretAuthInfo(string clientId, string principalId, string secret) { }
+        public string ClientId { get { throw null; } set { } }
+        public string PrincipalId { get { throw null; } set { } }
+        public string Secret { get { throw null; } set { } }
     }
     public partial class SourceConfiguration
     {
@@ -118,6 +186,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     {
         internal SourceConfigurationResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.SourceConfiguration> Configurations { get { throw null; } }
+    }
+    public partial class SystemAssignedIdentityAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase
+    {
+        public SystemAssignedIdentityAuthInfo() { }
+    }
+    public partial class TargetServiceBase
+    {
+        public TargetServiceBase() { }
+    }
+    public partial class UserAssignedIdentityAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase
+    {
+        public UserAssignedIdentityAuthInfo() { }
+        public string ClientId { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
     }
     public partial class ValidateResult
     {
@@ -158,6 +240,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public static implicit operator Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus left, Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ValueSecretInfo : Azure.ResourceManager.ServiceLinker.Models.SecretInfoBase
+    {
+        public ValueSecretInfo() { }
+        public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VNetSolutionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType>

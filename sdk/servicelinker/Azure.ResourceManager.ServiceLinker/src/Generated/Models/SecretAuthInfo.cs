@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is secret. </summary>
-    internal partial class SecretAuthInfo : AuthInfoBase
+    public partial class SecretAuthInfo : AuthInfoBase
     {
         /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
         public SecretAuthInfo()
@@ -30,17 +30,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Username or account name for secret auth. </summary>
         public string Name { get; set; }
         /// <summary> Password or key vault secret for secret auth. </summary>
-        internal SecretInfoBase SecretInfo { get; set; }
-        /// <summary> The secret type. </summary>
-        internal SecretType SecretType
-        {
-            get => SecretInfo is null ? default : SecretInfo.SecretType;
-            set
-            {
-                if (SecretInfo is null)
-                    SecretInfo = new SecretInfoBase();
-                SecretInfo.SecretType = value;
-            }
-        }
+        public SecretInfoBase SecretInfo { get; set; }
     }
 }

@@ -12,20 +12,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object containing security policy waf parameters. </summary>
-    internal partial class SecurityPolicyWebApplicationFirewallParameters : SecurityPolicyPropertiesParameters
+    public partial class SecurityPolicyWebApplicationFirewallDefinition : SecurityPolicyPropertiesDefinition
     {
-        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallParameters. </summary>
-        public SecurityPolicyWebApplicationFirewallParameters()
+        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallDefinition. </summary>
+        public SecurityPolicyWebApplicationFirewallDefinition()
         {
             Associations = new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
             PolicyType = SecurityPolicyType.WebApplicationFirewall;
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallParameters. </summary>
+        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallDefinition. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewallParameters(SecurityPolicyType policyType, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType)
+        internal SecurityPolicyWebApplicationFirewallDefinition(SecurityPolicyType policyType, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
