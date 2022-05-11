@@ -34,8 +34,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
             }
 
-            // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
+            AppContext.TryGetSwitch("Azure.Experimental.EnableActivitySource", out bool isAzureSDKEnabled);
+
+            if (isAzureSDKEnabled)
+            {
+                return builder
+                    .AddProcessor(new AzureSDKProcessor())
+                    .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
+            }
+            else
+            {
+                // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
+                return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
+            }
         }
     }
 }

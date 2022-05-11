@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -55,13 +56,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     ResultCode = depInfo[2]?.ToString();
                     break;
                 case OperationType.Messaging:
-                    depDataAndType = AzMonList.GetTagValues(ref monitorTags.MappedTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem);
+                    depDataAndType = AzMonList.GetTagValues(ref monitorTags.MappedTags, SemanticConventions.AttributeMessagingUrl, SemanticConventions.AttributeMessagingSystem, SemanticConventions.AttributeMessagingDestination);
                     Data = depDataAndType[0]?.ToString();
-                    Type = depDataAndType[1]?.ToString();
+                    Type = GetMessagingType(activity, depDataAndType[1]?.ToString());
+                    // just for demo: null checks not included
+                    Target = depDataAndType[0]?.ToString() + "/" + depDataAndType[2]?.ToString();
                     break;
             }
 
-            if (activity.Kind == ActivityKind.Internal && activity.Parent != null)
+            if (Type == null && activity.Kind == ActivityKind.Internal && activity.Parent != null)
             {
                 Type = "InProc";
             }
@@ -71,6 +74,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             TraceHelper.AddActivityLinksToProperties(activity.Links, ref monitorTags.UnMappedTags);
             TraceHelper.AddPropertiesToTelemetry(Properties, ref monitorTags.UnMappedTags);
+        }
+
+        // Question: Can this be used as general mapping for all messaging systems?
+        private static string GetMessagingType(Activity activity, string messagingSystem)
+        {
+            if (!string.IsNullOrEmpty(messagingSystem))
+            {
+                switch (activity.Kind)
+                {
+                    case ActivityKind.Producer:
+                        return "Queue Message | " + messagingSystem;
+                    case ActivityKind.Client:
+                        return messagingSystem;
+                    case ActivityKind.Internal:
+                        return "InProc | " + messagingSystem;
+                }
+            }
+
+            return null;
         }
     }
 }

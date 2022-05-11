@@ -51,8 +51,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             [SemanticConventions.AttributeFaasCron] = OperationType.FaaS,
             [SemanticConventions.AttributeFaasTime] = OperationType.FaaS,
 
-            [SemanticConventions.AttributeAzureNameSpace] = OperationType.Azure,
-            [SemanticConventions.AttributeMessageBusDestination] = OperationType.Azure,
+            // Removing these so that activity.type == Azure is not set
+            //[SemanticConventions.AttributeAzureNameSpace] = OperationType.Azure,
+            //[SemanticConventions.AttributeMessageBusDestination] = OperationType.Azure,
 
             [SemanticConventions.AttributeEndpointAddress] = OperationType.Messaging,
             [SemanticConventions.AttributeMessagingSystem] = OperationType.Messaging,
