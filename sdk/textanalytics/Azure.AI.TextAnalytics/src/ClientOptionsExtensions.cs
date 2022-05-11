@@ -27,12 +27,8 @@ namespace Azure.AI.TextAnalytics
             clientOptions.Diagnostics.LoggedQueryParameters.Add("piiCategories");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("opinionMining");
 
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("Endpoint");
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("projectName");
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("deploymentName");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("top");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("skip");
-            clientOptions.Diagnostics.LoggedQueryParameters.Add("maxpagesize");
         }
     }
 }
