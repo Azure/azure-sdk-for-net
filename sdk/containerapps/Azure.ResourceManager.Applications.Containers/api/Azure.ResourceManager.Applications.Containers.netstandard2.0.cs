@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public string ClientId { get { throw null; } set { } }
         public string ClientSecret { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class AzureFileProperties
     {
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         internal DefaultErrorResponseError() { }
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Applications.Containers.Models.DefaultErrorResponseErrorDetailsItem> Details { get { throw null; } }
-        public string Innererror { get { throw null; } }
+        public string InnerError { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
     }
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.HttpRequestDataHttpHeadersItem> HttpHeaders { get { throw null; } }
         public string Path { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
-        public Azure.ResourceManager.Applications.Containers.Models.Scheme? Scheme { get { throw null; } set { } }
+        public Azure.ResourceManager.Applications.Containers.Models.HttpScheme? Scheme { get { throw null; } set { } }
     }
     public partial class HttpRequestDataHttpHeadersItem
     {
@@ -972,6 +972,24 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public HttpScaleRule() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.ContainerAppScaleRuleAuth> Auth { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HttpScheme : System.IEquatable<Azure.ResourceManager.Applications.Containers.Models.HttpScheme>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HttpScheme(string value) { throw null; }
+        public static Azure.ResourceManager.Applications.Containers.Models.HttpScheme Http { get { throw null; } }
+        public static Azure.ResourceManager.Applications.Containers.Models.HttpScheme Https { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Applications.Containers.Models.HttpScheme other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Applications.Containers.Models.HttpScheme left, Azure.ResourceManager.Applications.Containers.Models.HttpScheme right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Applications.Containers.Models.HttpScheme (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.HttpScheme left, Azure.ResourceManager.Applications.Containers.Models.HttpScheme right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class HttpSettings
     {
@@ -1156,24 +1174,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public static bool operator ==(Azure.ResourceManager.Applications.Containers.Models.RevisionProvisioningState left, Azure.ResourceManager.Applications.Containers.Models.RevisionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Applications.Containers.Models.RevisionProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.RevisionProvisioningState left, Azure.ResourceManager.Applications.Containers.Models.RevisionProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Scheme : System.IEquatable<Azure.ResourceManager.Applications.Containers.Models.Scheme>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Scheme(string value) { throw null; }
-        public static Azure.ResourceManager.Applications.Containers.Models.Scheme Http { get { throw null; } }
-        public static Azure.ResourceManager.Applications.Containers.Models.Scheme Https { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Applications.Containers.Models.Scheme other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Applications.Containers.Models.Scheme left, Azure.ResourceManager.Applications.Containers.Models.Scheme right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Applications.Containers.Models.Scheme (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Applications.Containers.Models.Scheme left, Azure.ResourceManager.Applications.Containers.Models.Scheme right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
