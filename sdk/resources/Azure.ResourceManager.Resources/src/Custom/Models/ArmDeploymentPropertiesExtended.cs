@@ -6,8 +6,6 @@
 using System.ComponentModel;
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("SubResource")]
-
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment properties with additional details. </summary>
