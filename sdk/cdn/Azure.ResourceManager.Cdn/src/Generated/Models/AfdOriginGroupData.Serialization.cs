@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("healthProbeSettings");
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
-                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
+                if (TrafficRestorationTimeInMinutes != null)
                 {
                     writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                    writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
                 }
                 else
                 {
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> profileName = default;
-            Optional<LoadBalancingSettingsParameters> loadBalancingSettings = default;
-            Optional<HealthProbeParameters> healthProbeSettings = default;
+            Optional<LoadBalancingSettings> loadBalancingSettings = default;
+            Optional<HealthProbeSettings> healthProbeSettings = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<EnabledState> sessionAffinityState = default;
             Optional<AfdProvisioningState> provisioningState = default;
-            Optional<DeploymentStatus> deploymentStatus = default;
+            Optional<AfdDeploymentStatus> deploymentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            loadBalancingSettings = LoadBalancingSettingsParameters.DeserializeLoadBalancingSettingsParameters(property0.Value);
+                            loadBalancingSettings = LoadBalancingSettings.DeserializeLoadBalancingSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeParameters.DeserializeHealthProbeParameters(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trafficRestorationTimeToHealedOrNewEndpointsInMinutes"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deploymentStatus = new DeploymentStatus(property0.Value.GetString());
+                            deploymentStatus = new AfdDeploymentStatus(property0.Value.GetString());
                             continue;
                         }
                     }

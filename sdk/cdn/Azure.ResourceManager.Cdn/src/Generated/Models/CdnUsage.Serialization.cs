@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             UsageUnit unit = default;
             long currentValue = default;
             long limit = default;
-            UsageName name = default;
+            CdnUsageResourceName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = CdnUsageResourceName.DeserializeCdnUsageResourceName(property.Value);
                     continue;
                 }
             }
