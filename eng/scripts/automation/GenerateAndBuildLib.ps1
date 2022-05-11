@@ -191,7 +191,7 @@ function New-DataPlanePackageFolder() {
     Invoke-Expression $dotnetNewCmd
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    Write-Host "Generating configuration file: $file"
+    Write-Host "Updating configuration file: $file"
     Update-AutorestConfigFile -autorestFilePath $file -readme $readme
     Pop-Location
     # dotnet sln
