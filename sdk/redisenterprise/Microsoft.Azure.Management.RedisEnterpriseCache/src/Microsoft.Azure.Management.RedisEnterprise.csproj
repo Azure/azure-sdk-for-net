@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.RedisEnterprise</PackageId>
     <Description>Provides Redis Enterprise cache management capabilities for Microsoft Azure.</Description>
-    <Version>3.0.0</Version>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.RedisEnterprise</AssemblyName>
     <PackageTags>Microsoft Azure Redis Enterprise cache management;Redis Enterprise Management;</PackageTags>
     <PackageReleaseNotes>
