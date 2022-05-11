@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Samples
             RecognizePiiEntitiesResultCollection entititesPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"PII Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"PII Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (RecognizePiiEntitiesResult piiEntititesInDocument in entititesPerDocuments)

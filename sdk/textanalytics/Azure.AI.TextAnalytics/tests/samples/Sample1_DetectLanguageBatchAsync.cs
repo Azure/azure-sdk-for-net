@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Samples
             DetectLanguageResultCollection documentsLanguage = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (DetectLanguageResult documentLanguage in documentsLanguage)

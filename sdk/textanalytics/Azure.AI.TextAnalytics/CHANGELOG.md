@@ -13,6 +13,7 @@
 - In `AnalyzeHealthcareEntitiesOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore. PR [28375](https://github.com/Azure/azure-sdk-for-net/pull/28375)
 
 ### Other Changes
+This is the first version of the client library that targets the Azure Cognitive Service for Language APIs which includes the existing text analysis and natural language processing features found in the Text Analytics client library. In addition, the service API has changed from semantic to date-based versioning. This version of the client library defaults to the latest supported API version, which currently is `2022-04-01-preview`.
 
 ## 5.1.1 (2021-11-19)
 ### Breaking changes

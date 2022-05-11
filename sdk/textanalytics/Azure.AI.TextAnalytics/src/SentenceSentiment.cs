@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics
     /// The predicted sentiment and other analysis like Opinion mining
     /// for each sentence in the corresponding document.
     /// <para>For more information regarding text sentiment, see
-    /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
+    /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/sentiment-opinion-mining/overview"/>.</para>
     /// </summary>
     public readonly struct SentenceSentiment
     {
