@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         internal virtual ClientSideEncryptionOptions ClientSideEncryption => _clientSideEncryption;
 
-        internal bool UsingClientSideEncryption => ClientSideEncryption != default;
+        internal virtual bool UsingClientSideEncryption => ClientSideEncryption != default;
 
         /// <summary>
         /// Optional. The snapshot of the blob.
@@ -1383,7 +1383,7 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken).ConfigureAwait(false);
         }
 
-        internal async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        internal virtual async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
@@ -1392,7 +1392,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? _clientConfiguration.DownloadTransferValidationOptions;
+            DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? _clientConfiguration?.DownloadTransferValidationOptions;
             if (UsingClientSideEncryption && validationOptions != default && validationOptions.Algorithm != ValidationAlgorithm.None)
             {
                 throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
