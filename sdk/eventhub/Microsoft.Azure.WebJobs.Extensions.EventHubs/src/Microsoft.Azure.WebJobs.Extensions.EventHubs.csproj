@@ -12,18 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--
-        TEMP:
-            Project reference is needed until the CheckpointStore is included in a release.  Revert when
-            the 5.7.x line is released for GA.
-
     <PackageReference Include="Azure.Messaging.EventHubs" />
-    -->
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs\src\Azure.Messaging.EventHubs.csproj" />
-    <!-- END TEMP -->
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
-
     <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
 
@@ -36,6 +27,7 @@
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/BlobCheckpointStore/*.cs" LinkBase="SharedSource" />
     <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/WebJobsConfigurationExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Shared/StorageClientProvider.cs" LinkBase="SharedSource" />
+    
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
