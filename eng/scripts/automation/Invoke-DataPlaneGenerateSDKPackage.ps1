@@ -10,7 +10,7 @@ param (
   [string]$AUTOREST_CONFIG_FILE = "autorest.md"
 )
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
-
+$sdkPath = Resolve-Path $sdkPath
 # Generate dataplane library
 $outputJsonFile = "newpackageoutput.json"
 New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -inputfiles $inputfiles -readme $readme -securityScope $securityScope -securityHeaderName $securityHeaderName -AUTOREST_CONFIG_FILE $AUTOREST_CONFIG_FILE -outputJsonFile $outputJsonFile
@@ -36,6 +36,7 @@ if ( !$? ) {
 }
 # Generate APIs
 $repoRoot = (Join-Path $PSScriptRoot .. .. ..)
-Set-Location $repoRoot
+Push-Location $repoRoot
 pwsh eng/scripts/Export-API.ps1 $service
+Pop-Location
 exit 0
