@@ -161,12 +161,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                 result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", "Network Error");
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", "Network Error: Telemetry will be stored offline for retry");
             }
             else
             {
                 var status = httpMessage.Response.Status;
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {status}");
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {status}: Telemetry will be stored offline for retry");
                 switch (status)
                 {
                     case ResponseStatusCodes.PartialSuccess:
