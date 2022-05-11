@@ -1,4 +1,5 @@
 function BuildServiceDirectoryPrefix([string]$serviceName) {
+    $serviceName = $serviceName -replace '[\./\\]', '_'
     return $serviceName.ToUpperInvariant() + "_"
 }
 
@@ -17,8 +18,8 @@ function GetUserName() {
 
 function GetBaseName([string]$user, [string]$serviceDirectoryName) {
     # Handle service directories in nested directories, e.g. `data/aztables`
-    $serviceDirectorySafeName = $serviceDirectoryName -replace '[/\\]', ''
-    return "$user$serviceDirectorySafeName"
+    $serviceDirectorySafeName = $serviceDirectoryName -replace '[\./\\]', ''
+    return "$user$serviceDirectorySafeName".ToLowerInvariant()
 }
 
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())
