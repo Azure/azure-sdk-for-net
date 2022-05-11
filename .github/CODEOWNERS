@@ -211,7 +211,7 @@
 /sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
 
 # PRLabel: %Communication - Short Codes
-/sdk/communication/Azure.Communication.ShortCodes/      @danielav7
+/sdk/communication/Azure.Communication.ShortCodes/      @guilhermeluizsp @rtrevino89 @danielav7
 
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
