@@ -9,6 +9,7 @@ namespace Azure.Analytics.Purview.Administration
 {
     [CodeGenClient("CollectionsClient")]
     [CodeGenSuppress("PurviewCollection", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewCollection", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential)})]
     public partial class PurviewCollection
     {
         internal PurviewCollection(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string collectionName, ClientDiagnostics clientDiagnostics)

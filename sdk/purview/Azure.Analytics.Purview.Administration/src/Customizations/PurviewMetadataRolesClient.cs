@@ -18,6 +18,7 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewMetadataRoles service client. </summary>
     [CodeGenClient("PurviewMetadataRolesClient")]
     [CodeGenSuppress("PurviewMetadataRolesClient", new Type[] { typeof(Uri), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewMetadataRolesClient", new Type[] { typeof(Uri), typeof(TokenCredential)})]
     public partial class PurviewMetadataRolesClient
     {
         /// <summary> Initializes a new instance of PurviewMetadataRolesClient. </summary>

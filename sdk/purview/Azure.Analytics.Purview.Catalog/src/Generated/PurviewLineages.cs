@@ -33,14 +33,6 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewLineages. </summary>
-        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewLineages(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewCatalogClientOptions())
-        {
-        }
-
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>

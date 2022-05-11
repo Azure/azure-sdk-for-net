@@ -9,6 +9,7 @@ namespace Azure.Analytics.Purview.Administration
 {
     [CodeGenClient("ResourceSetRulesClient")]
     [CodeGenSuppress("PurviewResourceSetRule", typeof(Uri), typeof(TokenCredential), typeof(PurviewAccountClientOptions))]
+    [CodeGenSuppress("PurviewResourceSetRule", typeof(Uri), typeof(TokenCredential))]
     public partial class PurviewResourceSetRule
     {
         internal PurviewResourceSetRule(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, ClientDiagnostics clientDiagnostics)

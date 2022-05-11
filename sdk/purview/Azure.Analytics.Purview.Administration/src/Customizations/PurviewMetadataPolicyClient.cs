@@ -19,6 +19,7 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewMetadataPolicy service client. </summary>
     [CodeGenClient("PurviewMetadataPolicyClient")]
     [CodeGenSuppress("PurviewMetadataPolicyClient", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewMetadataPolicyClient", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential)})]
     public partial class PurviewMetadataPolicyClient
     {
         /// <summary> Initializes a new instance of PurviewMetadataPolicyClient. </summary>

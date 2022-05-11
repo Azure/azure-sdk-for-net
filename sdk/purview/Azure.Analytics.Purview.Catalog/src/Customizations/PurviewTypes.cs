@@ -9,6 +9,7 @@ namespace Azure.Analytics.Purview.Catalog
 {
     [CodeGenClient("PurviewTypesClient")]
     [CodeGenSuppress("PurviewTypes", typeof(Uri), typeof(TokenCredential), typeof(PurviewCatalogClientOptions))]
+    [CodeGenSuppress("PurviewTypes", typeof(Uri), typeof(TokenCredential))]
     public partial class PurviewTypes
     {
         internal PurviewTypes(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Uri endpoint, string apiVersion)

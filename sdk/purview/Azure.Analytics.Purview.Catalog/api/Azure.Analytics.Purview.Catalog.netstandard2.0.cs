@@ -3,7 +3,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewCatalogClient
     {
         protected PurviewCatalogClient() { }
-        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options) { }
         public Azure.Analytics.Purview.Catalog.PurviewCollections Collections { get { throw null; } }
         public Azure.Analytics.Purview.Catalog.PurviewEntities Entities { get { throw null; } }
         public Azure.Analytics.Purview.Catalog.PurviewGlossaries Glossaries { get { throw null; } }
