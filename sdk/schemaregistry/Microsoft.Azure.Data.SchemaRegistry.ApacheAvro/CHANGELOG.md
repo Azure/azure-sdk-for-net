@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
-
-### Features Added
+## 1.0.0 (2022-05-11)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Remove custom exception type `SchemaRegistryAvroException`.
 
 ## 1.0.0-beta.8 (2022-04-05)
 
