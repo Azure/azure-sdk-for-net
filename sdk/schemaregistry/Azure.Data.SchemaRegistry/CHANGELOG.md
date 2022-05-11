@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2022-05-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `GroupName` and `Name` properties to `SchemaProperties`.
 
 ## 1.1.0 (2022-01-25)
 
