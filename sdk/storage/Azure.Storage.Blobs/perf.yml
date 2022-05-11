@@ -49,7 +49,7 @@ jobs:
 
     - template: ../../eng/common/TestResources/deploy-test-resources.yml
       parameters:
-        ServiceDirectory: storage
+        ServiceDirectory: storage/Azure.Storage.Blobs
         Location: westus
         ResourceType: perf
 
@@ -64,7 +64,7 @@ jobs:
         --no-sync
         --languages net
         --services "${{ parameters.services }}"
-        --tests "^${{ parameters.tests }}"
+        --tests "${{ parameters.tests }}"
         --arguments "${{ parameters.arguments }}"
         --iterations ${{ parameters.iterations }}
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
@@ -84,7 +84,7 @@ jobs:
 
     - template: ../../eng/common/TestResources/remove-test-resources.yml
       parameters:
-        ServiceDirectory: storage
+        ServiceDirectory: storage/Azure.Storage.Blobs
         ResourceType: perf
 
     - task: PublishPipelineArtifact@1
