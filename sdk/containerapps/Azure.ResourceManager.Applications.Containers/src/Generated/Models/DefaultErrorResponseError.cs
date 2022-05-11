@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
         /// <param name="details"> Details or the error. </param>
-        /// <param name="innererror"> More information to debug error. </param>
-        internal DefaultErrorResponseError(string code, string message, string target, IReadOnlyList<DefaultErrorResponseErrorDetailsItem> details, string innererror)
+        /// <param name="innerError"> More information to debug error. </param>
+        internal DefaultErrorResponseError(string code, string message, string target, IReadOnlyList<DefaultErrorResponseErrorDetailsItem> details, string innerError)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
-            Innererror = innererror;
+            InnerError = innerError;
         }
 
         /// <summary> Standardized string to programmatically identify the error. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Details or the error. </summary>
         public IReadOnlyList<DefaultErrorResponseErrorDetailsItem> Details { get; }
         /// <summary> More information to debug error. </summary>
-        public string Innererror { get; }
+        public string InnerError { get; }
     }
 }

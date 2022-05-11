@@ -65,6 +65,7 @@ directive:
       $.Template['x-ms-client-name'] = 'ContainerAppTemplate';
       $.Volume['x-ms-client-name'] = 'ContainerAppVolume';
       $.VolumeMount['x-ms-client-name'] = 'ContainerAppVolumeMount';
+      $.DefaultErrorResponse.properties.error.properties.innererror['x-ms-client-name'] = 'InnerError';
   - from: ContainerApps.json
     where: $.definitions
     transform: >
@@ -80,5 +81,8 @@ directive:
     where: $.definitions
     transform: >
       $.Certificate['x-ms-client-name'] = 'ContainerAppCertificate';
-
+  - from: SourceControls.json
+    where: $.definitions
+    transform: >
+      $.AzureCredentials.properties.tenantId['format'] = 'uuid';
 ```
