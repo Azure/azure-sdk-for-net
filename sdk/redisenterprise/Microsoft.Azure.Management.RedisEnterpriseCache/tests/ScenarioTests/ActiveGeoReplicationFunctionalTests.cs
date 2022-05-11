@@ -184,7 +184,7 @@ namespace AzureRedisEnterpriseCache.Tests
                 for (int i = 0; i < 10; i++)
                 {
                     databaseResponse2 = _client.Databases.Get(resourceGroupName, redisEnterpriseCacheName2, databaseName);
-                    if (1.Equals(databaseResponse2.GeoReplication.LinkedDatabases.Count))
+                    if (databaseResponse2.GeoReplication.LinkedDatabases.Count.Equals(1))
                     {
                         break;
                     }
