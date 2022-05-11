@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 param (
-  [string]$inputJsonFile="generateInput.json",
-  [string]$outputJsonFile="output.json"
+  [string]$inputJsonFile,
+  [string]$outputJsonFile
 )
 
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
@@ -12,39 +12,32 @@ $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFile = $inputJson.relatedReadmeMdFile
 $readmeFile = $readmeFile -replace "\\", "/"
 $commitid = $inputJson.headSha
+$repoHttpsUrl = $inputJson.repoHttpsUrl
 $serviceType = $inputJson.serviceType
 
 Write-Host "swaggerDir:$swaggerDir, readmeFile:$readmeFile"
 
-$packageName = Get-ResourceProviderFromReadme $readmeFile
+# $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
 $sdkPath =  (Join-Path $PSScriptRoot .. .. ..)
 $sdkPath = Resolve-Path $sdkPath
 $sdkPath = $sdkPath -replace "\\", "/"
 
-$newpackageoutput = "newPackageOutput.json"
-if ( $serviceType -eq "resource-manager" ) {
-  Write-Host "Generate resource-manager SDK client library."
-  New-MgmtPackageFolder -service $service -packageName $packageName -sdkPath $sdkPath -commitid $commitid -readme $swaggerDir/$readmeFile -outputJsonFile $newpackageoutput
+$readme = ""
+if ($commitid -ne "") {
+  if ($repoHttpsUrl -ne "") {
+    $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
+  } else {
+    $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
+  }
 } else {
-  Write-Host "Generate data-plane SDK client library."
-  Write-Host "Data-plane SDK Generation is not implemented currently."
-  exit 1
+  $readme = (Join-Path $swaggerDir $readmeFile)
 }
-if ( !$? ) {
-  Write-Error "Failed to create sdk project folder. exit code: $?"
-  exit 1
-}
-$newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
-$projectFolder = $newpackageoutputJson.projectFolder
-$path = $newpackageoutputJson.path
-Write-Host "projectFolder:$projectFolder"
-Remove-Item $newpackageoutput
-# Generate Code
-Invoke-Generate -sdkfolder $projectFolder
-# Build
-Invoke-Build -sdkfolder $projectFolder
-
+# $generatedSDKPackages = @()
+$generatedSDKPackages = New-Object 'Collections.Generic.List[System.Object]'
+# $generatedSDKPackages = New-Object 'System.Collections.ArrayList[System.Object]'
+Invoke-GenerateAndBuildSDK -readmeAbsolutePath $readme -sdkRootPath $sdkPath -generatedSDKPackages $generatedSDKPackages
 $outputJson = [PSCustomObject]@{
-    packages = @([pscustomobject]@{packageName="$packageName"; result='succeeded'; path=@("$path");packageFolder="$path"})
+  packages = $generatedSDKPackages
 }
+$outputJson
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
