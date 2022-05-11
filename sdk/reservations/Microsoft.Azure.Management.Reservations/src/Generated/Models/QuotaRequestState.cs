@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.Reservations.Models
 {
 
     /// <summary>
-    /// Defines values for ReservationTerm.
+    /// Defines values for QuotaRequestState.
     /// </summary>
-    public static class ReservationTerm
+    public static class QuotaRequestState
     {
-        public const string P1Y = "P1Y";
-        public const string P3Y = "P3Y";
-        public const string P5Y = "P5Y";
+        public const string Accepted = "Accepted";
+        public const string Invalid = "Invalid";
+        public const string Succeeded = "Succeeded";
+        public const string Failed = "Failed";
+        public const string InProgress = "InProgress";
     }
 }

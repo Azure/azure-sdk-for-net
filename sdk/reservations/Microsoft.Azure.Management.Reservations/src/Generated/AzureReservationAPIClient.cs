@@ -395,13 +395,13 @@ namespace Microsoft.Azure.Management.Reservations
         /// can be an azure region or global
         /// </param>
         /// <param name='publisherId'>
-        /// Id of the publisher for 3pp products. This can be optional
+        /// Publisher id used to get the third party products
         /// </param>
         /// <param name='offerId'>
-        /// Id of the offerId for 3pp products. This can be optional
+        /// Offer id used to get the third party products
         /// </param>
         /// <param name='planId'>
-        /// Id of the planId for 3pp products. This can be optional
+        /// Plan id used to get the third party products
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -424,15 +424,11 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType, string location = default(string), string publisherId = null, string offerId = null, string planId = null, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<Catalog>>> GetCatalogWithHttpMessagesAsync(string subscriptionId, string reservedResourceType = default(string), string location = default(string), string publisherId = default(string), string offerId = default(string), string planId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (subscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
-            }
-            if (reservedResourceType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reservedResourceType");
             }
             string apiVersion = "2022-03-01";
             // Tracing
@@ -446,19 +442,10 @@ namespace Microsoft.Azure.Management.Reservations
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("reservedResourceType", reservedResourceType);
                 tracingParameters.Add("location", location);
+                tracingParameters.Add("publisherId", publisherId);
+                tracingParameters.Add("offerId", offerId);
+                tracingParameters.Add("planId", planId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                if (publisherId != null)
-                {
-                    tracingParameters.Add("publisherId", publisherId);
-                }
-                if (offerId != null)
-                {
-                    tracingParameters.Add("offerId", offerId);
-                }
-                if (planId != null)
-                {
-                    tracingParameters.Add("planId", planId);
-                }
                 ServiceClientTracing.Enter(_invocationId, this, "GetCatalog", tracingParameters);
             }
             // Construct URL
@@ -516,7 +503,7 @@ namespace Microsoft.Azure.Management.Reservations
 
             if (customHeaders != null)
             {
-                foreach (var _header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -554,7 +541,7 @@ namespace Microsoft.Azure.Management.Reservations
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody = SafeJsonConvert.DeserializeObject<Error>(_responseContent, DeserializationSettings);
+                    Error _errorBody =  SafeJsonConvert.DeserializeObject<Error>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -695,7 +682,7 @@ namespace Microsoft.Azure.Management.Reservations
 
             if (customHeaders != null)
             {
-                foreach (var _header in customHeaders)
+                foreach(var _header in customHeaders)
                 {
                     if (_httpRequest.Headers.Contains(_header.Key))
                     {
@@ -733,7 +720,7 @@ namespace Microsoft.Azure.Management.Reservations
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody = SafeJsonConvert.DeserializeObject<Error>(_responseContent, DeserializationSettings);
+                    Error _errorBody =  SafeJsonConvert.DeserializeObject<Error>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

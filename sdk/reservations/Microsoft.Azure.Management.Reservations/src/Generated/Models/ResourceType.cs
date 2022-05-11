@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.Reservations.Models
 {
 
     /// <summary>
-    /// Defines values for ReservationTerm.
+    /// Defines values for ResourceType.
     /// </summary>
-    public static class ReservationTerm
+    public static class ResourceType
     {
-        public const string P1Y = "P1Y";
-        public const string P3Y = "P3Y";
-        public const string P5Y = "P5Y";
+        public const string Standard = "standard";
+        public const string Dedicated = "dedicated";
+        public const string LowPriority = "lowPriority";
+        public const string Shared = "shared";
+        public const string ServiceSpecific = "serviceSpecific";
     }
 }
