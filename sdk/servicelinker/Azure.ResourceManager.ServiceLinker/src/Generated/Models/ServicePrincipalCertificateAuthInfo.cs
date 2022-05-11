@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is servicePrincipal certificate. </summary>
-    internal partial class ServicePrincipalCertificateAuthInfo : AuthInfoBase
+    public partial class ServicePrincipalCertificateAuthInfo : AuthInfoBase
     {
         /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>

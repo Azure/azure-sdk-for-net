@@ -18,12 +18,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The name of the profile which holds the secret. </summary>
         public string ProfileName { get; }
         /// <summary> object which contains secret parameters. </summary>
-        internal SecretParameters Parameters { get; }
-        /// <summary> The type of the secret resource. </summary>
-        internal SecretType ParametersSecretType
-        {
-            get => Parameters.SecretType;
-            set => Parameters.SecretType = value;
-        }
+        public SecretDefinition Parameters { get; }
     }
 }

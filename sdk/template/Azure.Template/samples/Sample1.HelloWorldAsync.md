@@ -5,6 +5,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 ## Import the namespaces
 
 ```C# Snippet:Azure_Template
+using Azure.Identity;
 using Azure.Template.Models;
 ```
 
@@ -14,6 +15,7 @@ You can also get secrets asynchronously:
 
 ```C# Snippet:Azure_Template_GetSecretAsync
 string endpoint = "https://myvault.vault.azure.net";
+var credential = new DefaultAzureCredential();
 var client = new TemplateClient(endpoint, new DefaultAzureCredential());
 
 SecretBundle secret = await client.GetSecretValueAsync("TestSecret");

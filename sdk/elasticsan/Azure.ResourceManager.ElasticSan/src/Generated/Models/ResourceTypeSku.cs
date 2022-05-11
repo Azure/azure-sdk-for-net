@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Maximum number of Volumes per Volume Groups per San account. </summary>
         public long? MaxElasticSanVolumeCount
         {
-            get => ElasticSanVolumeGroup.MaxElasticSanVolumeCount;
+            get => ElasticSanVolumeGroup?.MaxElasticSanVolumeCount;
         }
 
         /// <summary> Volume targets for the San account for a given tier. </summary>

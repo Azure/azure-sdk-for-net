@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info when authType is systemAssignedIdentity. </summary>
-    internal partial class SystemAssignedIdentityAuthInfo : AuthInfoBase
+    public partial class SystemAssignedIdentityAuthInfo : AuthInfoBase
     {
         /// <summary> Initializes a new instance of SystemAssignedIdentityAuthInfo. </summary>
         public SystemAssignedIdentityAuthInfo()

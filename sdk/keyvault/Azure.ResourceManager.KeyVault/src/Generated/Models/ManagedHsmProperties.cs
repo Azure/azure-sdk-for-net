@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public ManagedHsmProperties()
         {
             InitialAdminObjectIds = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItem>();
+            PrivateEndpointConnections = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>();
         }
 
         /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the managed hsm pool. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode, string statusMessage, HsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItem> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, CreateMode? createMode, string statusMessage, HsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
         public ManagedHsmNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> List of private endpoint connections associated with the managed hsm pool. </summary>
-        public IReadOnlyList<ManagedHsmPrivateEndpointConnectionItem> PrivateEndpointConnections { get; }
+        public IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The scheduled purge date in UTC. </summary>

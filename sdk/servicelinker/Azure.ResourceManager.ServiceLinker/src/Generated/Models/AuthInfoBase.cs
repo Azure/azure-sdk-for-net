@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The authentication info. </summary>
-    internal partial class AuthInfoBase
+    public partial class AuthInfoBase
     {
         /// <summary> Initializes a new instance of AuthInfoBase. </summary>
         public AuthInfoBase()
