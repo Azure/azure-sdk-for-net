@@ -11,6 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
+        [Ignore("LRO not implemented")]
         public void AnalyzeHealthcareEntities()
         {
             // create a text analytics client
@@ -80,7 +81,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // view operation results
             foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
             {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine($"Results of \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine("");
 
                 foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)

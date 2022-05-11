@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public EventHubNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
+
         [TearDown]
         public async Task ClearNamespaces()
         {

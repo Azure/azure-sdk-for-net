@@ -127,6 +127,9 @@ namespace Azure.AI.MetricsAdvisor
 
             // Calling deserialization helper
             MetricFeedback value = MetricFeedback.FromResponse(response);
+
+            // return the response
+            return Response.FromValue(value, response);
         }
     }
 }
@@ -162,6 +165,9 @@ namespace Azure.AI.MetricsAdvisor
 
             // Calling deserialization helper
             MetricFeedback value = MetricFeedback.FromResponse(response);
+
+            // return the response
+            return Response.FromValue(value, response);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private EdgeNodesRestOperations EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
         /// Operation Id: CheckNameAvailability
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCdnNameAvailability");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.CheckNameAvailabilityAsync(input, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /providers/Microsoft.Cdn/checkNameAvailability
         /// Operation Id: CheckNameAvailability
         /// </summary>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckCdnNameAvailability");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.CheckNameAvailability(input, cancellationToken);
+                var response = DefaultRestClient.CheckNameAvailability(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

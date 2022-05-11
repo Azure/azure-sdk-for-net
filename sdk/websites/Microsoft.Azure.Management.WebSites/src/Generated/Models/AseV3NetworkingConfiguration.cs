@@ -42,11 +42,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="type">Resource type.</param>
         /// <param name="allowNewPrivateEndpointConnections">Property to enable
         /// and disable new private endpoint connection creation on ASE</param>
-        public AseV3NetworkingConfiguration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> windowsOutboundIpAddresses = default(IList<string>), IList<string> linuxOutboundIpAddresses = default(IList<string>), bool? allowNewPrivateEndpointConnections = default(bool?))
+        public AseV3NetworkingConfiguration(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> windowsOutboundIpAddresses = default(IList<string>), IList<string> linuxOutboundIpAddresses = default(IList<string>), IList<string> externalInboundIpAddresses = default(IList<string>), IList<string> internalInboundIpAddresses = default(IList<string>), bool? allowNewPrivateEndpointConnections = default(bool?))
             : base(id, name, kind, type)
         {
             WindowsOutboundIpAddresses = windowsOutboundIpAddresses;
             LinuxOutboundIpAddresses = linuxOutboundIpAddresses;
+            ExternalInboundIpAddresses = externalInboundIpAddresses;
+            InternalInboundIpAddresses = internalInboundIpAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
             CustomInit();
         }
@@ -65,6 +67,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.linuxOutboundIpAddresses")]
         public IList<string> LinuxOutboundIpAddresses { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.externalInboundIpAddresses")]
+        public IList<string> ExternalInboundIpAddresses { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.internalInboundIpAddresses")]
+        public IList<string> InternalInboundIpAddresses { get; private set; }
 
         /// <summary>
         /// Gets or sets property to enable and disable new private endpoint
