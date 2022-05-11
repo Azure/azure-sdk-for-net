@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=0.1-preview",
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -31,7 +31,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-04-20-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -61,7 +61,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.92/status?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.92/status?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -88,7 +88,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.92/status?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.92/status?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -115,7 +115,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/users/fbac1389-0d13-381f-e5e6-84f577a60866?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/users/fbac1389-0d13-381f-e5e6-84f577a60866?api-version=2022-04-20-preview",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -146,7 +146,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/users/fbac1389-0d13-381f-e5e6-84f577a60866?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/users/fbac1389-0d13-381f-e5e6-84f577a60866?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -173,7 +173,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/users/fbac1389-0d13-381f-e5e6-84f577a60866?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/users/fbac1389-0d13-381f-e5e6-84f577a60866?api-version=2022-04-20-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

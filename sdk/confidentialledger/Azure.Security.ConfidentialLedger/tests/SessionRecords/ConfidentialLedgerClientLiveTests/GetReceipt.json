@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=0.1-preview",
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -31,7 +31,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-04-20-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -61,7 +61,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.80/status?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.80/status?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -88,7 +88,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.80/status?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.80/status?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -115,7 +115,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-04-20-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -145,7 +145,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.82/status?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.82/status?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -172,7 +172,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.82/status?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.82/status?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -199,7 +199,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -222,13 +222,13 @@
       },
       "ResponseBody": [
         "{\n",
-        "  \u0022@nextLink\u0022: \u0022/app/transactions?api-version=0.1-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.25\u0022,\n",
+        "  \u0022@nextLink\u0022: \u0022/app/transactions?api-version=2022-04-20-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.25\u0022,\n",
         "  \u0022state\u0022: \u0022Loading\u0022\n",
         "}"
       ]
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=0.1-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.25",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions?api-version=2022-04-20-preview\u0026subLedgerId=subledger:0\u0026fromTransactionId=2.25",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -398,7 +398,7 @@
       ]
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.25/receipt?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/transactions/2.25/receipt?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",

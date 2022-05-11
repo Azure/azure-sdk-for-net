@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=0.1-preview",
+      "RequestUri": "https://identity.accledger.azure.com/ledgerIdentity/chrissconfidentialledger?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -31,7 +31,7 @@
       }
     },
     {
-      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/governance/members?api-version=0.1-preview",
+      "RequestUri": "https://chrissconfidentialledger.confidential-ledger.azure.com/app/governance/members?api-version=2022-04-20-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
