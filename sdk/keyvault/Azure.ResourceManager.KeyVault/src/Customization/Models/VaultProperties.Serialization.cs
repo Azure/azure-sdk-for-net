@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class VaultProperties : IUtf8JsonSerializable
     {
-        // This customization is a work to the issue: https://github.com/Azure/azure-sdk-for-net/issues/28677
+        // This customization is a work around to the issue: https://github.com/Azure/azure-sdk-for-net/issues/28677
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
