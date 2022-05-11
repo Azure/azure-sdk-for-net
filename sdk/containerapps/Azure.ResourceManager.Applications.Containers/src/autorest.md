@@ -84,8 +84,5 @@ directive:
     where: $.definitions
     transform: >
       $.Certificate['x-ms-client-name'] = 'ContainerAppCertificate';
-  - from: SourceControls.json
-    where: $.definitions
-    transform: >
-      $.AzureCredentials.properties.tenantId['format'] = 'uuid';
+
 ```

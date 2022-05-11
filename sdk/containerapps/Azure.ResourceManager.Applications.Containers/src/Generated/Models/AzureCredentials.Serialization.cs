@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         {
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
-            Optional<Guid> tenantId = default;
+            Optional<string> tenantId = default;
             Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,12 +58,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"))
@@ -73,7 +67,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                     continue;
                 }
             }
-            return new AzureCredentials(clientId.Value, clientSecret.Value, Optional.ToNullable(tenantId), subscriptionId.Value);
+            return new AzureCredentials(clientId.Value, clientSecret.Value, tenantId.Value, subscriptionId.Value);
         }
     }
 }
