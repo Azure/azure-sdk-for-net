@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Optional<IList<HttpRequestDataHttpHeadersItem>> httpHeaders = default;
             Optional<string> path = default;
             int port = default;
-            Optional<Scheme> scheme = default;
+            Optional<HttpScheme> scheme = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheme = new Scheme(property.Value.GetString());
+                    scheme = new HttpScheme(property.Value.GetString());
                     continue;
                 }
             }

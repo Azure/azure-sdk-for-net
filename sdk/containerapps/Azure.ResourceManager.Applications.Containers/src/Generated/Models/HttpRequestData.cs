@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         /// <param name="scheme"> Scheme to use for connecting to the host. Defaults to HTTP. </param>
-        internal HttpRequestData(string host, IList<HttpRequestDataHttpHeadersItem> httpHeaders, string path, int port, Scheme? scheme)
+        internal HttpRequestData(string host, IList<HttpRequestDataHttpHeadersItem> httpHeaders, string path, int port, HttpScheme? scheme)
         {
             Host = host;
             HttpHeaders = httpHeaders;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </summary>
         public int Port { get; set; }
         /// <summary> Scheme to use for connecting to the host. Defaults to HTTP. </summary>
-        public Scheme? Scheme { get; set; }
+        public HttpScheme? Scheme { get; set; }
     }
 }
