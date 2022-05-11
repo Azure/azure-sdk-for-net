@@ -9,7 +9,7 @@ Azure Schema Registry is a schema repository service hosted by Azure Event Hubs,
 Install the Azure Schema Registry Apache Avro library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro --prerelease
+dotnet add package Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 ```
 
 ### Prerequisites
