@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckContainerAppNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _namespacesClientDiagnostics.CreateScope("ManagedEnvironmentResource.CheckNameAvailabilityNamespace");
+            using var scope = _namespacesClientDiagnostics.CreateScope("ManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
             try
             {
@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityNamespace(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResponse> CheckContainerAppNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _namespacesClientDiagnostics.CreateScope("ManagedEnvironmentResource.CheckNameAvailabilityNamespace");
+            using var scope = _namespacesClientDiagnostics.CreateScope("ManagedEnvironmentResource.CheckContainerAppNameAvailability");
             scope.Start();
             try
             {

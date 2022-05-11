@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.Applications.Containers
     {
         public ManagedEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Applications.Containers.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
-        public string DaprAIConnectionString { get { throw null; } set { } }
-        public string DaprAIInstrumentationKey { get { throw null; } set { } }
+        public string DaprAiConnectionString { get { throw null; } set { } }
+        public string DaprAiInstrumentationKey { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
         public Azure.ResourceManager.Applications.Containers.Models.EnvironmentProvisioningState? ProvisioningState { get { throw null; } }
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.Applications.Containers
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Applications.Containers.ManagedEnvironmentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Applications.Containers.ManagedEnvironmentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityNamespace(Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityResponse>> CheckNameAvailabilityNamespaceAsync(Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityResponse> CheckContainerAppNameAvailability(Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityResponse>> CheckContainerAppNameAvailabilityAsync(Azure.ResourceManager.Applications.Containers.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
