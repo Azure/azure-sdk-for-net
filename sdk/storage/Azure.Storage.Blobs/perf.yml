@@ -1,8 +1,8 @@
 parameters:
-  - name: services
-    displayName: Services (regex of services to run)
+  - name: packageVersions
+    displayName: PackageVersions (regex of package versions to run)
     type: string
-    default: '^storage-blob$'
+    default: '*'
   - name: tests
     displayName: Tests (regex of tests to run)
     type: string
@@ -43,11 +43,11 @@ jobs:
     - checkout: azure-sdk-tools
       path: s/azure-sdk-tools
 
-    - template: ../../eng/pipelines/templates/steps/install-dotnet.yml
+    - template: ../../../eng/pipelines/templates/steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
 
-    - template: ../../eng/common/TestResources/deploy-test-resources.yml
+    - template: ../../../eng/common/TestResources/deploy-test-resources.yml
       parameters:
         ServiceDirectory: storage/Azure.Storage.Blobs
         Location: westus
@@ -63,7 +63,8 @@ jobs:
         dotnet run -- run
         --no-sync
         --languages net
-        --services "${{ parameters.services }}"
+        --services "^storage-blob$"
+        --package-versions "${{ parameters.packageVersions }}"
         --tests "${{ parameters.tests }}"
         --arguments "${{ parameters.arguments }}"
         --iterations ${{ parameters.iterations }}
@@ -82,7 +83,7 @@ jobs:
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
       displayName: Print results
 
-    - template: ../../eng/common/TestResources/remove-test-resources.yml
+    - template: ../../../eng/common/TestResources/remove-test-resources.yml
       parameters:
         ServiceDirectory: storage/Azure.Storage.Blobs
         ResourceType: perf
