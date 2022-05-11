@@ -44,9 +44,9 @@ namespace Azure.AI.TextAnalytics
         public EntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the sub category of the entity inferred by the Language service's
+        /// Gets the subcategory of the entity inferred by the Language service's
         /// named entity recognition model.  This property may not have a value if
-        /// a sub category doesn't exist for this entity.  The list of available categories and
+        /// a subcategory doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at
         /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/named-entity-recognition/concepts/named-entity-categories"/>.
         /// </summary>

@@ -43,9 +43,9 @@ namespace Azure.AI.TextAnalytics
         public PiiEntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the sub category of the entity inferred by the Language service's
+        /// Gets the subcategory of the entity inferred by the Language service's
         /// named entity recognition model.  This property may not have a value if
-        /// a sub category doesn't exist for this entity.  The list of available categories and
+        /// a subcategory doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at <see href="https://aka.ms/tanerpii"/>.
         /// </summary>
         public string SubCategory { get; }

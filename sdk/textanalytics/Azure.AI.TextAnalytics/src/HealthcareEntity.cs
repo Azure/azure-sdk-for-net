@@ -39,9 +39,9 @@ namespace Azure.AI.TextAnalytics
         public HealthcareEntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the sub category of the entity inferred by the Text Analytics for
+        /// Gets the subcategory of the entity inferred by the Text Analytics for
         /// healthcare model. This property may not have a value if
-        /// a sub category doesn't exist for this entity.
+        /// a subcategory doesn't exist for this entity.
         /// </summary>
         public string SubCategory { get; }
 
