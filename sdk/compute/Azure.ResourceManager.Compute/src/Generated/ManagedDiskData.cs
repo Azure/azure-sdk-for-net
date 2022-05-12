@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the Disk data model. </summary>
-    public partial class DiskData : TrackedResourceData
+    /// <summary> A class representing the ManagedDisk data model. </summary>
+    public partial class ManagedDiskData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskData. </summary>
+        /// <summary> Initializes a new instance of ManagedDiskData. </summary>
         /// <param name="location"> The location. </param>
-        public DiskData(AzureLocation location) : base(location)
+        public ManagedDiskData(AzureLocation location) : base(location)
         {
             ManagedByExtended = new ChangeTrackingList<string>();
             Zones = new ChangeTrackingList<string>();
             ShareInfo = new ChangeTrackingList<ShareInfoElement>();
         }
 
-        /// <summary> Initializes a new instance of DiskData. </summary>
+        /// <summary> Initializes a new instance of ManagedDiskData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        internal DiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;

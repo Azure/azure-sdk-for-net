@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DiskData : IUtf8JsonSerializable
+    public partial class ManagedDiskData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        internal static DiskData DeserializeDiskData(JsonElement element)
+        internal static ManagedDiskData DeserializeManagedDiskData(JsonElement element)
         {
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskData(id, name, type, systemData, tags, location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsCollection.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess));
+            return new ManagedDiskData(id, name, type, systemData, tags, location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsCollection.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

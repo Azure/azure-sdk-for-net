@@ -37,6 +37,8 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  SSD: Ssd
+  SAS: Sas
 
 #TODO: remove after we resolve why RestorePoint has no list
 list-exception:
@@ -82,15 +84,12 @@ directive:
   - rename-model:
       from: RestorePointCollection
       to: RestorePointGroup
+  - rename-model:
+      from: Disk
+      to: ManagedDisk
   - from: disk.json
     where: $.definitions.PurchasePlan
     transform: $["x-ms-client-name"] = "DiskPurchasePlan"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineReimageParameters
-    transform: $["x-ms-client-name"] = "VirtualMachineReimageOptions"
-  - from: swagger-document
-    where: $.definitions.VirtualMachineScaleSetVMReimageParameters
-    transform: $["x-ms-client-name"] = "VirtualMachineScaleSetVmReimageOptions"
 # transform enum values
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]

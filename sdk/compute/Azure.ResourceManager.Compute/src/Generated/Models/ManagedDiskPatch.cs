@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Disk update resource. </summary>
-    public partial class DiskPatch
+    public partial class ManagedDiskPatch
     {
-        /// <summary> Initializes a new instance of DiskPatch. </summary>
-        public DiskPatch()
+        /// <summary> Initializes a new instance of ManagedDiskPatch. </summary>
+        public ManagedDiskPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
