@@ -12,15 +12,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Managed HSM resource. </summary>
-    public partial class KeyVaultTrackedResourceData : TrackedResourceData
+    public partial class ManagedHsmTrackedResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of KeyVaultTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmTrackedResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public KeyVaultTrackedResourceData(AzureLocation location) : base(location)
+        public ManagedHsmTrackedResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of ManagedHsmTrackedResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU details. </param>
-        internal KeyVaultTrackedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedHsmTrackedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
         }

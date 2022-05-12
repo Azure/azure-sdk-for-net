@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class ManagedHsmPrivateLinkResourceData : KeyVaultTrackedResourceData
+    public partial class ManagedHsmPrivateLinkResourceData : ManagedHsmTrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedHsmPrivateLinkResourceData. </summary>
         /// <param name="location"> The location. </param>
