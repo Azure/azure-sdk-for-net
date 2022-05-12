@@ -50,43 +50,37 @@ function Update-AutorestConfigFile() {
         [string]$readme = ""
     )
     if (Test-Path -Path $autorestFilePath) {
-        if ($readme -ne "") {
-            Write-Host "Updating autorest.md file to config required readme file."
+        if (($readme -ne "") -or ($inputfile -ne "")) {
             $requirRex = "require*:*";
-            $inputfileRex = "input-file *:*"
-            $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
-            if ((Get-Content $autorestFilePath | Select-String -Pattern $requirRex).Matches.Success) {
-                (Get-Content $autorestFilePath) -notmatch "- .*.md" |Out-File $autorestFilePath
-                (Get-Content $autorestFilePath) -notmatch $inputfileRex |Out-File $autorestFilePath
-                (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
-                (Get-Content $autorestFilePath) -replace $requirRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $autorestFilePath
-            } elseif ((Get-Content $autorestFilePath | Select-String -Pattern $inputfileRex).Matches.Success) {
-                (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
-                $requirefile = $requirefile + [Environment]::NewLine + "csharp: true";
-                (Get-Content $autorestFilePath) -replace $inputfileRex, ("require:" + [Environment]::NewLine + "- " + "$requirefile") | Set-Content $autorestFilePath
+            $inputfileRex = "input-file*:*"
+            # clear
+            (Get-Content $autorestFilePath) -notmatch $requirRex |Out-File $autorestFilePath
+            (Get-Content $autorestFilePath) -notmatch "- .*.md" |Out-File $autorestFilePath
+            (Get-Content $autorestFilePath) -notmatch $inputfileRex |Out-File $autorestFilePath
+            (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
+
+            $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
+            $configline = ""
+            if ($readme -ne "") {
+                Write-Host "Updating autorest.md file to config required readme file."
+                $requirefile = $readme + [Environment]::NewLine + "- " + $readme.Replace("readme.md", "readme.csharp.md")
+                $configline = "require:" + [Environment]::NewLine + "- " + "$requirefile" + [Environment]::NewLine + "csharp: true"
+            } elseif ($inputfile -ne "") {
+                Write-Host "Updating autorest.md file to update input-file."
+                if ($inputfile.StartsWith('-')) {
+                    $configline = "input-file:" + [Environment]::NewLine + "$inputfile"
+                } else {
+                    $configline = "input-file:"  + "$inputfile"
+                }
             }
-            if ( $? -ne $True) {
+            $fileContent = Get-Content -Path $autorestFilePath
+            $fileContent[$startNum - 1] += ([Environment]::NewLine + $configline)
+            $fileContent | Set-Content $autorestFilePath
+            if ( !$? ) {
                 Write-Error "Failed to update autorest.md. exit code: $?"
                 exit 1
             }
-        } elseif ($inputfile -ne "") {
-            Write-Host "Updating autorest.md file to update input-file."
-            $inputfileRex = "input-file *:*"
-            if ((Get-Content $autorestFilePath | Select-String -Pattern $inputfileRex).Matches.Success) {
-                (Get-Content $autorestFilePath) -notmatch "- .*.json" |Out-File $autorestFilePath
-                (Get-Content $autorestFilePath) -replace $inputfileRex, ("input-file:" + [Environment]::NewLine + "$inputfile") | Set-Content $autorestFilePath
-            } else {
-                $startNum = (Get-Content $autorestFilePath | Select-String -Pattern '```').LineNumber[0]
-                $fileContent = Get-Content -Path $autorestFilePath
-                $fileContent[$startNum - 1] += ([Environment]::NewLine + "input-file:" + [Environment]::NewLine + "$inputfile")
-                $fileContent | Set-Content $autorestFilePath
-            }
-            
-            if ( $? -ne $True) {
-                Write-Error "Failed to update autorest.md. exit code: $?"
-                exit 1
-            }
-        }   
+        }  
     } else {
         Write-Error "autorest.md doesn't exist."
         exit 1
@@ -377,13 +371,12 @@ function Invoke-GenerateAndBuildSDK () {
         Remove-Item $newpackageoutput
     } else {
         Write-Host "Generate data-plane SDK client library."
-        $readmeFileurl = "$repoHttpsUrl/blob/$commitid/$relateReadmeFile"
-        npx autorest --version=3.7.3 --csharp $readmeFileurl --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
+        npx autorest --version=3.7.3 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
         $serviceSDKDirectory = (Join-Path $sdkPath sdk $service)
         $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
         $folders |ForEach-Object {
             $folder=$_.Name
-            New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFileurl -outputJsonFile $newpackageoutput
+            New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
             $newpackageoutputJson = Get-Content $newpackageoutput | Out-String | ConvertFrom-Json
             $packagesToGen = $packagesToGen + @($newpackageoutputJson)
             if ( !$? ) {
