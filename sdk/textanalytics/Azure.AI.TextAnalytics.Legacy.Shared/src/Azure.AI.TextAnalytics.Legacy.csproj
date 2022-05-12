@@ -3,6 +3,7 @@
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics shared code library</AssemblyTitle>
     <Version>1.0.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsShippingLibrary>false</IsShippingLibrary>
     <GenerateAPIListing>false</GenerateAPIListing>
     <IsTestSupportProject>true</IsTestSupportProject>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
