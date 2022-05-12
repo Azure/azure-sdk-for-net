@@ -69,6 +69,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             else if (Mode == RecordedTestMode.Record)
             {
                 // Get ObjectId of Service Principal
+                // [warning] Microsoft.Graph required corresponding api permission, Please make sure the service has these two api permissions as follows.
+                // 1. ServicePrincipalEndpoint.Read.All(TYPE-Application) 2.ServicePrincipalEndpoint.ReadWrite.All(TYPE-Application)
                 var scopes = new[] { "https://graph.microsoft.com/.default" };
                 var options = new TokenCredentialOptions
                 {
