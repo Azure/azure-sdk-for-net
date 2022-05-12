@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Exchange Policy errors. </summary>
         public IReadOnlyList<ExchangePolicyError> PolicyErrors
         {
-            get => PolicyResult.PolicyErrors;
+            get => PolicyResult?.PolicyErrors;
         }
     }
 }

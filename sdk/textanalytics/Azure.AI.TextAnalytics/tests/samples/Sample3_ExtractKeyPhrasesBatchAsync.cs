@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
             ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)

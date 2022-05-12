@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleCacheKeyQueryStringAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleCacheKeyQueryStringAction(CacheKeyQueryStringActionParameters parameters)
+        public DeliveryRuleCacheKeyQueryStringAction(CacheKeyQueryStringActionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleCacheKeyQueryStringAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, CacheKeyQueryStringActionParameters parameters) : base(name)
+        internal DeliveryRuleCacheKeyQueryStringAction(DeliveryRuleActionType name, CacheKeyQueryStringActionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public CacheKeyQueryStringActionParameters Parameters { get; set; }
+        public CacheKeyQueryStringActionDefinition Parameters { get; set; }
     }
 }

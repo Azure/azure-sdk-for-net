@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The secret info. </summary>
-    internal partial class SecretInfoBase
+    public partial class SecretInfoBase
     {
         /// <summary> Initializes a new instance of SecretInfoBase. </summary>
         public SecretInfoBase()

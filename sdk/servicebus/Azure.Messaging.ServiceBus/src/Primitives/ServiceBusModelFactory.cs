@@ -428,7 +428,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="lastConnectionOpen">The last time that a connection was opened.</param>
         /// <param name="lastConnectionClose">The last time that a connection was closed.</param>
         /// <returns></returns>
-        public static ServiceBusTransportMetrics ServiceBusTransportMetrics(
+        internal static ServiceBusTransportMetrics ServiceBusTransportMetrics(
             DateTimeOffset? lastHeartbeat = default,
             DateTimeOffset? lastConnectionOpen = default,
             DateTimeOffset? lastConnectionClose = default)

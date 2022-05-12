@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("healthProbeSettings");
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
-                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
+                if (TrafficRestorationTimeInMinutes != null)
                 {
                     writer.WritePropertyName("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
-                    writer.WriteNumberValue(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes.Value);
+                    writer.WriteNumberValue(TrafficRestorationTimeInMinutes.Value);
                 }
                 else
                 {

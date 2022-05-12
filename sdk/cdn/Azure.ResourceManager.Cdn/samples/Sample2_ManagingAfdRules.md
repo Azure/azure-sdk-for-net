@@ -51,8 +51,8 @@ AfdRuleData input3 = new AfdRuleData
 {
     Order = 1
 };
-input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
-input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
+input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionDefinition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any)));
+input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionDefinition(CacheExpirationActionType.CacheExpirationAction, CacheBehaviorSettings.Override, CacheLevel.All)
 {
     CacheDuration = new TimeSpan(0, 0, 20)
 }));
@@ -89,8 +89,8 @@ AfdRulePatch input = new AfdRulePatch
 {
     Order = 2
 };
-input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionParameters(RequestUriMatchConditionParametersTypeName.DeliveryRuleRequestUriConditionParameters, RequestUriOperator.Any)));
-input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionParameters(CacheExpirationActionParametersTypeName.DeliveryRuleCacheExpirationActionParameters, CacheBehavior.Override, CacheType.All)
+input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionDefinition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any)));
+input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionDefinition(CacheExpirationActionType.CacheExpirationAction, CacheBehaviorSettings.Override, CacheLevel.All)
 {
     CacheDuration = new TimeSpan(0, 0, 30)
 }));
