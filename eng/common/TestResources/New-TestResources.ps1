@@ -375,7 +375,7 @@ try {
             $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
             Log "Generated base name '$BaseName' for CI build"
         } else {
-            $BaseName = GetBaseName $UserName $ServiceDirectory
+            $BaseName = GetBaseName $UserName (GetServiceLeafDirectoryName $ServiceDirectory)
             Log "BaseName was not set. Using default base name '$BaseName'"
         }
     }
@@ -520,7 +520,7 @@ try {
         $ResourceGroupName
     } elseif ($CI) {
         # Format the resource group name based on resource group naming recommendations and limitations.
-        "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
+        "rg-{0}-$BaseName" -f ($serviceName -replace '[\.\\\/:]', '-').ToLowerInvariant().Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
     } else {
         "rg-$BaseName"
     }
