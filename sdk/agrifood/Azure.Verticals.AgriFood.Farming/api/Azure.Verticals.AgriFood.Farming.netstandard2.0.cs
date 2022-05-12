@@ -71,6 +71,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCropAsync(string cropId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetCrops(System.Collections.Generic.IEnumerable<string> phenotypes = null, System.Collections.Generic.IEnumerable<string> ids = null, System.Collections.Generic.IEnumerable<string> names = null, System.Collections.Generic.IEnumerable<string> propertyFilters = null, System.Collections.Generic.IEnumerable<string> statuses = null, System.DateTimeOffset? minCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? minLastModifiedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxLastModifiedDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetCropsAsync(System.Collections.Generic.IEnumerable<string> phenotypes = null, System.Collections.Generic.IEnumerable<string> ids = null, System.Collections.Generic.IEnumerable<string> names = null, System.Collections.Generic.IEnumerable<string> propertyFilters = null, System.Collections.Generic.IEnumerable<string> statuses = null, System.DateTimeOffset? minCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? minLastModifiedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxLastModifiedDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<Azure.Verticals.AgriFood.Farming.Models.FoodCrop> GetCropsValue(System.Collections.Generic.IEnumerable<string> phenotypes = null, System.Collections.Generic.IEnumerable<string> ids = null, System.Collections.Generic.IEnumerable<string> names = null, System.Collections.Generic.IEnumerable<string> propertyFilters = null, System.Collections.Generic.IEnumerable<string> statuses = null, System.DateTimeOffset? minCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? minLastModifiedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxLastModifiedDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Verticals.AgriFood.Farming.Models.FoodCrop> GetCropsValueAsync(System.Collections.Generic.IEnumerable<string> phenotypes = null, System.Collections.Generic.IEnumerable<string> ids = null, System.Collections.Generic.IEnumerable<string> names = null, System.Collections.Generic.IEnumerable<string> propertyFilters = null, System.Collections.Generic.IEnumerable<string> statuses = null, System.DateTimeOffset? minCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxCreatedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? minLastModifiedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? maxLastModifiedDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CropVarietiesClient
     {
@@ -313,5 +315,21 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual System.Threading.Tasks.Task<Azure.Response> GetDataIngestionJobDetailsAsync(string jobId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetWeathers(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetWeathersAsync(string farmerId, string boundaryId, string extensionId, string weatherDataType, string granularity, System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), int? maxPageSize = default(int?), string skipToken = null, Azure.RequestContext context = null) { throw null; }
+    }
+}
+namespace Azure.Verticals.AgriFood.Farming.Models
+{
+    public partial class FoodCrop
+    {
+        public FoodCrop() { }
+        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string ETag { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.DateTimeOffset? ModifiedDateTime { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public string Phenotype { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> Properties { get { throw null; } }
+        public string Status { get { throw null; } set { } }
     }
 }
