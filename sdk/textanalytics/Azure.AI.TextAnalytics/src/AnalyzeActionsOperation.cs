@@ -19,6 +19,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal readonly IDictionary<string, int> _idToIndexMap;
 
+        private readonly bool? _showStats;
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<AnalyzeActionsResult>> _operationInternal;
@@ -98,12 +99,6 @@ namespace Azure.AI.TextAnalytics
         /// Returns true if the long-running operation has completed.
         /// </summary>
         public override bool HasCompleted => _operationInternal.HasCompleted;
-
-        /// <summary>
-        /// Represents the desire of the user to request statistics.
-        /// This is used in every GET request.
-        /// </summary>
-        private bool? _showStats { get; }
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).

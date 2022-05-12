@@ -19,12 +19,12 @@ namespace Azure.AI.TextAnalytics
     {
         internal readonly IDictionary<string, int> _idToIndexMap;
 
+        private readonly bool? _showStats;
+        private readonly string _jobId;
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
 
-        private readonly bool? _showStats;
-        private readonly string _jobId;
         private TextAnalyticsOperationStatus _status;
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
