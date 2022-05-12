@@ -11,10 +11,14 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(string userId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetCollections(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCollectionsAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.ConfidentialLedger.Models.LedgerCollection>> GetCollectionsValue(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.ConfidentialLedger.Models.LedgerCollection>>> GetCollectionsValueAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetConsortiumMembers(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConsortiumMembersAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetConstitution(Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetConstitutionAsync(Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerConstitution> GetConstitutionValue(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerConstitution>> GetConstitutionValueAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetCurrentLedgerEntry(string collectionId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCurrentLedgerEntryAsync(string collectionId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetEnclaveQuotes(Azure.RequestContext context = null) { throw null; }
@@ -88,6 +92,17 @@ namespace Azure.Security.ConfidentialLedger.Models
         public static implicit operator Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState (string value) { throw null; }
         public static bool operator !=(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState left, Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerQueryState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class LedgerCollection
+    {
+        internal LedgerCollection() { }
+        public string CollectionId { get { throw null; } }
+    }
+    public partial class LedgerConstitution
+    {
+        internal LedgerConstitution() { }
+        public string Digest { get { throw null; } }
+        public string Script { get { throw null; } }
     }
     public partial class ReceiptContents
     {
