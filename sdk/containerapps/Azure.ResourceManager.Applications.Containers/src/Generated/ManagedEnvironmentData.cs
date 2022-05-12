@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the Environment. </param>
-        /// <param name="daprAiInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="daprAiConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
+        /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
+        /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="vnetConfiguration"> Vnet configuration for the environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Applications.Containers
         /// supported
         /// </param>
         /// <param name="zoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
-        internal ManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EnvironmentProvisioningState? provisioningState, string daprAiInstrumentationKey, string daprAiConnectionString, VnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, string staticIP, AppLogsConfiguration appLogsConfiguration, bool? zoneRedundant) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, VnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, string staticIP, AppLogsConfiguration appLogsConfiguration, bool? zoneRedundant) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
-            DaprAiInstrumentationKey = daprAiInstrumentationKey;
-            DaprAiConnectionString = daprAiConnectionString;
+            DaprAIInstrumentationKey = daprAIInstrumentationKey;
+            DaprAIConnectionString = daprAIConnectionString;
             VnetConfiguration = vnetConfiguration;
             DeploymentErrors = deploymentErrors;
             DefaultDomain = defaultDomain;
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <summary> Provisioning state of the Environment. </summary>
         public EnvironmentProvisioningState? ProvisioningState { get; }
         /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
-        public string DaprAiInstrumentationKey { get; set; }
+        public string DaprAIInstrumentationKey { get; set; }
         /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
-        public string DaprAiConnectionString { get; set; }
+        public string DaprAIConnectionString { get; set; }
         /// <summary> Vnet configuration for the environment. </summary>
         public VnetConfiguration VnetConfiguration { get; set; }
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>

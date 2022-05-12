@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.Applications.Containers
     {
         public ManagedEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Applications.Containers.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
-        public string DaprAiConnectionString { get { throw null; } set { } }
-        public string DaprAiInstrumentationKey { get { throw null; } set { } }
+        public string DaprAIConnectionString { get { throw null; } set { } }
+        public string DaprAIInstrumentationKey { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
         public Azure.ResourceManager.Applications.Containers.Models.EnvironmentProvisioningState? ProvisioningState { get { throw null; } }

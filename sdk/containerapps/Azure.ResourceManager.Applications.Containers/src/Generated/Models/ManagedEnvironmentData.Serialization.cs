@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Applications.Containers
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(DaprAiInstrumentationKey))
+            if (Optional.IsDefined(DaprAIInstrumentationKey))
             {
                 writer.WritePropertyName("daprAIInstrumentationKey");
-                writer.WriteStringValue(DaprAiInstrumentationKey);
+                writer.WriteStringValue(DaprAIInstrumentationKey);
             }
-            if (Optional.IsDefined(DaprAiConnectionString))
+            if (Optional.IsDefined(DaprAIConnectionString))
             {
                 writer.WritePropertyName("daprAIConnectionString");
-                writer.WriteStringValue(DaprAiConnectionString);
+                writer.WriteStringValue(DaprAIConnectionString);
             }
             if (Optional.IsDefined(VnetConfiguration))
             {
