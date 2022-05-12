@@ -302,8 +302,8 @@ namespace Azure.Messaging.ServiceBus
                     maxWaitTime,
                     cancellationToken).ConfigureAwait(false);
             }
-            catch (TaskCanceledException ex)
-                when (isProcessor)
+            catch (OperationCanceledException ex)
+                when (isProcessor && cancellationToken.IsCancellationRequested)
             {
                 Logger.ProcessorStoppingReceiveCanceled(Identifier, ex.ToString());
                 scope.Failed(ex);
