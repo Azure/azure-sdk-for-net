@@ -36,6 +36,16 @@ namespace Azure.Analytics.Purview.Administration
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewCollection. </summary>
+        /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public PurviewCollection(Uri endpoint, string collectionName, TokenCredential credential) : this(endpoint, collectionName, credential, new PurviewAccountClientOptions())
+        {
+        }
+
         /// <summary> Get a collection. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>

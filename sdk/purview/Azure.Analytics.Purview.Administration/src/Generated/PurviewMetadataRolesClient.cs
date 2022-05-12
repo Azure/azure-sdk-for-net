@@ -34,6 +34,14 @@ namespace Azure.Analytics.Purview.Administration
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewMetadataRolesClient. </summary>
+        /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewMetadataRolesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewAccountClientOptions())
+        {
+        }
+
         /// <summary> Lists roles for Purview Account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
