@@ -1014,7 +1014,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(1, msg.DeliveryCount);
                 var end = DateTime.UtcNow;
                 Assert.NotNull(msg);
-                Assert.Less(end - start, TimeSpan.FromSeconds(5));
+                Assert.Less(end - start, TimeSpan.FromSeconds(10));
             }
         }
     }
