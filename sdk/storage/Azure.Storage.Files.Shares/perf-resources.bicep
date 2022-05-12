@@ -2,7 +2,7 @@ param baseName string = resourceGroup().name
 param location string = resourceGroup().location
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
-  name: '${baseName}fileshare'
+  name: '${baseName}files'
   location: location
   kind: 'FileStorage'
   sku: {
