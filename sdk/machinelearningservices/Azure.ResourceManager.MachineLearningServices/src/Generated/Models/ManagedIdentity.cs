@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Managed identity configuration. </summary>
-    internal partial class ManagedIdentity : IdentityConfiguration
+    public partial class ManagedIdentity : IdentityConfiguration
     {
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
         public ManagedIdentity()

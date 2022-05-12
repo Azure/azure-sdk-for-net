@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The list of compute start stop schedules to be applied. </summary>
         public IReadOnlyList<ComputeStartStopSchedule> SchedulesComputeStartStop
         {
-            get => Schedules.ComputeStartStop;
+            get => Schedules?.ComputeStartStop;
         }
 
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Runtime of compute instance. </summary>
         public string VersionsRuntime
         {
-            get => Versions.Runtime;
+            get => Versions?.Runtime;
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The CustomTargetRollingWindowSize. </summary>
-    internal partial class CustomTargetRollingWindowSize : TargetRollingWindowSize
+    public partial class CustomTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of CustomTargetRollingWindowSize. </summary>
         /// <param name="value"> [Required] TargetRollingWindowSize value. </param>

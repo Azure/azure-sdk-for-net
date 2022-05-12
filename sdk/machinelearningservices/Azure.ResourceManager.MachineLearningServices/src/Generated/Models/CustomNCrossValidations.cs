@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> N-Cross validations are specified by user. </summary>
-    internal partial class CustomNCrossValidations : NCrossValidations
+    public partial class CustomNCrossValidations : NCrossValidations
     {
         /// <summary> Initializes a new instance of CustomNCrossValidations. </summary>
         /// <param name="value"> [Required] N-Cross validations value. </param>

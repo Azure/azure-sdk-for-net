@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The CustomTargetLags. </summary>
-    internal partial class CustomTargetLags : TargetLags
+    public partial class CustomTargetLags : TargetLags
     {
         /// <summary> Initializes a new instance of CustomTargetLags. </summary>
         /// <param name="values"> [Required] Set target lags values. </param>

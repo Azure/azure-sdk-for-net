@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> PyTorch distribution configuration. </summary>
-    internal partial class PyTorch : DistributionConfiguration
+    public partial class PyTorch : DistributionConfiguration
     {
         /// <summary> Initializes a new instance of PyTorch. </summary>
         public PyTorch()

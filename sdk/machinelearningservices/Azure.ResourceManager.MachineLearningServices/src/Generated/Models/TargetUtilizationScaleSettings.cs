@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The TargetUtilizationScaleSettings. </summary>
-    internal partial class TargetUtilizationScaleSettings : OnlineScaleSettings
+    public partial class TargetUtilizationScaleSettings : OnlineScaleSettings
     {
         /// <summary> Initializes a new instance of TargetUtilizationScaleSettings. </summary>
         public TargetUtilizationScaleSettings()

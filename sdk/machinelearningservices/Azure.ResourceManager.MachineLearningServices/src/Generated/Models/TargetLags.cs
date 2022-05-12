@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The number of past periods to lag from the target column. </summary>
-    internal partial class TargetLags
+    public partial class TargetLags
     {
         /// <summary> Initializes a new instance of TargetLags. </summary>
         public TargetLags()

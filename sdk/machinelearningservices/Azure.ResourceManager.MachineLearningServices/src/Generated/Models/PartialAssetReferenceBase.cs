@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Base definition for asset references. </summary>
-    internal partial class PartialAssetReferenceBase
+    public partial class PartialAssetReferenceBase
     {
         /// <summary> Initializes a new instance of PartialAssetReferenceBase. </summary>
         public PartialAssetReferenceBase()

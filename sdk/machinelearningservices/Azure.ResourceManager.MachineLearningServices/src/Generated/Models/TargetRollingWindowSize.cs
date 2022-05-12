@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Forecasting target rolling window size. </summary>
-    internal partial class TargetRollingWindowSize
+    public partial class TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
         public TargetRollingWindowSize()

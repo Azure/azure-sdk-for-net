@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Mutable online deployment configuration. </summary>
-    internal partial class PartialOnlineDeployment
+    public partial class PartialOnlineDeployment
     {
         /// <summary> Initializes a new instance of PartialOnlineDeployment. </summary>
         public PartialOnlineDeployment()

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The AutoSeasonality. </summary>
-    internal partial class AutoSeasonality : Seasonality
+    public partial class AutoSeasonality : Seasonality
     {
         /// <summary> Initializes a new instance of AutoSeasonality. </summary>
         public AutoSeasonality()

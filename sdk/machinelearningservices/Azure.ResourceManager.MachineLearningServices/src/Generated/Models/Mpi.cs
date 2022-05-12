@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> MPI distribution configuration. </summary>
-    internal partial class Mpi : DistributionConfiguration
+    public partial class Mpi : DistributionConfiguration
     {
         /// <summary> Initializes a new instance of Mpi. </summary>
         public Mpi()

@@ -90,26 +90,4 @@ directive:
     where: $.definitions.TableVerticalValidationDataSettings.properties.cvSplitColumnNames
     transform: >
         $["x-nullable"] = true; 
-  - from: swagger-document
-    where: $.definitions.AssetReferenceBase
-    transform:  >
-        $ = {
-            "description": "Base definition for asset references.",
-            "required": [
-                "referenceType"
-            ],
-            "type": "object",
-            "properties": {
-                "referenceType": {
-                "description": "[Required] Specifies the type of asset reference.",
-                "$ref": "#/definitions/ReferenceType"
-                },
-                "foo": {
-                "type": "string",
-                "description": "This is a workaround to fix discriminator internal issue. No need to input any value in it.",
-                "x-nullable": true
-                }
-            },
-            "discriminator": "referenceType"
-        }
 ```

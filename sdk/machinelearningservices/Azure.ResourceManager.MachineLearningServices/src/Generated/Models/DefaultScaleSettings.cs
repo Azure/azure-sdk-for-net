@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The DefaultScaleSettings. </summary>
-    internal partial class DefaultScaleSettings : OnlineScaleSettings
+    public partial class DefaultScaleSettings : OnlineScaleSettings
     {
         /// <summary> Initializes a new instance of DefaultScaleSettings. </summary>
         public DefaultScaleSettings()

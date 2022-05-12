@@ -26,19 +26,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
         /// <summary> Additional attributes of the entity. </summary>
-        internal PartialOnlineDeployment Properties { get; set; }
-        /// <summary> [Required] The compute type of the endpoint. </summary>
-        internal EndpointComputeType PartialOnlineDeploymentEndpointComputeType
-        {
-            get => Properties is null ? default : Properties.EndpointComputeType;
-            set
-            {
-                if (Properties is null)
-                    Properties = new PartialOnlineDeployment();
-                Properties.EndpointComputeType = value;
-            }
-        }
-
+        public PartialOnlineDeployment Properties { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public PartialSku Sku { get; set; }
         /// <summary> Resource tags. </summary>

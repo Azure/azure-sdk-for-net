@@ -18,10 +18,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of OutputPathAssetReference. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="foo"> This is a workaround to fix discriminator internal issue. No need to input any value in it. </param>
         /// <param name="jobId"> ARM resource ID of the job. </param>
         /// <param name="path"> The path of the file/directory in the job output. </param>
-        internal OutputPathAssetReference(ReferenceType referenceType, string foo, string jobId, string path) : base(referenceType, foo)
+        internal OutputPathAssetReference(ReferenceType referenceType, string jobId, string path) : base(referenceType)
         {
             JobId = jobId;
             Path = path;

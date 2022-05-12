@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> User identity configuration. </summary>
-    internal partial class UserIdentity : IdentityConfiguration
+    public partial class UserIdentity : IdentityConfiguration
     {
         /// <summary> Initializes a new instance of UserIdentity. </summary>
         public UserIdentity()

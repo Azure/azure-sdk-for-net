@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> TensorFlow distribution configuration. </summary>
-    internal partial class TensorFlow : DistributionConfiguration
+    public partial class TensorFlow : DistributionConfiguration
     {
         /// <summary> Initializes a new instance of TensorFlow. </summary>
         public TensorFlow()

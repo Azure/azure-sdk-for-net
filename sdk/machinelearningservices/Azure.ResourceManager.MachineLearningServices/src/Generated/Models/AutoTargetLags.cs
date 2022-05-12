@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The AutoTargetLags. </summary>
-    internal partial class AutoTargetLags : TargetLags
+    public partial class AutoTargetLags : TargetLags
     {
         /// <summary> Initializes a new instance of AutoTargetLags. </summary>
         public AutoTargetLags()

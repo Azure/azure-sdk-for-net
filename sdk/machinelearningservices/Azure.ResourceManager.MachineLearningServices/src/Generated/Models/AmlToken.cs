@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> AML Token identity configuration. </summary>
-    internal partial class AmlToken : IdentityConfiguration
+    public partial class AmlToken : IdentityConfiguration
     {
         /// <summary> Initializes a new instance of AmlToken. </summary>
         public AmlToken()

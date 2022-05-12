@@ -102,19 +102,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Mapping of output data bindings used in the job. </summary>
         public IDictionary<string, JobOutput> Outputs { get; set; }
         /// <summary> [Required] The hyperparameter sampling algorithm. </summary>
-        internal SamplingAlgorithm SamplingAlgorithm { get; set; }
-        /// <summary> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </summary>
-        internal SamplingAlgorithmType SamplingAlgorithmType
-        {
-            get => SamplingAlgorithm is null ? default : SamplingAlgorithm.SamplingAlgorithmType;
-            set
-            {
-                if (SamplingAlgorithm is null)
-                    SamplingAlgorithm = new SamplingAlgorithm();
-                SamplingAlgorithm.SamplingAlgorithmType = value;
-            }
-        }
-
+        public SamplingAlgorithm SamplingAlgorithm { get; set; }
         /// <summary> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </summary>
         public BinaryData SearchSpace { get; set; }
         /// <summary> [Required] Trial component definition. </summary>

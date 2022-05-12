@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Target lags rolling window determined automatically. </summary>
-    internal partial class AutoTargetRollingWindowSize : TargetRollingWindowSize
+    public partial class AutoTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of AutoTargetRollingWindowSize. </summary>
         public AutoTargetRollingWindowSize()

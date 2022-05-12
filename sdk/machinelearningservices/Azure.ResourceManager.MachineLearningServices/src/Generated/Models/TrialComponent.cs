@@ -56,19 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
         public string Command { get; set; }
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
-        internal DistributionConfiguration Distribution { get; set; }
-        /// <summary> [Required] Specifies the type of distribution framework. </summary>
-        internal DistributionType DistributionType
-        {
-            get => Distribution is null ? default : Distribution.DistributionType;
-            set
-            {
-                if (Distribution is null)
-                    Distribution = new DistributionConfiguration();
-                Distribution.DistributionType = value;
-            }
-        }
-
+        public DistributionConfiguration Distribution { get; set; }
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
         /// <summary> Environment variables included in the job. </summary>

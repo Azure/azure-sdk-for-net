@@ -64,19 +64,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Identity configuration. If set, this should be one of AmlToken, ManagedIdentity, UserIdentity or null.
         /// Defaults to AmlToken if null.
         /// </summary>
-        internal IdentityConfiguration Identity { get; set; }
-        /// <summary> [Required] Specifies the type of identity framework. </summary>
-        internal IdentityConfigurationType IdentityType
-        {
-            get => Identity is null ? default : Identity.IdentityType;
-            set
-            {
-                if (Identity is null)
-                    Identity = new IdentityConfiguration();
-                Identity.IdentityType = value;
-            }
-        }
-
+        public IdentityConfiguration Identity { get; set; }
         /// <summary> Is the asset archived?. </summary>
         public bool? IsArchived { get; set; }
         /// <summary> [Required] Specifies the type of job. </summary>

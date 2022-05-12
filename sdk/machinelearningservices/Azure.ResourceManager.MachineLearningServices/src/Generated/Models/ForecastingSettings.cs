@@ -80,38 +80,14 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Flag for generating lags for the numeric features with &apos;auto&apos; or null. </summary>
         public FeatureLags? FeatureLags { get; set; }
         /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
-        internal ForecastHorizon ForecastHorizon { get; set; }
-        /// <summary> [Required] Set forecast horizon value selection mode. </summary>
-        internal ForecastHorizonMode ForecastHorizonMode
-        {
-            get => ForecastHorizon is null ? default : ForecastHorizon.Mode;
-            set
-            {
-                if (ForecastHorizon is null)
-                    ForecastHorizon = new ForecastHorizon();
-                ForecastHorizon.Mode = value;
-            }
-        }
-
+        public ForecastHorizon ForecastHorizon { get; set; }
         /// <summary> When forecasting, this parameter represents the period with which the forecast is desired, for example daily, weekly, yearly, etc. The forecast frequency is dataset frequency by default. </summary>
         public string Frequency { get; set; }
         /// <summary>
         /// Set time series seasonality as an integer multiple of the series frequency.
         /// If seasonality is set to &apos;auto&apos;, it will be inferred.
         /// </summary>
-        internal Seasonality Seasonality { get; set; }
-        /// <summary> [Required] Seasonality mode. </summary>
-        internal SeasonalityMode SeasonalityMode
-        {
-            get => Seasonality is null ? default : Seasonality.Mode;
-            set
-            {
-                if (Seasonality is null)
-                    Seasonality = new Seasonality();
-                Seasonality.Mode = value;
-            }
-        }
-
+        public Seasonality Seasonality { get; set; }
         /// <summary> The parameter defining how if AutoML should handle short time series. </summary>
         public ShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get; set; }
         /// <summary>
@@ -120,33 +96,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </summary>
         public TargetAggregationFunction? TargetAggregateFunction { get; set; }
         /// <summary> The number of past periods to lag from the target column. </summary>
-        internal TargetLags TargetLags { get; set; }
-        /// <summary> [Required] Set target lags mode - Auto/Custom. </summary>
-        internal TargetLagsMode TargetLagsMode
-        {
-            get => TargetLags is null ? default : TargetLags.Mode;
-            set
-            {
-                if (TargetLags is null)
-                    TargetLags = new TargetLags();
-                TargetLags.Mode = value;
-            }
-        }
-
+        public TargetLags TargetLags { get; set; }
         /// <summary> The number of past periods used to create a rolling window average of the target column. </summary>
-        internal TargetRollingWindowSize TargetRollingWindowSize { get; set; }
-        /// <summary> [Required] TargetRollingWindowSiz detection mode. </summary>
-        internal TargetRollingWindowSizeMode TargetRollingWindowSizeMode
-        {
-            get => TargetRollingWindowSize is null ? default : TargetRollingWindowSize.Mode;
-            set
-            {
-                if (TargetRollingWindowSize is null)
-                    TargetRollingWindowSize = new TargetRollingWindowSize();
-                TargetRollingWindowSize.Mode = value;
-            }
-        }
-
+        public TargetRollingWindowSize TargetRollingWindowSize { get; set; }
         /// <summary> The name of the time column. This parameter is required when forecasting to specify the datetime column in the input data used for building the time series and inferring its frequency. </summary>
         public string TimeColumnName { get; set; }
         /// <summary>

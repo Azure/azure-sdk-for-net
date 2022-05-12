@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Online deployment scaling configuration. </summary>
-    internal partial class OnlineScaleSettings
+    public partial class OnlineScaleSettings
     {
         /// <summary> Initializes a new instance of OnlineScaleSettings. </summary>
         public OnlineScaleSettings()

@@ -41,18 +41,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("referenceType");
             writer.WriteStringValue(ReferenceType.ToString());
-            if (Optional.IsDefined(Foo))
-            {
-                if (Foo != null)
-                {
-                    writer.WritePropertyName("foo");
-                    writer.WriteStringValue(Foo);
-                }
-                else
-                {
-                    writer.WriteNull("foo");
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -61,7 +49,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> jobId = default;
             Optional<string> path = default;
             ReferenceType referenceType = default;
-            Optional<string> foo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"))
@@ -89,18 +76,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     referenceType = new ReferenceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("foo"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        foo = null;
-                        continue;
-                    }
-                    foo = property.Value.GetString();
-                    continue;
-                }
             }
-            return new OutputPathAssetReference(referenceType, foo.Value, jobId.Value, path.Value);
+            return new OutputPathAssetReference(referenceType, jobId.Value, path.Value);
         }
     }
 }

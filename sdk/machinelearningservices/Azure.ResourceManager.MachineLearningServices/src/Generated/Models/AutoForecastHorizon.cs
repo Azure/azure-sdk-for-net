@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Forecast horizon determined automatically by system. </summary>
-    internal partial class AutoForecastHorizon : ForecastHorizon
+    public partial class AutoForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of AutoForecastHorizon. </summary>
         public AutoForecastHorizon()

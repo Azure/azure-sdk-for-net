@@ -1014,6 +1014,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.VmPriority? VmPriority { get { throw null; } set { } }
         public string VmSize { get { throw null; } set { } }
     }
+    public partial class AmlToken : Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration
+    {
+        public AmlToken() { }
+    }
     public partial class AmlUserFeature
     {
         internal AmlUserFeature() { }
@@ -1055,13 +1059,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class AssetReferenceBase
     {
         public AssetReferenceBase() { }
-        public string Foo { get { throw null; } set { } }
     }
     public partial class AssignedUser
     {
         public AssignedUser(string objectId, string tenantId) { }
         public string ObjectId { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+    }
+    public partial class AutoForecastHorizon : Azure.ResourceManager.MachineLearningServices.Models.ForecastHorizon
+    {
+        public AutoForecastHorizon() { }
     }
     public partial class AutoMLJob : Azure.ResourceManager.MachineLearningServices.Models.JobBaseDetails
     {
@@ -1076,6 +1083,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public AutoMLVertical() { }
         public Azure.ResourceManager.MachineLearningServices.Models.LogVerbosity? LogVerbosity { get { throw null; } set { } }
+    }
+    public partial class AutoNCrossValidations : Azure.ResourceManager.MachineLearningServices.Models.NCrossValidations
+    {
+        public AutoNCrossValidations() { }
     }
     public partial class AutoPauseProperties
     {
@@ -1108,6 +1119,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public bool? Enabled { get { throw null; } set { } }
         public int? MaxNodeCount { get { throw null; } set { } }
         public int? MinNodeCount { get { throw null; } set { } }
+    }
+    public partial class AutoSeasonality : Azure.ResourceManager.MachineLearningServices.Models.Seasonality
+    {
+        public AutoSeasonality() { }
+    }
+    public partial class AutoTargetLags : Azure.ResourceManager.MachineLearningServices.Models.TargetLags
+    {
+        public AutoTargetLags() { }
+    }
+    public partial class AutoTargetRollingWindowSize : Azure.ResourceManager.MachineLearningServices.Models.TargetRollingWindowSize
+    {
+        public AutoTargetRollingWindowSize() { }
     }
     public partial class AzureBlobDatastore : Azure.ResourceManager.MachineLearningServices.Models.DatastoreDetails
     {
@@ -1421,6 +1444,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public CommandJob(string command, string environmentId) { }
         public string CodeId { get { throw null; } set { } }
         public string Command { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration Distribution { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobInput> Inputs { get { throw null; } set { } }
@@ -1674,6 +1698,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public CronSchedule(string expression) { }
         public string Expression { get { throw null; } set { } }
     }
+    public partial class CustomForecastHorizon : Azure.ResourceManager.MachineLearningServices.Models.ForecastHorizon
+    {
+        public CustomForecastHorizon(int value) { }
+        public int Value { get { throw null; } set { } }
+    }
     public partial class CustomModelJobInput : Azure.ResourceManager.MachineLearningServices.Models.JobInput
     {
         public CustomModelJobInput(System.Uri uri) { }
@@ -1685,6 +1714,26 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public CustomModelJobOutput() { }
         public Azure.ResourceManager.MachineLearningServices.Models.OutputDeliveryMode? Mode { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class CustomNCrossValidations : Azure.ResourceManager.MachineLearningServices.Models.NCrossValidations
+    {
+        public CustomNCrossValidations(int value) { }
+        public int Value { get { throw null; } set { } }
+    }
+    public partial class CustomSeasonality : Azure.ResourceManager.MachineLearningServices.Models.Seasonality
+    {
+        public CustomSeasonality(int value) { }
+        public int Value { get { throw null; } set { } }
+    }
+    public partial class CustomTargetLags : Azure.ResourceManager.MachineLearningServices.Models.TargetLags
+    {
+        public CustomTargetLags(System.Collections.Generic.IEnumerable<int> values) { }
+        public System.Collections.Generic.IList<int> Values { get { throw null; } }
+    }
+    public partial class CustomTargetRollingWindowSize : Azure.ResourceManager.MachineLearningServices.Models.TargetRollingWindowSize
+    {
+        public CustomTargetRollingWindowSize(int value) { }
+        public int Value { get { throw null; } set { } }
     }
     public partial class Databricks : Azure.ResourceManager.MachineLearningServices.Models.Compute
     {
@@ -1736,6 +1785,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     public partial class DatastoreDetails : Azure.ResourceManager.MachineLearningServices.Models.ResourceBase
     {
         public DatastoreDetails(Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials credentials) { }
+        public Azure.ResourceManager.MachineLearningServices.Models.DatastoreCredentials Credentials { get { throw null; } set { } }
         public bool? IsDefault { get { throw null; } }
     }
     public partial class DatastoreSecrets
@@ -1765,6 +1815,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public DataVersionBaseDetails(System.Uri dataUri) { }
         public System.Uri DataUri { get { throw null; } set { } }
+    }
+    public partial class DefaultScaleSettings : Azure.ResourceManager.MachineLearningServices.Models.OnlineScaleSettings
+    {
+        public DefaultScaleSettings() { }
     }
     public partial class DeploymentLogs
     {
@@ -1861,6 +1915,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public DiagnoseWorkspaceContent() { }
         public Azure.ResourceManager.MachineLearningServices.Models.DiagnoseRequestProperties Value { get { throw null; } set { } }
+    }
+    public partial class DistributionConfiguration
+    {
+        public DistributionConfiguration() { }
     }
     public partial class EarlyTerminationPolicy
     {
@@ -2109,6 +2167,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public FlavorData() { }
         public System.Collections.Generic.IDictionary<string, string> Data { get { throw null; } set { } }
     }
+    public partial class ForecastHorizon
+    {
+        public ForecastHorizon() { }
+    }
     public partial class Forecasting : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
     {
         public Forecasting() { }
@@ -2182,9 +2244,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string CountryOrRegionForHolidays { get { throw null; } set { } }
         public int? CvStepSize { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.FeatureLags? FeatureLags { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.ForecastHorizon ForecastHorizon { get { throw null; } set { } }
         public string Frequency { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.Seasonality Seasonality { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ShortSeriesHandlingConfiguration? ShortSeriesHandlingConfig { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction? TargetAggregateFunction { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TargetLags TargetLags { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.TargetRollingWindowSize TargetRollingWindowSize { get { throw null; } set { } }
         public string TimeColumnName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TimeSeriesIdColumnNames { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.UseStl? UseStl { get { throw null; } set { } }
@@ -2256,6 +2322,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public IdAssetReference(string assetId) { }
         public string AssetId { get { throw null; } set { } }
+    }
+    public partial class IdentityConfiguration
+    {
+        public IdentityConfiguration() { }
     }
     public partial class ImageClassification : Azure.ResourceManager.MachineLearningServices.Models.AutoMLVertical
     {
@@ -2511,6 +2581,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string ComputeId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExperimentName { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration Identity { get { throw null; } set { } }
         public bool? IsArchived { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ScheduleBase Schedule { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobService> Services { get { throw null; } set { } }
@@ -2827,6 +2898,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.UsageUnit? Unit { get { throw null; } }
         public string UsageType { get { throw null; } }
     }
+    public partial class ManagedIdentity : Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration
+    {
+        public ManagedIdentity() { }
+        public System.Guid? ClientId { get { throw null; } set { } }
+        public System.Guid? ObjectId { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+    }
     public partial class ManagedOnlineDeployment : Azure.ResourceManager.MachineLearningServices.Models.OnlineDeploymentDetails
     {
         public ManagedOnlineDeployment() { }
@@ -2976,6 +3054,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.MountState left, Azure.ResourceManager.MachineLearningServices.Models.MountState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class Mpi : Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration
+    {
+        public Mpi() { }
+        public int? ProcessCountPerInstance { get { throw null; } set { } }
+    }
+    public partial class NCrossValidations
+    {
+        public NCrossValidations() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Network : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.Network>
     {
@@ -3100,6 +3187,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.PartialManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialOnlineDeployment Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.PartialSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -3116,6 +3204,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.DeploymentProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.MachineLearningServices.Models.ProbeSettings ReadinessProbe { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.OnlineRequestSettings RequestSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.OnlineScaleSettings ScaleSettings { get { throw null; } set { } }
     }
     public partial class OnlineEndpointDataPatch
     {
@@ -3142,6 +3231,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public int? MaxConcurrentRequestsPerInstance { get { throw null; } set { } }
         public System.TimeSpan? MaxQueueWait { get { throw null; } set { } }
         public System.TimeSpan? RequestTimeout { get { throw null; } set { } }
+    }
+    public partial class OnlineScaleSettings
+    {
+        public OnlineScaleSettings() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperatingSystemType : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.OperatingSystemType>
@@ -3288,6 +3381,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string JobId { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
     }
+    public partial class PartialAssetReferenceBase
+    {
+        public PartialAssetReferenceBase() { }
+    }
     public partial class PartialBatchDeployment
     {
         public PartialBatchDeployment() { }
@@ -3300,6 +3397,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.BatchLoggingLevel? LoggingLevel { get { throw null; } set { } }
         public int? MaxConcurrencyPerInstance { get { throw null; } set { } }
         public long? MiniBatchSize { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.PartialAssetReferenceBase Model { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.BatchOutputAction? OutputAction { get { throw null; } set { } }
         public string OutputFileName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } set { } }
@@ -3322,6 +3420,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public PartialManagedServiceIdentity() { }
         public Azure.ResourceManager.MachineLearningServices.Models.ManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> UserAssignedIdentities { get { throw null; } }
+    }
+    public partial class PartialOnlineDeployment
+    {
+        public PartialOnlineDeployment() { }
     }
     public partial class PartialOnlineEndpoint
     {
@@ -3445,6 +3547,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccessType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccessType left, Azure.ResourceManager.MachineLearningServices.Models.PublicNetworkAccessType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PyTorch : Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration
+    {
+        public PyTorch() { }
+        public int? ProcessCountPerInstance { get { throw null; } set { } }
     }
     public partial class QuotaBaseProperties
     {
@@ -3741,6 +3848,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.ScriptReference CreationScript { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ScriptReference StartupScript { get { throw null; } set { } }
     }
+    public partial class Seasonality
+    {
+        public Seasonality() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceDataAccessAuthIdentity : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.ServiceDataAccessAuthIdentity>
     {
@@ -4010,6 +4121,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public Azure.ResourceManager.MachineLearningServices.Models.SweepJobLimits Limits { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.Objective Objective { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearningServices.Models.JobOutput> Outputs { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.SamplingAlgorithm SamplingAlgorithm { get { throw null; } set { } }
         public System.BinaryData SearchSpace { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.TrialComponent Trial { get { throw null; } set { } }
     }
@@ -4077,6 +4189,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
     {
         public TableVerticalValidationDataSettings() { }
         public System.Collections.Generic.IList<string> CvSplitColumnNames { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.NCrossValidations NCrossValidations { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetAggregationFunction : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction>
@@ -4098,6 +4211,28 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public static implicit operator Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction left, Azure.ResourceManager.MachineLearningServices.Models.TargetAggregationFunction right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class TargetLags
+    {
+        public TargetLags() { }
+    }
+    public partial class TargetRollingWindowSize
+    {
+        public TargetRollingWindowSize() { }
+    }
+    public partial class TargetUtilizationScaleSettings : Azure.ResourceManager.MachineLearningServices.Models.OnlineScaleSettings
+    {
+        public TargetUtilizationScaleSettings() { }
+        public int? MaxInstances { get { throw null; } set { } }
+        public int? MinInstances { get { throw null; } set { } }
+        public System.TimeSpan? PollingInterval { get { throw null; } set { } }
+        public int? TargetUtilizationPercentage { get { throw null; } set { } }
+    }
+    public partial class TensorFlow : Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration
+    {
+        public TensorFlow() { }
+        public int? ParameterServerCount { get { throw null; } set { } }
+        public int? WorkerCount { get { throw null; } set { } }
     }
     public partial class TestDataSettings
     {
@@ -4150,6 +4285,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public TrialComponent(string command, string environmentId) { }
         public string CodeId { get { throw null; } set { } }
         public string Command { get { throw null; } set { } }
+        public Azure.ResourceManager.MachineLearningServices.Models.DistributionConfiguration Distribution { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningServices.Models.ResourceConfiguration Resources { get { throw null; } set { } }
@@ -4276,6 +4412,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public string AdminUserName { get { throw null; } set { } }
         public string AdminUserPassword { get { throw null; } set { } }
         public string AdminUserSshPublicKey { get { throw null; } set { } }
+    }
+    public partial class UserIdentity : Azure.ResourceManager.MachineLearningServices.Models.IdentityConfiguration
+    {
+        public UserIdentity() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UseStl : System.IEquatable<Azure.ResourceManager.MachineLearningServices.Models.UseStl>

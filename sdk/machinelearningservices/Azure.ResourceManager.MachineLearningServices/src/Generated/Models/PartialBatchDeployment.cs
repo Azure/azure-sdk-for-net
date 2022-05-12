@@ -49,19 +49,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// </summary>
         public long? MiniBatchSize { get; set; }
         /// <summary> Reference to the model asset for the endpoint deployment. </summary>
-        internal PartialAssetReferenceBase Model { get; set; }
-        /// <summary> [Required] Specifies the type of asset reference. </summary>
-        internal ReferenceType ModelReferenceType
-        {
-            get => Model is null ? default : Model.ReferenceType;
-            set
-            {
-                if (Model is null)
-                    Model = new PartialAssetReferenceBase();
-                Model.ReferenceType = value;
-            }
-        }
-
+        public PartialAssetReferenceBase Model { get; set; }
         /// <summary> Indicates how the output will be organized. </summary>
         public BatchOutputAction? OutputAction { get; set; }
         /// <summary> Customized output file name for append_row output action. </summary>

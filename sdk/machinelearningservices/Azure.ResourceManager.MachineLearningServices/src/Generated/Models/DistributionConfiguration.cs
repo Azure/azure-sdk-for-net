@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Base definition for job distribution configuration. </summary>
-    internal partial class DistributionConfiguration
+    public partial class DistributionConfiguration
     {
         /// <summary> Initializes a new instance of DistributionConfiguration. </summary>
         public DistributionConfiguration()

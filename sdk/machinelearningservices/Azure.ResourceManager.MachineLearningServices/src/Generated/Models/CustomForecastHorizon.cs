@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
-    internal partial class CustomForecastHorizon : ForecastHorizon
+    public partial class CustomForecastHorizon : ForecastHorizon
     {
         /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
         /// <param name="value"> [Required] Forecast horizon value. </param>

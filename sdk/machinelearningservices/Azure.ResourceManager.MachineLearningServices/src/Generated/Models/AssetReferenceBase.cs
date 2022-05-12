@@ -17,16 +17,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="foo"> This is a workaround to fix discriminator internal issue. No need to input any value in it. </param>
-        internal AssetReferenceBase(ReferenceType referenceType, string foo)
+        internal AssetReferenceBase(ReferenceType referenceType)
         {
             ReferenceType = referenceType;
-            Foo = foo;
         }
 
         /// <summary> [Required] Specifies the type of asset reference. </summary>
         internal ReferenceType ReferenceType { get; set; }
-        /// <summary> This is a workaround to fix discriminator internal issue. No need to input any value in it. </summary>
-        public string Foo { get; set; }
     }
 }

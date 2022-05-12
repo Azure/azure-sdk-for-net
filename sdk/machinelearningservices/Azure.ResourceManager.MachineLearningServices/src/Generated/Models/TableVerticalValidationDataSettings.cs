@@ -43,17 +43,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
         /// </summary>
-        internal NCrossValidations NCrossValidations { get; set; }
-        /// <summary> [Required] Mode for determining N-Cross validations. </summary>
-        internal NCrossValidationsMode NCrossValidationsMode
-        {
-            get => NCrossValidations is null ? default : NCrossValidations.Mode;
-            set
-            {
-                if (NCrossValidations is null)
-                    NCrossValidations = new NCrossValidations();
-                NCrossValidations.Mode = value;
-            }
-        }
+        public NCrossValidations NCrossValidations { get; set; }
     }
 }

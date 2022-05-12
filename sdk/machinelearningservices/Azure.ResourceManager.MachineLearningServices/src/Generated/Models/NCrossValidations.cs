@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> N-Cross validations value. </summary>
-    internal partial class NCrossValidations
+    public partial class NCrossValidations
     {
         /// <summary> Initializes a new instance of NCrossValidations. </summary>
         public NCrossValidations()

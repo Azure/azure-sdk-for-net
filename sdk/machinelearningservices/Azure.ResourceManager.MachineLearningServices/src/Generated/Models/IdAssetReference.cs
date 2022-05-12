@@ -28,9 +28,8 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         /// <summary> Initializes a new instance of IdAssetReference. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        /// <param name="foo"> This is a workaround to fix discriminator internal issue. No need to input any value in it. </param>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
-        internal IdAssetReference(ReferenceType referenceType, string foo, string assetId) : base(referenceType, foo)
+        internal IdAssetReference(ReferenceType referenceType, string assetId) : base(referenceType)
         {
             AssetId = assetId;
             ReferenceType = referenceType;

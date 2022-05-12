@@ -90,17 +90,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
         /// </summary>
-        internal OnlineScaleSettings ScaleSettings { get; set; }
-        /// <summary> [Required] Type of deployment scaling algorithm. </summary>
-        internal ScaleType ScaleType
-        {
-            get => ScaleSettings is null ? default : ScaleSettings.ScaleType;
-            set
-            {
-                if (ScaleSettings is null)
-                    ScaleSettings = new OnlineScaleSettings();
-                ScaleSettings.ScaleType = value;
-            }
-        }
+        public OnlineScaleSettings ScaleSettings { get; set; }
     }
 }
