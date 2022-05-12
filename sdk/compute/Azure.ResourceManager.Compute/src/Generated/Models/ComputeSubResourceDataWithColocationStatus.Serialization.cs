@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SubResourceWithColocationStatus : IUtf8JsonSerializable
+    public partial class ComputeSubResourceDataWithColocationStatus : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static SubResourceWithColocationStatus DeserializeSubResourceWithColocationStatus(JsonElement element)
+        internal static ComputeSubResourceDataWithColocationStatus DeserializeComputeSubResourceDataWithColocationStatus(JsonElement element)
         {
             Optional<InstanceViewStatus> colocationStatus = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("colocationStatus"))
@@ -46,11 +46,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new SubResourceWithColocationStatus(id.Value, colocationStatus.Value);
+            return new ComputeSubResourceDataWithColocationStatus(id.Value, colocationStatus.Value);
         }
     }
 }

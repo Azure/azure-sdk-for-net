@@ -182,18 +182,18 @@ namespace Azure.ResourceManager.Compute
             Optional<int> diskSizeGB = default;
             Optional<long> diskSizeBytes = default;
             Optional<string> uniqueId = default;
-            Optional<EncryptionSettingsCollection> encryptionSettingsCollection = default;
+            Optional<EncryptionSettingGroup> encryptionSettingsCollection = default;
             Optional<string> provisioningState = default;
             Optional<long> diskIOPSReadWrite = default;
             Optional<long> diskMBpsReadWrite = default;
             Optional<long> diskIOPSReadOnly = default;
             Optional<long> diskMBpsReadOnly = default;
             Optional<DiskState> diskState = default;
-            Optional<Encryption> encryption = default;
+            Optional<DiskEncryption> encryption = default;
             Optional<int> maxShares = default;
             Optional<IReadOnlyList<ShareInfoElement>> shareInfo = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<string> diskAccessId = default;
+            Optional<ResourceIdentifier> diskAccessId = default;
             Optional<string> tier = default;
             Optional<bool> burstingEnabled = default;
             Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(property0.Value);
+                            encryptionSettingsCollection = EncryptionSettingGroup.DeserializeEncryptionSettingGroup(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maxShares"))
@@ -499,7 +499,12 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("diskAccessId"))
                         {
-                            diskAccessId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diskAccessId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tier"))

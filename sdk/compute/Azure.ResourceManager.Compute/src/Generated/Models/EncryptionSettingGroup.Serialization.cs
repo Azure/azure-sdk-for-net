@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class EncryptionSettingsCollection : IUtf8JsonSerializable
+    public partial class EncryptionSettingGroup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static EncryptionSettingsCollection DeserializeEncryptionSettingsCollection(JsonElement element)
+        internal static EncryptionSettingGroup DeserializeEncryptionSettingGroup(JsonElement element)
         {
             bool enabled = default;
             Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new EncryptionSettingsCollection(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value);
+            return new EncryptionSettingGroup(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value);
         }
     }
 }

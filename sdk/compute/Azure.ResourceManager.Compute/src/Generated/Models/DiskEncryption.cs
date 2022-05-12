@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Encryption at rest settings for disk or snapshot. </summary>
-    public partial class Encryption
+    public partial class DiskEncryption
     {
-        /// <summary> Initializes a new instance of Encryption. </summary>
-        public Encryption()
+        /// <summary> Initializes a new instance of DiskEncryption. </summary>
+        public DiskEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of Encryption. </summary>
+        /// <summary> Initializes a new instance of DiskEncryption. </summary>
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
         /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
-        internal Encryption(string diskEncryptionSetId, EncryptionType? encryptionType)
+        internal DiskEncryption(string diskEncryptionSetId, EncryptionType? encryptionType)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
             EncryptionType = encryptionType;

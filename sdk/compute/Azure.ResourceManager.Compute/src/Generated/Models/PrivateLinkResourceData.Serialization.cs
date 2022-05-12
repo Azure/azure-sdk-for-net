@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputePrivateLinkResource
+    public partial class PrivateLinkResourceData
     {
-        internal static ComputePrivateLinkResource DeserializeComputePrivateLinkResource(JsonElement element)
+        internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputePrivateLinkResource(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new PrivateLinkResourceData(id, name, type, systemData, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
         }
     }
 }

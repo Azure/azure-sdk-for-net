@@ -56,6 +56,8 @@ override-operation-name:
   VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
   VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
+  LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
+  LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
@@ -63,12 +65,6 @@ request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
 
 directive:
-  - from: compute.json
-    where: $.definitions.VirtualMachineImageProperties.properties.dataDiskImages
-    transform: $.description="The list of data disk images information."
-  - from: disk.json
-    where: $.definitions.GrantAccessData.properties.access
-    transform: $.description="The Access Level, accepted values include None, Read, Write."
   - rename-model:
       from: SshPublicKey
       to: SshPublicKeyInfo
@@ -87,9 +83,24 @@ directive:
   - rename-model:
       from: Disk
       to: ManagedDisk
-  - from: disk.json
-    where: $.definitions.PurchasePlan
-    transform: $["x-ms-client-name"] = "DiskPurchasePlan"
+  - rename-model:
+      from: EncryptionSettingsCollection
+      to: EncryptionSettingGroup
+#   - rename-model:
+#       from: SubResourceReadOnly
+#       to: ComputeSubResource
+#   - rename-model:
+#       from: SubResource
+#       to: ComputeWriteableSubResource
+  - rename-model:
+      from: UpdateResource
+      to: ComputeUpdateResourceData
+  - rename-model:
+      from: SubResourceWithColocationStatus
+      to: ComputeSubResourceDataWithColocationStatus
+  - rename-model:
+      from: PrivateLinkResource
+      to: PrivateLinkResourceData
 # transform enum values
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[1]
@@ -100,12 +111,30 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
+      $.SubResource.properties.id["x-ms-format"] = "arm-id";
+      $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
+      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
   - from: compute.json
-    where: $.definitions.VirtualMachineInstallPatchesParameters.properties.maximumDuration
-    transform: $["format"] = "duration"
-  - from: compute.json
-    where: $.definitions.VirtualMachineExtensionUpdateProperties.properties.type
-    transform: $["x-ms-client-name"] = "VirtualMachineExtensionType"
+    where: $.definitions
+    transform: >
+      $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
+      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
+      $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
+      $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
+      $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
+      $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
+  - from: disk.json
+    where: $.definitions
+    transform: >
+      $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
+      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
+      $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
+      $.Encryption["x-ms-client-name"] = "DiskEncryption";
   - from: communityGallery.json
     where: $.definitions.PirCommunityGalleryResource.properties.type
     transform: $["x-ms-client-name"] = "ResourceType"

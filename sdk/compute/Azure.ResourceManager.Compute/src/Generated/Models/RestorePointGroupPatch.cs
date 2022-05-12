@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Update Restore Point collection parameters. </summary>
-    public partial class RestorePointGroupPatch : UpdateResource
+    public partial class RestorePointGroupPatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of RestorePointGroupPatch. </summary>
         public RestorePointGroupPatch()

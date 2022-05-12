@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Encryption settings for disk or snapshot. </summary>
-    public partial class EncryptionSettingsCollection
+    public partial class EncryptionSettingGroup
     {
-        /// <summary> Initializes a new instance of EncryptionSettingsCollection. </summary>
+        /// <summary> Initializes a new instance of EncryptionSettingGroup. </summary>
         /// <param name="enabled"> Set this flag to true and provide DiskEncryptionKey and optional KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey and KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request object, the existing settings remain unchanged. </param>
-        public EncryptionSettingsCollection(bool enabled)
+        public EncryptionSettingGroup(bool enabled)
         {
             Enabled = enabled;
             EncryptionSettings = new ChangeTrackingList<EncryptionSettingsElement>();
         }
 
-        /// <summary> Initializes a new instance of EncryptionSettingsCollection. </summary>
+        /// <summary> Initializes a new instance of EncryptionSettingGroup. </summary>
         /// <param name="enabled"> Set this flag to true and provide DiskEncryptionKey and optional KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey and KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request object, the existing settings remain unchanged. </param>
         /// <param name="encryptionSettings"> A collection of encryption settings, one for each disk volume. </param>
         /// <param name="encryptionSettingsVersion"> Describes what type of encryption is used for the disks. Once this field is set, it cannot be overwritten. &apos;1.0&apos; corresponds to Azure Disk Encryption with AAD app.&apos;1.1&apos; corresponds to Azure Disk Encryption. </param>
-        internal EncryptionSettingsCollection(bool enabled, IList<EncryptionSettingsElement> encryptionSettings, string encryptionSettingsVersion)
+        internal EncryptionSettingGroup(bool enabled, IList<EncryptionSettingsElement> encryptionSettings, string encryptionSettingsVersion)
         {
             Enabled = enabled;
             EncryptionSettings = encryptionSettings;

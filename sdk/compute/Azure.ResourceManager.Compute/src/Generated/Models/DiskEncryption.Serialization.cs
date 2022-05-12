@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class Encryption : IUtf8JsonSerializable
+    public partial class DiskEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static Encryption DeserializeEncryption(JsonElement element)
+        internal static DiskEncryption DeserializeDiskEncryption(JsonElement element)
         {
             Optional<string> diskEncryptionSetId = default;
             Optional<EncryptionType> type = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new Encryption(diskEncryptionSetId.Value, Optional.ToNullable(type));
+            return new DiskEncryption(diskEncryptionSetId.Value, Optional.ToNullable(type));
         }
     }
 }
