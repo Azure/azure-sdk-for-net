@@ -74,8 +74,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OutboundRuleId
         {
-            get => OutboundRule.Id;
-            set => OutboundRule.Id = value;
+            get => OutboundRule?.Id;
         }
 
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>

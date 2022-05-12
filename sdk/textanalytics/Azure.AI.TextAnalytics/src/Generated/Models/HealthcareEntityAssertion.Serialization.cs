@@ -10,8 +10,29 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareEntityAssertion
+    public partial class HealthcareEntityAssertion : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Conditionality))
+            {
+                writer.WritePropertyName("conditionality");
+                writer.WriteStringValue(Conditionality.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Certainty))
+            {
+                writer.WritePropertyName("certainty");
+                writer.WriteStringValue(Certainty.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association");
+                writer.WriteStringValue(Association.Value.ToSerialString());
+            }
+            writer.WriteEndObject();
+        }
+
         internal static HealthcareEntityAssertion DeserializeHealthcareEntityAssertion(JsonElement element)
         {
             Optional<EntityConditionality> conditionality = default;

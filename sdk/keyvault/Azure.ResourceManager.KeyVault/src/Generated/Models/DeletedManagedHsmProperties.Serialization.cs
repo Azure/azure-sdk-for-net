@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedManagedHsmProperties DeserializeDeletedManagedHsmProperties(JsonElement element)
         {
-            Optional<string> mhsmId = default;
+            Optional<ResourceIdentifier> mhsmId = default;
             Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("mhsmId"))
                 {
-                    mhsmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    mhsmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))

@@ -38,23 +38,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    // TODO: Add check if offline storage is enabled by user via options
                     _storage = new FileStorage(options.StorageDirectory);
                 }
                 catch (Exception)
                 {
-                    try
-                    {
-                        _storage = new FileStorage(options.StorageDirectory);
-                    }
-                    catch (Exception)
-                    {
-                        // TODO:
-                        // log exception
-                        // Remove this when we add an option to disable offline storage.
-                        // So if someone opts in for storage and we cannot initialize, we can throw.
-                        // Change needed on persistent storage side to throw if not able to create storage directory.
-                    }
+                    // TODO:
+                    // log exception
+                    // Remove this when we add an option to disable offline storage.
+                    // So if someone opts in for storage and we cannot initialize, we can throw.
+                    // Change needed on persistent storage side to throw if not able to create storage directory.
                 }
             }
         }

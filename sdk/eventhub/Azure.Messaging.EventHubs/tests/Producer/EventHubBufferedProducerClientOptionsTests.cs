@@ -24,6 +24,22 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void RetryOptionsAreOptimizedForBufferedPublishing()
+        {
+            var standardRetryOptions = new EventHubsRetryOptions();
+            var options = new EventHubBufferedProducerClientOptions();
+
+            Assert.That(options.RetryOptions, Is.Not.Null, "The retry options should not be null.");
+            Assert.That(options.RetryOptions.MaximumRetries, Is.GreaterThan(standardRetryOptions.MaximumRetries), "The buffered retry options should allow for more retries than the standard.");
+            Assert.That(options.RetryOptions.TryTimeout, Is.GreaterThan(standardRetryOptions.TryTimeout), "The buffered retry options should allow for a longer try timeout than the standard.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClientOptions.Clone" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void CloneProducesACopy()
         {
             var options = new EventHubBufferedProducerClientOptions
@@ -34,9 +50,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 MaximumConcurrentSends = 9,
                 MaximumConcurrentSendsPerPartition = 5,
                 Identifier = "Test-Options",
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
-                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(36) }
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets }
             };
+
+            // Update the options without assigning a new instance.  This will ensure that the default custom type
+            // that defines buffered publishing defaults is maintained.
+
+            options.RetryOptions.TryTimeout = TimeSpan.FromMinutes(26);
 
             var clone = options.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");

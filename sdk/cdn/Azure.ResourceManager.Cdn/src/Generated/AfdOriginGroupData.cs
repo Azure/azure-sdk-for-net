@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="profileName"> The name of the profile which holds the origin group. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
         /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginGroupData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettingsParameters loadBalancingSettings, HealthProbeParameters healthProbeSettings, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes, EnabledState? sessionAffinityState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
-            TrafficRestorationTimeToHealedOrNewEndpointsInMinutes = trafficRestorationTimeToHealedOrNewEndpointsInMinutes;
+            TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
             SessionAffinityState = sessionAffinityState;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the profile which holds the origin group. </summary>
         public string ProfileName { get; }
         /// <summary> Load balancing settings for a backend pool. </summary>
-        public LoadBalancingSettingsParameters LoadBalancingSettings { get; set; }
+        public LoadBalancingSettings LoadBalancingSettings { get; set; }
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>
-        public HealthProbeParameters HealthProbeSettings { get; set; }
+        public HealthProbeSettings HealthProbeSettings { get; set; }
         /// <summary> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </summary>
-        public int? TrafficRestorationTimeToHealedOrNewEndpointsInMinutes { get; set; }
+        public int? TrafficRestorationTimeInMinutes { get; set; }
         /// <summary> Whether to allow session affinity on this host. Valid options are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
         public EnabledState? SessionAffinityState { get; set; }
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

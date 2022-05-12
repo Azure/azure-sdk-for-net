@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Needs to be fixed before GA")]
         public async Task CreateOrUpdate()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -87,6 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Needs to be fixed before GA")]
         public async Task CheckIfExist()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -101,6 +103,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Needs to be fixed before GA")]
         public async Task Get()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -118,6 +121,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Needs to be fixed before GA")]
         public async Task GetAll()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
@@ -135,6 +139,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Needs to be fixed before GA")]
         public async Task Delete()
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");

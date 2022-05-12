@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
-        /// <param name="azureOrigin"> Resource reference to the Azure origin resource. </param>
+        /// <param name="origin"> Resource reference to the Azure origin resource. </param>
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
         /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdOriginData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource azureOrigin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             OriginGroupName = originGroupName;
-            AzureOrigin = azureOrigin;
+            Origin = origin;
             HostName = hostName;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the origin group which contains this origin. </summary>
         public string OriginGroupName { get; }
         /// <summary> Resource reference to the Azure origin resource. </summary>
-        internal WritableSubResource AzureOrigin { get; set; }
+        internal WritableSubResource Origin { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier AzureOriginId
+        public ResourceIdentifier OriginId
         {
-            get => AzureOrigin is null ? default : AzureOrigin.Id;
+            get => Origin is null ? default : Origin.Id;
             set
             {
-                if (AzureOrigin is null)
-                    AzureOrigin = new WritableSubResource();
-                AzureOrigin.Id = value;
+                if (Origin is null)
+                    Origin = new WritableSubResource();
+                Origin.Id = value;
             }
         }
 
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

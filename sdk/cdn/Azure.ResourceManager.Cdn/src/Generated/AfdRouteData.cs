@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRouteData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, AfdRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, AfdRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -101,6 +101,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

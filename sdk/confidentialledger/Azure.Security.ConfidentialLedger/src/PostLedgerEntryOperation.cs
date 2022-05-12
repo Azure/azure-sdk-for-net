@@ -61,15 +61,13 @@ namespace Azure.Security.ConfidentialLedger
                     .ConfigureAwait(false)
                 : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
-            _operationInternal.RawResponse = statusResponse;
-
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
                 var error = new ResponseError(null, exceptionMessage);
                 var ex = async
                     ? await _client.ClientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, error).ConfigureAwait(false)
                     : _client.ClientDiagnostics.CreateRequestFailedException(statusResponse, error);
-                return OperationState.Failure(GetRawResponse(), new RequestFailedException(exceptionMessage, ex));
+                return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
 
             string status = JsonDocument.Parse(statusResponse.Content)
