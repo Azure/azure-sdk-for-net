@@ -52,7 +52,7 @@ jobs:
       parameters:
         EnableNuGetCache: false
 
-    - template: ../../common/TestResources/deploy-test-resources.yml
+    - template: ../../../common/TestResources/deploy-test-resources.yml
       parameters:
         ServiceDirectory: ${{ parameters.serviceDirectory }}
         Location: westus
@@ -85,7 +85,7 @@ jobs:
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
       displayName: Print results
 
-    - template: ../../common/TestResources/remove-test-resources.yml
+    - template: ../../../common/TestResources/remove-test-resources.yml
       parameters:
         ServiceDirectory: ${{ parameters.serviceDirectory }}
         ResourceType: perf
