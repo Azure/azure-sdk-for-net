@@ -18,7 +18,7 @@ parameters:
   - name: additionalArguments
     displayName: AdditionalArguments (passed to PerfAutomation)
     type: string
-    default: ''
+    default: ' '
 
 extends:
   template: ../../../eng/pipelines/templates/jobs/perf.yml
