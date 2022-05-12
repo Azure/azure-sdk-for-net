@@ -36,5 +36,5 @@ steps:
         -Force `
         -Verbose
     displayName: Remove test resources
-    condition: eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true')
+    condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
     continueOnError: true
