@@ -16,6 +16,12 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> AutoCompleteAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Browse(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BrowseAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewCollections GetPurviewCollectionsClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewEntities GetPurviewEntitiesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewGlossaries GetPurviewGlossariesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewLineages GetPurviewLineagesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewRelationships GetPurviewRelationshipsClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewTypes GetPurviewTypesClient() { throw null; }
         public virtual Azure.Response Search(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SearchAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Suggest(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

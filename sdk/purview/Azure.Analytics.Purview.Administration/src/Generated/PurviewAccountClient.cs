@@ -1120,6 +1120,25 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
+        private PurviewResourceSetRule _cachedPurviewResourceSetRule;
+
+        /// <summary> Initializes a new instance of PurviewCollection. </summary>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
+        {
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
+
+            return new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName);
+        }
+
+        /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
+        public virtual PurviewResourceSetRule GetPurviewResourceSetRuleClient()
+        {
+            return Volatile.Read(ref _cachedPurviewResourceSetRule) ?? Interlocked.CompareExchange(ref _cachedPurviewResourceSetRule, new PurviewResourceSetRule(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewResourceSetRule;
+        }
+
         internal HttpMessage CreateGetAccountPropertiesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
