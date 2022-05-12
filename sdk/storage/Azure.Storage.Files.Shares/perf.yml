@@ -1,0 +1,33 @@
+parameters:
+  - name: packageVersions
+    displayName: PackageVersions (regex of package versions to run)
+    type: string
+    default: '.*'
+  - name: tests
+    displayName: Tests (regex of tests to run)
+    type: string
+    default: '^(download|upload)$'
+  - name: arguments
+    displayName: Arguments (regex of arguments to run)
+    type: string
+    default: '(10240)|(10485760)|(1073741824)' 
+  - name: iterations
+    displayName: Iterations (times to run each test)
+    type: number
+    default: '5'
+
+extends:
+  template: ../../../eng/pipelines/templates/jobs/perf.yml
+  parameters:
+    serviceDirectory: storage/Azure.Storage.Files.Shares
+    services: "^storage-file-share$"
+    packageVersions: ${{ parameters.packageVersions }}
+    tests: ${{ parameters.tests }}
+    arguments: ${{ parameters.arguments }}
+    iterations: ${{ parameters.iterations }}
+    envVars:
+      AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
+      AZURE_STORAGE_ACCOUNT_NAME: $(azure-storage-account-name)
+      AZURE_STORAGE_CONNECTION_STRING: $(azure-storage-connection-string)
+      STANDARD_STORAGE_CONNECTION_STRING: $(standard-storage-connection-string)
+      STORAGE_CONNECTION_STRING: $(storage-connection-string)
