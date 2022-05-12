@@ -31,8 +31,8 @@ namespace Compute.Tests
                 ProtectedSettings = "{}",
                 EnableAutomaticUpgrade = false,
             };
-            typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
