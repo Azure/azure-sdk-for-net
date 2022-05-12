@@ -21,7 +21,6 @@ parameters:
     type: object
     default: {}
 
-
 variables:
   - name: NugetSecurityAnalysisWarningLevel
     value: 'none'
