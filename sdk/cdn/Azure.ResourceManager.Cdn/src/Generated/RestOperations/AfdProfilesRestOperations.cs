@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        internal HttpMessage CreateCheckHostNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string profileName, CheckHostNameAvailabilityContent content)
+        internal HttpMessage CreateCheckHostNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string profileName, HostNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityOutput>> CheckHostNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string profileName, CheckHostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<CdnNameAvailabilityResult>> CheckHostNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string profileName, HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        CdnNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = CdnNameAvailabilityResult.DeserializeCdnNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityOutput> CheckHostNameAvailability(string subscriptionId, string resourceGroupName, string profileName, CheckHostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<CdnNameAvailabilityResult> CheckHostNameAvailability(string subscriptionId, string resourceGroupName, string profileName, HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.Cdn
             {
                 case 200:
                     {
-                        CheckNameAvailabilityOutput value = default;
+                        CdnNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityOutput.DeserializeCheckNameAvailabilityOutput(document.RootElement);
+                        value = CdnNameAvailabilityResult.DeserializeCdnNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

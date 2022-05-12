@@ -16,48 +16,24 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> The target service properties. </summary>
-        internal TargetServiceBase TargetService { get; set; }
-        /// <summary> The target service type. </summary>
-        internal TargetServiceType ServiceType
-        {
-            get => TargetService is null ? default : TargetService.ServiceType;
-            set
-            {
-                if (TargetService is null)
-                    TargetService = new TargetServiceBase();
-                TargetService.ServiceType = value;
-            }
-        }
-
+        public TargetServiceBase TargetService { get; set; }
         /// <summary> The authentication type. </summary>
-        internal AuthInfoBase AuthInfo { get; set; }
-        /// <summary> The authentication type. </summary>
-        internal AuthType AuthType
-        {
-            get => AuthInfo is null ? default : AuthInfo.AuthType;
-            set
-            {
-                if (AuthInfo is null)
-                    AuthInfo = new AuthInfoBase();
-                AuthInfo.AuthType = value;
-            }
-        }
-
+        public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
         public ClientType? ClientType { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
-        internal VNetSolution VNetSolution { get; set; }
+        internal VnetSolution VnetSolution { get; set; }
         /// <summary> Type of VNet solution. </summary>
-        public VNetSolutionType? SolutionType
+        public VnetSolutionType? SolutionType
         {
-            get => VNetSolution is null ? default : VNetSolution.SolutionType;
+            get => VnetSolution is null ? default : VnetSolution.SolutionType;
             set
             {
-                if (VNetSolution is null)
-                    VNetSolution = new VNetSolution();
-                VNetSolution.SolutionType = value;
+                if (VnetSolution is null)
+                    VnetSolution = new VnetSolution();
+                VnetSolution.SolutionType = value;
             }
         }
 

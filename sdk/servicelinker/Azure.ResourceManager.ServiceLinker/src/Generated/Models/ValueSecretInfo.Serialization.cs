@@ -10,15 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class ValueSecretInfo : IUtf8JsonSerializable
+    public partial class ValueSecretInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value");
+                    writer.WriteStringValue(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value");
+                }
             }
             writer.WritePropertyName("secretType");
             writer.WriteStringValue(SecretType.ToString());
@@ -33,6 +40,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
+                        continue;
+                    }
                     value = property.Value.GetString();
                     continue;
                 }

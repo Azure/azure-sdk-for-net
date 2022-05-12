@@ -92,17 +92,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </summary>
         public MonitorSchedule Schedule { get; set; }
         /// <summary> Action needs to be taken on rule execution. </summary>
-        internal MonitorAction Action { get; set; }
-        /// <summary> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </summary>
-        internal string ActionOdataType
-        {
-            get => Action is null ? default : Action.OdataType;
-            set
-            {
-                if (Action is null)
-                    Action = new MonitorAction();
-                Action.OdataType = value;
-            }
-        }
+        public MonitorAction Action { get; set; }
     }
 }

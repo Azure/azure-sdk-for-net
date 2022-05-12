@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         private const string SuccessValue = "success";
-        private const string FailedValue = "failed";
+        private const string FailureValue = "failure";
         private const string WarningValue = "warning";
 
         /// <summary> success. </summary>
         public static ValidationResultStatus Success { get; } = new ValidationResultStatus(SuccessValue);
-        /// <summary> failed. </summary>
-        public static ValidationResultStatus Failed { get; } = new ValidationResultStatus(FailedValue);
+        /// <summary> failure. </summary>
+        public static ValidationResultStatus Failure { get; } = new ValidationResultStatus(FailureValue);
         /// <summary> warning. </summary>
         public static ValidationResultStatus Warning { get; } = new ValidationResultStatus(WarningValue);
         /// <summary> Determines if two <see cref="ValidationResultStatus"/> values are the same. </summary>

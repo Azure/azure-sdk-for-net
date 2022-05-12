@@ -16,7 +16,7 @@ namespace Azure.Template
     /// <summary> The Template service client. </summary>
     public partial class TemplateClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://template/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly string _vaultBaseUrl;
@@ -44,7 +44,7 @@ namespace Azure.Template
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TemplateClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _vaultBaseUrl = vaultBaseUrl;

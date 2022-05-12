@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 false,
                 true,
                 new List<string> { ObjectId },
-                ManagedHsmProperties.NetworkAcls,
+                ManagedHsmProperties.NetworkRuleSet,
                 PublicNetworkAccess.Disabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             // Update
             ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Enabled;
-            ManagedHsmProperties.NetworkAcls.DefaultAction = "Allow";
+            ManagedHsmProperties.NetworkRuleSet.DefaultAction = "Allow";
             parameters = new ManagedHsmData(Location)
             {
                 Sku = new ManagedHsmSku(ManagedHsmSkuFamily.B, ManagedHsmSkuName.StandardB1),
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
                 false,
                 true,
                 new List<string> { ObjectId },
-                ManagedHsmProperties.NetworkAcls,
+                ManagedHsmProperties.NetworkRuleSet,
                 PublicNetworkAccess.Enabled,
                 DefSoftDeleteRetentionInDays,
                 Tags);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             bool expectedEnablePurgeProtection,
             bool expectedEnableSoftDelete,
             List<string> expectedInitialAdminObjectIds,
-            MhsmNetworkRuleSet expectedNetworkAcls,
+            ManagedHsmNetworkRuleSet expectedNetworkAcls,
             PublicNetworkAccess expectedPublicNetworkAccess,
             int expectedSoftDeleteRetentionInDays,
             Dictionary<string, string> expectedTags)
@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.KeyVault.Tests
             Assert.AreEqual(expectedEnableSoftDelete, managedHsmData.Properties.EnableSoftDelete);
             Assert.AreEqual(expectedHsmUri, managedHsmData.Properties.HsmUri.ToString());
             Assert.AreEqual(expectedInitialAdminObjectIds, managedHsmData.Properties.InitialAdminObjectIds);
-            Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkAcls.Bypass);
-            Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkAcls.DefaultAction);
+            Assert.AreEqual(expectedNetworkAcls.Bypass, managedHsmData.Properties.NetworkRuleSet.Bypass);
+            Assert.AreEqual(expectedNetworkAcls.DefaultAction, managedHsmData.Properties.NetworkRuleSet.DefaultAction);
             Assert.AreEqual(expectedPublicNetworkAccess, managedHsmData.Properties.PublicNetworkAccess);
             Assert.AreEqual(expectedSoftDeleteRetentionInDays, managedHsmData.Properties.SoftDeleteRetentionInDays);
             Assert.True(expectedTags.DictionaryEqual(managedHsmData.Tags));
