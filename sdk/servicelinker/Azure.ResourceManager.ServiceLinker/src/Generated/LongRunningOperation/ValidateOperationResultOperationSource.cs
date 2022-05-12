@@ -14,18 +14,18 @@ using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal class ValidateResultOperationSource : IOperationSource<ValidateResult>
+    internal class ValidateOperationResultOperationSource : IOperationSource<ValidateOperationResult>
     {
-        ValidateResult IOperationSource<ValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ValidateOperationResult IOperationSource<ValidateOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ValidateResult.DeserializeValidateResult(document.RootElement);
+            return ValidateOperationResult.DeserializeValidateOperationResult(document.RootElement);
         }
 
-        async ValueTask<ValidateResult> IOperationSource<ValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ValidateOperationResult> IOperationSource<ValidateOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ValidateResult.DeserializeValidateResult(document.RootElement);
+            return ValidateOperationResult.DeserializeValidateOperationResult(document.RootElement);
         }
     }
 }

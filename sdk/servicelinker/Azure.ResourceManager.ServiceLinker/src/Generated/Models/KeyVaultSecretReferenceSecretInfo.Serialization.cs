@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
-                writer.WriteStringValue(Version);
+                if (Version != null)
+                {
+                    writer.WritePropertyName("version");
+                    writer.WriteStringValue(Version);
+                }
+                else
+                {
+                    writer.WriteNull("version");
+                }
             }
             writer.WritePropertyName("secretType");
             writer.WriteStringValue(SecretType.ToString());
@@ -44,6 +51,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("version"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        version = null;
+                        continue;
+                    }
                     version = property.Value.GetString();
                     continue;
                 }

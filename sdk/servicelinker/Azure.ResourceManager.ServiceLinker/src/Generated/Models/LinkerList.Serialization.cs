@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("nextLink"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nextLink = null;
+                        continue;
+                    }
                     nextLink = property.Value.GetString();
                     continue;
                 }

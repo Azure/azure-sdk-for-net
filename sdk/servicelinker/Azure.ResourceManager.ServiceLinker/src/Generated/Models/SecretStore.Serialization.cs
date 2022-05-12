@@ -17,8 +17,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultId))
             {
-                writer.WritePropertyName("keyVaultId");
-                writer.WriteStringValue(KeyVaultId);
+                if (KeyVaultId != null)
+                {
+                    writer.WritePropertyName("keyVaultId");
+                    writer.WriteStringValue(KeyVaultId);
+                }
+                else
+                {
+                    writer.WriteNull("keyVaultId");
+                }
             }
             writer.WriteEndObject();
         }
@@ -30,6 +37,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("keyVaultId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyVaultId = null;
+                        continue;
+                    }
                     keyVaultId = property.Value.GetString();
                     continue;
                 }

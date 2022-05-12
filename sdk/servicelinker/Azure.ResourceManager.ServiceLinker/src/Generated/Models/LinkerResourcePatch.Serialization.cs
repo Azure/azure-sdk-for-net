@@ -32,20 +32,41 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("clientType");
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Optional.IsDefined(VNetSolution))
+            if (Optional.IsDefined(VnetSolution))
             {
-                writer.WritePropertyName("vNetSolution");
-                writer.WriteObjectValue(VNetSolution);
+                if (VnetSolution != null)
+                {
+                    writer.WritePropertyName("vNetSolution");
+                    writer.WriteObjectValue(VnetSolution);
+                }
+                else
+                {
+                    writer.WriteNull("vNetSolution");
+                }
             }
             if (Optional.IsDefined(SecretStore))
             {
-                writer.WritePropertyName("secretStore");
-                writer.WriteObjectValue(SecretStore);
+                if (SecretStore != null)
+                {
+                    writer.WritePropertyName("secretStore");
+                    writer.WriteObjectValue(SecretStore);
+                }
+                else
+                {
+                    writer.WriteNull("secretStore");
+                }
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
-                writer.WriteStringValue(Scope);
+                if (Scope != null)
+                {
+                    writer.WritePropertyName("scope");
+                    writer.WriteStringValue(Scope);
+                }
+                else
+                {
+                    writer.WriteNull("scope");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

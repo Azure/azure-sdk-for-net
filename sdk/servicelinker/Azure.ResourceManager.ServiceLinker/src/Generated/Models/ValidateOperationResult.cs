@@ -11,16 +11,18 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The validation result for a linker. </summary>
-    public partial class ValidateResult
+    /// <summary> The validation operation result for a linker. </summary>
+    public partial class ValidateOperationResult
     {
-        /// <summary> Initializes a new instance of ValidateResult. </summary>
-        internal ValidateResult()
+        /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
+        internal ValidateOperationResult()
         {
             ValidationDetail = new ChangeTrackingList<ValidationResultItem>();
         }
 
-        /// <summary> Initializes a new instance of ValidateResult. </summary>
+        /// <summary> Initializes a new instance of ValidateOperationResult. </summary>
+        /// <param name="resourceId"> Validated linker id. </param>
+        /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>
         /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
         /// <param name="reportStartTimeUtc"> The start time of the validation report. </param>
@@ -29,8 +31,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
-        internal ValidateResult(string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartTimeUtc, DateTimeOffset? reportEndTimeUtc, string sourceId, string targetId, AuthType? authType, IReadOnlyList<ValidationResultItem> validationDetail)
+        internal ValidateOperationResult(string resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartTimeUtc, DateTimeOffset? reportEndTimeUtc, string sourceId, string targetId, AuthType? authType, IReadOnlyList<ValidationResultItem> validationDetail)
         {
+            ResourceId = resourceId;
+            Status = status;
             LinkerName = linkerName;
             IsConnectionAvailable = isConnectionAvailable;
             ReportStartTimeUtc = reportStartTimeUtc;
@@ -41,6 +45,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             ValidationDetail = validationDetail;
         }
 
+        /// <summary> Validated linker id. </summary>
+        public string ResourceId { get; }
+        /// <summary> Validation operation status. </summary>
+        public string Status { get; }
         /// <summary> The linker name. </summary>
         public string LinkerName { get; }
         /// <summary> A boolean value indicating whether the connection is available or not. </summary>

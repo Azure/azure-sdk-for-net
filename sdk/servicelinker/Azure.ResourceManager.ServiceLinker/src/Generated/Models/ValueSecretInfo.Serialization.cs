@@ -17,8 +17,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
-                writer.WriteStringValue(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value");
+                    writer.WriteStringValue(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value");
+                }
             }
             writer.WritePropertyName("secretType");
             writer.WriteStringValue(SecretType.ToString());
@@ -33,6 +40,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        value = null;
+                        continue;
+                    }
                     value = property.Value.GetString();
                     continue;
                 }
