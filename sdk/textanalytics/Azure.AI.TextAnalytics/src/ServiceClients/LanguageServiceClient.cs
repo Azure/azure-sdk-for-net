@@ -1287,6 +1287,110 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             throw new NotImplementedException();
         }
 
+        // NEEDS IMPLEMENTATION
+        public override async Task<Response<HealthcareJobStatusResult>> HealthStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override Response<HealthcareJobStatusResult> HealthStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            scope.Start();
+
+            try
+            {
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override async Task<Response<HealthcareJobStatusResult>> HealthStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override Response<HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Analyze Operation

@@ -17,6 +17,8 @@ namespace Azure.AI.TextAnalytics
     /// <summary> Pageable operation class for analyzing multiple healthcare documents using long running operation. </summary>
     public class AnalyzeHealthcareEntitiesOperation : PageableOperation<AnalyzeHealthcareEntitiesResultCollection>, IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>
     {
+        internal readonly IDictionary<string, int> _idToIndexMap;
+
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
@@ -27,7 +29,7 @@ namespace Azure.AI.TextAnalytics
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
         private DateTimeOffset _createdOn;
-        internal readonly IDictionary<string, int> _idToIndexMap;
+        private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -257,116 +259,64 @@ namespace Azure.AI.TextAnalytics
         /// </remarks>
         public override Pageable<AnalyzeHealthcareEntitiesResultCollection> GetValues(CancellationToken cancellationToken = default)
         {
-            //// Validates that the operation has completed successfully.
-            //_ = _operationInternal.Value;
+            // Validates that the operation has completed successfully.
+            _ = _operationInternal.Value;
 
-            //Page<AnalyzeHealthcareEntitiesResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
-            //{
-            //    //diagnostics scope?
-            //    try
-            //    {
-            //        Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, cancellationToken);
-
-            //AnalyzeHealthcareEntitiesResultCollection result = ExtractHealthcareActionResult(jobState.Value.Results, _idToIndexMap);
-            //        return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
-            //    }
-            //    catch (Exception)
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
-            throw new NotImplementedException();
-        }
-
-#pragma warning disable CA1801 // Review unused parameters
-#pragma warning disable CS1983 // Return type of async
-#pragma warning disable CS1822 // Static method
-#pragma warning disable CA1822 // Mark members as static
-        private AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
-#pragma warning restore CA1822 // Mark members as static
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning restore CS1983 // Return type of async
-#pragma warning restore CS1822 // Static method
-        {
-            //async Task<Page<AnalyzeHealthcareEntitiesResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
-            //{
-            //    //diagnostics scope?
-            //    try
-            //    {
-            //        Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-
-            //AnalyzeHealthcareEntitiesResultCollection result = ExtractHealthcareActionResult(jobState.Value.Results, _idToIndexMap);
-            //        return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
-            //    }
-            //    catch (Exception)
-            //    {
-            //        throw;
-            //    }
-            //}
-
-            //return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
-            throw new NotImplementedException();
-        }
-
-#pragma warning disable CS1998 // await needed in method
-        async ValueTask<OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
-#pragma warning restore CS1998 // await needed in method
-        {
-            //Response<HealthcareJobState> response = async
-            //    ? await _serviceClient.HealthStatusAsync(new Guid(_jobId), null, null, _showStats, cancellationToken).ConfigureAwait(false)
-            //    : _serviceClient.HealthStatus(new Guid(_jobId), null, null, _showStats, cancellationToken);
-
-            //// Add lock to avoid race condition?
-            //_status = response.Value.Status;
-            //_createdOn = response.Value.CreatedDateTime;
-            //_expiresOn = response.Value.ExpirationDateTime;
-            //_lastModified = response.Value.LastUpdateDateTime;
-
-            // TEMP:  Just to stop warnings
-            _status = TextAnalyticsOperationStatus.NotStarted;
-            _createdOn = default;
-            _expiresOn = default;
-            _lastModified = default;
-            // END TEMP
-
-            //Response rawResponse = response.GetRawResponse();
-
-            //if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
-            //{
-            //    string nextLink = response.Value.NextLink;
-            //AnalyzeHealthcareEntitiesResultCollection value = ExtractHealthcareActionResult(response.Value.Results, _idToIndexMap);
-            //    _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, rawResponse);
-
-            //    return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
-            //}
-            //else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            //{
-            //    RequestFailedException requestFailedException = await ClientCommon
-            //        .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-            //        .ConfigureAwait(false);
-
-            //    return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, requestFailedException);
-            //}
-            //else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
-            //{
-            //    return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse,
-            //        new RequestFailedException("The operation was canceled so no value is available."));
-            //}
-
-            //return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
-            throw new NotImplementedException();
-        }
-
-        private static AnalyzeHealthcareEntitiesResultCollection ExtractHealthcareActionResult(AnalyzeTextJobState jobState, IDictionary<string, int> map)
-        {
-            var healthcareTask = jobState.Tasks.Items[0];
-            if (healthcareTask.Kind == AnalyzeTextLROResultsKind.HealthcareLROResults)
+            Page<AnalyzeHealthcareEntitiesResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                return Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection((healthcareTask as HealthcareLROResult).Results, map);
+                var response = _serviceClient.HealthStatusNextPage(nextLink, pageSizeHint, _idToIndexMap, cancellationToken);
+                return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
             }
-            throw new InvalidOperationException($"Invalid task executed. Expected a HealthcareLROResults but instead got {healthcareTask.Kind}.");
+
+            return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
+        }
+
+        private AsyncPageable<AnalyzeHealthcareEntitiesResultCollection> CreateOperationValueAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<AnalyzeHealthcareEntitiesResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                var response = await _serviceClient.HealthStatusNextPageAsync(nextLink, pageSizeHint, _idToIndexMap, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
+        }
+
+        async ValueTask<OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        {
+            Response<HealthcareJobStatusResult> response = async
+                ? await _serviceClient.HealthStatusAsync(Id, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.HealthStatus(Id, _showStats, null, null, _idToIndexMap, cancellationToken);
+
+            _createdOn = response.Value.CreatedOn;
+            _expiresOn = response.Value.ExpiresOn;
+            _lastModified = response.Value.LastModifiedOn;
+            _status = response.Value.Status;
+
+            Response rawResponse = response.GetRawResponse();
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+            {
+                string nextLink = response.Value.NextLink;
+                _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, nextLink, rawResponse);
+
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
+            }
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
+            {
+                RequestFailedException requestFailedException = await ClientCommon
+                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
+                    .ConfigureAwait(false);
+
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, requestFailedException);
+            }
+            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            {
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse,
+                    new RequestFailedException("The operation was canceled so no value is available."));
+            }
+
+            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
         }
     }
 }

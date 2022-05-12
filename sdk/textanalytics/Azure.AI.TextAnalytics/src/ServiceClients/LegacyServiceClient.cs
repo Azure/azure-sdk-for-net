@@ -1162,6 +1162,100 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
+        public override async Task<Response<Models.HealthcareJobStatusResult>> HealthStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            scope.Start();
+
+            try
+            {
+                var result = await _serviceRestClient.HealthStatusAsync(id, top, skip, showStats, cancellationToken).ConfigureAwait(false);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<Models.HealthcareJobStatusResult> HealthStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            scope.Start();
+
+            try
+            {
+                var result = _serviceRestClient.HealthStatus(id, top, skip, showStats, cancellationToken);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override async Task<Response<Models.HealthcareJobStatusResult>> HealthStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                var result = await _serviceRestClient.HealthStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override Response<Models.HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            scope.Start();
+
+            try
+            {
+                var result = _serviceRestClient.HealthStatusNextPage(nextLink, cancellationToken);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Analyze Operation

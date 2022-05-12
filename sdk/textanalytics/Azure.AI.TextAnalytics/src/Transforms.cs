@@ -771,7 +771,7 @@ namespace Azure.AI.TextAnalytics
                 DisplayName = jobState.DisplayName,
                 NextLink = jobState.NextLink,
                 CreatedOn = jobState.CreatedDateTime,
-                LatModifiedOn = jobState.LastUpdateDateTime,
+                LastModifiedOn = jobState.LastUpdateDateTime,
                 ExpiresOn = jobState.ExpirationDateTime,
                 AcionsSucceeded = jobState.Tasks.Completed,
                 AcionsInProgress = jobState.Tasks.InProgress,

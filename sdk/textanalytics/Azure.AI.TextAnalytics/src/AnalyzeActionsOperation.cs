@@ -17,6 +17,8 @@ namespace Azure.AI.TextAnalytics
     /// <summary> Pageable operation class for analyzing multiple actions using long running operation. </summary>
     public class AnalyzeActionsOperation : PageableOperation<AnalyzeActionsResult>, IOperation<AsyncPageable<AnalyzeActionsResult>>
     {
+        internal readonly IDictionary<string, int> _idToIndexMap;
+
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<AnalyzeActionsResult>> _operationInternal;
@@ -28,8 +30,9 @@ namespace Azure.AI.TextAnalytics
         private DateTimeOffset _createdOn;
         private DateTimeOffset? _expiresOn;
         private DateTimeOffset _lastModified;
-        private TextAnalyticsOperationStatus _status;
         private string _displayName;
+        private TextAnalyticsOperationStatus _status;
+        private Page<AnalyzeActionsResult> _firstPage;
 
         /// <summary>
         /// Total actions failed in the operation
@@ -83,11 +86,6 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
-        /// Provides the input to be part of AnalyzeOperation class
-        /// </summary>
-        internal readonly IDictionary<string, int> _idToIndexMap;
-
-        /// <summary>
         /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
@@ -100,11 +98,6 @@ namespace Azure.AI.TextAnalytics
         /// Returns true if the long-running operation has completed.
         /// </summary>
         public override bool HasCompleted => _operationInternal.HasCompleted;
-
-        /// <summary>
-        /// Provides the results for the first page.
-        /// </summary>
-        private Page<AnalyzeActionsResult> _firstPage;
 
         /// <summary>
         /// Represents the desire of the user to request statistics.
@@ -268,7 +261,7 @@ namespace Azure.AI.TextAnalytics
             _displayName = response.Value.DisplayName;
             _createdOn = response.Value.CreatedOn;
             _expiresOn = response.Value.ExpiresOn;
-            _lastModified = response.Value.LatModifiedOn;
+            _lastModified = response.Value.LastModifiedOn;
             _status = response.Value.Status;
             _actionsFailed = response.Value.ActionsFailed;
             _actionsInProgress = response.Value.AcionsInProgress;

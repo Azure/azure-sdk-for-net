@@ -856,6 +856,28 @@ namespace Azure.AI.TextAnalytics
 
         #region Long Running Operations
 
+        // NEEDS IMPLEMENTATION
+        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToHealthcareEntitiesResultCollection(Legacy.HealthcareResult legacyResult, IDictionary<string, int> map)
+        {
+            var results = new List<AnalyzeHealthcareEntitiesResult>(legacyResult.Documents.Count);
+
+            if (legacyResult.Errors != null)
+            {
+                foreach (var error in legacyResult.Errors)
+                {
+                    results.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
+                }
+            }
+            else
+            {
+                //TODO: Implement
+                throw new NotImplementedException();
+            }
+
+            SortHeterogeneousCollection(results, map);
+            return new AnalyzeHealthcareEntitiesResultCollection(results, ConvertToBatchStatistics(legacyResult.Statistics), legacyResult.ModelVersion);
+        }
+
         internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(Legacy.AnalyzeJobState jobState, IDictionary<string, int> map)
         {
             List<ExtractKeyPhrasesActionResult> keyPhrases = new();
@@ -932,13 +954,32 @@ namespace Azure.AI.TextAnalytics
                 DisplayName = legacyJobState.DisplayName,
                 NextLink = legacyJobState.NextLink,
                 CreatedOn = legacyJobState.CreatedDateTime,
-                LatModifiedOn = legacyJobState.LastUpdateDateTime,
+                LastModifiedOn = legacyJobState.LastUpdateDateTime,
                 ExpiresOn = legacyJobState.ExpirationDateTime,
                 AcionsSucceeded = legacyJobState.Tasks.Completed,
                 AcionsInProgress = legacyJobState.Tasks.InProgress,
                 ActionsFailed = legacyJobState.Tasks.Failed,
                 ActionsTotal = legacyJobState.Tasks.Total,
                 Result = ConvertToAnalyzeActionsResult(legacyJobState, map)
+            };
+
+            foreach (var error in legacyJobState.Errors)
+            {
+                result.Errors.Add(ConvertToLanguageError(error));
+            }
+
+            return result;
+        }
+
+        internal static Models.HealthcareJobStatusResult ConvertToHealthcareJobStatusResult(Legacy.HealthcareJobState legacyJobState, IDictionary<string, int> map)
+        {
+            var result = new Models.HealthcareJobStatusResult
+            {
+                NextLink = legacyJobState.NextLink,
+                CreatedOn = legacyJobState.CreatedDateTime,
+                LastModifiedOn = legacyJobState.LastUpdateDateTime,
+                ExpiresOn = legacyJobState.ExpirationDateTime,
+                Result = ConvertToHealthcareEntitiesResultCollection(legacyJobState.Results, map)
             };
 
             foreach (var error in legacyJobState.Errors)
