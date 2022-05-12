@@ -20,6 +20,9 @@ parameters:
   - name: envVars
     type: object
     default: {}
+  - name: additionalArguments
+    type: string
+    default: ''
 
 variables:
   - name: NugetSecurityAnalysisWarningLevel
@@ -73,6 +76,7 @@ jobs:
         --tests "${{ parameters.tests }}"
         --arguments "${{ parameters.arguments }}"
         --iterations ${{ parameters.iterations }}
+        ${{ parameters.additionalArguments }}
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation
       env:
         ${{ each var in parameters.EnvVars }}:

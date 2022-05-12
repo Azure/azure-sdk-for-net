@@ -15,6 +15,10 @@ parameters:
     displayName: Iterations (times to run each test)
     type: number
     default: '5'
+  - name: additionalArguments
+    displayName: AdditionalArguments (passed to PerfAutomation)
+    type: string
+    default: ' '
 
 extends:
   template: ../../../eng/pipelines/templates/jobs/perf.yml
@@ -25,6 +29,7 @@ extends:
     tests: ${{ parameters.tests }}
     arguments: ${{ parameters.arguments }}
     iterations: ${{ parameters.iterations }}
+    additionalArguments: ${{ parameters.additionalArguments }}
     envVars:
       AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
       AZURE_STORAGE_ACCOUNT_NAME: $(azure-storage-account-name)
