@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
             LinkerResource linker = await linkers.GetAsync(linkerName);
             Assert.IsTrue(linker.Id.ToString().StartsWith(webapp.Id.ToString(), StringComparison.InvariantCultureIgnoreCase));
             Assert.AreEqual(webPubSub.Id.ToString(), (linker.Data.TargetService as AzureResource).Id);
-            Assert.AreEqual(AuthType.Secret, linker.Data.AuthType);
+            Assert.AreEqual(AuthType.Secret, linker.Data.AuthInfo.AuthType);
 
             // get service linker configurations
             SourceConfigurationResult configurations = await linker.GetConfigurationsAsync();
