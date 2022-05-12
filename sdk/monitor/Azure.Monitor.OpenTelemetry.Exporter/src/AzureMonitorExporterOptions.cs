@@ -28,15 +28,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.
         /// </summary>
-        public ServiceVersion Version { get; set; } = ServiceVersion.V2020_09_15_Preview;
+        public ServiceVersion Version { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
+        /// </summary>
+        public AzureMonitorExporterOptions() : this(LatestVersion)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMonitorExporterOptions"/>.
         /// </summary>
         /// <param name="version">The <see cref="ServiceVersion"/> of the Azure Monitor ingestion API.</param>
-        public AzureMonitorExporterOptions(ServiceVersion version = LatestVersion)
+        public AzureMonitorExporterOptions(ServiceVersion version)
         {
-            this.Version = version;
+            Version = version;
         }
 
         [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "This naming format is defined in the Azure SDK Design Guidelines.")]
