@@ -16,29 +16,30 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
     using System.Linq;
 
     /// <summary>
-    /// Import RDB files into a target database
+    /// Forcibly unlink another database from this database.
     /// </summary>
     /// <remarks>
-    /// Parameters for a Redis Enterprise import operation.
+    /// Parameters for a Redis Enterprise Active Geo Replication Force Unlink
+    /// operation.
     /// </remarks>
-    public partial class ImportClusterParameters
+    public partial class ForceUnlinkParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ImportClusterParameters class.
+        /// Initializes a new instance of the ForceUnlinkParameters class.
         /// </summary>
-        public ImportClusterParameters()
+        public ForceUnlinkParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImportClusterParameters class.
+        /// Initializes a new instance of the ForceUnlinkParameters class.
         /// </summary>
-        /// <param name="sasUris">SAS URIs for the target blobs to import
-        /// from</param>
-        public ImportClusterParameters(IList<string> sasUris)
+        /// <param name="ids">The resource IDs of the database resources to be
+        /// unlinked.</param>
+        public ForceUnlinkParameters(IList<string> ids)
         {
-            SasUris = sasUris;
+            Ids = ids;
             CustomInit();
         }
 
@@ -48,10 +49,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SAS URIs for the target blobs to import from
+        /// Gets or sets the resource IDs of the database resources to be
+        /// unlinked.
         /// </summary>
-        [JsonProperty(PropertyName = "sasUris")]
-        public IList<string> SasUris { get; set; }
+        [JsonProperty(PropertyName = "ids")]
+        public IList<string> Ids { get; set; }
 
     }
 }
