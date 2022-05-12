@@ -41,8 +41,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="sourceDataStoreType">Gets or sets the type of the
         /// source data store. Possible values include: 'ArchiveStore',
         /// 'SnapshotStore', 'VaultStore'</param>
-        public AzureBackupRecoveryPointBasedRestoreRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string recoveryPointId)
-            : base(restoreTargetInfo, sourceDataStoreType)
+        /// <param name="sourceResourceId">Fully qualified Azure Resource
+        /// Manager ID of the datasource which is being recovered.</param>
+        public AzureBackupRecoveryPointBasedRestoreRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string recoveryPointId, string sourceResourceId = default(string))
+            : base(restoreTargetInfo, sourceDataStoreType, sourceResourceId)
         {
             RecoveryPointId = recoveryPointId;
             CustomInit();

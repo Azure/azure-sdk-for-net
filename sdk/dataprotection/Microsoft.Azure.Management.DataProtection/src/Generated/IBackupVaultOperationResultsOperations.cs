@@ -23,11 +23,11 @@ namespace Microsoft.Azure.Management.DataProtection
     /// </summary>
     public partial interface IBackupVaultOperationResultsOperations
     {
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='operationId'>
         /// </param>
@@ -46,6 +46,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BackupVaultResource,BackupVaultOperationResultsGetHeaders>> GetWithHttpMessagesAsync(string vaultName, string resourceGroupName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BackupVaultResource,BackupVaultOperationResultsGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

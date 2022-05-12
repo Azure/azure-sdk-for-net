@@ -27,15 +27,15 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
-            public static IPage<BaseBackupPolicyResource> List(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName)
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
+            public static IPage<BaseBackupPolicyResource> List(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName)
             {
-                return operations.ListAsync(vaultName, resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, vaultName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,18 +44,18 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<BaseBackupPolicyResource>> ListAsync(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<BaseBackupPolicyResource>> ListAsync(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(vaultName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, vaultName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,17 +70,17 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
             /// <param name='backupPolicyName'>
             /// </param>
-            public static BaseBackupPolicyResource Get(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, string backupPolicyName)
+            public static BaseBackupPolicyResource Get(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, string backupPolicyName)
             {
-                return operations.GetAsync(vaultName, resourceGroupName, backupPolicyName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, vaultName, backupPolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -92,20 +92,20 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupPolicyName'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BaseBackupPolicyResource> GetAsync(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, string backupPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BaseBackupPolicyResource> GetAsync(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, string backupPolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, backupPolicyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vaultName, backupPolicyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -117,11 +117,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupPolicyName'>
             /// Name of the policy
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BaseBackupPolicyResource CreateOrUpdate(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters)
+            public static BaseBackupPolicyResource CreateOrUpdate(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, string backupPolicyName, BaseBackupPolicyResource parameters)
             {
-                return operations.CreateOrUpdateAsync(vaultName, resourceGroupName, backupPolicyName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, vaultName, backupPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,11 +140,11 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupPolicyName'>
             /// Name of the policy
@@ -155,9 +155,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BaseBackupPolicyResource> CreateOrUpdateAsync(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BaseBackupPolicyResource> CreateOrUpdateAsync(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, string backupPolicyName, BaseBackupPolicyResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, backupPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vaultName, backupPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -169,17 +169,17 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
             /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
+            /// </param>
             /// <param name='backupPolicyName'>
             /// </param>
-            public static void Delete(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, string backupPolicyName)
+            public static void Delete(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, string backupPolicyName)
             {
-                operations.DeleteAsync(vaultName, resourceGroupName, backupPolicyName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vaultName, backupPolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -188,20 +188,20 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='vaultName'>
-            /// The name of the backup vault.
-            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group where the backup vault is present.
+            /// </param>
+            /// <param name='vaultName'>
+            /// The name of the backup vault.
             /// </param>
             /// <param name='backupPolicyName'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBackupPoliciesOperations operations, string vaultName, string resourceGroupName, string backupPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBackupPoliciesOperations operations, string resourceGroupName, string vaultName, string backupPolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(vaultName, resourceGroupName, backupPolicyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vaultName, backupPolicyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

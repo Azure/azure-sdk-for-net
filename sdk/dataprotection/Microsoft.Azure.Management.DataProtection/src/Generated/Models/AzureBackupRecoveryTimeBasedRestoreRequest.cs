@@ -43,8 +43,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// 'SnapshotStore', 'VaultStore'</param>
         /// <param name="recoveryPointTime">The recovery time in ISO 8601
         /// format example - 2020-08-14T17:30:00.0000000Z.</param>
-        public AzureBackupRecoveryTimeBasedRestoreRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string recoveryPointTime)
-            : base(restoreTargetInfo, sourceDataStoreType)
+        /// <param name="sourceResourceId">Fully qualified Azure Resource
+        /// Manager ID of the datasource which is being recovered.</param>
+        public AzureBackupRecoveryTimeBasedRestoreRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string recoveryPointTime, string sourceResourceId = default(string))
+            : base(restoreTargetInfo, sourceDataStoreType, sourceResourceId)
         {
             RecoveryPointTime = recoveryPointTime;
             CustomInit();

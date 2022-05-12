@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <param name="secretStoreType">Gets or sets the type of secret
         /// store. Possible values include: 'Invalid', 'AzureKeyVault'</param>
         /// <param name="uri">Uri to get to the resource</param>
-        public SecretStoreResource(string secretStoreType, string uri = default(string))
+        /// <param name="value">Gets or sets value stored in secret store
+        /// resource</param>
+        public SecretStoreResource(string secretStoreType, string uri = default(string), string value = default(string))
         {
             Uri = uri;
             SecretStoreType = secretStoreType;
+            Value = value;
             CustomInit();
         }
 
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "secretStoreType")]
         public string SecretStoreType { get; set; }
+
+        /// <summary>
+        /// Gets or sets value stored in secret store resource
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.

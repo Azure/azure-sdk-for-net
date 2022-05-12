@@ -50,11 +50,11 @@ namespace Microsoft.Azure.Management.DataProtection
         /// </summary>
         public DataProtectionClient Client { get; private set; }
 
-        /// <param name='vaultName'>
-        /// The name of the backup vault.
-        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the backup vault is present.
+        /// </param>
+        /// <param name='vaultName'>
+        /// The name of the backup vault.
         /// </param>
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
@@ -83,23 +83,23 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>> FindWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AzureBackupFindRestorableTimeRangesResponseResource>> FindWithHttpMessagesAsync(string resourceGroupName, string vaultName, string backupInstanceName, AzureBackupFindRestorableTimeRangesRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (vaultName == null)
+            if (Client.SubscriptionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.SubscriptionId == null)
+            if (vaultName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
             }
             if (backupInstanceName == null)
             {
@@ -120,8 +120,8 @@ namespace Microsoft.Azure.Management.DataProtection
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("backupInstanceName", backupInstanceName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -130,9 +130,9 @@ namespace Microsoft.Azure.Management.DataProtection
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/findRestorableTimeRanges").ToString();
-            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             _url = _url.Replace("{backupInstanceName}", System.Uri.EscapeDataString(backupInstanceName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

@@ -53,7 +53,11 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// the resource i.e. provisioning/updating/Succeeded/Failed</param>
         /// <param name="datasourceAuthCredentials">Credentials to use to
         /// authenticate with data source provider.</param>
-        public BackupInstance(Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, string friendlyName = default(string), DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string), AuthCredentials datasourceAuthCredentials = default(AuthCredentials))
+        /// <param name="validationType">Specifies the type of validation. In
+        /// case of DeepValidation, all validations from /validateForBackup API
+        /// will run again. Possible values include: 'ShallowValidation',
+        /// 'DeepValidation'</param>
+        public BackupInstance(Datasource dataSourceInfo, PolicyInfo policyInfo, string objectType, string friendlyName = default(string), DatasourceSet dataSourceSetInfo = default(DatasourceSet), ProtectionStatusDetails protectionStatus = default(ProtectionStatusDetails), string currentProtectionState = default(string), UserFacingError protectionErrorDetails = default(UserFacingError), string provisioningState = default(string), AuthCredentials datasourceAuthCredentials = default(AuthCredentials), string validationType = default(string))
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -64,6 +68,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
             ProtectionErrorDetails = protectionErrorDetails;
             ProvisioningState = provisioningState;
             DatasourceAuthCredentials = datasourceAuthCredentials;
+            ValidationType = validationType;
             ObjectType = objectType;
             CustomInit();
         }
@@ -134,6 +139,15 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// </summary>
         [JsonProperty(PropertyName = "datasourceAuthCredentials")]
         public AuthCredentials DatasourceAuthCredentials { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the type of validation. In case of
+        /// DeepValidation, all validations from /validateForBackup API will
+        /// run again. Possible values include: 'ShallowValidation',
+        /// 'DeepValidation'
+        /// </summary>
+        [JsonProperty(PropertyName = "validationType")]
+        public string ValidationType { get; set; }
 
         /// <summary>
         /// </summary>

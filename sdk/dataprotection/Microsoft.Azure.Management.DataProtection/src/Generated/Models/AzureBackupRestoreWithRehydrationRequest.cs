@@ -46,8 +46,10 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// 'Invalid', 'High', 'Standard'</param>
         /// <param name="rehydrationRetentionDuration">Retention duration in
         /// ISO 8601 format i.e P10D .</param>
-        public AzureBackupRestoreWithRehydrationRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string recoveryPointId, string rehydrationPriority, string rehydrationRetentionDuration)
-            : base(restoreTargetInfo, sourceDataStoreType, recoveryPointId)
+        /// <param name="sourceResourceId">Fully qualified Azure Resource
+        /// Manager ID of the datasource which is being recovered.</param>
+        public AzureBackupRestoreWithRehydrationRequest(RestoreTargetInfoBase restoreTargetInfo, string sourceDataStoreType, string recoveryPointId, string rehydrationPriority, string rehydrationRetentionDuration, string sourceResourceId = default(string))
+            : base(restoreTargetInfo, sourceDataStoreType, recoveryPointId, sourceResourceId)
         {
             RehydrationPriority = rehydrationPriority;
             RehydrationRetentionDuration = rehydrationRetentionDuration;

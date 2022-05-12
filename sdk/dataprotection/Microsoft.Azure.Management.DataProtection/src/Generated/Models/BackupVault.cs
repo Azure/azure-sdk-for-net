@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// Initializes a new instance of the BackupVault class.
         /// </summary>
         /// <param name="storageSettings">Storage Settings</param>
+        /// <param name="monitoringSettings">Monitoring Settings</param>
         /// <param name="provisioningState">Provisioning state of the
         /// BackupVault resource. Possible values include: 'Failed',
         /// 'Provisioning', 'Succeeded', 'Unknown', 'Updating'</param>
@@ -46,8 +47,9 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// 'MoveSucceeded'</param>
         /// <param name="resourceMoveDetails">Resource move details for backup
         /// vault</param>
-        public BackupVault(IList<StorageSetting> storageSettings, string provisioningState = default(string), string resourceMoveState = default(string), ResourceMoveDetails resourceMoveDetails = default(ResourceMoveDetails))
+        public BackupVault(IList<StorageSetting> storageSettings, MonitoringSettings monitoringSettings = default(MonitoringSettings), string provisioningState = default(string), string resourceMoveState = default(string), ResourceMoveDetails resourceMoveDetails = default(ResourceMoveDetails))
         {
+            MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
             ResourceMoveState = resourceMoveState;
             ResourceMoveDetails = resourceMoveDetails;
@@ -59,6 +61,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets monitoring Settings
+        /// </summary>
+        [JsonProperty(PropertyName = "monitoringSettings")]
+        public MonitoringSettings MonitoringSettings { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the BackupVault resource. Possible
