@@ -20,7 +20,7 @@ extends:
   template: ../../../eng/pipelines/templates/jobs/perf.yml
   parameters:
     serviceDirectory: storage/Azure.Storage.Files.DataLake
-    services: "^storage-file-data-lake$"
+    services: "^storage-file-datalake$"
     packageVersions: ${{ parameters.packageVersions }}
     tests: ${{ parameters.tests }}
     arguments: ${{ parameters.arguments }}
