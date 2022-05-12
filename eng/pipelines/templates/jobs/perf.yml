@@ -48,11 +48,11 @@ jobs:
     - checkout: azure-sdk-tools
       path: s/azure-sdk-tools
 
-    - template: ../../../eng/pipelines/templates/steps/install-dotnet.yml
+    - template: ../steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
 
-    - template: ../../../eng/common/TestResources/deploy-test-resources.yml
+    - template: ../../common/TestResources/deploy-test-resources.yml
       parameters:
         ServiceDirectory: ${{ parameters.serviceDirectory }}
         Location: westus
@@ -85,7 +85,7 @@ jobs:
       workingDirectory: azure-sdk-tools/tools/perf-automation/Azure.Sdk.Tools.PerfAutomation/results
       displayName: Print results
 
-    - template: ../../../eng/common/TestResources/remove-test-resources.yml
+    - template: ../../common/TestResources/remove-test-resources.yml
       parameters:
         ServiceDirectory: ${{ parameters.serviceDirectory }}
         ResourceType: perf
