@@ -202,21 +202,21 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInf
   # Fetch the service readme name
   $monikers = @("latest", "preview")
   $msService = GetDocsMsService -packageInfo $packageInfos[0] -serviceName $serviceName
-  for($i=0; $i -lt $monikers.Length; $i++) {
-    $absolutePath = "$DocRepoLocation/$pathPrefix/$($monikers[$i])"
+  foreach($moniker in $monikers) {
+    $absolutePath = "$DocRepoLocation/$pathPrefix/$moniker/"
     $serviceReadme = "$readmeBaseName.md"
     $clientIndexReadme  = "$readmeBaseName-client-index.md"
     $mgmtIndexReadme  = "$readmeBaseName-mgmt-index.md"
     $clientPackageInfo = $servicePackages.Where({ 'client' -eq $_.Type }) | Sort-Object -Property Package
     if ($clientPackageInfo) {
-      generate-markdown-table -absolutePath "$absolutePath" -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $monikers[$i]
+      generate-markdown-table -absolutePath "$absolutePath" -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $moniker
     }
     $mgmtPackageInfo = $servicePackages.Where({ 'mgmt' -eq $_.Type }) | Sort-Object -Property Package
     if ($mgmtPackageInfo) {
-      generate-markdown-table -absolutePath "$absolutePath" -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $monikers[$i]
+      generate-markdown-table -absolutePath "$absolutePath" -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $moniker
     }
     if (!(Test-Path (Join-Path $absolutePath -ChildPath $serviceReadme))) {
-      create-metadata-table -absolutePath $absolutePath -readmeName $serviceReadme -moniker $monikers[$i] -msService $msService `
+      create-metadata-table -absolutePath $absolutePath -readmeName $serviceReadme -moniker $moniker -msService $msService `
         -clientTableLink $clientIndexReadme -mgmtTableLink $mgmtIndexReadme `
         -serviceName $serviceName
     }
