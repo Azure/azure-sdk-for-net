@@ -14,8 +14,14 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a preview release of the Azure Compute SDK. Included with this release is:
-        1. CDRP API
+        This is a public release of the Azure Compute SDK. Included with this release is:
+        1. ComputeRP API calls updated with 2022-03-01 version. 
+        2. UltraSSDcapability properties added in dedicated host resource.
+        3. Identity property added to virtual machine scale set.
+        4. ConsistencyMode and InstanceView added to restore point.
+        5. Guest patching feature added to VM and VMSS.
+        6. treatFailureAsDeploymentFailure and enableAutomaticUpgrade added to VMGalleryApplication resource.
+        7. intent property added for VM.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
