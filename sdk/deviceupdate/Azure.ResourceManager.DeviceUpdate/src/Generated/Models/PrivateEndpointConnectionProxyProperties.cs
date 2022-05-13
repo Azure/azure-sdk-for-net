@@ -18,13 +18,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyProperties. </summary>
         /// <param name="eTag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
         /// <param name="status"> Operation status. </param>
-        internal PrivateEndpointConnectionProxyProperties(string eTag, RemotePrivateEndpoint remotePrivateEndpoint, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string status)
+        internal PrivateEndpointConnectionProxyProperties(string eTag, RemotePrivateEndpoint remotePrivateEndpoint, string status)
         {
             ETag = eTag;
             RemotePrivateEndpoint = remotePrivateEndpoint;
-            ProvisioningState = provisioningState;
             Status = status;
         }
 
@@ -32,8 +30,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         public string ETag { get; }
         /// <summary> Remote private endpoint details. </summary>
         public RemotePrivateEndpoint RemotePrivateEndpoint { get; set; }
-        /// <summary> The provisioning state of the private endpoint connection proxy resource. </summary>
-        public PrivateEndpointConnectionProxyProvisioningState? ProvisioningState { get; }
         /// <summary> Operation status. </summary>
         public string Status { get; set; }
     }

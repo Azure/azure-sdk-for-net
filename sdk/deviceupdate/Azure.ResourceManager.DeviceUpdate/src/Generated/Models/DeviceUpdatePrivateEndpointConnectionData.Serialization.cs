@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -25,10 +26,17 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("privateEndpoint");
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            writer.WritePropertyName("privateLinkServiceConnectionState");
+            writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+            if (Optional.IsCollectionDefined(GroupIds))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WritePropertyName("groupIds");
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -41,7 +49,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             ResourceType type = default;
             SystemData systemData = default;
             Optional<SubResource> privateEndpoint = default;
-            Optional<DeviceUpdatePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            DeviceUpdatePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            Optional<IList<string>> groupIds = default;
             Optional<DeviceUpdatePrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,12 +95,22 @@ namespace Azure.ResourceManager.DeviceUpdate
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
                         {
+                            privateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("groupIds"))
+                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property0.Value);
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -108,7 +127,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new DeviceUpdatePrivateEndpointConnectionData(id, name, type, systemData, privateEndpoint, privateLinkServiceConnectionState, Optional.ToList(groupIds), Optional.ToNullable(provisioningState));
         }
     }
 }

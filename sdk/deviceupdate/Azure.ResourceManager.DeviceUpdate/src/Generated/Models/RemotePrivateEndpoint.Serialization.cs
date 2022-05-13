@@ -21,6 +21,26 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location");
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsDefined(ImmutableSubscriptionId))
+            {
+                writer.WritePropertyName("immutableSubscriptionId");
+                writer.WriteStringValue(ImmutableSubscriptionId);
+            }
+            if (Optional.IsDefined(ImmutableResourceId))
+            {
+                writer.WritePropertyName("immutableResourceId");
+                writer.WriteStringValue(ImmutableResourceId);
+            }
+            if (Optional.IsDefined(VnetTrafficTag))
+            {
+                writer.WritePropertyName("vnetTrafficTag");
+                writer.WriteStringValue(VnetTrafficTag);
+            }
             if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections");
@@ -67,6 +87,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         internal static RemotePrivateEndpoint DeserializeRemotePrivateEndpoint(JsonElement element)
         {
             Optional<string> id = default;
+            Optional<string> location = default;
+            Optional<string> immutableSubscriptionId = default;
+            Optional<string> immutableResourceId = default;
             Optional<string> vnetTrafficTag = default;
             Optional<IList<PrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
             Optional<IList<PrivateLinkServiceConnection>> privateLinkServiceConnections = default;
@@ -77,6 +100,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 if (property.NameEquals("id"))
                 {
                     id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("immutableSubscriptionId"))
+                {
+                    immutableSubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("immutableResourceId"))
+                {
+                    immutableResourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vnetTrafficTag"))
@@ -145,7 +183,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new RemotePrivateEndpoint(id.Value, vnetTrafficTag.Value, Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(privateLinkServiceConnections), Optional.ToList(privateLinkServiceProxies), Optional.ToList(connectionDetails));
+            return new RemotePrivateEndpoint(id.Value, location.Value, immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(privateLinkServiceConnections), Optional.ToList(privateLinkServiceProxies), Optional.ToList(connectionDetails));
         }
     }
 }
