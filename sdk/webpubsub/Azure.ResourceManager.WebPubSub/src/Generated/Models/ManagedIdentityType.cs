@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Represent the identity type: systemAssigned, userAssigned, None. </summary>
+    /// <summary> Represents the identity type: systemAssigned, userAssigned, None. </summary>
     public readonly partial struct ManagedIdentityType : IEquatable<ManagedIdentityType>
     {
         private readonly string _value;

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </summary>
+    /// <summary> The incoming request type to the service. </summary>
     public readonly partial struct WebPubSubRequestType : IEquatable<WebPubSubRequestType>
     {
         private readonly string _value;

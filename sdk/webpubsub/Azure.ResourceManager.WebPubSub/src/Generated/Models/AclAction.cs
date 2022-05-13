@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Default action when no other rule matches. </summary>
+    /// <summary> Azure Networking ACL Action. </summary>
     public readonly partial struct AclAction : IEquatable<AclAction>
     {
         private readonly string _value;
