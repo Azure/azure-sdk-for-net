@@ -16,14 +16,18 @@ namespace Azure.ResourceManager.IotCentral.Models
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
+        /// <param name="action"> The network action for the IP mask. </param>
         /// <param name="filterName"> The readable name of the IP rule. </param>
         /// <param name="ipMask"> The CIDR block defining the IP range. </param>
-        internal NetworkRuleSetIPRule(string filterName, string ipMask)
+        internal NetworkRuleSetIPRule(IPRuleAction? action, string filterName, string ipMask)
         {
+            Action = action;
             FilterName = filterName;
             IPMask = ipMask;
         }
 
+        /// <summary> The network action for the IP mask. </summary>
+        public IPRuleAction? Action { get; }
         /// <summary> The readable name of the IP rule. </summary>
         public string FilterName { get; set; }
         /// <summary> The CIDR block defining the IP range. </summary>
