@@ -3,7 +3,8 @@ namespace Azure.Template
     public partial class TemplateClient
     {
         protected TemplateClient() { }
-        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential, Azure.Template.TemplateClientOptions options = null) { }
+        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential) { }
+        public TemplateClient(string vaultBaseUrl, Azure.Core.TokenCredential credential, Azure.Template.TemplateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetSecret(string secretName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSecretAsync(string secretName, Azure.RequestContext context = null) { throw null; }

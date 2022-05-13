@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FluidRelay
     internal class FluidRelayArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationOrResponseInternals<T> _operation;
+        private readonly OperationInternal<T> _operation;
 
         /// <summary> Initializes a new instance of FluidRelayArmOperation for mocking. </summary>
         protected FluidRelayArmOperation()
@@ -28,16 +28,19 @@ namespace Azure.ResourceManager.FluidRelay
 
         internal FluidRelayArmOperation(Response<T> response)
         {
-            _operation = new OperationOrResponseInternals<T>(response);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
         internal FluidRelayArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
         {
-            _operation = new OperationOrResponseInternals<T>(source, clientDiagnostics, pipeline, request, response, finalStateVia, "FluidRelayArmOperation");
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "FluidRelayArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override T Value => _operation.Value;
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.FluidRelay
         public override bool HasCompleted => _operation.HasCompleted;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
