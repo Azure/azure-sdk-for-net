@@ -4,39 +4,33 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.EdgeOrder.Tests;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Reservations.Tests.Tests
+namespace Azure.ResourceManager.Reservations.Tests
 {
-    [TestFixture]
     public class GetCatalogTests : ReservationsManagementClientBase
     {
-        public GetCatalogTests() : base(true)
+        public GetCatalogTests(bool isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            //if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            //{
-            await InitializeClients();
-            //}
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await InitializeClients();
+            }
         }
 
-        [OneTimeTearDown]
-        public void Cleanup()
-        {
-            CleanupResourceGroups();
-        }
-
-        [TestCase, Order(1)]
+        [TestCase]
+        [RecordedTest]
         public async Task TestGetCatalogForVirtualMachines()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = ReservationsExtensions.GetCatalogAsync(Subscription, "VirtualMachines", "eastus");
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VirtualMachines", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
 
             Assert.NotNull(catalogResult);
