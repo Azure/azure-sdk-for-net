@@ -36,16 +36,6 @@ namespace Azure.Analytics.Purview.Administration
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewMetadataPolicyClient. </summary>
-        /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
-        /// <param name="collectionName"> The String to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PurviewMetadataPolicyClient(Uri endpoint, string collectionName, TokenCredential credential) : this(endpoint, collectionName, credential, new PurviewAccountClientOptions())
-        {
-        }
-
         /// <summary> Updates a metadata policy. </summary>
         /// <param name="policyId"> Unique policy id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
