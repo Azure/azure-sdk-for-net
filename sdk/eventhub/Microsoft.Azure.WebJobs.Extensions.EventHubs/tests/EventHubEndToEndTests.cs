@@ -455,7 +455,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value2", properties["TestProp2"]);
 
                 Assert.NotNull(partitionContext.PartitionId);
-                Assert.NotNull(partitionContext.ReadLastEnqueuedEventProperties());
+                Assert.AreNotEqual(default(LastEnqueuedEventProperties), partitionContext.ReadLastEnqueuedEventProperties());
 
                 _eventWait.Set();
             }
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 Assert.NotNull(partitionContext.PartitionId);
-                Assert.NotNull(partitionContext.ReadLastEnqueuedEventProperties());
+                Assert.AreNotEqual(default(LastEnqueuedEventProperties), partitionContext.ReadLastEnqueuedEventProperties());
 
                 if (s_processedEventCount == s_eventCount)
                 {
