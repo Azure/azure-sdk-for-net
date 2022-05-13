@@ -5,11 +5,17 @@ param(
   $RepoName,
   # Please use the RepoOwner/RepoName format: e.g. Azure/azure-sdk-for-java
   $RepoId="$RepoOwner/$RepoName",
+  # CentralRepoId the original PR to generate sync PR. E.g Azure/azure-sdk-tools for eng/common
+  $CentralRepoId,
+  # We start from the sync PRs, use the branch name to get the PR number of central repo. E.g. sync-eng/common-(<branchName>)-(<PrNumber>). Have group name on PR number.
+  $CentralPRRegex,
   [Parameter(Mandatory = $true)]
   $BranchPrefix,  
   # Date format: e.g. Tuesday, April 12, 2022 1:36:02 PM. Allow to use other date format.
   [AllowNull()]
   [DateTime]$LastCommitOlderThan,
+  # Allow to filter by PR creator.
+  $FilterByPRCreator,
   [Parameter(Mandatory = $true)]
   $AuthToken
 )
@@ -34,10 +40,32 @@ foreach ($res in $responses)
   }
   $branch = $res.ref
   $branchName = $branch.Replace("refs/heads/","")
+  $pullRequestNumber = ($branchName -match $CentralPRRegex)["PrNumber"]
+  try {
+    $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
+    if ($centralPR.state -ne "closed") {
+      continue
+    }
+  }
+  catch 
+  {
+    LogError "Get-GitHubPullRequests failed with exception:`n$_"
+    exit 1
+  }
+  
   try {
     $head = "${RepoId}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
     $pullRequests = Get-GitHubPullRequests -RepoId $RepoId -State "all" -Head $head -AuthToken $AuthToken
+    $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
+    if ($openPullRequests.Count -gt 0)
+    {
+      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has open pull Requests. Closing..."
+      Close-GithubPullRequests -RepoId $RepoId -PullRequestNumber $openPullRequests.PullRequestNumber -AuthToken $AuthToken
+    }
+    else{
+      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
+    }
   }
   catch
   {
@@ -45,15 +73,6 @@ foreach ($res in $responses)
     exit 1
   }
 
-  $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
-  if ($openPullRequests.Count -gt 0)
-  {
-    LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has open pull Requests. Skipping"
-    LogDebug $openPullRequests.url
-    continue
-  }
-
-  LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
   if ($LastCommitOlderThan) {
     if (!$res.object -or !$res.object.url) {
       LogWarning "No commit url returned from response. Skipping... "

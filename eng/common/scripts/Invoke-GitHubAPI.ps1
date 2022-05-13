@@ -152,6 +152,32 @@ function New-GitHubPullRequest {
           -MaximumRetryCount 3
 }
 
+function Close-GitHubPullRequest {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $PullRequestNumber,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PullRequestNumber"
+  $parameters = @{
+    state                 = "closed"
+  }
+
+  return Invoke-RestMethod `
+          -Method PATCH `
+          -Uri $uri `
+          -Body ($parameters | ConvertTo-Json) `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
 function New-GitHubIssue {
   param (
     [Parameter(Mandatory = $true)]
