@@ -8,6 +8,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   sku: {
     name: 'Premium_LRS'
   }
+
+  resource service 'fileServices' = {
+    name: 'default'
+    properties: {
+      shareDeleteRetentionPolicy: {
+        enabled: false
+      }
+    }
+  }
 }
 
 var name = storageAccount.name
