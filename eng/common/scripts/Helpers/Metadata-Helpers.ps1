@@ -81,16 +81,13 @@ function GetPrimaryCodeOwner ([string]$TargetDirectory)
     return $null
 }
 
-function GetDocsMsService($clientPackageInfo, $mgmtPackageInfo, $serviceName) 
+function GetDocsMsService($packageInfo, $serviceName) 
 {
   $service = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
-  if ($clientPackageInfo -and $clientPackageInfo[0].MSDocService) {
-    # Use MSDocService in csv metadata to override the service directory
+  if ($packageInfo.MSDocService) {
+    # Use MSDocService in csv metadata to override the service directory    
     # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
     $service = $clientPackageInfo[0].MSDocService
-  }
-  elseif ($mgmtPackageInfo -and $mgmtPackageInfo[0].MSDocService) {
-    $service = $mgmtPackageInfo[0].MSDocService
   }
   Write-Host "The service of package: $service"
   return $service
@@ -106,7 +103,7 @@ function GenerateDocsMsMetadata($language, $serviceName, $tenantId, $clientId, $
   $msauthor = ""
   if (!$author) {
     LogError "Cannot fetch the author from CODEOWNER file."
-    exit 1
+    return
   }
   elseif ($TenantId -and $ClientId -and $ClientSecret) {
     $msauthor = GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author

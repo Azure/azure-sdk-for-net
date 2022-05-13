@@ -117,7 +117,7 @@ function GetPackageLookup($packageList) {
 
 function create-metadata-table($absolutePath, $readmeName, $moniker, $msService, $clientTableLink, $mgmtTableLink, $serviceName)
 {
-  $readmePath = "$absolutePath$readmeName"
+  $readmePath = Join-Path $absolutePath -ChildPath $readmeName
   New-Item -Path $readmePath -Force
   $lang = $LanguageDisplayName
   $langTitle = "Azure $serviceName SDK for $lang"
@@ -129,12 +129,12 @@ function create-metadata-table($absolutePath, $readmeName, $moniker, $msService,
   # Add tables, seperate client and mgmt.
   $readmeHeader = "# $langTitle - $moniker"
   Add-Content -Path $readmePath -Value $readmeHeader
-  if (Test-Path "$absolutePath$clientTableLink") {
+  if (Test-Path (Join-Path $absolutePath -ChildPath $clientTableLink)) {
     $clientTable = "## Client packages - $moniker`r`n"
     $clientTable += "[!INCLUDE [client-packages]($clientTableLink)]`r`n"
     Add-Content -Path $readmePath -Value $clientTable
   }
-  if (Test-Path "$absolutePath$mgmtTableLink") {
+  if (Test-Path (Join-Path $absolutePath -ChildPath $mgmtTableLink)) {
     $mgmtTable = "## Management packages - $moniker`r`n"
     $mgmtTable += "[!INCLUDE [mgmt-packages]($mgmtTableLink)]`r`n"
     Add-Content -Path $readmePath -Value $mgmtTable -NoNewline
@@ -178,13 +178,13 @@ function generate-markdown-table($absolutePath, $readmeName, $packageInfo, $moni
     if (!$pkg.VersionGA -and "latest" -eq $moniker) {
       continue
     }
-    if (!$pkg.VersionPreview -and "preivew" -eq $moniker) {
+    if (!$pkg.VersionPreview -and "preview" -eq $moniker) {
       continue
     }
     $repositoryLink = $RepositoryUri
     $packageLevelReame = &$GetPackageLevelReadmeFn -packageMetadata $pkg
     $referenceLink = "$packageLevelReame-readme"
-    if (!(Test-Path "$absolutePath$referenceLink.md")) {
+    if (!(Test-Path (Join-Path $absolutePath -ChildPath "$referenceLink.md"))) {
       continue
     }
     $githubLink = $GithubUri
@@ -194,33 +194,34 @@ function generate-markdown-table($absolutePath, $readmeName, $packageInfo, $moni
     $line = "|[$($pkg.DisplayName)]($referenceLink)|[$($pkg.Package)]($repositoryLink/$($pkg.Package))|[Github]($githubLink)|`r`n"
     $content += $line
   }
-  Set-Content -Path "$absolutePath$readmeName" -Value $content -NoNewline
+  Set-Content -Path (Join-Path $absolutePath -ChildPath $readmeName) -Value $content -NoNewline
 }
 
-function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPackageInfo, $mgmtPackageInfo, $serviceName) {
+function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInfos, $serviceName) {
   # Add ability to override
   # Fetch the service readme name
   $monikers = @("latest", "preview")
-
-  $msService = GetDocsMsService -clientPackageInfo $clientPackageInfo -mgmtPackageInfo $mgmtPackageInfo -serviceName $serviceName
+  $msService = GetDocsMsService -packageInfo $packageInfos[0] -serviceName $serviceName
   for($i=0; $i -lt $monikers.Length; $i++) {
-    $absolutePath = "$DocRepoLocation/$pathPrefix/$($monikers[$i])/"
+    $absolutePath = "$DocRepoLocation/$pathPrefix/$($monikers[$i])"
     $serviceReadme = "$readmeBaseName.md"
     $clientIndexReadme  = "$readmeBaseName-client-index.md"
     $mgmtIndexReadme  = "$readmeBaseName-mgmt-index.md"
+    $clientPackageInfo = $servicePackages.Where({ 'client' -eq $_.Type }) | Sort-Object -Property Package
     if ($clientPackageInfo) {
       generate-markdown-table -absolutePath "$absolutePath" -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $monikers[$i]
     }
+    $mgmtPackageInfo = $servicePackages.Where({ 'mgmt' -eq $_.Type }) | Sort-Object -Property Package
     if ($mgmtPackageInfo) {
       generate-markdown-table -absolutePath "$absolutePath" -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $monikers[$i]
     }
-    if (!(Test-Path "$absolutePath$serviceReadme")) {
-      create-metadata-table -absulutePath $absolutePath -readmeName $serviceReadme -moniker $monikers[$i] -msService $msService `
+    if (!(Test-Path (Join-Path $absolutePath -ChildPath $serviceReadme))) {
+      create-metadata-table -absolutePath $absolutePath -readmeName $serviceReadme -moniker $monikers[$i] -msService $msService `
         -clientTableLink $clientIndexReadme -mgmtTableLink $mgmtIndexReadme `
         -serviceName $serviceName
     }
     else {
-      update-metadata-table -readmePath "$absolutePath$serviceReadme" -serviceName $serviceName -msService $msService
+      update-metadata-table -readmePath (Join-Path $absolutePath -ChildPath $serviceReadme) -serviceName $serviceName -msService $msService
     }
   } 
 }
@@ -304,17 +305,22 @@ $serviceNameList = $services.Keys | Sort-Object
 $toc = @()
 foreach ($service in $serviceNameList) {
   Write-Host "Building service: $service"
+
+  if ($service -eq "Key Vault") {
+    Write-Host "here"
+  }
   $packageItems = @()
 
   # Client packages get individual entries
-  $clientPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('client' -eq $_.Type) })
+  $servicePackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service })
+  $clientPackages = $servicePackages.Where({ 'client' -eq $_.Type })
   $clientPackages = $clientPackages | Sort-Object -Property Package
   foreach ($clientPackage in $clientPackages) {
     $packageItems += GetClientPackageNode -clientPackage $clientPackage
   }
 
   # All management packages go under a single `Management` header in the ToC
-  $mgmtPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('mgmt' -eq $_.Type) })
+  $mgmtPackages = $servicePackages.Where({ 'mgmt' -eq $_.Type })
   $mgmtPackages = $mgmtPackages | Sort-Object -Property Package
   if ($mgmtPackages) {
     $children = &$GetDocsMsTocChildrenForManagementPackagesFn `
@@ -341,7 +347,7 @@ foreach ($service in $serviceNameList) {
 
   if($EnableServiceReadmeGen) {
     generate-service-level-readme -readmeBaseName $serviceReadmeBaseName -pathPrefix $hrefPrefix `
-    -clientPackageInfo $clientPackages -mgmtPackageInfo $mgmtPackages -serviceName $service
+      -packageInfos $servicePackages -serviceName $service
   }
   $serviceTocEntry = [PSCustomObject]@{
     name            = $service;
