@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ActivityLogAlertActionList : IUtf8JsonSerializable
+    internal partial class ActionList : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static ActivityLogAlertActionList DeserializeActivityLogAlertActionList(JsonElement element)
+        internal static ActionList DeserializeActionList(JsonElement element)
         {
-            Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
+            Optional<IList<ActionGroupProperties>> actionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroups"))
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActivityLogAlertActionGroup> array = new List<ActivityLogAlertActionGroup>();
+                    List<ActionGroupProperties> array = new List<ActionGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item));
+                        array.Add(ActionGroupProperties.DeserializeActionGroupProperties(item));
                     }
                     actionGroups = array;
                     continue;
                 }
             }
-            return new ActivityLogAlertActionList(Optional.ToList(actionGroups));
+            return new ActionList(Optional.ToList(actionGroups));
         }
     }
 }

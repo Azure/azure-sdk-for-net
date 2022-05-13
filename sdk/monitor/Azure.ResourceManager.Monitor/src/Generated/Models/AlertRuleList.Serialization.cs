@@ -12,9 +12,9 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ActivityLogAlertList
+    internal partial class AlertRuleList
     {
-        internal static ActivityLogAlertList DeserializeActivityLogAlertList(JsonElement element)
+        internal static AlertRuleList DeserializeAlertRuleList(JsonElement element)
         {
             Optional<IReadOnlyList<ActivityLogAlertData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ActivityLogAlertList(Optional.ToList(value), nextLink.Value);
+            return new AlertRuleList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -24,5 +24,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public IReadOnlyList<KnownDataFlowStreams> Streams { get; }
         /// <summary> List of destinations for this data flow. </summary>
         public IReadOnlyList<string> Destinations { get; }
+        /// <summary> The KQL query to transform stream data. </summary>
+        public string TransformKql { get; }
+        /// <summary> The output stream of the transform. Only required if the transform changes data to a different stream. </summary>
+        public string OutputStream { get; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.Monitor
 
         private readonly ClientDiagnostics _dataCollectionEndpointClientDiagnostics;
         private readonly DataCollectionEndpointsRestOperations _dataCollectionEndpointRestClient;
+        private readonly ClientDiagnostics _dataCollectionRuleAssociationClientDiagnostics;
+        private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationRestClient;
         private readonly DataCollectionEndpointData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataCollectionEndpointResource"/> class for mocking. </summary>
@@ -60,6 +63,9 @@ namespace Azure.ResourceManager.Monitor
             _dataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointRestClient = new DataCollectionEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion);
+            _dataCollectionRuleAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleAssociationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataCollectionRuleAssociationResource.ResourceType, out string dataCollectionRuleAssociationApiVersion);
+            _dataCollectionRuleAssociationRestClient = new DataCollectionRuleAssociationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleAssociationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -239,6 +245,90 @@ namespace Azure.ResourceManager.Monitor
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists associations for the specified data collection endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}/associations
+        /// Operation Id: DataCollectionRuleAssociations_ListByDataCollectionEndpoint
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DataCollectionRuleAssociationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = await _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<DataCollectionRuleAssociationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = await _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists associations for the specified data collection endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}/associations
+        /// Operation Id: DataCollectionRuleAssociations_ListByDataCollectionEndpoint
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociations(CancellationToken cancellationToken = default)
+        {
+            Page<DataCollectionRuleAssociationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<DataCollectionRuleAssociationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

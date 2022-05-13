@@ -40,11 +40,6 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
-            }
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition");
@@ -52,15 +47,13 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(Actions))
             {
-                if (Actions != null)
-                {
-                    writer.WritePropertyName("actions");
-                    writer.WriteObjectValue(Actions);
-                }
-                else
-                {
-                    writer.WriteNull("actions");
-                }
+                writer.WritePropertyName("actions");
+                writer.WriteObjectValue(Actions);
+            }
+            if (Optional.IsDefined(Enabled))
+            {
+                writer.WritePropertyName("enabled");
+                writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -80,9 +73,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceType type = default;
             SystemData systemData = default;
             Optional<IList<string>> scopes = default;
+            Optional<AlertRuleAllOfCondition> condition = default;
+            Optional<ActionList> actions = default;
             Optional<bool> enabled = default;
-            Optional<ActivityLogAlertAllOfCondition> condition = default;
-            Optional<ActivityLogAlertActionList> actions = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -145,6 +138,26 @@ namespace Azure.ResourceManager.Monitor
                             scopes = array;
                             continue;
                         }
+                        if (property0.NameEquals("condition"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            condition = AlertRuleAllOfCondition.DeserializeAlertRuleAllOfCondition(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("actions"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            actions = ActionList.DeserializeActionList(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("enabled"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -153,26 +166,6 @@ namespace Azure.ResourceManager.Monitor
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("condition"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            condition = ActivityLogAlertAllOfCondition.DeserializeActivityLogAlertAllOfCondition(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("actions"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                actions = null;
-                                continue;
-                            }
-                            actions = ActivityLogAlertActionList.DeserializeActivityLogAlertActionList(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -184,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ActivityLogAlertData(id, name, type, systemData, tags, location, Optional.ToList(scopes), Optional.ToNullable(enabled), condition.Value, actions.Value, description.Value);
+            return new ActivityLogAlertData(id, name, type, systemData, tags, location, Optional.ToList(scopes), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value);
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
             WindowsEventLogs = new ChangeTrackingList<WindowsEventLogDataSource>();
             Syslog = new ChangeTrackingList<SyslogDataSource>();
             Extensions = new ChangeTrackingList<ExtensionDataSource>();
+            LogFiles = new ChangeTrackingList<LogFilesDataSource>();
+            IisLogs = new ChangeTrackingList<IisLogsDataSource>();
         }
 
         /// <summary> The list of performance counter data source configurations. </summary>
@@ -30,5 +32,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public IReadOnlyList<SyslogDataSource> Syslog { get; }
         /// <summary> The list of Azure VM extension data source configurations. </summary>
         public IReadOnlyList<ExtensionDataSource> Extensions { get; }
+        /// <summary> The list of Log files source configurations. </summary>
+        public IReadOnlyList<LogFilesDataSource> LogFiles { get; }
+        /// <summary> The list of IIS logs source configurations. </summary>
+        public IReadOnlyList<IisLogsDataSource> IisLogs { get; }
     }
 }
