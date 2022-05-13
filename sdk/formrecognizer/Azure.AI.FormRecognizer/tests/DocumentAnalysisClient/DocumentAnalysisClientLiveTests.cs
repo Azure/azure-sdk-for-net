@@ -1201,7 +1201,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27083")]
         public async Task StartAnalyzeDocumentPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
@@ -1242,7 +1241,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.NotNull(document.Fields);
 
-            Assert.True(document.Fields.ContainsKey("ReceiptType"));
             Assert.True(document.Fields.ContainsKey("MerchantAddress"));
             Assert.True(document.Fields.ContainsKey("MerchantName"));
             Assert.True(document.Fields.ContainsKey("MerchantPhoneNumber"));
@@ -1250,10 +1248,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.True(document.Fields.ContainsKey("TransactionTime"));
             Assert.True(document.Fields.ContainsKey("Items"));
             Assert.True(document.Fields.ContainsKey("Subtotal"));
-            Assert.True(document.Fields.ContainsKey("Tax"));
+            Assert.True(document.Fields.ContainsKey("TotalTax"));
             Assert.True(document.Fields.ContainsKey("Total"));
 
-            Assert.AreEqual("Itemized", document.Fields["ReceiptType"].AsString());
             Assert.AreEqual("Contoso", document.Fields["MerchantName"].AsString());
             Assert.AreEqual("123 Main Street Redmond, WA 98052", document.Fields["MerchantAddress"].AsString());
             Assert.AreEqual("123-456-7890", document.Fields["MerchantPhoneNumber"].Content);
@@ -1269,7 +1266,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(59, time.Minutes);
             Assert.AreEqual(0, time.Seconds);
 
-            var expectedItems = new List<(int? Quantity, string Name, double? Price, double? TotalPrice)>()
+            var expectedItems = new List<(int? Quantity, string Description, double? Price, double? TotalPrice)>()
             {
                 (1, "Surface Pro 6", null, 999.00),
                 (1, "SurfacePen", null, 99.99)
@@ -1286,25 +1283,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 var receiptItemInfo = items[itemIndex].AsDictionary();
 
                 receiptItemInfo.TryGetValue("Quantity", out var quantityField);
-                receiptItemInfo.TryGetValue("Name", out var nameField);
+                receiptItemInfo.TryGetValue("Description", out var descriptionField);
                 receiptItemInfo.TryGetValue("Price", out var priceField);
                 receiptItemInfo.TryGetValue("TotalPrice", out var totalPriceField);
 
                 var quantity = quantityField == null ? null : (double?)quantityField.AsDouble();
-                var name = nameField == null ? null : nameField.AsString();
+                var description = descriptionField == null ? null : descriptionField.AsString();
                 var price = priceField == null ? null : (double?)priceField.AsDouble();
                 var totalPrice = totalPriceField == null ? null : (double?)totalPriceField.AsDouble();
 
                 var expectedItem = expectedItems[itemIndex];
 
                 Assert.AreEqual(expectedItem.Quantity, quantity, $"Quantity mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, name, $"Name mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
                 Assert.That(price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"Price mismatch in item with index {itemIndex}.");
                 Assert.That(totalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"Total price mismatch in item with index {itemIndex}.");
             }
 
             Assert.That(document.Fields["Subtotal"].AsDouble(), Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That(document.Fields["Tax"].AsDouble(), Is.EqualTo(104.40).Within(0.0001));
+            Assert.That(document.Fields["TotalTax"].AsDouble(), Is.EqualTo(104.40).Within(0.0001));
             Assert.That(document.Fields["Total"].AsDouble(), Is.EqualTo(1203.39).Within(0.0001));
         }
 
