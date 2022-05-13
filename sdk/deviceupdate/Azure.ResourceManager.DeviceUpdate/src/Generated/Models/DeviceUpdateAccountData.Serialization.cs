@@ -41,6 +41,21 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections");
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteStringValue(Sku.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
