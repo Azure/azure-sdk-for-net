@@ -271,8 +271,7 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score)
         {
-            //return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
-            throw new NotImplementedException();
+            return new CategorizedEntity(new Entity(text, category, subCategory, default, default, score));
         }
 
         /// <summary>
@@ -287,8 +286,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.CategorizedEntity"/> for mocking purposes.</returns>
         public static CategorizedEntity CategorizedEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
-            //return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
-            throw new NotImplementedException();
+            return new CategorizedEntity(new Entity(text, category, subCategory, offset, length, score));
         }
 
         /// <summary>
@@ -353,8 +351,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.PiiEntity"/> for mocking purposes.</returns>
         public static PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset, int length)
         {
-            //return new PiiEntity(new Entity(text, category, subCategory, offset, length, score));
-            throw new NotImplementedException();
+            return new PiiEntity(new Entity(text, category, subCategory, offset, length, score));
         }
 
         /// <summary>
@@ -504,8 +501,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.SummarySentence"/> for mocking purposes.</returns>
         public static SummarySentence SummarySentence(string text, double rankScore, int offset, int length)
         {
-            //return new SummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
-            throw new NotImplementedException();
+            return new SummarySentence(new ExtractedSummarySentence(text, rankScore, offset, length));
         }
 
         /// <summary>
@@ -616,8 +612,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.ClassificationCategory"/> for mocking purposes.</returns>
         public static ClassificationCategory ClassificationCategory(string category, double confidenceScore)
         {
-            //return new ClassificationCategory(new ClassificationResult(category, confidenceScore));
-            throw new NotImplementedException();
+            return new ClassificationCategory(new ClassificationResult(category, confidenceScore));
         }
         #endregion
 
@@ -866,8 +861,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new ExtractKeyPhrasesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new ExtractKeyPhrasesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -883,8 +877,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new ExtractKeyPhrasesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new ExtractKeyPhrasesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -930,8 +923,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new ExtractSummaryActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new ExtractSummaryActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -947,8 +939,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new ExtractSummaryActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new ExtractSummaryActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -994,8 +985,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new RecognizeCustomEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizeCustomEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1011,8 +1001,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new RecognizeCustomEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizeCustomEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1058,8 +1047,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new MultiCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new MultiCategoryClassifyActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1075,8 +1063,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new MultiCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new MultiCategoryClassifyActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1122,8 +1109,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new SingleCategoryClassifyActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new SingleCategoryClassifyActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1139,8 +1125,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new SingleCategoryClassifyActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new SingleCategoryClassifyActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1187,8 +1172,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new AnalyzeSentimentActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new AnalyzeSentimentActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1204,8 +1188,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            // return new AnalyzeSentimentActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new AnalyzeSentimentActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1251,8 +1234,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            // return new RecognizeLinkedEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizeLinkedEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1268,8 +1250,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new RecognizeLinkedEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizeLinkedEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1315,8 +1296,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new RecognizeEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizeEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1332,8 +1312,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new RecognizeEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizeEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         /// <summary>`
@@ -1379,8 +1358,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            // return new RecognizePiiEntitiesActionResult(actionName, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizePiiEntitiesActionResult(actionName, completedOn, new Error(code, message));
         }
 
         /// <summary>
@@ -1396,8 +1374,7 @@ namespace Azure.AI.TextAnalytics
             string code,
             string message)
         {
-            //return new RecognizePiiEntitiesActionResult(default, completedOn, new TextAnalyticsErrorInternal(code, message));
-            throw new NotImplementedException();
+            return new RecognizePiiEntitiesActionResult(default, completedOn, new Error(code, message));
         }
 
         #endregion Action Result Models
@@ -1469,8 +1446,7 @@ namespace Azure.AI.TextAnalytics
             int length,
             double confidenceScore)
         {
-            //return new HealthcareEntity(new HealthcareEntityInternal(text, category, offset, length, confidenceScore));
-            throw new NotImplementedException();
+            return new HealthcareEntity(new HealthcareEntityInternal(text, category, offset, length, confidenceScore));
         }
 
         /// <summary>
@@ -1491,8 +1467,7 @@ namespace Azure.AI.TextAnalytics
             double confidenceScore,
             string entityName)
         {
-            //return new HealthcareEntityRelationRole(new HealthcareEntityInternal(text, category, offset, length, confidenceScore), entityName);
-            throw new NotImplementedException();
+            return new HealthcareEntityRelationRole(new HealthcareEntityInternal(text, category, offset, length, confidenceScore), entityName);
         }
 
         /// <summary>

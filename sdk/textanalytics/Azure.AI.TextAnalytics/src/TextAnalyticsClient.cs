@@ -28,7 +28,13 @@ namespace Azure.AI.TextAnalytics
             TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2
         };
 
-        internal readonly ServiceClient _serviceClient;
+        private readonly ServiceClient _serviceClient;
+
+        /// <summary>
+        /// Gets the <see cref="ServiceClient" /> instance that can be used for
+        /// interacting with the Text Analytics service.
+        /// </summary>
+        internal ServiceClient ServiceClient => _serviceClient;
 
         /// <summary>
         /// Protected constructor to allow mocking.
