@@ -7,7 +7,8 @@ using System.Globalization;
 namespace Azure.Core.TestFramework
 {
     /// <summary>
-    /// Marks tests failing with specific service error codes as "inconclusive".
+    /// Marks tests failing with specific service error codes as "inconclusive". Must be used with test fixtures derived
+    /// from <see cref="RecordedTestBase"/> and is used only by tests attributed with <see cref="RecordedTestAttribute"/>.
     /// </summary>
     /// <remarks>
     /// This is intended for use with intermittent service issues that happen only during internal testing,
@@ -25,8 +26,13 @@ namespace Azure.Core.TestFramework
         /// </summary>
         /// <param name="status">The HTTP status code to ignore e.g., 400.</param>
         /// <param name="errorCode">The Azure error code to ignore e.g., BadParameter.</param>
+        /// <exception cref="ArgumentException"><paramref name="status"/> is &lt; 100 or &gt; 599, or <paramref name="errorCode"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="errorCode"/> is null.</exception>
         public IgnoreServiceErrorAttribute(int status, string errorCode)
         {
+            Argument.AssertInRange(status, 100, 599, nameof(status));
+            Argument.AssertNotNullOrEmpty(errorCode, nameof(errorCode));
+
             _statusMessage = $"Status: {status.ToString(CultureInfo.InvariantCulture)}";
             _errorCodeMessage = $"ErrorCode: {errorCode}";
         }
@@ -48,8 +54,9 @@ namespace Azure.Core.TestFramework
         /// <param name="message">The message to match.</param>
         /// <returns>True if the <paramref name="message"/> matches the current attribute; otherwise, false.</returns>
         internal protected bool Matches(string message) =>
+            !string.IsNullOrEmpty(message) &&
             message.Contains(_statusMessage) &&
             message.Contains(_errorCodeMessage) &&
-            string.IsNullOrWhiteSpace(Message) ? true : message.Contains(Message);
+            string.IsNullOrWhiteSpace(Message) || message.Contains(Message);
     }
 }
