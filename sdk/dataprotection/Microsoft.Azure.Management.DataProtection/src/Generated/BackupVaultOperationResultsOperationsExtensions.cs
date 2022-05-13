@@ -24,36 +24,36 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the backup vault is present.
-            /// </param>
             /// <param name='vaultName'>
             /// The name of the backup vault.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
+            /// </param>
             /// <param name='operationId'>
             /// </param>
-            public static BackupVaultResource Get(this IBackupVaultOperationResultsOperations operations, string resourceGroupName, string vaultName, string operationId)
+            public static BackupVaultResource Get(this IBackupVaultOperationResultsOperations operations, string vaultName, string resourceGroupName, string operationId)
             {
-                return operations.GetAsync(resourceGroupName, vaultName, operationId).GetAwaiter().GetResult();
+                return operations.GetAsync(vaultName, resourceGroupName, operationId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group where the backup vault is present.
-            /// </param>
             /// <param name='vaultName'>
             /// The name of the backup vault.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group where the backup vault is present.
             /// </param>
             /// <param name='operationId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupVaultResource> GetAsync(this IBackupVaultOperationResultsOperations operations, string resourceGroupName, string vaultName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupVaultResource> GetAsync(this IBackupVaultOperationResultsOperations operations, string vaultName, string resourceGroupName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vaultName, operationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(vaultName, resourceGroupName, operationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
