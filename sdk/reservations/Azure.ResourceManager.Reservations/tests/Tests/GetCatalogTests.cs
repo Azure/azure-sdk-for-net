@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     public class GetCatalogTests : ReservationsManagementClientBase
     {
         public GetCatalogTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
