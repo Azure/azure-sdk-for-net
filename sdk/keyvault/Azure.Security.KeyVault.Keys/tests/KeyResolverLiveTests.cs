@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(new SecretClient(Uri, TestEnvironment.Credential, InstrumentClientOptions(new SecretClientOptions())));
         }
 
-        [Test]
+        [RecordedTest]
         public void ResolveNonExistantKeyId()
         {
             var uriBuilder = new RequestUriBuilder();
@@ -52,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => Resolver.ResolveAsync(uriBuilder.ToUri()));
         }
 
-        [Test]
+        [RecordedTest]
         public void ResolveNonExistantSecretId()
         {
             var uriBuilder = new RequestUriBuilder();
@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<RequestFailedException>(() => Resolver.ResolveAsync(uriBuilder.ToUri()));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ResolveKeyId()
         {
             string keyName = Recording.GenerateId();
@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(toWrap, unwrapResult.Key);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ResolveSecretId()
         {
             SecretClient secretClient = GetSecretClient();
@@ -130,7 +130,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(toWrap, unwrapResult.Key);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ResolveAsInterface()
         {
             string keyName = Recording.GenerateId();
