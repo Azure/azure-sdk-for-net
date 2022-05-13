@@ -115,8 +115,9 @@ function GetPackageLookup($packageList) {
   return $packageLookup
 }
 
-function create-metadata-table($readmePath, $moniker, $msService, $clientTableLink, $mgmtTableLink, $clientExists, $mgmtExists, $serviceName)
+function create-metadata-table($absolutePath, $readmeName, $moniker, $msService, $clientTableLink, $mgmtTableLink, $serviceName)
 {
+  $readmePath = "$absolutePath$readmeName"
   New-Item -Path $readmePath -Force
   $lang = $LanguageDisplayName
   $langTitle = "Azure $serviceName SDK for $lang"
@@ -128,12 +129,12 @@ function create-metadata-table($readmePath, $moniker, $msService, $clientTableLi
   # Add tables, seperate client and mgmt.
   $readmeHeader = "# $langTitle - $moniker"
   Add-Content -Path $readmePath -Value $readmeHeader
-  if ($clientExists) {
+  if (Test-Path "$absolutePath$clientTableLink") {
     $clientTable = "## Client packages - $moniker`r`n"
     $clientTable += "[!INCLUDE [client-packages]($clientTableLink)]`r`n"
     Add-Content -Path $readmePath -Value $clientTable
   }
-  if ($mgmtExists) {
+  if (Test-Path "$absolutePath$mgmtTableLink") {
     $mgmtTable = "## Management packages - $moniker`r`n"
     $mgmtTable += "[!INCLUDE [mgmt-packages]($mgmtTableLink)]`r`n"
     Add-Content -Path $readmePath -Value $mgmtTable -NoNewline
@@ -207,20 +208,15 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
     $serviceReadme = "$readmeBaseName.md"
     $clientIndexReadme  = "$readmeBaseName-client-index.md"
     $mgmtIndexReadme  = "$readmeBaseName-mgmt-index.md"
-    $clientExists = $false
-    $mgmtExists = $false
     if ($clientPackageInfo) {
-      $clientExists = $true
       generate-markdown-table -absolutePath "$absolutePath" -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $monikers[$i]
     }
     if ($mgmtPackageInfo) {
-      $mgmtExists = $true
       generate-markdown-table -absolutePath "$absolutePath" -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $monikers[$i]
     }
     if (!(Test-Path "$absolutePath$serviceReadme")) {
-      create-metadata-table -readmePath "$absolutePath$serviceReadme" -moniker $monikers[$i] -msService $msService `
-        -clientExists $clientExists -mgmtExists $mgmtExists `
-        -clientTableLink "$clientIndexReadme" -mgmtTableLink "$mgmtIndexReadme" `
+      create-metadata-table -absulutePath $absolutePath -readmeName $serviceReadme -moniker $monikers[$i] -msService $msService `
+        -clientTableLink $clientIndexReadme -mgmtTableLink $mgmtIndexReadme `
         -serviceName $serviceName
     }
     else {
