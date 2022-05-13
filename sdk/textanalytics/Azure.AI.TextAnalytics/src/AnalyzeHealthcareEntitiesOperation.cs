@@ -199,44 +199,16 @@ namespace Azure.AI.TextAnalytics
         /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual void Cancel(CancellationToken cancellationToken = default)
-        {
-            //using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
-            //scope.Start();
-            //try
-            //{
-            //    _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            throw new NotImplementedException();
-        }
+        public virtual void Cancel(CancellationToken cancellationToken = default) =>
+            _serviceClient.CancelHealthcareJob(_jobId, cancellationToken);
 
         /// <summary>
         /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
-        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
-        {
-            //using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
-            //scope.Start();
-
-            //try
-            //{
-            //    await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            await Task.Yield();
-            throw new NotImplementedException();
-        }
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
+            await _serviceClient.CancelHealthcareJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the final result of the long-running operation asynchronously.

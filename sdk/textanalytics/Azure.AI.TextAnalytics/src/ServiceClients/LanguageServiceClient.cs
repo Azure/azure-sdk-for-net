@@ -1391,6 +1391,55 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
+        // NEEDS IMPLEMENTATION
+        public override async Task CancelHealthcareJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelHealthcareJobAsync)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override void CancelHealthcareJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            {
+                Argument.AssertNotNull(jobId, nameof(jobId));
+
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelHealthcareJob)}");
+                scope.Start();
+
+                try
+                {
+                    throw new NotImplementedException();
+                    //var result = << NO HEALTHCARE SERVICE METHOD >>
+                    //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                    //return Response.FromValue(status, result.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+        }
+
         #endregion
 
         #region Analyze Operation

@@ -92,6 +92,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         public abstract AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default);
         public abstract AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default);
         public abstract Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default);
+        public abstract Task CancelHealthcareJobAsync(string jobId, CancellationToken cancellationToken = default);
+        public abstract void CancelHealthcareJob(string jobId, CancellationToken cancellationToken = default);
 
         #endregion
 
