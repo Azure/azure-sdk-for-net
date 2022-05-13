@@ -97,6 +97,25 @@ namespace Azure.Core.TestFramework
                                 "Test timed out in initial run, but was retried successfully.");
                         }
                     }
+                    else
+                    {
+                        // Check if there are any service errors we should ignore.
+                        IgnoreServiceErrorAttribute[] attributes = Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true);
+                        if (attributes != null)
+                        {
+                            foreach (IgnoreServiceErrorAttribute attr in attributes)
+                            {
+                                if (attr.Matches(resultMessage))
+                                {
+                                    context.CurrentResult.SetResult(
+                                        ResultState.Inconclusive,
+                                        $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
+                                        context.CurrentResult.StackTrace);
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 return context.CurrentResult;

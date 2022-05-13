@@ -1,0 +1,7 @@
+﻿{
+    "Entries": [],
+    "Variables": {
+        "AZURE_KEYVAULT_URL": "https://heathskeyvault.vault.azure.net/",
+        "RandomSeed": "1976273756"
+    }
+}

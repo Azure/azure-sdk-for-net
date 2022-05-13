@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
@@ -958,6 +959,48 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             List<KeyProperties> allKeys = await Client.GetPropertiesOfKeyVersionsAsync(Recording.GenerateId()).ToEnumerableAsync();
             Assert.AreEqual(0, allKeys.Count);
+        }
+
+        [RecordedTest]
+        [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
+        public void ReleaseKeyAttestationErrorThrowsInconclusive()
+        {
+            MockResponse resp = new MockResponse(403)
+                .WithHeader(HttpHeader.Names.ContentType, "application/json")
+                .WithContent(@"{""error"":{""code"":""Forbidden"",""message"":""Target environment attestation statement cannot be verified."",""innererror"":{""code"":""AccessDenied""}}}");
+
+            KeyClientOptions options = new()
+            {
+                Transport = new MockTransport(resp),
+            };
+
+            KeyClient client = new(new("https://myvault.vault.azure.net"), new MockCredential(), options);
+            client.ReleaseKey(new("name", "targetAttestationToken"));
+
+            Assert.Fail("Client method did not throw expected HTTP 403");
+        }
+
+        [RecordedTest]
+        [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
+        public void ExportableNotSupportedThrowsInconclusive()
+        {
+            MockResponse resp = new MockResponse(400)
+                .WithHeader(HttpHeader.Names.ContentType, "application/json")
+                .WithContent(@"{""error"":{""code"":""BadParameter"",""message"":""AKV.SKR.1001: The exportable attribute is only supported with premium vaults and API version >= '7.3-preview'.""}}");
+
+            KeyClientOptions options = new()
+            {
+                Transport = new MockTransport(resp),
+            };
+
+            KeyClient client = new(new("https://myvault.vault.azure.net"), new MockCredential(), options);
+            client.CreateRsaKey(new("test-key")
+            {
+                Exportable = true,
+                KeySize = 2048,
+            });
+
+            Assert.Fail("Client method did not throw expected HTTP 400");
         }
     }
 }
