@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<ValidationResultStatus> result = default;
+            Optional<ValidationResultStatus?> result = default;
             Optional<string> errorMessage = default;
             Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("description"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
                     description = property.Value.GetString();
                     continue;
                 }
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        result = null;
                         continue;
                     }
                     result = new ValidationResultStatus(property.Value.GetString());
@@ -43,11 +48,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 if (property.NameEquals("errorMessage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorMessage = null;
+                        continue;
+                    }
                     errorMessage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errorCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorCode = null;
+                        continue;
+                    }
                     errorCode = property.Value.GetString();
                     continue;
                 }

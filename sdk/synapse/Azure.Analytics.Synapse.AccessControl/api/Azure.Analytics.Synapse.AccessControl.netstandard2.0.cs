@@ -48,7 +48,8 @@ namespace Azure.Analytics.Synapse.AccessControl
     public partial class RoleAssignmentsClient
     {
         protected RoleAssignmentsClient() { }
-        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
+        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public RoleAssignmentsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessResponse> CheckPrincipalAccess(Azure.Analytics.Synapse.AccessControl.CheckPrincipalAccessRequest checkAccessRequest) { throw null; }
         public virtual Azure.Response CheckPrincipalAccess(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -68,7 +69,8 @@ namespace Azure.Analytics.Synapse.AccessControl
     public partial class RoleDefinitionsClient
     {
         protected RoleDefinitionsClient() { }
-        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options = null) { }
+        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public RoleDefinitionsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.AccessControl.AccessControlClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetRoleDefinitionById(string roleDefinitionId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, Azure.RequestContext context = null) { throw null; }

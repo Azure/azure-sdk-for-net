@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
             AnalyzeSentimentResultCollection sentimentPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Sentiment Analysis\" Model, version: \"{sentimentPerDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (AnalyzeSentimentResult sentimentInDocument in sentimentPerDocuments)

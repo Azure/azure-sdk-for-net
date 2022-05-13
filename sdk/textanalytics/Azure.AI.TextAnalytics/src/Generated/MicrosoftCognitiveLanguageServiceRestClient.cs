@@ -270,6 +270,7 @@ namespace Azure.AI.TextAnalytics
             uri.AppendPath("/analyze-text/jobs/", false);
             uri.AppendPath(jobId, true);
             uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
