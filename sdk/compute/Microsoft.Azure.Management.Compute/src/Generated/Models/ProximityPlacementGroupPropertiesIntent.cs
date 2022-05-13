@@ -16,26 +16,28 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains additional properties of a diagnostic
+    /// Specifies the user intent of the proximity placement group.
     /// </summary>
-    public partial class DiagnosticProperties
+    public partial class ProximityPlacementGroupPropertiesIntent
     {
         /// <summary>
-        /// Initializes a new instance of the DiagnosticProperties class.
+        /// Initializes a new instance of the
+        /// ProximityPlacementGroupPropertiesIntent class.
         /// </summary>
-        public DiagnosticProperties()
+        public ProximityPlacementGroupPropertiesIntent()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DiagnosticProperties class.
+        /// Initializes a new instance of the
+        /// ProximityPlacementGroupPropertiesIntent class.
         /// </summary>
-        /// <param name="supportedResourceTypes">Describes what are the
-        /// supported resource types for a diagnostic.</param>
-        public DiagnosticProperties(IList<string> supportedResourceTypes = default(IList<string>))
+        /// <param name="vmSizes">Specifies possible sizes of virtual machines
+        /// that can be created in the proximity placement group.</param>
+        public ProximityPlacementGroupPropertiesIntent(IList<string> vmSizes = default(IList<string>))
         {
-            SupportedResourceTypes = supportedResourceTypes;
+            VmSizes = vmSizes;
             CustomInit();
         }
 
@@ -45,11 +47,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes what are the supported resource types for a
-        /// diagnostic.
+        /// Gets or sets specifies possible sizes of virtual machines that can
+        /// be created in the proximity placement group.
         /// </summary>
-        [JsonProperty(PropertyName = "supportedResourceTypes")]
-        public IList<string> SupportedResourceTypes { get; set; }
+        [JsonProperty(PropertyName = "vmSizes")]
+        public IList<string> VmSizes { get; set; }
 
     }
 }
