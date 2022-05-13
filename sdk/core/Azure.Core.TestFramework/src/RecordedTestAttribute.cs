@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -100,19 +103,25 @@ namespace Azure.Core.TestFramework
                     else
                     {
                         // Check if there are any service errors we should ignore.
-                        IgnoreServiceErrorAttribute[] attributes = Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true);
-                        if (attributes != null)
+                        List<IgnoreServiceErrorAttribute> attributes = Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+                        // Check parents for service errors to ignore.
+                        ITest test = Test;
+                        while (test.Parent is Test t)
                         {
-                            foreach (IgnoreServiceErrorAttribute attr in attributes)
+                            attributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                            test = t;
+                        }
+
+                        foreach (IgnoreServiceErrorAttribute attr in attributes)
+                        {
+                            if (attr.Matches(resultMessage))
                             {
-                                if (attr.Matches(resultMessage))
-                                {
-                                    context.CurrentResult.SetResult(
-                                        ResultState.Inconclusive,
-                                        $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
-                                        context.CurrentResult.StackTrace);
-                                    break;
-                                }
+                                context.CurrentResult.SetResult(
+                                    ResultState.Inconclusive,
+                                    $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
+                                    context.CurrentResult.StackTrace);
+                                break;
                             }
                         }
                     }

@@ -53,10 +53,10 @@ namespace Azure.Core.TestFramework
         /// </summary>
         /// <param name="message">The message to match.</param>
         /// <returns>True if the <paramref name="message"/> matches the current attribute; otherwise, false.</returns>
-        internal protected bool Matches(string message) =>
+        protected internal bool Matches(string message) =>
             !string.IsNullOrEmpty(message) &&
             message.Contains(_statusMessage) &&
             message.Contains(_errorCodeMessage) &&
-            string.IsNullOrWhiteSpace(Message) || message.Contains(Message);
+            (string.IsNullOrWhiteSpace(Message) || message.Contains(Message));
     }
 }
