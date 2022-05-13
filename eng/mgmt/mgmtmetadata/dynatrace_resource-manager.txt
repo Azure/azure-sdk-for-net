@@ -4,11 +4,12 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/dynatrace/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\azure-sdk-for-net\sdk
-2022-05-10 12:39:57 UTC
+Autorest CSharp Version: 2.3.82
+2022-05-13 13:04:36 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      8713239a8b6cfcd49cbf0c34638269b41cfe0ed7
+Commit:      b5c12286510fae45b196457d82f9ad70b967987a
 AutoRest information
 Requested version: 2.0.4421
 Bootstrapper version:    autorest@3.6.1

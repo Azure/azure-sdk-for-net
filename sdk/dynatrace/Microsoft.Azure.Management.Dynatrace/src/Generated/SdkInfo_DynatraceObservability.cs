@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Dynatrace
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/dynatrace/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "8713239a8b6cfcd49cbf0c34638269b41cfe0ed7";
+      public static readonly String GithubCommidId = "b5c12286510fae45b196457d82f9ad70b967987a";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
