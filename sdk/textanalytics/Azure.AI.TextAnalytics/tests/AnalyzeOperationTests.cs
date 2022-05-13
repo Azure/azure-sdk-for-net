@@ -13,7 +13,6 @@ namespace Azure.AI.TextAnalytics.Tests
     [ClientTestFixture(
     TextAnalyticsClientOptions.ServiceVersion.V3_1,
     TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
-    [Ignore("Not yet implemented")]
     public class AnalyzeOperationTests : TextAnalyticsClientLiveTestBase
     {
         public AnalyzeOperationTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -423,6 +422,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [Ignore("Pagination not implemented yet")]
         public async Task AnalyzeOperationWithPagination()
         {
             TextAnalyticsClient client = GetClient();

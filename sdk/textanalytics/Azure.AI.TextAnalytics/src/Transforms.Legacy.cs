@@ -111,6 +111,19 @@ namespace Azure.AI.TextAnalytics
         internal static ClassificationCategory ConvertToClassificationCategory(Legacy.ClassificationResult legacyClassification) =>
             new ClassificationCategory(new Models.ClassificationResult(legacyClassification.Category, legacyClassification.ConfidenceScore));
 
+        internal static TextAnalyticsOperationStatus ConvertToTextAnalyticsOperationStatus(Legacy.Models.State legacyState) =>
+            legacyState switch
+            {
+                Legacy.Models.State.Cancelling => TextAnalyticsOperationStatus.Cancelling,
+                Legacy.Models.State.Cancelled => TextAnalyticsOperationStatus.Cancelled,
+                Legacy.Models.State.Failed => TextAnalyticsOperationStatus.Failed,
+                Legacy.Models.State.Running => TextAnalyticsOperationStatus.Running,
+                Legacy.Models.State.Succeeded => TextAnalyticsOperationStatus.Succeeded,
+                Legacy.Models.State.NotStarted => TextAnalyticsOperationStatus.NotStarted,
+                Legacy.Models.State.Rejected => TextAnalyticsOperationStatus.Rejected,
+                _ => new TextAnalyticsOperationStatus(legacyState.ToString())
+            };
+
         #endregion
 
         #region DetectLanguage
@@ -1151,6 +1164,7 @@ namespace Azure.AI.TextAnalytics
                 AcionsInProgress = legacyJobState.Tasks.InProgress,
                 ActionsFailed = legacyJobState.Tasks.Failed,
                 ActionsTotal = legacyJobState.Tasks.Total,
+                Status = ConvertToTextAnalyticsOperationStatus(legacyJobState.Status),
                 Result = ConvertToAnalyzeActionsResult(legacyJobState, map)
             };
 
