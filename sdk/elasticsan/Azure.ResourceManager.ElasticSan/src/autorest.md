@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: elasticsan
 namespace: Azure.ResourceManager.elasticsan
-require: https://github.com/Azure/azure-rest-api-specs/blob/50ed15bd61ac79f2368d769df0c207a00b9e099f/specification/elasticsan/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a416080c85111fbe4e0a483a1b99f1126ca6e97c/specification/elasticsan/resource-manager/readme.md
 tag: package-2021-11-20-preview
 output-folder: Generated/
 clear-output-folder: true
