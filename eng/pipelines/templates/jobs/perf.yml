@@ -29,6 +29,10 @@ variables:
     value: 'none'
   - name: skipComponentGovernanceDetection
     value: 'true'
+  - name: Pool
+    value: 'azsdk-pool-mms-ubuntu-2004-perf'
+  - name: OSVmImage
+    value: 'MMSUbuntu20.04'
 
 resources:
   repositories:
@@ -42,14 +46,18 @@ jobs:
 - job: Perf
   timeoutInMinutes: 360
   pool:
-    name: "azsdk-pool-mms-ubuntu-2004-perf"
-    vmImage: "MMSUbuntu20.04"  
+    name: $(Pool)
+    vmImage: $(OSVmImage)
   steps:
     - checkout: self
       path: s
 
     - checkout: azure-sdk-tools
       path: s/azure-sdk-tools
+
+    - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+      parameters:
+        AgentImage: $(OSVmImage)
 
     - template: ../steps/install-dotnet.yml
       parameters:
