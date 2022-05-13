@@ -4,7 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
-    TimeoutInMinutes: 400
+    TimeoutInMinutes: 200
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
