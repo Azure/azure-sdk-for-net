@@ -305,10 +305,6 @@ $serviceNameList = $services.Keys | Sort-Object
 $toc = @()
 foreach ($service in $serviceNameList) {
   Write-Host "Building service: $service"
-
-  if ($service -eq "Key Vault") {
-    Write-Host "here"
-  }
   $packageItems = @()
 
   # Client packages get individual entries
