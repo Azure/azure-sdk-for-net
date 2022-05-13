@@ -3,7 +3,8 @@ namespace Azure.Analytics.Purview.Catalog
     public partial class PurviewCatalogClient
     {
         protected PurviewCatalogClient() { }
-        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options = null) { }
+        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public PurviewCatalogClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Catalog.PurviewCatalogClientOptions options) { }
         public Azure.Analytics.Purview.Catalog.PurviewCollections Collections { get { throw null; } }
         public Azure.Analytics.Purview.Catalog.PurviewEntities Entities { get { throw null; } }
         public Azure.Analytics.Purview.Catalog.PurviewGlossaries Glossaries { get { throw null; } }
@@ -15,6 +16,12 @@ namespace Azure.Analytics.Purview.Catalog
         public virtual System.Threading.Tasks.Task<Azure.Response> AutoCompleteAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Browse(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BrowseAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewCollections GetPurviewCollectionsClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewEntities GetPurviewEntitiesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewGlossaries GetPurviewGlossariesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewLineages GetPurviewLineagesClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewRelationships GetPurviewRelationshipsClient() { throw null; }
+        public virtual Azure.Analytics.Purview.Catalog.PurviewTypes GetPurviewTypesClient() { throw null; }
         public virtual Azure.Response Search(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SearchAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Suggest(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

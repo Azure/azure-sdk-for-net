@@ -43,10 +43,21 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceName"> The String to use. </param>
         /// <param name="scanName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/>, <paramref name="scanName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> or <paramref name="scanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, TokenCredential credential) : this(endpoint, dataSourceName, scanName, credential, new PurviewScanningServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewScanClient. </summary>
+        /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="scanName"> The String to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/>, <paramref name="scanName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> or <paramref name="scanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
+        public PurviewScanClient(Uri endpoint, string dataSourceName, string scanName, TokenCredential credential, PurviewScanningServiceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
