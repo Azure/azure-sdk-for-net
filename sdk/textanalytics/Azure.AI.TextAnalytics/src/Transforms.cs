@@ -766,7 +766,7 @@ namespace Azure.AI.TextAnalytics
 
         internal static AnalyzeTextJobStatusResult ConvertToAnalyzeTextJobStatusResult(AnalyzeTextJobState jobState, IDictionary<string, int> map)
         {
-            var result = new Models.AnalyzeTextJobStatusResult
+            var result = new AnalyzeTextJobStatusResult
             {
                 DisplayName = jobState.DisplayName,
                 NextLink = jobState.NextLink,

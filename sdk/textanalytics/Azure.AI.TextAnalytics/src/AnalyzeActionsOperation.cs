@@ -19,6 +19,7 @@ namespace Azure.AI.TextAnalytics
     {
         internal readonly IDictionary<string, int> _idToIndexMap;
 
+        private readonly string _jobId;
         private readonly bool? _showStats;
         private readonly ServiceClient _serviceClient;
         private readonly ClientDiagnostics _diagnostics;
@@ -112,7 +113,22 @@ namespace Azure.AI.TextAnalytics
         /// <param name="client">The client used to check for completion.</param>
         public AnalyzeActionsOperation(string operationId, TextAnalyticsClient client)
         {
-            // TODO: Add argument validation here.
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
+            try
+            {
+                OperationContinuationToken token = OperationContinuationToken.Deserialize(operationId);
+
+                _jobId = token.JobId;
+                _showStats = token.ShowStats;
+                _idToIndexMap = token.InputDocumentOrder;
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Invalid value. Please use the {nameof(AnalyzeActionsOperation)}.{nameof(Id)} property value.", nameof(operationId), e);
+            }
+
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = _serviceClient.Diagnostics;
@@ -135,9 +151,9 @@ namespace Azure.AI.TextAnalytics
             _showStats = showStats;
             _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(_diagnostics, this, rawResponse: null);
 
-            // TODO: Add validation here
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-            Id = operationLocation.Split('/').Last();
+            _jobId = operationLocation.Split('/').Last();
+
+            Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
         }
 
         /// <summary>
@@ -250,8 +266,8 @@ namespace Azure.AI.TextAnalytics
         async ValueTask<OperationState<AsyncPageable<AnalyzeActionsResult>>> IOperation<AsyncPageable<AnalyzeActionsResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeTextJobStatusResult> response = async
-                ? await _serviceClient.AnalyzeStatusAsync(Id, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.AnalyzeStatus(Id, _showStats, null, null, _idToIndexMap, cancellationToken);
+                ? await _serviceClient.AnalyzeStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.AnalyzeStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
 
             _displayName = response.Value.DisplayName;
             _createdOn = response.Value.CreatedOn;

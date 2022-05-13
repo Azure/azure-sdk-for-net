@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -109,19 +110,6 @@ namespace Azure.AI.TextAnalytics
 
         internal static ClassificationCategory ConvertToClassificationCategory(Legacy.ClassificationResult legacyClassification) =>
             new ClassificationCategory(new Models.ClassificationResult(legacyClassification.Category, legacyClassification.ConfidenceScore));
-
-        internal static TextAnalyticsOperationStatus ConvertToTextAnalyticsOperationStatus(Legacy.Models.State legacyState) =>
-            legacyState switch
-            {
-                Legacy.Models.State.Cancelling => TextAnalyticsOperationStatus.Cancelling,
-                Legacy.Models.State.Cancelled => TextAnalyticsOperationStatus.Cancelled,
-                Legacy.Models.State.Failed => TextAnalyticsOperationStatus.Failed,
-                Legacy.Models.State.Running => TextAnalyticsOperationStatus.Running,
-                Legacy.Models.State.Succeeded => TextAnalyticsOperationStatus.Succeeded,
-                Legacy.Models.State.NotStarted => TextAnalyticsOperationStatus.NotStarted,
-                Legacy.Models.State.Rejected => TextAnalyticsOperationStatus.Rejected,
-                _ => new TextAnalyticsOperationStatus(legacyState.ToString())
-            };
 
         #endregion
 
@@ -372,31 +360,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             return list;
-        }
-
-        internal static ExtractKeyPhrasesResult ConvertToExtractKeyPhrasesResult(string id, Legacy.KeyPhraseResult legacyResult)
-        {
-            if (legacyResult.Errors.Count > 0)
-            {
-                var docError = default(Legacy.DocumentError);
-
-                foreach (var error in legacyResult.Errors)
-                {
-                    if (docError.Id == id)
-                    {
-                        docError = error;
-                        break;
-                    }
-                }
-
-                if (docError != null)
-                {
-                    return new ExtractKeyPhrasesResult(id, ConvertToError(docError.Error));
-                }
-            }
-
-            throw new NotImplementedException();
-            //var x = new ExtractKeyPhrasesResult(id, ConvertToDocumentStatistics(legacyResult.Statistics), ConvertToKeyPhraseCollection(legacyResult.Documents))
         }
 
         #endregion
@@ -878,73 +841,301 @@ namespace Azure.AI.TextAnalytics
             return new AnalyzeHealthcareEntitiesResultCollection(results, ConvertToBatchStatistics(legacyResult.Statistics), legacyResult.ModelVersion);
         }
 
+        private static string[] parseActionErrorTarget(string targetReference)
+        {
+            if (string.IsNullOrEmpty(targetReference))
+            {
+                throw new InvalidOperationException("Expected an error with a target field referencing an action but did not get one");
+            }
+
+            // action could be failed and the target reference is "#/tasks/keyPhraseExtractionTasks/0";
+            Match targetMatch = _targetRegex.Match(targetReference);
+
+            string[] taskNameIdPair = new string[2];
+            if (targetMatch.Success && targetMatch.Groups.Count == 3)
+            {
+                taskNameIdPair[0] = targetMatch.Groups[1].Value;
+                taskNameIdPair[1] = targetMatch.Groups[2].Value;
+                return taskNameIdPair;
+            }
+            return null;
+        }
+
         internal static AnalyzeActionsResult ConvertToAnalyzeActionsResult(Legacy.AnalyzeJobState jobState, IDictionary<string, int> map)
         {
-            List<ExtractKeyPhrasesActionResult> keyPhrases = new();
-            List<RecognizeEntitiesActionResult> entitiesRecognition = new();
-            List<RecognizePiiEntitiesActionResult> entitiesPiiRecognition = new();
-            List<RecognizeLinkedEntitiesActionResult> entitiesLinkingRecognition = new();
-            List<AnalyzeSentimentActionResult> analyzeSentiment = new();
-            List<ExtractSummaryActionResult> extractSummary = new();
-            List<RecognizeCustomEntitiesActionResult> customEntitiesRecognition = new();
-            List<SingleCategoryClassifyActionResult> singleCategoryClassify = new();
-            List<MultiCategoryClassifyActionResult> multiCategoryClassify = new();
+            IDictionary<int, Legacy.TextAnalyticsError> keyPhraseErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> entitiesRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> entitiesPiiRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> entitiesLinkingRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> analyzeSentimentErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> extractSummaryErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> customEntitiesRecognitionErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> singleCategoryClassifyErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
+            IDictionary<int, Legacy.TextAnalyticsError> multiCategoryClassifyErrors = new Dictionary<int, Legacy.TextAnalyticsError>();
 
-            foreach (var task in jobState.Tasks.KeyPhraseExtractionTasks)
+            if (jobState.Errors.Any())
             {
-                keyPhrases.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
+                foreach (Legacy.TextAnalyticsError error in jobState.Errors)
+                {
+                    string[] targetPair = parseActionErrorTarget(error.Target);
+                    if (targetPair == null)
+                        throw new InvalidOperationException($"Invalid action/id error. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
 
-            foreach (var task in jobState.Tasks.EntityRecognitionTasks)
-            {
-                entitiesRecognition.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
+                    string taskName = targetPair[0];
+                    int taskIndex = int.Parse(targetPair[1], CultureInfo.InvariantCulture);
 
-            foreach (var task in jobState.Tasks.EntityRecognitionPiiTasks)
-            {
-                entitiesPiiRecognition.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
-
-            foreach (var task in jobState.Tasks.EntityLinkingTasks)
-            {
-                entitiesLinkingRecognition.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
-
-            foreach (var task in jobState.Tasks.SentimentAnalysisTasks)
-            {
-                analyzeSentiment.Add(new AnalyzeSentimentActionResult(ConvertToAnalyzeSentimentResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
-
-            foreach (var task in jobState.Tasks.ExtractiveSummarizationTasks)
-            {
-                extractSummary.Add(new ExtractSummaryActionResult(ConvertToExtractSummaryResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
-
-            foreach (var task in jobState.Tasks.CustomEntityRecognitionTasks)
-            {
-                customEntitiesRecognition.Add(new RecognizeCustomEntitiesActionResult(ConvertToRecognizeCustomEntitiesResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
-
-            foreach (var task in jobState.Tasks.CustomSingleClassificationTasks)
-            {
-                singleCategoryClassify.Add(new SingleCategoryClassifyActionResult(ConvertToSingleCategoryClassifyResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
-            }
-
-            foreach (var task in jobState.Tasks.CustomMultiClassificationTasks)
-            {
-                multiCategoryClassify.Add(new MultiCategoryClassifyActionResult(ConvertToMultiCategoryClassifyResultCollection(task.Results, map), task.TaskName, task.LastUpdateDateTime));
+                    if ("entityRecognitionTasks".Equals(taskName))
+                    {
+                        entitiesRecognitionErrors.Add(taskIndex, error);
+                    }
+                    else if ("entityRecognitionPiiTasks".Equals(taskName))
+                    {
+                        entitiesPiiRecognitionErrors.Add(taskIndex, error);
+                    }
+                    else if ("keyPhraseExtractionTasks".Equals(taskName))
+                    {
+                        keyPhraseErrors.Add(taskIndex, error);
+                    }
+                    else if ("entityLinkingTasks".Equals(taskName))
+                    {
+                        entitiesLinkingRecognitionErrors.Add(taskIndex, error);
+                    }
+                    else if ("sentimentAnalysisTasks".Equals(taskName))
+                    {
+                        analyzeSentimentErrors.Add(taskIndex, error);
+                    }
+                    else if ("extractiveSummarizationTasks".Equals(taskName))
+                    {
+                        extractSummaryErrors.Add(taskIndex, error);
+                    }
+                    else if ("customEntityRecognitionTasks".Equals(taskName))
+                    {
+                        customEntitiesRecognitionErrors.Add(taskIndex, error);
+                    }
+                    else if ("customSingleClassificationTasks".Equals(taskName))
+                    {
+                        singleCategoryClassifyErrors.Add(taskIndex, error);
+                    }
+                    else if ("customMultiClassificationTasks".Equals(taskName))
+                    {
+                        multiCategoryClassifyErrors.Add(taskIndex, error);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Invalid task name in target reference - {taskName}. \n Additional information: Error code: {error.Code} Error message: {error.Message}");
+                    }
+                }
             }
 
             return new AnalyzeActionsResult(
-                keyPhrases,
-                entitiesRecognition,
-                entitiesPiiRecognition,
-                entitiesLinkingRecognition,
-                analyzeSentiment,
-                extractSummary,
-                customEntitiesRecognition,
-                singleCategoryClassify,
-                multiCategoryClassify);
+                ConvertToExtractKeyPhrasesActionResults(jobState, map, keyPhraseErrors),
+                ConvertToRecognizeEntitiesActionsResults(jobState, map, entitiesRecognitionErrors),
+                ConvertToRecognizePiiEntitiesActionsResults(jobState, map, entitiesPiiRecognitionErrors),
+                ConvertToRecognizeLinkedEntitiesActionsResults(jobState, map, entitiesLinkingRecognitionErrors),
+                ConvertToAnalyzeSentimentActionsResults(jobState, map, analyzeSentimentErrors),
+                ConvertToExtractSummaryActionsResults(jobState, map, extractSummaryErrors),
+                ConvertToRecognizeCustomEntitiesActionsResults(jobState, map, customEntitiesRecognitionErrors),
+                ConvertToSingleCategoryClassifyResults(jobState, map, singleCategoryClassifyErrors),
+                ConvertToMultiCategoryClassifyActionsResults(jobState, map, multiCategoryClassifyErrors)
+                );
+        }
+
+        private static IReadOnlyCollection<MultiCategoryClassifyActionResult> ConvertToMultiCategoryClassifyActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<MultiCategoryClassifyActionResult>(jobState.Tasks.CustomMultiClassificationTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.CustomMultiClassificationTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new MultiCategoryClassifyActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new MultiCategoryClassifyActionResult(ConvertToMultiCategoryClassifyResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<SingleCategoryClassifyActionResult> ConvertToSingleCategoryClassifyResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<SingleCategoryClassifyActionResult>(jobState.Tasks.CustomSingleClassificationTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.CustomSingleClassificationTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new SingleCategoryClassifyActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new SingleCategoryClassifyActionResult(ConvertToSingleCategoryClassifyResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<AnalyzeSentimentActionResult> ConvertToAnalyzeSentimentActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<AnalyzeSentimentActionResult>(jobState.Tasks.SentimentAnalysisTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.SentimentAnalysisTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new AnalyzeSentimentActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new AnalyzeSentimentActionResult(ConvertToAnalyzeSentimentResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> ConvertToRecognizeLinkedEntitiesActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<RecognizeLinkedEntitiesActionResult>(jobState.Tasks.EntityLinkingTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.EntityLinkingTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new RecognizeLinkedEntitiesActionResult(ConvertToRecognizeLinkedEntitiesResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<ExtractKeyPhrasesActionResult> ConvertToExtractKeyPhrasesActionResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<ExtractKeyPhrasesActionResult>(jobState.Tasks.KeyPhraseExtractionTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.KeyPhraseExtractionTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new ExtractKeyPhrasesActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new ExtractKeyPhrasesActionResult(ConvertToExtractKeyPhrasesResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<RecognizePiiEntitiesActionResult> ConvertToRecognizePiiEntitiesActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<RecognizePiiEntitiesActionResult>(jobState.Tasks.EntityRecognitionPiiTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.EntityRecognitionPiiTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizePiiEntitiesActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new RecognizePiiEntitiesActionResult(ConvertToRecognizePiiEntitiesResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<RecognizeEntitiesActionResult> ConvertToRecognizeEntitiesActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<RecognizeEntitiesActionResult>(jobState.Tasks.EntityRecognitionTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.EntityRecognitionTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizeEntitiesActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new RecognizeEntitiesActionResult(ConvertToRecognizeEntitiesResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<RecognizeCustomEntitiesActionResult> ConvertToRecognizeCustomEntitiesActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<RecognizeCustomEntitiesActionResult>(jobState.Tasks.CustomEntityRecognitionTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.CustomEntityRecognitionTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new RecognizeCustomEntitiesActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new RecognizeCustomEntitiesActionResult(ConvertToRecognizeCustomEntitiesResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
+        }
+
+        private static IReadOnlyCollection<ExtractSummaryActionResult> ConvertToExtractSummaryActionsResults(Legacy.AnalyzeJobState jobState, IDictionary<string, int> idToIndexMap, IDictionary<int, Legacy.TextAnalyticsError> tasksErrors)
+        {
+            var collection = new List<ExtractSummaryActionResult>(jobState.Tasks.ExtractiveSummarizationTasks.Count);
+            int index = 0;
+            foreach (var task in jobState.Tasks.ExtractiveSummarizationTasks)
+            {
+                tasksErrors.TryGetValue(index, out Legacy.TextAnalyticsError taskError);
+
+                if (taskError != null)
+                {
+                    collection.Add(new ExtractSummaryActionResult(task.TaskName, task.LastUpdateDateTime, ConvertToLanguageError(taskError)));
+                }
+                else
+                {
+                    collection.Add(new ExtractSummaryActionResult(ConvertToExtractSummaryResultCollection(task.Results, idToIndexMap), task.TaskName, task.LastUpdateDateTime));
+                }
+                index++;
+            }
+
+            return collection;
         }
 
         internal static Models.AnalyzeTextJobStatusResult ConvertToAnalyzeTextJobStatusResult(Legacy.AnalyzeJobState legacyJobState, IDictionary<string, int> map)
