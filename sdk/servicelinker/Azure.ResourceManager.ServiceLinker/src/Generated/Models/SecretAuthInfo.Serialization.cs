@@ -17,13 +17,27 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name");
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name");
+                }
             }
             if (Optional.IsDefined(SecretInfo))
             {
-                writer.WritePropertyName("secretInfo");
-                writer.WriteObjectValue(SecretInfo);
+                if (SecretInfo != null)
+                {
+                    writer.WritePropertyName("secretInfo");
+                    writer.WriteObjectValue(SecretInfo);
+                }
+                else
+                {
+                    writer.WriteNull("secretInfo");
+                }
             }
             writer.WritePropertyName("authType");
             writer.WriteStringValue(AuthType.ToString());
@@ -39,6 +53,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        name = null;
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
@@ -46,7 +65,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        secretInfo = null;
                         continue;
                     }
                     secretInfo = SecretInfoBase.DeserializeSecretInfoBase(property.Value);
