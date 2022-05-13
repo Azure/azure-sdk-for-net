@@ -5,20 +5,22 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Resource model definition. </summary>
-    public partial class PirResource
+    public partial class PirResourceData
     {
-        /// <summary> Initializes a new instance of PirResource. </summary>
-        internal PirResource()
+        /// <summary> Initializes a new instance of PirResourceData. </summary>
+        internal PirResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PirResource. </summary>
+        /// <summary> Initializes a new instance of PirResourceData. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        internal PirResource(string name, string location)
+        internal PirResourceData(string name, AzureLocation? location)
         {
             Name = name;
             Location = location;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

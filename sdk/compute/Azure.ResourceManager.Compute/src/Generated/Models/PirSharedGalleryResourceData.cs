@@ -5,21 +5,23 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the shared gallery resource in pir. </summary>
-    public partial class PirSharedGalleryResource : PirResource
+    public partial class PirSharedGalleryResourceData : PirResourceData
     {
-        /// <summary> Initializes a new instance of PirSharedGalleryResource. </summary>
-        internal PirSharedGalleryResource()
+        /// <summary> Initializes a new instance of PirSharedGalleryResourceData. </summary>
+        internal PirSharedGalleryResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PirSharedGalleryResource. </summary>
+        /// <summary> Initializes a new instance of PirSharedGalleryResourceData. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        internal PirSharedGalleryResource(string name, string location, string uniqueId) : base(name, location)
+        internal PirSharedGalleryResourceData(string name, AzureLocation? location, string uniqueId) : base(name, location)
         {
             UniqueId = uniqueId;
         }

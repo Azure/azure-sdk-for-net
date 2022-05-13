@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class Extension : IUtf8JsonSerializable
+    public partial class CloudServiceExtension : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static Extension DeserializeExtension(JsonElement element)
+        internal static CloudServiceExtension DeserializeCloudServiceExtension(JsonElement element)
         {
             Optional<string> name = default;
             Optional<CloudServiceExtensionProperties> properties = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new Extension(name.Value, properties.Value);
+            return new CloudServiceExtension(name.Value, properties.Value);
         }
     }
 }

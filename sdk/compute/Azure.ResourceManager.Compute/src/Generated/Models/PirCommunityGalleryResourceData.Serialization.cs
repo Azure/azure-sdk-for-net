@@ -10,12 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PirSharedGalleryResource
+    public partial class PirCommunityGalleryResourceData
     {
-        internal static PirSharedGalleryResource DeserializePirSharedGalleryResource(JsonElement element)
+        internal static PirCommunityGalleryResourceData DeserializePirCommunityGalleryResourceData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
+            Optional<ResourceType> type = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identifier"))
@@ -47,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PirSharedGalleryResource(name.Value, location.Value, uniqueId.Value);
+            return new PirCommunityGalleryResourceData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PirResource
+    public partial class PirResourceData
     {
-        internal static PirResource DeserializePirResource(JsonElement element)
+        internal static PirResourceData DeserializePirResourceData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -25,11 +25,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new PirResource(name.Value, location.Value);
+            return new PirResourceData(name.Value, Optional.ToNullable(location));
         }
     }
 }

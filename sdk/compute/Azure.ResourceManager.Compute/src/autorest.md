@@ -111,13 +111,13 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
-      $.SubResource.properties.id["x-ms-format"] = "arm-id";
-      $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
-      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+#   - from: swagger-document
+#     where: $.definitions
+#     transform: >
+#       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
+#       $.SubResource.properties.id["x-ms-format"] = "arm-id";
+#       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
+#       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
   - from: compute.json
     where: $.definitions
     transform: >
@@ -127,6 +127,10 @@ directive:
       $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
+      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
+      $.SubResource.properties.id["x-ms-format"] = "arm-id";
+      $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
+      $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
   - from: disk.json
     where: $.definitions
     transform: >
@@ -135,10 +139,24 @@ directive:
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.Encryption["x-ms-client-name"] = "DiskEncryption";
-  - from: communityGallery.json
-    where: $.definitions.PirCommunityGalleryResource.properties.type
-    transform: $["x-ms-client-name"] = "ResourceType"
   - from: cloudService.json
-    where: $.definitions.UpdateDomain
-    transform: $["x-ms-client-name"] = "UpdateDomainIdentifier"
+    where: $.definitions
+    transform: >
+      $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
+      $.Extension["x-ms-client-name"] = "CloudServiceExtension";
+      $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
+      $.SubResource.properties.id["x-ms-format"] = "arm-id";
+  - from: sharedGallery.json
+    where: $.definitions
+    transform: >
+      $.PirResource["x-ms-client-name"] = "PirResourceData";
+      $.PirResource.properties.location["x-ms-format"] = "azure-location";
+      $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
+  - from: communityGallery.json
+    where: $.definitions
+    transform: >
+      $.PirCommunityGalleryResource["x-ms-client-name"] = "PirCommunityGalleryResourceData";
+      $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
+      $.PirCommunityGalleryResource.properties.location["x-ms-format"] = "azure-location";
+      $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
 ```

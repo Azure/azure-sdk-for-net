@@ -5,22 +5,24 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Base information about the community gallery resource in pir. </summary>
-    public partial class PirCommunityGalleryResource
+    public partial class PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of PirCommunityGalleryResource. </summary>
-        internal PirCommunityGalleryResource()
+        /// <summary> Initializes a new instance of PirCommunityGalleryResourceData. </summary>
+        internal PirCommunityGalleryResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PirCommunityGalleryResource. </summary>
+        /// <summary> Initializes a new instance of PirCommunityGalleryResourceData. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        internal PirCommunityGalleryResource(string name, string location, string resourceType, string uniqueId)
+        internal PirCommunityGalleryResourceData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
         {
             Name = name;
             Location = location;
@@ -31,9 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The unique id of this community gallery. </summary>
         public string UniqueId { get; }
     }

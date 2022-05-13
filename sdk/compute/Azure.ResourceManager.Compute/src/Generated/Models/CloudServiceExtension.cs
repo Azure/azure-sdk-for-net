@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a cloud service Extension. </summary>
-    public partial class Extension
+    public partial class CloudServiceExtension
     {
-        /// <summary> Initializes a new instance of Extension. </summary>
-        public Extension()
+        /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
+        public CloudServiceExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of Extension. </summary>
+        /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="properties"> Extension Properties. </param>
-        internal Extension(string name, CloudServiceExtensionProperties properties)
+        internal CloudServiceExtension(string name, CloudServiceExtensionProperties properties)
         {
             Name = name;
             Properties = properties;

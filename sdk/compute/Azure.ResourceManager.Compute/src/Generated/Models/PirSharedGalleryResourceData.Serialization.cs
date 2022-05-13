@@ -10,13 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PirCommunityGalleryResource
+    public partial class PirSharedGalleryResourceData
     {
-        internal static PirCommunityGalleryResource DeserializePirCommunityGalleryResource(JsonElement element)
+        internal static PirSharedGalleryResourceData DeserializePirSharedGalleryResourceData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
-            Optional<string> type = default;
+            Optional<AzureLocation> location = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identifier"))
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PirCommunityGalleryResource(name.Value, location.Value, type.Value, uniqueId.Value);
+            return new PirSharedGalleryResourceData(name.Value, Optional.ToNullable(location), uniqueId.Value);
         }
     }
 }
