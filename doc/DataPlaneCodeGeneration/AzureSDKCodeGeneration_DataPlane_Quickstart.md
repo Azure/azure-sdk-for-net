@@ -208,7 +208,9 @@ security-scopes: https://yourendpoint.azure.com/.default
 - Support both credentials(e.g. `-securityHeaderName` and `--securityScope` are specified):
 
 ```yaml
-security: AADToken;AzureKey
+security:
+  - AADToken
+  - AzureKey
 security-header-name: Your-Subscription-Key
 security-scopes: https://yourendpoint.azure.com/.default
 ```
