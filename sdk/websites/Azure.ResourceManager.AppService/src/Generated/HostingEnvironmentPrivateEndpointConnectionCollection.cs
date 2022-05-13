@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Approves or rejects a private endpoint connection
+        /// Approves or rejects a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: AppServiceEnvironments_ApproveOrRejectPrivateEndpointConnection
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Approves or rejects a private endpoint connection
+        /// Approves or rejects a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: AppServiceEnvironments_ApproveOrRejectPrivateEndpointConnection
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Gets a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnection
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Gets a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnection
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the list of private endpoints associated with a hosting environment
+        /// Gets the list of private endpoints associated with a hosting environment
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections
         /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnectionList
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the list of private endpoints associated with a hosting environment
+        /// Gets the list of private endpoints associated with a hosting environment
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections
         /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnectionList
         /// </summary>

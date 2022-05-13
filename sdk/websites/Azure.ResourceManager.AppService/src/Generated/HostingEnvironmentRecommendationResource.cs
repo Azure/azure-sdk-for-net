@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a recommendation rule for an app.
+        /// Get a recommendation rule for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
         /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a recommendation rule for an app.
+        /// Get a recommendation rule for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
         /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disables the specific rule for a web site permanently.
+        /// Disables the specific rule for a web site permanently.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}/disable
         /// Operation Id: Recommendations_DisableRecommendationForHostingEnvironment
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disables the specific rule for a web site permanently.
+        /// Disables the specific rule for a web site permanently.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}/disable
         /// Operation Id: Recommendations_DisableRecommendationForHostingEnvironment
         /// </summary>

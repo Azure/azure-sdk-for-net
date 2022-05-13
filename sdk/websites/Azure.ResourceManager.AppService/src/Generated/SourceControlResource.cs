@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>

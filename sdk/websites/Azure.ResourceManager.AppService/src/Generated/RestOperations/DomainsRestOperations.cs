@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Check if a domain is available for registration. </summary>
+        /// <summary> Check if a domain is available for registration. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Check if a domain is available for registration. </summary>
+        /// <summary> Check if a domain is available for registration. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="identifier"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all domains in a subscription. </summary>
+        /// <summary> Get all domains in a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all domains in a subscription. </summary>
+        /// <summary> Get all domains in a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Generate a single sign-on request for the domain management portal. </summary>
+        /// <summary> Generate a single sign-on request for the domain management portal. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Generate a single sign-on request for the domain management portal. </summary>
+        /// <summary> Generate a single sign-on request for the domain management portal. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get domain name recommendations based on keywords. </summary>
+        /// <summary> Get domain name recommendations based on keywords. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get domain name recommendations based on keywords. </summary>
+        /// <summary> Get domain name recommendations based on keywords. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all domains in a resource group. </summary>
+        /// <summary> Get all domains in a resource group. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all domains in a resource group. </summary>
+        /// <summary> Get all domains in a resource group. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a domain. </summary>
+        /// <summary> Get a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a domain. </summary>
+        /// <summary> Get a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates or updates a domain. </summary>
+        /// <summary> Creates or updates a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates or updates a domain. </summary>
+        /// <summary> Creates or updates a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a domain. </summary>
+        /// <summary> Delete a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a domain. </summary>
+        /// <summary> Delete a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates or updates a domain. </summary>
+        /// <summary> Creates or updates a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates or updates a domain. </summary>
+        /// <summary> Creates or updates a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Lists domain ownership identifiers. </summary>
+        /// <summary> Lists domain ownership identifiers. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Lists domain ownership identifiers. </summary>
+        /// <summary> Lists domain ownership identifiers. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get ownership identifier for domain. </summary>
+        /// <summary> Get ownership identifier for domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get ownership identifier for domain. </summary>
+        /// <summary> Get ownership identifier for domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
+        /// <summary> Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
+        /// <summary> Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete ownership identifier for domain. </summary>
+        /// <summary> Delete ownership identifier for domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete ownership identifier for domain. </summary>
+        /// <summary> Delete ownership identifier for domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
+        /// <summary> Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
+        /// <summary> Creates an ownership identifier for a domain or updates identifier details for an existing identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of domain. </param>
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Renew a domain. </summary>
+        /// <summary> Renew a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Renew a domain. </summary>
+        /// <summary> Renew a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -1232,7 +1232,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all domains in a subscription. </summary>
+        /// <summary> Get all domains in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all domains in a subscription. </summary>
+        /// <summary> Get all domains in a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get domain name recommendations based on keywords. </summary>
+        /// <summary> Get domain name recommendations based on keywords. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get domain name recommendations based on keywords. </summary>
+        /// <summary> Get domain name recommendations based on keywords. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -1372,7 +1372,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all domains in a resource group. </summary>
+        /// <summary> Get all domains in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all domains in a resource group. </summary>
+        /// <summary> Get all domains in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Lists domain ownership identifiers. </summary>
+        /// <summary> Lists domain ownership identifiers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Lists domain ownership identifiers. </summary>
+        /// <summary> Lists domain ownership identifiers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>

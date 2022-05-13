@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
+        /// Creates a new static site in an existing resource group, or updates an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSite
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
+        /// Creates a new static site in an existing resource group, or updates an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSite
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site.
+        /// Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site.
+        /// Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all static sites in the specified resource group.
+        /// Gets all static sites in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites
         /// Operation Id: StaticSites_GetStaticSitesByResourceGroup
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all static sites in the specified resource group.
+        /// Gets all static sites in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites
         /// Operation Id: StaticSites_GetStaticSitesByResourceGroup
         /// </summary>

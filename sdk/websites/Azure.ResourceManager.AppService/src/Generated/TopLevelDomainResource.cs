@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Gets all legal agreements that user needs to accept before purchasing a domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
         /// Operation Id: TopLevelDomains_ListAgreements
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all legal agreements that user needs to accept before purchasing a domain.
+        /// Gets all legal agreements that user needs to accept before purchasing a domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}/listAgreements
         /// Operation Id: TopLevelDomains_ListAgreements
         /// </summary>

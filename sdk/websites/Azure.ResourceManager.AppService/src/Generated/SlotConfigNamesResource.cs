@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Gets the names of app settings and connection strings that stick to the slot (not swapped).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_ListSlotConfigurationNames
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        /// Gets the names of app settings and connection strings that stick to the slot (not swapped).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_ListSlotConfigurationNames
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Updates the names of application settings and connection string that remain with the slot during swap operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_UpdateSlotConfigurationNames
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the names of application settings and connection string that remain with the slot during swap operation.
+        /// Updates the names of application settings and connection string that remain with the slot during swap operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames
         /// Operation Id: WebApps_UpdateSlotConfigurationNames
         /// </summary>

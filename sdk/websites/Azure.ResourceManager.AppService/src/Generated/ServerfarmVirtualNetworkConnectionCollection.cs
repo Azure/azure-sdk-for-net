@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Get a Virtual Network associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: AppServicePlans_GetVnetFromServerFarm
         /// </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Get a Virtual Network associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: AppServicePlans_GetVnetFromServerFarm
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all Virtual Networks associated with an App Service plan.
+        /// Get all Virtual Networks associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
         /// Operation Id: AppServicePlans_ListVnets
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all Virtual Networks associated with an App Service plan.
+        /// Get all Virtual Networks associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
         /// Operation Id: AppServicePlans_ListVnets
         /// </summary>

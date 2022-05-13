@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all App Service plans for a subscription. </summary>
+        /// <summary> Get all App Service plans for a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="detailed">
         /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all App Service plans for a subscription. </summary>
+        /// <summary> Get all App Service plans for a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="detailed">
         /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all App Service plans in a resource group. </summary>
+        /// <summary> Get all App Service plans in a resource group. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all App Service plans in a resource group. </summary>
+        /// <summary> Get all App Service plans in a resource group. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get an App Service plan. </summary>
+        /// <summary> Get an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get an App Service plan. </summary>
+        /// <summary> Get an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates or updates an App Service Plan. </summary>
+        /// <summary> Creates or updates an App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates or updates an App Service Plan. </summary>
+        /// <summary> Creates or updates an App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete an App Service plan. </summary>
+        /// <summary> Delete an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete an App Service plan. </summary>
+        /// <summary> Delete an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates or updates an App Service Plan. </summary>
+        /// <summary> Creates or updates an App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates or updates an App Service Plan. </summary>
+        /// <summary> Creates or updates an App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all capabilities of an App Service plan. </summary>
+        /// <summary> List all capabilities of an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all capabilities of an App Service plan. </summary>
+        /// <summary> List all capabilities of an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieve a Hybrid Connection in use in an App Service plan. </summary>
+        /// <summary> Retrieve a Hybrid Connection in use in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieve a Hybrid Connection in use in an App Service plan. </summary>
+        /// <summary> Retrieve a Hybrid Connection in use in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a Hybrid Connection in use in an App Service plan. </summary>
+        /// <summary> Delete a Hybrid Connection in use in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a Hybrid Connection in use in an App Service plan. </summary>
+        /// <summary> Delete a Hybrid Connection in use in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the send key name and value of a Hybrid Connection. </summary>
+        /// <summary> Get the send key name and value of a Hybrid Connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the send key name and value of a Hybrid Connection. </summary>
+        /// <summary> Get the send key name and value of a Hybrid Connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
+        /// <summary> Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
+        /// <summary> Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
+        /// <summary> Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
+        /// <summary> Get the maximum number of Hybrid Connections allowed in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieve all Hybrid Connections in use in an App Service plan. </summary>
+        /// <summary> Retrieve all Hybrid Connections in use in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieve all Hybrid Connections in use in an App Service plan. </summary>
+        /// <summary> Retrieve all Hybrid Connections in use in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restart all apps in an App Service plan. </summary>
+        /// <summary> Restart all apps in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restart all apps in an App Service plan. </summary>
+        /// <summary> Restart all apps in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all apps associated with an App Service plan. </summary>
+        /// <summary> Get all apps associated with an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all apps associated with an App Service plan. </summary>
+        /// <summary> Get all apps associated with an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all selectable SKUs for a given App Service Plan. </summary>
+        /// <summary> Gets all selectable SKUs for a given App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of App Service Plan. </param>
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all selectable SKUs for a given App Service Plan. </summary>
+        /// <summary> Gets all selectable SKUs for a given App Service Plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of App Service Plan. </param>
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets server farm usage information. </summary>
+        /// <summary> Gets server farm usage information. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of App Service Plan. </param>
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets server farm usage information. </summary>
+        /// <summary> Gets server farm usage information. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of App Service Plan. </param>
@@ -1472,7 +1472,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all Virtual Networks associated with an App Service plan. </summary>
+        /// <summary> Get all Virtual Networks associated with an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all Virtual Networks associated with an App Service plan. </summary>
+        /// <summary> Get all Virtual Networks associated with an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1562,7 +1562,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
+        /// <summary> Get a Virtual Network associated with an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1595,7 +1595,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
+        /// <summary> Get a Virtual Network associated with an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a Virtual Network gateway. </summary>
+        /// <summary> Get a Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1687,7 +1687,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a Virtual Network gateway. </summary>
+        /// <summary> Get a Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Update a Virtual Network gateway. </summary>
+        /// <summary> Update a Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1785,7 +1785,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Update a Virtual Network gateway. </summary>
+        /// <summary> Update a Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1843,7 +1843,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all routes that are associated with a Virtual Network in an App Service plan. </summary>
+        /// <summary> Get all routes that are associated with a Virtual Network in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1879,7 +1879,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all routes that are associated with a Virtual Network in an App Service plan. </summary>
+        /// <summary> Get all routes that are associated with a Virtual Network in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1943,7 +1943,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary> Create or update a Virtual Network route in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1978,7 +1978,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary> Create or update a Virtual Network route in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
+        /// <summary> Delete a Virtual Network route in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2065,7 +2065,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a Virtual Network route in an App Service plan. </summary>
+        /// <summary> Delete a Virtual Network route in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2121,7 +2121,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary> Create or update a Virtual Network route in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2156,7 +2156,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Create or update a Virtual Network route in an App Service plan. </summary>
+        /// <summary> Create or update a Virtual Network route in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2214,7 +2214,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Reboot a worker machine in an App Service plan. </summary>
+        /// <summary> Reboot a worker machine in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2240,7 +2240,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Reboot a worker machine in an App Service plan. </summary>
+        /// <summary> Reboot a worker machine in an App Service plan. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -2280,7 +2280,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all App Service plans for a subscription. </summary>
+        /// <summary> Get all App Service plans for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="detailed">
@@ -2311,7 +2311,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all App Service plans for a subscription. </summary>
+        /// <summary> Get all App Service plans for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="detailed">
@@ -2356,7 +2356,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all App Service plans in a resource group. </summary>
+        /// <summary> Get all App Service plans in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2385,7 +2385,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all App Service plans in a resource group. </summary>
+        /// <summary> Get all App Service plans in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2428,7 +2428,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
+        /// <summary> Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2463,7 +2463,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
+        /// <summary> Get all apps that use a Hybrid Connection in an App Service Plan. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2512,7 +2512,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieve all Hybrid Connections in use in an App Service plan. </summary>
+        /// <summary> Retrieve all Hybrid Connections in use in an App Service plan. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2543,7 +2543,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieve all Hybrid Connections in use in an App Service plan. </summary>
+        /// <summary> Retrieve all Hybrid Connections in use in an App Service plan. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2588,7 +2588,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all apps associated with an App Service plan. </summary>
+        /// <summary> Get all apps associated with an App Service plan. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2622,7 +2622,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all apps associated with an App Service plan. </summary>
+        /// <summary> Get all apps associated with an App Service plan. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets server farm usage information. </summary>
+        /// <summary> Gets server farm usage information. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -2702,7 +2702,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets server farm usage information. </summary>
+        /// <summary> Gets server farm usage information. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>

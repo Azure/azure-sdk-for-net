@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_CreateOrUpdateVnetConnection
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_CreateOrUpdateVnetConnection
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the virtual networks the app (or deployment slot) is connected to.
+        /// Gets the virtual networks the app (or deployment slot) is connected to.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
         /// Operation Id: WebApps_ListVnetConnections
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the virtual networks the app (or deployment slot) is connected to.
+        /// Gets the virtual networks the app (or deployment slot) is connected to.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections
         /// Operation Id: WebApps_ListVnetConnections
         /// </summary>

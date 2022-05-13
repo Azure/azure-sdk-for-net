@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create function for web site, or a deployment slot.
+        /// Create function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
         /// Operation Id: WebApps_CreateInstanceFunctionSlot
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create function for web site, or a deployment slot.
+        /// Create function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
         /// Operation Id: WebApps_CreateInstanceFunctionSlot
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Get function information by its ID for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
         /// Operation Id: WebApps_GetInstanceFunctionSlot
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Get function information by its ID for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}
         /// Operation Id: WebApps_GetInstanceFunctionSlot
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List the functions for a web site, or a deployment slot.
+        /// List the functions for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions
         /// Operation Id: WebApps_ListInstanceFunctionsSlot
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List the functions for a web site, or a deployment slot.
+        /// List the functions for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions
         /// Operation Id: WebApps_ListInstanceFunctionsSlot
         /// </summary>

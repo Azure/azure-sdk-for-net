@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source control configuration of an app.
+        /// Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControl
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source control configuration of an app.
+        /// Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControl
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes the source control configuration of an app.
+        /// Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControl
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes the source control configuration of an app.
+        /// Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControl
         /// </summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControl
         /// </summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControl
         /// </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControl
         /// </summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the source control configuration of an app.
+        /// Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControl
         /// </summary>

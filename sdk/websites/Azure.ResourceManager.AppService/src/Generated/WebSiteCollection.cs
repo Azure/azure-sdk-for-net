@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_CreateOrUpdate
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_CreateOrUpdate
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
+        /// Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all web, mobile, and API apps in the specified resource group.
+        /// Gets all web, mobile, and API apps in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites
         /// Operation Id: WebApps_ListByResourceGroup
         /// </summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all web, mobile, and API apps in the specified resource group.
+        /// Gets all web, mobile, and API apps in the specified resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites
         /// Operation Id: WebApps_ListByResourceGroup
         /// </summary>

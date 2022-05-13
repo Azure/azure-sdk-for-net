@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all network features used by the app (or deployment slot, if specified).
+        /// Gets all network features used by the app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}
         /// Operation Id: WebApps_ListNetworkFeaturesSlot
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all network features used by the app (or deployment slot, if specified).
+        /// Gets all network features used by the app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}
         /// Operation Id: WebApps_ListNetworkFeaturesSlot
         /// </summary>

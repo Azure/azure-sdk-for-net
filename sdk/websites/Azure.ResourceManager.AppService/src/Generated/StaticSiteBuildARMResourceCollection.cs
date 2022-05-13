@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all static site builds for a particular static site.
+        /// Gets all static site builds for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds
         /// Operation Id: StaticSites_GetStaticSiteBuilds
         /// </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all static site builds for a particular static site.
+        /// Gets all static site builds for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds
         /// Operation Id: StaticSites_GetStaticSiteBuilds
         /// </summary>

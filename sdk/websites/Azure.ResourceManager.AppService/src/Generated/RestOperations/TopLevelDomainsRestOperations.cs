@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all top-level domains supported for registration. </summary>
+        /// <summary> Get all top-level domains supported for registration. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all top-level domains supported for registration. </summary>
+        /// <summary> Get all top-level domains supported for registration. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary> Get details of a top-level domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get details of a top-level domain. </summary>
+        /// <summary> Get details of a top-level domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
         /// <param name="agreementOption"> Domain agreement options. </param>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all top-level domains supported for registration. </summary>
+        /// <summary> Get all top-level domains supported for registration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all top-level domains supported for registration. </summary>
+        /// <summary> Get all top-level domains supported for registration. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
+        /// <summary> Gets all legal agreements that user needs to accept before purchasing a domain. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Name of the top-level domain. </param>

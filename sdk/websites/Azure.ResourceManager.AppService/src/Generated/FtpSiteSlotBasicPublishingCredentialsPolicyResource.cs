@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns whether FTP is allowed on the site or not.
+        /// Returns whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_GetFtpAllowedSlot
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns whether FTP is allowed on the site or not.
+        /// Returns whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_GetFtpAllowedSlot
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates whether FTP is allowed on the site or not.
+        /// Updates whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowedSlot
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates whether FTP is allowed on the site or not.
+        /// Updates whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowedSlot
         /// </summary>

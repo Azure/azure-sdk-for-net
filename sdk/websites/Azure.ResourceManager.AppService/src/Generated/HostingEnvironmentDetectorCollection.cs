@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Hosting Environment Detector Response
+        /// Get Hosting Environment Detector Response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Hosting Environment Detector Response
+        /// Get Hosting Environment Detector Response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List Hosting Environment Detector Responses
+        /// List Hosting Environment Detector Responses
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors
         /// Operation Id: Diagnostics_ListHostingEnvironmentDetectorResponses
         /// </summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List Hosting Environment Detector Responses
+        /// List Hosting Environment Detector Responses
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors
         /// Operation Id: Diagnostics_ListHostingEnvironmentDetectorResponses
         /// </summary>

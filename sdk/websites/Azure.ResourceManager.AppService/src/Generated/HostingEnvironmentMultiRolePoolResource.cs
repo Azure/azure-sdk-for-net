@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a multi-role pool.
+        /// Get properties of a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_GetMultiRolePool
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a multi-role pool.
+        /// Get properties of a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_GetMultiRolePool
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a multi-role pool.
+        /// Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_UpdateMultiRolePool
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a multi-role pool.
+        /// Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_UpdateMultiRolePool
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a multi-role pool.
+        /// Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_CreateOrUpdateMultiRolePool
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a multi-role pool.
+        /// Create or update a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
         /// Operation Id: AppServiceEnvironments_CreateOrUpdateMultiRolePool
         /// </summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
+        /// Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
         /// </summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
+        /// Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
         /// </summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a multi-role pool of an App Service Environment.
+        /// Get metric definitions for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRoleMetricDefinitions
         /// </summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a multi-role pool of an App Service Environment.
+        /// Get metric definitions for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListMultiRoleMetricDefinitions
         /// </summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available SKUs for scaling a multi-role pool.
+        /// Get available SKUs for scaling a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
         /// </summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available SKUs for scaling a multi-role pool.
+        /// Get available SKUs for scaling a multi-role pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get usage metrics for a multi-role pool of an App Service Environment.
+        /// Get usage metrics for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
         /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
         /// </summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get usage metrics for a multi-role pool of an App Service Environment.
+        /// Get usage metrics for a multi-role pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
         /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
         /// </summary>

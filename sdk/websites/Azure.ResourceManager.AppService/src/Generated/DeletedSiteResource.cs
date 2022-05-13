@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get deleted app for a subscription.
+        /// Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get deleted app for a subscription.
+        /// Get deleted app for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all deleted apps for a subscription.
+        /// Get all deleted apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
         /// Operation Id: Global_GetDeletedWebAppSnapshots
         /// </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all deleted apps for a subscription.
+        /// Get all deleted apps for a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}/snapshots
         /// Operation Id: Global_GetDeletedWebAppSnapshots
         /// </summary>

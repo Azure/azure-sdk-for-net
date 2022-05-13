@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtension
         /// </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtension
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get list of siteextensions for a web site, or a deployment slot.
+        /// Get list of siteextensions for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
         /// Operation Id: WebApps_ListSiteExtensions
         /// </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get list of siteextensions for a web site, or a deployment slot.
+        /// Get list of siteextensions for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions
         /// Operation Id: WebApps_ListSiteExtensions
         /// </summary>

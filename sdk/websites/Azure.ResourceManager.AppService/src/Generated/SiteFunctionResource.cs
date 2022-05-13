@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Get function information by its ID for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_GetFunction
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Get function information by its ID for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_GetFunction
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a function for web site, or a deployment slot.
+        /// Delete a function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_DeleteFunction
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a function for web site, or a deployment slot.
+        /// Delete a function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_DeleteFunction
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create function for web site, or a deployment slot.
+        /// Create function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_CreateFunction
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create function for web site, or a deployment slot.
+        /// Create function for web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
         /// Operation Id: WebApps_CreateFunction
         /// </summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Add or update a function secret.
+        /// Add or update a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_CreateOrUpdateFunctionSecret
         /// </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Add or update a function secret.
+        /// Add or update a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_CreateOrUpdateFunctionSecret
         /// </summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a function secret.
+        /// Delete a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_DeleteFunctionSecret
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a function secret.
+        /// Delete a function secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName}
         /// Operation Id: WebApps_DeleteFunctionSecret
         /// </summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function keys for a function in a web site, or a deployment slot.
+        /// Get function keys for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listkeys
         /// Operation Id: WebApps_ListFunctionKeys
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function keys for a function in a web site, or a deployment slot.
+        /// Get function keys for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listkeys
         /// Operation Id: WebApps_ListFunctionKeys
         /// </summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function secrets for a function in a web site, or a deployment slot.
+        /// Get function secrets for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listsecrets
         /// Operation Id: WebApps_ListFunctionSecrets
         /// </summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get function secrets for a function in a web site, or a deployment slot.
+        /// Get function secrets for a function in a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listsecrets
         /// Operation Id: WebApps_ListFunctionSecrets
         /// </summary>

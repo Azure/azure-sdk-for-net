@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates a Kubernetes Environment.
+        /// Creates or updates a Kubernetes Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_CreateOrUpdate
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates a Kubernetes Environment.
+        /// Creates or updates a Kubernetes Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_CreateOrUpdate
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of a Kubernetes Environment.
+        /// Get the properties of a Kubernetes Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Get
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of a Kubernetes Environment.
+        /// Get the properties of a Kubernetes Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Get
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all the Kubernetes Environments in a resource group.
+        /// Get all the Kubernetes Environments in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
         /// Operation Id: KubeEnvironments_ListByResourceGroup
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all the Kubernetes Environments in a resource group.
+        /// Get all the Kubernetes Environments in a resource group.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments
         /// Operation Id: KubeEnvironments_ListByResourceGroup
         /// </summary>

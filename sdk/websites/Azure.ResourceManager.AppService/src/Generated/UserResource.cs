@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets publishing user
+        /// Gets publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: GetPublishingUser
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets publishing user
+        /// Gets publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: GetPublishingUser
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates publishing user
+        /// Updates publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: UpdatePublishingUser
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates publishing user
+        /// Updates publishing user
         /// Request Path: /providers/Microsoft.Web/publishingUsers/web
         /// Operation Id: UpdatePublishingUser
         /// </summary>

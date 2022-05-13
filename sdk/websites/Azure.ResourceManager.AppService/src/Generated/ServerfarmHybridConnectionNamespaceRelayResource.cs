@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a Hybrid Connection in use in an App Service plan.
+        /// Delete a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_DeleteHybridConnection
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a Hybrid Connection in use in an App Service plan.
+        /// Delete a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_DeleteHybridConnection
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the send key name and value of a Hybrid Connection.
+        /// Get the send key name and value of a Hybrid Connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys
         /// Operation Id: AppServicePlans_ListHybridConnectionKeys
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the send key name and value of a Hybrid Connection.
+        /// Get the send key name and value of a Hybrid Connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys
         /// Operation Id: AppServicePlans_ListHybridConnectionKeys
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps that use a Hybrid Connection in an App Service Plan.
+        /// Get all apps that use a Hybrid Connection in an App Service Plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites
         /// Operation Id: AppServicePlans_ListWebAppsByHybridConnection
         /// </summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps that use a Hybrid Connection in an App Service Plan.
+        /// Get all apps that use a Hybrid Connection in an App Service Plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites
         /// Operation Id: AppServicePlans_ListWebAppsByHybridConnection
         /// </summary>

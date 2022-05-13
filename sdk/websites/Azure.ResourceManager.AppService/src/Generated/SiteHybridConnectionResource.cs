@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a hybrid connection configuration by its name.
+        /// Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnection
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a hybrid connection configuration by its name.
+        /// Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnection
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a relay service connection by its name.
+        /// Deletes a relay service connection by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
         /// Operation Id: WebApps_DeleteRelayServiceConnection
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a relay service connection by its name.
+        /// Deletes a relay service connection by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
         /// Operation Id: WebApps_DeleteRelayServiceConnection
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
         /// Operation Id: WebApps_UpdateRelayServiceConnection
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
         /// Operation Id: WebApps_UpdateRelayServiceConnection
         /// </summary>

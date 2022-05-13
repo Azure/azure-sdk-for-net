@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site build
+        /// Gets the details of the user provided function app registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site build
+        /// Gets the details of the user provided function app registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a static site build.
+        /// Deletes a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_DeleteStaticSiteBuild
         /// </summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a static site build.
+        /// Deletes a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_DeleteStaticSiteBuild
         /// </summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the app settings of a static site build.
+        /// Creates or updates the app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/appsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildAppSettings
         /// </summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the app settings of a static site build.
+        /// Creates or updates the app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/appsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildAppSettings
         /// </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the function app settings of a static site build.
+        /// Creates or updates the function app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/functionappsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the function app settings of a static site build.
+        /// Creates or updates the function app settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/config/functionappsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings
         /// </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the functions of a particular static site build.
+        /// Gets the functions of a particular static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/functions
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctions
         /// </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the functions of a particular static site build.
+        /// Gets the functions of a particular static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/functions
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctions
         /// </summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildAppSettings
         /// </summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildAppSettings
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listFunctionAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctionAppSettings
         /// </summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site build.
+        /// Gets the application settings of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/listFunctionAppSettings
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctionAppSettings
         /// </summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deploys zipped content to a specific environment of a static site.
+        /// Deploys zipped content to a specific environment of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/zipdeploy
         /// Operation Id: StaticSites_CreateZipDeploymentForStaticSiteBuild
         /// </summary>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deploys zipped content to a specific environment of a static site.
+        /// Deploys zipped content to a specific environment of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/zipdeploy
         /// Operation Id: StaticSites_CreateZipDeploymentForStaticSiteBuild
         /// </summary>

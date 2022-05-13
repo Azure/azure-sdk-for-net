@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a worker pool.
+        /// Create or update a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_CreateOrUpdateWorkerPool
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a worker pool.
+        /// Create or update a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_CreateOrUpdateWorkerPool
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a worker pool.
+        /// Get properties of a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_GetWorkerPool
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a worker pool.
+        /// Get properties of a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_GetWorkerPool
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all worker pools of an App Service Environment.
+        /// Get all worker pools of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools
         /// Operation Id: AppServiceEnvironments_ListWorkerPools
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all worker pools of an App Service Environment.
+        /// Get all worker pools of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools
         /// Operation Id: AppServiceEnvironments_ListWorkerPools
         /// </summary>

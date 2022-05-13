@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an existing custom domain for a particular static site.
+        /// Gets an existing custom domain for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_GetStaticSiteCustomDomain
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an existing custom domain for a particular static site.
+        /// Gets an existing custom domain for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_GetStaticSiteCustomDomain
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a custom domain.
+        /// Deletes a custom domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_DeleteStaticSiteCustomDomain
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a custom domain.
+        /// Deletes a custom domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_DeleteStaticSiteCustomDomain
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site custom domain in an existing resource group and static site.
+        /// Creates a new static site custom domain in an existing resource group and static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteCustomDomain
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site custom domain in an existing resource group and static site.
+        /// Creates a new static site custom domain in an existing resource group and static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteCustomDomain
         /// </summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validates a particular custom domain can be added to a static site.
+        /// Validates a particular custom domain can be added to a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}/validate
         /// Operation Id: StaticSites_ValidateCustomDomainCanBeAddedToStaticSite
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validates a particular custom domain can be added to a static site.
+        /// Validates a particular custom domain can be added to a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}/validate
         /// Operation Id: StaticSites_ValidateCustomDomainCanBeAddedToStaticSite
         /// </summary>

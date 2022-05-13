@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates a certificate and associates with key vault secret.
+        /// Creates or updates a certificate and associates with key vault secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_CreateOrUpdateCertificate
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates a certificate and associates with key vault secret.
+        /// Creates or updates a certificate and associates with key vault secret.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_CreateOrUpdateCertificate
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the certificate associated with a certificate order.
+        /// Get the certificate associated with a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_GetCertificate
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the certificate associated with a certificate order.
+        /// Get the certificate associated with a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates/{name}
         /// Operation Id: AppServiceCertificateOrders_GetCertificate
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all certificates associated with a certificate order.
+        /// List all certificates associated with a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates
         /// Operation Id: AppServiceCertificateOrders_ListCertificates
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all certificates associated with a certificate order.
+        /// List all certificates associated with a certificate order.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/certificates
         /// Operation Id: AppServiceCertificateOrders_ListCertificates
         /// </summary>

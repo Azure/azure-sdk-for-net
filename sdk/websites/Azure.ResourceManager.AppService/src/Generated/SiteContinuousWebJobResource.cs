@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Gets a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_GetContinuousWebJob
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a continuous web job by its ID for an app, or a deployment slot.
+        /// Delete a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteContinuousWebJob
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a continuous web job by its ID for an app, or a deployment slot.
+        /// Delete a continuous web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteContinuousWebJob
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Start a continuous web job for an app, or a deployment slot.
+        /// Start a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/start
         /// Operation Id: WebApps_StartContinuousWebJob
         /// </summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Start a continuous web job for an app, or a deployment slot.
+        /// Start a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/start
         /// Operation Id: WebApps_StartContinuousWebJob
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Stop a continuous web job for an app, or a deployment slot.
+        /// Stop a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/stop
         /// Operation Id: WebApps_StopContinuousWebJob
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Stop a continuous web job for an app, or a deployment slot.
+        /// Stop a continuous web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/stop
         /// Operation Id: WebApps_StopContinuousWebJob
         /// </summary>

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_GetHybridConnection
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_GetHybridConnection
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Removes a Hybrid Connection from this site.
+        /// Removes a Hybrid Connection from this site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_DeleteHybridConnection
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Removes a Hybrid Connection from this site.
+        /// Removes a Hybrid Connection from this site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_DeleteHybridConnection
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new Hybrid Connection using a Service Bus relay.
+        /// Creates a new Hybrid Connection using a Service Bus relay.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_UpdateHybridConnection
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new Hybrid Connection using a Service Bus relay.
+        /// Creates a new Hybrid Connection using a Service Bus relay.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: WebApps_UpdateHybridConnection
         /// </summary>

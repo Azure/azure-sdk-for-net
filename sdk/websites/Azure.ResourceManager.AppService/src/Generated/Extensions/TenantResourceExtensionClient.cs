@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.CertificateRegistration/operations
         /// Operation Id: CertificateRegistrationProvider_ListOperations
         /// </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.CertificateRegistration/operations
         /// Operation Id: CertificateRegistrationProvider_ListOperations
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.DomainRegistration/operations
         /// Operation Id: DomainRegistrationProvider_ListOperations
         /// </summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
         /// Request Path: /providers/Microsoft.DomainRegistration/operations
         /// Operation Id: DomainRegistrationProvider_ListOperations
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Get available application frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions
+        /// Get available Function app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions
+        /// Get available Function app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
+        /// Get available Function app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Function app frameworks and their versions for location
+        /// Get available Function app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
+        /// Get available Web app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions for location
+        /// Get available Web app frameworks and their versions for location
         /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
         /// Request Path: /providers/Microsoft.Web/operations
         /// Operation Id: Provider_ListOperations
         /// </summary>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
+        /// Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
         /// Request Path: /providers/Microsoft.Web/operations
         /// Operation Id: Provider_ListOperations
         /// </summary>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions
+        /// Get available Web app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available Web app frameworks and their versions
+        /// Get available Web app frameworks and their versions
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>

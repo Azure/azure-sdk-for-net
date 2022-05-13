@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site detector response
+        /// Get site detector response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get site detector response
+        /// Get site detector response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>

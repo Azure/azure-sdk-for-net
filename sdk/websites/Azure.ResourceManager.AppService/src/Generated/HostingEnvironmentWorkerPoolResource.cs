@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a worker pool.
+        /// Get properties of a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_GetWorkerPool
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a worker pool.
+        /// Get properties of a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_GetWorkerPool
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a worker pool.
+        /// Create or update a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update a worker pool.
+        /// Create or update a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment.
+        /// Get metric definitions for a specific instance of a worker pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions
         /// </summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment.
+        /// Get metric definitions for a specific instance of a worker pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a worker pool of an App Service Environment.
+        /// Get metric definitions for a worker pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListWebWorkerMetricDefinitions
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get metric definitions for a worker pool of an App Service Environment.
+        /// Get metric definitions for a worker pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions
         /// Operation Id: AppServiceEnvironments_ListWebWorkerMetricDefinitions
         /// </summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available SKUs for scaling a worker pool.
+        /// Get available SKUs for scaling a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available SKUs for scaling a worker pool.
+        /// Get available SKUs for scaling a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus
         /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
         /// </summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get usage metrics for a worker pool of an App Service Environment.
+        /// Get usage metrics for a worker pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages
         /// Operation Id: AppServiceEnvironments_ListWebWorkerUsages
         /// </summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get usage metrics for a worker pool of an App Service Environment.
+        /// Get usage metrics for a worker pool of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages
         /// Operation Id: AppServiceEnvironments_ListWebWorkerUsages
         /// </summary>

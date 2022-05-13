@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a hostname binding for an app.
+        /// Creates a hostname binding for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_CreateOrUpdatePublicCertificate
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a hostname binding for an app.
+        /// Creates a hostname binding for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_CreateOrUpdatePublicCertificate
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the named public certificate for an app (or deployment slot, if specified).
+        /// Get the named public certificate for an app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_GetPublicCertificate
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the named public certificate for an app (or deployment slot, if specified).
+        /// Get the named public certificate for an app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_GetPublicCertificate
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get public certificates for an app or a deployment slot.
+        /// Get public certificates for an app or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates
         /// Operation Id: WebApps_ListPublicCertificates
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get public certificates for an app or a deployment slot.
+        /// Get public certificates for an app or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates
         /// Operation Id: WebApps_ListPublicCertificates
         /// </summary>

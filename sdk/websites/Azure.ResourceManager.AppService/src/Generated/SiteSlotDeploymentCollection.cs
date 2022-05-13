@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create a deployment for an app, or a deployment slot.
+        /// Create a deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
         /// Operation Id: WebApps_CreateDeploymentSlot
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create a deployment for an app, or a deployment slot.
+        /// Create a deployment for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
         /// Operation Id: WebApps_CreateDeploymentSlot
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
         /// Operation Id: WebApps_GetDeploymentSlot
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Get a deployment by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
         /// Operation Id: WebApps_GetDeploymentSlot
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List deployments for an app, or a deployment slot.
+        /// List deployments for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments
         /// Operation Id: WebApps_ListDeploymentsSlot
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List deployments for an app, or a deployment slot.
+        /// List deployments for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments
         /// Operation Id: WebApps_ListDeploymentsSlot
         /// </summary>

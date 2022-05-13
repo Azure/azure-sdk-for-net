@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all scale-out instances of an app.
+        /// Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
         /// Operation Id: WebApps_GetInstanceInfo
         /// </summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all scale-out instances of an app.
+        /// Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
         /// Operation Id: WebApps_GetInstanceInfo
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all scale-out instances of an app.
+        /// Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances
         /// Operation Id: WebApps_ListInstanceIdentifiers
         /// </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all scale-out instances of an app.
+        /// Gets all scale-out instances of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances
         /// Operation Id: WebApps_ListInstanceIdentifiers
         /// </summary>

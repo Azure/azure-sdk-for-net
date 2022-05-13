@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistorySlot
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistorySlot
         /// </summary>

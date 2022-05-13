@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site custom domain in an existing resource group and static site.
+        /// Creates a new static site custom domain in an existing resource group and static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteCustomDomain
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site custom domain in an existing resource group and static site.
+        /// Creates a new static site custom domain in an existing resource group and static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteCustomDomain
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an existing custom domain for a particular static site.
+        /// Gets an existing custom domain for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_GetStaticSiteCustomDomain
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an existing custom domain for a particular static site.
+        /// Gets an existing custom domain for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_GetStaticSiteCustomDomain
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all static site custom domains for a particular static site.
+        /// Gets all static site custom domains for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains
         /// Operation Id: StaticSites_ListStaticSiteCustomDomains
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets all static site custom domains for a particular static site.
+        /// Gets all static site custom domains for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains
         /// Operation Id: StaticSites_ListStaticSiteCustomDomains
         /// </summary>

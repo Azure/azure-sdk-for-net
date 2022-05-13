@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
+        /// Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
         /// </summary>

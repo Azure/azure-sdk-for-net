@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
+        /// <summary> List all ResourceHealthMetadata for all sites in the resource group in the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
+        /// <summary> Gets the category of ResourceHealthMetadata to use for the given site as a collection. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>

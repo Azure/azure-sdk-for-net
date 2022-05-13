@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get domain ownership identifier for web app.
+        /// Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get domain ownership identifier for web app.
+        /// Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifierSlot
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a domain ownership identifier for a web app.
+        /// Deletes a domain ownership identifier for a web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_DeleteDomainOwnershipIdentifierSlot
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a domain ownership identifier for a web app.
+        /// Deletes a domain ownership identifier for a web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_DeleteDomainOwnershipIdentifierSlot
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_UpdateDomainOwnershipIdentifierSlot
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_UpdateDomainOwnershipIdentifierSlot
         /// </summary>

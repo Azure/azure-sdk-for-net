@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates a named add-on of an app.
+        /// Updates a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_AddPremierAddOn
         /// </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates a named add-on of an app.
+        /// Updates a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_AddPremierAddOn
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a named add-on of an app.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOn
         /// </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a named add-on of an app.
+        /// Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOn
         /// </summary>

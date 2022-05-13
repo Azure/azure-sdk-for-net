@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Hosting Environment Detector Response
+        /// Get Hosting Environment Detector Response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get Hosting Environment Detector Response
+        /// Get Hosting Environment Detector Response
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a worker pool.
+        /// Get properties of a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_GetWorkerPool
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get properties of a worker pool.
+        /// Get properties of a worker pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
         /// Operation Id: AppServiceEnvironments_GetWorkerPool
         /// </summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Gets a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnection
         /// </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Gets a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: AppServiceEnvironments_GetPrivateEndpointConnection
         /// </summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a recommendation rule for an app.
+        /// Get a recommendation rule for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
         /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
         /// </summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a recommendation rule for an app.
+        /// Get a recommendation rule for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/{name}
         /// Operation Id: Recommendations_GetRuleDetailsByHostingEnvironment
         /// </summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of an App Service Environment.
+        /// Get the properties of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Get
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the properties of an App Service Environment.
+        /// Get the properties of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Get
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete an App Service Environment.
+        /// Delete an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Delete
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete an App Service Environment.
+        /// Delete an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Delete
         /// </summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update an App Service Environment.
+        /// Create or update an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Create or update an App Service Environment.
+        /// Create or update an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Update
         /// </summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the used, available, and total worker capacity an App Service Environment.
+        /// Get the used, available, and total worker capacity an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/compute
         /// Operation Id: AppServiceEnvironments_ListCapacities
         /// </summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the used, available, and total worker capacity an App Service Environment.
+        /// Get the used, available, and total worker capacity an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/compute
         /// Operation Id: AppServiceEnvironments_ListCapacities
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get IP addresses assigned to an App Service Environment.
+        /// Get IP addresses assigned to an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
         /// Operation Id: AppServiceEnvironments_GetVipInfo
         /// </summary>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get IP addresses assigned to an App Service Environment.
+        /// Get IP addresses assigned to an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip
         /// Operation Id: AppServiceEnvironments_GetVipInfo
         /// </summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get diagnostic information for an App Service Environment.
+        /// Get diagnostic information for an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
         /// Operation Id: AppServiceEnvironments_ListDiagnostics
         /// </summary>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get diagnostic information for an App Service Environment.
+        /// Get diagnostic information for an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics
         /// Operation Id: AppServiceEnvironments_ListDiagnostics
         /// </summary>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a diagnostics item for an App Service Environment.
+        /// Get a diagnostics item for an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
         /// Operation Id: AppServiceEnvironments_GetDiagnosticsItem
         /// </summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a diagnostics item for an App Service Environment.
+        /// Get a diagnostics item for an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/diagnostics/{diagnosticsName}
         /// Operation Id: AppServiceEnvironments_GetDiagnosticsItem
         /// </summary>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the network endpoints of all inbound dependencies of an App Service Environment.
+        /// Get the network endpoints of all inbound dependencies of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/inboundNetworkDependenciesEndpoints
         /// Operation Id: AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints
         /// </summary>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the network endpoints of all inbound dependencies of an App Service Environment.
+        /// Get the network endpoints of all inbound dependencies of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/inboundNetworkDependenciesEndpoints
         /// Operation Id: AppServiceEnvironments_GetInboundNetworkDependenciesEndpoints
         /// </summary>
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all currently running operations on the App Service Environment.
+        /// List all currently running operations on the App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
         /// Operation Id: AppServiceEnvironments_ListOperations
         /// </summary>
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all currently running operations on the App Service Environment.
+        /// List all currently running operations on the App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/operations
         /// Operation Id: AppServiceEnvironments_ListOperations
         /// </summary>
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the network endpoints of all outbound dependencies of an App Service Environment.
+        /// Get the network endpoints of all outbound dependencies of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
         /// Operation Id: AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints
         /// </summary>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the network endpoints of all outbound dependencies of an App Service Environment.
+        /// Get the network endpoints of all outbound dependencies of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/outboundNetworkDependenciesEndpoints
         /// Operation Id: AppServiceEnvironments_GetOutboundNetworkDependenciesEndpoints
         /// </summary>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the private link resources
+        /// Gets the private link resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
         /// Operation Id: AppServiceEnvironments_GetPrivateLinkResources
         /// </summary>
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the private link resources
+        /// Gets the private link resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateLinkResources
         /// Operation Id: AppServiceEnvironments_GetPrivateLinkResources
         /// </summary>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reboot all machines in an App Service Environment.
+        /// Reboot all machines in an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot
         /// Operation Id: AppServiceEnvironments_Reboot
         /// </summary>
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reboot all machines in an App Service Environment.
+        /// Reboot all machines in an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/reboot
         /// Operation Id: AppServiceEnvironments_Reboot
         /// </summary>
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all App Service plans in an App Service Environment.
+        /// Get all App Service plans in an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms
         /// Operation Id: AppServiceEnvironments_ListAppServicePlans
         /// </summary>
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all App Service plans in an App Service Environment.
+        /// Get all App Service plans in an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/serverfarms
         /// Operation Id: AppServiceEnvironments_ListAppServicePlans
         /// </summary>
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps in an App Service Environment.
+        /// Get all apps in an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/sites
         /// Operation Id: AppServiceEnvironments_ListWebApps
         /// </summary>
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all apps in an App Service Environment.
+        /// Get all apps in an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/sites
         /// Operation Id: AppServiceEnvironments_ListWebApps
         /// </summary>
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get global usage metrics of an App Service Environment.
+        /// Get global usage metrics of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/usages
         /// Operation Id: AppServiceEnvironments_ListUsages
         /// </summary>
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get global usage metrics of an App Service Environment.
+        /// Get global usage metrics of an App Service Environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/usages
         /// Operation Id: AppServiceEnvironments_ListUsages
         /// </summary>
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get past recommendations for an app, optionally specified by the time range.
+        /// Get past recommendations for an app, optionally specified by the time range.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendationHistory
         /// Operation Id: Recommendations_ListHistoryForHostingEnvironment
         /// </summary>
@@ -1282,7 +1282,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get past recommendations for an app, optionally specified by the time range.
+        /// Get past recommendations for an app, optionally specified by the time range.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendationHistory
         /// Operation Id: Recommendations_ListHistoryForHostingEnvironment
         /// </summary>
@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all recommendations for a hosting environment.
+        /// Get all recommendations for a hosting environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations
         /// Operation Id: Recommendations_ListRecommendedRulesForHostingEnvironment
         /// </summary>
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all recommendations for a hosting environment.
+        /// Get all recommendations for a hosting environment.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations
         /// Operation Id: Recommendations_ListRecommendedRulesForHostingEnvironment
         /// </summary>
@@ -1414,7 +1414,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disable all recommendations for an app.
+        /// Disable all recommendations for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/disable
         /// Operation Id: Recommendations_DisableAllForHostingEnvironment
         /// </summary>
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Disable all recommendations for an app.
+        /// Disable all recommendations for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/disable
         /// Operation Id: Recommendations_DisableAllForHostingEnvironment
         /// </summary>
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reset all recommendation opt-out settings for an app.
+        /// Reset all recommendation opt-out settings for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/reset
         /// Operation Id: Recommendations_ResetAllFiltersForHostingEnvironment
         /// </summary>
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Reset all recommendation opt-out settings for an app.
+        /// Reset all recommendation opt-out settings for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/recommendations/reset
         /// Operation Id: Recommendations_ResetAllFiltersForHostingEnvironment
         /// </summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_CreateOrUpdateRelayServiceConnectionSlot
         /// </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_CreateOrUpdateRelayServiceConnectionSlot
         /// </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a hybrid connection configuration by its name.
+        /// Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnectionSlot
         /// </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a hybrid connection configuration by its name.
+        /// Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnectionSlot
         /// </summary>

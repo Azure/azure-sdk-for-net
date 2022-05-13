@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary> Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
+        /// <summary> Microsoft.CertificateRegistration call to get a detector response from App Lens. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="certificateOrderName"> The certificate order name for which the response is needed. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
+        /// <summary> Microsoft.CertificateRegistration to get the list of detectors for this RP. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>

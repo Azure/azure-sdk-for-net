@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier
+        /// Creates an ownership identifier for a domain or updates identifier details for an existing identifier
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
         /// Operation Id: Domains_CreateOrUpdateOwnershipIdentifier
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates an ownership identifier for a domain or updates identifier details for an existing identifier
+        /// Creates an ownership identifier for a domain or updates identifier details for an existing identifier
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
         /// Operation Id: Domains_CreateOrUpdateOwnershipIdentifier
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get ownership identifier for domain
+        /// Get ownership identifier for domain
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
         /// Operation Id: Domains_GetOwnershipIdentifier
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get ownership identifier for domain
+        /// Get ownership identifier for domain
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers/{name}
         /// Operation Id: Domains_GetOwnershipIdentifier
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists domain ownership identifiers.
+        /// Lists domain ownership identifiers.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers
         /// Operation Id: Domains_ListOwnershipIdentifiers
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists domain ownership identifiers.
+        /// Lists domain ownership identifiers.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}/domainOwnershipIdentifiers
         /// Operation Id: Domains_ListOwnershipIdentifiers
         /// </summary>

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
+        /// Microsoft.CertificateRegistration call to get a detector response from App Lens.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
+        /// Microsoft.CertificateRegistration call to get a detector response from App Lens.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Microsoft.CertificateRegistration to get the list of detectors for this RP.
+        /// Microsoft.CertificateRegistration to get the list of detectors for this RP.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors
         /// Operation Id: CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse
         /// </summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Microsoft.CertificateRegistration to get the list of detectors for this RP.
+        /// Microsoft.CertificateRegistration to get the list of detectors for this RP.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors
         /// Operation Id: CertificateOrdersDiagnostics_ListAppServiceCertificateOrderDetectorResponse
         /// </summary>

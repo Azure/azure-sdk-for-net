@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>

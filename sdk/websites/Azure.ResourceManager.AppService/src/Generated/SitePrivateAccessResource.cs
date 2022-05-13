@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Gets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_GetPrivateAccess
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Gets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_GetPrivateAccess
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_PutPrivateAccessVnet
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        /// Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_PutPrivateAccessVnet
         /// </summary>

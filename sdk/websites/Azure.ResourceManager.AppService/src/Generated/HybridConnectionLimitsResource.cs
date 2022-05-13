@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Get the maximum number of Hybrid Connections allowed in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
         /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        /// Get the maximum number of Hybrid Connections allowed in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit
         /// Operation Id: AppServicePlans_GetHybridConnectionPlanLimit
         /// </summary>

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all apps for a subscription. </summary>
+        /// <summary> Get all apps for a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all apps for a subscription. </summary>
+        /// <summary> Get all apps for a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all web, mobile, and API apps in the specified resource group. </summary>
+        /// <summary> Gets all web, mobile, and API apps in the specified resource group. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all web, mobile, and API apps in the specified resource group. </summary>
+        /// <summary> Gets all web, mobile, and API apps in the specified resource group. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="includeSlots"> Specify &lt;strong&gt;true&lt;/strong&gt; to include deployment slots in results. The default is false, which only gives you the production slot of all apps. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
+        /// <summary> Gets the details of a web, mobile, or API app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
+        /// <summary> Gets the details of a web, mobile, or API app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
+        /// <summary> Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app to delete. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
+        /// <summary> Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app to delete. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Analyze a custom hostname. </summary>
+        /// <summary> Analyze a custom hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Analyze a custom hostname. </summary>
+        /// <summary> Analyze a custom hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Applies the configuration settings from the target slot onto the current slot. </summary>
+        /// <summary> Applies the configuration settings from the target slot onto the current slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Applies the configuration settings from the target slot onto the current slot. </summary>
+        /// <summary> Applies the configuration settings from the target slot onto the current slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a backup of an app. </summary>
+        /// <summary> Creates a backup of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a backup of an app. </summary>
+        /// <summary> Creates a backup of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a backup of an app by its ID. </summary>
+        /// <summary> Gets a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a backup of an app by its ID. </summary>
+        /// <summary> Gets a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a backup of an app by its ID. </summary>
+        /// <summary> Deletes a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a backup of an app by its ID. </summary>
+        /// <summary> Deletes a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
+        /// <summary> Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
+        /// <summary> Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
+        /// <summary> Restores a specific backup to another app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
+        /// <summary> Restores a specific backup to another app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1233,7 +1233,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether FTP is allowed on the site or not. </summary>
+        /// <summary> Returns whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1314,7 +1314,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether FTP is allowed on the site or not. </summary>
+        /// <summary> Returns whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1370,7 +1370,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
+        /// <summary> Updates whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
+        /// <summary> Updates whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed on the site or not. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed on the site or not. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <summary> Updates whether user publishing credentials are allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1571,7 +1571,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <summary> Updates whether user publishing credentials are allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1623,7 +1623,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1706,7 +1706,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Replaces the application settings of an app. </summary>
+        /// <summary> Replaces the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Replaces the application settings of an app. </summary>
+        /// <summary> Replaces the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1789,7 +1789,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the application settings of an app. </summary>
+        /// <summary> Gets the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1818,7 +1818,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the application settings of an app. </summary>
+        /// <summary> Gets the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the Authentication / Authorization settings associated with web app. </summary>
+        /// <summary> Updates the Authentication / Authorization settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -1903,7 +1903,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the Authentication / Authorization settings associated with web app. </summary>
+        /// <summary> Updates the Authentication / Authorization settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Authentication/Authorization settings of an app. </summary>
+        /// <summary> Gets the Authentication/Authorization settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1984,7 +1984,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Authentication/Authorization settings of an app. </summary>
+        /// <summary> Gets the Authentication/Authorization settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -2069,7 +2069,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -2121,7 +2121,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2150,7 +2150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2204,7 +2204,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the Azure storage account configurations of an app. </summary>
+        /// <summary> Updates the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2235,7 +2235,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the Azure storage account configurations of an app. </summary>
+        /// <summary> Updates the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2287,7 +2287,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Azure storage account configurations of an app. </summary>
+        /// <summary> Gets the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2316,7 +2316,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Azure storage account configurations of an app. </summary>
+        /// <summary> Gets the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2370,7 +2370,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the backup configuration of an app. </summary>
+        /// <summary> Updates the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the backup configuration of an app. </summary>
+        /// <summary> Updates the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes the backup configuration of an app. </summary>
+        /// <summary> Deletes the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2477,7 +2477,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes the backup configuration of an app. </summary>
+        /// <summary> Deletes the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2522,7 +2522,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the backup configuration of an app. </summary>
+        /// <summary> Gets the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2551,7 +2551,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the backup configuration of an app. </summary>
+        /// <summary> Gets the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2601,7 +2601,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2630,7 +2630,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2681,7 +2681,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2714,7 +2714,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2768,7 +2768,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2797,7 +2797,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2848,7 +2848,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2881,7 +2881,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2939,7 +2939,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Replaces the connection strings of an app. </summary>
+        /// <summary> Replaces the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2970,7 +2970,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Replaces the connection strings of an app. </summary>
+        /// <summary> Replaces the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3022,7 +3022,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the connection strings of an app. </summary>
+        /// <summary> Gets the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3051,7 +3051,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the connection strings of an app. </summary>
+        /// <summary> Gets the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3101,7 +3101,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the logging configuration of an app. </summary>
+        /// <summary> Gets the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3132,7 +3132,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the logging configuration of an app. </summary>
+        /// <summary> Gets the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3188,7 +3188,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <summary> Updates the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3219,7 +3219,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <summary> Updates the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3275,7 +3275,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Replaces the metadata of an app. </summary>
+        /// <summary> Replaces the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3306,7 +3306,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Replaces the metadata of an app. </summary>
+        /// <summary> Replaces the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3358,7 +3358,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the metadata of an app. </summary>
+        /// <summary> Gets the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3387,7 +3387,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the metadata of an app. </summary>
+        /// <summary> Gets the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3437,7 +3437,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
+        /// <summary> Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3461,7 +3461,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
+        /// <summary> Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3510,7 +3510,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the Push settings associated with web app. </summary>
+        /// <summary> Updates the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -3541,7 +3541,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the Push settings associated with web app. </summary>
+        /// <summary> Updates the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -3593,7 +3593,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Push settings associated with web app. </summary>
+        /// <summary> Gets the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -3622,7 +3622,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Push settings associated with web app. </summary>
+        /// <summary> Gets the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -3672,7 +3672,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
+        /// <summary> Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3703,7 +3703,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
+        /// <summary> Gets the names of app settings and connection strings that stick to the slot (not swapped). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3759,7 +3759,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
+        /// <summary> Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3790,7 +3790,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
+        /// <summary> Updates the names of application settings and connection string that remain with the slot during swap operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3842,7 +3842,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
+        /// <summary> Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3873,7 +3873,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
+        /// <summary> Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3929,7 +3929,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3960,7 +3960,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4016,7 +4016,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4047,7 +4047,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4099,7 +4099,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4128,7 +4128,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4179,7 +4179,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
+        /// <summary> Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4212,7 +4212,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
+        /// <summary> Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4268,7 +4268,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Reverts the configuration of an app to a previous snapshot. </summary>
+        /// <summary> Reverts the configuration of an app to a previous snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4294,7 +4294,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Reverts the configuration of an app to a previous snapshot. </summary>
+        /// <summary> Reverts the configuration of an app to a previous snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4341,7 +4341,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the last lines of docker logs for the given site. </summary>
+        /// <summary> Gets the last lines of docker logs for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -4370,7 +4370,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the last lines of docker logs for the given site. </summary>
+        /// <summary> Gets the last lines of docker logs for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -4420,7 +4420,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the ZIP archived docker log files for the given site. </summary>
+        /// <summary> Gets the ZIP archived docker log files for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -4449,7 +4449,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the ZIP archived docker log files for the given site. </summary>
+        /// <summary> Gets the ZIP archived docker log files for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -4499,7 +4499,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4528,7 +4528,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4579,7 +4579,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4612,7 +4612,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4667,7 +4667,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4694,7 +4694,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4744,7 +4744,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Start a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4770,7 +4770,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Start a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4819,7 +4819,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stop a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Stop a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4845,7 +4845,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stop a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Stop a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -4892,7 +4892,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4921,7 +4921,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -4972,7 +4972,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Get a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5005,7 +5005,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Get a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5064,7 +5064,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Create a deployment for an app, or a deployment slot. </summary>
+        /// <summary> Create a deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5097,7 +5097,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Create a deployment for an app, or a deployment slot. </summary>
+        /// <summary> Create a deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5152,7 +5152,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5179,7 +5179,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5229,7 +5229,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List deployment log for specific deployment for an app, or a deployment slot. </summary>
+        /// <summary> List deployment log for specific deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5260,7 +5260,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List deployment log for specific deployment for an app, or a deployment slot. </summary>
+        /// <summary> List deployment log for specific deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5316,7 +5316,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
+        /// <summary> Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5347,7 +5347,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
+        /// <summary> Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5399,7 +5399,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5428,7 +5428,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5479,7 +5479,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get domain ownership identifier for web app. </summary>
+        /// <summary> Get domain ownership identifier for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5512,7 +5512,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get domain ownership identifier for web app. </summary>
+        /// <summary> Get domain ownership identifier for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5571,7 +5571,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5604,7 +5604,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5659,7 +5659,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
+        /// <summary> Deletes a domain ownership identifier for a web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5686,7 +5686,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
+        /// <summary> Deletes a domain ownership identifier for a web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5739,7 +5739,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5772,7 +5772,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -5826,7 +5826,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -5857,7 +5857,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -5913,7 +5913,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -5939,7 +5939,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -5986,7 +5986,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -6015,7 +6015,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -6065,7 +6065,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6094,7 +6094,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6144,7 +6144,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Fetch a short lived token that can be exchanged for a master key. </summary>
+        /// <summary> Fetch a short lived token that can be exchanged for a master key. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -6173,7 +6173,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Fetch a short lived token that can be exchanged for a master key. </summary>
+        /// <summary> Fetch a short lived token that can be exchanged for a master key. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -6224,7 +6224,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary> Get function information by its ID for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6257,7 +6257,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary> Get function information by its ID for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6316,7 +6316,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
+        /// <summary> Create function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6344,7 +6344,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
+        /// <summary> Create function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6394,7 +6394,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
+        /// <summary> Delete a function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6420,7 +6420,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
+        /// <summary> Delete a function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6474,7 +6474,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Add or update a function secret. </summary>
+        /// <summary> Add or update a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6510,7 +6510,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Add or update a function secret. </summary>
+        /// <summary> Add or update a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6570,7 +6570,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a function secret. </summary>
+        /// <summary> Delete a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6598,7 +6598,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a function secret. </summary>
+        /// <summary> Delete a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6649,7 +6649,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function keys for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6680,7 +6680,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function keys for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6734,7 +6734,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get function secrets for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function secrets for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6765,7 +6765,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get function secrets for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function secrets for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6817,7 +6817,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get host secrets for a function app. </summary>
+        /// <summary> Get host secrets for a function app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6846,7 +6846,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get host secrets for a function app. </summary>
+        /// <summary> Get host secrets for a function app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -6896,7 +6896,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -6920,7 +6920,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -6965,7 +6965,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -6989,7 +6989,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7041,7 +7041,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Add or update a host level secret. </summary>
+        /// <summary> Add or update a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -7077,7 +7077,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Add or update a host level secret. </summary>
+        /// <summary> Add or update a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -7137,7 +7137,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a host level secret. </summary>
+        /// <summary> Delete a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -7165,7 +7165,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a host level secret. </summary>
+        /// <summary> Delete a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -7214,7 +7214,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7243,7 +7243,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7294,7 +7294,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the named hostname binding for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named hostname binding for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7327,7 +7327,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the named hostname binding for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named hostname binding for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7386,7 +7386,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7419,7 +7419,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7474,7 +7474,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7501,7 +7501,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -7552,7 +7552,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
+        /// <summary> Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7587,7 +7587,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
+        /// <summary> Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7650,7 +7650,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7685,7 +7685,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7744,7 +7744,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Removes a Hybrid Connection from this site. </summary>
+        /// <summary> Removes a Hybrid Connection from this site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7772,7 +7772,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Removes a Hybrid Connection from this site. </summary>
+        /// <summary> Removes a Hybrid Connection from this site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7828,7 +7828,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7863,7 +7863,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7919,7 +7919,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
+        /// <summary> Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7948,7 +7948,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
+        /// <summary> Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -7998,7 +7998,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8027,7 +8027,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8078,7 +8078,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
+        /// <summary> Gets a hybrid connection configuration by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8111,7 +8111,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
+        /// <summary> Gets a hybrid connection configuration by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8170,7 +8170,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8203,7 +8203,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8258,7 +8258,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a relay service connection by its name. </summary>
+        /// <summary> Deletes a relay service connection by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8284,7 +8284,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a relay service connection by its name. </summary>
+        /// <summary> Deletes a relay service connection by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8336,7 +8336,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8369,7 +8369,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8423,7 +8423,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8452,7 +8452,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8503,7 +8503,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8536,7 +8536,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -8592,7 +8592,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -8625,7 +8625,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -8685,7 +8685,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -8713,7 +8713,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -8764,7 +8764,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -8795,7 +8795,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -8849,7 +8849,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -8880,7 +8880,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -8935,7 +8935,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -8970,7 +8970,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9029,7 +9029,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9057,7 +9057,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9110,7 +9110,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9141,7 +9141,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9197,7 +9197,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9230,7 +9230,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9289,7 +9289,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9326,7 +9326,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9388,7 +9388,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9421,7 +9421,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -9475,7 +9475,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Shows whether an app can be cloned to another resource group or subscription. </summary>
+        /// <summary> Shows whether an app can be cloned to another resource group or subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9504,7 +9504,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Shows whether an app can be cloned to another resource group or subscription. </summary>
+        /// <summary> Shows whether an app can be cloned to another resource group or subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9554,7 +9554,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9583,7 +9583,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9633,7 +9633,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9662,7 +9662,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9717,7 +9717,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a web app. </summary>
+        /// <summary> Restores a web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -9745,7 +9745,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a web app. </summary>
+        /// <summary> Restores a web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -9798,7 +9798,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Migrates a local (in-app) MySql database to a remote MySql database. </summary>
+        /// <summary> Migrates a local (in-app) MySql database to a remote MySql database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -9824,7 +9824,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Migrates a local (in-app) MySql database to a remote MySql database. </summary>
+        /// <summary> Migrates a local (in-app) MySql database to a remote MySql database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -9871,7 +9871,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
+        /// <summary> Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -9900,7 +9900,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
+        /// <summary> Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -9950,7 +9950,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a Swift Virtual Network connection. </summary>
+        /// <summary> Gets a Swift Virtual Network connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -9981,7 +9981,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a Swift Virtual Network connection. </summary>
+        /// <summary> Gets a Swift Virtual Network connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10038,7 +10038,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10072,7 +10072,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10126,7 +10126,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
+        /// <summary> Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10150,7 +10150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
+        /// <summary> Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10200,7 +10200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10234,7 +10234,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10289,7 +10289,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
+        /// <summary> Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10320,7 +10320,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
+        /// <summary> Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10373,7 +10373,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10410,7 +10410,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10480,7 +10480,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start capturing network packets for the site (To be deprecated). </summary>
+        /// <summary> Start capturing network packets for the site (To be deprecated). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -10512,7 +10512,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start capturing network packets for the site (To be deprecated). </summary>
+        /// <summary> Start capturing network packets for the site (To be deprecated). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -10577,7 +10577,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -10605,7 +10605,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -10654,7 +10654,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -10679,7 +10679,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -10726,7 +10726,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10762,7 +10762,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10820,7 +10820,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10857,7 +10857,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10916,7 +10916,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -10952,7 +10952,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11009,7 +11009,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Generates a new publishing password for an app (or deployment slot, if specified). </summary>
+        /// <summary> Generates a new publishing password for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11034,7 +11034,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Generates a new publishing password for an app (or deployment slot, if specified). </summary>
+        /// <summary> Generates a new publishing password for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11084,7 +11084,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -11114,7 +11114,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -11165,7 +11165,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Gets web app&apos;s event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -11194,7 +11194,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Gets web app&apos;s event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -11244,7 +11244,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the premier add-ons of an app. </summary>
+        /// <summary> Gets the premier add-ons of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11273,7 +11273,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the premier add-ons of an app. </summary>
+        /// <summary> Gets the premier add-ons of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11324,7 +11324,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named add-on of an app. </summary>
+        /// <summary> Gets a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11357,7 +11357,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named add-on of an app. </summary>
+        /// <summary> Gets a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11416,7 +11416,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11449,7 +11449,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11504,7 +11504,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a premier add-on from an app. </summary>
+        /// <summary> Delete a premier add-on from an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11530,7 +11530,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a premier add-on from an app. </summary>
+        /// <summary> Delete a premier add-on from an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11582,7 +11582,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11615,7 +11615,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -11669,7 +11669,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -11700,7 +11700,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -11756,7 +11756,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -11787,7 +11787,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -11839,7 +11839,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -11868,7 +11868,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -11919,7 +11919,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a private endpoint connection. </summary>
+        /// <summary> Gets a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -11952,7 +11952,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a private endpoint connection. </summary>
+        /// <summary> Gets a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12011,7 +12011,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Approves or rejects a private endpoint connection. </summary>
+        /// <summary> Approves or rejects a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12040,7 +12040,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Approves or rejects a private endpoint connection. </summary>
+        /// <summary> Approves or rejects a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12091,7 +12091,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a private endpoint connection. </summary>
+        /// <summary> Deletes a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12119,7 +12119,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a private endpoint connection. </summary>
+        /// <summary> Deletes a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12168,7 +12168,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the private link resources. </summary>
+        /// <summary> Gets the private link resources. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12197,7 +12197,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the private link resources. </summary>
+        /// <summary> Gets the private link resources. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -12247,7 +12247,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12276,7 +12276,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12327,7 +12327,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12360,7 +12360,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12415,7 +12415,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12441,7 +12441,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12490,7 +12490,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12519,7 +12519,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12571,7 +12571,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12602,7 +12602,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12657,7 +12657,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12692,7 +12692,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12750,7 +12750,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12781,7 +12781,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -12833,7 +12833,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -12862,7 +12862,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -12913,7 +12913,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named public certificate for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -12946,7 +12946,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named public certificate for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13005,7 +13005,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13038,7 +13038,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13093,7 +13093,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13120,7 +13120,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13172,7 +13172,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the publishing profile for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the publishing profile for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13201,7 +13201,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the publishing profile for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the publishing profile for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13251,7 +13251,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
+        /// <summary> Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13275,7 +13275,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
+        /// <summary> Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13328,7 +13328,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restarts an app (or deployment slot, if specified). </summary>
+        /// <summary> Restarts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13354,7 +13354,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restarts an app (or deployment slot, if specified). </summary>
+        /// <summary> Restarts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13405,7 +13405,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
+        /// <summary> Restores an app from a backup blob in Azure Storage. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13432,7 +13432,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
+        /// <summary> Restores an app from a backup blob in Azure Storage. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13484,7 +13484,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a deleted web app to this web app. </summary>
+        /// <summary> Restores a deleted web app to this web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -13511,7 +13511,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a deleted web app to this web app. </summary>
+        /// <summary> Restores a deleted web app to this web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -13563,7 +13563,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a web app from a snapshot. </summary>
+        /// <summary> Restores a web app from a snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -13590,7 +13590,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a web app from a snapshot. </summary>
+        /// <summary> Restores a web app from a snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -13638,7 +13638,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13667,7 +13667,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13718,7 +13718,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <summary> Get site extension information by its ID for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13751,7 +13751,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <summary> Get site extension information by its ID for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13806,7 +13806,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Install site extension on a web site, or a deployment slot. </summary>
+        /// <summary> Install site extension on a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13833,7 +13833,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Install site extension on a web site, or a deployment slot. </summary>
+        /// <summary> Install site extension on a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13882,7 +13882,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Remove a site extension from a web site, or a deployment slot. </summary>
+        /// <summary> Remove a site extension from a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13908,7 +13908,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Remove a site extension from a web site, or a deployment slot. </summary>
+        /// <summary> Remove a site extension from a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -13955,7 +13955,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Gets an app&apos;s deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13984,7 +13984,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Gets an app&apos;s deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14035,7 +14035,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
+        /// <summary> Gets the details of a web, mobile, or API app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14068,7 +14068,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the details of a web, mobile, or API app. </summary>
+        /// <summary> Gets the details of a web, mobile, or API app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14127,7 +14127,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -14156,7 +14156,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -14215,7 +14215,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
+        /// <summary> Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app to delete. </param>
@@ -14244,7 +14244,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
+        /// <summary> Deletes a web, mobile, or API app, or one of the deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app to delete. </param>
@@ -14299,7 +14299,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -14333,7 +14333,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
+        /// <summary> Creates a new web, mobile, or API app in an existing resource group, or updates an existing app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Unique name of the app to create or update. To create or update a deployment slot, use the {slot} parameter. </param>
@@ -14394,7 +14394,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Analyze a custom hostname. </summary>
+        /// <summary> Analyze a custom hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -14426,7 +14426,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Analyze a custom hostname. </summary>
+        /// <summary> Analyze a custom hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -14485,7 +14485,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Applies the configuration settings from the target slot onto the current slot. </summary>
+        /// <summary> Applies the configuration settings from the target slot onto the current slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14513,7 +14513,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Applies the configuration settings from the target slot onto the current slot. </summary>
+        /// <summary> Applies the configuration settings from the target slot onto the current slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14568,7 +14568,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a backup of an app. </summary>
+        /// <summary> Creates a backup of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14601,7 +14601,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a backup of an app. </summary>
+        /// <summary> Creates a backup of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14657,7 +14657,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14688,7 +14688,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14743,7 +14743,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a backup of an app by its ID. </summary>
+        /// <summary> Gets a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14778,7 +14778,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a backup of an app by its ID. </summary>
+        /// <summary> Gets a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14837,7 +14837,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a backup of an app by its ID. </summary>
+        /// <summary> Deletes a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14865,7 +14865,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a backup of an app by its ID. </summary>
+        /// <summary> Deletes a backup of an app by its ID. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -14922,7 +14922,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
+        /// <summary> Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -14957,7 +14957,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
+        /// <summary> Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -15021,7 +15021,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
+        /// <summary> Restores a specific backup to another app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15052,7 +15052,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a specific backup to another app (or deployment slot, if specified). </summary>
+        /// <summary> Restores a specific backup to another app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15106,7 +15106,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15137,7 +15137,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15191,7 +15191,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether FTP is allowed on the site or not. </summary>
+        /// <summary> Returns whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15224,7 +15224,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether FTP is allowed on the site or not. </summary>
+        /// <summary> Returns whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15284,7 +15284,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
+        /// <summary> Updates whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15317,7 +15317,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates whether FTP is allowed on the site or not. </summary>
+        /// <summary> Updates whether FTP is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15373,7 +15373,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed on the site or not. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15406,7 +15406,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed on the site or not. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15466,7 +15466,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <summary> Updates whether user publishing credentials are allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15499,7 +15499,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates whether user publishing credentials are allowed on the site or not. </summary>
+        /// <summary> Updates whether user publishing credentials are allowed on the site or not. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15555,7 +15555,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15586,7 +15586,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15644,7 +15644,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Replaces the application settings of an app. </summary>
+        /// <summary> Replaces the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15677,7 +15677,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Replaces the application settings of an app. </summary>
+        /// <summary> Replaces the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15733,7 +15733,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the application settings of an app. </summary>
+        /// <summary> Gets the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15764,7 +15764,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the application settings of an app. </summary>
+        /// <summary> Gets the application settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15822,7 +15822,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the Authentication / Authorization settings associated with web app. </summary>
+        /// <summary> Updates the Authentication / Authorization settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -15855,7 +15855,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the Authentication / Authorization settings associated with web app. </summary>
+        /// <summary> Updates the Authentication / Authorization settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -15911,7 +15911,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Authentication/Authorization settings of an app. </summary>
+        /// <summary> Gets the Authentication/Authorization settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -15942,7 +15942,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Authentication/Authorization settings of an app. </summary>
+        /// <summary> Gets the Authentication/Authorization settings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16000,7 +16000,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -16033,7 +16033,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -16089,7 +16089,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16120,7 +16120,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16178,7 +16178,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the Azure storage account configurations of an app. </summary>
+        /// <summary> Updates the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16211,7 +16211,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the Azure storage account configurations of an app. </summary>
+        /// <summary> Updates the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16267,7 +16267,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Azure storage account configurations of an app. </summary>
+        /// <summary> Gets the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16298,7 +16298,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Azure storage account configurations of an app. </summary>
+        /// <summary> Gets the Azure storage account configurations of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16356,7 +16356,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the backup configuration of an app. </summary>
+        /// <summary> Updates the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16389,7 +16389,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the backup configuration of an app. </summary>
+        /// <summary> Updates the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16445,7 +16445,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes the backup configuration of an app. </summary>
+        /// <summary> Deletes the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16471,7 +16471,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes the backup configuration of an app. </summary>
+        /// <summary> Deletes the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16520,7 +16520,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the backup configuration of an app. </summary>
+        /// <summary> Gets the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16551,7 +16551,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the backup configuration of an app. </summary>
+        /// <summary> Gets the backup configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16605,7 +16605,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16636,7 +16636,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16691,7 +16691,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16726,7 +16726,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16784,7 +16784,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16815,7 +16815,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16870,7 +16870,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16905,7 +16905,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary> Gets the config reference and status of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16967,7 +16967,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Replaces the connection strings of an app. </summary>
+        /// <summary> Replaces the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17000,7 +17000,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Replaces the connection strings of an app. </summary>
+        /// <summary> Replaces the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17056,7 +17056,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the connection strings of an app. </summary>
+        /// <summary> Gets the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17087,7 +17087,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the connection strings of an app. </summary>
+        /// <summary> Gets the connection strings of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17141,7 +17141,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the logging configuration of an app. </summary>
+        /// <summary> Gets the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17174,7 +17174,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the logging configuration of an app. </summary>
+        /// <summary> Gets the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17234,7 +17234,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <summary> Updates the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17267,7 +17267,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the logging configuration of an app. </summary>
+        /// <summary> Updates the logging configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17327,7 +17327,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Replaces the metadata of an app. </summary>
+        /// <summary> Replaces the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17360,7 +17360,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Replaces the metadata of an app. </summary>
+        /// <summary> Replaces the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17416,7 +17416,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the metadata of an app. </summary>
+        /// <summary> Gets the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17447,7 +17447,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the metadata of an app. </summary>
+        /// <summary> Gets the metadata of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17501,7 +17501,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
+        /// <summary> Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17527,7 +17527,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Git/FTP publishing credentials of an app. </summary>
+        /// <summary> Gets the Git/FTP publishing credentials of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17580,7 +17580,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the Push settings associated with web app. </summary>
+        /// <summary> Updates the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -17613,7 +17613,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the Push settings associated with web app. </summary>
+        /// <summary> Updates the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -17669,7 +17669,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the Push settings associated with web app. </summary>
+        /// <summary> Gets the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -17700,7 +17700,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the Push settings associated with web app. </summary>
+        /// <summary> Gets the Push settings associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -17754,7 +17754,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
+        /// <summary> Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17787,7 +17787,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
+        /// <summary> Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17847,7 +17847,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17880,7 +17880,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17940,7 +17940,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17973,7 +17973,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the configuration of an app. </summary>
+        /// <summary> Updates the configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18029,7 +18029,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18060,7 +18060,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18115,7 +18115,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
+        /// <summary> Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18150,7 +18150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
+        /// <summary> Gets a snapshot of the configuration of an app at a previous point in time. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18210,7 +18210,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Reverts the configuration of an app to a previous snapshot. </summary>
+        /// <summary> Reverts the configuration of an app to a previous snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18238,7 +18238,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Reverts the configuration of an app to a previous snapshot. </summary>
+        /// <summary> Reverts the configuration of an app to a previous snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18289,7 +18289,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the last lines of docker logs for the given site. </summary>
+        /// <summary> Gets the last lines of docker logs for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -18320,7 +18320,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the last lines of docker logs for the given site. </summary>
+        /// <summary> Gets the last lines of docker logs for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -18374,7 +18374,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the ZIP archived docker log files for the given site. </summary>
+        /// <summary> Gets the ZIP archived docker log files for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -18405,7 +18405,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the ZIP archived docker log files for the given site. </summary>
+        /// <summary> Gets the ZIP archived docker log files for the given site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -18459,7 +18459,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18490,7 +18490,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18545,7 +18545,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18580,7 +18580,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18639,7 +18639,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18668,7 +18668,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a continuous web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18722,7 +18722,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Start a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18750,7 +18750,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Start a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18803,7 +18803,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stop a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Stop a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18831,7 +18831,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stop a continuous web job for an app, or a deployment slot. </summary>
+        /// <summary> Stop a continuous web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -18882,7 +18882,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18913,7 +18913,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -18968,7 +18968,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Get a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19003,7 +19003,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Get a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19066,7 +19066,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Create a deployment for an app, or a deployment slot. </summary>
+        /// <summary> Create a deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19101,7 +19101,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Create a deployment for an app, or a deployment slot. </summary>
+        /// <summary> Create a deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19160,7 +19160,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19189,7 +19189,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a deployment by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19243,7 +19243,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List deployment log for specific deployment for an app, or a deployment slot. </summary>
+        /// <summary> List deployment log for specific deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19276,7 +19276,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List deployment log for specific deployment for an app, or a deployment slot. </summary>
+        /// <summary> List deployment log for specific deployment for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19336,7 +19336,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
+        /// <summary> Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19369,7 +19369,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
+        /// <summary> Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19425,7 +19425,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19456,7 +19456,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19511,7 +19511,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get domain ownership identifier for web app. </summary>
+        /// <summary> Get domain ownership identifier for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19546,7 +19546,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get domain ownership identifier for web app. </summary>
+        /// <summary> Get domain ownership identifier for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19609,7 +19609,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19644,7 +19644,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19703,7 +19703,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
+        /// <summary> Deletes a domain ownership identifier for a web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19732,7 +19732,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a domain ownership identifier for a web app. </summary>
+        /// <summary> Deletes a domain ownership identifier for a web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19789,7 +19789,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19824,7 +19824,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
+        /// <summary> Creates a domain ownership identifier for web app, or updates an existing ownership identifier. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -19882,7 +19882,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -19915,7 +19915,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -19975,7 +19975,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -20003,7 +20003,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -20054,7 +20054,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -20085,7 +20085,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -20139,7 +20139,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20170,7 +20170,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20224,7 +20224,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Fetch a short lived token that can be exchanged for a master key. </summary>
+        /// <summary> Fetch a short lived token that can be exchanged for a master key. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -20255,7 +20255,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Fetch a short lived token that can be exchanged for a master key. </summary>
+        /// <summary> Fetch a short lived token that can be exchanged for a master key. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -20310,7 +20310,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary> Get function information by its ID for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20345,7 +20345,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get function information by its ID for web site, or a deployment slot. </summary>
+        /// <summary> Get function information by its ID for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20408,7 +20408,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
+        /// <summary> Create function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20438,7 +20438,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Create function for web site, or a deployment slot. </summary>
+        /// <summary> Create function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20492,7 +20492,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
+        /// <summary> Delete a function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20520,7 +20520,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a function for web site, or a deployment slot. </summary>
+        /// <summary> Delete a function for web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20578,7 +20578,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Add or update a function secret. </summary>
+        /// <summary> Add or update a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20616,7 +20616,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Add or update a function secret. </summary>
+        /// <summary> Add or update a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20680,7 +20680,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a function secret. </summary>
+        /// <summary> Delete a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20710,7 +20710,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a function secret. </summary>
+        /// <summary> Delete a function secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20765,7 +20765,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function keys for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20798,7 +20798,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function keys for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20856,7 +20856,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get function secrets for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function secrets for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20889,7 +20889,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get function secrets for a function in a web site, or a deployment slot. </summary>
+        /// <summary> Get function secrets for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20945,7 +20945,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get host secrets for a function app. </summary>
+        /// <summary> Get host secrets for a function app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -20976,7 +20976,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get host secrets for a function app. </summary>
+        /// <summary> Get host secrets for a function app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -21030,7 +21030,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21056,7 +21056,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21105,7 +21105,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21131,7 +21131,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21187,7 +21187,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Add or update a host level secret. </summary>
+        /// <summary> Add or update a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -21225,7 +21225,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Add or update a host level secret. </summary>
+        /// <summary> Add or update a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -21289,7 +21289,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a host level secret. </summary>
+        /// <summary> Delete a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -21319,7 +21319,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a host level secret. </summary>
+        /// <summary> Delete a host level secret. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -21372,7 +21372,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21403,7 +21403,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21458,7 +21458,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the named hostname binding for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named hostname binding for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21493,7 +21493,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the named hostname binding for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named hostname binding for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21556,7 +21556,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21591,7 +21591,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21650,7 +21650,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21679,7 +21679,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -21734,7 +21734,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
+        /// <summary> Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -21771,7 +21771,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
+        /// <summary> Retrieves a specific Service Bus Hybrid Connection used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -21838,7 +21838,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -21875,7 +21875,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -21938,7 +21938,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Removes a Hybrid Connection from this site. </summary>
+        /// <summary> Removes a Hybrid Connection from this site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -21968,7 +21968,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Removes a Hybrid Connection from this site. </summary>
+        /// <summary> Removes a Hybrid Connection from this site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -22028,7 +22028,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -22065,7 +22065,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new Hybrid Connection using a Service Bus relay. </summary>
+        /// <summary> Creates a new Hybrid Connection using a Service Bus relay. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -22125,7 +22125,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
+        /// <summary> Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -22156,7 +22156,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
+        /// <summary> Retrieves all Service Bus Hybrid Connections used by this Web App. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -22210,7 +22210,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22241,7 +22241,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets hybrid connections configured for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22296,7 +22296,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
+        /// <summary> Gets a hybrid connection configuration by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22331,7 +22331,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a hybrid connection configuration by its name. </summary>
+        /// <summary> Gets a hybrid connection configuration by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22394,7 +22394,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22429,7 +22429,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22488,7 +22488,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a relay service connection by its name. </summary>
+        /// <summary> Deletes a relay service connection by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22516,7 +22516,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a relay service connection by its name. </summary>
+        /// <summary> Deletes a relay service connection by its name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22572,7 +22572,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22607,7 +22607,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
+        /// <summary> Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22665,7 +22665,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22696,7 +22696,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22751,7 +22751,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22786,7 +22786,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -22846,7 +22846,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -22881,7 +22881,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the status of the last MSDeploy operation. </summary>
+        /// <summary> Get the status of the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -22945,7 +22945,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -22975,7 +22975,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Invoke the MSDeploy web app extension. </summary>
+        /// <summary> Invoke the MSDeploy web app extension. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -23030,7 +23030,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -23063,7 +23063,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the MSDeploy Log for the last MSDeploy operation. </summary>
+        /// <summary> Get the MSDeploy Log for the last MSDeploy operation. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -23121,7 +23121,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23154,7 +23154,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23213,7 +23213,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23250,7 +23250,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23313,7 +23313,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23343,7 +23343,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23400,7 +23400,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23433,7 +23433,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23493,7 +23493,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23528,7 +23528,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23591,7 +23591,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23630,7 +23630,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23696,7 +23696,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23731,7 +23731,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -23789,7 +23789,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Shows whether an app can be cloned to another resource group or subscription. </summary>
+        /// <summary> Shows whether an app can be cloned to another resource group or subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -23820,7 +23820,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Shows whether an app can be cloned to another resource group or subscription. </summary>
+        /// <summary> Shows whether an app can be cloned to another resource group or subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -23874,7 +23874,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -23905,7 +23905,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -23959,7 +23959,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -23990,7 +23990,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for This is to allow calling via powershell and ARM template. </summary>
+        /// <summary> This is to allow calling via powershell and ARM template. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24044,7 +24044,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
+        /// <summary> Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -24077,7 +24077,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
+        /// <summary> Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -24133,7 +24133,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a Swift Virtual Network connection. </summary>
+        /// <summary> Gets a Swift Virtual Network connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24166,7 +24166,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a Swift Virtual Network connection. </summary>
+        /// <summary> Gets a Swift Virtual Network connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24227,7 +24227,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24263,7 +24263,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24321,7 +24321,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
+        /// <summary> Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24347,7 +24347,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
+        /// <summary> Deletes a Swift Virtual Network connection from an app (or deployment slot). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24401,7 +24401,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24437,7 +24437,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24496,7 +24496,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
+        /// <summary> Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24531,7 +24531,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all network features used by the app (or deployment slot, if specified). </summary>
+        /// <summary> Gets all network features used by the app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24590,7 +24590,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24629,7 +24629,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -24703,7 +24703,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start capturing network packets for the site (To be deprecated). </summary>
+        /// <summary> Start capturing network packets for the site (To be deprecated). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -24737,7 +24737,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start capturing network packets for the site (To be deprecated). </summary>
+        /// <summary> Start capturing network packets for the site (To be deprecated). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -24806,7 +24806,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -24836,7 +24836,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -24889,7 +24889,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -24916,7 +24916,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -24967,7 +24967,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25005,7 +25005,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25067,7 +25067,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25106,7 +25106,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25169,7 +25169,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25207,7 +25207,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
+        /// <summary> Gets a named operation for a network trace capturing (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25268,7 +25268,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Generates a new publishing password for an app (or deployment slot, if specified). </summary>
+        /// <summary> Generates a new publishing password for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25295,7 +25295,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Generates a new publishing password for an app (or deployment slot, if specified). </summary>
+        /// <summary> Generates a new publishing password for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25349,7 +25349,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -25381,7 +25381,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -25436,7 +25436,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Gets web app&apos;s event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -25467,7 +25467,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Gets web app&apos;s event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -25521,7 +25521,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the premier add-ons of an app. </summary>
+        /// <summary> Gets the premier add-ons of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25552,7 +25552,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the premier add-ons of an app. </summary>
+        /// <summary> Gets the premier add-ons of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25607,7 +25607,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a named add-on of an app. </summary>
+        /// <summary> Gets a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25642,7 +25642,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a named add-on of an app. </summary>
+        /// <summary> Gets a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25705,7 +25705,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25740,7 +25740,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25799,7 +25799,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a premier add-on from an app. </summary>
+        /// <summary> Delete a premier add-on from an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25827,7 +25827,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a premier add-on from an app. </summary>
+        /// <summary> Delete a premier add-on from an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25883,7 +25883,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25918,7 +25918,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates a named add-on of an app. </summary>
+        /// <summary> Updates a named add-on of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -25976,7 +25976,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -26009,7 +26009,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Gets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -26069,7 +26069,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -26102,7 +26102,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
+        /// <summary> Sets data around private site access enablement and authorized Virtual Networks that can access the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -26158,7 +26158,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26189,7 +26189,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26244,7 +26244,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a private endpoint connection. </summary>
+        /// <summary> Gets a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26279,7 +26279,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a private endpoint connection. </summary>
+        /// <summary> Gets a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26342,7 +26342,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Approves or rejects a private endpoint connection. </summary>
+        /// <summary> Approves or rejects a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26373,7 +26373,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Approves or rejects a private endpoint connection. </summary>
+        /// <summary> Approves or rejects a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26428,7 +26428,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a private endpoint connection. </summary>
+        /// <summary> Deletes a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26458,7 +26458,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a private endpoint connection. </summary>
+        /// <summary> Deletes a private endpoint connection. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26511,7 +26511,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the private link resources. </summary>
+        /// <summary> Gets the private link resources. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26542,7 +26542,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the private link resources. </summary>
+        /// <summary> Gets the private link resources. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
@@ -26596,7 +26596,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26627,7 +26627,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26682,7 +26682,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26717,7 +26717,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26776,7 +26776,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26804,7 +26804,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
+        /// <summary> Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26857,7 +26857,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26888,7 +26888,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get a memory dump of a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26944,7 +26944,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -26977,7 +26977,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -27036,7 +27036,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -27073,7 +27073,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get process information by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -27135,7 +27135,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -27168,7 +27168,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -27224,7 +27224,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27255,7 +27255,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27310,7 +27310,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named public certificate for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27345,7 +27345,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the named public certificate for an app (or deployment slot, if specified). </summary>
+        /// <summary> Get the named public certificate for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27408,7 +27408,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27443,7 +27443,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
+        /// <summary> Creates a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27502,7 +27502,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27531,7 +27531,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a hostname binding for an app. </summary>
+        /// <summary> Deletes a hostname binding for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27587,7 +27587,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the publishing profile for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the publishing profile for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27618,7 +27618,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the publishing profile for an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the publishing profile for an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27672,7 +27672,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
+        /// <summary> Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27698,7 +27698,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
+        /// <summary> Resets the configuration settings of the current slot if they were previously modified by calling the API with POST. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27755,7 +27755,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restarts an app (or deployment slot, if specified). </summary>
+        /// <summary> Restarts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27783,7 +27783,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restarts an app (or deployment slot, if specified). </summary>
+        /// <summary> Restarts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27838,7 +27838,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
+        /// <summary> Restores an app from a backup blob in Azure Storage. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27867,7 +27867,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores an app from a backup blob in Azure Storage. </summary>
+        /// <summary> Restores an app from a backup blob in Azure Storage. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -27923,7 +27923,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a deleted web app to this web app. </summary>
+        /// <summary> Restores a deleted web app to this web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -27952,7 +27952,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a deleted web app to this web app. </summary>
+        /// <summary> Restores a deleted web app to this web app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -28008,7 +28008,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Restores a web app from a snapshot. </summary>
+        /// <summary> Restores a web app from a snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -28037,7 +28037,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Restores a web app from a snapshot. </summary>
+        /// <summary> Restores a web app from a snapshot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -28089,7 +28089,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28120,7 +28120,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28175,7 +28175,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <summary> Get site extension information by its ID for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28210,7 +28210,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <summary> Get site extension information by its ID for a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28269,7 +28269,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Install site extension on a web site, or a deployment slot. </summary>
+        /// <summary> Install site extension on a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28298,7 +28298,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Install site extension on a web site, or a deployment slot. </summary>
+        /// <summary> Install site extension on a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28351,7 +28351,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Remove a site extension from a web site, or a deployment slot. </summary>
+        /// <summary> Remove a site extension from a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28379,7 +28379,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Remove a site extension from a web site, or a deployment slot. </summary>
+        /// <summary> Remove a site extension from a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -28434,7 +28434,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28467,7 +28467,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28527,7 +28527,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Swaps two deployment slots of an app. </summary>
+        /// <summary> Swaps two deployment slots of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28556,7 +28556,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Swaps two deployment slots of an app. </summary>
+        /// <summary> Swaps two deployment slots of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28608,7 +28608,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -28639,7 +28639,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -28693,7 +28693,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -28724,7 +28724,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -28778,7 +28778,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the source control configuration of an app. </summary>
+        /// <summary> Gets the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28813,7 +28813,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the source control configuration of an app. </summary>
+        /// <summary> Gets the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28875,7 +28875,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28905,7 +28905,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28962,7 +28962,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes the source control configuration of an app. </summary>
+        /// <summary> Deletes the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -28990,7 +28990,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes the source control configuration of an app. </summary>
+        /// <summary> Deletes the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29045,7 +29045,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29080,7 +29080,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29138,7 +29138,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Starts an app (or deployment slot, if specified). </summary>
+        /// <summary> Starts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29164,7 +29164,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Starts an app (or deployment slot, if specified). </summary>
+        /// <summary> Starts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29225,7 +29225,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -29255,7 +29255,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -29308,7 +29308,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stops an app (or deployment slot, if specified). </summary>
+        /// <summary> Stops an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29334,7 +29334,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stops an app (or deployment slot, if specified). </summary>
+        /// <summary> Stops an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29383,7 +29383,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -29410,7 +29410,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -29460,7 +29460,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Sync web app repository. </summary>
+        /// <summary> Sync web app repository. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -29486,7 +29486,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Sync web app repository. </summary>
+        /// <summary> Sync web app repository. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -29535,7 +29535,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29561,7 +29561,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -29610,7 +29610,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29641,7 +29641,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29696,7 +29696,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29731,7 +29731,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29790,7 +29790,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29819,7 +29819,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29873,7 +29873,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29906,7 +29906,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29965,7 +29965,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -30002,7 +30002,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -30064,7 +30064,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Run a triggered web job for an app, or a deployment slot. </summary>
+        /// <summary> Run a triggered web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -30092,7 +30092,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Run a triggered web job for an app, or a deployment slot. </summary>
+        /// <summary> Run a triggered web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -30147,7 +30147,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30179,7 +30179,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30234,7 +30234,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
+        /// <summary> Gets the virtual networks the app (or deployment slot) is connected to. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30270,7 +30270,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
+        /// <summary> Gets the virtual networks the app (or deployment slot) is connected to. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30330,7 +30330,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
+        /// <summary> Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30365,7 +30365,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
+        /// <summary> Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30428,7 +30428,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30463,7 +30463,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30522,7 +30522,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
+        /// <summary> Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30550,7 +30550,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
+        /// <summary> Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30606,7 +30606,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30641,7 +30641,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30702,7 +30702,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30739,7 +30739,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30806,7 +30806,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30843,7 +30843,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30910,7 +30910,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -30947,7 +30947,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31007,7 +31007,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -31038,7 +31038,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -31093,7 +31093,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
+        /// <summary> Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -31128,7 +31128,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
+        /// <summary> Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -31188,7 +31188,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31219,7 +31219,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31275,7 +31275,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Swaps two deployment slots of an app. </summary>
+        /// <summary> Swaps two deployment slots of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31302,7 +31302,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Swaps two deployment slots of an app. </summary>
+        /// <summary> Swaps two deployment slots of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31350,7 +31350,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -31379,7 +31379,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -31429,7 +31429,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -31458,7 +31458,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Website Name. </param>
@@ -31508,7 +31508,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the source control configuration of an app. </summary>
+        /// <summary> Gets the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31541,7 +31541,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the source control configuration of an app. </summary>
+        /// <summary> Gets the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31599,7 +31599,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31627,7 +31627,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31680,7 +31680,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes the source control configuration of an app. </summary>
+        /// <summary> Deletes the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31706,7 +31706,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes the source control configuration of an app. </summary>
+        /// <summary> Deletes the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31757,7 +31757,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31790,7 +31790,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates the source control configuration of an app. </summary>
+        /// <summary> Updates the source control configuration of an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31844,7 +31844,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Starts an app (or deployment slot, if specified). </summary>
+        /// <summary> Starts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31868,7 +31868,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Starts an app (or deployment slot, if specified). </summary>
+        /// <summary> Starts an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -31925,7 +31925,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -31953,7 +31953,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Start capturing network packets for the site. </summary>
+        /// <summary> Start capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -32002,7 +32002,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stops an app (or deployment slot, if specified). </summary>
+        /// <summary> Stops an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32026,7 +32026,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stops an app (or deployment slot, if specified). </summary>
+        /// <summary> Stops an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32071,7 +32071,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -32096,7 +32096,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Stop ongoing capturing network packets for the site. </summary>
+        /// <summary> Stop ongoing capturing network packets for the site. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> The name of the web app. </param>
@@ -32142,7 +32142,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Sync web app repository. </summary>
+        /// <summary> Sync web app repository. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -32166,7 +32166,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Sync web app repository. </summary>
+        /// <summary> Sync web app repository. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -32211,7 +32211,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32235,7 +32235,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Syncs function trigger metadata to the management database. </summary>
+        /// <summary> Syncs function trigger metadata to the management database. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32280,7 +32280,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32309,7 +32309,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32360,7 +32360,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32393,7 +32393,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32448,7 +32448,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32475,7 +32475,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
+        /// <summary> Delete a triggered web job by its ID for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32525,7 +32525,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32556,7 +32556,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32611,7 +32611,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32646,7 +32646,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32704,7 +32704,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Run a triggered web job for an app, or a deployment slot. </summary>
+        /// <summary> Run a triggered web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32730,7 +32730,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Run a triggered web job for an app, or a deployment slot. </summary>
+        /// <summary> Run a triggered web job for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32781,7 +32781,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32811,7 +32811,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32862,7 +32862,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
+        /// <summary> Gets the virtual networks the app (or deployment slot) is connected to. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32896,7 +32896,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the virtual networks the app (or deployment slot) is connected to. </summary>
+        /// <summary> Gets the virtual networks the app (or deployment slot) is connected to. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32952,7 +32952,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
+        /// <summary> Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -32985,7 +32985,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
+        /// <summary> Gets a virtual network the app (or deployment slot) is connected to by name. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33044,7 +33044,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33077,7 +33077,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33132,7 +33132,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
+        /// <summary> Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33158,7 +33158,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
+        /// <summary> Deletes a connection from an app (or deployment slot to a named virtual network. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33210,7 +33210,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33243,7 +33243,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
+        /// <summary> Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33300,7 +33300,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33335,7 +33335,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Gets an app&apos;s Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33398,7 +33398,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33433,7 +33433,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33496,7 +33496,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33531,7 +33531,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
+        /// <summary> Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH). </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -33587,7 +33587,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -33616,7 +33616,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -33667,7 +33667,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
+        /// <summary> Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -33700,7 +33700,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get webjob information for an app, or a deployment slot. </summary>
+        /// <summary> Get webjob information for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -33747,7 +33747,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get all apps for a subscription. </summary>
+        /// <summary> Get all apps for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -33774,7 +33774,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get all apps for a subscription. </summary>
+        /// <summary> Get all apps for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -33815,7 +33815,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all web, mobile, and API apps in the specified resource group. </summary>
+        /// <summary> Gets all web, mobile, and API apps in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -33845,7 +33845,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all web, mobile, and API apps in the specified resource group. </summary>
+        /// <summary> Gets all web, mobile, and API apps in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -33889,7 +33889,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -33920,7 +33920,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -33965,7 +33965,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -33996,7 +33996,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34041,7 +34041,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34072,7 +34072,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34117,7 +34117,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34148,7 +34148,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34193,7 +34193,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34224,7 +34224,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34269,7 +34269,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34300,7 +34300,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34345,7 +34345,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34376,7 +34376,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34421,7 +34421,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34452,7 +34452,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34497,7 +34497,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34528,7 +34528,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34573,7 +34573,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34604,7 +34604,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34649,7 +34649,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34680,7 +34680,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34725,7 +34725,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34756,7 +34756,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34801,7 +34801,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34834,7 +34834,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34881,7 +34881,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34916,7 +34916,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -34965,7 +34965,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35000,7 +35000,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35049,7 +35049,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35080,7 +35080,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35125,7 +35125,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35157,7 +35157,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35203,7 +35203,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35234,7 +35234,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35279,7 +35279,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35310,7 +35310,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35355,7 +35355,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35388,7 +35388,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35435,7 +35435,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35468,7 +35468,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35515,7 +35515,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35546,7 +35546,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35591,7 +35591,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35622,7 +35622,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35667,7 +35667,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Gets an app&apos;s deployment slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35698,7 +35698,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Gets an app&apos;s deployment slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35743,7 +35743,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35776,7 +35776,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35823,7 +35823,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35856,7 +35856,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
+        /// <summary> Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35903,7 +35903,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35936,7 +35936,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the configurations of an app. </summary>
+        /// <summary> List the configurations of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35983,7 +35983,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36016,7 +36016,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36063,7 +36063,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36096,7 +36096,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary> Gets the config reference app settings and status of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36143,7 +36143,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36176,7 +36176,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
+        /// <summary> Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36223,7 +36223,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36256,7 +36256,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List continuous web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List continuous web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36303,7 +36303,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36336,7 +36336,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary> List deployments for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36383,7 +36383,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36416,7 +36416,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Lists ownership identifiers for domain associated with web app. </summary>
+        /// <summary> Lists ownership identifiers for domain associated with web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36463,7 +36463,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36496,7 +36496,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the functions for a web site, or a deployment slot. </summary>
+        /// <summary> List the functions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36543,7 +36543,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36576,7 +36576,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary> Get hostname bindings for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36623,7 +36623,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36656,7 +36656,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets all scale-out instances of an app. </summary>
+        /// <summary> Gets all scale-out instances of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36703,7 +36703,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36738,7 +36738,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36787,7 +36787,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36824,7 +36824,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36875,7 +36875,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36912,7 +36912,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36963,7 +36963,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36996,7 +36996,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets existing backups of an app. </summary>
+        /// <summary> Gets existing backups of an app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37043,7 +37043,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37077,7 +37077,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets perfmon counters for web app. </summary>
+        /// <summary> Gets perfmon counters for web app. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37125,7 +37125,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37158,7 +37158,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the list of private endpoint connections associated with a site. </summary>
+        /// <summary> Gets the list of private endpoint connections associated with a site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37205,7 +37205,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37238,7 +37238,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
+        /// <summary> Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37285,7 +37285,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37320,7 +37320,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List module information for a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37369,7 +37369,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37404,7 +37404,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
+        /// <summary> List the threads in a process by its ID for a specific scaled-out instance in a web site. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37453,7 +37453,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37486,7 +37486,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get public certificates for an app or a deployment slot. </summary>
+        /// <summary> Get public certificates for an app or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37533,7 +37533,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37566,7 +37566,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get list of siteextensions for a web site, or a deployment slot. </summary>
+        /// <summary> Get list of siteextensions for a web site, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37613,7 +37613,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37648,7 +37648,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37697,7 +37697,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37730,7 +37730,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37777,7 +37777,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37810,7 +37810,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37857,7 +37857,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37890,7 +37890,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37937,7 +37937,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37972,7 +37972,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38021,7 +38021,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38055,7 +38055,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38103,7 +38103,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38136,7 +38136,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38183,7 +38183,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38216,7 +38216,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get the difference in configuration settings between two web app slots. </summary>
+        /// <summary> Get the difference in configuration settings between two web app slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38263,7 +38263,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38294,7 +38294,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user. </summary>
+        /// <summary> Returns all Snapshots to the user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38339,7 +38339,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38370,7 +38370,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Returns all Snapshots to the user from DRSecondary endpoint. </summary>
+        /// <summary> Returns all Snapshots to the user from DRSecondary endpoint. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38415,7 +38415,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38446,7 +38446,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List triggered web jobs for an app, or a deployment slot. </summary>
+        /// <summary> List triggered web jobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38491,7 +38491,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38524,7 +38524,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38571,7 +38571,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38603,7 +38603,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the quota usage information of an app (or deployment slot, if specified). </summary>
+        /// <summary> Gets the quota usage information of an app (or deployment slot, if specified). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38649,7 +38649,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38680,7 +38680,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List webjobs for an app, or a deployment slot. </summary>
+        /// <summary> List webjobs for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>

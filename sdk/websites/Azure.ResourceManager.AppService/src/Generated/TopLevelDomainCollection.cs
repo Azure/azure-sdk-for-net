@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get details of a top-level domain.
+        /// Get details of a top-level domain.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
         /// Operation Id: TopLevelDomains_Get
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all top-level domains supported for registration.
+        /// Get all top-level domains supported for registration.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
         /// Operation Id: TopLevelDomains_List
         /// </summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get all top-level domains supported for registration.
+        /// Get all top-level domains supported for registration.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains
         /// Operation Id: TopLevelDomains_List
         /// </summary>

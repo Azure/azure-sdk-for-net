@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Gets a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: StaticSites_GetPrivateEndpointConnection
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Gets a private endpoint connection
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: StaticSites_GetPrivateEndpointConnection
         /// </summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site build.
+        /// Gets the details of a static site build.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
         /// Operation Id: StaticSites_GetStaticSiteBuild
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site
+        /// Gets the details of the user provided function app registered with a static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSite
         /// </summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site
+        /// Gets the details of the user provided function app registered with a static site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSite
         /// </summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an existing custom domain for a particular static site.
+        /// Gets an existing custom domain for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_GetStaticSiteCustomDomain
         /// </summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an existing custom domain for a particular static site.
+        /// Gets an existing custom domain for a particular static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/customDomains/{domainName}
         /// Operation Id: StaticSites_GetStaticSiteCustomDomain
         /// </summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site.
+        /// Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of a static site.
+        /// Gets the details of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a static site.
+        /// Deletes a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_DeleteStaticSite
         /// </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a static site.
+        /// Deletes a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_DeleteStaticSite
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
+        /// Creates a new static site in an existing resource group, or updates an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_UpdateStaticSite
         /// </summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates a new static site in an existing resource group, or updates an existing static site.
+        /// Creates a new static site in an existing resource group, or updates an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_UpdateStaticSite
         /// </summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the list of users of a static site.
+        /// Gets the list of users of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers
         /// Operation Id: StaticSites_ListStaticSiteUsers
         /// </summary>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the list of users of a static site.
+        /// Gets the list of users of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers
         /// Operation Id: StaticSites_ListStaticSiteUsers
         /// </summary>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes the user entry from the static site.
+        /// Deletes the user entry from the static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
         /// Operation Id: StaticSites_DeleteStaticSiteUser
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes the user entry from the static site.
+        /// Deletes the user entry from the static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
         /// Operation Id: StaticSites_DeleteStaticSiteUser
         /// </summary>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates a user entry with the listed roles
+        /// Updates a user entry with the listed roles
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
         /// Operation Id: StaticSites_UpdateStaticSiteUser
         /// </summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates a user entry with the listed roles
+        /// Updates a user entry with the listed roles
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}
         /// Operation Id: StaticSites_UpdateStaticSiteUser
         /// </summary>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the app settings of a static site.
+        /// Creates or updates the app settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/appsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteAppSettings
         /// </summary>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the app settings of a static site.
+        /// Creates or updates the app settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/appsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteAppSettings
         /// </summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the function app settings of a static site.
+        /// Creates or updates the function app settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/functionappsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteFunctionAppSettings
         /// </summary>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates or updates the function app settings of a static site.
+        /// Creates or updates the function app settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/config/functionappsettings
         /// Operation Id: StaticSites_CreateOrUpdateStaticSiteFunctionAppSettings
         /// </summary>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates an invitation link for a user with the role
+        /// Creates an invitation link for a user with the role
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation
         /// Operation Id: StaticSites_CreateUserRolesInvitationLink
         /// </summary>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Creates an invitation link for a user with the role
+        /// Creates an invitation link for a user with the role
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation
         /// Operation Id: StaticSites_CreateUserRolesInvitationLink
         /// </summary>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Detaches a static site.
+        /// Detaches a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/detach
         /// Operation Id: StaticSites_DetachStaticSite
         /// </summary>
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Detaches a static site.
+        /// Detaches a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/detach
         /// Operation Id: StaticSites_DetachStaticSite
         /// </summary>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the functions of a static site.
+        /// Gets the functions of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/functions
         /// Operation Id: StaticSites_ListStaticSiteFunctions
         /// </summary>
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the functions of a static site.
+        /// Gets the functions of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/functions
         /// Operation Id: StaticSites_ListStaticSiteFunctions
         /// </summary>
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site.
+        /// Gets the application settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listAppSettings
         /// Operation Id: StaticSites_ListStaticSiteAppSettings
         /// </summary>
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site.
+        /// Gets the application settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listAppSettings
         /// Operation Id: StaticSites_ListStaticSiteAppSettings
         /// </summary>
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists the roles configured for the static site.
+        /// Lists the roles configured for the static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listConfiguredRoles
         /// Operation Id: StaticSites_ListStaticSiteConfiguredRoles
         /// </summary>
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists the roles configured for the static site.
+        /// Lists the roles configured for the static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listConfiguredRoles
         /// Operation Id: StaticSites_ListStaticSiteConfiguredRoles
         /// </summary>
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site.
+        /// Gets the application settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listFunctionAppSettings
         /// Operation Id: StaticSites_ListStaticSiteFunctionAppSettings
         /// </summary>
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the application settings of a static site.
+        /// Gets the application settings of a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listFunctionAppSettings
         /// Operation Id: StaticSites_ListStaticSiteFunctionAppSettings
         /// </summary>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists the secrets for an existing static site.
+        /// Lists the secrets for an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listSecrets
         /// Operation Id: StaticSites_ListStaticSiteSecrets
         /// </summary>
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Lists the secrets for an existing static site.
+        /// Lists the secrets for an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/listSecrets
         /// Operation Id: StaticSites_ListStaticSiteSecrets
         /// </summary>
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the private link resources
+        /// Gets the private link resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateLinkResources
         /// Operation Id: StaticSites_GetPrivateLinkResources
         /// </summary>
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the private link resources
+        /// Gets the private link resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/privateLinkResources
         /// Operation Id: StaticSites_GetPrivateLinkResources
         /// </summary>
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Resets the api key for an existing static site.
+        /// Resets the api key for an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey
         /// Operation Id: StaticSites_ResetStaticSiteApiKey
         /// </summary>
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Resets the api key for an existing static site.
+        /// Resets the api key for an existing static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey
         /// Operation Id: StaticSites_ResetStaticSiteApiKey
         /// </summary>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deploys zipped content to a static site.
+        /// Deploys zipped content to a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/zipdeploy
         /// Operation Id: StaticSites_CreateZipDeploymentForStaticSite
         /// </summary>
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deploys zipped content to a static site.
+        /// Deploys zipped content to a static site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/zipdeploy
         /// Operation Id: StaticSites_CreateZipDeploymentForStaticSite
         /// </summary>

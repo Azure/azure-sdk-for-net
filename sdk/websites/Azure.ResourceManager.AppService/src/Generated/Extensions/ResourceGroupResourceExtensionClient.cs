@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the resource group in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
+        /// List all ResourceHealthMetadata for all sites in the resource group in the subscription.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
+        /// Move resources between resource groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Move resources between resource groups.
+        /// Move resources between resource groups.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate if a resource can be created.
+        /// Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate if a resource can be created.
+        /// Validate if a resource can be created.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate whether a resource can be moved.
+        /// Validate whether a resource can be moved.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Validate whether a resource can be moved.
+        /// Validate whether a resource can be moved.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>

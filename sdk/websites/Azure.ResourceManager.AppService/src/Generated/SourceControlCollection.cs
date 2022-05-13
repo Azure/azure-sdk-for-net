@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates source control token
+        /// Updates source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: UpdateSourceControl
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets source control token
+        /// Gets source control token
         /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
         /// Operation Id: GetSourceControl
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source controls available for Azure websites.
+        /// Gets the source controls available for Azure websites.
         /// Request Path: /providers/Microsoft.Web/sourcecontrols
         /// Operation Id: ListSourceControls
         /// </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the source controls available for Azure websites.
+        /// Gets the source controls available for Azure websites.
         /// Request Path: /providers/Microsoft.Web/sourcecontrols
         /// Operation Id: ListSourceControls
         /// </summary>

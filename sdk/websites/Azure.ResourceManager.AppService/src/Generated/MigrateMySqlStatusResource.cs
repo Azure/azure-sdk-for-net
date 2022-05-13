@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        /// Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
         /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        /// Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status
         /// Operation Id: WebApps_GetMigrateMySqlStatusSlot
         /// </summary>

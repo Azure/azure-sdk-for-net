@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Gets the category of ResourceHealthMetadata to use for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default
         /// Operation Id: ResourceHealthMetadata_GetBySite
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the category of ResourceHealthMetadata to use for the given site
+        /// Gets the category of ResourceHealthMetadata to use for the given site
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default
         /// Operation Id: ResourceHealthMetadata_GetBySite
         /// </summary>

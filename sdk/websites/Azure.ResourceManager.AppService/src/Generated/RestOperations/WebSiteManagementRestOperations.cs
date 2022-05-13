@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets publishing user. </summary>
+        /// <summary> Gets publishing user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<UserData>> GetPublishingUserAsync(CancellationToken cancellationToken = default)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets publishing user. </summary>
+        /// <summary> Gets publishing user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<UserData> GetPublishingUser(CancellationToken cancellationToken = default)
         {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates publishing user. </summary>
+        /// <summary> Updates publishing user. </summary>
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates publishing user. </summary>
+        /// <summary> Updates publishing user. </summary>
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
+        /// <summary> Gets the source controls available for Azure websites. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<Models.SourceControlCollection>> ListSourceControlsAsync(CancellationToken cancellationToken = default)
         {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
+        /// <summary> Gets the source controls available for Azure websites. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Models.SourceControlCollection> ListSourceControls(CancellationToken cancellationToken = default)
         {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary> Gets source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary> Gets source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates source control token. </summary>
+        /// <summary> Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates source control token. </summary>
+        /// <summary> Updates source control token. </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <summary> Gets a list of meters for a given location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <summary> Gets a list of meters for a given location. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Check if a resource name is available. </summary>
+        /// <summary> Check if a resource name is available. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="type"> Resource type used for verification. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Check if a resource name is available. </summary>
+        /// <summary> Check if a resource name is available. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="type"> Resource type used for verification. </param>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
+        /// <summary> Gets list of available geo regions plus ministamps. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets list of available geo regions plus ministamps. </summary>
+        /// <summary> Gets list of available geo regions plus ministamps. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <summary> Get a list of available geographical regions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <summary> Get a list of available geographical regions. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
         /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <summary> List all apps that are assigned to a hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <summary> List all apps that are assigned to a hostname. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all premier add-on offers. </summary>
+        /// <summary> List all premier add-on offers. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all premier add-on offers. </summary>
+        /// <summary> List all premier add-on offers. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all SKUs. </summary>
+        /// <summary> List all SKUs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all SKUs. </summary>
+        /// <summary> List all SKUs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <summary> Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
+        /// <summary> Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Move resources between resource groups. </summary>
+        /// <summary> Move resources between resource groups. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Move resources between resource groups. </summary>
+        /// <summary> Move resources between resource groups. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <summary> Validate if a resource can be created. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="content"> Request with the resources to validate. </param>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Validate if a resource can be created. </summary>
+        /// <summary> Validate if a resource can be created. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="content"> Request with the resources to validate. </param>
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <summary> Validate whether a resource can be moved. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Validate whether a resource can be moved. </summary>
+        /// <summary> Validate whether a resource can be moved. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
+        /// <summary> Gets the source controls available for Azure websites. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
+        /// <summary> Gets the source controls available for Azure websites. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -1265,7 +1265,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <summary> Gets a list of meters for a given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
@@ -1294,7 +1294,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a list of meters for a given location. </summary>
+        /// <summary> Gets a list of meters for a given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <summary> Get a list of available geographical regions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1368,7 +1368,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Get a list of available geographical regions. </summary>
+        /// <summary> Get a list of available geographical regions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <summary> List all apps that are assigned to a hostname. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
@@ -1442,7 +1442,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all apps that are assigned to a hostname. </summary>
+        /// <summary> List all apps that are assigned to a hostname. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="nameIdentifier"> Hostname information. </param>
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List all premier add-on offers. </summary>
+        /// <summary> List all premier add-on offers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1512,7 +1512,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List all premier add-on offers. </summary>
+        /// <summary> List all premier add-on offers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

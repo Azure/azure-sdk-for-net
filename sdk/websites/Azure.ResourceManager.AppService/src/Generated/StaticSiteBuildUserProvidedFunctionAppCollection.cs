@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Register a user provided function app with a static site build
+        /// Register a user provided function app with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_RegisterUserProvidedFunctionAppWithStaticSiteBuild
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Register a user provided function app with a static site build
+        /// Register a user provided function app with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_RegisterUserProvidedFunctionAppWithStaticSiteBuild
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site build
+        /// Gets the details of the user provided function app registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function app registered with a static site build
+        /// Gets the details of the user provided function app registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps/{functionAppName}
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppForStaticSiteBuild
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function apps registered with a static site build
+        /// Gets the details of the user provided function apps registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppsForStaticSiteBuild
         /// </summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the details of the user provided function apps registered with a static site build
+        /// Gets the details of the user provided function apps registered with a static site build
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/userProvidedFunctionApps
         /// Operation Id: StaticSites_GetUserProvidedFunctionAppsForStaticSiteBuild
         /// </summary>

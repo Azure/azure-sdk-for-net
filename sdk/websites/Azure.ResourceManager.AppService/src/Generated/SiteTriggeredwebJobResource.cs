@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistorySlot
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
+        /// Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistorySlot
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job by its ID for an app, or a deployment slot.
+        /// Gets a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_GetTriggeredWebJobSlot
         /// </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a triggered web job by its ID for an app, or a deployment slot.
+        /// Gets a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_GetTriggeredWebJobSlot
         /// </summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a triggered web job by its ID for an app, or a deployment slot.
+        /// Delete a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteTriggeredWebJobSlot
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Delete a triggered web job by its ID for an app, or a deployment slot.
+        /// Delete a triggered web job by its ID for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}
         /// Operation Id: WebApps_DeleteTriggeredWebJobSlot
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Run a triggered web job for an app, or a deployment slot.
+        /// Run a triggered web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run
         /// Operation Id: WebApps_RunTriggeredWebJobSlot
         /// </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Run a triggered web job for an app, or a deployment slot.
+        /// Run a triggered web job for an app, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run
         /// Operation Id: WebApps_RunTriggeredWebJobSlot
         /// </summary>

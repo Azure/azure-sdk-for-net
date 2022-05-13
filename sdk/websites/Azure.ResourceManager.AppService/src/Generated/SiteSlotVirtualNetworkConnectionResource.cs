@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Gets an app&apos;s Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_GetVnetConnectionGatewaySlot
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Gets an app&apos;s Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_GetVnetConnectionGatewaySlot
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnectionSlot
         /// </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Gets a virtual network the app (or deployment slot) is connected to by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_GetVnetConnectionSlot
         /// </summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a connection from an app (or deployment slot to a named virtual network.
+        /// Deletes a connection from an app (or deployment slot to a named virtual network.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_DeleteVnetConnectionSlot
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Deletes a connection from an app (or deployment slot to a named virtual network.
+        /// Deletes a connection from an app (or deployment slot to a named virtual network.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_DeleteVnetConnectionSlot
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_UpdateVnetConnectionSlot
         /// </summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_UpdateVnetConnectionSlot
         /// </summary>

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshotSlot
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Gets a snapshot of the configuration of an app at a previous point in time.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
         /// Operation Id: WebApps_GetConfigurationSnapshotSlot
         /// </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_GetConfigurationSlot
         /// </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        /// Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_GetConfigurationSlot
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the configuration of an app.
+        /// Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_UpdateConfigurationSlot
         /// </summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the configuration of an app.
+        /// Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_UpdateConfigurationSlot
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the configuration of an app.
+        /// Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
         /// </summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Updates the configuration of an app.
+        /// Updates the configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        /// Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
         /// Operation Id: WebApps_ListConfigurationSnapshotInfoSlot
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        /// Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots
         /// Operation Id: WebApps_ListConfigurationSnapshotInfoSlot
         /// </summary>

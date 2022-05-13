@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the status of the last MSDeploy operation.
+        /// Get the status of the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_GetMSDeployStatus
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the status of the last MSDeploy operation.
+        /// Get the status of the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_GetMSDeployStatus
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Invoke the MSDeploy web app extension.
+        /// Invoke the MSDeploy web app extension.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_CreateMSDeployOperation
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Invoke the MSDeploy web app extension.
+        /// Invoke the MSDeploy web app extension.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy
         /// Operation Id: WebApps_CreateMSDeployOperation
         /// </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Get the MSDeploy Log for the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log
         /// Operation Id: WebApps_GetMSDeployLog
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get the MSDeploy Log for the last MSDeploy operation.
+        /// Get the MSDeploy Log for the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log
         /// Operation Id: WebApps_GetMSDeployLog
         /// </summary>
