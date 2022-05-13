@@ -2,7 +2,7 @@ parameters:
   - name: packageVersions
     displayName: PackageVersions (regex of package versions to run)
     type: string
-    default: '.*'
+    default: '12.9.0|source'
   - name: tests
     displayName: Tests (regex of tests to run)
     type: string
