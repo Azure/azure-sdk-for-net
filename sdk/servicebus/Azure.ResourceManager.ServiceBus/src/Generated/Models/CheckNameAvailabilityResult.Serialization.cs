@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToUnavailableReason();
+                    reason = new UnavailableReason(property.Value.GetString());
                     continue;
                 }
             }

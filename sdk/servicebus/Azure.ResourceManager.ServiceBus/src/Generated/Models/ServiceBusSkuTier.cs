@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> The billing tier of this particular SKU. </summary>
-    public enum ServiceBusSkuTier
+    public readonly partial struct ServiceBusSkuTier : IEquatable<ServiceBusSkuTier>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSkuTier"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusSkuTier(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string BasicValue = "Basic";
+        private const string StandardValue = "Standard";
+        private const string PremiumValue = "Premium";
+
         /// <summary> Basic. </summary>
-        Basic,
+        public static ServiceBusSkuTier Basic { get; } = new ServiceBusSkuTier(BasicValue);
         /// <summary> Standard. </summary>
-        Standard,
+        public static ServiceBusSkuTier Standard { get; } = new ServiceBusSkuTier(StandardValue);
         /// <summary> Premium. </summary>
-        Premium
+        public static ServiceBusSkuTier Premium { get; } = new ServiceBusSkuTier(PremiumValue);
+        /// <summary> Determines if two <see cref="ServiceBusSkuTier"/> values are the same. </summary>
+        public static bool operator ==(ServiceBusSkuTier left, ServiceBusSkuTier right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ServiceBusSkuTier"/> values are not the same. </summary>
+        public static bool operator !=(ServiceBusSkuTier left, ServiceBusSkuTier right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ServiceBusSkuTier"/>. </summary>
+        public static implicit operator ServiceBusSkuTier(string value) => new ServiceBusSkuTier(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ServiceBusSkuTier other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ServiceBusSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

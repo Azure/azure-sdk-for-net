@@ -5,16 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </summary>
-    public enum RoleDisasterRecovery
+    public readonly partial struct RoleDisasterRecovery : IEquatable<RoleDisasterRecovery>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RoleDisasterRecovery"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RoleDisasterRecovery(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string PrimaryValue = "Primary";
+        private const string PrimaryNotReplicatingValue = "PrimaryNotReplicating";
+        private const string SecondaryValue = "Secondary";
+
         /// <summary> Primary. </summary>
-        Primary,
+        public static RoleDisasterRecovery Primary { get; } = new RoleDisasterRecovery(PrimaryValue);
         /// <summary> PrimaryNotReplicating. </summary>
-        PrimaryNotReplicating,
+        public static RoleDisasterRecovery PrimaryNotReplicating { get; } = new RoleDisasterRecovery(PrimaryNotReplicatingValue);
         /// <summary> Secondary. </summary>
-        Secondary
+        public static RoleDisasterRecovery Secondary { get; } = new RoleDisasterRecovery(SecondaryValue);
+        /// <summary> Determines if two <see cref="RoleDisasterRecovery"/> values are the same. </summary>
+        public static bool operator ==(RoleDisasterRecovery left, RoleDisasterRecovery right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RoleDisasterRecovery"/> values are not the same. </summary>
+        public static bool operator !=(RoleDisasterRecovery left, RoleDisasterRecovery right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="RoleDisasterRecovery"/>. </summary>
+        public static implicit operator RoleDisasterRecovery(string value) => new RoleDisasterRecovery(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RoleDisasterRecovery other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(RoleDisasterRecovery other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

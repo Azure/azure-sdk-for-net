@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static DisasterRecoveryData DeserializeDisasterRecoveryData(JsonElement element)
         {
+            Optional<string> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -46,6 +47,11 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<RoleDisasterRecovery> role = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -112,14 +118,14 @@ namespace Azure.ResourceManager.ServiceBus
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            role = property0.Value.GetString().ToRoleDisasterRecovery();
+                            role = new RoleDisasterRecovery(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DisasterRecoveryData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role));
+            return new DisasterRecoveryData(id, name, type, systemData, location.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role));
         }
     }
 }

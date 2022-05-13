@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name");
-            writer.WriteStringValue(Name.ToSerialString());
+            writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier");
-                writer.WriteStringValue(Tier.Value.ToSerialString());
+                writer.WriteStringValue(Tier.Value.ToString());
             }
             if (Optional.IsDefined(Capacity))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 if (property.NameEquals("name"))
                 {
-                    name = property.Value.GetString().ToServiceBusSkuName();
+                    name = new ServiceBusSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = property.Value.GetString().ToServiceBusSkuTier();
+                    tier = new ServiceBusSkuTier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("capacity"))

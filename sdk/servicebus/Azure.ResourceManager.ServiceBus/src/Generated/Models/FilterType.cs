@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Rule filter types. </summary>
-    public enum FilterType
+    public readonly partial struct FilterType : IEquatable<FilterType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="FilterType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FilterType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string SqlFilterValue = "SqlFilter";
+        private const string CorrelationFilterValue = "CorrelationFilter";
+
         /// <summary> SqlFilter. </summary>
-        SqlFilter,
+        public static FilterType SqlFilter { get; } = new FilterType(SqlFilterValue);
         /// <summary> CorrelationFilter. </summary>
-        CorrelationFilter
+        public static FilterType CorrelationFilter { get; } = new FilterType(CorrelationFilterValue);
+        /// <summary> Determines if two <see cref="FilterType"/> values are the same. </summary>
+        public static bool operator ==(FilterType left, FilterType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="FilterType"/> values are not the same. </summary>
+        public static bool operator !=(FilterType left, FilterType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="FilterType"/>. </summary>
+        public static implicit operator FilterType(string value) => new FilterType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is FilterType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(FilterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
