@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmData : Azure.ResourceManager.KeyVault.Models.KeyVaultTrackedResourceData
+    public partial class ManagedHsmData : Azure.ResourceManager.KeyVault.Models.ManagedHsmTrackedResourceData
     {
         public ManagedHsmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties Properties { get { throw null; } set { } }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.KeyVaultTrackedResourceData
+    public partial class ManagedHsmPrivateEndpointConnectionData : Azure.ResourceManager.KeyVault.Models.ManagedHsmTrackedResourceData
     {
         public ManagedHsmPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? Etag { get { throw null; } set { } }
@@ -227,12 +227,10 @@ namespace Azure.ResourceManager.KeyVault
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.KeyVault.VaultResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.VaultResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VaultData : Azure.ResourceManager.Models.ResourceData
+    public partial class VaultData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        internal VaultData() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public VaultData(Azure.Core.AzureLocation location, Azure.ResourceManager.KeyVault.Models.VaultProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } set { } }
     }
     public partial class VaultResource : Azure.ResourceManager.ArmResource
     {
@@ -530,11 +528,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         Standard = 0,
         Premium = 1,
     }
-    public partial class KeyVaultTrackedResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public KeyVaultTrackedResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
-    }
     public partial class ManagedHsmIPRule
     {
         public ManagedHsmIPRule(string addressRange) { }
@@ -555,7 +548,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class ManagedHsmPrivateLinkResourceData : Azure.ResourceManager.KeyVault.Models.KeyVaultTrackedResourceData
+    public partial class ManagedHsmPrivateLinkResourceData : Azure.ResourceManager.KeyVault.Models.ManagedHsmTrackedResourceData
     {
         public ManagedHsmPrivateLinkResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string GroupId { get { throw null; } }
@@ -613,6 +606,11 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         StandardB1 = 0,
         CustomB32 = 1,
+    }
+    public partial class ManagedHsmTrackedResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public ManagedHsmTrackedResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.KeyVault.Models.ManagedHsmSku Sku { get { throw null; } set { } }
     }
     public partial class ManagedHsmVirtualNetworkRule
     {

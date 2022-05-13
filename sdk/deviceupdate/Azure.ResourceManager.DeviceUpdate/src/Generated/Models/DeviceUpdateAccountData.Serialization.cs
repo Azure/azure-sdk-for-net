@@ -41,6 +41,16 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections");
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -57,6 +67,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -82,7 +93,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -97,7 +108,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -139,11 +150,26 @@ namespace Azure.ResourceManager.DeviceUpdate
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointConnections"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<DeviceUpdatePrivateEndpointConnectionData> array = new List<DeviceUpdatePrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DeviceUpdateAccountData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess));
+            return new DeviceUpdateAccountData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections));
         }
     }
 }

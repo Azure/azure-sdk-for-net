@@ -16,7 +16,7 @@ You can also get secrets asynchronously:
 ```C# Snippet:Azure_Template_GetSecretAsync
 string endpoint = "https://myvault.vault.azure.net";
 var credential = new DefaultAzureCredential();
-var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+var client = new TemplateClient(endpoint, credential);
 
 SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
 

@@ -34,20 +34,41 @@ namespace Azure.ResourceManager.ServiceLinker
                 writer.WritePropertyName("clientType");
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Optional.IsDefined(VNetSolution))
+            if (Optional.IsDefined(VnetSolution))
             {
-                writer.WritePropertyName("vNetSolution");
-                writer.WriteObjectValue(VNetSolution);
+                if (VnetSolution != null)
+                {
+                    writer.WritePropertyName("vNetSolution");
+                    writer.WriteObjectValue(VnetSolution);
+                }
+                else
+                {
+                    writer.WriteNull("vNetSolution");
+                }
             }
             if (Optional.IsDefined(SecretStore))
             {
-                writer.WritePropertyName("secretStore");
-                writer.WriteObjectValue(SecretStore);
+                if (SecretStore != null)
+                {
+                    writer.WritePropertyName("secretStore");
+                    writer.WriteObjectValue(SecretStore);
+                }
+                else
+                {
+                    writer.WriteNull("secretStore");
+                }
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
-                writer.WriteStringValue(Scope);
+                if (Scope != null)
+                {
+                    writer.WritePropertyName("scope");
+                    writer.WriteStringValue(Scope);
+                }
+                else
+                {
+                    writer.WriteNull("scope");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -63,7 +84,7 @@ namespace Azure.ResourceManager.ServiceLinker
             Optional<AuthInfoBase> authInfo = default;
             Optional<ClientType> clientType = default;
             Optional<string> provisioningState = default;
-            Optional<VNetSolution> vNetSolution = default;
+            Optional<VnetSolution> vNetSolution = default;
             Optional<SecretStore> secretStore = default;
             Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
@@ -136,17 +157,17 @@ namespace Azure.ResourceManager.ServiceLinker
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                vNetSolution = null;
                                 continue;
                             }
-                            vNetSolution = VNetSolution.DeserializeVNetSolution(property0.Value);
+                            vNetSolution = VnetSolution.DeserializeVnetSolution(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("secretStore"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                secretStore = null;
                                 continue;
                             }
                             secretStore = SecretStore.DeserializeSecretStore(property0.Value);
@@ -154,6 +175,11 @@ namespace Azure.ResourceManager.ServiceLinker
                         }
                         if (property0.NameEquals("scope"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                scope = null;
+                                continue;
+                            }
                             scope = property0.Value.GetString();
                             continue;
                         }

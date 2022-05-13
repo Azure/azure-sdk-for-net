@@ -1253,20 +1253,20 @@ namespace Azure.AI.TextAnalytics
 namespace Azure.AI.TextAnalytics.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HealthcareTaskParametersFhirVersion : System.IEquatable<Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion>
+    public readonly partial struct FhirVersion : System.IEquatable<Azure.AI.TextAnalytics.Models.FhirVersion>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HealthcareTaskParametersFhirVersion(string value) { throw null; }
-        public static Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion Four01 { get { throw null; } }
-        public bool Equals(Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion other) { throw null; }
+        public FhirVersion(string value) { throw null; }
+        public static Azure.AI.TextAnalytics.Models.FhirVersion Four01 { get { throw null; } }
+        public bool Equals(Azure.AI.TextAnalytics.Models.FhirVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion left, Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion right) { throw null; }
-        public static implicit operator Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion (string value) { throw null; }
-        public static bool operator !=(Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion left, Azure.AI.TextAnalytics.Models.HealthcareTaskParametersFhirVersion right) { throw null; }
+        public static bool operator ==(Azure.AI.TextAnalytics.Models.FhirVersion left, Azure.AI.TextAnalytics.Models.FhirVersion right) { throw null; }
+        public static implicit operator Azure.AI.TextAnalytics.Models.FhirVersion (string value) { throw null; }
+        public static bool operator !=(Azure.AI.TextAnalytics.Models.FhirVersion left, Azure.AI.TextAnalytics.Models.FhirVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
