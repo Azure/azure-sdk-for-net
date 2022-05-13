@@ -152,13 +152,13 @@ function update-metadata-table($readmePath, $serviceName, $msService)
   }
   $restContent = $Matches["content"]
   $serviceBaseName = $serviceName.ToLower().Replace(' ', '').Replace('/', '-')
-  $author = GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
+  $author = "sima-zhu" #GetPrimaryCodeOwner -TargetDirectory "/sdk/$serviceBaseName/"
   if (!$author) {
     LogError "Cannot fetch the author from CODEOWNER file."
     exit 1
   }
   $metadataTable["author"] = $author
-  $msauthor = GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author   
+  $msauthor = "sizhu" #GetMsAliasFromGithub -TenantId $tenantId -ClientId $clientId -ClientSecret $clientSecret -GithubUser $author   
   if (!$msauthor) {
     LogError "No ms.author found for $author. "
     $msauthor = $author
@@ -170,13 +170,22 @@ function update-metadata-table($readmePath, $serviceName, $msService)
   Set-Content -Path $readmePath -Value "---`n$metadataString---`n$restContent" -NoNewline
 }
 
-function generate-markdown-table($readmePath, $packageInfo) {
+function generate-markdown-table($absolutePath, $readmeName, $packageInfo, $moniker) {
   $content = "| Reference | Package | Source |`r`n|---|---|---|`r`n" 
   # Here is the table, the versioned value will
   foreach ($pkg in $packageInfo) {
+    if (!$pkg.VersionGA -and "latest" -eq $moniker) {
+      continue
+    }
+    if (!$pkg.VersionPreview -and "preivew" -eq $moniker) {
+      continue
+    }
     $repositoryLink = $RepositoryUri
     $packageLevelReame = &$GetPackageLevelReadmeFn -packageMetadata $pkg
     $referenceLink = "$packageLevelReame-readme"
+    if (!(Test-Path "$absolutePath$referenceLink.md")) {
+      continue
+    }
     $githubLink = $GithubUri
     if ($pkg.PSObject.Members.Name -contains "FileMetadata") {
       $githubLink = "$GithubUri/blob/main/$($pkg.FileMetadata.DirectoryPath)"
@@ -184,7 +193,7 @@ function generate-markdown-table($readmePath, $packageInfo) {
     $line = "|[$($pkg.DisplayName)]($referenceLink)|[$($pkg.Package)]($repositoryLink/$($pkg.Package))|[Github]($githubLink)|`r`n"
     $content += $line
   }
-  Set-Content -Path $readmePath -Value $content -NoNewline
+  Set-Content -Path "$absolutePath$readmeName" -Value $content -NoNewline
 }
 
 function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPackageInfo, $mgmtPackageInfo, $serviceName) {
@@ -202,11 +211,11 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $clientPack
     $mgmtExists = $false
     if ($clientPackageInfo) {
       $clientExists = $true
-      generate-markdown-table -readmePath "$absolutePath$clientIndexReadme" -packageInfo $clientPackageInfo
+      generate-markdown-table -absolutePath "$absolutePath" -readmeName "$clientIndexReadme" -packageInfo $clientPackageInfo -moniker $monikers[$i]
     }
     if ($mgmtPackageInfo) {
       $mgmtExists = $true
-      generate-markdown-table -readmePath "$absolutePath$mgmtIndexReadme" -packageInfo $mgmtPackageInfo
+      generate-markdown-table -absolutePath "$absolutePath" -readmeName "$mgmtIndexReadme" -packageInfo $mgmtPackageInfo -moniker $monikers[$i]
     }
     if (!(Test-Path "$absolutePath$serviceReadme")) {
       create-metadata-table -readmePath "$absolutePath$serviceReadme" -moniker $monikers[$i] -msService $msService `
@@ -300,6 +309,9 @@ $toc = @()
 foreach ($service in $serviceNameList) {
   Write-Host "Building service: $service"
 
+  if ($service -eq "Key Vault") {
+    Write-Host "here"
+  }
   $packageItems = @()
 
   # Client packages get individual entries
