@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Samples
             RecognizeLinkedEntitiesResultCollection entitiesInDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{entitiesInDocuments.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Entity Linking\", version: \"{entitiesInDocuments.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesInDocuments)
