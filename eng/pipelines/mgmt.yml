@@ -89,6 +89,7 @@ pr:
     - sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
+    - sdk/dynatrace/Microsoft.Azure.Management.Dynatrace
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
     - sdk/elastic/Microsoft.Azure.Management.Elastic
     - sdk/eng/mgmt

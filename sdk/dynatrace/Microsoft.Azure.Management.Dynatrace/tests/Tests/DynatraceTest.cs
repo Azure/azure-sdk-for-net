@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Dynatrace.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.Dynatrace.Tests.Tests
 {
@@ -23,23 +24,42 @@ namespace Microsoft.Azure.Management.Dynatrace.Tests.Tests
                 CreateResourceGroup(context, rgName);
                 MonitorResource rp = CreateResource(context, rgName, resourceName);
                 Assert.NotNull(rp);
-
-                DeleteResource(context, rgName, resourceName);
-                DeleteResourceGroup(context, rgName);
             }
         }
 
         private MonitorResource CreateResource(MockContext context, string rgName, string resourceName)
         {
             DynatraceObservabilityClient client = GetDynatraceObservabilityClient(context);
-            return client.Monitors.Create(
+            return client.Monitors.CreateOrUpdate(
                 rgName,
                 resourceName,
                 new MonitorResource(
                     name: resourceName,
                     type: "Dynatrace.Observability/monitors",
-                    location: "eastus"
-                    )
+                    location: "eastus",
+                    userInfo: new UserInfo
+                    {
+                        FirstName = "Divyansh",
+                        LastName = "Agarwal",
+                        PhoneNumber = "1234567890",
+                        Country = "US",
+                        EmailAddress = "agarwald@microsoft.com"
+                    },
+                    planData: new PlanData
+                    {
+                        UsageType = "COMMITTED",
+                        BillingCycle = "Monthly",
+                        PlanDetails = "azureportalintegration_privatepreview",
+                        EffectiveDate = System.DateTime.Now
+                    },
+                    dynatraceEnvironmentProperties: new DynatraceEnvironmentProperties
+                    {
+                        SingleSignOnProperties = new DynatraceSingleSignOnProperties
+                        {
+                            AadDomains = new List<string>()
+                        }
+                    }
+                )
             );
         }
 
