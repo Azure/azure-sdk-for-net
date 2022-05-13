@@ -2,13 +2,10 @@
 
 ## 1.0.0-beta.9 (Unreleased)
 
-### Features Added
-
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Flattened property from a read-only model no longer has setters.
+- The type of flattened primitive property changed to its corresponding nullable type.
 
 ## 1.0.0-beta.8 (2022-04-08)
 
