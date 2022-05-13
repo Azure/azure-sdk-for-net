@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2021-06-30-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "165",
         "Content-Type": "application/json",
-        "traceparent": "00-720bdc943c1ba64f85bc1032a1f6065f-319dac2df8ab7241-00",
+        "traceparent": "00-e18b6a270fedbf4aa52f156c36b95068-88ddb48c6626a84d-00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20210112.1",
-          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.18363)"
+          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "d02d781f8b36684e0993daf0caefe2ff",
         "x-ms-return-client-request-id": "true"
@@ -23,21 +23,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 12 Jan 2021 23:39:01 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Thu, 20 Jan 2022 06:11:31 GMT",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-e18b6a270fedbf4aa52f156c36b95068-3bb13489a73cb34a-01"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2021-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c93d6b7251ca1d438871d5b899dde0df-088746a83d3ce646-00",
+        "traceparent": "00-d36afd1acc4c7f43b8b50b4d377b4d4d-993eecbf21b97a41-00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20210112.1",
-          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.18363)"
+          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "3d3a6d482365e3cdd529fca441745b18",
         "x-ms-return-client-request-id": "true"
@@ -47,8 +48,9 @@
       "ResponseHeaders": {
         "Content-Length": "180",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Jan 2021 23:39:01 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Thu, 20 Jan 2022 06:11:31 GMT",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-d36afd1acc4c7f43b8b50b4d377b4d4d-7490ee91dbaaf24f-01"
       },
       "ResponseBody": {
         "id": "someEventRouteId-1586653154",
@@ -57,15 +59,15 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes?api-version=2021-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-aa88e78e0f006243bccb197c4d6df696-9d1a3d2cd5752a4e-00",
+        "traceparent": "00-ccb2050cb2e3d94fbae03ebbb753137e-914373a89f7a534f-00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20210112.1",
-          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.18363)"
+          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "a0255ffec40c2966e95382abecac1244",
         "x-ms-return-client-request-id": "true"
@@ -73,30 +75,21 @@
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "719",
+        "Content-Length": "388",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Jan 2021 23:39:01 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Thu, 20 Jan 2022 06:11:31 GMT",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-ccb2050cb2e3d94fbae03ebbb753137e-993f8ee29e3d514c-01"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "someEventRouteId-2015079387",
-            "endpointName": "someEventHubEndpoint",
-            "filter": "type = \u0027Microsoft.DigitalTwins.Twin.Create\u0027 OR type = \u0027microsoft.iot.telemetry\u0027"
-          },
-          {
-            "id": "someEventRouteId-528499153",
-            "endpointName": "someEventHubEndpoint",
-            "filter": "type = \u0027Microsoft.DigitalTwins.Twin.Create\u0027 OR type = \u0027microsoft.iot.telemetry\u0027"
-          },
-          {
-            "id": "someEventRouteId-575233152",
+            "id": "someEventRouteId-1586653154",
             "endpointName": "someEventHubEndpoint",
             "filter": "$eventType = \u0027DigitalTwinTelemetryMessages\u0027 or $eventType = \u0027DigitalTwinLifecycleNotification\u0027"
           },
           {
-            "id": "someEventRouteId-1586653154",
+            "id": "someEventRouteId-575233152",
             "endpointName": "someEventHubEndpoint",
             "filter": "$eventType = \u0027DigitalTwinTelemetryMessages\u0027 or $eventType = \u0027DigitalTwinLifecycleNotification\u0027"
           }
@@ -105,15 +98,15 @@
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2021-06-30-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-159bb6f93f7aed4a8649b2c79ef74a5f-e8518f6f48db2f49-00",
+        "traceparent": "00-8e04145f51cda54aadd3544b8a31f0ba-5d70e88ad4aa2b4f-00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20210112.1",
-          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.18363)"
+          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "14843e15def0fc7dab4afb0c8ea92694",
         "x-ms-return-client-request-id": "true"
@@ -122,21 +115,22 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 12 Jan 2021 23:39:01 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Thu, 20 Jan 2022 06:11:31 GMT",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-8e04145f51cda54aadd3544b8a31f0ba-9c8fa670ec3b2542-01"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-1586653154?api-version=2021-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-213d18e94593524d9f124bd175f0ce9e-127162c6eadbd846-00",
+        "traceparent": "00-56b08962b785684db9536535caad455c-080f117e85ada24b-00",
         "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20210112.1",
-          "(.NET 5.0.1-servicing.20575.16; Microsoft Windows 10.0.18363)"
+          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
+          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
         ],
         "x-ms-client-request-id": "6bf2c13841ca84f206105311a021f628",
         "x-ms-return-client-request-id": "true"
@@ -144,15 +138,16 @@
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
-        "Content-Length": "222",
+        "Content-Length": "223",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 12 Jan 2021 23:39:01 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Thu, 20 Jan 2022 06:11:31 GMT",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-56b08962b785684db9536535caad455c-b52c667dadf12440-01"
       },
       "ResponseBody": {
         "error": {
           "code": "EventRouteNotFound",
-          "message": "There is no route available that matches the provided input. Check for all valid event routes by calling EventRoute_List. See Swagger example (http://aka.ms/RouteSwSmpl)."
+          "message": "There is no route available that matches the provided input. Check for all valid event routes by calling EventRoute_List. See Swagger example (https://aka.ms/RouteSwSmpl)."
         }
       }
     }

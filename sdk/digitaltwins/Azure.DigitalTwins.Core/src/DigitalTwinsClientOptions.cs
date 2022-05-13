@@ -12,7 +12,7 @@ namespace Azure.DigitalTwins.Core
     /// </summary>
     public class DigitalTwinsClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2020_10_31;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_06_30_Preview;
 
         /// <summary>
         /// The versions of Azure Digital Twins supported by this client
@@ -25,7 +25,12 @@ namespace Azure.DigitalTwins.Core
             /// <summary>
             /// 2020-10-31
             /// </summary>
-            V2020_10_31 = 1
+            V2020_10_31 = 1,
+
+            /// <summary>
+            /// 2021-06-30-preview
+            /// </summary>
+            V2021_06_30_Preview = 2
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
@@ -59,6 +64,7 @@ namespace Azure.DigitalTwins.Core
             return Version switch
             {
                 ServiceVersion.V2020_10_31 => "2020-10-31",
+                ServiceVersion.V2021_06_30_Preview => "2021-06-30-preview",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }
