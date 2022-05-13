@@ -648,7 +648,7 @@ namespace Azure.AI.TextAnalytics
         {
             var sortBy = action.OrderBy switch
             {
-                null => null,
+                null => (Legacy.Models.ExtractiveSummarizationTaskParametersSortBy?)null,
                 SummarySentencesOrder.Rank => Legacy.Models.ExtractiveSummarizationTaskParametersSortBy.Rank,
                 SummarySentencesOrder.Offset => Legacy.Models.ExtractiveSummarizationTaskParametersSortBy.Rank,
                 _ => throw new NotSupportedException($"The sentence sort by, { action.OrderBy }, is not supported for conversion.")
@@ -1164,9 +1164,13 @@ namespace Azure.AI.TextAnalytics
                 AcionsInProgress = legacyJobState.Tasks.InProgress,
                 ActionsFailed = legacyJobState.Tasks.Failed,
                 ActionsTotal = legacyJobState.Tasks.Total,
-                Status = ConvertToTextAnalyticsOperationStatus(legacyJobState.Status),
-                Result = ConvertToAnalyzeActionsResult(legacyJobState, map)
+                Status = ConvertToTextAnalyticsOperationStatus(legacyJobState.Status)
             };
+
+            if (result.Status == TextAnalyticsOperationStatus.Succeeded)
+            {
+                result.Result = ConvertToAnalyzeActionsResult(legacyJobState, map);
+            }
 
             foreach (var error in legacyJobState.Errors)
             {

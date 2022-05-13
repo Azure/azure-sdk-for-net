@@ -777,9 +777,13 @@ namespace Azure.AI.TextAnalytics
                 AcionsInProgress = jobState.Tasks.InProgress,
                 ActionsFailed = jobState.Tasks.Failed,
                 ActionsTotal = jobState.Tasks.Total,
-                Status = jobState.Status,
-                Result = ConvertToAnalyzeActionsResult(jobState, map)
+                Status = jobState.Status
             };
+
+            if (result.Status == TextAnalyticsOperationStatus.Succeeded)
+            {
+                result.Result = ConvertToAnalyzeActionsResult(jobState, map);
+            }
 
             foreach (var error in jobState.Errors)
             {
