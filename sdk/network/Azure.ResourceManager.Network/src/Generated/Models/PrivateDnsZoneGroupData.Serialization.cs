@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(ResourceType);
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.Network
         internal static PrivateDnsZoneGroupData DeserializePrivateDnsZoneGroupData(JsonElement element)
         {
             Optional<string> name = default;
+            Optional<string> type = default;
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -55,6 +61,11 @@ namespace Azure.ResourceManager.Network
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -105,7 +116,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateDnsZoneGroupData(id.Value, name.Value, etag.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateDnsZoneConfigs));
+            return new PrivateDnsZoneGroupData(id.Value, name.Value, type.Value, etag.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateDnsZoneConfigs));
         }
     }
 }

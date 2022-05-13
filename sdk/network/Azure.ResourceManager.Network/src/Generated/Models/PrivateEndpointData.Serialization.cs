@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid");
+                writer.WriteStringValue(ResourceGuid);
+            }
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet");
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<string> resourceGuid = default;
             Optional<SubnetData> subnet = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -160,6 +166,11 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("resourceGuid"))
+                        {
+                            resourceGuid = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("subnet"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -244,7 +255,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateEndpointData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
+            return new PrivateEndpointData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, resourceGuid.Value, subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs));
         }
     }
 }

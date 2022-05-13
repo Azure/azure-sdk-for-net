@@ -26,16 +26,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service connection resource. </param>
         /// <param name="privateLinkServiceId"> The resource id of private link service. </param>
+        /// <param name="resolvedPrivateLinkServiceLocation"> The location for the resolved private link service. </param>
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal PrivateLinkServiceConnection(string id, string name, string resourceType, string etag, ProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id)
+        internal PrivateLinkServiceConnection(string id, string name, string resourceType, string etag, ProvisioningState? provisioningState, string privateLinkServiceId, string resolvedPrivateLinkServiceLocation, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
             Etag = etag;
             ProvisioningState = provisioningState;
             PrivateLinkServiceId = privateLinkServiceId;
+            ResolvedPrivateLinkServiceLocation = resolvedPrivateLinkServiceLocation;
             GroupIds = groupIds;
             RequestMessage = requestMessage;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Network.Models
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource id of private link service. </summary>
         public string PrivateLinkServiceId { get; set; }
+        /// <summary> The location for the resolved private link service. </summary>
+        public string ResolvedPrivateLinkServiceLocation { get; set; }
         /// <summary> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </summary>
         public IList<string> GroupIds { get; }
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>
