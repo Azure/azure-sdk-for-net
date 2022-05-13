@@ -40,9 +40,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options = null)
+        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));

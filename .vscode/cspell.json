@@ -156,6 +156,14 @@
       ]
     },
     {
+      "filename": "**/sdk/containerapps/**/*",
+      "words": [
+        "dapr",
+        "grpc",
+        "proto"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
