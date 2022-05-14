@@ -18,6 +18,8 @@ namespace Azure.AI.TextAnalytics
         /// <summary>The expression used for extracting indexes from a sentence sentiment assessment.</summary>
         private static readonly Regex s_sentenceSentimentAssessmentRegex = new(@"/documents/(?<documentIndex>\d*)/sentences/(?<sentenceIndex>\d*)/assessments/(?<assessmentIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
+        private static readonly Regex s_legacyHealthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+
         #region Common
 
         internal static Models.InnerErrorModel ConvertToLanguageError(Legacy.InnerError error)
@@ -391,30 +393,6 @@ namespace Azure.AI.TextAnalytics
             return entityList;
         }
 
-        internal static List<LinkedEntityMatch> ConvertToLinkedEntityMatches(IReadOnlyList<Legacy.Match> matches)
-        {
-            var matchesList = new List<LinkedEntityMatch>(matches.Count);
-
-            foreach (var match in matches)
-            {
-                matchesList.Add(new LinkedEntityMatch(match.ConfidenceScore, match.Text, match.Offset, match.Length));
-            }
-
-            return matchesList;
-        }
-
-        internal static List<LinkedEntity> ConvertToLinkedEntityList(IReadOnlyList<Legacy.LinkedEntity> entities)
-        {
-            var entitiesList = new List<LinkedEntity>(entities.Count);
-
-            foreach (var entity in entities)
-            {
-                entitiesList.Add(new LinkedEntity(entity.Name, ConvertToLinkedEntityMatches(entity.Matches), entity.Language, entity.Id, new Uri(entity.Url), entity.DataSource, entity.BingId));
-            }
-
-            return entitiesList;
-        }
-
         internal static RecognizeEntitiesResultCollection ConvertToRecognizeEntitiesResultCollection(Legacy.EntitiesResult results, IDictionary<string, int> idToIndexMap)
         {
             var recognizeEntities = new List<RecognizeEntitiesResult>(results.Errors.Count);
@@ -593,6 +571,30 @@ namespace Azure.AI.TextAnalytics
 
         internal static LinkedEntityCollection ConvertToLinkedEntityCollection(Legacy.DocumentLinkedEntities documentEntities) =>
             new LinkedEntityCollection(ConvertToLinkedEntityList(documentEntities.Entities), ConvertToWarnings(documentEntities.Warnings));
+
+        internal static List<LinkedEntityMatch> ConvertToLinkedEntityMatches(IReadOnlyList<Legacy.Match> matches)
+        {
+            var matchesList = new List<LinkedEntityMatch>(matches.Count);
+
+            foreach (var match in matches)
+            {
+                matchesList.Add(new LinkedEntityMatch(match.ConfidenceScore, match.Text, match.Offset, match.Length));
+            }
+
+            return matchesList;
+        }
+
+        internal static List<LinkedEntity> ConvertToLinkedEntityList(IReadOnlyList<Legacy.LinkedEntity> entities)
+        {
+            var entitiesList = new List<LinkedEntity>(entities.Count);
+
+            foreach (var entity in entities)
+            {
+                entitiesList.Add(new LinkedEntity(entity.Name, ConvertToLinkedEntityMatches(entity.Matches), entity.Language, entity.Id, new Uri(entity.Url), entity.DataSource, entity.BingId));
+            }
+
+            return entitiesList;
+        }
 
         internal static RecognizeLinkedEntitiesResultCollection ConvertToRecognizeLinkedEntitiesResultCollection(Legacy.EntityLinkingResult results, IDictionary<string, int> idToIndexMap)
         {
@@ -830,29 +832,176 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Long Running Operations
+        #region Healthcare
 
-        // NEEDS IMPLEMENTATION
-        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToHealthcareEntitiesResultCollection(Legacy.HealthcareResult legacyResult, IDictionary<string, int> map)
+        internal static HealthcareEntity ConvertToHealthcareEntity(Legacy.HealthcareEntity entity) =>
+            new HealthcareEntity(
+                entity.Text,
+                entity.Category,
+                entity.Subcategory,
+                entity.ConfidenceScore,
+                entity.Offset,
+                entity.Length,
+                ConvertToEntityDataSource(entity.Links),
+                ConvertToHealthcareEntityAssertion(entity.Assertion),
+                entity.Name);
+
+        internal static HealthcareEntityAssertion ConvertToHealthcareEntityAssertion(Legacy.HealthcareAssertion assertion)
         {
-            var results = new List<AnalyzeHealthcareEntitiesResult>(legacyResult.Documents.Count);
+            if (assertion == null)
+                return null;
 
-            if (legacyResult.Errors != null)
-            {
-                foreach (var error in legacyResult.Errors)
-                {
-                    results.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
-                }
-            }
-            else
-            {
-                //TODO: Implement
-                throw new NotImplementedException();
-            }
-
-            SortHeterogeneousCollection(results, map);
-            return new AnalyzeHealthcareEntitiesResultCollection(results, ConvertToBatchStatistics(legacyResult.Statistics), legacyResult.ModelVersion);
+            return new HealthcareEntityAssertion(
+                ConvertToEntityConditionality(assertion.Conditionality),
+                ConvertToEntityCertainty(assertion.Certainty),
+                ConvertToEntityAssociation(assertion.Association));
         }
+
+        internal static EntityConditionality? ConvertToEntityConditionality(Legacy.Models.Conditionality? legacyConditionality) =>
+            legacyConditionality switch
+            {
+                null => (EntityConditionality?)null,
+                Legacy.Models.Conditionality.Hypothetical => EntityConditionality.Hypothetical,
+                Legacy.Models.Conditionality.Conditional => EntityConditionality.Conditional,
+                _ => throw new NotSupportedException($"The conditionality, {legacyConditionality}, is not supported for conversion.")
+            };
+
+        internal static EntityCertainty? ConvertToEntityCertainty(Legacy.Models.Certainty? legacyCertainty) =>
+            legacyCertainty switch
+            {
+                null => null,
+                Legacy.Models.Certainty.Positive => EntityCertainty.Positive,
+                Legacy.Models.Certainty.PositivePossible => EntityCertainty.PositivePossible,
+                Legacy.Models.Certainty.NeutralPossible => EntityCertainty.NeutralPossible,
+                Legacy.Models.Certainty.NegativePossible => EntityCertainty.NegativePossible,
+                Legacy.Models.Certainty.Negative => EntityCertainty.Negative,
+                _ => throw new NotSupportedException($"The certainty, {legacyCertainty}, is not supported for conversion.")
+            };
+
+        internal static EntityAssociation? ConvertToEntityAssociation(Legacy.Models.Association? legacyAssociation) =>
+            legacyAssociation switch
+            {
+                null => null,
+                Legacy.Models.Association.Subject => EntityAssociation.Subject,
+                Legacy.Models.Association.Other => EntityAssociation.Other,
+                _ => throw new NotSupportedException($"The association, {legacyAssociation}, is not supported for conversion.")
+            };
+
+        internal static List<EntityDataSource> ConvertToEntityDataSource(IReadOnlyList<Legacy.HealthcareEntityLink> healthcareEntityLinks)
+        {
+            var dataSources = new List<EntityDataSource>(healthcareEntityLinks.Count);
+
+            foreach (var dataSource in healthcareEntityLinks)
+            {
+                dataSources.Add(new EntityDataSource(dataSource.DataSource, dataSource.Id));
+            }
+
+            return dataSources;
+        }
+
+        internal static List<HealthcareEntity> ConvertToHealthcareEntityCollection(IReadOnlyList<Legacy.HealthcareEntity> healthcareEntities)
+        {
+            var entityList = new List<HealthcareEntity>(healthcareEntities.Count);
+
+            foreach (var entity in healthcareEntities)
+            {
+                entityList.Add(ConvertToHealthcareEntity(entity));
+            }
+
+            return entityList;
+        }
+
+        internal static AnalyzeHealthcareEntitiesResultCollection ConvertToAnalyzeHealthcareEntitiesResultCollection(Legacy.HealthcareResult results, IDictionary<string, int> idToIndexMap)
+        {
+            var healthcareEntititesResults = new List<AnalyzeHealthcareEntitiesResult>(results.Errors.Count);
+
+            //Read errors
+            foreach (var error in results.Errors)
+            {
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(error.Id, ConvertToError(error.Error)));
+            }
+
+            //Read entities
+            foreach (Legacy.DocumentHealthcareEntities documentHealthcareEntities in results.Documents)
+            {
+                healthcareEntititesResults.Add(new AnalyzeHealthcareEntitiesResult(
+                    documentHealthcareEntities.Id,
+                    ConvertToDocumentStatistics(documentHealthcareEntities.Statistics),
+                    ConvertToHealthcareEntityCollection(documentHealthcareEntities.Entities),
+                    ConvertToHealthcareEntityRelationsCollection(documentHealthcareEntities.Entities, documentHealthcareEntities.Relations),
+                    ConvertToWarnings(documentHealthcareEntities.Warnings)));
+            }
+
+            healthcareEntititesResults = healthcareEntititesResults.OrderBy(result => idToIndexMap[result.Id]).ToList();
+
+            return new AnalyzeHealthcareEntitiesResultCollection(healthcareEntititesResults, ConvertToBatchStatistics(results.Statistics), results.ModelVersion);
+        }
+
+        private static IList<HealthcareEntityRelation> ConvertToHealthcareEntityRelationsCollection(IReadOnlyList<Legacy.HealthcareEntity> healthcareEntities, IReadOnlyList<Legacy.HealthcareRelation> healthcareRelations)
+        {
+            List<HealthcareEntityRelation> result = new List<HealthcareEntityRelation>();
+            foreach (var relation in healthcareRelations)
+            {
+                result.Add(new HealthcareEntityRelation(
+                                    relation.RelationType.ToString(),
+                                    ConvertToHealthcareEntityRelationRoleCollection(relation.Entities, healthcareEntities)));
+            }
+            return result;
+        }
+
+        private static IReadOnlyCollection<HealthcareEntityRelationRole> ConvertToHealthcareEntityRelationRoleCollection(IReadOnlyList<Legacy.HealthcareRelationEntity> entities, IReadOnlyList<Legacy.HealthcareEntity> healthcareEntities)
+        {
+            List<HealthcareEntityRelationRole> result = new List<HealthcareEntityRelationRole>();
+
+            foreach (var entity in entities)
+            {
+                int refIndex = ParseLegacyHealthcareEntityIndex(entity.Ref);
+                Legacy.HealthcareEntity refEntity = healthcareEntities[refIndex];
+
+                result.Add(new HealthcareEntityRelationRole(ConvertToHealthcareEntity(refEntity), entity.Role));
+            }
+
+            return result;
+        }
+
+        private static int ParseLegacyHealthcareEntityIndex(string reference)
+        {
+            Match healthcareEntityMatch = s_legacyHealthcareEntityRegex.Match(reference);
+            if (healthcareEntityMatch.Success)
+            {
+                return int.Parse(healthcareEntityMatch.Groups["entityIndex"].Value, CultureInfo.InvariantCulture);
+            }
+
+            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+        }
+
+        internal static Models.HealthcareJobStatusResult ConvertToHealthcareJobStatusResult(Legacy.HealthcareJobState legacyJobState, IDictionary<string, int> map)
+        {
+            var result = new Models.HealthcareJobStatusResult
+            {
+                NextLink = legacyJobState.NextLink,
+                CreatedOn = legacyJobState.CreatedDateTime,
+                LastModifiedOn = legacyJobState.LastUpdateDateTime,
+                ExpiresOn = legacyJobState.ExpirationDateTime,
+                Status = ConvertToTextAnalyticsOperationStatus(legacyJobState.Status)
+            };
+
+            if (result.Status == TextAnalyticsOperationStatus.Succeeded)
+            {
+                result.Result = ConvertToAnalyzeHealthcareEntitiesResultCollection(legacyJobState.Results, map);
+            }
+
+            foreach (var error in legacyJobState.Errors)
+            {
+                result.Errors.Add(ConvertToLanguageError(error));
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Long Running Operations
 
         private static string[] parseActionErrorTarget(string targetReference)
         {
@@ -1171,25 +1320,6 @@ namespace Azure.AI.TextAnalytics
             {
                 result.Result = ConvertToAnalyzeActionsResult(legacyJobState, map);
             }
-
-            foreach (var error in legacyJobState.Errors)
-            {
-                result.Errors.Add(ConvertToLanguageError(error));
-            }
-
-            return result;
-        }
-
-        internal static Models.HealthcareJobStatusResult ConvertToHealthcareJobStatusResult(Legacy.HealthcareJobState legacyJobState, IDictionary<string, int> map)
-        {
-            var result = new Models.HealthcareJobStatusResult
-            {
-                NextLink = legacyJobState.NextLink,
-                CreatedOn = legacyJobState.CreatedDateTime,
-                LastModifiedOn = legacyJobState.LastUpdateDateTime,
-                ExpiresOn = legacyJobState.ExpirationDateTime,
-                Result = ConvertToHealthcareEntitiesResultCollection(legacyJobState.Results, map)
-            };
 
             foreach (var error in legacyJobState.Errors)
             {

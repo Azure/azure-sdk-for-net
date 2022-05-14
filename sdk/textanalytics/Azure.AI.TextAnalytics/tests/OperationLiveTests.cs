@@ -75,7 +75,6 @@ namespace Azure.AI.TextAnalytics.Tests
         #region Healthcare
 
         [RecordedTest]
-        [Ignore("Not yet implemented")]
         public async Task HealthcareOperationCanPollFromNewObject()
         {
             TextAnalyticsClient client = GetClient(out var nonInstrumentedClient);
@@ -100,7 +99,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("Not yet implemented")]
         public async Task HealthcareOperationConvenienceCanPollFromNewObject()
         {
             TextAnalyticsClient client = GetClient(out var nonInstrumentedClient);
