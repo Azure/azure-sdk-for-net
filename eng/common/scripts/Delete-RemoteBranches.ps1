@@ -40,7 +40,12 @@ foreach ($res in $responses)
   }
   $branch = $res.ref
   $branchName = $branch.Replace("refs/heads/","")
-  $pullRequestNumber = ($branchName -match $CentralPRRegex)["PrNumber"]
+  $branchName -match $CentralPRRegex | Out-Null
+  $pullRequestNumber = $Matches["PrNumber"]
+  if (!$pullRequestNumber) {
+    LogWarning "Did not fetch any pr number from the branch. Please double check $branchName"
+    continue
+  }
   try {
     $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
     if ($centralPR.state -ne "closed") {
@@ -57,22 +62,27 @@ foreach ($res in $responses)
     $head = "${RepoId}:${branchName}"
     LogDebug "Operating on branch [ $branchName ]"
     $pullRequests = Get-GitHubPullRequests -RepoId $RepoId -State "all" -Head $head -AuthToken $AuthToken
-    $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
-    if ($openPullRequests.Count -gt 0)
-    {
-      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has open pull Requests. Closing..."
-      Close-GithubPullRequests -RepoId $RepoId -PullRequestNumber $openPullRequests.PullRequestNumber -AuthToken $AuthToken
-    }
-    else{
-      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has no associated open Pull Request. "
-    }
   }
   catch
   {
     LogError "Get-GitHubPullRequests failed with exception:`n$_"
     exit 1
   }
+  $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
 
+  foreach ($openPullRequest in $openPullRequests) {
+    try 
+    {
+      Close-GithubPullRequest -apiurl $openPullRequest.url -AuthToken $AuthToken | Out-Null
+      LogDebug "Open pull Request [ $($openPullRequest.url)] associate with branch [ $branchName ] in repo [ $RepoId ] has been closed."
+    }
+    catch
+    {
+      LogError "Close-GithubPullRequest failed with exception:`n$_"
+      exit 1
+    }
+  }
+  
   if ($LastCommitOlderThan) {
     if (!$res.object -or !$res.object.url) {
       LogWarning "No commit url returned from response. Skipping... "

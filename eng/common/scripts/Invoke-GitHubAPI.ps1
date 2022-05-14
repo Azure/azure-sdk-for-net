@@ -95,10 +95,9 @@ function Get-GitHubSourceReferences {
 
 function Get-GitHubPullRequest {
   param (
-    [Parameter(Mandatory = $true)]
     $RepoOwner,
-    [Parameter(Mandatory = $true)]
     $RepoName,
+    $RepoId = "$RepoOwner/$RepoName",
     [Parameter(Mandatory = $true)]
     $PullRequestNumber,
     [ValidateNotNullOrEmpty()]
@@ -106,7 +105,7 @@ function Get-GitHubPullRequest {
     $AuthToken
   )
 
-  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PullRequestNumber"
+  $uri = "$GithubAPIBaseURI/$RepoId/pulls/$PullRequestNumber"
 
   return Invoke-RestMethod `
           -Method GET `
@@ -155,24 +154,19 @@ function New-GitHubPullRequest {
 function Close-GitHubPullRequest {
   param (
     [Parameter(Mandatory = $true)]
-    $RepoOwner,
-    [Parameter(Mandatory = $true)]
-    $RepoName,
-    [Parameter(Mandatory = $true)]
-    $PullRequestNumber,
+    $apiurl,
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
   )
 
-  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/pulls/$PullRequestNumber"
   $parameters = @{
     state                 = "closed"
   }
 
   return Invoke-RestMethod `
           -Method PATCH `
-          -Uri $uri `
+          -Uri $apiurl `
           -Body ($parameters | ConvertTo-Json) `
           -Headers (Get-GitHubApiHeaders -token $AuthToken) `
           -MaximumRetryCount 3
