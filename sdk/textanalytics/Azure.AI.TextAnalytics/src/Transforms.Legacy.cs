@@ -835,16 +835,16 @@ namespace Azure.AI.TextAnalytics
         #region Healthcare
 
         internal static HealthcareEntity ConvertToHealthcareEntity(Legacy.HealthcareEntity entity) =>
-          new HealthcareEntity(
-              entity.Text,
-              entity.Category,
-              entity.Subcategory,
-              entity.ConfidenceScore,
-              entity.Offset,
-              entity.Length,
-              ConvertToEntityDataSource(entity.Links),
-              ConvertToHealthcareEntityAssertion(entity.Assertion),
-              entity.Name);
+            new HealthcareEntity(
+                entity.Text,
+                entity.Category,
+                entity.Subcategory,
+                entity.ConfidenceScore,
+                entity.Offset,
+                entity.Length,
+                ConvertToEntityDataSource(entity.Links),
+                ConvertToHealthcareEntityAssertion(entity.Assertion),
+                entity.Name);
 
         internal static HealthcareEntityAssertion ConvertToHealthcareEntityAssertion(Legacy.HealthcareAssertion assertion)
         {
@@ -869,7 +869,7 @@ namespace Azure.AI.TextAnalytics
         internal static EntityCertainty? ConvertToEntityCertainty(Legacy.Models.Certainty? legacyCertainty) =>
             legacyCertainty switch
             {
-                null => (EntityCertainty?)null,
+                null => null,
                 Legacy.Models.Certainty.Positive => EntityCertainty.Positive,
                 Legacy.Models.Certainty.PositivePossible => EntityCertainty.PositivePossible,
                 Legacy.Models.Certainty.NeutralPossible => EntityCertainty.NeutralPossible,
@@ -881,7 +881,7 @@ namespace Azure.AI.TextAnalytics
         internal static EntityAssociation? ConvertToEntityAssociation(Legacy.Models.Association? legacyAssociation) =>
             legacyAssociation switch
             {
-                null => (EntityAssociation?)null,
+                null => null,
                 Legacy.Models.Association.Subject => EntityAssociation.Subject,
                 Legacy.Models.Association.Other => EntityAssociation.Other,
                 _ => throw new NotSupportedException($"The association, {legacyAssociation}, is not supported for conversion.")
