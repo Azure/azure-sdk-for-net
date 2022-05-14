@@ -31,7 +31,6 @@ namespace Azure.DigitalTwins.Core
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-<<<<<<< HEAD
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
@@ -39,15 +38,6 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-=======
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public DigitalTwinsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2021-06-30-preview")
-        {
-            this.endpoint = endpoint ?? new Uri("https://digitaltwins-hostname");
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
->>>>>>> 8f61584a04115bfc1a9809be0a9742bd6fbe33e8
         }
 
         internal HttpMessage CreateGetByIdRequest(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions)
