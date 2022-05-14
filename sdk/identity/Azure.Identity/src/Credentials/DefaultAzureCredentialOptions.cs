@@ -68,6 +68,11 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
+        /// Specifies Powershell process timeout in milliseconds.
+        /// </summary>
+        public int PowerShellProcessTimeoutMs { get; set; } = (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
+
+        /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
         /// authentication details from the process' environment variables.
         /// </summary>

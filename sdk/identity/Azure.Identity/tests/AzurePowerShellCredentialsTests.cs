@@ -144,6 +144,16 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void ConfigurePowershellProcessTimeout()
+        {
+            int powershellProcessTimeout = 42;
+
+            AzurePowerShellCredential credential = new AzurePowerShellCredential(
+                      new AzurePowerShellCredentialOptions() { PowerShellProcessTimeoutMs = powershellProcessTimeout });
+            Assert.AreEqual(powershellProcessTimeout, credential.PowerShellProcessTimeoutMs);
+        }
+
+        [Test]
         [RunOnlyOnPlatforms(Windows = true)]
         public void AuthenticateWithAzurePowerShellCredential_PowerShellNotInstalled(
             [Values("'powershell' is not recognized", "powershell: command not found", "powershell: not found")]

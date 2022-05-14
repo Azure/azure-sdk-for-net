@@ -24,7 +24,7 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
-        private const int PowerShellProcessTimeoutMs = 10000;
+        internal int PowerShellProcessTimeoutMs { get; private set; }
         internal bool UseLegacyPowerShell { get; set; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
@@ -67,6 +67,7 @@ namespace Azure.Identity
             _tenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
+            PowerShellProcessTimeoutMs = options?.PowerShellProcessTimeoutMs ?? (int)TimeSpan.FromSeconds(10).TotalMilliseconds;
         }
 
         /// <summary>

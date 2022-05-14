@@ -83,6 +83,7 @@ namespace Azure.Identity.Tests
             string expVsTenantId = Guid.NewGuid().ToString();
             string expCodeTenantId = Guid.NewGuid().ToString();
             string expResourceId =  $"/subscriptions/{Guid.NewGuid().ToString()}/locations/MyLocation";
+            int expPowershellProcessTimeoutMs = 42;
             string actClientId_ManagedIdentity = null;
             string actResiurceId_ManagedIdentity = null;
             string actClientId_InteractiveBrowser = null;
@@ -91,6 +92,7 @@ namespace Azure.Identity.Tests
             string actBrowserTenantId = null;
             string actVsTenantId = null;
             string actCodeTenantId = null;
+            int actPowershellProcessTimeoutMs = 0;
 
             var credFactory = new MockDefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null));
 
@@ -103,7 +105,7 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, clientId,  _) => { actBrowserTenantId = tenantId; actClientId_InteractiveBrowser = clientId; };
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => { actVsTenantId = tenantId; };
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => { actCodeTenantId = tenantId; };
-            credFactory.OnCreateAzurePowerShellCredential = _ => {};
+            credFactory.OnCreateAzurePowerShellCredential = (powershellProcessTimeoutMs, _) => { actPowershellProcessTimeoutMs = powershellProcessTimeoutMs; };
 
             var options = new DefaultAzureCredentialOptions
             {
@@ -115,6 +117,7 @@ namespace Azure.Identity.Tests
                 VisualStudioCodeTenantId = expCodeTenantId,
                 InteractiveBrowserTenantId = expBrowserTenantId,
                 ExcludeInteractiveBrowserCredential = false,
+                PowerShellProcessTimeoutMs = expPowershellProcessTimeoutMs
             };
 
             switch (managedIdentityIdType)
@@ -135,6 +138,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expBrowserTenantId, actBrowserTenantId);
             Assert.AreEqual(expVsTenantId, actVsTenantId);
             Assert.AreEqual(expCodeTenantId, actCodeTenantId);
+            Assert.AreEqual(expPowershellProcessTimeoutMs, actPowershellProcessTimeoutMs);
             switch (managedIdentityIdType)
             {
                 case ManagedIdentityIdType.ClientId:
@@ -322,7 +326,7 @@ namespace Azure.Identity.Tests
             credFactory.OnCreateInteractiveBrowserCredential = (tenantId, _, _) => interactiveBrowserCredentialIncluded = true;
             credFactory.OnCreateVisualStudioCredential = (tenantId, _) => visualStudioCredentialIncluded = true;
             credFactory.OnCreateVisualStudioCodeCredential = (tenantId, _) => visualStudioCodeCredentialIncluded = true;
-            credFactory.OnCreateAzurePowerShellCredential = _ => powerShellCredentialsIncluded = true;
+            credFactory.OnCreateAzurePowerShellCredential = (_, _) => powerShellCredentialsIncluded = true;
             credFactory.OnCreateManagedIdentityCredential = (clientId, _) =>
             {
                 managedIdentityCredentialIncluded = true;
@@ -394,7 +398,7 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
             credFactory.OnCreateAzureCliCredential = c =>
                 SetupMockForException(c);
-            credFactory.OnCreateAzurePowerShellCredential = c =>
+            credFactory.OnCreateAzurePowerShellCredential = (_, c) =>
                 SetupMockForException(c);
             credFactory.OnCreateVisualStudioCredential = (_, c) =>
                 SetupMockForException(c);
@@ -484,7 +488,7 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
             credFactory.OnCreateAzureCliCredential = c =>
                 SetupMockForException(c);
-            credFactory.OnCreateAzurePowerShellCredential = c =>
+            credFactory.OnCreateAzurePowerShellCredential = (_, c) =>
                 SetupMockForException(c);
 
             credFactory.OnCreateInteractiveBrowserCredential = (_, _, c) =>
@@ -616,7 +620,7 @@ namespace Azure.Identity.Tests
                 SetupMockForException(c);
             credFactory.OnCreateVisualStudioCodeCredential = (_, c) =>
                 SetupMockForException(c);
-            credFactory.OnCreateAzurePowerShellCredential = c =>
+            credFactory.OnCreateAzurePowerShellCredential = (_, c) =>
                 SetupMockForException(c);
 
             return credFactory;
