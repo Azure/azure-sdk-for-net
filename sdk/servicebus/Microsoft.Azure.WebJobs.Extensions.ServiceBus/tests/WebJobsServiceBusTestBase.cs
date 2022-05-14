@@ -301,7 +301,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                          (p.FormattedMessage == null ||
                          // Ignore this error that the SDK logs when cancelling batch receive
                          !p.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException")));
-                Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
+                Assert.IsEmpty(errors, string.Join(
+                    ",",
+                    errors.Select(e => e.Exception != null ? e.Exception.StackTrace : e.FormattedMessage)));
 
                 var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
 

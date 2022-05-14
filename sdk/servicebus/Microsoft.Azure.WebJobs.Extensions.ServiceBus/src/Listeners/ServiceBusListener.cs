@@ -402,11 +402,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
                         receiveActions.EndExecutionScope();
 
+                        var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
                         // Complete batch of messages only if the execution was successful
                         if (_autoCompleteMessages && result.Succeeded)
                         {
                             List<Task> completeTasks = new List<Task>();
-                            foreach (ServiceBusReceivedMessage message in messagesArray.Concat(receiveActions.Messages.Keys))
+                            foreach (ServiceBusReceivedMessage message in processedMessages)
                             {
                                 // skip messages that were settled in the user's function
                                 if (input.MessageActions.SettledMessages.ContainsKey(message))
@@ -427,7 +428,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             // in the Service Bus SDK.
 
                             List<Task> abandonTasks = new List<Task>();
-                            foreach (ServiceBusReceivedMessage message in messagesArray)
+                            foreach (ServiceBusReceivedMessage message in processedMessages)
                             {
                                 // skip messages that were settled in the user's function
                                 if (input.MessageActions.SettledMessages.ContainsKey(message))

@@ -239,26 +239,48 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task TestAutoCompleteDisabledOnTrigger_AbandonsWhenException<T>()
         {
-            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            int messageCount = 2;
+            for (int i = 0; i < messageCount; i++)
+            {
+                await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            }
 
             // Intentionally skipping validation as we are expecting errors in the error log
             // for this test, so we accept that the stop will not be graceful.
             using (var host = BuildHost<T>(
-                host => host.ConfigureWebJobs(b => b.AddServiceBus(options => options.MaxConcurrentCalls = 1)),
+                host => host.ConfigureWebJobs(b => b.AddServiceBus(options =>
+                {
+                    options.MaxConcurrentCalls = 1;
+                    options.MaxMessageBatchSize = 1;
+                })),
                 skipValidation: true))
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
             }
-            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-            await using ServiceBusReceiver receiver = client.CreateReceiver(FirstQueueScope.QueueName);
 
-            // The message should have been abandoned, so it should be available to be received again prior to the lock duration elapsing.
-            var message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
-            Assert.NotNull(message);
-            await receiver.CompleteMessageAsync(message);
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            await using ServiceBusReceiver receiver = client.CreateReceiver(FirstQueueScope.QueueName, new ServiceBusReceiverOptions {ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete});
+
+            // all messages should have been abandoned, so we should be able to receive them right away
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            tokenSource.CancelAfter(TimeSpan.FromSeconds(5));
+            int remaining = messageCount;
+            while (!tokenSource.IsCancellationRequested && remaining > 0)
+            {
+                try
+                {
+                    var receivedMessages = await receiver.ReceiveMessagesAsync(remaining, TimeSpan.FromSeconds(5), tokenSource.Token);
+                    remaining -= receivedMessages.Count;
+                }
+                catch (OperationCanceledException)
+                {
+                }
+            }
+            Assert.AreEqual(0, remaining);
         }
+
         [Test]
         public async Task TestSingle_CrossEntityTransaction()
         {
@@ -1332,10 +1354,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestSingleAutoCompleteMessagesEnabledOnTriggerException
         {
-            public static void Run(
+            public async Task Run(
                 [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = false)]
-                ServiceBusReceivedMessage message)
+                ServiceBusReceivedMessage message,
+                ServiceBusReceiveActions receiveActions)
             {
+                // validate that additional messages received will get abandoned after the exception
+                await receiveActions.ReceiveMessagesAsync(1);
                 _waitHandle1.Set();
                 throw new Exception("Exception from user function");
             }
@@ -1343,10 +1368,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestBatchAutoCompleteMessagesEnabledOnTriggerException
         {
-            public static void Run(
+            public static async Task Run(
                 [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = false)]
-                ServiceBusReceivedMessage[] messages)
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusReceiveActions receiveActions)
             {
+                // validate that additional messages received will get abandoned after the exception
+                await receiveActions.ReceiveMessagesAsync(1);
                 _waitHandle1.Set();
                 throw new Exception("Exception from user function");
             }
