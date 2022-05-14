@@ -5,7 +5,7 @@
 ### New Features
 
 - Added support for `SourceTime` to `DigitalTwinPropertyMetadata`.
-- Added support for `$LastUpdatedTime` to `DigitalTwinMetadata`.
+- Added support for `LastUpdatedTime` for digital twins and components to `DigitalTwinMetadata`.
 
 ## 1.2.2 (2021-04-12)
 
