@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
         public string LastUpdatedOn { get; set; }
-        
+
         /// <summary>
         /// This field will contain metadata about changes on properties on the digital twin.
         /// The key will be the property name, and the value is the metadata.

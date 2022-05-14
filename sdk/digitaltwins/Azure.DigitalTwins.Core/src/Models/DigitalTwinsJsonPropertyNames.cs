@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
         /// The JSON property name for the model field on a digital twin metadata.
         /// </summary>
         public const string MetadataModel = "$model";
-        
+
         /// <summary>
         /// The last update time of a digital twin property, used in the $metadata object
         /// on a digital twin or component about their properties.
