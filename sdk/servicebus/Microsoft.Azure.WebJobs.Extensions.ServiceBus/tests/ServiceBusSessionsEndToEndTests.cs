@@ -905,7 +905,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(message);
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -914,7 +914,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -931,7 +931,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(messages.First());
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -940,7 +940,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -1025,7 +1025,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // override the options computed from ServiceBusOptions
                 options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
                 options.MaxConcurrentSessions = 1;
-                if (entityPath == _firstQueueScope.QueueName)
+                if (entityPath == FirstQueueScope.QueueName)
                 {
                     processor = client.CreateSessionProcessor(entityPath, options);
                 }
