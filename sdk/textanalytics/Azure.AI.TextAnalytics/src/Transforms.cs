@@ -363,6 +363,16 @@ namespace Azure.AI.TextAnalytics
 
         private static Regex _healthcareEntityRegex = new Regex(@"\#/results/documents\/(?<documentIndex>\d*)\/entities\/(?<entityIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
+        private static AnalyzeHealthcareEntitiesResultCollection ExtractHealthcareActionResult(AnalyzeTextJobState jobState, IDictionary<string, int> map)
+        {
+            var healthcareTask = jobState.Tasks.Items[0];
+            if (healthcareTask.Kind == AnalyzeTextLROResultsKind.HealthcareLROResults)
+            {
+                return Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection((healthcareTask as HealthcareLROResult).Results, map);
+            }
+            throw new InvalidOperationException($"Invalid task executed. Expected a HealthcareLROResults but instead got {healthcareTask.Kind}.");
+        }
+
         #endregion
 
         #region Extract Summary
@@ -786,6 +796,30 @@ namespace Azure.AI.TextAnalytics
             if (result.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 result.Result = ConvertToAnalyzeActionsResult(jobState, map);
+            }
+
+            foreach (var error in jobState.Errors)
+            {
+                result.Errors.Add(error);
+            }
+
+            return result;
+        }
+
+        internal static HealthcareJobStatusResult ConvertToHealthcareJobStatusResult(AnalyzeTextJobState jobState, IDictionary<string, int> map)
+        {
+            var result = new HealthcareJobStatusResult
+            {
+                NextLink = jobState.NextLink,
+                CreatedOn = jobState.CreatedDateTime,
+                LastModifiedOn = jobState.LastUpdateDateTime,
+                ExpiresOn = jobState.ExpirationDateTime,
+                Status = jobState.Status
+            };
+
+            if (result.Status == TextAnalyticsOperationStatus.Succeeded)
+            {
+                result.Result = ExtractHealthcareActionResult(jobState, map);
             }
 
             foreach (var error in jobState.Errors)

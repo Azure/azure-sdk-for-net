@@ -174,7 +174,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         #region Healthcare
         [Test]
-        [Ignore("Not yet implemented")]
         public async Task CreateHealthcareOperationConvenienceSetsOperationId()
         {
             var mockResponse = new MockResponse(202);
@@ -201,7 +200,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public async Task CreateHealthcareOperationSetsOperationId()
         {
             var mockResponse = new MockResponse(202);
@@ -234,7 +232,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void CreateHealthcareOperationFromFakeValidOperationId()
         {
             var jobId = "2a96a91f-7edf-4931-a880-3fdee1d56f15";
@@ -252,7 +249,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void CreateHealthcareOperationWrongOperationId()
         {
             var client = CreateTestClient(new MockTransport());
@@ -262,7 +258,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void CreateHealthcareOperationWrongTokenVersion()
         {
             var client = CreateTestClient(new MockTransport());
@@ -278,7 +273,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void CreateHealthcareOperationMissingJobId()
         {
             var client = CreateTestClient(new MockTransport());
@@ -291,7 +285,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void CreateHealthcareOperationMissingDocumentOrder()
         {
             var client = CreateTestClient(new MockTransport());

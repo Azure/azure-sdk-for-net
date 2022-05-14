@@ -11,14 +11,13 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        [Ignore("LRO not implemented")]
         public async Task AnalyzeHealthcareEntitiesAsync()
         {
             // create a text analytics client
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions(TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview));
 
             // get input documents
             string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |

@@ -24,6 +24,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private static readonly TextAnalyticsRequestOptions s_defaultRequestOptions = new();
         private static readonly RecognizePiiEntitiesOptions s_piiEntitiesOptions = new();
         private static readonly AnalyzeSentimentOptions s_analyzeSentimentOptions = new();
+        private static readonly AnalyzeHealthcareEntitiesOptions s_analyzeHealthcareEntitiesOptions = new();
 
         private readonly MicrosoftCognitiveLanguageServiceRestClient _languageRestClient;
         private readonly TextAnalyticsClientOptions _options;
@@ -1243,51 +1244,105 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
         public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new AnalyzeHealthcareEntitiesOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_analyzeHealthcareEntitiesOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
         public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<string> documents, string language = default, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNullOrEmpty(documents, nameof(documents));
-            //options ??= new AnalyzeHealthcareEntitiesOptions();
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
+            options ??= s_analyzeHealthcareEntitiesOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents, language);
 
-            //return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
         }
 
         public override AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNull(documents, nameof(documents));
+            options ??= s_analyzeHealthcareEntitiesOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //options ??= new AnalyzeHealthcareEntitiesOptions();
-
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
-
-            //return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
-            throw new NotImplementedException();
+            return StartAnalyzeHealthcareEntities(documentInputs, options, cancellationToken);
         }
 
         public override async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(IEnumerable<TextDocumentInput> documents, AnalyzeHealthcareEntitiesOptions options = default, CancellationToken cancellationToken = default)
         {
-            //Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNull(documents, nameof(documents));
+            options ??= s_analyzeHealthcareEntitiesOptions;
+            MultiLanguageAnalysisInput documentInputs = ConvertToMultiLanguageInputs(documents);
 
-            //options ??= new AnalyzeHealthcareEntitiesOptions();
-
-            //MultiLanguageBatchInput documentInputs = ConvertToMultiLanguageInputs(documents);
-
-            //return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-            await Task.Yield();
-            throw new NotImplementedException();
+            return await StartAnalyzeHealthcareEntitiesAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
         }
 
-        // NEEDS IMPLEMENTATION
+        private static HealthcareLROTask CreateHealthcareTask(AnalyzeHealthcareEntitiesOptions options)
+        {
+            return new HealthcareLROTask()
+            {
+                Parameters = new HealthcareTaskParameters()
+                {
+                    ModelVersion = options.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = options.DisableServiceLogs
+                }
+            };
+        }
+
+        private AnalyzeHealthcareEntitiesOperation StartAnalyzeHealthcareEntities(MultiLanguageAnalysisInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeHealthcareEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) } );
+
+                var response = _languageRestClient.AnalyzeBatchSubmitJob(input, cancellationToken);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<AnalyzeHealthcareEntitiesOperation> StartAnalyzeHealthcareEntitiesAsync(MultiLanguageAnalysisInput batchInput, AnalyzeHealthcareEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new AnalyzeHealthcareEntitiesOptions();
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeHealthcareEntities)}");
+            scope.Start();
+
+            try
+            {
+                AnalyzeTextJobsInput input = new(batchInput, new List<AnalyzeTextLROTask>() { CreateHealthcareTask(options) });
+
+                var response = await _languageRestClient.AnalyzeBatchSubmitJobAsync(input, cancellationToken).ConfigureAwait(false);
+
+                string location = response.Headers.OperationLocation;
+
+                IDictionary<string, int> idToIndexMap = CreateIdToIndexMap(batchInput.Documents);
+
+                return new AnalyzeHealthcareEntitiesOperation(this, _clientDiagnostics, location, idToIndexMap, options.IncludeStatistics);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         public override async Task<Response<HealthcareJobStatusResult>> HealthStatusAsync(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
@@ -1302,12 +1357,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                await Task.Yield();
-                throw new NotImplementedException();
-                //var result = << NO HEALTHCARE SERVICE METHOD >>
-                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+                var result = await _languageRestClient.AnalyzeBatchJobStatusAsync(id, showStats, top, skip, cancellationToken).ConfigureAwait(false);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
 
-                //return Response.FromValue(status, result.GetRawResponse());
+                return Response.FromValue(status, result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1316,7 +1369,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        // NEEDS IMPLEMENTATION
         public override Response<HealthcareJobStatusResult> HealthStatus(string jobId, bool? showStats, int? top, int? skip, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jobId, nameof(jobId));
@@ -1331,11 +1383,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                throw new NotImplementedException();
-                //var result = << NO HEALTHCARE SERVICE METHOD >>
-                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+                var result = _languageRestClient.AnalyzeBatchJobStatus(id, showStats, top, skip, cancellationToken);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
 
-                //return Response.FromValue(status, result.GetRawResponse());
+                return Response.FromValue(status, result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1388,6 +1439,55 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override async Task CancelHealthcareJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelHealthcareJobAsync)}");
+            scope.Start();
+
+            try
+            {
+                await Task.Yield();
+                throw new NotImplementedException();
+                //var result = << NO HEALTHCARE SERVICE METHOD >>
+                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                //return Response.FromValue(status, result.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // NEEDS IMPLEMENTATION
+        public override void CancelHealthcareJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            {
+                Argument.AssertNotNull(jobId, nameof(jobId));
+
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelHealthcareJob)}");
+                scope.Start();
+
+                try
+                {
+                    throw new NotImplementedException();
+                    //var result = << NO HEALTHCARE SERVICE METHOD >>
+                    //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+
+                    //return Response.FromValue(status, result.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
         }
 
