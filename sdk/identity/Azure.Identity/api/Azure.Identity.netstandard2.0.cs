@@ -70,6 +70,7 @@ namespace Azure.Identity
     public partial class AzurePowerShellCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public AzurePowerShellCredentialOptions() { }
+        public int PowerShellProcessTimeoutMs { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
@@ -150,6 +151,7 @@ namespace Azure.Identity
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
         public string ManagedIdentityClientId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
+        public int PowerShellProcessTimeoutMs { get { throw null; } set { } }
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
         public string SharedTokenCacheUsername { get { throw null; } set { } }
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
