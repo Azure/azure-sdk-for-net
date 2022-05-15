@@ -26,8 +26,11 @@ namespace Azure.AI.Language.Conversations
                 writer.WritePropertyName("language");
                 writer.WriteStringValue(Language);
             }
-            writer.WritePropertyName("modality");
-            writer.WriteStringValue(Modality.ToString());
+            if (Optional.IsDefined(Modality))
+            {
+                writer.WritePropertyName("modality");
+                writer.WriteStringValue(Modality.Value.ToString());
+            }
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role");

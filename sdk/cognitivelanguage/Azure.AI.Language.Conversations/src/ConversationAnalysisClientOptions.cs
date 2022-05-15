@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations
             {
                 ServiceVersion.V2021_11_01_Preview => "2021-11-01-preview",
                 ServiceVersion.V2022_03_01_Preview => "2022-03-01-preview",
-                ServiceVersion.V2022_05_15_Preview => "2022-04-01-preview",
+                ServiceVersion.V2022_05_15_Preview => "2022-05-15-preview",
                 _ => throw new NotSupportedException()
             };
 

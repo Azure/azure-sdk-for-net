@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Initializes a new instance of AnalyzeConversationSummarizationTask. </summary>
         public AnalyzeConversationSummarizationTask()
         {
-            Kind = new AnalyzeConversationLROTaskKind("IssueResolutionSummarization");
+            Kind = AnalyzeConversationLROTaskKind.ConversationalSummarizationTask;
         }
 
         /// <summary> Initializes a new instance of AnalyzeConversationSummarizationTask. </summary>

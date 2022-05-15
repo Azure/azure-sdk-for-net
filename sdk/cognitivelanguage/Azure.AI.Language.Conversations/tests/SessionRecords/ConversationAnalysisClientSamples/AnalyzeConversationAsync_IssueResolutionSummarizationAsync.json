@@ -1,0 +1,266 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://apim-westeurope.cognitivetest.trafficmanager.net/language/analyze-conversation/jobs?api-version=2022-04-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Connection": "keep-alive",
+        "Content-Length": "578",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0670908311720743ac029b7731882a68-80a23d437ce0434e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1796546a56e53b1d2dc7b2f8e993d688",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hello, how can I help you?",
+                  "id": "1",
+                  "participantId": "Agent",
+                  "modality": "text"
+                },
+                {
+                  "text": "How to upgrade Office? I am getting error messages the whole day.",
+                  "id": "2",
+                  "participantId": "Customer",
+                  "modality": "text"
+                },
+                {
+                  "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+                  "id": "3",
+                  "participantId": "Agent",
+                  "modality": "text"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "summaryAspects": "Issue, Resolution"
+            },
+            "kind": "IssueResolutionSummarization",
+            "taskName": "1"
+          }
+        ]
+      },
+      "StatusCode": 503,
+      "ResponseHeaders": {
+        "apim-request-id": "695d6a5f-edec-4beb-ac0e-605069564e38",
+        "Content-Length": "19",
+        "Content-Type": "text/plain",
+        "Date": "Sun, 15 May 2022 14:21:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": "no healthy upstream"
+    },
+    {
+      "RequestUri": "https://apim-westeurope.cognitivetest.trafficmanager.net/language/analyze-conversation/jobs?api-version=2022-04-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "578",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0670908311720743ac029b7731882a68-80a23d437ce0434e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1796546a56e53b1d2dc7b2f8e993d688",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hello, how can I help you?",
+                  "id": "1",
+                  "participantId": "Agent",
+                  "modality": "text"
+                },
+                {
+                  "text": "How to upgrade Office? I am getting error messages the whole day.",
+                  "id": "2",
+                  "participantId": "Customer",
+                  "modality": "text"
+                },
+                {
+                  "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+                  "id": "3",
+                  "participantId": "Agent",
+                  "modality": "text"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "summaryAspects": "Issue, Resolution"
+            },
+            "kind": "IssueResolutionSummarization",
+            "taskName": "1"
+          }
+        ]
+      },
+      "StatusCode": 503,
+      "ResponseHeaders": {
+        "apim-request-id": "d546a233-e01e-4d42-8eb3-ff5e6b2a4a5e",
+        "Content-Length": "19",
+        "Content-Type": "text/plain",
+        "Date": "Sun, 15 May 2022 14:21:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": "no healthy upstream"
+    },
+    {
+      "RequestUri": "https://apim-westeurope.cognitivetest.trafficmanager.net/language/analyze-conversation/jobs?api-version=2022-04-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "578",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0670908311720743ac029b7731882a68-80a23d437ce0434e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1796546a56e53b1d2dc7b2f8e993d688",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hello, how can I help you?",
+                  "id": "1",
+                  "participantId": "Agent",
+                  "modality": "text"
+                },
+                {
+                  "text": "How to upgrade Office? I am getting error messages the whole day.",
+                  "id": "2",
+                  "participantId": "Customer",
+                  "modality": "text"
+                },
+                {
+                  "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+                  "id": "3",
+                  "participantId": "Agent",
+                  "modality": "text"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "summaryAspects": "Issue, Resolution"
+            },
+            "kind": "IssueResolutionSummarization",
+            "taskName": "1"
+          }
+        ]
+      },
+      "StatusCode": 503,
+      "ResponseHeaders": {
+        "apim-request-id": "12ea7c9c-37ed-4db8-8236-50bb5d22f9fa",
+        "Content-Length": "19",
+        "Content-Type": "text/plain",
+        "Date": "Sun, 15 May 2022 14:21:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": "no healthy upstream"
+    },
+    {
+      "RequestUri": "https://apim-westeurope.cognitivetest.trafficmanager.net/language/analyze-conversation/jobs?api-version=2022-04-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "578",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-0670908311720743ac029b7731882a68-80a23d437ce0434e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1796546a56e53b1d2dc7b2f8e993d688",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hello, how can I help you?",
+                  "id": "1",
+                  "participantId": "Agent",
+                  "modality": "text"
+                },
+                {
+                  "text": "How to upgrade Office? I am getting error messages the whole day.",
+                  "id": "2",
+                  "participantId": "Customer",
+                  "modality": "text"
+                },
+                {
+                  "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+                  "id": "3",
+                  "participantId": "Agent",
+                  "modality": "text"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "summaryAspects": "Issue, Resolution"
+            },
+            "kind": "IssueResolutionSummarization",
+            "taskName": "1"
+          }
+        ]
+      },
+      "StatusCode": 503,
+      "ResponseHeaders": {
+        "apim-request-id": "21a3ba50-489a-4771-aded-72b77f673555",
+        "Content-Length": "19",
+        "Content-Type": "text/plain",
+        "Date": "Sun, 15 May 2022 14:22:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": "no healthy upstream"
+    }
+  ],
+  "Variables": {
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://apim-westeurope.cognitivetest.trafficmanager.net",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "2064571840"
+  }
+}

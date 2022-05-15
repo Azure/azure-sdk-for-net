@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The override language of a conversation item in BCP 47 language representation. </summary>
         public string Language { get; set; }
         /// <summary> Enumeration of supported conversational modalities. </summary>
-        internal InputModality Modality { get; set; }
+        public InputModality? Modality { get; set; }
         /// <summary> The role of the participant. </summary>
         public GeneratedRole? Role { get; set; }
         /// <summary> Additional Properties. </summary>

@@ -13,15 +13,15 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [AsyncOnly]
         [RecordedTest]
-        public async Task AnalyzeConversationAsync_IssueResolutionSummarization()
+        public async Task AnalyzeConversationAsync_PII()
         {
             ConversationAnalysisClient client = Client;
 
             List<TextConversationItem> conversationItems = new List<TextConversationItem>()
             {
-                new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
-                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
-                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
+                new TextConversationItem("1", "0", "Is john doe?"),
+                new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
+                new TextConversationItem("3", "0", "Pretty good."),
             };
 
             List<TextConversation> input = new List<TextConversation>()
@@ -29,12 +29,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 new TextConversation("1", "en", conversationItems)
             };
 
-            ConversationSummarizationTaskParameters param = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { });
+            ConversationPIITaskParameters param = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
 
-            var issueSumTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, param);
+            var pii = new AnalyzeConversationPIITask("1", AnalyzeConversationLROTaskKind.ConversationalPIITask, param);
             List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
             {
-                issueSumTask
+                pii
             };
 
             try

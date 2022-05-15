@@ -22,13 +22,13 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IssueResolutionSummaryResultsValue = "issueResolutionSummaryResults";
-        private const string ConversationPIIResultsValue = "conversationPIIResults";
+        private const string ConversationalPIIResultsValue = "ConversationalPIIResults";
+        private const string ConversationalSummarizationResultsValue = "ConversationalSummarizationResults";
 
-        /// <summary> issueResolutionSummaryResults. </summary>
-        public static AnalyzeConversationResultsKind IssueResolutionSummaryResults { get; } = new AnalyzeConversationResultsKind(IssueResolutionSummaryResultsValue);
-        /// <summary> conversationPIIResults. </summary>
-        public static AnalyzeConversationResultsKind ConversationPIIResults { get; } = new AnalyzeConversationResultsKind(ConversationPIIResultsValue);
+        /// <summary> ConversationalPIIResults. </summary>
+        public static AnalyzeConversationResultsKind ConversationalPIIResults { get; } = new AnalyzeConversationResultsKind(ConversationalPIIResultsValue);
+        /// <summary> ConversationalSummarizationResults. </summary>
+        public static AnalyzeConversationResultsKind ConversationalSummarizationResults { get; } = new AnalyzeConversationResultsKind(ConversationalSummarizationResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeConversationResultsKind left, AnalyzeConversationResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultsKind"/> values are not the same. </summary>
