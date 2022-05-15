@@ -1,0 +1,149 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-westus2-apim.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Connection": "keep-alive",
+        "Content-Length": "1272",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-de5585c49f6d4c4290af20ee46d0bb98-36f86bba6eeb9847-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "709a3e7743c83dc7e024b00dc8374441",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "itn": "hi",
+                  "maskedItn": "hi",
+                  "text": "Hi",
+                  "lexical": "hi",
+                  "audioTimings": [
+                    {
+                      "word": "hi",
+                      "offset": 4500000,
+                      "duration": 2800000
+                    }
+                  ],
+                  "id": "1",
+                  "participantId": "speaker"
+                },
+                {
+                  "itn": "jane doe",
+                  "maskedItn": "jane doe",
+                  "text": "Jane doe",
+                  "lexical": "jane doe",
+                  "audioTimings": [
+                    {
+                      "word": "jane",
+                      "offset": 7100000,
+                      "duration": 4800000
+                    },
+                    {
+                      "word": "jane",
+                      "offset": 12000000,
+                      "duration": 1700000
+                    }
+                  ],
+                  "id": "2",
+                  "participantId": "speaker"
+                },
+                {
+                  "itn": "hi jane what\u0027s your phone number",
+                  "maskedItn": "hi jane what\u0027s your phone number",
+                  "text": "Hi Jane, what\u0027s your phone number?",
+                  "lexical": "hi jane what\u0027s your phone number",
+                  "audioTimings": [
+                    {
+                      "word": "hi",
+                      "offset": 7700000,
+                      "duration": 3100000
+                    },
+                    {
+                      "word": "jane",
+                      "offset": 10900000,
+                      "duration": 5700000
+                    },
+                    {
+                      "word": "what\u0027s",
+                      "offset": 17300000,
+                      "duration": 2600000
+                    },
+                    {
+                      "word": "your",
+                      "offset": 20000000,
+                      "duration": 1600000
+                    },
+                    {
+                      "word": "phone",
+                      "offset": 21700000,
+                      "duration": 1700000
+                    },
+                    {
+                      "word": "number",
+                      "offset": 23500000,
+                      "duration": 2300000
+                    }
+                  ],
+                  "id": "3",
+                  "participantId": "agent"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "transcript"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "piiCategories": [
+                "All"
+              ],
+              "includeAudioRedaction": false,
+              "modelVersion": "2022-05-15-preview",
+              "loggingOptOut": false
+            },
+            "kind": "ConversationalPIITask",
+            "taskName": "analyze"
+          }
+        ]
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "apim-request-id": "6ad9e124-448e-4dbe-9d16-e4e7e0f0ace8",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 15 May 2022 16:21:31 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "11",
+        "x-http2-stream-id": "5"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "InvalidRequest",
+          "details": [],
+          "message": "Invalid Request.",
+          "innererror": {
+            "code": "InvalidParameterValue",
+            "message": "Job task: \u0027ConversationalPIITask-analyze\u0027 failed with validation errors: [\u0027Invalid parameter in request\u0027]"
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://ta-westus2-apim.ppe.cognitiveservices.azure.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "538989212"
+  }
+}

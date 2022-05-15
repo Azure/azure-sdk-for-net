@@ -148,5 +148,206 @@ namespace Azure.AI.Language.Conversations.Tests
             // assert - top intent answers
             // Assert.IsNotEmpty(topIntent.Result.Answers);
         }
+
+        [RecordedTest]
+        public async Task AnalyzeConversationAsync_ConversationSummarization()
+        {
+            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            ConversationAnalysisClient client = Client;
+
+            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            {
+                new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+                new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+                new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
+            };
+
+            List<TextConversation> input = new List<TextConversation>()
+            {
+                new TextConversation("1", "en", textConversationItems)
+            };
+
+            ConversationSummarizationTaskParameters conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+
+            var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
+            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            {
+                conversationSummarizationTask
+            };
+
+            var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+            await analyzeConversationOperation.WaitForCompletionAsync();
+
+            var jobResults = analyzeConversationOperation.Value;
+            Assert.NotNull(jobResults);
+
+            foreach (var result in jobResults.Tasks.Items)
+            {
+                var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
+                Assert.NotNull(analyzeConversationSummarization);
+
+                var results = analyzeConversationSummarization.Results;
+                Assert.NotNull(results);
+
+                Assert.NotNull(results.Conversations);
+                foreach (var conversation in results.Conversations)
+                {
+                    Assert.NotNull(conversation.Summaries);
+                    foreach (var summary in conversation.Summaries)
+                    {
+                        Assert.NotNull(summary.Text);
+                        Assert.NotNull(summary.Aspect);
+                    }
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeConversation_ConversationPII_TextInput()
+        {
+            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            {
+                new TextConversationItem("1", "0", "Is john doe?"),
+                new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
+                new TextConversationItem("3", "0", "Pretty good."),
+            };
+
+            List<TextConversation> input = new List<TextConversation>()
+            {
+                new TextConversation("1", "en", textConversationItems)
+            };
+
+            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+
+            var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
+            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            {
+                piiTask
+            };
+
+            var analyzeConversationOperation = await Client.AnalyzeConversationAsync(input, tasks);
+            await analyzeConversationOperation.WaitForCompletionAsync();
+
+            var jobResults = analyzeConversationOperation.Value;
+            Assert.NotNull(jobResults);
+
+            foreach (var result in jobResults.Tasks.Items)
+            {
+                var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+                Assert.NotNull(analyzeConversationPIIResult);
+
+                var results = analyzeConversationPIIResult.Results;
+                Assert.NotNull(results);
+
+                Assert.NotNull(results.Conversations);
+                foreach (var conversation in results.Conversations)
+                {
+                    Assert.NotNull(conversation.ConversationItems);
+                    foreach (var conversationItem in conversation.ConversationItems)
+                    {
+                        Assert.NotNull(conversationItem.Entities);
+                        foreach (var entity in conversationItem.Entities)
+                        {
+                            Assert.NotNull(entity.Text);
+                            Assert.NotNull(entity.Length);
+                            Assert.NotNull(entity.ConfidenceScore);
+                            Assert.NotNull(entity.Category);
+                            Assert.NotNull(entity.Offset);
+                        }
+                    }
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeConversation_ConversationPII_TranscriptInput()
+        {
+            var transciprtConversationItemOne = new TranscriptConversationItem(
+               id: "1",
+               participantId: "speaker",
+               itn: "hi",
+               maskedItn: "hi",
+               text: "Hi",
+               lexical: "hi");
+            transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
+
+            var transciprtConversationItemTwo = new TranscriptConversationItem(
+               id: "2",
+               participantId: "speaker",
+               itn: "jane doe",
+               maskedItn: "jane doe",
+               text: "Jane doe",
+               lexical: "jane doe");
+            transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
+            transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
+
+            var transciprtConversationItemThree = new TranscriptConversationItem(
+                id: "3",
+                participantId: "agent",
+                itn: "hi jane what's your phone number",
+                maskedItn: "hi jane what's your phone number",
+                text: "Hi Jane, what's your phone number?",
+                lexical: "hi jane what's your phone number");
+            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
+            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
+            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
+            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
+            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
+            transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
+
+            List<TranscriptConversationItem> transcriptConversationItems = new List<TranscriptConversationItem>()
+            {
+                transciprtConversationItemOne,
+                transciprtConversationItemTwo,
+                transciprtConversationItemThree,
+            };
+
+            List<TranscriptConversation> input = new List<TranscriptConversation>()
+            {
+                new TranscriptConversation("1", "en", transcriptConversationItems)
+            };
+
+            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
+
+            var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
+            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            {
+                piiTask
+            };
+
+            var analyzeConversationOperation = await Client.AnalyzeConversationAsync(input, tasks);
+
+            await analyzeConversationOperation.WaitForCompletionAsync();
+
+            var jobResults = analyzeConversationOperation.Value;
+            Assert.NotNull(jobResults);
+
+            foreach (var result in jobResults.Tasks.Items)
+            {
+                var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+                Assert.NotNull(analyzeConversationPIIResult);
+
+                var results = analyzeConversationPIIResult.Results;
+                Assert.NotNull(results);
+
+                Assert.NotNull(results.Conversations);
+                foreach (var conversation in results.Conversations)
+                {
+                    Assert.NotNull(conversation.ConversationItems);
+                    foreach (var conversationItem in conversation.ConversationItems)
+                    {
+                        Assert.NotNull(conversationItem.Entities);
+                        foreach (var entity in conversationItem.Entities)
+                        {
+                            Assert.NotNull(entity.Text);
+                            Assert.NotNull(entity.Length);
+                            Assert.NotNull(entity.ConfidenceScore);
+                            Assert.NotNull(entity.Category);
+                            Assert.NotNull(entity.Offset);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

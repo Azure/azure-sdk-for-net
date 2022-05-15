@@ -1,0 +1,174 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-westus2-apim.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Connection": "keep-alive",
+        "Content-Length": "475",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-944ab2d8d4c41e44a840009a4f089a6f-7b636b9124dc2c40-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "234ac00c907d796f1bfc44ff2f626be7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Is john doe?",
+                  "id": "1",
+                  "participantId": "0"
+                },
+                {
+                  "text": "Hi John, how are you doing today?",
+                  "id": "2",
+                  "participantId": "1"
+                },
+                {
+                  "text": "Pretty good.",
+                  "id": "3",
+                  "participantId": "0"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "piiCategories": [
+                "All"
+              ],
+              "includeAudioRedaction": false,
+              "modelVersion": "2022-05-15-preview",
+              "loggingOptOut": false
+            },
+            "kind": "ConversationalPIITask",
+            "taskName": "analyze"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "d17dd956-8e73-4f0d-9f1a-349b1b23adc4",
+        "Content-Length": "0",
+        "Date": "Sun, 15 May 2022 17:16:53 GMT",
+        "operation-location": "https://ta-westus2-apim.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/5b20699e-7fef-4943-88eb-e53567157c2d?api-version=2022-05-15-preview",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "101",
+        "x-http2-stream-id": "3"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://ta-westus2-apim.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/5b20699e-7fef-4943-88eb-e53567157c2d?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220515.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ea0097f8e1fec9e30381eb704e7419b1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b5a97204-97d2-42f9-a564-3710426a57f1",
+        "Content-Length": "914",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 15 May 2022 17:16:53 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "197",
+        "x-http2-stream-id": "3"
+      },
+      "ResponseBody": {
+        "jobId": "5b20699e-7fef-4943-88eb-e53567157c2d",
+        "lastUpdatedDateTime": "2022-05-15T17:16:53Z",
+        "createdDateTime": "2022-05-15T17:16:53Z",
+        "expirationDateTime": "2022-05-16T17:16:53Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "conversationalPIIResults",
+              "taskName": "analyze",
+              "lastUpdateDateTime": "2022-05-15T17:16:53.7034082Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "id": "1",
+                    "conversationItems": [
+                      {
+                        "id": "1",
+                        "redactedContent": {
+                          "text": "Is **** doe?"
+                        },
+                        "entities": [
+                          {
+                            "text": "john",
+                            "category": "Name",
+                            "offset": 3,
+                            "length": 4,
+                            "confidenceScore": 0.95
+                          }
+                        ]
+                      },
+                      {
+                        "id": "2",
+                        "redactedContent": {
+                          "text": "Hi ****, how are you doing today?"
+                        },
+                        "entities": [
+                          {
+                            "text": "John",
+                            "category": "Name",
+                            "offset": 3,
+                            "length": 4,
+                            "confidenceScore": 0.96
+                          }
+                        ]
+                      },
+                      {
+                        "id": "3",
+                        "redactedContent": {
+                          "text": "Pretty good."
+                        },
+                        "entities": []
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-05-15-preview"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://ta-westus2-apim.ppe.cognitiveservices.azure.com",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "338817159"
+  }
+}

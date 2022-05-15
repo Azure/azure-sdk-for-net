@@ -101,6 +101,10 @@ namespace Azure.AI.Language.Conversations
         public override ValueTask<Response<AnalyzeConversationJobState>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
+        /// <inheritdoc />
+        public override Response<AnalyzeConversationJobState> WaitForCompletion(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletion(s_defaultPollingInterval, cancellationToken);
+
         async ValueTask<OperationState<AnalyzeConversationJobState>> IOperation<AnalyzeConversationJobState>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeConversationJobState> response = async
@@ -116,6 +120,7 @@ namespace Azure.AI.Language.Conversations
                     return OperationState<AnalyzeConversationJobState>.Success(rawResponse, value);
 
                 case JobState.Running:
+                case JobState.NotStarted:
                     return OperationState<AnalyzeConversationJobState>.Pending(rawResponse);
 
                 default:
