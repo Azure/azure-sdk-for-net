@@ -1,14 +1,11 @@
 # Release History
 
-## 7.9.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.8.1 (2022-05-16)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed issue that could result in the message lock renewal not being cancelled if the user message handler threw an exception.
+- Abandon messages that are received from the `ProcessorReceiveActions` in the event of the user message handler throwing an exception.
 
 ## 7.8.0 (2022-05-09)
 

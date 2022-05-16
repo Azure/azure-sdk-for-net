@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly ITriggeredFunctionExecutor _triggerExecutor;
         private readonly string _entityPath;
         private readonly bool _isSessionsEnabled;
-        private readonly bool _autoCompleteMessagesOptionEvaluatedValue;
+        private readonly bool _autoCompleteMessages;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly bool _singleDispatch;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             ServiceBusEntityType entityType,
             string entityPath,
             bool isSessionsEnabled,
-            bool autoCompleteMessagesOptionEvaluatedValue,
+            bool autoCompleteMessages,
             ITriggeredFunctionExecutor triggerExecutor,
             ServiceBusOptions options,
             string connection,
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             _entityPath = entityPath;
             _isSessionsEnabled = isSessionsEnabled;
-            _autoCompleteMessagesOptionEvaluatedValue = autoCompleteMessagesOptionEvaluatedValue;
+            _autoCompleteMessages = autoCompleteMessages;
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
@@ -82,14 +82,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _messageProcessor = new Lazy<MessageProcessor>(
                 () =>
                 {
-                    var processorOptions = options.ToProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue, concurrencyManager.Enabled);
+                    var processorOptions = options.ToProcessorOptions(_autoCompleteMessages, concurrencyManager.Enabled);
                     return messagingProvider.CreateMessageProcessor(_client.Value, _entityPath, processorOptions);
                 });
 
             _sessionMessageProcessor = new Lazy<SessionMessageProcessor>(
                 () =>
                 {
-                    var sessionProcessorOptions = options.ToSessionProcessorOptions(_autoCompleteMessagesOptionEvaluatedValue, concurrencyManager.Enabled);
+                    var sessionProcessorOptions = options.ToSessionProcessorOptions(_autoCompleteMessages, concurrencyManager.Enabled);
                     return messagingProvider.CreateSessionMessageProcessor(_client.Value,_entityPath, sessionProcessorOptions);
                 });
 
@@ -402,43 +402,45 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
                         receiveActions.EndExecutionScope();
 
+                        var processedMessages = messagesArray.Concat(receiveActions.Messages.Keys);
                         // Complete batch of messages only if the execution was successful
-                        if (_autoCompleteMessagesOptionEvaluatedValue)
+                        if (_autoCompleteMessages && result.Succeeded)
                         {
-                            if (result.Succeeded)
+                            List<Task> completeTasks = new List<Task>();
+                            foreach (ServiceBusReceivedMessage message in processedMessages)
                             {
-                                List<Task> completeTasks = new List<Task>();
-                                foreach (ServiceBusReceivedMessage message in messagesArray.Concat(receiveActions.Messages.Keys))
+                                // skip messages that were settled in the user's function
+                                if (input.MessageActions.SettledMessages.ContainsKey(message))
                                 {
-                                    // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
-                                    {
-                                        continue;
-                                    }
-
-                                    // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
-                                    completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
+                                    continue;
                                 }
 
-                                await Task.WhenAll(completeTasks).ConfigureAwait(false);
+                                // Pass CancellationToken.None to allow autocompletion to finish even when shutting down
+                                completeTasks.Add(receiver.CompleteMessageAsync(message, CancellationToken.None));
                             }
-                            else
-                            {
-                                List<Task> abandonTasks = new List<Task>();
-                                foreach (ServiceBusReceivedMessage message in messagesArray)
-                                {
-                                    // skip messages that were settled in the user's function
-                                    if (input.MessageActions.SettledMessages.ContainsKey(message))
-                                    {
-                                        continue;
-                                    }
 
-                                    // Pass CancellationToken.None to allow abandon to finish even when shutting down
-                                    abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
+                            await Task.WhenAll(completeTasks).ConfigureAwait(false);
+                        }
+                        else if (!result.Succeeded)
+                        {
+                            // For failed executions, we abandon the messages regardless of the autoCompleteMessages configuration.
+                            // This matches the behavior that happens for single dispatch functions as the processor does the same thing
+                            // in the Service Bus SDK.
+
+                            List<Task> abandonTasks = new List<Task>();
+                            foreach (ServiceBusReceivedMessage message in processedMessages)
+                            {
+                                // skip messages that were settled in the user's function
+                                if (input.MessageActions.SettledMessages.ContainsKey(message))
+                                {
+                                    continue;
                                 }
 
-                                await Task.WhenAll(abandonTasks).ConfigureAwait(false);
+                                // Pass CancellationToken.None to allow abandon to finish even when shutting down
+                                abandonTasks.Add(receiver.AbandonMessageAsync(message, cancellationToken: CancellationToken.None));
                             }
+
+                            await Task.WhenAll(abandonTasks).ConfigureAwait(false);
                         }
 
                         if (_isSessionsEnabled)
