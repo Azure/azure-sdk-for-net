@@ -42,13 +42,14 @@ namespace Azure.ResourceManager.Reservations
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            var apiVersion = reservedResourceType.Equals("SqlDatabases", StringComparison.OrdinalIgnoreCase) ? "2020-10-01-preview" : _apiVersion;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Capacity/catalogs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             if (reservedResourceType != null)
             {
                 uri.AppendQuery("reservedResourceType", reservedResourceType, true);
