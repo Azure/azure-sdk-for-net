@@ -59,16 +59,14 @@ directive:
 
 ```yaml
 directive:
-    - from: swagger-document
-      where: $["paths"]["/analyze-conversations/jobs"]["post"]
-      transform: >
-          $["operationId"] = "ConversationAnalysis_SubmitJob";
+- rename-operation:
+    from: AnalyzeConversation_SubmitJob
+    to: ConversationAnalysis_SubmitJob
 ```
 
 ```yaml
 directive:
-    - from: swagger-document
-      where: $["paths"]["/analyze-conversations/jobs/{jobId}"]["get"]
-      transform: >
-          $["operationId"] = "ConversationAnalysis_JobStatus";
+- rename-operation:
+    from: AnalyzeConversation_JobStatus
+    to: ConversationAnalysis_JobStatus
 ```
