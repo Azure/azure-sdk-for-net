@@ -3,6 +3,8 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- ConversationPII
+- ConversationSummarization
 
 ### Breaking Changes
 

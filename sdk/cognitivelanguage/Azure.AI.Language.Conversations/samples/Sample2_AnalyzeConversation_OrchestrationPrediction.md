@@ -21,7 +21,7 @@ Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
     "How are you?",
     orchestrationProject);
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
 ```
 
 ## Asynchronous
@@ -32,7 +32,7 @@ Response<AnalyzeConversationResult> response =  await client.AnalyzeConversation
     "How are you?",
     orchestrationProject);
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
 ```
 
 ## Accessing project specific results
@@ -45,22 +45,22 @@ Depending on the project chosen by your orchestration model, you may get results
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
+if (targetIntentResult.TargetKind == TargetProjectKind.QuestionAnswering)
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-    KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
+    KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result as KnowledgeBaseAnswer;
 
     Console.WriteLine("Answers: \n");
-    foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
+    /* foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
     {
         Console.WriteLine($"Answer: {answer.Answer}");
         Console.WriteLine($"Confidence: {answer.Confidence}");
         Console.WriteLine($"Source: {answer.Source}");
         Console.WriteLine();
-    }
+    } */
 }
 ```
 
@@ -70,7 +70,7 @@ if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.Conversation)
+if (targetIntentResult.TargetKind == TargetProjectKind.CustomConversation)
 {
     ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -116,7 +116,7 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.Luis)
+if (targetIntentResult.TargetKind == TargetProjectKind.Luis)
 {
     LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
     BinaryData luisResponse = luisTargetIntentResult.Result;

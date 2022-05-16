@@ -17,6 +17,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
+            #region Snippet:AnalyzeConversation_ConversationPII_Transcript_Input
             var transciprtConversationItemOne = new TranscriptConversationItem(
                id: "1",
                participantId: "speaker",
@@ -69,52 +70,48 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             {
                 piiTask
             };
+            #endregion
 
-            try
+            var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
+            analyzeConversationOperation.WaitForCompletion();
+
+            #region Snippet:AnalyzeConversation_ConversationPII_Transcript_Results
+            var jobResults = analyzeConversationOperation.Value;
+            foreach (var result in jobResults.Tasks.Items)
             {
-                var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
-                analyzeConversationOperation.WaitForCompletion();
+                var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
 
-                var jobResults = analyzeConversationOperation.Value;
-                foreach (var result in jobResults.Tasks.Items)
+                var results = analyzeConversationPIIResult.Results;
+
+                Console.WriteLine("Conversations:");
+                foreach (var conversation in results.Conversations)
                 {
-                    var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
-
-                    var results = analyzeConversationPIIResult.Results;
-
-                    Console.WriteLine("Conversations:");
-                    foreach (var conversation in results.Conversations)
+                    Console.WriteLine($"Conversation #:{conversation.Id}");
+                    Console.WriteLine("Conversation Items: ");
+                    foreach (var conversationItem in conversation.ConversationItems)
                     {
-                        Console.WriteLine($"Conversation #:{conversation.Id}");
-                        Console.WriteLine("Conversation Items: ");
-                        foreach (var conversationItem in conversation.ConversationItems)
+                        Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
+
+                        Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
+                        Console.WriteLine($"Redacted Lexical: {conversationItem.RedactedContent.Lexical}");
+                        Console.WriteLine($"Redacted AudioTimings: {conversationItem.RedactedContent.AudioTimings}");
+                        Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
+
+                        Console.WriteLine("Entities:");
+                        foreach (var entity in conversationItem.Entities)
                         {
-                            Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
-
-                            Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
-                            Console.WriteLine($"Redacted Lexical: {conversationItem.RedactedContent.Lexical}");
-                            Console.WriteLine($"Redacted AudioTimings: {conversationItem.RedactedContent.AudioTimings}");
-                            Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
-
-                            Console.WriteLine("Entities:");
-                            foreach (var entity in conversationItem.Entities)
-                            {
-                                Console.WriteLine($"Text: {entity.Text}");
-                                Console.WriteLine($"Offset: {entity.Offset}");
-                                Console.WriteLine($"Category: {entity.Category}");
-                                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
-                                Console.WriteLine($"Length: {entity.Length}");
-                                Console.WriteLine();
-                            }
+                            Console.WriteLine($"Text: {entity.Text}");
+                            Console.WriteLine($"Offset: {entity.Offset}");
+                            Console.WriteLine($"Category: {entity.Category}");
+                            Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"Length: {entity.Length}");
+                            Console.WriteLine();
                         }
-                        Console.WriteLine();
                     }
+                    Console.WriteLine();
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            #endregion
         }
 
         [AsyncOnly]
@@ -176,50 +173,43 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 piiTask
             };
 
-            try
-            {
-                var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
-                await analyzeConversationOperation.WaitForCompletionAsync();
+            var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+            await analyzeConversationOperation.WaitForCompletionAsync();
 
-                var jobResults = analyzeConversationOperation.Value;
-                foreach (var result in jobResults.Tasks.Items)
+            var jobResults = analyzeConversationOperation.Value;
+            foreach (var result in jobResults.Tasks.Items)
+            {
+                var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+
+                var results = analyzeConversationPIIResult.Results;
+
+                Console.WriteLine("Conversations:");
+                foreach (var conversation in results.Conversations)
                 {
-                    var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
-
-                    var results = analyzeConversationPIIResult.Results;
-
-                    Console.WriteLine("Conversations:");
-                    foreach (var conversation in results.Conversations)
+                    Console.WriteLine($"Conversation #:{conversation.Id}");
+                    Console.WriteLine("Conversation Items: ");
+                    foreach (var conversationItem in conversation.ConversationItems)
                     {
-                        Console.WriteLine($"Conversation #:{conversation.Id}");
-                        Console.WriteLine("Conversation Items: ");
-                        foreach (var conversationItem in conversation.ConversationItems)
+                        Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
+
+                        Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
+                        Console.WriteLine($"Redacted Lexical: {conversationItem.RedactedContent.Lexical}");
+                        Console.WriteLine($"Redacted AudioTimings: {conversationItem.RedactedContent.AudioTimings}");
+                        Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
+
+                        Console.WriteLine("Entities:");
+                        foreach (var entity in conversationItem.Entities)
                         {
-                            Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
-
-                            Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
-                            Console.WriteLine($"Redacted Lexical: {conversationItem.RedactedContent.Lexical}");
-                            Console.WriteLine($"Redacted AudioTimings: {conversationItem.RedactedContent.AudioTimings}");
-                            Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
-
-                            Console.WriteLine("Entities:");
-                            foreach (var entity in conversationItem.Entities)
-                            {
-                                Console.WriteLine($"Text: {entity.Text}");
-                                Console.WriteLine($"Offset: {entity.Offset}");
-                                Console.WriteLine($"Category: {entity.Category}");
-                                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
-                                Console.WriteLine($"Length: {entity.Length}");
-                                Console.WriteLine();
-                            }
+                            Console.WriteLine($"Text: {entity.Text}");
+                            Console.WriteLine($"Offset: {entity.Offset}");
+                            Console.WriteLine($"Category: {entity.Category}");
+                            Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"Length: {entity.Length}");
+                            Console.WriteLine();
                         }
-                        Console.WriteLine();
                     }
+                    Console.WriteLine();
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
             }
         }
     }
