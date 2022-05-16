@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/providers/Microsoft.TestBase/skus?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2Uvc2t1cz9hcGktdmVyc2lvbj0yMDIwLTEyLTE2LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ba2639f5-c264-4adb-a316-9b10942b95de"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "c9404609-25e0-44e3-87e6-df2228fde7a3"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9404609-25e0-44e3-87e6-df2228fde7a3"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073449Z:c9404609-25e0-44e3-87e6-df2228fde7a3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 06C5E3FA7089495894FAA709F1B37A70 Ref B: SG2EDGE1417 Ref C: 2021-06-17T07:34:48Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:34:49 GMT"
+        ],
+        "Content-Length": [
+          "203"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"resourceType\": \"testBaseAccounts\",\r\n      \"name\": \"S0\",\r\n      \"tier\": \"Standard\",\r\n      \"locations\": [\r\n        \"global\"\r\n      ],\r\n      \"locationInfo\": [\r\n        {\r\n          \"location\": \"global\",\r\n          \"zones\": [],\r\n          \"zoneDetails\": []\r\n        }\r\n      ],\r\n      \"capabilities\": [],\r\n      \"restrictions\": []\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9fabf001-9c1f-4aab-9451-e431da271956"
+  }
+}

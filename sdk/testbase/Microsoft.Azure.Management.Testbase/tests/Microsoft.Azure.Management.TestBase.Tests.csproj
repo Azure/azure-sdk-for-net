@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
+  <PropertyGroup>
+    <PackageId>Testbase.Tests</PackageId>
+    <Description>Testbase.Tests Class Library</Description>
+    <AssemblyName>Testbase.Tests</AssemblyName>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <ExcludeFromBuild>false</ExcludeFromBuild>
+    <ExcludeFromTest>false</ExcludeFromTest>
+    <AssemblyOriginatorKeyFile>C:\Work\Repos\azure-sdk-for-net\eng\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
+    <DefineConstants>TRACE;netcoreapp20;DebugInVS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+		<PackageReference Include="Microsoft.Azure.Insights" Version="0.16.0-preview" />
+		<PackageReference Include="Microsoft.Azure.Management.Storage" Version="4.2.0-preview" />
+		<PackageReference Include="Microsoft.Azure.Management.Network" Version="19.17.1-preview" />
+		<PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
+		<PackageReference Include="Microsoft.Azure.Management.ManagedServiceIdentity" Version="1.0.0" />
+		<PackageReference Include="WindowsAzure.Storage" Version="8.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.TestBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Resources/*.cspkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Resources\test.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

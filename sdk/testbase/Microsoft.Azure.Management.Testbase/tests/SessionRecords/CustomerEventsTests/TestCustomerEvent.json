@@ -1,0 +1,429 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Jlc291cmNlR3JvdXBzL3Rlc3RiYXNlX3JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvdGVzdEJhc2VBY2NvdW50cy90ZXN0QmFzZUFjY291bnRfa2FpZmEvY3VzdG9tZXJFdmVudHM/YXBpLXZlcnNpb249MjAyMC0xMi0xNi1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4729f17d-1cb3-43e5-ac5a-a4d45ed8ace5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "x-ms-request-id": [
+          "7590f71e-490b-416b-ae7b-a09abcde4f86"
+        ],
+        "x-ms-correlation-request-id": [
+          "6a583c1b-c0b1-4c54-ab04-f1b343c49448"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073823Z:6a583c1b-c0b1-4c54-ab04-f1b343c49448"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 4466717E913447B8A1E9BACEC676B826 Ref B: SG2EDGE1519 Ref C: 2021-06-17T07:38:22Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:38:23 GMT"
+        ],
+        "Content-Length": [
+          "2513"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"testbase6336_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase6336_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase2303_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase2303_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase9379_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase9379_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase2062_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase2062_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase5139_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase5139_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase3963_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase3963_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase1499_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase1499_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": null\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"testbase9406_event\",\r\n      \"properties\": {\r\n        \"eventName\": \"testbase9406_event\",\r\n        \"receivers\": [\r\n          {\r\n            \"receiverType\": \"UserObjects\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": {\r\n                \"userObjectIds\": [\r\n                  \"test\",\r\n                  \"test-2\"\r\n                ]\r\n              },\r\n              \"subscriptionReceiverValue\": {\r\n                \"subscriptionId\": null,\r\n                \"subscriptionName\": null,\r\n                \"role\": null\r\n              },\r\n              \"distributionGroupListReceiverValue\": {\r\n                \"distributionGroups\": []\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"receiverType\": \"DistributionGroup\",\r\n            \"receiverValue\": {\r\n              \"userObjectReceiverValue\": null,\r\n              \"subscriptionReceiverValue\": null,\r\n              \"distributionGroupListReceiverValue\": {\r\n                \"distributionGroups\": [\r\n                  \"test@microsoft.com\"\r\n                ]\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents/testbase6336_event?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Jlc291cmNlR3JvdXBzL3Rlc3RiYXNlX3JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvdGVzdEJhc2VBY2NvdW50cy90ZXN0QmFzZUFjY291bnRfa2FpZmEvY3VzdG9tZXJFdmVudHMvdGVzdGJhc2U2MzM2X2V2ZW50P2FwaS12ZXJzaW9uPTIwMjAtMTItMTYtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "959c240a-4812-42bf-a53f-c0524107a279"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "x-ms-request-id": [
+          "1edfdc4d-9a8c-45ba-b05d-4bd9bea0b46b"
+        ],
+        "x-ms-correlation-request-id": [
+          "f24259ae-2c1b-44dc-b913-1505002d6d37"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073825Z:f24259ae-2c1b-44dc-b913-1505002d6d37"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: FC5F4F83B7F34CCF8A331B555AD3BC57 Ref B: SG2EDGE1519 Ref C: 2021-06-17T07:38:23Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:38:25 GMT"
+        ],
+        "Content-Length": [
+          "277"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"testbase6336_event\",\r\n  \"properties\": {\r\n    \"eventName\": \"testbase6336_event\",\r\n    \"receivers\": [\r\n      {\r\n        \"receiverType\": \"UserObjects\",\r\n        \"receiverValue\": {\r\n          \"userObjectReceiverValue\": {\r\n            \"userObjectIds\": [\r\n              \"test\",\r\n              \"test-2\"\r\n            ]\r\n          },\r\n          \"subscriptionReceiverValue\": null,\r\n          \"distributionGroupListReceiverValue\": null\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents/testbase5219_event?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Jlc291cmNlR3JvdXBzL3Rlc3RiYXNlX3JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvdGVzdEJhc2VBY2NvdW50cy90ZXN0QmFzZUFjY291bnRfa2FpZmEvY3VzdG9tZXJFdmVudHMvdGVzdGJhc2U1MjE5X2V2ZW50P2FwaS12ZXJzaW9uPTIwMjAtMTItMTYtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"eventName\": \"initial-verification\",\r\n    \"receivers\": [\r\n      {\r\n        \"receiverType\": \"UserObjects\",\r\n        \"receiverValue\": {\r\n          \"userObjectReceiverValue\": {\r\n            \"userObjectIds\": [\r\n              \"test\",\r\n              \"test-2\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f646e1ed-3440-439b-a842-e2028f1fc968"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "341"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.TestBase/locations/NORTHEUROPE/operationStatuses/00c31163-9500-422d-94c2-e2fca6da48c2?api-version=2020-12-16-preview"
+        ],
+        "x-ms-request-id": [
+          "00c31163-9500-422d-94c2-e2fca6da48c2"
+        ],
+        "x-ms-correlation-request-id": [
+          "f9e06d09-0e4e-4acb-81c0-48952f8b2b63"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073826Z:f9e06d09-0e4e-4acb-81c0-48952f8b2b63"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: CE35EDCABF3344CFB0DA1980FF2168D1 Ref B: SG2EDGE1519 Ref C: 2021-06-17T07:38:25Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:38:25 GMT"
+        ],
+        "Content-Length": [
+          "730"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents/testbase5219_event\",\r\n  \"name\": \"testbase5219_event\",\r\n  \"type\": \"microsoft.testbase/testbaseaccounts/customerevents\",\r\n  \"systemData\": {\r\n    \"createdBy\": \"c7ffd595-6c07-4e87-a52f-810916ffaec5\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2021-06-17T07:38:25.8352719Z\",\r\n    \"lastModifiedBy\": \"c7ffd595-6c07-4e87-a52f-810916ffaec5\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2021-06-17T07:38:25.8352719Z\"\r\n  },\r\n  \"properties\": {\r\n    \"eventName\": \"initial-verification\",\r\n    \"receivers\": [\r\n      {\r\n        \"receiverType\": \"UserObjects\",\r\n        \"receiverValue\": {\r\n          \"userObjectReceiverValue\": {\r\n            \"userObjectIds\": [\r\n              \"test\",\r\n              \"test-2\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/providers/Microsoft.TestBase/locations/NORTHEUROPE/operationStatuses/00c31163-9500-422d-94c2-e2fca6da48c2?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvbG9jYXRpb25zL05PUlRIRVVST1BFL29wZXJhdGlvblN0YXR1c2VzLzAwYzMxMTYzLTk1MDAtNDIyZC05NGMyLWUyZmNhNmRhNDhjMj9hcGktdmVyc2lvbj0yMDIwLTEyLTE2LXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"030031c7-0000-0700-0000-60cafbf40000\""
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "708b2bde-03ec-4e0e-aeb1-a69eaafa20f8"
+        ],
+        "x-ms-correlation-request-id": [
+          "46b5f732-43f4-43c9-9383-df293463d6bf"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073856Z:46b5f732-43f4-43c9-9383-df293463d6bf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 9F03437B0F4C454D97C8DD11720BAEAA Ref B: SG2EDGE1519 Ref C: 2021-06-17T07:38:56Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:38:56 GMT"
+        ],
+        "Content-Length": [
+          "502"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.TestBase/locations/NORTHEUROPE/operationStatuses/00c31163-9500-422d-94c2-e2fca6da48c2\",\r\n  \"name\": \"00c31163-9500-422d-94c2-e2fca6da48c2\",\r\n  \"resourceId\": \"/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents/testbase5219_event\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2021-06-17T07:38:25.9969129Z\",\r\n  \"endTime\": \"2021-06-17T07:38:28.7671877Z\",\r\n  \"percentComplete\": 100.0,\r\n  \"properties\": {}\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents/testbase5219_event?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Jlc291cmNlR3JvdXBzL3Rlc3RiYXNlX3JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvdGVzdEJhc2VBY2NvdW50cy90ZXN0QmFzZUFjY291bnRfa2FpZmEvY3VzdG9tZXJFdmVudHMvdGVzdGJhc2U1MjE5X2V2ZW50P2FwaS12ZXJzaW9uPTIwMjAtMTItMTYtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "x-ms-request-id": [
+          "5d971bf2-f143-43a0-a7f5-e1685edd5145"
+        ],
+        "x-ms-correlation-request-id": [
+          "fa1dc561-9649-4241-aa5d-22819cdc5b53"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073857Z:fa1dc561-9649-4241-aa5d-22819cdc5b53"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 398AFDA77C764EE185E25E3886D9DC17 Ref B: SG2EDGE1519 Ref C: 2021-06-17T07:38:56Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:38:57 GMT"
+        ],
+        "Content-Length": [
+          "277"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"testbase5219_event\",\r\n  \"properties\": {\r\n    \"eventName\": \"testbase5219_event\",\r\n    \"receivers\": [\r\n      {\r\n        \"receiverType\": \"UserObjects\",\r\n        \"receiverValue\": {\r\n          \"userObjectReceiverValue\": {\r\n            \"userObjectIds\": [\r\n              \"test\",\r\n              \"test-2\"\r\n            ]\r\n          },\r\n          \"subscriptionReceiverValue\": null,\r\n          \"distributionGroupListReceiverValue\": null\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/customerEvents/testbase5219_event?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Jlc291cmNlR3JvdXBzL3Rlc3RiYXNlX3JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvdGVzdEJhc2VBY2NvdW50cy90ZXN0QmFzZUFjY291bnRfa2FpZmEvY3VzdG9tZXJFdmVudHMvdGVzdGJhc2U1MjE5X2V2ZW50P2FwaS12ZXJzaW9uPTIwMjAtMTItMTYtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3d74ce4d-bb43-4aac-8241-c11efa41ad7c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.TestBase/locations/NORTHEUROPE/operationStatuses/a0707cf6-96aa-47af-96ac-683adf136c19?api-version=2020-12-16-preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "Azure-AsyncOperation": [
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.TestBase/locations/NORTHEUROPE/operationStatuses/a0707cf6-96aa-47af-96ac-683adf136c19?api-version=2020-12-16-preview"
+        ],
+        "x-ms-request-id": [
+          "a0707cf6-96aa-47af-96ac-683adf136c19"
+        ],
+        "x-ms-correlation-request-id": [
+          "61aa60ac-7435-4d1a-8e90-5ee5fd5cb39f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T073858Z:61aa60ac-7435-4d1a-8e90-5ee5fd5cb39f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 3B584142F6394C47BBDF58E59166103E Ref B: SG2EDGE1519 Ref C: 2021-06-17T07:38:57Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:38:57 GMT"
+        ],
+        "Content-Length": [
+          "4"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "null",
+      "StatusCode": 202
+    }
+  ],
+  "Names": {
+    "TestCustomerEvent": [
+      "testbase5219"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "9fabf001-9c1f-4aab-9451-e431da271956"
+  }
+}

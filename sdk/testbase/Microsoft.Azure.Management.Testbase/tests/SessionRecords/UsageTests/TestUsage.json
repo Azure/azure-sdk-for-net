@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/9fabf001-9c1f-4aab-9451-e431da271956/resourceGroups/testbase_rg/providers/Microsoft.TestBase/testBaseAccounts/testBaseAccount_kaifa/usages?api-version=2020-12-16-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWZhYmYwMDEtOWMxZi00YWFiLTk0NTEtZTQzMWRhMjcxOTU2L3Jlc291cmNlR3JvdXBzL3Rlc3RiYXNlX3JnL3Byb3ZpZGVycy9NaWNyb3NvZnQuVGVzdEJhc2UvdGVzdEJhc2VBY2NvdW50cy90ZXN0QmFzZUFjY291bnRfa2FpZmEvdXNhZ2VzP2FwaS12ZXJzaW9uPTIwMjAtMTItMTYtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3b8b928f-cd69-4b17-a9c5-ef3c364fe1ff"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30015.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.TestBase.TestBaseClient/0.0.0.1"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-providerhub-traffic": [
+          "True"
+        ],
+        "x-ms-failure-cause": [
+          "provider-api-validation"
+        ],
+        "x-ms-request-id": [
+          "632298c0-dfff-43ab-9398-960c671013c2"
+        ],
+        "x-ms-correlation-request-id": [
+          "b7544fd2-a6f3-4574-aea1-bce95206672e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20210617T074142Z:b7544fd2-a6f3-4574-aea1-bce95206672e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Cache": [
+          "CONFIG_NOCACHE"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: 647C32DAD8864BFF9CA6740F5B7F02D5 Ref B: SG2EDGE1606 Ref C: 2021-06-17T07:41:41Z"
+        ],
+        "Date": [
+          "Thu, 17 Jun 2021 07:41:42 GMT"
+        ],
+        "Content-Length": [
+          "390"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"HttpResponsePayloadAPISpecValidationFailed\",\r\n    \"target\": \"\",\r\n    \"message\": \"Failed to create HTTP response as per the API specification with one or more errors. Please see details for more information. Consider to retry operation with api-versions ''.\",\r\n    \"details\": [\r\n      {\r\n        \"code\": \"InvalidType\",\r\n        \"message\": \"Expected type object but found type string. Paths in payload: '$.value[0].name'\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 412
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "9fabf001-9c1f-4aab-9451-e431da271956"
+  }
+}
