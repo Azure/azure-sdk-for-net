@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for rejecting the call. </summary>
-    internal partial class RejectCallRequest
+    public partial class RejectCallRequest
     {
         /// <summary> Initializes a new instance of RejectCallRequest. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>

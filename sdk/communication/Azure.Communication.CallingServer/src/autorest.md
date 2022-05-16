@@ -6,12 +6,20 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 > see https://aka.ms/autorest
 
 ```yaml
-model-namespace: false
-openapi-type: data-plane
-title:
-  Server Calling
 input-file:
     -  $(this-folder)/Swagger/2022-04-07.json
-payload-flattening-threshold: 10
+
+clear-output-folder: true
+client-side-validation: false
+payload-flattening-threshold: 1
+
+openapi-type: data-plane
+tag: V2022_04_07_preview
+
+model-namespace: false
+
+title:
+  Server Calling
+
 generation1-convenience-client: true
 ```

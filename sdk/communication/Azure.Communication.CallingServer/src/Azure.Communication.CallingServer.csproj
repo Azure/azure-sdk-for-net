@@ -33,6 +33,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Generated\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

@@ -10,13 +10,20 @@ namespace Azure.Communication.CallingServer
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ServerCallingModelFactory
     {
-        /// <summary> Initializes a new instance of AnswerCallResponse. </summary>
-        /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="subscriptionId"> The subscription id. </param>
-        /// <returns> A new <see cref="CallingServer.AnswerCallResponse"/> instance for mocking. </returns>
-        public static AnswerCallResponse AnswerCallResponse(string serverCallId = null, string subscriptionId = null)
+        /// <summary> Initializes a new instance of CreateCallResult. </summary>
+        /// <param name="callLegId"> The call leg id. </param>
+        /// <returns> A new <see cref="CallingServer.CreateCallResult"/> instance for mocking. </returns>
+        public static CreateCallResult CreateCallResult(string callLegId = null)
         {
-            return new AnswerCallResponse(serverCallId, subscriptionId);
+            return new CreateCallResult(callLegId);
+        }
+
+        /// <summary> Initializes a new instance of AnswerCallResponse. </summary>
+        /// <param name="callLegId"> The call leg id. </param>
+        /// <returns> A new <see cref="CallingServer.AnswerCallResponse"/> instance for mocking. </returns>
+        public static AnswerCallResponse AnswerCallResponse(string callLegId = null)
+        {
+            return new AnswerCallResponse(callLegId);
         }
     }
 }

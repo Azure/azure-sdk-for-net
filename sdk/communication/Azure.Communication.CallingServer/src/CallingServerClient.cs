@@ -23,7 +23,8 @@ namespace Azure.Communication.CallingServer
         internal readonly HttpPipeline _pipeline;
         internal readonly string _resourceEndpoint;
 
-        internal ServerCallsRestClient ServerCallRestClient { get; }
+        internal CallConnectionRestClient CallConnectionRestClient { get; }
+        internal ServerCallingRestClient ServerCallRestClient { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
@@ -98,7 +99,8 @@ namespace Azure.Communication.CallingServer
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
-            ServerCallRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            ServerCallRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
         #endregion
@@ -109,27 +111,74 @@ namespace Azure.Communication.CallingServer
             _pipeline = null;
             _resourceEndpoint = null;
             _clientDiagnostics = null;
+            CallConnectionRestClient = null;
             ServerCallRestClient = null;
         }
 
-        /// Answer an incoming call.
-        /// <param name="incomingCallContext"> The incoming call context </param>
-        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// Create an outgoing call from source to target identities.
+        /// <param name="source"> The source identity. </param>
+        /// <param name="target"> The target identity. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="options"> The call options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual Response<AnswerCallResponse> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        public virtual async Task<Response<CallConnection>> CreateCallAsync(CommunicationIdentifier source, CommunicationIdentifier target, Uri callbackUri, CreateCallOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
             scope.Start();
             try
             {
-                var answerResponse = ServerCallRestClient.AnswerCall(
-                    incomingCallContext: incomingCallContext,
-                    callbackUri: callbackUri?.AbsoluteUri,
-                    cancellationToken: cancellationToken);
+                CreateCallRequestInternal request = new CreateCallRequestInternal(CommunicationIdentifierSerializer.Serialize(target), CommunicationIdentifierSerializer.Serialize(source));
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                request.Subject = options.Subject;
 
-                return answerResponse;
+                var createCallResponse = await ServerCallRestClient.CreateCallAsync(request,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new CallConnection(createCallResponse.Value.CallLegId, CallConnectionRestClient, _clientDiagnostics),
+                    createCallResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Create an outgoing call from source to target identities.
+        /// <param name="source"> The source identity. </param>
+        /// <param name="target"> The target identity. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="options"> The call options. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        public virtual Response<CallConnection> CreateCall(CommunicationIdentifier source, CommunicationIdentifier target, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
+            scope.Start();
+            try
+            {
+                CreateCallRequestInternal request = new CreateCallRequestInternal(CommunicationIdentifierSerializer.Serialize(target), CommunicationIdentifierSerializer.Serialize(source));
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+                request.Subject = options.Subject;
+                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+
+                var createCallResponse = ServerCallRestClient.CreateCall(request,
+                    cancellationToken: cancellationToken
+                    );
+
+                return Response.FromValue(
+                    new CallConnection(createCallResponse.Value.CallLegId, CallConnectionRestClient, _clientDiagnostics),
+                    createCallResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -144,19 +193,163 @@ namespace Azure.Communication.CallingServer
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
-        public virtual async Task<Response<AnswerCallResponse>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnection>> AnswerCallAsync(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCallAsync)}");
             scope.Start();
             try
             {
-                var answerResponse = await ServerCallRestClient.AnswerCallAsync(
-                    incomingCallContext: incomingCallContext,
-                    callbackUri: callbackUri?.AbsoluteUri,
+                AnswerCallRequest request = new AnswerCallRequest(incomingCallContext);
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                var answerResponse = await ServerCallRestClient.AnswerCallAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new CallConnection(answerResponse.Value.CallLegId, CallConnectionRestClient, _clientDiagnostics),
+                    answerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Answer an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual Response<CallConnection> AnswerCall(string incomingCallContext, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(AnswerCall)}");
+            scope.Start();
+            try
+            {
+                AnswerCallRequest request = new AnswerCallRequest(incomingCallContext);
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                var answerResponse = ServerCallRestClient.AnswerCall(request,
+                    cancellationToken: cancellationToken);
+
+                return Response.FromValue(
+                    new CallConnection(answerResponse.Value.CallLegId, CallConnectionRestClient, _clientDiagnostics),
+                    answerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="target"> The target identities. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        public virtual async Task<Response> RedirectCallAsync(string incomingCallContext, CommunicationIdentifier target, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCallAsync)}");
+            scope.Start();
+            try
+            {
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(incomingCallContext, CommunicationIdentifierSerializer.Serialize(target));
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                return await ServerCallRestClient.RedirectCallAsync(
+                    request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
-                return answerResponse;
+        /// Redirect an incoming call to the target identities.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="target"> The target identities. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
+        public virtual Response RedirectCall(string incomingCallContext, CommunicationIdentifier target, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RedirectCall)}");
+            scope.Start();
+            try
+            {
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(incomingCallContext, CommunicationIdentifierSerializer.Serialize(target));
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                return ServerCallRestClient.RedirectCall(
+                    request,
+                    cancellationToken: cancellationToken
+                    );
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Reject an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callRejectReason"> The reason for rejecting call. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual async Task<Response> RejectCallAsync(string incomingCallContext, CallRejectReason callRejectReason, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCallAsync)}");
+            scope.Start();
+            try
+            {
+                RejectCallRequest request = new RejectCallRequest(incomingCallContext);
+                request.CallRejectReason = callRejectReason.ToString();
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                return await ServerCallRestClient.RejectCallAsync(request,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// Reject an incoming call.
+        /// <param name="incomingCallContext"> The incoming call context </param>
+        /// <param name="callRejectReason"> The reason for rejecting call. </param>
+        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="incomingCallContext"/> is null.</exception>
+        public virtual Response RejectCall(string incomingCallContext, CallRejectReason callRejectReason, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(RejectCall)}");
+            scope.Start();
+            try
+            {
+                RejectCallRequest request = new RejectCallRequest(incomingCallContext);
+                request.CallRejectReason = callRejectReason.ToString();
+                request.CallbackUri = callbackUri?.AbsoluteUri;
+
+                return ServerCallRestClient.RejectCall(request,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {

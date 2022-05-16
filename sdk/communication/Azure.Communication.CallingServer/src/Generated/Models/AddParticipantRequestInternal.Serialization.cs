@@ -10,15 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class TerminateCallRequest : IUtf8JsonSerializable
+    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Reason))
+            if (Optional.IsDefined(AlternateCallerId))
             {
-                writer.WritePropertyName("reason");
-                writer.WriteStringValue(Reason);
+                writer.WritePropertyName("alternateCallerId");
+                writer.WriteObjectValue(AlternateCallerId);
+            }
+            writer.WritePropertyName("participant");
+            writer.WriteObjectValue(Participant);
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext");
+                writer.WriteStringValue(OperationContext);
             }
             if (Optional.IsDefined(CallbackUri))
             {

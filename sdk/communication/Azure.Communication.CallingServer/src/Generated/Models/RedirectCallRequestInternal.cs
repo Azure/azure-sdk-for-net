@@ -6,17 +6,18 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for redirecting the call. </summary>
-    internal partial class RedirectCallRequest
+    internal partial class RedirectCallRequestInternal
     {
-        /// <summary> Initializes a new instance of RedirectCallRequest. </summary>
+        /// <summary> Initializes a new instance of RedirectCallRequestInternal. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="target"> The target identity to redirect the call to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
-        public RedirectCallRequest(string incomingCallContext, CommunicationIdentifierModel target)
+        public RedirectCallRequestInternal(string incomingCallContext, CommunicationIdentifierModel target)
         {
             if (incomingCallContext == null)
             {

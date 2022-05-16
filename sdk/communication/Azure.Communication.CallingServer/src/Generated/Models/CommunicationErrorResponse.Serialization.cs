@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class AnswerCallResponse
+    internal partial class CommunicationErrorResponse
     {
-        internal static AnswerCallResponse DeserializeAnswerCallResponse(JsonElement element)
+        internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
         {
-            Optional<string> callLegId = default;
+            CommunicationError error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callLegId"))
+                if (property.NameEquals("error"))
                 {
-                    callLegId = property.Value.GetString();
+                    error = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;
                 }
             }
-            return new AnswerCallResponse(callLegId.Value);
+            return new CommunicationErrorResponse(error);
         }
     }
 }

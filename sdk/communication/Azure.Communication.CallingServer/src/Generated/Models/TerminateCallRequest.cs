@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The request payload for terminating the call. </summary>
-    internal partial class TerminateCallRequest
+    public partial class TerminateCallRequest
     {
         /// <summary> Initializes a new instance of TerminateCallRequest. </summary>
         public TerminateCallRequest()
@@ -17,5 +17,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Gets or sets the reason. </summary>
         public string Reason { get; set; }
+        /// <summary> The callback uri. </summary>
+        public string CallbackUri { get; set; }
     }
 }

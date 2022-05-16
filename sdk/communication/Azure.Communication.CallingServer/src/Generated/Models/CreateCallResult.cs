@@ -7,17 +7,17 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The response payload of the answer call operation. </summary>
-    public partial class AnswerCallResponse
+    /// <summary> The response payload of the create call operation. </summary>
+    public partial class CreateCallResult
     {
-        /// <summary> Initializes a new instance of AnswerCallResponse. </summary>
-        internal AnswerCallResponse()
+        /// <summary> Initializes a new instance of CreateCallResult. </summary>
+        internal CreateCallResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AnswerCallResponse. </summary>
+        /// <summary> Initializes a new instance of CreateCallResult. </summary>
         /// <param name="callLegId"> The call leg id. </param>
-        internal AnswerCallResponse(string callLegId)
+        internal CreateCallResult(string callLegId)
         {
             CallLegId = callLegId;
         }

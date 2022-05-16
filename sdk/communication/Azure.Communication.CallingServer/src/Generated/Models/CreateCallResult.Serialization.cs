@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class AnswerCallResponse
+    public partial class CreateCallResult
     {
-        internal static AnswerCallResponse DeserializeAnswerCallResponse(JsonElement element)
+        internal static CreateCallResult DeserializeCreateCallResult(JsonElement element)
         {
             Optional<string> callLegId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AnswerCallResponse(callLegId.Value);
+            return new CreateCallResult(callLegId.Value);
         }
     }
 }
