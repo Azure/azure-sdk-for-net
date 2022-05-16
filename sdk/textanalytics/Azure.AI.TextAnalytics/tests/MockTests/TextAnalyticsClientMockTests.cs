@@ -645,32 +645,34 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Not implemented yet")]
         public async Task DeserializeTextAnalyticsError()
         {
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(@"
                 {
-                    ""documents"": [
-                        {
-                            ""id"": ""0"",
-                            ""keyPhrases"": [],
-                            ""warnings"": []
-                        }
-                    ],
-                    ""errors"": [
-                        {
-                            ""id"": ""1"",
-                            ""error"": {
-                                ""code"": ""InvalidArgument"",
-                                ""message"": ""Invalid document in request."",
-                                ""innererror"": {
-                                    ""code"": ""InvalidDocument"",
-                                    ""message"": ""Document text is empty.""
+                    ""kind"": ""KeyPhraseExtractionResults"",
+                    ""results"": {  
+                        ""documents"": [
+                            {
+                                ""id"": ""0"",
+                                ""keyPhrases"": [],
+                                ""warnings"": []
+                            }
+                        ],
+                        ""errors"": [
+                            {
+                                ""id"": ""1"",
+                                ""error"": {
+                                    ""code"": ""InvalidArgument"",
+                                    ""message"": ""Invalid document in request."",
+                                    ""innererror"": {
+                                        ""code"": ""InvalidDocument"",
+                                        ""message"": ""Document text is empty.""
+                                    }
                                 }
                             }
-                        }
-                    ],
-                    ""modelVersion"": ""2020-07-01""
+                        ],
+                        ""modelVersion"": ""2020-07-01""
+                    }
                 }"));
 
             var mockResponse = new MockResponse(200);
