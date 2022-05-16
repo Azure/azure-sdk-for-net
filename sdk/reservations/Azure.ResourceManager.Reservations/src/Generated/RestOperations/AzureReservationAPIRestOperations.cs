@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Reservations
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
+            // SqlDatabases is currently not supported in 2022-03-01 version, using 2020-10-01-preview for it instead
             var apiVersion = reservedResourceType.Equals("SqlDatabases", StringComparison.OrdinalIgnoreCase) ? "2020-10-01-preview" : _apiVersion;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
