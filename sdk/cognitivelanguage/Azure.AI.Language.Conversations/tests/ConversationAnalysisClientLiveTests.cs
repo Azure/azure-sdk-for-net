@@ -152,25 +152,24 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversationAsync_ConversationSummarization()
         {
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
             ConversationAnalysisClient client = Client;
 
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
                 new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
                 new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
             };
 
-            List<TextConversation> input = new List<TextConversation>()
+            var input = new List<TextConversation>()
             {
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            ConversationSummarizationTaskParameters conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
 
             var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 conversationSummarizationTask
             };
@@ -205,22 +204,22 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_ConversationPII_TextInput()
         {
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "0", "Is john doe?"),
                 new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
                 new TextConversationItem("3", "0", "Pretty good."),
             };
 
-            List<TextConversation> input = new List<TextConversation>()
+            var input = new List<TextConversation>()
             {
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 piiTask
             };
@@ -295,22 +294,22 @@ namespace Azure.AI.Language.Conversations.Tests
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
 
-            List<TranscriptConversationItem> transcriptConversationItems = new List<TranscriptConversationItem>()
+            var transcriptConversationItems = new List<TranscriptConversationItem>()
             {
                 transciprtConversationItemOne,
                 transciprtConversationItemTwo,
                 transciprtConversationItemThree,
             };
 
-            List<TranscriptConversation> input = new List<TranscriptConversation>()
+            var input = new List<TranscriptConversation>()
             {
                 new TranscriptConversation("1", "en", transcriptConversationItems)
             };
 
-            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 piiTask
             };

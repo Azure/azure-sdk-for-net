@@ -17,22 +17,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "0", "Is john doe?"),
                 new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
                 new TextConversationItem("3", "0", "Pretty good."),
             };
 
-            List<TextConversation> input = new List<TextConversation>()
+            var input = new List<TextConversation>()
             {
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 piiTask
             };
@@ -80,19 +80,19 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "0", "Is john doe?"),
                 new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
                 new TextConversationItem("3", "0", "Pretty good."),
             };
 
-            List<TextConversation> input = new List<TextConversation>()
+            var input = new List<TextConversation>()
             {
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
             List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()

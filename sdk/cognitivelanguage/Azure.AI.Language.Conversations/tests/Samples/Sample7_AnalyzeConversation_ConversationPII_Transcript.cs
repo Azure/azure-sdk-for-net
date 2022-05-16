@@ -50,22 +50,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
 
-            List<TranscriptConversationItem> transcriptConversationItems = new List<TranscriptConversationItem>()
+            var transcriptConversationItems = new List<TranscriptConversationItem>()
             {
                 transciprtConversationItemOne,
                 transciprtConversationItemTwo,
                 transciprtConversationItemThree,
             };
 
-            List<TranscriptConversation> input = new List<TranscriptConversation>()
+            var input = new List<TranscriptConversation>()
             {
                 new TranscriptConversation("1", "en", transcriptConversationItems)
             };
 
-            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 piiTask
             };
@@ -156,22 +156,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
 
-            List<TranscriptConversationItem> transcriptConversationItems = new List<TranscriptConversationItem>()
+            var transcriptConversationItems = new List<TranscriptConversationItem>()
             {
                 transciprtConversationItemOne,
                 transciprtConversationItemTwo,
                 transciprtConversationItemThree,
             };
 
-            List<TranscriptConversation> input = new List<TranscriptConversation>()
+            var input = new List<TranscriptConversation>()
             {
                 new TranscriptConversation("1", "en", transcriptConversationItems)
             };
 
-            ConversationPIITaskParameters conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 piiTask
             };

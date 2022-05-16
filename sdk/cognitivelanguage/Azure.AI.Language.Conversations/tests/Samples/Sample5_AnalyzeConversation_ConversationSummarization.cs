@@ -17,22 +17,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
                 new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
                 new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
             };
 
-            List<TextConversation> input = new List<TextConversation>()
+            var input = new List<TextConversation>()
             {
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            ConversationSummarizationTaskParameters conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
 
             var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 conversationSummarizationTask
             };
@@ -68,22 +68,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            List<TextConversationItem> textConversationItems = new List<TextConversationItem>()
+            var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
                 new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
                 new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
             };
 
-            List<TextConversation> input = new List<TextConversation>()
+            var input = new List<TextConversation>()
             {
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            ConversationSummarizationTaskParameters conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
 
             var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
-            List<AnalyzeConversationLROTask> tasks = new List<AnalyzeConversationLROTask>()
+            var tasks = new List<AnalyzeConversationLROTask>()
             {
                 conversationSummarizationTask
             };
