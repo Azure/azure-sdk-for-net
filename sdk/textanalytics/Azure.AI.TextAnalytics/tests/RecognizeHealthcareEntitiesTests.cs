@@ -445,6 +445,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview)]
         public async Task RecognizeHealthcareEntitiesWithFhir()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
