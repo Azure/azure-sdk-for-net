@@ -1,5 +1,15 @@
 # Release History
 
+## 7.9.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 7.8.1 (2022-05-16)
 
 ### Bugs Fixed
