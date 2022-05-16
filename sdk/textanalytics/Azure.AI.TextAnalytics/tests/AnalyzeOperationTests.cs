@@ -420,7 +420,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         public async Task AnalyzeOperationWithPagination()
         {
             TextAnalyticsClient client = GetClient();

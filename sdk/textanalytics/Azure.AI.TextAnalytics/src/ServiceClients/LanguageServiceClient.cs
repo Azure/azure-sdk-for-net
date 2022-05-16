@@ -1395,7 +1395,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        // NEEDS IMPLEMENTATION
         public override async Task<Response<HealthcareJobStatusResult>> HealthStatusNextPageAsync(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1405,12 +1404,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                await Task.Yield();
-                throw new NotImplementedException();
-                //var result = << NO HEALTHCARE SERVICE METHOD >>
-                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+                var result = await _languageRestClient.AnalyzeBatchNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
 
-                //return Response.FromValue(status, result.GetRawResponse());
+                return Response.FromValue(status, result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1419,7 +1416,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             }
         }
 
-        // NEEDS IMPLEMENTATION
         public override Response<HealthcareJobStatusResult> HealthStatusNextPage(string nextLink, int? pageSizeHint, IDictionary<string, int> idToIndexMap, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
@@ -1429,11 +1425,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                throw new NotImplementedException();
-                //var result = << NO HEALTHCARE SERVICE METHOD >>
-                //var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
+                var result = _languageRestClient.AnalyzeBatchNextPage(nextLink, cancellationToken);
+                var status = Transforms.ConvertToHealthcareJobStatusResult(result.Value, idToIndexMap);
 
-                //return Response.FromValue(status, result.GetRawResponse());
+                return Response.FromValue(status, result.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1593,12 +1588,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                await Task.Yield();
-                throw new NotImplementedException();
-                //var response = << NO SERVICE METHOD... WHAT GOES HERE??? >>
-                //var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+                var response = await _languageRestClient.AnalyzeBatchNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
 
-                //return Response.FromValue(result, response.GetRawResponse());
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -1616,11 +1609,10 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             try
             {
-                throw new NotImplementedException();
-                //var response = << NO SERVICE METHOD... WHAT GOES HERE??? >>
-                //var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
+                var response = _languageRestClient.AnalyzeBatchNextPage(nextLink, cancellationToken);
+                var result = Transforms.ConvertToAnalyzeTextJobStatusResult(response.Value, idToIndexMap);
 
-                //return Response.FromValue(result, response.GetRawResponse());
+                return Response.FromValue(result, response.GetRawResponse());
             }
             catch (Exception e)
             {
