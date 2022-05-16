@@ -24,7 +24,7 @@ namespace Azure.Template.Tests.Samples
             string endpoint = TestEnvironment.KeyVaultUri;
             var credential = TestEnvironment.Credential;
 #endif
-            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+            var client = new TemplateClient(endpoint, credential);
 
             SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
 
