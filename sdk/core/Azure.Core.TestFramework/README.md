@@ -289,6 +289,13 @@ When tests are run in `Playback` mode, the HTTP method, Uri, and headers are use
     }
 ```
 
+### Ignoring intermittent service errors
+
+If your live tests are impacted by temporary or intermittent services errors, be sure the service team is aware and has a plan to address the issues.
+If these issues cannot be resolved, you can attribute test classes or test methods with `[IgnoreServiceError]` which takes a required HTTP status code, Azure service error, and optional error message substring.
+This attribute, when used with `RecordedTestBase`-derived test fixtures and methods attributed with `[RecordedTest]`, which mark tests that failed with that specific error as "inconclusive", along with an optional
+reason you specify and the original error information.
+
 ### Misc
 
 You can use `Recording.GenerateId()` to generate repeatable random IDs.

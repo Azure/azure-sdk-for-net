@@ -16,6 +16,7 @@ using NUnit.Framework.Interfaces;
 
 namespace Azure.Core.TestFramework
 {
+    [NonParallelizable]
     public abstract class RecordedTestBase : ClientTestBase
     {
         public TestRecording Recording { get; private set; }

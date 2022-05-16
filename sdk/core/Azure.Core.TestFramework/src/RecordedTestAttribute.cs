@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -95,6 +98,31 @@ namespace Azure.Core.TestFramework
                             context.CurrentResult.SetResult(
                                 context.CurrentResult.ResultState,
                                 "Test timed out in initial run, but was retried successfully.");
+                        }
+                    }
+                    else
+                    {
+                        // Check if there are any service errors we should ignore.
+                        List<IgnoreServiceErrorAttribute> attributes = Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+                        // Check parents for service errors to ignore.
+                        ITest test = Test;
+                        while (test.Parent is Test t)
+                        {
+                            attributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                            test = t;
+                        }
+
+                        foreach (IgnoreServiceErrorAttribute attr in attributes)
+                        {
+                            if (attr.Matches(resultMessage))
+                            {
+                                context.CurrentResult.SetResult(
+                                    ResultState.Inconclusive,
+                                    $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
+                                    context.CurrentResult.StackTrace);
+                                break;
+                            }
                         }
                     }
                 }
