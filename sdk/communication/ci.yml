@@ -38,6 +38,8 @@ extends:
       safeName: AzureCommunicationSms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
+    - name: Azure.Communication.MediaComposition
+      safeName: AzureCommunicationMediaComposition
     - name: Azure.Communication.NetworkTraversal
       safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers

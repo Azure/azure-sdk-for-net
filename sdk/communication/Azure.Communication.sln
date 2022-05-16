@@ -52,6 +52,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.Tests", "Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj", "{F564FD34-F010-41FA-A58C-51558FB9FE89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.MediaComposition", "Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj", "{D5445861-C735-4A13-900F-3745FBD9566A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,10 @@ Global
 		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
