@@ -1,0 +1,497 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzL0RmYXVsdC1BcHBsaWNhdGlvbkdyb3VwLTYxNjk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": true,\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 3951729,\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"name\": \"ThrottlingPolicy1\"\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 79123,\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"name\": \"ThrottlingPolicy2\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "35acf2e9-66b3-40a2-a370-41bb74750190"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "486"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c3526a8e-c9e3-4131-95a8-90a3460ad866_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "261c816f-1e6b-4216-b477-856eaa11f1a7"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162904Z:261c816f-1e6b-4216-b477-856eaa11f1a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:04 GMT"
+        ],
+        "Content-Length": [
+          "646"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169\",\r\n  \"name\": \"Dfault-ApplicationGroup-6169\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy1\",\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"rateLimitThreshold\": 3951729\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy2\",\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"rateLimitThreshold\": 79123\r\n      }\r\n    ],\r\n    \"isEnabled\": true\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzL0RmYXVsdC1BcHBsaWNhdGlvbkdyb3VwLTYxNjk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": false,\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 3951729,\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"name\": \"ThrottlingPolicy1\"\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 79123,\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"name\": \"ThrottlingPolicy2\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b249e1e6-4ab5-4e93-b14d-2202770b2327"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "487"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "72c69dcf-a9b9-44ef-89cd-63d04dc287c1_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "6d27e356-7719-4988-90e8-7fa824bbea61"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162906Z:6d27e356-7719-4988-90e8-7fa824bbea61"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:06 GMT"
+        ],
+        "Content-Length": [
+          "647"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169\",\r\n  \"name\": \"Dfault-ApplicationGroup-6169\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy1\",\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"rateLimitThreshold\": 3951729\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy2\",\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"rateLimitThreshold\": 79123\r\n      }\r\n    ],\r\n    \"isEnabled\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzL0RmYXVsdC1BcHBsaWNhdGlvbkdyb3VwLTYxNjk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": false,\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 3951729,\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"name\": \"ThrottlingPolicy1\"\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 79123,\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"name\": \"ThrottlingPolicy2\"\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 3951729,\r\n        \"metricId\": \"OutgoingBytes\",\r\n        \"name\": \"ThrottlingPolicy3\"\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"rateLimitThreshold\": 79123,\r\n        \"metricId\": \"OutgoingMessages\",\r\n        \"name\": \"ThrottlingPolicy4\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4a8a7564-0e8a-44a8-9dd6-2dd29e818e23"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "830"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "89a9ad31-17a4-4623-8831-43af874afc73_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "48d331c5-4a42-4945-a514-dbf1161f5ea4"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162909Z:48d331c5-4a42-4945-a514-dbf1161f5ea4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:08 GMT"
+        ],
+        "Content-Length": [
+          "870"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169\",\r\n  \"name\": \"Dfault-ApplicationGroup-6169\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy1\",\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"rateLimitThreshold\": 3951729\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy2\",\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"rateLimitThreshold\": 79123\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy3\",\r\n        \"metricId\": \"OutgoingBytes\",\r\n        \"rateLimitThreshold\": 3951729\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy4\",\r\n        \"metricId\": \"OutgoingMessages\",\r\n        \"rateLimitThreshold\": 79123\r\n      }\r\n    ],\r\n    \"isEnabled\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzL0RmYXVsdC1BcHBsaWNhdGlvbkdyb3VwLTYxNjk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "62a8c6d6-fae8-414a-a751-dc93ea7b6151"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fbf393f9-5b53-4a7a-b5de-7d72f1126ff7_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "6e9f6563-3e51-4ca3-ae03-9f8f7979519f"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162907Z:6e9f6563-3e51-4ca3-ae03-9f8f7979519f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:07 GMT"
+        ],
+        "Content-Length": [
+          "647"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169\",\r\n  \"name\": \"Dfault-ApplicationGroup-6169\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n    \"policies\": [\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy1\",\r\n        \"metricId\": \"IncomingBytes\",\r\n        \"rateLimitThreshold\": 3951729\r\n      },\r\n      {\r\n        \"type\": \"ThrottlingPolicy\",\r\n        \"name\": \"ThrottlingPolicy2\",\r\n        \"metricId\": \"IncomingMessages\",\r\n        \"rateLimitThreshold\": 79123\r\n      }\r\n    ],\r\n    \"isEnabled\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzL0RmYXVsdC1BcHBsaWNhdGlvbkdyb3VwLTYxNjk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "db0359ff-d977-47ea-a487-4f26c34d9e68"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "97a3609f-6a8a-414b-919e-f2324f9c0e5e_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "1892cb90-ef1c-4441-a41c-3b6e8bf6caa8"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162912Z:1892cb90-ef1c-4441-a41c-3b6e8bf6caa8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:12 GMT"
+        ],
+        "Content-Length": [
+          "161"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"message\": \"The requested resource Dfault-ApplicationGroup-6169 does not exist. CorrelationId: 1892cb90-ef1c-4441-a41c-3b6e8bf6caa8\",\r\n    \"code\": \"NotFound\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzP2FwaS12ZXJzaW9uPTIwMjItMDEtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a058b904-7b29-47f4-9b73-308393749f76"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d0682689-b5f8-4950-b7b7-95d7a212d873_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "d352cf19-287e-4a52-85a9-db2790573d29"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162910Z:d352cf19-287e-4a52-85a9-db2790573d29"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:09 GMT"
+        ],
+        "Content-Length": [
+          "5586"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/testAppGroup4\",\r\n      \"name\": \"testAppGroup4\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=OutgoingMessagesPolicy\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"out-number\",\r\n            \"metricId\": \"OutgoingMessages\",\r\n            \"rateLimitThreshold\": 1\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/testAppGroup5\",\r\n      \"name\": \"testAppGroup5\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=IncomingMessagePolicy\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"in-number\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 1\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/testAppGroup10\",\r\n      \"name\": \"testAppGroup10\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=AayushTestPolicy\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"Ingress-policy-1-new1-Bytes\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 1024\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/SDKTestingAppGroup\",\r\n      \"name\": \"SDKTestingAppGroup\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=SDKTestingAppGroup\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy1\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy2\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/appGroupForTestingSDK\",\r\n      \"name\": \"appGroupForTestingSDK\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=appGroupForTestingSDK\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy1\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy2\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/appGroupForTestingSDKTest\",\r\n      \"name\": \"appGroupForTestingSDKTest\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=SDKTestingSASKey\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy1\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy2\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-3898\",\r\n      \"name\": \"Dfault-ApplicationGroup-3898\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-9617\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy1\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy2\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          }\r\n        ],\r\n        \"isEnabled\": true\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-1533\",\r\n      \"name\": \"Dfault-ApplicationGroup-1533\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-150\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy1\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy2\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          }\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169\",\r\n      \"name\": \"Dfault-ApplicationGroup-6169\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/ApplicationGroups\",\r\n      \"location\": \"East US\",\r\n      \"properties\": {\r\n        \"clientAppGroupIdentifier\": \"SASKeyName=Dfault-SASKey-2997\",\r\n        \"policies\": [\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy1\",\r\n            \"metricId\": \"IncomingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy2\",\r\n            \"metricId\": \"IncomingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy3\",\r\n            \"metricId\": \"OutgoingBytes\",\r\n            \"rateLimitThreshold\": 3951729\r\n          },\r\n          {\r\n            \"type\": \"ThrottlingPolicy\",\r\n            \"name\": \"ThrottlingPolicy4\",\r\n            \"metricId\": \"OutgoingMessages\",\r\n            \"rateLimitThreshold\": 79123\r\n          }\r\n        ],\r\n        \"isEnabled\": false\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/326100e2-f69d-4268-8503-075374f62b6e/resourceGroups/kindrasiri_eh_benchmark/providers/Microsoft.EventHub/namespaces/idc-appGroupTest/applicationGroups/Dfault-ApplicationGroup-6169?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzI2MTAwZTItZjY5ZC00MjY4LTg1MDMtMDc1Mzc0ZjYyYjZlL3Jlc291cmNlR3JvdXBzL2tpbmRyYXNpcmlfZWhfYmVuY2htYXJrL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9pZGMtYXBwR3JvdXBUZXN0L2FwcGxpY2F0aW9uR3JvdXBzL0RmYXVsdC1BcHBsaWNhdGlvbkdyb3VwLTYxNjk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d9eebf2c-c197-4097-8b7e-171416485a9a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2e2ac3c6-d455-4fac-be75-85348e40af1d_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "ed13ebcb-c1bc-400c-b582-e1ea817153aa"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20220516T162911Z:ed13ebcb-c1bc-400c-b582-e1ea817153aa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 16 May 2022 16:29:11 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "ApplicationGroupCreateUpdateDelete": [
+      "Dfault-ApplicationGroup-6169",
+      "Dfault-SASKey-2997"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "326100e2-f69d-4268-8503-075374f62b6e"
+  }
+}
