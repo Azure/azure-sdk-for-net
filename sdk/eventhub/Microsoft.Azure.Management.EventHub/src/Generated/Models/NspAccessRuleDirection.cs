@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccessFlag.
+    /// Defines values for NspAccessRuleDirection.
     /// </summary>
-    public static class PublicNetworkAccessFlag
+    public static class NspAccessRuleDirection
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
-        public const string SecuredByPerimeter = "SecuredByPerimeter";
+        public const string Inbound = "Inbound";
+        public const string Outbound = "Outbound";
     }
 }

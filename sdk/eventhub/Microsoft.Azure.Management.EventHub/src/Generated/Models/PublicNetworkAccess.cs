@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccessFlag.
+    /// Defines values for PublicNetworkAccess.
     /// </summary>
-    public static class PublicNetworkAccessFlag
+    public static class PublicNetworkAccess
     {
         public const string Enabled = "Enabled";
         public const string Disabled = "Disabled";

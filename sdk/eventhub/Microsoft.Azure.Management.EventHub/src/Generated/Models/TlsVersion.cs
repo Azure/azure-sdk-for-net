@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccessFlag.
+    /// Defines values for TlsVersion.
     /// </summary>
-    public static class PublicNetworkAccessFlag
+    public static class TlsVersion
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
-        public const string SecuredByPerimeter = "SecuredByPerimeter";
+        public const string OneFullStopZero = "1.0";
+        public const string OneFullStopOne = "1.1";
+        public const string OneFullStopTwo = "1.2";
     }
 }

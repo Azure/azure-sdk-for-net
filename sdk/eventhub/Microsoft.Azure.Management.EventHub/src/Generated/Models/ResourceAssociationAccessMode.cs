@@ -12,12 +12,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccessFlag.
+    /// Defines values for ResourceAssociationAccessMode.
     /// </summary>
-    public static class PublicNetworkAccessFlag
+    public static class ResourceAssociationAccessMode
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
-        public const string SecuredByPerimeter = "SecuredByPerimeter";
+        public const string NoAssociationMode = "NoAssociationMode";
+        public const string EnforcedMode = "EnforcedMode";
+        public const string LearningMode = "LearningMode";
+        public const string AuditMode = "AuditMode";
+        public const string UnspecifiedMode = "UnspecifiedMode";
     }
 }

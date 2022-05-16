@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
 {
 
     /// <summary>
-    /// Defines values for PublicNetworkAccessFlag.
+    /// Defines values for MetricId.
     /// </summary>
-    public static class PublicNetworkAccessFlag
+    public static class MetricId
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
-        public const string SecuredByPerimeter = "SecuredByPerimeter";
+        public const string IncomingBytes = "IncomingBytes";
+        public const string OutgoingBytes = "OutgoingBytes";
+        public const string IncomingMessages = "IncomingMessages";
+        public const string OutgoingMessages = "OutgoingMessages";
     }
 }
