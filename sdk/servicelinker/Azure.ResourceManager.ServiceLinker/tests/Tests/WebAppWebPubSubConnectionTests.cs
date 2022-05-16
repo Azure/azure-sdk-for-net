@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceLinker.Models;
@@ -71,6 +72,11 @@ namespace Azure.ResourceManager.ServiceLinker.Tests.Tests
                 ClientType = ClientType.Dotnet,
             };
             await linkers.CreateOrUpdateAsync(WaitUntil.Completed, linkerName, linkerData);
+
+            // list service linker
+            var linkerResources = await linkers.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1, linkerResources.Count);
+            Assert.AreEqual(linkerName, linkerResources[0].Data.Name);
 
             // get service linker
             LinkerResource linker = await linkers.GetAsync(linkerName);
