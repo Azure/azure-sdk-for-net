@@ -167,14 +167,14 @@ namespace Azure.AI.Language.Conversations
 
             MultiLanguageConversationAnalysisInput multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
 
-            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+            AnalyzeConversationJobsInput analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.Start();
 
             try
             {
-                var responseHeaders = await _analysisRestClient.SubmitJobAsync(analyzeConversationJobsInput, cancellationToken).ConfigureAwait(false);
+                ResponseWithHeaders<ConversationAnalysisSubmitJobHeaders> responseHeaders = await _analysisRestClient.SubmitJobAsync(analyzeConversationJobsInput, cancellationToken).ConfigureAwait(false);
 
                 return new AnalyzeConversationOperation(_analysisRestClient, Diagnostics, responseHeaders.Headers.OperationLocation);
             }
@@ -198,14 +198,14 @@ namespace Azure.AI.Language.Conversations
 
             MultiLanguageConversationAnalysisInput multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
 
-            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+            AnalyzeConversationJobsInput analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.Start();
 
             try
             {
-                var responseHeaders = _analysisRestClient.SubmitJob(analyzeConversationJobsInput, cancellationToken);
+                ResponseWithHeaders<ConversationAnalysisSubmitJobHeaders> responseHeaders = _analysisRestClient.SubmitJob(analyzeConversationJobsInput, cancellationToken);
 
                 return new AnalyzeConversationOperation(_analysisRestClient, Diagnostics, responseHeaders.Headers.OperationLocation);
             }
