@@ -7,8 +7,6 @@
 - Fixed issue that could result in the message lock renewal not being cancelled if the user message handler threw an exception.
 - Abandon messages that are received from the `ProcessorReceiveActions` in the event of the user message handler throwing an exception.
 
-### Other Changes
-
 ## 7.8.0 (2022-05-09)
 
 ### Features Added
