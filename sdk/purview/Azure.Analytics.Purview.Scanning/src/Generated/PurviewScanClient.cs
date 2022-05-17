@@ -434,8 +434,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   id: string,
+        /// <code>
+        /// {
+        ///   id: string, # Optional. Test id doc
         ///   name: string,
         ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
         ///   scanResults: [
