@@ -62,39 +62,6 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("systemData");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("createdBy");
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (Optional.IsDefined(CreatedByType))
-            {
-                writer.WritePropertyName("createdByType");
-                writer.WriteStringValue(CreatedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy");
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (Optional.IsDefined(LastModifiedByType))
-            {
-                writer.WritePropertyName("lastModifiedByType");
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(LastModifiedOn))
-            {
-                writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -121,6 +88,7 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> registrationTimestamp = default;
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastBillingTimestamp = default;
+<<<<<<< HEAD
             Optional<string> serviceEndpoint = default;
             Optional<string> createdBy = default;
             Optional<Models.CreatedByType> createdByType = default;
@@ -128,6 +96,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> lastModifiedBy = default;
             Optional<Models.CreatedByType> lastModifiedByType = default;
             Optional<DateTimeOffset> lastModifiedAt = default;
+=======
+>>>>>>> upstream/main
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -322,70 +292,12 @@ namespace Azure.ResourceManager.Hci
                     }
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("createdBy"))
-                        {
-                            createdBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdByType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdByType = new Models.CreatedByType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedBy"))
-                        {
-                            lastModifiedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedByType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedByType = new Models.CreatedByType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedAt"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
+<<<<<<< HEAD
             return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+=======
+            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp));
+>>>>>>> upstream/main
         }
     }
 }

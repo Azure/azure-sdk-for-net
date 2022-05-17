@@ -13,14 +13,17 @@ namespace Azure.AI.TextAnalytics
     /// The predicted sentiment and other analysis like Opinion mining
     /// for each sentence in the corresponding document.
     /// <para>For more information regarding text sentiment, see
-    /// <see href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.</para>
+    /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/sentiment-opinion-mining/overview"/>.</para>
     /// </summary>
     public readonly struct SentenceSentiment
     {
         internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> opinions)
         {
+            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
+            Text = text ?? string.Empty;
+
             Sentiment = sentiment;
-            Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;

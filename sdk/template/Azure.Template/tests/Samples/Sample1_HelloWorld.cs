@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 #region Snippet:Azure_Template
+using Azure.Identity;
 using Azure.Template.Models;
 #endregion
 using NUnit.Framework;
@@ -19,11 +19,14 @@ namespace Azure.Template.Tests.Samples
         public void GettingASecret()
         {
             #region Snippet:Azure_Template_GetSecret
+#if SNIPPET
             string endpoint = "https://myvault.vault.azure.net";
-#if !SNIPPET
-            endpoint = TestEnvironment.KeyVaultUri;
+            var credential = new DefaultAzureCredential();
+#else
+            string endpoint = TestEnvironment.KeyVaultUri;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+            var client = new TemplateClient(endpoint, credential);
 
             SecretBundle secret = client.GetSecretValue("TestSecret");
 

@@ -16,7 +16,7 @@ namespace Azure.Template
     /// <summary> The Template service client. </summary>
     public partial class TemplateClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://template/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly string _vaultBaseUrl;
@@ -36,15 +36,23 @@ namespace Azure.Template
         /// <summary> Initializes a new instance of TemplateClient. </summary>
         /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="credential"/> is null. </exception>
+        public TemplateClient(string vaultBaseUrl, TokenCredential credential) : this(vaultBaseUrl, credential, new TemplateClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of TemplateClient. </summary>
+        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="credential"/> is null. </exception>
-        public TemplateClient(string vaultBaseUrl, TokenCredential credential, TemplateClientOptions options = null)
+        public TemplateClient(string vaultBaseUrl, TokenCredential credential, TemplateClientOptions options)
         {
             Argument.AssertNotNull(vaultBaseUrl, nameof(vaultBaseUrl));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TemplateClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _vaultBaseUrl = vaultBaseUrl;

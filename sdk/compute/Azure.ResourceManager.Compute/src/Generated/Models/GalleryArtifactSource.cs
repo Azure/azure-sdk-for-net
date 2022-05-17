@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier ManagedImageId
         {
-            get => ManagedImage.Id;
+            get => ManagedImage?.Id;
         }
     }
 }

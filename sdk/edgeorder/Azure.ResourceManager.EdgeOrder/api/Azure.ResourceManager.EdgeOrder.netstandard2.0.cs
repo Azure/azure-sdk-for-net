@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus? DoubleEncryptionStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EdgeOrder.Models.NotificationPreference> NotificationPreferences { get { throw null; } }
         public string PreferredManagementResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
     public partial class OrderItemResourcePatch
     {

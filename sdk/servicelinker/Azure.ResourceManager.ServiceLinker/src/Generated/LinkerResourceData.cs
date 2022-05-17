@@ -28,63 +28,39 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="authInfo"> The authentication type. </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="vNetSolution"> The VNet solution. </param>
+        /// <param name="vnetSolution"> The VNet solution. </param>
         /// <param name="secretStore"> An option to store secret value in secure place. </param>
         /// <param name="scope"> connection scope in source service. </param>
-        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBase targetService, AuthInfoBase authInfo, ClientType? clientType, string provisioningState, VNetSolution vNetSolution, SecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
+        internal LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBase targetService, AuthInfoBase authInfo, ClientType? clientType, string provisioningState, VnetSolution vnetSolution, SecretStore secretStore, string scope) : base(id, name, resourceType, systemData)
         {
             TargetService = targetService;
             AuthInfo = authInfo;
             ClientType = clientType;
             ProvisioningState = provisioningState;
-            VNetSolution = vNetSolution;
+            VnetSolution = vnetSolution;
             SecretStore = secretStore;
             Scope = scope;
         }
 
         /// <summary> The target service properties. </summary>
-        internal TargetServiceBase TargetService { get; set; }
-        /// <summary> The target service type. </summary>
-        internal TargetServiceType ServiceType
-        {
-            get => TargetService is null ? default : TargetService.ServiceType;
-            set
-            {
-                if (TargetService is null)
-                    TargetService = new TargetServiceBase();
-                TargetService.ServiceType = value;
-            }
-        }
-
+        public TargetServiceBase TargetService { get; set; }
         /// <summary> The authentication type. </summary>
-        internal AuthInfoBase AuthInfo { get; set; }
-        /// <summary> The authentication type. </summary>
-        internal AuthType AuthType
-        {
-            get => AuthInfo is null ? default : AuthInfo.AuthType;
-            set
-            {
-                if (AuthInfo is null)
-                    AuthInfo = new AuthInfoBase();
-                AuthInfo.AuthType = value;
-            }
-        }
-
+        public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
         public ClientType? ClientType { get; set; }
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The VNet solution. </summary>
-        internal VNetSolution VNetSolution { get; set; }
+        internal VnetSolution VnetSolution { get; set; }
         /// <summary> Type of VNet solution. </summary>
-        public VNetSolutionType? SolutionType
+        public VnetSolutionType? SolutionType
         {
-            get => VNetSolution is null ? default : VNetSolution.SolutionType;
+            get => VnetSolution is null ? default : VnetSolution.SolutionType;
             set
             {
-                if (VNetSolution is null)
-                    VNetSolution = new VNetSolution();
-                VNetSolution.SolutionType = value;
+                if (VnetSolution is null)
+                    VnetSolution = new VnetSolution();
+                VnetSolution.SolutionType = value;
             }
         }
 

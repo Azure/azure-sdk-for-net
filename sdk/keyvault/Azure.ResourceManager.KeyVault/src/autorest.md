@@ -65,15 +65,15 @@ directive:
   - from: managedHsm.json
     where: '$.definitions'
     transform: >
-      $.ManagedHsmResource['x-ms-client-name'] = 'KeyVaultTrackedResourceData';
-      $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
+      $.ManagedHsmResource['x-ms-client-name'] = 'ManagedHsmTrackedResourceData';
       $.ManagedHsmResource.properties.location['x-ms-format'] = 'azure-location';
+      $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
       $.DeletedManagedHsmProperties.properties.location['x-ms-format'] = 'azure-location';
       $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
       $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
       $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'HsmProvisioningState';
-      $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'VnetSubnetId';
+      $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
   - from: keyvault.json
     where: '$.definitions'
@@ -90,6 +90,7 @@ directive:
       $.VaultCreateOrUpdateParameters.properties.location['x-ms-format'] = 'azure-location';
       $.VaultAccessPolicyParameters.properties.location['x-ms-format'] = 'azure-location';
       $.Vault.properties.location['x-ms-format'] = 'azure-location';
+      $.Vault['x-csharp-usage'] = 'model,input,output';
       $.VaultProperties.properties.createMode['x-ms-enum']['name'] = 'VaultCreateMode';
       $.Resource.properties.location['x-ms-format'] = 'azure-location';
       $.PrivateEndpointConnectionItem.properties.etag['x-ms-format'] = 'etag';
@@ -105,6 +106,18 @@ directive:
   - rename-model:
       from: Permissions
       to: IdentityAccessPermissions
+  - rename-model:
+      from: MHSMPrivateLinkResource
+      to: MHSMPrivateLinkResourceData
+  - rename-model:
+      from: PrivateLinkResource
+      to: PrivateLinkResourceData
+  - rename-model:
+      from: MHSMPrivateEndpointConnectionItem
+      to: MHSMPrivateEndpointConnectionItemData
+  - rename-model:
+      from: PrivateEndpointConnectionItem
+      to: PrivateEndpointConnectionItemData
 ```
 
 ### Tag: package-2021-10

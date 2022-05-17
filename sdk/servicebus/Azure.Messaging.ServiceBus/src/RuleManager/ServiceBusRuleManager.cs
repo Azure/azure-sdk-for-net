@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Manages rules for subscriptions.
     /// </summary>
-    public class ServiceBusRuleManager : IAsyncDisposable
+    internal class ServiceBusRuleManager : IAsyncDisposable
     {
         /// <summary>
         /// The path of the Service Bus subscription that the rule manager is connected to, specific to the

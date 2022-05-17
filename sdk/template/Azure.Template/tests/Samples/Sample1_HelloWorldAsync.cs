@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Template.Models;
 using NUnit.Framework;
 
@@ -17,11 +17,14 @@ namespace Azure.Template.Tests.Samples
         public async Task GettingASecretAsync()
         {
             #region Snippet:Azure_Template_GetSecretAsync
+#if SNIPPET
             string endpoint = "https://myvault.vault.azure.net";
-#if !SNIPPET
-            endpoint = TestEnvironment.KeyVaultUri;
+            var credential = new DefaultAzureCredential();
+#else
+            string endpoint = TestEnvironment.KeyVaultUri;
+            var credential = TestEnvironment.Credential;
 #endif
-            var client = new TemplateClient(endpoint, new DefaultAzureCredential());
+            var client = new TemplateClient(endpoint, credential);
 
             SecretBundle secret = await client.GetSecretValueAsync("TestSecret");
 

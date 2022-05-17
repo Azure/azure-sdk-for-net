@@ -39,6 +39,9 @@ directive:
   - from: extensions.json
     where: $.definitions.Extension
     transform: $["x-ms-client-name"] = "ArcExtension"
+  - from: extensions.json
+    where: $.definitions.Extension.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
   - from: clusters.json
     where: $.definitions.Cluster
     transform: $["x-ms-client-name"] = "HciCluster"
@@ -62,6 +65,7 @@ directive:
     where: $.definitions.ClusterReportedProperties.properties.clusterId
     transform: >
       $.format = "uuid"
+<<<<<<< HEAD
   - from: arcSettings.json
     where: $.definitions.ArcSettingProperties.properties
     transform: >
@@ -69,4 +73,12 @@ directive:
       $.arcApplicationTenantId.format = "uuid";
       $.arcServicePrincipalObjectId.format = "uuid";
       $.arcApplicationObjectId.format = "uuid";
+=======
+  - from: clusters.json
+    where: $.definitions.Cluster.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
+  - from: arcSettings.json
+    where: $.definitions.ArcSetting.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
+>>>>>>> upstream/main
 ```

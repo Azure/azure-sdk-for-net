@@ -10,15 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class AzureKeyVaultProperties : IUtf8JsonSerializable
+    public partial class AzureKeyVaultProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectAsKubernetesCsiDriver))
             {
-                writer.WritePropertyName("connectAsKubernetesCsiDriver");
-                writer.WriteBooleanValue(ConnectAsKubernetesCsiDriver.Value);
+                if (ConnectAsKubernetesCsiDriver != null)
+                {
+                    writer.WritePropertyName("connectAsKubernetesCsiDriver");
+                    writer.WriteBooleanValue(ConnectAsKubernetesCsiDriver.Value);
+                }
+                else
+                {
+                    writer.WriteNull("connectAsKubernetesCsiDriver");
+                }
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(AzureResourceType.ToString());
@@ -27,7 +34,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static AzureKeyVaultProperties DeserializeAzureKeyVaultProperties(JsonElement element)
         {
-            Optional<bool> connectAsKubernetesCsiDriver = default;
+            Optional<bool?> connectAsKubernetesCsiDriver = default;
             AzureResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,7 +42,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        connectAsKubernetesCsiDriver = null;
                         continue;
                     }
                     connectAsKubernetesCsiDriver = property.Value.GetBoolean();

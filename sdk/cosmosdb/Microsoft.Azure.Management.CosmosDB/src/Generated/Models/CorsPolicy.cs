@@ -104,16 +104,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AllowedOrigins");
             }
-            if (MaxAgeInSeconds != null)
+            if (MaxAgeInSeconds > 2147483647)
             {
-                if (MaxAgeInSeconds > 2147483647)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxAgeInSeconds", 2147483647);
-                }
-                if (MaxAgeInSeconds < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxAgeInSeconds", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxAgeInSeconds", 2147483647);
+            }
+            if (MaxAgeInSeconds < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxAgeInSeconds", 1);
             }
         }
     }

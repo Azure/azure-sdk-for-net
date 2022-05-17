@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
         internal const ServiceVersion LatestVersion = ServiceVersion.V2022_04_01_Preview;
 
         /// <summary>
-        /// The versions of the Text Analytics service supported by this client library.
+        /// The versions of the Text Analytics or Language service supported by this client library.
         /// </summary>
         public enum ServiceVersion
         {
