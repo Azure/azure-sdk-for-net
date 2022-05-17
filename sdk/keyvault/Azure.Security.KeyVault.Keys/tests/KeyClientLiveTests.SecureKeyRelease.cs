@@ -13,9 +13,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     public partial class KeyClientLiveTests
     {
-        [Test]
-        [AttestationMayFail] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
-        [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
+        [RecordedTest]
+        [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
+        [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseCreatedKey()
@@ -41,9 +41,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
         }
 
-        [Test]
-        [AttestationMayFail] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
-        [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
+        [RecordedTest]
+        [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
+        [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseUpdatedKey()
@@ -79,9 +79,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual("BadParameter", ex.ErrorCode);
         }
 
-        [Test]
-        [AttestationMayFail] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
-        [PartiallyDeployed] // TODO: Remove once SKR is deployed to sovereign clouds.
+        [RecordedTest]
+        [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // TODO: Remove once the attestation issue is resolved: https://github.com/Azure/azure-sdk-for-net/issues/27957
+        [IgnoreServiceError(400, "BadParameter")] // TODO: Remove once SKR is deployed to sovereign clouds.
         [PremiumOnly]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task UpdateReleasePolicy([Values] bool immutable)

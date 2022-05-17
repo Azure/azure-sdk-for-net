@@ -406,7 +406,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("Pagination not implemented yet")]
         public async Task AnalyzeHealthcareEntitiesPagination()
         {
             TextAnalyticsClient client = GetClient();
