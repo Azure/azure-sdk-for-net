@@ -237,9 +237,9 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public CosmosDBPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public string GroupId { get { throw null; } set { } }
         public string PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.CosmosDB.Models.CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } set { } }
     }
     public partial class CosmosDBPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource

@@ -362,8 +362,8 @@ namespace Azure.ResourceManager.EventHubs
     public partial class EventHubsPrivateEndpointConnectionData : Azure.ResourceManager.EventHubs.Models.ProxyResource
     {
         public EventHubsPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.EventHubs.Models.ConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.EventHubs.Models.ConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EndPointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class EventHubsPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource

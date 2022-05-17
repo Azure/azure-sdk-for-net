@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
         {
             Name = name;
             Etag = etag;
             ResourceType = resourceType;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             LinkIdentifier = linkIdentifier;
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the application gateway private endpoint connection resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The consumer link id. </summary>

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
+        /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal PrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal PrivateEndpointConnectionItemData(string id, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState)
         {
             Id = id;
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Approval state of the private link connection. </summary>
-        public KeyVaultPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public KeyVaultPrivateLinkServiceConnectionState ConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }

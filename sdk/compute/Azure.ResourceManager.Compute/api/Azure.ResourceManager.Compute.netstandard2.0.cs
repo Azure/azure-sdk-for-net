@@ -426,8 +426,8 @@ namespace Azure.ResourceManager.Compute
     public partial class ComputePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public ComputePrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.Compute.Models.ComputePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ComputePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class ComputePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource

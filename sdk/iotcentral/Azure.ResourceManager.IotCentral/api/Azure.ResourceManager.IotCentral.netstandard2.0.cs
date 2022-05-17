@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.IotCentral
     public partial class IotCentralPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public IotCentralPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class IotCentralPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource

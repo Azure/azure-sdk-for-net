@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public ServiceBusPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.ServiceBus.Models.ConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.ConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.EndpointProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
     public partial class ServiceBusPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource

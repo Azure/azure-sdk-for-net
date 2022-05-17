@@ -161,4 +161,13 @@ directive:
       where: $.definitions.MaintenanceWindowTimeRange.properties.duration
       transform: >
           $.format = "duration";
+# shorten "privateLinkServiceConnectionState" property name
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
+      transform: >
+          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+    - from: ManagedInstancePrivateEndpointConnections.json
+      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
+      transform: >
+          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
 ```

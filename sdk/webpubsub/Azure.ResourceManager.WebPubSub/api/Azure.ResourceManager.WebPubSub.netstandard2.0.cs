@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.WebPubSub
     public partial class WebPubSubPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public WebPubSubPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public string PrivateEndpointId { get { throw null; } set { } }
-        public Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class WebPubSubPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource

@@ -588,8 +588,8 @@ namespace Azure.ResourceManager.Storage
     public partial class StoragePrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public StoragePrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class StoragePrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
