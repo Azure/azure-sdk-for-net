@@ -3,6 +3,8 @@
 ## 5.2.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added keyword argument `FhirVersion` to `AnalyzeHealthcareEntitiesOptions`. Use the keyword to indicate the version for the property `AnalyzeHealthcareEntitiesResult.FhirBundle`  that represents a FHIR compatible object for consumption in other Healthcare tools.
+- Added property `FhirBundle` to `AnalyzeHealthcareEntitiesResult`.
 
 ### Breaking Changes
 - Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.

@@ -1390,6 +1390,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
         /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
             string id,
             TextDocumentStatistics statistics,
@@ -1398,6 +1399,27 @@ namespace Azure.AI.TextAnalytics
             IEnumerable<TextAnalyticsWarning> warnings)
         {
             return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
+        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
+        /// <param name="healthcareEntities">Sets the collection of <see cref="TextAnalytics.HealthcareEntity"/>.</param>
+        /// <param name="entityRelations">Sets the collection of <see cref="TextAnalytics.HealthcareEntityRelation"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="TextAnalytics.TextAnalyticsWarning"/>.</param>
+        /// <param name="fhirBundle">Sets the object <see cref="AnalyzeHealthcareEntitiesResult.FhirBundle"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesResult"/> for mocking purposes.</returns>
+        public static AnalyzeHealthcareEntitiesResult AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            IEnumerable<HealthcareEntity> healthcareEntities,
+            IEnumerable<HealthcareEntityRelation> entityRelations,
+            IEnumerable<TextAnalyticsWarning> warnings,
+            IDictionary<string, object> fhirBundle)
+        {
+            return new AnalyzeHealthcareEntitiesResult(id, statistics, healthcareEntities.ToList(), entityRelations.ToList(), warnings.ToList(), fhirBundle);
         }
 
         /// <summary>

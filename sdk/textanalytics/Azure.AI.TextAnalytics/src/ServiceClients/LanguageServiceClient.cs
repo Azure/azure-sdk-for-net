@@ -1286,7 +1286,8 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 {
                     ModelVersion = options.ModelVersion,
                     StringIndexType = Constants.DefaultStringIndexType,
-                    LoggingOptOut = options.DisableServiceLogs
+                    LoggingOptOut = options.DisableServiceLogs,
+                    FhirVersion = options.FhirVersion ?? (FhirVersion?)null
                 }
             };
         }
