@@ -30,9 +30,3 @@ extends:
     arguments: ${{ parameters.arguments }}
     iterations: ${{ parameters.iterations }}
     additionalArguments: ${{ parameters.additionalArguments }}
-    envVars:
-      AZURE_STORAGE_ACCOUNT_KEY: $(azure-storage-account-key)
-      AZURE_STORAGE_ACCOUNT_NAME: $(azure-storage-account-name)
-      AZURE_STORAGE_CONNECTION_STRING: $(azure-storage-connection-string)
-      STANDARD_STORAGE_CONNECTION_STRING: $(standard-storage-connection-string)
-      STORAGE_CONNECTION_STRING: $(storage-connection-string)
