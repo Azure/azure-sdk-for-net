@@ -62,12 +62,11 @@ namespace Azure.ResourceManager.Hci
     {
         public ArcSettingData() { }
         public Azure.ResourceManager.Hci.Models.ArcSettingAggregateState? AggregateState { get { throw null; } }
-<<<<<<< HEAD
-        public string ArcApplicationClientId { get { throw null; } set { } }
-        public string ArcApplicationObjectId { get { throw null; } set { } }
-        public string ArcApplicationTenantId { get { throw null; } set { } }
+        public System.Guid? ArcApplicationClientId { get { throw null; } set { } }
+        public System.Guid? ArcApplicationObjectId { get { throw null; } set { } }
+        public System.Guid? ArcApplicationTenantId { get { throw null; } set { } }
         public string ArcInstanceResourceGroup { get { throw null; } set { } }
-        public string ArcServicePrincipalObjectId { get { throw null; } set { } }
+        public System.Guid? ArcServicePrincipalObjectId { get { throw null; } set { } }
         public System.BinaryData ConnectivityProperties { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? CreatedByType { get { throw null; } set { } }
@@ -75,9 +74,7 @@ namespace Azure.ResourceManager.Hci
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
-=======
         public string ArcInstanceResourceGroup { get { throw null; } }
->>>>>>> upstream/main
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeState> PerNodeDetails { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -120,9 +117,9 @@ namespace Azure.ResourceManager.Hci
     public partial class HciClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public HciClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string AadApplicationObjectId { get { throw null; } set { } }
+        public System.Guid? AadApplicationObjectId { get { throw null; } set { } }
         public System.Guid? AadClientId { get { throw null; } set { } }
-        public string AadServicePrincipalObjectId { get { throw null; } set { } }
+        public System.Guid? AadServicePrincipalObjectId { get { throw null; } set { } }
         public System.Guid? AadTenantId { get { throw null; } set { } }
         public string BillingModel { get { throw null; } }
         public System.Guid? CloudId { get { throw null; } }
