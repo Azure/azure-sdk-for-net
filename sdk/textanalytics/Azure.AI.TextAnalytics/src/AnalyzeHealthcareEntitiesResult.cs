@@ -15,27 +15,28 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly IReadOnlyCollection<HealthcareEntity> _entities;
 
-        internal AnalyzeHealthcareEntitiesResult(
-            string id,
-            TextDocumentStatistics statistics,
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// </summary>
+        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
             IList<TextAnalyticsWarning> warnings,
             IDictionary<string, object> fhirBundle)
-            : this(id, statistics, healthcareEntities, entityRelations, warnings)
-        {
-            FhirBundle = new ReadOnlyDictionary<string, object>(fhirBundle);
-        }
-
-        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
-            IList<HealthcareEntity> healthcareEntities,
-            IList<HealthcareEntityRelation> entityRelations,
-            IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+
+            if (fhirBundle == null)
+            {
+                FhirBundle = new Dictionary<string, object>();
+            }
+            else
+            {
+                FhirBundle = new ReadOnlyDictionary<string, object>(fhirBundle);
+            }
         }
 
         /// <summary>
