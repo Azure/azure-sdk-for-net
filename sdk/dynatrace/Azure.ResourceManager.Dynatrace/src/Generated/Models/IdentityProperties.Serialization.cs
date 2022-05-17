@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static IdentityProperties DeserializeIdentityProperties(JsonElement element)
         {
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<string> principalId = default;
             ManagedIdentityType type = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
@@ -43,7 +44,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("principalId"))
@@ -72,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new IdentityProperties(tenantId.Value, principalId.Value, type, Optional.ToDictionary(userAssignedIdentities));
+            return new IdentityProperties(Optional.ToNullable(tenantId), principalId.Value, type, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

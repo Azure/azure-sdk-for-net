@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dynatrace
             if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId");
-                writer.WriteStringValue(EnterpriseAppId);
+                writer.WriteStringValue(EnterpriseAppId.Value);
             }
             if (Optional.IsDefined(SingleSignOnUri))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dynatrace
             ResourceType type = default;
             SystemData systemData = default;
             Optional<SingleSignOnStates> singleSignOnState = default;
-            Optional<string> enterpriseAppId = default;
+            Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -104,7 +104,12 @@ namespace Azure.ResourceManager.Dynatrace
                         }
                         if (property0.NameEquals("enterpriseAppId"))
                         {
-                            enterpriseAppId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enterpriseAppId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("singleSignOnUrl"))
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.Dynatrace
                     continue;
                 }
             }
-            return new DynatraceSingleSignOnResourceData(id, name, type, systemData, Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
+            return new DynatraceSingleSignOnResourceData(id, name, type, systemData, Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
         }
     }
 }

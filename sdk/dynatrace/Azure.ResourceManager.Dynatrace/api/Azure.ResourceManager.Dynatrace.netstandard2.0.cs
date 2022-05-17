@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Dynatrace
     {
         public DynatraceSingleSignOnResourceData() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
-        public string EnterpriseAppId { get { throw null; } set { } }
+        public System.Guid? EnterpriseAppId { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.VmInfo> GetHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironments(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResource> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResource> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResourceDetails> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResourceDetails> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResult> GetSsoDetails(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResult>> GetSsoDetailsAsync(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource> GetTagRule(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         public DynatraceSingleSignOnProperties() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
-        public string EnterpriseAppId { get { throw null; } set { } }
+        public System.Guid? EnterpriseAppId { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.SingleSignOnStates? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public IdentityProperties(Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType managedIdentityType) { }
         public Azure.ResourceManager.Dynatrace.Models.ManagedIdentityType ManagedIdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -283,8 +283,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public partial class LinkableEnvironmentContent
     {
         public LinkableEnvironmentContent() { }
-        public string Region { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
         public string UserPrincipal { get { throw null; } set { } }
     }
     public partial class LinkableEnvironmentResult
@@ -357,9 +357,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MonitoredResource
+    public partial class MonitoredResourceDetails
     {
-        internal MonitoredResource() { }
+        internal MonitoredResourceDetails() { }
         public string Id { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public string ReasonForMetricsStatus { get { throw null; } }

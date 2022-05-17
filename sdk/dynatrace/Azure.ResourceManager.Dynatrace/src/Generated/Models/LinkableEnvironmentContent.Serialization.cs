@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(UserPrincipal))
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region");
-                writer.WriteStringValue(Region);
+                writer.WriteStringValue(Region.Value);
             }
             writer.WriteEndObject();
         }

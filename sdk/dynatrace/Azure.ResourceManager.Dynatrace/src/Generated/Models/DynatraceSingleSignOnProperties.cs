@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal DynatraceSingleSignOnProperties(SingleSignOnStates? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, ProvisioningState? provisioningState)
+        internal DynatraceSingleSignOnProperties(SingleSignOnStates? singleSignOnState, Guid? enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, ProvisioningState? provisioningState)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> State of Single Sign On. </summary>
         public SingleSignOnStates? SingleSignOnState { get; set; }
         /// <summary> Version of the Dynatrace agent installed on the VM. </summary>
-        public string EnterpriseAppId { get; set; }
+        public Guid? EnterpriseAppId { get; set; }
         /// <summary> The login URL specific to this Dynatrace Environment. </summary>
         public Uri SingleSignOnUri { get; set; }
         /// <summary> array of Aad(azure active directory) domains. </summary>

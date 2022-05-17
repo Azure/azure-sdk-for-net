@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class MonitoredResource
+    public partial class MonitoredResourceDetails
     {
-        internal static MonitoredResource DeserializeMonitoredResource(JsonElement element)
+        internal static MonitoredResourceDetails DeserializeMonitoredResourceDetails(JsonElement element)
         {
             Optional<string> id = default;
             Optional<SendingMetricsStatus> sendingMetrics = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new MonitoredResourceDetails(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

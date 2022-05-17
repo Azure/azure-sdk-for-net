@@ -365,10 +365,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_ListMonitoredResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitoredResource> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitoredResourceDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitoredResourceDetails> GetMonitoredResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitoredResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MonitoredResourceDetails>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetMonitoredResources");
                 scope.Start();
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Dynatrace
                     throw;
                 }
             }
-            async Task<Page<MonitoredResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MonitoredResourceDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetMonitoredResources");
                 scope.Start();
@@ -407,10 +407,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_ListMonitoredResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitoredResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitoredResource> GetMonitoredResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitoredResourceDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitoredResourceDetails> GetMonitoredResources(CancellationToken cancellationToken = default)
         {
-            Page<MonitoredResource> FirstPageFunc(int? pageSizeHint)
+            Page<MonitoredResourceDetails> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetMonitoredResources");
                 scope.Start();
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Dynatrace
                     throw;
                 }
             }
-            Page<MonitoredResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MonitoredResourceDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetMonitoredResources");
                 scope.Start();

@@ -43,7 +43,11 @@ directive:
     transform: >
       $.LinkableEnvironmentResponse['x-ms-client-name'] = 'LinkableEnvironmentResult';
       $.SSODetailsResponse['x-ms-client-name'] = 'SsoDetailsResult';
+      $.MonitoredResource['x-ms-client-name'] = 'MonitoredResourceDetails';
       $.MonitoredResource.properties.sendingMetrics['x-ms-client-name'] = 'sendingMetricsStatus';
       $.MonitoredResource.properties.sendingLogs['x-ms-client-name'] = 'sendingLogsStatus';
-
+      $.LinkableEnvironmentRequest.properties.tenantId['format'] = 'uuid';
+      $.IdentityProperties.properties.tenantId['format'] = 'uuid';
+      $.DynatraceSingleSignOnProperties.properties.enterpriseAppId['format'] = 'uuid';
+      $.LinkableEnvironmentRequest.properties.region['x-ms-format'] = 'azure-location';
 ```

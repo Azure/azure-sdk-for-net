@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="principalId"> The active directory identifier of this principal. </param>
         /// <param name="managedIdentityType"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        internal IdentityProperties(string tenantId, string principalId, ManagedIdentityType managedIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal IdentityProperties(Guid? tenantId, string principalId, ManagedIdentityType managedIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             TenantId = tenantId;
             PrincipalId = principalId;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         }
 
         /// <summary> The Active Directory tenant id of the principal. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> The active directory identifier of this principal. </summary>
         public string PrincipalId { get; }
         /// <summary> The type of managed identity assigned to this resource. </summary>

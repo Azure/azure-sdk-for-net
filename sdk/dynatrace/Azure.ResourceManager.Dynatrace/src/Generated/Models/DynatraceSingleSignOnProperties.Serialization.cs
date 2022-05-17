@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId");
-                writer.WriteStringValue(EnterpriseAppId);
+                writer.WriteStringValue(EnterpriseAppId.Value);
             }
             if (Optional.IsDefined(SingleSignOnUri))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         internal static DynatraceSingleSignOnProperties DeserializeDynatraceSingleSignOnProperties(JsonElement element)
         {
             Optional<SingleSignOnStates> singleSignOnState = default;
-            Optional<string> enterpriseAppId = default;
+            Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -66,7 +66,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (property.NameEquals("enterpriseAppId"))
                 {
-                    enterpriseAppId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enterpriseAppId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("singleSignOnUrl"))
@@ -105,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceSingleSignOnProperties(Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
+            return new DynatraceSingleSignOnProperties(Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
         }
     }
 }
