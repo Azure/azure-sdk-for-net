@@ -28,32 +28,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _sharedListener = sharedListener;
         }
 
-        public BlobListener(ISharedListener sharedListener, BlobContainerClient containerClient, ILoggerFactory loggerFactory)
+        public BlobListener(ISharedListener sharedListener, BlobContainerClient containerClient, IBlobPathSource blobPathSource, ILoggerFactory loggerFactory)
         {
             _sharedListener = sharedListener;
-            _details = new Lazy<string>(() => $"blob container={containerClient.Name}, storage account name={containerClient.AccountName}");
+            _details = new Lazy<string>(() => $"blob container={containerClient.Name}, storage account name={containerClient.AccountName}, blob name pattern={blobPathSource.BlobNamePattern}");
             _logger = loggerFactory.CreateLogger<BlobListener>();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                ThrowIfDisposed();
+            ThrowIfDisposed();
 
-                if (_started)
-                {
-                    throw new InvalidOperationException("The listener has already been started.");
-                }
-
-                _logger.LogDebug($"Storage blob listener started ({_details.Value})");
-                return StartAsyncCore(cancellationToken);
-            }
-            catch (Exception ex)
+            if (_started)
             {
-                _logger.LogError(ex, $"Storage blob listener encountered an error during starting ({_details.Value})");
-                throw;
+                throw new InvalidOperationException("The listener has already been started.");
             }
+
+            _logger.LogDebug($"Storage blob listener started ({_details.Value})");
+            return StartAsyncCore(cancellationToken);
         }
 
         private async Task StartAsyncCore(CancellationToken cancellationToken)
@@ -66,27 +58,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                ThrowIfDisposed();
+            ThrowIfDisposed();
 
-                if (!_started)
-                {
-                    throw new InvalidOperationException(
-                        "The listener has not yet been started or has already been stopped.");
-                }
+            if (!_started)
+            {
+                throw new InvalidOperationException(
+                    "The listener has not yet been started or has already been stopped.");
+            }
 
-                return StopAsyncCore(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Storage blob listener encountered an error during stopping ({_details.Value})");
-                throw;
-            }
-            finally
-            {
-                _logger.LogDebug($"Storage blob listener stopped ({_details.Value})");
-            }
+            _logger.LogDebug($"Storage blob listener stopped ({_details.Value})");
+            return StopAsyncCore(cancellationToken);
         }
 
         private async Task StopAsyncCore(CancellationToken cancellationToken)

@@ -147,39 +147,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                ThrowIfDisposed();
-                _timer.Start();
-                _logger.LogDebug($"Storage queue listener started ({_details.Value})");
-                return Task.FromResult(0);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDebug(ex, $"Storage queue listener encountered an error while starting ({_details.Value})");
-                throw;
-            }
+            ThrowIfDisposed();
+            _timer.Start();
+            _logger.LogDebug($"Storage queue listener started ({_details.Value})");
+            return Task.FromResult(0);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
             {
-                try
-                {
-                    ThrowIfDisposed();
-                    _timer.Cancel();
-                    await Task.WhenAll(_processing).ConfigureAwait(false);
-                    await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogDebug(ex, $"Storage queue listener encountered an error while stopping ({_details.Value})");
-                }
-                finally
-                {
-                    _logger.LogDebug($"Storage queue listener stopped ({_details.Value})");
-                }
+                ThrowIfDisposed();
+                _timer.Cancel();
+                await Task.WhenAll(_processing).ConfigureAwait(false);
+                await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
+                _logger.LogDebug($"Storage queue listener stopped ({_details.Value})");
             }
         }
 
