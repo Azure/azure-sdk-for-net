@@ -1,7 +1,0 @@
-﻿{
-  "Entries": [],
-  "Variables": {
-    "RandomSeed": "1865212351",
-    "Storage_TestConfigDefault": "ProductionTenant\ncdm03r01aversioning16\nU2FuaXRpemVk\nhttps://cdm03r01aversioning16.blob.core.windows.net\nhttps://cdm03r01aversioning16.file.core.windows.net\nhttps://cdm03r01aversioning16.queue.core.windows.net\nhttps://cdm03r01aversioning16.table.core.windows.net\n\n\n\n\nhttps://cdm03r01aversioning16-secondary.blob.core.windows.net\nhttps://cdm03r01aversioning16-secondary.file.core.windows.net\nhttps://cdm03r01aversioning16-secondary.queue.core.windows.net\nhttps://cdm03r01aversioning16-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://cdm03r01aversioning16.blob.core.windows.net/;QueueEndpoint=https://cdm03r01aversioning16.queue.core.windows.net/;FileEndpoint=https://cdm03r01aversioning16.file.core.windows.net/;BlobSecondaryEndpoint=https://cdm03r01aversioning16-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://cdm03r01aversioning16-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://cdm03r01aversioning16-secondary.file.core.windows.net/;AccountName=cdm03r01aversioning16;AccountKey=Sanitized\nseanscope1\n\n"
-  }
-}

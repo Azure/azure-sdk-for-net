@@ -1,7 +1,0 @@
-Breaking Changes
-================
-
-12.0.0-preview.1 (2019-07)
---------------------------
-- New Azure.Storage.Common client library.  For more information, please visit:
-  https://aka.ms/azure-sdk-preview1-net.

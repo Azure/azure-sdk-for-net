@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ConfigurationManager", "ConfigMgr\Microsoft.Azure.ConfigurationManager.csproj", "{10F3E599-5A74-4AB4-8141-7DBA18591E1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigurationManager.Tests", "ConfigMgr.Tests\ConfigurationManager.Tests.csproj", "{6DA3D888-45A3-431E-A073-A0C561E22A42}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10F3E599-5A74-4AB4-8141-7DBA18591E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F3E599-5A74-4AB4-8141-7DBA18591E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F3E599-5A74-4AB4-8141-7DBA18591E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F3E599-5A74-4AB4-8141-7DBA18591E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DA3D888-45A3-431E-A073-A0C561E22A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DA3D888-45A3-431E-A073-A0C561E22A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DA3D888-45A3-431E-A073-A0C561E22A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DA3D888-45A3-431E-A073-A0C561E22A42}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

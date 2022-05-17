@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />
+  <PropertyGroup>
+    <Description>Microsoft Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</Description>
+    <AssemblyName>Microsoft.Azure.ConfigurationManager</AssemblyName>
+    <AssemblyTitle>Microsoft Azure Configuration Manager</AssemblyTitle>
+    <Version>4.0.0</Version>
+    <PackageId>Microsoft.Azure.ConfigurationManager</PackageId>
+    <PackageTags>MicrosoftAzure Azure ConfigurationManager</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        1) This is a replacement of Microsoft.WindowsAzure.ConfigurationManager
+		      https://www.nuget.org/packages/Microsoft.WindowsAzure.ConfigurationManager/
+		
+		    2) This is being released with a new name to conform to naming standards across all Azure .NET SDKs
+		    3) This package is being released to align with rest of the Azure .NET SDKs in terms of targeting consistent target framework.
+      ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452</TargetFrameworks>
+    <!--;netstandard1.4-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.configuration" />
+  </ItemGroup>
+</Project>

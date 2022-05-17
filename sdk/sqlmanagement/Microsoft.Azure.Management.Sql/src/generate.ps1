@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "sql/resource-manager" -AutoRestVersion "v2"

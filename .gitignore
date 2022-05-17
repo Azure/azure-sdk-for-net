@@ -8,8 +8,6 @@
 .vs/
 *.lock.json
 developer/
-launch.json
-launchSettings.json
 
 # Build results
 binaries/
@@ -24,7 +22,6 @@ tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
 src/NuGet.Config
 tools/7-zip/
-#tools/LocalNugetFeed/Microsoft.Internal.NetSdkBuild.Mgmt.Tools.*.nupkg
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
@@ -63,10 +60,6 @@ ipch/
 *.psess
 *.vsp
 
-# VS Code
-**/.vscode/*
-!.vscode/cspell.json
-
 # Code analysis
 *.CodeAnalysisLog.xml
 
@@ -77,9 +70,6 @@ ipch/
 _ReSharper*/
 
 *.[Rr]e[Ss]harper
-
-# Rider IDE
-.idea
 
 # NCrunch
 *.ncrunch*
@@ -111,6 +101,7 @@ TestResults
 [Tt]est[Rr]esult*
 *.Cache
 ClientBin
+[Ss]tyle[Cc]op.*
 ~$*
 *.dbmdl
 
@@ -123,12 +114,7 @@ tools/*.dll
 
 # Sensitive files
 *.keys
-!Azure.Extensions.AspNetCore.DataProtection.Keys
-!Azure.Security.KeyVault.Keys
 *.pfx
-TestConfigurations.xml
-*.json.env
-*.bicep.env
 
 # Backup & report files from converting an old project file to a newer
 # Visual Studio version. Backup files are not needed, because we have git ;-)
@@ -157,15 +143,3 @@ build.out
 csx/
 *.GhostDoc.xml
 pingme.txt
-
-# TS/Node files
-dist/
-node_modules/
-
-# MSBuild binary log files
-msbuild.binlog
-
-# BenchmarkDotNet 
-BenchmarkDotNet.Artifacts
-
-artifacts

@@ -1,8 +1,0 @@
-{
-    "azureAuthorityHost": "https://login.microsoftonline.com/",
-    "cognitiveServicesEndpointSuffix": ".cognitiveservices.azure.com",
-    "communicationServicesEndpointSuffix": ".communication.azure.com",
-    "keyVaultDomainSuffix": ".vault.azure.net",
-    "keyVaultEndpointSuffix": ".vault.azure.net",
-    "storageEndpointSuffix": "core.windows.net"
-}

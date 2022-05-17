@@ -1,9 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "DateTimeOffsetNow": "2021-08-11T12:42:23.1969902-07:00",
-    "RandomSeed": "1370847292",
-    "Storage_TestConfigOAuth": "OAuthTenant\nkasobolcanadanetoauth\nU2FuaXRpemVk\nhttps://kasobolcanadanetoauth.blob.core.windows.net\nhttp://kasobolcanadanetoauth.file.core.windows.net\nhttp://kasobolcanadanetoauth.queue.core.windows.net\nhttp://kasobolcanadanetoauth.table.core.windows.net\n\n\n\n\nhttp://kasobolcanadanetoauth-secondary.blob.core.windows.net\nhttp://kasobolcanadanetoauth-secondary.file.core.windows.net\nhttp://kasobolcanadanetoauth-secondary.queue.core.windows.net\nhttp://kasobolcanadanetoauth-secondary.table.core.windows.net\nc6b5fe1a-9b59-4975-92c4-d9f728c3c371\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://kasobolcanadanetoauth.blob.core.windows.net/;QueueEndpoint=http://kasobolcanadanetoauth.queue.core.windows.net/;FileEndpoint=http://kasobolcanadanetoauth.file.core.windows.net/;BlobSecondaryEndpoint=http://kasobolcanadanetoauth-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://kasobolcanadanetoauth-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://kasobolcanadanetoauth-secondary.file.core.windows.net/;AccountName=kasobolcanadanetoauth;AccountKey=Sanitized\n\nkasobol\nba45b233-e2ef-4169-8808-49eb0d8eba0d",
-    "_containerName": "ccc0c3b3-39f3-484e-82af-1eeedc495adf"
-  }
-}

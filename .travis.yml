@@ -1,0 +1,34 @@
+language: csharp
+mono: none
+sudo: required
+dist: trusty
+group: deprecated-2017Q4
+env:
+    global:
+        - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+        - DOTNET_CLI_TELEMETRY_OPTOUT: 1
+# safelist
+#branches:
+#    only:
+#    - travisBuild
+addons:
+  apt:
+    sources:
+    packages:
+install:
+  - cat /etc/*release
+  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 417A0893
+  - sudo apt-get update
+  - sudo apt-get install dotnet-dev-1.0.4
+script:
+  - ./testSdkOnLinux.sh
+after_script:
+  - echo "========== Server log: ============"
+  - pwd
+  - ls -al
+  - ls -al TestResults
+  - cat TestResults/*.log
+notifications:  
+  slack:
+    secure: d0PFVLcyqcMxNtmZ8JaEpIBzXbUbZCgKs8QtBB5qEIXDnxflSR3AhczlILNhTBKtMEBlwVzsz65yP09XcmvB6xpAfJbHqSRzk2frKa5viPcAD8Wr/NYamt9/UiTCsnql8MqzjVy0tLdMscXKRmsUey4YF570zl0b7gAbq7XTqxM=

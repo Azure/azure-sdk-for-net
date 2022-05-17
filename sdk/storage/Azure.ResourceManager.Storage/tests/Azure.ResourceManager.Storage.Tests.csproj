@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.Storage.csproj" />
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-</Project>

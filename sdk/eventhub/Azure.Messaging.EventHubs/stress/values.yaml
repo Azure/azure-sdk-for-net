@@ -1,5 +1,0 @@
-scenarios:
-- "EventProd"
-- "BuffProd"
-- "BurstBuffProd"
-- "ConcurBuffProd"

@@ -1,5 +1,3 @@
-* text=auto
-
 *.bmp binary
 *.dll binary
 *.gif binary
@@ -12,14 +10,27 @@
 *.ismv binary
 *.isma binary
 
+*.ascx text
+*.cmd text
+*.config text
 *.cs text diff=csharp
-*.csproj text=auto
-*.sln text=auto eol=crlf
-*.sh text=auto eol=lf
+*.csproj text merge=union
+*.edmx text
 
-# Automatically collapse Track 2 test recordings in github PRs
-**/SessionRecords/**/*.json linguist-generated=true
+*.htm text
+*.html text
 
-# Generated code
-**/Generated/**/*.cs linguist-generated=true
-**/Generated/**/*.csproj linguist-generated=true
+*.js text
+*.json text
+
+*.msbuild text
+*.nuspec text
+
+*.resx text
+*.ruleset text
+*.StyleCop text
+*.targets text
+*.txt text
+*.xml text
+
+*.sln text eol=crlf merge=union
