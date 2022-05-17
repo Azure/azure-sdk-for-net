@@ -14,8 +14,6 @@ param(
   # Date format: e.g. Tuesday, April 12, 2022 1:36:02 PM. Allow to use other date format.
   [AllowNull()]
   [DateTime]$LastCommitOlderThan,
-  # Allow to filter by PR creator.
-  $FilterByPRCreator,
   [Parameter(Mandatory = $true)]
   $AuthToken
 )
