@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         public string AzureMonitorMetricsName
         {
-            get => AzureMonitorMetrics.Name;
+            get => AzureMonitorMetrics?.Name;
         }
     }
 }

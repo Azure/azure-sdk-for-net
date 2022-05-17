@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Cdn
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            Optional<HealthProbeParameters> healthProbeSettings = default;
+            Optional<HealthProbeSettings> healthProbeSettings = default;
             Optional<IList<WritableSubResource>> origins = default;
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionParameters> responseBasedOriginErrorDetectionSettings = default;
+            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             Optional<OriginGroupResourceState> resourceState = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
                                 healthProbeSettings = null;
                                 continue;
                             }
-                            healthProbeSettings = HealthProbeParameters.DeserializeHealthProbeParameters(property0.Value);
+                            healthProbeSettings = HealthProbeSettings.DeserializeHealthProbeSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("origins"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
                                 responseBasedOriginErrorDetectionSettings = null;
                                 continue;
                             }
-                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionParameters.DeserializeResponseBasedOriginErrorDetectionParameters(property0.Value);
+                            responseBasedOriginErrorDetectionSettings = ResponseBasedOriginErrorDetectionSettings.DeserializeResponseBasedOriginErrorDetectionSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))

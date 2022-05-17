@@ -209,9 +209,14 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        if (!diagnosticListener.Scopes.Any())
+                        // If ForwardsClientCallsAttribute is being used on the method, we don't know what the name of the scope should be because there could be many
+                        // differently named methods sharing the same scope name, but we do know that there should be some scope created other than the Azure.Core scope.
+                        if (!diagnosticListener.Scopes.Any(e => !e.Name.StartsWith("Azure.Core")))
                         {
-                            throw new InvalidOperationException($"Expected some diagnostic scopes to be created, found none");
+                            throw new InvalidOperationException(
+                                "Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present. " +
+                                $"Ensure that the inner method that client calls are being forwarded to from the '{source}' method has diagnostic scopes " +
+                                "defined by using clientDiagnostics.CreateScope(...).");
                         }
                     }
                 }

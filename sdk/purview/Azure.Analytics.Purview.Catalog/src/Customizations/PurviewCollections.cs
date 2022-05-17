@@ -7,16 +7,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    [CodeGenClient("PurviewCollectionClient")]
-    [CodeGenSuppress("PurviewCollections", typeof(Uri), typeof(TokenCredential), typeof(PurviewCatalogClientOptions))]
+    [CodeGenClient("PurviewCollectionClient", ParentClient = typeof(PurviewCatalogClient))]
     public partial class PurviewCollections
     {
-        internal PurviewCollections(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Uri endpoint, string apiVersion)
-        {
-            _pipeline = pipeline;
-            ClientDiagnostics = clientDiagnostics;
-            this._endpoint = endpoint;
-            this._apiVersion = apiVersion;
-        }
     }
 }

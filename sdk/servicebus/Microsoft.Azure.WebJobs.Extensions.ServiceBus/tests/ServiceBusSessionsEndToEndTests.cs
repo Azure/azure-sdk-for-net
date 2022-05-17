@@ -554,6 +554,47 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        [Test]
+        public async Task TestSingle_ReceiveFromFunction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestReceiveFromFunction>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // Delay to make sure function is done executing
+                await Task.Delay(500);
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.ReceiveMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestBatch_ReceiveFromFunction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestReceiveFromFunction_Batch>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // Delay to make sure function is done executing
+                await Task.Delay(500);
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
+                await host.StopAsync();
+            }
+        }
+
         private async Task TestMultiple<T>(bool isXml = false)
         {
             if (isXml)
@@ -864,7 +905,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(message);
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -873,7 +914,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -890,7 +931,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(messages.First());
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -899,7 +940,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -984,7 +1025,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // override the options computed from ServiceBusOptions
                 options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
                 options.MaxConcurrentSessions = 1;
-                if (entityPath == _firstQueueScope.QueueName)
+                if (entityPath == FirstQueueScope.QueueName)
                 {
                     processor = client.CreateSessionProcessor(entityPath, options);
                 }
@@ -1039,6 +1080,52 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(250);
 
                 Interlocked.Increment(ref InvocationCount);
+            }
+        }
+
+        public class TestReceiveFromFunction
+        {
+            public static ServiceBusReceiveActions ReceiveActions { get; private set; }
+
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                ServiceBusReceiveActions receiveActions)
+            {
+                ReceiveActions = receiveActions;
+                await messageActions.DeferMessageAsync(message);
+
+                var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
+                    new[] { message.SequenceNumber });
+
+                var received = await receiveActions.ReceiveMessagesAsync(1);
+                Assert.IsNotNull(received);
+
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestReceiveFromFunction_Batch
+        {
+            public static ServiceBusReceiveActions ReceiveActions { get; private set; }
+
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusMessageActions messageActions,
+                ServiceBusReceiveActions receiveActions)
+            {
+                ReceiveActions = receiveActions;
+                await messageActions.DeferMessageAsync(messages.First());
+
+                var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
+                    new[] { messages.First().SequenceNumber });
+
+                var received = await receiveActions.ReceiveMessagesAsync(1);
+                Assert.IsNotNull(received);
+
+                _waitHandle1.Set();
             }
         }
     }

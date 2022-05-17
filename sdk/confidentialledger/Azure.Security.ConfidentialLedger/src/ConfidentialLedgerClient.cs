@@ -18,7 +18,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options = null)
+        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential, ConfidentialLedgerClientOptions options)
         {
             if (ledgerUri == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.Security.ConfidentialLedger
 
             var actualOptions = options ?? new ConfidentialLedgerClientOptions();
             var transportOptions = GetIdentityServerTlsCertAndTrust(ledgerUri, actualOptions);
-            ClientDiagnostics = new ClientDiagnostics(actualOptions);
+            ClientDiagnostics = new ClientDiagnostics(actualOptions, true);
             _tokenCredential = credential;
             var authPolicy = new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes);
             _pipeline = HttpPipelineBuilder.Build(

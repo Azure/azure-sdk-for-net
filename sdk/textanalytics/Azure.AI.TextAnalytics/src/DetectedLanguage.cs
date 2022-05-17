@@ -13,10 +13,15 @@ namespace Azure.AI.TextAnalytics
     public readonly struct DetectedLanguage
     {
         internal DetectedLanguage(DetectedLanguageInternal language, IList<TextAnalyticsWarning> warnings)
+            : this(language.Name, language.Iso6391Name, language.ConfidenceScore, warnings)
         {
-            Name = language.Name;
-            Iso6391Name = language.Iso6391Name;
-            ConfidenceScore = language.ConfidenceScore;
+        }
+
+        internal DetectedLanguage(string name, string iso6391Name, double confidenceScore, IList<TextAnalyticsWarning> warnings)
+        {
+            Name = name;
+            Iso6391Name = iso6391Name;
+            ConfidenceScore = confidenceScore;
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 

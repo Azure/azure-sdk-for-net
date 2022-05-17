@@ -33,6 +33,21 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewTypes(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
