@@ -10,7 +10,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
+using OpenTelemetry.Extensions.PersistentStorage;
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -20,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
-        internal IPersistentStorage _storage;
+        internal PersistentBlobProvider _storage;
         private readonly string _instrumentationKey;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options)
@@ -38,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    _storage = new FileStorage(options.StorageDirectory);
+                    _storage = new FileBlobProvider(options.StorageDirectory);
                 }
                 catch (Exception)
                 {
@@ -101,15 +102,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 try
                 {
                     // TODO: Do we need more lease time?
-                    var blob = _storage.GetBlob()?.Lease(10000);
-                    if (blob == null)
+                    if (_storage.TryGetBlob(out var blob) && blob.TryLease(1000))
                     {
-                        // no files to transmit
-                        return;
-                    }
-                    else
-                    {
-                        var data = blob.Read();
+                        blob.TryRead(out var data);
                         using var httpMessage = async ?
                             await _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).ConfigureAwait(false) :
                             _applicationInsightsRestClient.InternalTrackAsync(data, cancellationToken).Result;
@@ -118,12 +113,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                         if (result == ExportResult.Success)
                         {
-                            blob.Delete();
+                            blob.TryDelete();
                         }
                         else
                         {
                             HandleFailures(httpMessage, blob);
                         }
+                    }
+                    else
+                    {
+                        // no files to process
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -198,7 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return result;
         }
 
-        private void HandleFailures(HttpMessage httpMessage, IPersistentBlob blob)
+        private void HandleFailures(HttpMessage httpMessage, PersistentBlob blob)
         {
             int retryInterval;
 
@@ -206,7 +206,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 // HttpRequestException
                 // Extend lease time so that it is not picked again for retry.
-                blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+                blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
             }
             else
             {
@@ -221,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (content != null)
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                            blob.Delete();
+                            blob.TryDelete();
                             _storage.SaveTelemetry(content, retryInterval);
                         }
                         break;
@@ -231,14 +231,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         // Extend lease time using retry interval period
                         // so that it is not picked up again before that.
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
-                        blob.Lease(retryInterval);
+                        blob.TryLease(retryInterval);
                         break;
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
                     case ResponseStatusCodes.GatewayTimeout:
                         // Extend lease time so that it is not picked up again
-                        blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
+                        blob.TryLease(HttpPipelineHelper.MinimumRetryInterval);
                         break;
                     default:
                         // Log Non-Retriable Status and don't retry or store;

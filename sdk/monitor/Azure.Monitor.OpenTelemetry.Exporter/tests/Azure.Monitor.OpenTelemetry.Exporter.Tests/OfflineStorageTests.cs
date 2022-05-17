@@ -7,10 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Azure.Core.Pipeline;
+using Xunit;
+using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
-using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
@@ -113,8 +113,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             //Assert
             Assert.Single(transmitter._storage.GetBlobs());
-
-            var failedData = System.Text.Encoding.UTF8.GetString(transmitter._storage.GetBlob().Read());
+            transmitter._storage.TryGetBlob(out var blob);
+            blob.TryRead(out var content);
+            var failedData = System.Text.Encoding.UTF8.GetString(content);
 
             string[] items = failedData.Split('\n');
 
@@ -159,7 +160,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options);
 
             // Overwrite storage with mock
-            transmitter._storage = new MockFileStorage();
+            transmitter._storage = new MockFileProvider();
 
             return transmitter;
         }
@@ -183,36 +184,65 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             return new TelemetryItem(activity, ref monitorTags, null, null, null);
         }
 
-        private class MockFileStorage : IPersistentStorage
+        private class MockFileProvider : PersistentBlobProvider
         {
-            private readonly List<IPersistentBlob> _mockStorage = new();
+            private readonly List<PersistentBlob> _mockStorage = new();
 
-            public IEnumerable<IPersistentBlob> GetBlobs() => this._mockStorage.AsEnumerable();
+            public IEnumerable<PersistentBlob> TryGetBlobs() => this._mockStorage.AsEnumerable();
 
-            public IPersistentBlob GetBlob() => this.GetBlobs().FirstOrDefault();
-
-            public IPersistentBlob CreateBlob(byte[] buffer, int leasePeriodMilliseconds = 0)
+            protected override IEnumerable<PersistentBlob> OnGetBlobs()
             {
-                var blob = new MockFileBlob().Write(buffer);
+                return this._mockStorage.AsEnumerable();
+            }
+
+            protected override bool OnTryCreateBlob(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
+            {
+                blob = new MockFileBlob();
                 this._mockStorage.Add(blob);
-                return blob;
+                return blob.TryWrite(buffer);
+            }
+
+            protected override bool OnTryCreateBlob(byte[] buffer, out PersistentBlob blob)
+            {
+                blob = new MockFileBlob();
+                this._mockStorage.Add(blob);
+                return blob.TryWrite(buffer);
+            }
+
+            protected override bool OnTryGetBlob(out PersistentBlob blob)
+            {
+                blob = this.GetBlobs().FirstOrDefault();
+
+                return true;
             }
         }
 
-        private class MockFileBlob : IPersistentBlob
+        private class MockFileBlob : PersistentBlob
         {
             private byte[] _buffer;
 
-            public void Delete() { }
+            protected override bool OnTryRead(out byte[] buffer)
+            {
+                buffer = this._buffer;
 
-            public IPersistentBlob Lease(int leasePeriodMilliseconds) => this;
+                return true;
+            }
 
-            public byte[] Read() => this._buffer;
-
-            public IPersistentBlob Write(byte[] buffer, int leasePeriodMilliseconds = 0)
+            protected override bool OnTryWrite(byte[] buffer, int leasePeriodMilliseconds = 0)
             {
                 this._buffer = buffer;
-                return this;
+
+                return true;
+            }
+
+            protected override bool OnTryLease(int leasePeriodMilliseconds)
+            {
+                return true;
+            }
+
+            protected override bool OnTryDelete()
+            {
+                throw new NotImplementedException();
             }
         }
     }
