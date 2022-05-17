@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CustomConversationValue = "CustomConversation";
+        private const string CustomConversationValue = "Conversation";
 
         /// <summary> CustomConversation. </summary>
         public static AnalyzeConversationTaskKind CustomConversation { get; } = new AnalyzeConversationTaskKind(CustomConversationValue);

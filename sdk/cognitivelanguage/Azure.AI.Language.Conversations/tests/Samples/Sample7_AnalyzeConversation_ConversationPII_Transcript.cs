@@ -76,6 +76,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             analyzeConversationOperation.WaitForCompletion();
 
             #region Snippet:AnalyzeConversation_ConversationPII_Transcript_Results
+            /*
             var jobResults = analyzeConversationOperation.Value;
             foreach (var result in jobResults.Tasks.Items)
             {
@@ -110,7 +111,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                     Console.WriteLine();
                 }
-            }
+            }*/
             #endregion
         }
 
@@ -177,6 +178,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             await analyzeConversationOperation.WaitForCompletionAsync();
 
             var jobResults = analyzeConversationOperation.Value;
+            /*
             foreach (var result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
@@ -210,7 +212,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                     Console.WriteLine();
                 }
-            }
+            }*/
         }
     }
 }

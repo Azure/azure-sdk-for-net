@@ -180,6 +180,7 @@ namespace Azure.AI.Language.Conversations.Tests
             var jobResults = analyzeConversationOperation.Value;
             Assert.NotNull(jobResults);
 
+            /*
             foreach (var result in jobResults.Tasks.Items)
             {
                 var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
@@ -198,7 +199,7 @@ namespace Azure.AI.Language.Conversations.Tests
                         Assert.NotNull(summary.Aspect);
                     }
                 }
-            }
+            }*/
         }
 
         [RecordedTest]
@@ -229,7 +230,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             var jobResults = analyzeConversationOperation.Value;
             Assert.NotNull(jobResults);
-
+            /*
             foreach (var result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
@@ -255,7 +256,7 @@ namespace Azure.AI.Language.Conversations.Tests
                         }
                     }
                 }
-            }
+            }*/
         }
 
         [RecordedTest]
@@ -321,6 +322,7 @@ namespace Azure.AI.Language.Conversations.Tests
             var jobResults = analyzeConversationOperation.Value;
             Assert.NotNull(jobResults);
 
+            /*
             foreach (var result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
@@ -346,7 +348,7 @@ namespace Azure.AI.Language.Conversations.Tests
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }

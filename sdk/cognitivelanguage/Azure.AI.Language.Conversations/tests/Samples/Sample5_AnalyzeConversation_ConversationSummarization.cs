@@ -45,6 +45,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             #region Snippet:AnalyzeConversation_ConversationSummarization_Results
+            /*
             var jobResults = analyzeConversationOperation.Value;
             foreach (var result in jobResults.Tasks.Items)
             {
@@ -64,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                     Console.WriteLine();
                 }
-            }
+            }*/
             #endregion
         }
 
@@ -100,7 +101,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             var jobResults = analyzeConversationOperation.Value;
-            foreach (var result in jobResults.Tasks.Items)
+            /*foreach (var result in jobResults.Tasks.Items)
             {
                 var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
 
@@ -118,7 +119,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                     Console.WriteLine();
                 }
-            }
+            }*/
         }
     }
 }
