@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         /// <summary> Initializes a new instance of MonitoredResource. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to Dynatrace. </param>
+        /// <param name="sendingMetricsStatus"> Flag indicating if resource is sending metrics to Dynatrace. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
-        /// <param name="sendingLogs"> Flag indicating if resource is sending logs to Dynatrace. </param>
+        /// <param name="sendingLogsStatus"> Flag indicating if resource is sending logs to Dynatrace. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal MonitoredResource(string id, SendingMetricsStatus? sendingMetrics, string reasonForMetricsStatus, SendingLogsStatus? sendingLogs, string reasonForLogsStatus)
+        internal MonitoredResource(string id, SendingMetricsStatus? sendingMetricsStatus, string reasonForMetricsStatus, SendingLogsStatus? sendingLogsStatus, string reasonForLogsStatus)
         {
             Id = id;
-            SendingMetrics = sendingMetrics;
+            SendingMetricsStatus = sendingMetricsStatus;
             ReasonForMetricsStatus = reasonForMetricsStatus;
-            SendingLogs = sendingLogs;
+            SendingLogsStatus = sendingLogsStatus;
             ReasonForLogsStatus = reasonForLogsStatus;
         }
 
         /// <summary> The ARM id of the resource. </summary>
         public string Id { get; }
         /// <summary> Flag indicating if resource is sending metrics to Dynatrace. </summary>
-        public SendingMetricsStatus? SendingMetrics { get; }
+        public SendingMetricsStatus? SendingMetricsStatus { get; }
         /// <summary> Reason for why the resource is sending metrics (or why it is not sending). </summary>
         public string ReasonForMetricsStatus { get; }
         /// <summary> Flag indicating if resource is sending logs to Dynatrace. </summary>
-        public SendingLogsStatus? SendingLogs { get; }
+        public SendingLogsStatus? SendingLogsStatus { get; }
         /// <summary> Reason for why the resource is sending logs (or why it is not sending). </summary>
         public string ReasonForLogsStatus { get; }
     }

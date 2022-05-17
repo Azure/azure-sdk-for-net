@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         private const string CrashedValue = "CRASHED";
         private const string LostValue = "LOST";
         private const string MonitoredValue = "MONITORED";
-        private const string PREMonitoredValue = "PRE_MONITORED";
+        private const string PreMonitoredValue = "PRE_MONITORED";
         private const string ShutdownValue = "SHUTDOWN";
         private const string UnexpectedShutdownValue = "UNEXPECTED_SHUTDOWN";
         private const string UnknownValue = "UNKNOWN";
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> MONITORED. </summary>
         public static AvailabilityState Monitored { get; } = new AvailabilityState(MonitoredValue);
         /// <summary> PRE_MONITORED. </summary>
-        public static AvailabilityState PREMonitored { get; } = new AvailabilityState(PREMonitoredValue);
+        public static AvailabilityState PreMonitored { get; } = new AvailabilityState(PreMonitoredValue);
         /// <summary> SHUTDOWN. </summary>
         public static AvailabilityState Shutdown { get; } = new AvailabilityState(ShutdownValue);
         /// <summary> UNEXPECTED_SHUTDOWN. </summary>
