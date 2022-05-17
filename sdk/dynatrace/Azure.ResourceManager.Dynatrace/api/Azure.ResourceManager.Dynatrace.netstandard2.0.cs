@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResourceCollection GetDynatraceSingleSignOnResources() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.VmInfo> GetHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.VmInfo> GetHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResponse> GetLinkableEnvironments(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResponse> GetLinkableEnvironmentsAsync(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironments(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResource> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.Models.MonitoredResource> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResponse> GetSsoDetails(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResponse>> GetSsoDetailsAsync(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResult> GetSsoDetails(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.Models.SsoDetailsResult>> GetSsoDetailsAsync(Azure.ResourceManager.Dynatrace.Models.SsoDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource> GetTagRule(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.TagRuleResource>> GetTagRuleAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dynatrace.TagRuleCollection GetTagRules() { throw null; }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Crashed { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Lost { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Monitored { get { throw null; } }
-        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState PREMonitored { get { throw null; } }
+        public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState PreMonitored { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Shutdown { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState UnexpectedShutdown { get { throw null; } }
         public static Azure.ResourceManager.Dynatrace.Models.AvailabilityState Unknown { get { throw null; } }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public EnvironmentInfo() { }
         public string EnvironmentId { get { throw null; } set { } }
         public string IngestionKey { get { throw null; } set { } }
-        public string LandingURL { get { throw null; } set { } }
+        public System.Uri LandingUri { get { throw null; } set { } }
         public string LogsIngestionEndpoint { get { throw null; } set { } }
     }
     public partial class FilteringTag
@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public string TenantId { get { throw null; } set { } }
         public string UserPrincipal { get { throw null; } set { } }
     }
-    public partial class LinkableEnvironmentResponse
+    public partial class LinkableEnvironmentResult
     {
-        internal LinkableEnvironmentResponse() { }
+        internal LinkableEnvironmentResult() { }
         public string EnvironmentId { get { throw null; } }
         public string EnvironmentName { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.PlanData PlanData { get { throw null; } }
@@ -363,8 +363,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public string Id { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public string ReasonForMetricsStatus { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus? SendingLogs { get { throw null; } }
-        public Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus? SendingMetrics { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.SendingLogsStatus? SendingLogsStatus { get { throw null; } }
+        public Azure.ResourceManager.Dynatrace.Models.SendingMetricsStatus? SendingMetricsStatus { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitoringStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.MonitoringStatus>
@@ -560,9 +560,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public SsoDetailsContent() { }
         public string UserPrincipal { get { throw null; } set { } }
     }
-    public partial class SsoDetailsResponse
+    public partial class SsoDetailsResult
     {
-        internal SsoDetailsResponse() { }
+        internal SsoDetailsResult() { }
         public System.Collections.Generic.IReadOnlyList<string> AadDomains { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AdminUsers { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.SsoStatus? IsSsoEnabled { get { throw null; } }
