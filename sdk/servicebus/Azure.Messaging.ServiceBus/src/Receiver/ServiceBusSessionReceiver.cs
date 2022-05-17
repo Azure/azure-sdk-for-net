@@ -144,12 +144,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.GetSessionStateException(Identifier, exception.ToString());
+                Logger.GetSessionStateException(Identifier, exception.ToString(), SessionId);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.GetSessionStateComplete(Identifier);
+            Logger.GetSessionStateComplete(Identifier, SessionId);
             return sessionState;
         }
 
@@ -186,12 +186,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.SetSessionStateException(Identifier, exception.ToString());
+                Logger.SetSessionStateException(Identifier, exception.ToString(), SessionId);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.SetSessionStateComplete(Identifier);
+            Logger.SetSessionStateComplete(Identifier, SessionId);
         }
 
         /// <summary>
@@ -230,12 +230,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.RenewSessionLockException(Identifier, exception.ToString());
+                Logger.RenewSessionLockException(Identifier, exception.ToString(), SessionId);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.RenewSessionLockComplete(Identifier);
+            Logger.RenewSessionLockComplete(Identifier, SessionId);
         }
     }
 }

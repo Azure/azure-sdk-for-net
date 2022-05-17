@@ -283,11 +283,11 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier);
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier, message.LockTokenGuid);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewMessageLockException(Processor.Identifier, ex.ToString());
+                    ServiceBusEventSource.Log.ProcessorRenewMessageLockException(Processor.Identifier, ex.ToString(), message.LockTokenGuid);
 
                     // If the message has already been settled there is no need to raise the lock lost exception to user error handler.
                     if (!message.IsSettled)
