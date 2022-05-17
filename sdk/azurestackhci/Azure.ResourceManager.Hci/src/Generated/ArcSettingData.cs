@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -34,18 +35,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-<<<<<<< HEAD
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, BinaryData connectivityProperties, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
-=======
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails) : base(id, name, resourceType, systemData)
->>>>>>> upstream/main
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, BinaryData connectivityProperties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -55,16 +46,7 @@ namespace Azure.ResourceManager.Hci
             ArcApplicationObjectId = arcApplicationObjectId;
             AggregateState = aggregateState;
             PerNodeDetails = perNodeDetails;
-<<<<<<< HEAD
             ConnectivityProperties = connectivityProperties;
-            CreatedBy = createdBy;
-            CreatedByType = createdByType;
-            CreatedOn = createdOn;
-            LastModifiedBy = lastModifiedBy;
-            LastModifiedByType = lastModifiedByType;
-            LastModifiedOn = lastModifiedOn;
-=======
->>>>>>> upstream/main
         }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
@@ -83,22 +65,7 @@ namespace Azure.ResourceManager.Hci
         public ArcSettingAggregateState? AggregateState { get; }
         /// <summary> State of Arc agent in each of the nodes. </summary>
         public IReadOnlyList<PerNodeState> PerNodeDetails { get; }
-<<<<<<< HEAD
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
         public BinaryData ConnectivityProperties { get; set; }
-        /// <summary> The identity that created the resource. </summary>
-        public string CreatedBy { get; set; }
-        /// <summary> The type of identity that created the resource. </summary>
-        public Models.CreatedByType? CreatedByType { get; set; }
-        /// <summary> The timestamp of resource creation (UTC). </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The identity that last modified the resource. </summary>
-        public string LastModifiedBy { get; set; }
-        /// <summary> The type of identity that last modified the resource. </summary>
-        public Models.CreatedByType? LastModifiedByType { get; set; }
-        /// <summary> The timestamp of resource last modification (UTC). </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
-=======
->>>>>>> upstream/main
     }
 }
