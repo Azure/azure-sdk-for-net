@@ -154,8 +154,15 @@ namespace EventHub.Tests.ScenarioTests
                     //New connection string 
                     var regenerateConnection_primary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, KeyType.PrimaryKey);
                     Assert.NotNull(regenerateConnection_primary);
-                    Assert.NotEqual(listKeysResponse.PrimaryConnectionString, regenerateConnection_primary.PrimaryConnectionString);
-                    Assert.Equal(listKeysResponse.SecondaryConnectionString, regenerateConnection_primary.SecondaryConnectionString);
+                    Assert.NotEqual(listKeysResponse.PrimaryKey, regenerateConnection_primary.PrimaryKey);
+                    Assert.Equal(listKeysResponse.SecondaryKey, regenerateConnection_primary.SecondaryKey);
+
+                    var regenerateConnection_secondary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, KeyType.SecondaryKey);
+                    Assert.NotNull(regenerateConnection_secondary);
+                    Assert.Equal(regenerateConnection_secondary.PrimaryKey, regenerateConnection_primary.PrimaryKey);
+                    Assert.NotEqual(regenerateConnection_secondary.SecondaryKey, regenerateConnection_primary.SecondaryKey);
+
+
 
                     // Delete Eventhub authorizationRule
                     EventHubManagementClient.EventHubs.DeleteAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);

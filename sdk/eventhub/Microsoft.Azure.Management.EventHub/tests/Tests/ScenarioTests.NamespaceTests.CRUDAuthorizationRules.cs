@@ -151,8 +151,16 @@ namespace EventHub.Tests.ScenarioTests
                     // Regenerate connection string to the namespace for a Authorization rule created
                     var NewKeysResponse_primary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.PrimaryKey);
                     Assert.NotNull(NewKeysResponse_primary);
-                    Assert.NotEqual(NewKeysResponse_primary.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
-                    Assert.Equal(NewKeysResponse_primary.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
+                    Assert.NotEqual(NewKeysResponse_primary.PrimaryKey, listKeysResponse.PrimaryKey);
+                    Assert.Equal(NewKeysResponse_primary.SecondaryKey, listKeysResponse.SecondaryKey);
+
+                    // Regenerate connection string to the namespace for a Authorization rule created
+                    var NewKeysResponse_secondary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.SecondaryKey);
+                    Assert.NotNull(NewKeysResponse_secondary);
+                    Assert.Equal(NewKeysResponse_primary.PrimaryKey, NewKeysResponse_secondary.PrimaryKey);
+                    Assert.NotEqual(NewKeysResponse_primary.SecondaryKey, NewKeysResponse_secondary.SecondaryKey);
+
+
 
                     // Delete namespace authorizationRule
                     EventHubManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
