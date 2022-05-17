@@ -51,6 +51,8 @@ directive:
       $.aadClientId.format = "uuid";
       $.aadTenantId.format = "uuid";
       $.cloudId.format = "uuid";
+      $.aadApplicationObjectId.format = "uuid";
+      $.aadServicePrincipalObjectId.format = "uuid";
   - from: clusters.json
     where: $.definitions.ClusterPatchProperties.properties
     transform: >
@@ -60,4 +62,11 @@ directive:
     where: $.definitions.ClusterReportedProperties.properties.clusterId
     transform: >
       $.format = "uuid"
+  - from: arcSettings.json
+    where: $.definitions.ArcSettingProperties.properties
+    transform: >
+      $.arcApplicationClientId.format = "uuid";
+      $.arcApplicationTenantId.format = "uuid";
+      $.arcServicePrincipalObjectId.format = "uuid";
+      $.arcApplicationObjectId.format = "uuid";
 ```

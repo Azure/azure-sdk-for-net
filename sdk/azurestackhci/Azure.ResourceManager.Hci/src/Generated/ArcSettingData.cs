@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, string arcApplicationClientId, string arcApplicationTenantId, string arcServicePrincipalObjectId, string arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, BinaryData connectivityProperties, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeState> perNodeDetails, BinaryData connectivityProperties, string createdBy, Models.CreatedByType? createdByType, DateTimeOffset? createdOn, string lastModifiedBy, Models.CreatedByType? lastModifiedByType, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.Hci
         /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
         public string ArcInstanceResourceGroup { get; set; }
         /// <summary> App id of arc AAD identity. </summary>
-        public string ArcApplicationClientId { get; set; }
+        public Guid? ArcApplicationClientId { get; set; }
         /// <summary> Tenant id of arc AAD identity. </summary>
-        public string ArcApplicationTenantId { get; set; }
+        public Guid? ArcApplicationTenantId { get; set; }
         /// <summary> Object id of arc AAD service principal. </summary>
-        public string ArcServicePrincipalObjectId { get; set; }
+        public Guid? ArcServicePrincipalObjectId { get; set; }
         /// <summary> Object id of arc AAD identity. </summary>
-        public string ArcApplicationObjectId { get; set; }
+        public Guid? ArcApplicationObjectId { get; set; }
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
         public ArcSettingAggregateState? AggregateState { get; }
         /// <summary> State of Arc agent in each of the nodes. </summary>

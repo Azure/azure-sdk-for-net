@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(ArcApplicationClientId))
             {
                 writer.WritePropertyName("arcApplicationClientId");
-                writer.WriteStringValue(ArcApplicationClientId);
+                writer.WriteStringValue(ArcApplicationClientId.Value);
             }
             if (Optional.IsDefined(ArcApplicationTenantId))
             {
                 writer.WritePropertyName("arcApplicationTenantId");
-                writer.WriteStringValue(ArcApplicationTenantId);
+                writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
             if (Optional.IsDefined(ArcServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId");
-                writer.WriteStringValue(ArcServicePrincipalObjectId);
+                writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
             if (Optional.IsDefined(ArcApplicationObjectId))
             {
                 writer.WritePropertyName("arcApplicationObjectId");
-                writer.WriteStringValue(ArcApplicationObjectId);
+                writer.WriteStringValue(ArcApplicationObjectId.Value);
             }
             if (Optional.IsDefined(ConnectivityProperties))
             {
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Hci
             SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> arcInstanceResourceGroup = default;
-            Optional<string> arcApplicationClientId = default;
-            Optional<string> arcApplicationTenantId = default;
-            Optional<string> arcServicePrincipalObjectId = default;
-            Optional<string> arcApplicationObjectId = default;
+            Optional<Guid> arcApplicationClientId = default;
+            Optional<Guid> arcApplicationTenantId = default;
+            Optional<Guid> arcServicePrincipalObjectId = default;
+            Optional<Guid> arcApplicationObjectId = default;
             Optional<ArcSettingAggregateState> aggregateState = default;
             Optional<IReadOnlyList<PerNodeState>> perNodeDetails = default;
             Optional<BinaryData> connectivityProperties = default;
@@ -161,22 +161,42 @@ namespace Azure.ResourceManager.Hci
                         }
                         if (property0.NameEquals("arcApplicationClientId"))
                         {
-                            arcApplicationClientId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationClientId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("arcApplicationTenantId"))
                         {
-                            arcApplicationTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationTenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("arcServicePrincipalObjectId"))
                         {
-                            arcServicePrincipalObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("arcApplicationObjectId"))
                         {
-                            arcApplicationObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            arcApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("aggregateState"))
@@ -280,7 +300,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new ArcSettingData(id, name, type, systemData, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, arcApplicationClientId.Value, arcApplicationTenantId.Value, arcServicePrincipalObjectId.Value, arcApplicationObjectId.Value, Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new ArcSettingData(id, name, type, systemData, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }
