@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the get sso details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SsoDetailsResponse>> GetSsoDetailsAsync(SsoDetailsContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SsoDetailsResult>> GetSsoDetailsAsync(SsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetSsoDetails");
             scope.Start();
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="content"> The details of the get sso details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsoDetailsResponse> GetSsoDetails(SsoDetailsContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SsoDetailsResult> GetSsoDetails(SsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetSsoDetails");
             scope.Start();
@@ -709,12 +709,12 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> The details of the linkable environment request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LinkableEnvironmentResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LinkableEnvironmentResponse> GetLinkableEnvironmentsAsync(LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LinkableEnvironmentResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LinkableEnvironmentResult> GetLinkableEnvironmentsAsync(LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<LinkableEnvironmentResponse>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LinkableEnvironmentResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetLinkableEnvironments");
                 scope.Start();
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Dynatrace
                     throw;
                 }
             }
-            async Task<Page<LinkableEnvironmentResponse>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LinkableEnvironmentResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetLinkableEnvironments");
                 scope.Start();
@@ -755,12 +755,12 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="content"> The details of the linkable environment request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="LinkableEnvironmentResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LinkableEnvironmentResponse> GetLinkableEnvironments(LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LinkableEnvironmentResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LinkableEnvironmentResult> GetLinkableEnvironments(LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<LinkableEnvironmentResponse> FirstPageFunc(int? pageSizeHint)
+            Page<LinkableEnvironmentResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetLinkableEnvironments");
                 scope.Start();
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Dynatrace
                     throw;
                 }
             }
-            Page<LinkableEnvironmentResponse> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LinkableEnvironmentResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _monitorResourceMonitorsClientDiagnostics.CreateScope("MonitorResource.GetLinkableEnvironments");
                 scope.Start();

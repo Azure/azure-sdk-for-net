@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> SSO details from the Dynatrace partner. </summary>
-    public partial class SsoDetailsResponse
+    public partial class SsoDetailsResult
     {
-        /// <summary> Initializes a new instance of SsoDetailsResponse. </summary>
-        internal SsoDetailsResponse()
+        /// <summary> Initializes a new instance of SsoDetailsResult. </summary>
+        internal SsoDetailsResult()
         {
             AadDomains = new ChangeTrackingList<string>();
             AdminUsers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SsoDetailsResponse. </summary>
+        /// <summary> Initializes a new instance of SsoDetailsResult. </summary>
         /// <param name="isSsoEnabled"> Whether the SSO is enabled for this resource or not. </param>
         /// <param name="metadataUri"> URL for Azure AD metadata. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="adminUsers"> Array of admin user emails. </param>
-        internal SsoDetailsResponse(SsoStatus? isSsoEnabled, Uri metadataUri, Uri singleSignOnUri, IReadOnlyList<string> aadDomains, IReadOnlyList<string> adminUsers)
+        internal SsoDetailsResult(SsoStatus? isSsoEnabled, Uri metadataUri, Uri singleSignOnUri, IReadOnlyList<string> aadDomains, IReadOnlyList<string> adminUsers)
         {
             IsSsoEnabled = isSsoEnabled;
             MetadataUri = metadataUri;

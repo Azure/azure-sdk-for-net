@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Response for getting all the linkable environments. </summary>
-    public partial class LinkableEnvironmentResponse
+    public partial class LinkableEnvironmentResult
     {
-        /// <summary> Initializes a new instance of LinkableEnvironmentResponse. </summary>
-        internal LinkableEnvironmentResponse()
+        /// <summary> Initializes a new instance of LinkableEnvironmentResult. </summary>
+        internal LinkableEnvironmentResult()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkableEnvironmentResponse. </summary>
+        /// <summary> Initializes a new instance of LinkableEnvironmentResult. </summary>
         /// <param name="environmentId"> environment id for which user is an admin. </param>
         /// <param name="environmentName"> Name of the environment. </param>
         /// <param name="planData"> Billing plan information. </param>
-        internal LinkableEnvironmentResponse(string environmentId, string environmentName, PlanData planData)
+        internal LinkableEnvironmentResult(string environmentId, string environmentName, PlanData planData)
         {
             EnvironmentId = environmentId;
             EnvironmentName = environmentName;

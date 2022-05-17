@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SsoDetailsResponse>> GetSsoDetailsAsync(string subscriptionId, string resourceGroupName, string monitorName, SsoDetailsContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SsoDetailsResult>> GetSsoDetailsAsync(string subscriptionId, string resourceGroupName, string monitorName, SsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -938,9 +938,9 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case 200:
                     {
-                        SsoDetailsResponse value = default;
+                        SsoDetailsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SsoDetailsResponse.DeserializeSsoDetailsResponse(document.RootElement);
+                        value = SsoDetailsResult.DeserializeSsoDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SsoDetailsResponse> GetSsoDetails(string subscriptionId, string resourceGroupName, string monitorName, SsoDetailsContent content = null, CancellationToken cancellationToken = default)
+        public Response<SsoDetailsResult> GetSsoDetails(string subscriptionId, string resourceGroupName, string monitorName, SsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -968,9 +968,9 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case 200:
                     {
-                        SsoDetailsResponse value = default;
+                        SsoDetailsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SsoDetailsResponse.DeserializeSsoDetailsResponse(document.RootElement);
+                        value = SsoDetailsResult.DeserializeSsoDetailsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

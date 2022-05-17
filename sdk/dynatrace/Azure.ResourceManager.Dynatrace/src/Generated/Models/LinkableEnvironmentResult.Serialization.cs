@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class LinkableEnvironmentResponse
+    public partial class LinkableEnvironmentResult
     {
-        internal static LinkableEnvironmentResponse DeserializeLinkableEnvironmentResponse(JsonElement element)
+        internal static LinkableEnvironmentResult DeserializeLinkableEnvironmentResult(JsonElement element)
         {
             Optional<string> environmentId = default;
             Optional<string> environmentName = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new LinkableEnvironmentResponse(environmentId.Value, environmentName.Value, planData.Value);
+            return new LinkableEnvironmentResult(environmentId.Value, environmentName.Value, planData.Value);
         }
     }
 }

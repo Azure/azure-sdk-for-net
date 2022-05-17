@@ -34,12 +34,15 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  URL: Uri
   PRE: Pre
 
 directive:
   - from: dynatrace.json
     where: $.definitions
     transform: >
+      $.LinkableEnvironmentResponse['x-ms-client-name'] = 'LinkableEnvironmentResult';
+      $.SSODetailsResponse['x-ms-client-name'] = 'SsoDetailsResult';
       $.MonitoredResource.properties.sendingMetrics['x-ms-client-name'] = 'sendingMetricsStatus';
       $.MonitoredResource.properties.sendingLogs['x-ms-client-name'] = 'sendingLogsStatus';
 

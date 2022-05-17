@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static LinkableEnvironmentListResponse DeserializeLinkableEnvironmentListResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<LinkableEnvironmentResponse>> value = default;
+            Optional<IReadOnlyList<LinkableEnvironmentResult>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LinkableEnvironmentResponse> array = new List<LinkableEnvironmentResponse>();
+                    List<LinkableEnvironmentResult> array = new List<LinkableEnvironmentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkableEnvironmentResponse.DeserializeLinkableEnvironmentResponse(item));
+                        array.Add(LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult(item));
                     }
                     value = array;
                     continue;

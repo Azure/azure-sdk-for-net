@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of LinkableEnvironmentListResponse. </summary>
         internal LinkableEnvironmentListResponse()
         {
-            Value = new ChangeTrackingList<LinkableEnvironmentResponse>();
+            Value = new ChangeTrackingList<LinkableEnvironmentResult>();
         }
 
         /// <summary> Initializes a new instance of LinkableEnvironmentListResponse. </summary>
         /// <param name="value"> List of environments for which user is an admin. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
-        internal LinkableEnvironmentListResponse(IReadOnlyList<LinkableEnvironmentResponse> value, string nextLink)
+        internal LinkableEnvironmentListResponse(IReadOnlyList<LinkableEnvironmentResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of environments for which user is an admin. </summary>
-        public IReadOnlyList<LinkableEnvironmentResponse> Value { get; }
+        public IReadOnlyList<LinkableEnvironmentResult> Value { get; }
         /// <summary> Link to the next set of results, if any. </summary>
         public string NextLink { get; }
     }

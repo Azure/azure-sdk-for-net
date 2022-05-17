@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class SsoDetailsResponse
+    public partial class SsoDetailsResult
     {
-        internal static SsoDetailsResponse DeserializeSsoDetailsResponse(JsonElement element)
+        internal static SsoDetailsResult DeserializeSsoDetailsResult(JsonElement element)
         {
             Optional<SsoStatus> isSsoEnabled = default;
             Optional<Uri> metadataUrl = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new SsoDetailsResponse(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers));
+            return new SsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers));
         }
     }
 }
