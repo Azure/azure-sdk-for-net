@@ -13,7 +13,7 @@ param(
   [Parameter(Mandatory = $true)]
   $AuthToken
 )
-
+# It is just for testing. :)
 . (Join-Path $PSScriptRoot common.ps1)
 
 LogDebug "Operating on Repo [ $RepoId ]"
