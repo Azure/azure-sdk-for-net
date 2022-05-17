@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
                 await jobHost.CallAsync(nameof(BinderTestJobsAsyncCollector.ServiceBusBinderTest), args);
 
-                var count = await CleanUpEntity(_firstQueueScope.QueueName);
+                var count = await CleanUpEntity(FirstQueueScope.QueueName);
 
                 Assert.AreEqual(numMessages * 3, count);
                 await host.StopAsync();
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
                 await jobHost.CallAsync(nameof(BinderTestJobsSyncCollector.ServiceBusBinderTest), args);
 
-                var count = await CleanUpEntity(_firstQueueScope.QueueName);
+                var count = await CleanUpEntity(FirstQueueScope.QueueName);
 
                 Assert.AreEqual(numMessages * 3, count);
                 await host.StopAsync();
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await WriteQueueMessage(
                     "Test",
                     connectionString: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString,
-                    queueName: _secondaryNamespaceQueueScope.QueueName);
+                    queueName: SecondaryNamespaceQueueScope.QueueName);
 
                 _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 _topicSubscriptionCalled2.WaitOne(SBTimeoutMills);
@@ -226,6 +226,62 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_AutoCompleteDisabledOnTrigger_AbandonsWhenException()
+        {
+            await TestAutoCompleteDisabledOnTrigger_AbandonsWhenException<TestSingleAutoCompleteMessagesEnabledOnTriggerException>();
+        }
+
+        [Test]
+        public async Task TestBatch_AutoCompleteDisabledOnTrigger_AbandonsWhenException()
+        {
+            await TestAutoCompleteDisabledOnTrigger_AbandonsWhenException<TestBatchAutoCompleteMessagesEnabledOnTriggerException>();
+        }
+
+        private async Task TestAutoCompleteDisabledOnTrigger_AbandonsWhenException<T>()
+        {
+            int messageCount = 2;
+            for (int i = 0; i < messageCount; i++)
+            {
+                await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            }
+
+            // Intentionally skipping validation as we are expecting errors in the error log
+            // for this test, so we accept that the stop will not be graceful.
+            using (var host = BuildHost<T>(
+                host => host.ConfigureWebJobs(b => b.AddServiceBus(options =>
+                {
+                    options.MaxConcurrentCalls = 1;
+                    options.MaxMessageBatchSize = 1;
+                })),
+                skipValidation: true))
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            await using ServiceBusReceiver receiver = client.CreateReceiver(FirstQueueScope.QueueName, new ServiceBusReceiverOptions {ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete});
+
+            // all messages should have been abandoned, so we should be able to receive them right away
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            tokenSource.CancelAfter(TimeSpan.FromSeconds(5));
+            int remaining = messageCount;
+            while (!tokenSource.IsCancellationRequested && remaining > 0)
+            {
+                try
+                {
+                    var receivedMessages = await receiver.ReceiveMessagesAsync(remaining, TimeSpan.FromSeconds(5), tokenSource.Token);
+                    remaining -= receivedMessages.Count;
+                }
+                catch (OperationCanceledException)
+                {
+                }
+            }
+            Assert.AreEqual(0, remaining);
+        }
+
+        [Test]
         public async Task TestSingle_CrossEntityTransaction()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
@@ -255,13 +311,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task TestSingle_CustomErrorHandler()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
-            var host = BuildHost<TestCustomErrorHandler>(SetCustomErrorHandler);
+
+            // Intentionally skipping validation as we are expecting errors in the error log
+            // for this test, so we accept that the stop will not be graceful.
+            var host = BuildHost<TestCustomErrorHandler>(SetCustomErrorHandler, skipValidation: true);
             using (host)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-                // intentionally not calling host.StopAsync as we are expecting errors in the error log
-                // for this test, so we accept that the stop will not be graceful
+                await host.StopAsync();
             }
         }
 
@@ -531,7 +589,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var message = new ServiceBusMessage();
                 message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -548,7 +606,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var message = new ServiceBusMessage();
                 message.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue("foobar");
                 await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                var sender = client.CreateSender(_firstQueueScope.QueueName);
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
 
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
@@ -1020,7 +1078,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int numMessages,
                 Binder binder)
             {
-                var attribute = new ServiceBusAttribute(_firstQueueScope.QueueName)
+                var attribute = new ServiceBusAttribute(FirstQueueScope.QueueName)
                 {
                     EntityType = ServiceBusEntityType.Queue
                 };
@@ -1044,7 +1102,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int numMessages,
                 Binder binder)
             {
-                var attribute = new ServiceBusAttribute(_firstQueueScope.QueueName)
+                var attribute = new ServiceBusAttribute(FirstQueueScope.QueueName)
                 {
                     EntityType = ServiceBusEntityType.Queue
                 };
@@ -1294,6 +1352,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class TestSingleAutoCompleteMessagesEnabledOnTriggerException
+        {
+            public async Task Run(
+                [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = false)]
+                ServiceBusReceivedMessage message,
+                ServiceBusReceiveActions receiveActions)
+            {
+                // validate that additional messages received will get abandoned after the exception
+                await receiveActions.ReceiveMessagesAsync(1);
+                _waitHandle1.Set();
+                throw new Exception("Exception from user function");
+            }
+        }
+
+        public class TestBatchAutoCompleteMessagesEnabledOnTriggerException
+        {
+            public static async Task Run(
+                [ServiceBusTrigger(FirstQueueNameKey, AutoCompleteMessages = false)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusReceiveActions receiveActions)
+            {
+                // validate that additional messages received will get abandoned after the exception
+                await receiveActions.ReceiveMessagesAsync(1);
+                _waitHandle1.Set();
+                throw new Exception("Exception from user function");
+            }
+        }
+
         public class TestSingleAutoCompleteMessagesEnabledOnTrigger_CompleteInFunction
         {
             public static async Task RunAsync(
@@ -1318,7 +1404,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await messageActions.CompleteMessageAsync(message);
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage());
                     ts.Complete();
                 }
@@ -1328,7 +1414,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(received);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(SecondQueueScope.QueueName);
                 var received = await receiver2.ReceiveMessageAsync();
                 Assert.IsNotNull(received);
                 _waitHandle1.Set();
@@ -1346,7 +1432,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await messageActions.CompleteMessageAsync(messages.First());
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage());
                     ts.Complete();
                 }
@@ -1356,7 +1442,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(received);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = noTxClient.CreateReceiver(SecondQueueScope.QueueName);
                 var received = await receiver2.ReceiveMessageAsync();
                 Assert.IsNotNull(received);
                 _waitHandle1.Set();
