@@ -91,7 +91,7 @@ namespace Azure.Communication.MediaComposition
             RestClient = null;
         }
 
-        /// <param name="mediaCompositionId"> The media composition ID to use. </param>
+        /// <param name="mediaCompositionId"> The media composition id to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MediaCompositionBody>> GetAsync(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
@@ -108,7 +108,7 @@ namespace Azure.Communication.MediaComposition
             }
         }
 
-        /// <param name="mediaCompositionId"> The media composition ID to use. </param>
+        /// <param name="mediaCompositionId"> The media composition id to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MediaCompositionBody> Get(string mediaCompositionId, CancellationToken cancellationToken = default)
         {
@@ -136,6 +136,7 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
+                // TODO: what is this id and is it needed?
                 var id = new Guid().ToString();
                 return await RestClient.CreateAsync(mediaCompositionId, id, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken).ConfigureAwait(false);
             }
@@ -157,6 +158,7 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
+                // TODO: what is this id and is it needed?
                 var id = new Guid().ToString();
                 return RestClient.Create(mediaCompositionId, id, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken);
             }
@@ -179,17 +181,8 @@ namespace Azure.Communication.MediaComposition
             try
             {
                 // TODO: what is this id and how to retrieve for updates?
-                // What is the CompositionStreamState?
+                // Should the CompositionStreamState be exposed for update?
                 var id = new Guid().ToString();
-                if (inputs is null)
-                {
-                    inputs = new Dictionary<string, MediaInput>();
-                }
-
-                if (outputs is null)
-                {
-                    outputs = new Dictionary<string, MediaOutput>();
-                }
                 return await RestClient.UpdateAsync(mediaCompositionId, id, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -211,17 +204,8 @@ namespace Azure.Communication.MediaComposition
             try
             {
                 // TODO: what is this id and how to retrieve for updates?
-                // What is the CompositionStreamState?
+                // Should the CompositionStreamState be exposed for update?
                 var id = new Guid().ToString();
-                if (inputs is null)
-                {
-                    inputs = new Dictionary<string, MediaInput>();
-                }
-
-                if (outputs is null)
-                {
-                    outputs = new Dictionary<string, MediaOutput>();
-                }
                 return RestClient.Update(mediaCompositionId, id, layout, inputs, outputs, null, cancellationToken);
             }
             catch (Exception e)
