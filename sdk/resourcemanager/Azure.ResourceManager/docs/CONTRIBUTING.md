@@ -34,23 +34,79 @@ We use [NUnit 3][nunit] as our testing framework.
 
 [Azure.Core.TestFramework's testing framework][core_tests] provides a set of reusable primitives that simplify writing tests for new Azure SDK libraries.
 
-### Sync/Async testing
+### Testing project structure
 
-We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, we automatically rewrite our async API calls into their sync equivalents. Simply write your tests using only async APIs and call `InstrumentClient` on any of our client objects. The test framework will wrap the client with a proxy that forwards everything to the sync overloads. Please note that a number of our helpers will automatically instrument clients they provide you. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
+With the help of [Azure.ResourceManager.Template](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/templates/Azure.ResourceManager.Template), the basic testing project and file structure(see following for details) will be generated under `sdk\<service name>\<package name>\tests` directory.
 
-### Recorded tests
+```text
+sdk\<service name>\<package name>\tests\Azure.ResourceManager.<service>.csproj
+sdk\<service name>\<package name>\tests\<service>ManagementTestBase.cs
+sdk\<service name>\<package name>\tests\<service>ManagementTestEnvironment.cs
+sdk\<service name>\<package name>\tests\SessionRecords
+sdk\<service name>\<package name>\tests\Scenario
+```
 
-Our testing framework supports recording service requests made during a unit test so they can be replayed later. You can set the `AZURE_TEST_MODE` environment variable to `Playback` to run previously recorded tests, `Record` to record or re-record tests, and `Live` to run tests against the live service.
+### Writing scenario tests
 
-Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][tests_sanitized].
+All the public APIs that are exposed to the customer need to be tested and they are distributed in the following three kinds of `.cs` files. Accordingly, you'd better put the tests of the same file's APIs in a separate file under the `Scenario` folder, thus facilitating the subsequent maintenance.
+
+```text
+sdk\<service name>\<package name>\src\Generated\<service>Extensions.cs
+sdk\<service name>\<package name>\src\Generated\<resource>Collection.cs
+sdk\<service name>\<package name>\src\Generated\<resource>Resource.cs
+```
+
+For instance, if you want to test the `CreateOrUpdate` method in ExampleCollection.cs, the corresponding test file will be:
+
+```csharp
+namespace Azure.ResourceManager.Service.Tests
+{
+    public class ExampleCollectionTests : ServiceManagementTestBase
+    {
+        public ExampleCollectionTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
+        {
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CreateOrUpdate()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.WestUS);
+            string resourceName = Recording.GenerateAssetName("resource");
+            ExampleResource resource = await rg.GetExamples().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, new ExampleData());
+            Assert.AreEqual(resourceName, resource.Data.Name);
+        }
+```
+
+We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, we automatically rewrite our async API calls into their sync equivalents. Simply write your tests using only async APIs and the test framework will wrap the client with a proxy that forwards everything to the sync overloads automatically. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
 
 ### Running tests
 
+In order to run the tests, the following environment variables need to be set:
+
+```text
+- AZURE_TEST_MODE
+- AZURE_AUTHORITY_HOST
+- AZURE_CLIENT_ID
+- AZURE_CLIENT_SECRET
+- AZURE_SUBSCRIPTION_ID
+- AZURE_TENANT_ID
+```
+**Note**:
+
+- Our testing framework supports three different test modes: `Live`, `Playback`, `Record`. In management plane, please set the `AZURE_TEST_MODE` to `Record` for your first test run, this will record HTTP requests and responses and store the record files in `SessionRecords` folder. After you have successfully recorded all the tests for the first time, you can change its value to `Playback`. And if the tests locally fail due to recording session file mismatches, the attribute `RecordedTest` will help enable automatically re-record failed tests. Also, the recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - <service> - tests` in the PR.
+
+- Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][tests_sanitized].
+
+- `AZURE_AUTHORITY_HOST` should be `https://login.microsoftonline.com` if the azure service is deployed in Prod and `https://login.windows-ppe.net` if the service is in Dogfood. 
+
+- For the rest of the environment variables settings, please refer to this [document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
+
 The easiest way to run the tests is via Visual Studio's unit test runner.
 
-You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp2.1` or `dotnet test -f net461`.
-
-The recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - appconfiguration - tests` in the PR.
+You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp3.1` or `dotnet test -f net461`.
 
 ### Samples
 
