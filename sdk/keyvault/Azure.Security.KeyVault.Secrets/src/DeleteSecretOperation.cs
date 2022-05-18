@@ -24,13 +24,16 @@ namespace Azure.Security.KeyVault.Secrets
         {
             _pipeline = pipeline;
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
 
             // The recoveryId is only returned if soft delete is enabled.
             if (_value.RecoveryId is null)
             {
                 // If soft delete is not enabled, deleting is immediate so set success accordingly.
-                _operationInternal.SetState(OperationState.Success(response.GetRawResponse()));
+                _operationInternal = OperationInternal.Succeeded(response.GetRawResponse());
+            }
+            else
+            {
+                _operationInternal = new(_pipeline.Diagnostics, this, response.GetRawResponse(), nameof(DeleteSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
             }
         }
 

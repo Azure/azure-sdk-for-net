@@ -1,5 +1,5 @@
 #Requires -Version 7.0
-
+$CI_YAML_FILE = "ci.yml"
 function Get-SwaggerInfo()
 {
     param(
@@ -85,6 +85,30 @@ function Update-AutorestConfigFile() {
         exit 1
     }
 }
+
+function Update-CIYmlFile() {
+    param (
+        [string]$ciFilePath,
+        [string]$artifact
+    )
+    if (Test-Path -Path $ciFilePath) {
+        $packageRex = "name *: $artifact"
+        if ((Get-Content $ciFilePath | Select-String -Pattern $packageRex).Matches.Success) {
+            Write-Host "CI already enabled."
+        } else {
+            $safeName = $artifact.Replace('.', '')
+            $artifactsBlockRex = "Artifacts *:"
+            $startNum = (Get-Content $ciFilePath | Select-String -Pattern $artifactsBlockRex).LineNumber[0]
+            $fileContent = Get-Content -Path $ciFilePath
+            $fileContent[$startNum - 1] += ([Environment]::NewLine + "    - " + "name: $artifact" + [Environment]::NewLine + "      safeName: $safeName")
+            $fileContent | Set-Content $ciFilePath
+        }
+    } else {
+        Write-Error "ci.yml doesn't exist."
+        exit 1
+    }
+}
+
 function New-DataPlanePackageFolder() {
   param(
       [string]$service,
@@ -103,13 +127,18 @@ function New-DataPlanePackageFolder() {
   $inputfile = ""
   $fileArray = $inputfiles.Split(";")
   if (($inputfiles -ne "") -And ($fileArray.Length -gt 0)) {
-    $inputfile = "- " + $fileArray[0];
-    for ($i = 1; $i -lt $fileArray.Count ; $i++) {
+    for ($i = 0; $i -lt $fileArray.Count ; $i++) {
         $inputfile = $inputfile + [Environment]::NewLine + "- " + $fileArray[$i]
     }
   }
 
+  $serviceFolder = (Join-Path $sdkPath "sdk" $service)
+  if (!(Test-Path -Path $serviceFolder)) {
+    Write-Host "service folder does not exist! create the folder $serviceFolder"
+    New-Item -Path $serviceFolder -ItemType Directory
+  }
   $projectFolder=(Join-Path $sdkPath "sdk" $service $namespace)
+  $ciymlFilePath =(Join-Path $sdkPath "sdk" $service $CI_YAML_FILE)
   $apifolder = (Join-Path $projectFolder "api")
   Write-Host "projectFolder:$projectFolder, apifolder:$apifolder"
   if ((Test-Path -Path $projectFolder) -And (Test-Path -Path $apifolder)) {
@@ -117,27 +146,31 @@ function New-DataPlanePackageFolder() {
     # update the input-file url if needed.
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
     Update-AutorestConfigFile -autorestFilePath $file -inputfile $inputfile -readme $readme
+    Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
     Write-Host "Path doesn't exist. create template."
     if ($inputfile -eq "" -And $readme -eq "") {
         Write-Error "Error: input file should not be empty."
         exit 1
     }
-    dotnet new -i $sdkPath/eng/templates/Azure.ServiceTemplate.Template
+    dotnet new -i $sdkPath/sdk/template
     Write-Host "Create project folder $projectFolder"
-    New-Item -Path $projectFolder -ItemType Directory
-    Push-Location $projectFolder
+    if (Test-Path -Path $projectFolder) {
+        Remove-Item -Path $projectFolder -ItemType Directory
+    }
+
+    Push-Location $serviceFolder
     $namespaceArray = $namespace.Split(".")
     if ( $namespaceArray.Count -lt 3) {
         Write-Error "Error: invalid namespace name."
         exit 1
     }
 
-    $libraryName = $namespaceArray[-1]
+    $clientName = $namespaceArray[-1]
     $groupName = $namespaceArray[1]
-    $dotnetNewCmd = "dotnet new dataplane --libraryName $libraryName --groupName $groupName --includeCI true --force"
+    $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
     if ($inputfile -ne "") {
-        $dotnetNewCmd = $dotnetNewCmd + " --swagger $inputfile"
+        $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
     }
     if ($securityScope -ne "") {
         $dotnetNewCmd = $dotnetNewCmd + " --securityScopes $securityScope";
@@ -147,13 +180,22 @@ function New-DataPlanePackageFolder() {
         $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
     }
 
-    # dotnet new dataplane --libraryName $libraryName --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
-    Write-Host "Invote dotnet new command: $dotnetNewCmd"
+    if (Test-Path -Path $ciymlFilePath) {
+        Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
+        Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
+
+        $dotnetNewCmd = $dotnetNewCmd + " --includeCI false"
+    }
+    # dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
+    Write-Host "Invoke dotnet new command: $dotnetNewCmd"
     Invoke-Expression $dotnetNewCmd
 
     $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    Update-AutorestConfigFile -autorestFilePath $file -inputfile -readme $readme
+    Write-Host "Updating configuration file: $file"
+    Update-AutorestConfigFile -autorestFilePath $file -readme $readme
+    Pop-Location
     # dotnet sln
+    Push-Location $projectFolder
     dotnet sln remove src\$namespace.csproj
     dotnet sln add src\$namespace.csproj
     dotnet sln remove tests\$namespace.Tests.csproj
@@ -244,6 +286,26 @@ function Invoke-Generate() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Push-Location $sdkfolder/src
     dotnet build /t:GenerateCode
+    if ( !$? ) {
+        Write-Error "Failed to generate sdk."
+        Pop-Location
+        exit 1
+    }
+    Pop-Location
+}
+
+function Invoke-Build() {
+    param(
+        [string]$sdkfolder= ""
+    )
+    $sdkfolder = $sdkfolder -replace "\\", "/"
+    Push-Location $sdkfolder
+    dotnet build
+    if ( !$? ) {
+        Write-Error "Failed to build sdk. exit code: $?"
+        Pop-Location
+        exit 1
+    }
     Pop-Location
 }
 
@@ -254,6 +316,11 @@ function Invoke-Pack() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Push-Location $sdkfolder
     dotnet pack
+    if ( !$? ) {
+        Write-Error "Failed to build sdk package. exit code: $?"
+        Pop-Location
+        exit 1
+    }
     Pop-Location
 }
 function Get-ResourceProviderFromReadme($readmeFile) {

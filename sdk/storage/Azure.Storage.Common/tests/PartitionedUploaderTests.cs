@@ -37,7 +37,7 @@ namespace Azure.Storage.Tests
         {
             var mock = new Mock<PartitionedUploader<object, object>.CreateScope>(MockBehavior.Strict);
             mock.Setup(del => del(s_operationName))
-                .Returns(new Core.Pipeline.DiagnosticScope("Azure.Storage.Tests", s_operationName, new DiagnosticListener("Azure.Storage.Tests"), DiagnosticScope.ActivityKind.Client));
+                .Returns(new Core.Pipeline.DiagnosticScope("Azure.Storage.Tests", s_operationName, new DiagnosticListener("Azure.Storage.Tests"), DiagnosticScope.ActivityKind.Client, false));
             return mock;
         }
 

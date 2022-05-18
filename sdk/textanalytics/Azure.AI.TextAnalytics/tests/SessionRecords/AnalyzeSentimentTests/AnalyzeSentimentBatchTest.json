@@ -1,128 +1,131 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/sentiment?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "224",
+        "Accept": "application/json",
+        "Content-Length": "318",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8632120c2bafb145be6853290dc936e2-d87d673c1a121d45-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "f4c1d2e666ddf215fcefdfedc5dd71c8",
+        "traceparent": "00-9b6caaf38e9c4a41964b64e0a4f80db7-2f24f0684f85ab4e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220504.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "aa0598ed7ab8ee220fa486511730df87",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "1",
-            "text": "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.",
-            "language": "en"
-          },
-          {
-            "id": "2",
-            "text": "Esta comida no me gusta. Siempre que la como me enfermo.",
-            "language": "es"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "Esta comida no me gusta. Siempre que la como me enfermo.",
+              "language": "es"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "SentimentAnalysis"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3a35d0eb-d944-41c7-b16d-95d13be9ce5a",
+        "apim-request-id": "1c303512-5ea6-487e-b6ef-25697fc3213e",
+        "Content-Length": "1002",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Mon, 25 Oct 2021 21:13:20 GMT",
+        "Date": "Wed, 04 May 2022 23:39:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "1",
-            "sentiment": "positive",
-            "confidenceScores": {
-              "positive": 1.0,
-              "neutral": 0.0,
-              "negative": 0.0
-            },
-            "sentences": [
-              {
-                "sentiment": "positive",
-                "confidenceScores": {
-                  "positive": 1.0,
-                  "neutral": 0.0,
-                  "negative": 0.0
-                },
-                "offset": 0,
-                "length": 52,
-                "text": "Pike Place Market is my favorite Seattle attraction."
+        "kind": "SentimentAnalysisResults",
+        "results": {
+          "documents": [
+            {
+              "id": "1",
+              "sentiment": "positive",
+              "confidenceScores": {
+                "positive": 0.97,
+                "neutral": 0.02,
+                "negative": 0.01
               },
-              {
-                "sentiment": "positive",
-                "confidenceScores": {
-                  "positive": 1.0,
-                  "neutral": 0.0,
-                  "negative": 0.0
+              "sentences": [
+                {
+                  "sentiment": "positive",
+                  "confidenceScores": {
+                    "positive": 0.96,
+                    "neutral": 0.03,
+                    "negative": 0.01
+                  },
+                  "offset": 0,
+                  "length": 54,
+                  "text": "Pike Place Market is my favorite Seattle attraction.  "
                 },
-                "offset": 54,
-                "length": 25,
-                "text": "We had so much fun there."
-              }
-            ],
-            "warnings": []
-          },
-          {
-            "id": "2",
-            "sentiment": "negative",
-            "confidenceScores": {
-              "positive": 0.06,
-              "neutral": 0.1,
-              "negative": 0.84
+                {
+                  "sentiment": "positive",
+                  "confidenceScores": {
+                    "positive": 0.98,
+                    "neutral": 0.01,
+                    "negative": 0.01
+                  },
+                  "offset": 54,
+                  "length": 25,
+                  "text": "We had so much fun there."
+                }
+              ],
+              "warnings": []
             },
-            "sentences": [
-              {
-                "sentiment": "negative",
-                "confidenceScores": {
-                  "positive": 0.11,
-                  "neutral": 0.18,
-                  "negative": 0.71
-                },
-                "offset": 0,
-                "length": 24,
-                "text": "Esta comida no me gusta."
+            {
+              "id": "2",
+              "sentiment": "negative",
+              "confidenceScores": {
+                "positive": 0.02,
+                "neutral": 0.02,
+                "negative": 0.96
               },
-              {
-                "sentiment": "negative",
-                "confidenceScores": {
-                  "positive": 0.01,
-                  "neutral": 0.01,
-                  "negative": 0.98
+              "sentences": [
+                {
+                  "sentiment": "negative",
+                  "confidenceScores": {
+                    "positive": 0.01,
+                    "neutral": 0.01,
+                    "negative": 0.98
+                  },
+                  "offset": 0,
+                  "length": 25,
+                  "text": "Esta comida no me gusta. "
                 },
-                "offset": 25,
-                "length": 31,
-                "text": "Siempre que la como me enfermo."
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2020-04-01"
+                {
+                  "sentiment": "negative",
+                  "confidenceScores": {
+                    "positive": 0.03,
+                    "neutral": 0.03,
+                    "negative": 0.94
+                  },
+                  "offset": 25,
+                  "length": 31,
+                  "text": "Siempre que la como me enfermo."
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-10-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "876796289",
+    "RandomSeed": "187500191",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

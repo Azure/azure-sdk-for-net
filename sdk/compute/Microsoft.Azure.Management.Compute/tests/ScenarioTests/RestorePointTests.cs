@@ -305,6 +305,8 @@ namespace Compute.Tests
                 {
                     RestorePointInstanceView restorePointInstanceView = restorePoint.InstanceView;
                     Assert.NotNull(restorePointInstanceView);
+                    Assert.Equal(storageProfile.DataDisks.Count + 1, restorePointInstanceView.DiskRestorePoints.Count);
+                    Assert.NotNull(restorePointInstanceView.DiskRestorePoints[0].ReplicationStatus.CompletionPercent);
                 }
             }
             else

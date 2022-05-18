@@ -1,6 +1,6 @@
 # Release History
 
-## 7.8.0-beta.3 (Unreleased)
+## 7.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.8.1 (2022-05-16)
+
+### Bugs Fixed
+
+- Fixed issue that could result in the message lock renewal not being cancelled if the user message handler threw an exception.
+- Abandon messages that are received from the `ProcessorReceiveActions` in the event of the user message handler throwing an exception.
+
+## 7.8.0 (2022-05-09)
+
+### Features Added
+
+- Added the `GetReceiveActions` method to `ProcessMessageEventArgs` and `ProcessSessionMessageEventArgs` to allow for receiving additional messages from the processor callback.
+
+### Breaking Changes
+
+- `ServiceBusTransportMetrics` and `ServiceBusRuleManager` have been removed from the prior beta versions. These will be evaluated for inclusion in a future GA release.
+
+### Bugs Fixed
+
+- Prevent exception when stopping processor that can occur if custom registrations were added to the `CancellationToken` that is exposed via the event args.
+- Don't close entire AMQP session when closing individual AMQP links when `EnableCrossEntityTransactions` is set to `true`, since with this configuration, all links will share the same session.
+
+### Other Changes
+
+- Retries related to accepting sessions when using the `ServiceBusSessionProcessor` are now logged as `Verbose` rather than `Warning`.
 
 ## 7.8.0-beta.2 (2022-04-07)
 

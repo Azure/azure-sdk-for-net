@@ -61,17 +61,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Dimensions of the asset.
         /// </summary>
-        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : AssetDimensionsWrapper; }
+        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : (System.Numerics.Vector3)AssetDimensionsWrapper; }
 
         /// <summary>
         /// BoundingBoxCenter of the asset.
         /// </summary>
-        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : BoundingBoxCenterWrapper; }
+        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : (System.Numerics.Vector3)BoundingBoxCenterWrapper; }
 
         /// <summary>
         /// Gravity vector with respect to object's nominal position.
         /// </summary>
-        public System.Numerics.Vector3 Gravity { get => GravityWrapper; internal set => GravityWrapper = value; }
+        public System.Numerics.Vector3 Gravity { get => (System.Numerics.Vector3)GravityWrapper; internal set => GravityWrapper = (Vector3)value; }
 
         /// <summary>
         /// Orientation of model's bounding box.

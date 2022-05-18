@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UrlValue = "url";
+        private const string UriValue = "url";
         private const string ReferrerValue = "referrer";
         private const string BrowserValue = "browser";
         private const string UserAgentValue = "userAgent";
         private const string CountryOrRegionValue = "countryOrRegion";
 
         /// <summary> url. </summary>
-        public static LogRanking Url { get; } = new LogRanking(UrlValue);
+        public static LogRanking Uri { get; } = new LogRanking(UriValue);
         /// <summary> referrer. </summary>
         public static LogRanking Referrer { get; } = new LogRanking(ReferrerValue);
         /// <summary> browser. </summary>

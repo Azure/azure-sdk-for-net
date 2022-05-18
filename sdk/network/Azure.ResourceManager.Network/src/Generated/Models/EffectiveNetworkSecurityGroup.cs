@@ -38,8 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkSecurityGroupId
         {
-            get => NetworkSecurityGroup.Id;
-            set => NetworkSecurityGroup.Id = value;
+            get => NetworkSecurityGroup?.Id;
         }
 
         /// <summary> Associated resources. </summary>
