@@ -22,53 +22,25 @@ namespace Azure.Verticals.AgriFood.Farming
     {
 
         /// <summary> Returns a paginated list of crop resources. </summary>
-        /// <param name="phenotypes"> Crop phenotypes of the resource. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> Options containing all optional parameters. <see cref="GetCropsOptions"/>. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual AsyncPageable<FoodCrop> GetCropsValueAsync(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FoodCrop> GetCropsValueAsync(GetCropsOptions options = null, CancellationToken cancellationToken = default)
         {
-            AsyncPageable<BinaryData> pageableBinaryData = GetCropsAsync(phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, new RequestContext{ CancellationToken = cancellationToken});
+            AsyncPageable<BinaryData> pageableBinaryData = GetCropsAsync(options?.Phenotypes, options?.Ids, options?.Names, options?.PropertyFilters,
+                options?.Statuses, options?.MinCreatedDateTime, options?.MaxCreatedDateTime, options?.MinLastModifiedDateTime, options?.MaxLastModifiedDateTime,
+                options?.MaxPageSize, options?.SkipToken, new RequestContext{ CancellationToken = cancellationToken});
 
             return PageableHelpers.Select(pageableBinaryData, response => FoodCropListResponse.FromResponse(response).Value);
         }
 
         /// <summary> Returns a paginated list of crop resources. </summary>
-        /// <param name="phenotypes"> Crop phenotypes of the resource. </param>
-        /// <param name="ids"> Ids of the resource. </param>
-        /// <param name="names"> Names of the resource. </param>
-        /// <param name="propertyFilters">
-        /// Filters on key-value pairs within the Properties object.
-        /// eg. &quot;{testKey} eq {testValue}&quot;.
-        /// </param>
-        /// <param name="statuses"> Statuses of the resource. </param>
-        /// <param name="minCreatedDateTime"> Minimum creation date of resource (inclusive). </param>
-        /// <param name="maxCreatedDateTime"> Maximum creation date of resource (inclusive). </param>
-        /// <param name="minLastModifiedDateTime"> Minimum last modified date of resource (inclusive). </param>
-        /// <param name="maxLastModifiedDateTime"> Maximum last modified date of resource (inclusive). </param>
-        /// <param name="maxPageSize">
-        /// Maximum number of items needed (inclusive).
-        /// Minimum = 10, Maximum = 1000, Default value = 50.
-        /// </param>
-        /// <param name="skipToken"> Skip token for getting next set of results. </param>
+        /// <param name="options"> Options containing all optional parameters. <see cref="GetCropsOptions"/>. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual Pageable<FoodCrop> GetCropsValue(IEnumerable<string> phenotypes = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FoodCrop> GetCropsValue(GetCropsOptions options = null, CancellationToken cancellationToken = default)
         {
-            Pageable<BinaryData> pageableBinaryData = GetCrops(phenotypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, new RequestContext{ CancellationToken = cancellationToken});
+            Pageable<BinaryData> pageableBinaryData = GetCrops(options?.Phenotypes, options?.Ids, options?.Names, options?.PropertyFilters,
+                options?.Statuses, options?.MinCreatedDateTime, options?.MaxCreatedDateTime, options?.MinLastModifiedDateTime, options?.MaxLastModifiedDateTime,
+                options?.MaxPageSize, options?.SkipToken, new RequestContext{ CancellationToken = cancellationToken});
 
             return PageableHelpers.Select(pageableBinaryData, response => FoodCropListResponse.FromResponse(response).Value);
         }
