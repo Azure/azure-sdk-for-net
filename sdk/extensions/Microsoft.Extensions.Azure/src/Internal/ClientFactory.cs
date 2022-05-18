@@ -88,7 +88,7 @@ namespace Microsoft.Extensions.Azure
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
-            var resourceId = configuration["resourceId"];
+            var resourceId = configuration["UserAssignedManagedIdentityResourceId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
@@ -96,6 +96,11 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
+                if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
+                {
+                    throw new ArgumentException("Cannot specify both 'clientId' and 'UserAssignedManagedIdentityResourceId'");
+                }
+
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
                     return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));

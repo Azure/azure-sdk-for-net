@@ -223,7 +223,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesManagedServiceIdentityCredentialsWithResourceId()
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("resourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("UserAssignedManagedIdentityResourceId", "ConfigurationResourceId"),
                 new KeyValuePair<string, string>("credential", "managedidentity")
             );
 
@@ -238,22 +238,17 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        public void CreatesManagedServiceIdentityCredentialsWithResourceIdAndClientIdSpecified()
+        public void CreatesManagedServiceIdentityCredentialsThrowsWhenResourceIdAndClientIdSpecified()
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("resourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("UserAssignedManagedIdentityResourceId", "ConfigurationResourceId"),
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
                 new KeyValuePair<string, string>("credential", "managedidentity")
             );
 
-            var credential = ClientFactory.CreateCredential(configuration);
-
-            Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
-            var managedIdentityCredential = (ManagedIdentityCredential)credential;
-
-            var resourceId = (string)typeof(ManagedIdentityCredential).GetField("_clientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
-
-            Assert.AreEqual("ConfigurationResourceId", resourceId);
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.InstanceOf<ArgumentException>());
         }
 
         [Test]

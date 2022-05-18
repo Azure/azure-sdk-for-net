@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added support for constructing a `ManagedIdentityCredential` from config using a `ResourceId`.
+- Added support for constructing a `ManagedIdentityCredential` from config by specifying a `UserAssignedManagedIdentityResourceId`.
 
 ## 1.2.0 (2022-05-10)
 
