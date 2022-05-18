@@ -10,8 +10,20 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class SentimentConfidenceScores
+    public partial class SentimentConfidenceScores : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("positive");
+            writer.WriteNumberValue(Positive);
+            writer.WritePropertyName("neutral");
+            writer.WriteNumberValue(Neutral);
+            writer.WritePropertyName("negative");
+            writer.WriteNumberValue(Negative);
+            writer.WriteEndObject();
+        }
+
         internal static SentimentConfidenceScores DeserializeSentimentConfidenceScores(JsonElement element)
         {
             double positive = default;

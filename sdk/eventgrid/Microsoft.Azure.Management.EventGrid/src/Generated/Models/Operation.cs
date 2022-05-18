@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an operation returned by the GetOperations request
+    /// Represents an operation returned by the GetOperations request.
     /// </summary>
     public partial class Operation
     {
@@ -29,15 +29,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">Name of the operation</param>
-        /// <param name="display">Display name of the operation</param>
-        /// <param name="origin">Origin of the operation</param>
-        /// <param name="properties">Properties of the operation</param>
-        public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), object properties = default(object))
+        /// <param name="name">Name of the operation.</param>
+        /// <param name="display">Display name of the operation.</param>
+        /// <param name="origin">Origin of the operation.</param>
+        /// <param name="isDataAction">This Boolean is used to determine if the
+        /// operation is a data plane action or not.</param>
+        /// <param name="properties">Properties of the operation.</param>
+        public Operation(string name = default(string), OperationInfo display = default(OperationInfo), string origin = default(string), bool? isDataAction = default(bool?), object properties = default(object))
         {
             Name = name;
             Display = display;
             Origin = origin;
+            IsDataAction = isDataAction;
             Properties = properties;
             CustomInit();
         }
@@ -48,25 +51,32 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the operation
+        /// Gets or sets name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets display name of the operation
+        /// Gets or sets display name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationInfo Display { get; set; }
 
         /// <summary>
-        /// Gets or sets origin of the operation
+        /// Gets or sets origin of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of the operation
+        /// Gets or sets this Boolean is used to determine if the operation is
+        /// a data plane action or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }

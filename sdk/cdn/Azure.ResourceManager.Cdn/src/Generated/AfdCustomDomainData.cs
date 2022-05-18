@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="profileName"> The name of the profile which holds the domain. </param>
         /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
-        /// <param name="azureDnsZone"> Resource reference to the Azure DNS zone. </param>
+        /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
         /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
         /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        internal AfdCustomDomainData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsParameters tlsSettings, WritableSubResource azureDnsZone, AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
+        internal AfdCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, AfdCustomDomainHttpsContent tlsSettings, WritableSubResource dnsZone, AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResource, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, DomainValidationProperties validationProperties) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;
-            AzureDnsZone = azureDnsZone;
+            DnsZone = dnsZone;
             PreValidatedCustomDomainResource = preValidatedCustomDomainResource;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -50,23 +50,23 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the profile which holds the domain. </summary>
         public string ProfileName { get; }
         /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
-        public AfdCustomDomainHttpsParameters TlsSettings { get; set; }
+        public AfdCustomDomainHttpsContent TlsSettings { get; set; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
-        internal WritableSubResource AzureDnsZone { get; set; }
+        internal WritableSubResource DnsZone { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier AzureDnsZoneId
+        public ResourceIdentifier DnsZoneId
         {
-            get => AzureDnsZone is null ? default : AzureDnsZone.Id;
+            get => DnsZone is null ? default : DnsZone.Id;
             set
             {
-                if (AzureDnsZone is null)
-                    AzureDnsZone = new WritableSubResource();
-                AzureDnsZone.Id = value;
+                if (DnsZone is null)
+                    DnsZone = new WritableSubResource();
+                DnsZone.Id = value;
             }
         }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
-        internal AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
+        internal AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId PreValidatedCustomDomainResource { get; set; }
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier PreValidatedCustomDomainResourceId
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             set
             {
                 if (PreValidatedCustomDomainResource is null)
-                    PreValidatedCustomDomainResource = new AfdDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
+                    PreValidatedCustomDomainResource = new AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId();
                 PreValidatedCustomDomainResource.Id = value;
             }
         }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </summary>
         public DomainValidationState? DomainValidationState { get; }
         /// <summary> The host name of the domain. Must be a domain name. </summary>

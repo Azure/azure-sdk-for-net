@@ -128,6 +128,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/azure/azure-sdk-for-net/issues/28272")]
         public void StartBuildModelFailsWithInvalidPrefix()
         {
             var client = CreateDocumentModelAdministrationClient();

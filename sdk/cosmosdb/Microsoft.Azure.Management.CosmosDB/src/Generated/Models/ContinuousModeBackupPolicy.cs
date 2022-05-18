@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         /// <param name="migrationState">The object representing the state of
         /// the migration between the backup policies.</param>
-        public ContinuousModeBackupPolicy(BackupPolicyMigrationState migrationState = default(BackupPolicyMigrationState))
+        /// <param name="continuousModeProperties">Configuration values for
+        /// continuous mode backup</param>
+        public ContinuousModeBackupPolicy(BackupPolicyMigrationState migrationState = default(BackupPolicyMigrationState), ContinuousModeProperties continuousModeProperties = default(ContinuousModeProperties))
             : base(migrationState)
         {
+            ContinuousModeProperties = continuousModeProperties;
             CustomInit();
         }
 
@@ -42,6 +45,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets configuration values for continuous mode backup
+        /// </summary>
+        [JsonProperty(PropertyName = "continuousModeProperties")]
+        public ContinuousModeProperties ContinuousModeProperties { get; set; }
 
     }
 }

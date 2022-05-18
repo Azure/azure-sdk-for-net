@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleRemoteAddressCondition DeserializeDeliveryRuleRemoteAddressCondition(JsonElement element)
         {
-            RemoteAddressMatchConditionParameters parameters = default;
+            RemoteAddressMatchConditionDefinition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = RemoteAddressMatchConditionParameters.DeserializeRemoteAddressMatchConditionParameters(property.Value);
+                    parameters = RemoteAddressMatchConditionDefinition.DeserializeRemoteAddressMatchConditionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

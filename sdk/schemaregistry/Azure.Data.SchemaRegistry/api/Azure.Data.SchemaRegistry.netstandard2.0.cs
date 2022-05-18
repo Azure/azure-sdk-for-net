@@ -50,8 +50,8 @@ namespace Azure.Data.SchemaRegistry
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Data.SchemaRegistry.SchemaProperties SchemaProperties(Azure.Data.SchemaRegistry.SchemaFormat format, string schemaId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Data.SchemaRegistry.SchemaProperties SchemaProperties(Azure.Data.SchemaRegistry.SchemaFormat format, string schemaId, string groupName, string name) { throw null; }
+        public static Azure.Data.SchemaRegistry.SchemaRegistrySchema SchemaRegistrySchema(Azure.Data.SchemaRegistry.SchemaProperties properties, string definition) { throw null; }
     }
     public partial class SchemaRegistrySchema
     {
