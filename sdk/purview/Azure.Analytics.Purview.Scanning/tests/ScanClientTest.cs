@@ -104,7 +104,74 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             string scanName = "test-scan1009-2";
             var client = GetPurviewScanClient(dataSourceName, scanName);
             //Create
+            var requiredData = new
+            {
+                kind = "AmazonS3Credential",
+            };
+
             var data = new
+            {
+                id = "test-id",
+                name = "test-name",
+                kind = "AmazonS3Credential",
+                scanResults = new[]
+                {
+                    new
+                    {
+                        parentId = "test-scanResults-parentId",
+                        id = "test-scanResults-Id",
+                        resourceId = "test-scanResults-resourceId",
+                        status = "test-scanResults-status",
+                        assetsDiscovered = 4513,
+                        assetsClassified = 5423,
+                        diagnostics = new
+                        {
+                            notifications = new[]
+                            {
+                                new
+                                {
+                                    message = "test-scanResults-diagnostics-message",
+                                    code =  3423
+                                }
+                            },
+                            exceptionCountMap = "Dictionary(string, number) how to pass"
+                        },
+                        startTime = "2022-05-10T13:57:31.2311892-04:00",
+                        queuedTime = "2022-05-10T14:57:31.2311892-04:00",
+                        pipelineStartTime = "2022-05-10T15:57:31.2311892-04:00",
+                        endTime = "2022-05-10T16:57:31.2311892-04:00",
+                        scanRulesetVersion = 9284,
+                        scanRulesetType = "Custom",
+                        scanLevelType = "Full",
+                        errorMessage = "test-scanResults-errorMessage",
+                        error = new
+                        {
+                            code = "test-scanResults-error-code",
+                            message = "test-scanResults-error-message",
+                            target = "test-scanResults-error-target",
+                            details = new[]
+                            {
+                                new
+                                {
+                                    code = "test-scanResults-error-details-code",
+                                    message = "test-scanResults-error-details-message",
+                                    target = "test-scanResults-error-details-target",
+                                    details = new[]
+                                    {
+                                        new
+                                        {
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        runType = "test-scanResults-runType",
+                        dataSourceType = "AzureSubscription"
+                    },
+                }
+            };
+
+            var dataTest = new
             {
                 name = scanName,
                 kind = "AmazonS3Credential",
@@ -122,8 +189,10 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                     }
                 }
             };
-            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-            Assert.AreEqual(201, createResponse.Status);
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(requiredData));
+            JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+            Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+            Assert.AreEqual(201, response.Status);
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);

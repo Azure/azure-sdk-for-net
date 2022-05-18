@@ -1,0 +1,1 @@
+search_result['128']=["topic_000000000000005E.html","PurviewScanningServiceClientOptions Class","Client options for PurviewScanningServiceClient."];

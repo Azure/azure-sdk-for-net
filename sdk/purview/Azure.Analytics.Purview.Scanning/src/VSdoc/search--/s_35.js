@@ -1,0 +1,1 @@
+search_result['35']=["topic_000000000000000B.html","PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions) Constructor","Initializes a new instance of PurviewClassificationRuleClient."];

@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"Azure.Test.Perf Reference","topic_0000000000000071.html"],['4',"Azure.Test.Perf Namespace","topic_0000000000000001.html"],['122',"TestProxyPolicy Class","topic_0000000000000064.html"],['127',"Methods","topic_0000000000000064_methods--.html"],['130',"RedirectToTestProxy Method","topic_000000000000006A.html"]];

@@ -1,0 +1,1 @@
+search_result['115']=["topic_0000000000000051.html","PurviewScanningServiceClient.GetLatestSystemRulesets Method","Get the latest version of a system scan ruleset."];

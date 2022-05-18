@@ -1,0 +1,1 @@
+search_result['46']=["topic_0000000000000015.html","PurviewClassificationRuleClient.GetVersions Method","Lists the rule versions of a classification rule."];

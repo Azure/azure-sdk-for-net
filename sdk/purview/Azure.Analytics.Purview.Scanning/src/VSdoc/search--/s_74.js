@@ -1,0 +1,1 @@
+search_result['74']=["topic_000000000000002B.html","PurviewScanClient.CreateOrUpdate Method","Creates an instance of a scan."];

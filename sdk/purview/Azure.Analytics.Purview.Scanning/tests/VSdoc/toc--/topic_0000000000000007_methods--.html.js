@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"Azure.Analytics.Purview.Scanning.Tests Reference","topic_0000000000000028.html"],['4',"Azure.Analytics.Purview.Scanning.Tests Namespace","topic_0000000000000003.html"],['9',"ClassificationRuleClientTestBase Class","topic_0000000000000007.html"],['11',"Methods","topic_0000000000000007_methods--.html"]];

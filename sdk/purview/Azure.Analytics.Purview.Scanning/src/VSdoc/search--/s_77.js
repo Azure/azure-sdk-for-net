@@ -1,0 +1,1 @@
+search_result['77']=["topic_000000000000002E.html","PurviewScanClient.DeleteAsync Method","Deletes the scan associated with the data source."];

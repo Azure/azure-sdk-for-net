@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"Azure.Test.Stress Reference","topic_000000000000002F.html"],['4',"Azure.Test.Stress Namespace","topic_0000000000000001.html"],['5',"StressMetrics Class","topic_0000000000000002.html"],['6',"Properties","topic_0000000000000002_props--.html"],['13',"Remaining Property","topic_0000000000000007.html"]];

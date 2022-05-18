@@ -1,0 +1,1 @@
+search_result['106']=["topic_0000000000000048.html","PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync Method","Creates or Updates a scan ruleset."];

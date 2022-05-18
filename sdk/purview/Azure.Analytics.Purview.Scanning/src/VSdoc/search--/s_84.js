@@ -1,0 +1,1 @@
+search_result['84']=["topic_0000000000000035.html","PurviewScanClient.GetTrigger Method","Gets trigger information."];

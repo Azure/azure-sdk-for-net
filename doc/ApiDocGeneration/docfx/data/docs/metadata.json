@@ -1,0 +1,206 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "properties": {
+        "title": {
+            "type": ["string", "null"],
+            "description": "Used to compose HTML <title> tag, which is:\n#1 The title displayed in browser window/tab. \n#2 The first line in Search Engine Result Page\n\nThe \"title\" meta is set as \"is_visible\"=FALSE in order not to show in in <meta> tag. \nValue of \"title\" meta can be specified in MD YAML meta block. If \"title\" is not specified, OPS copy H1 value to \"title\" meta.\n\nNote that both \"title\" meta and h1 are localizable for OL.\n\nPS: The html <title> element is then composed as:\n \nIf titleSuffix is supplied\n        title meta + “ - \" + titleSuffix meta + “ | “ + Site Identifier\nElse\n        title meta + “ | “ + Site Identifier"
+        },
+        "author": {
+            "type": ["string", "null"],
+            "description": "Indicates the person who own the quality of the content.\n\nFor conceptual document, OPS system takes Git value (MD file creator) as default, and if \"author\" is specified in MD file then take it from MD file instead. Note that the Git field to be filled into \"author\" should be Git username. OPS will map it into user's Full Name and show on the page. \nFor reference document, OPS system don't have a systematic way to get author name, so \"author\" meta is always filled at content side.\nNote that \"author\" meta filled by writer must be a valid username in GitHub. Otherwise OPS build will throw out error which will fail the build (before feature 833467 is implemented) or throw out warning (after feature 833467 is implemented). As for content on top of VSO Git, validation is not run because VSO don't support profile so there's not way to validate it so as nothing to be thrown out by OPS build upon invalid VSO \"author\".\n\nWhen one person leaves MS, all the MD files with his username input as \"author\" should be replaced by another person. If content side take no action, the page will still show the name of left person on the page (unless he has deleted its Git account which will fail/warn the build).\n\nNote:\nVSO Git don't provide a good way to return full name and user profile for a given username, so \"author\" meta is only saved at OPS back-end but not shown on UI of VSO based OPS page.\n\nPS: In original design, \"author\" and \"ms.author\" are considered as same metadata by OPS. OPS simply copy \"author\" meta to \"ms.author\".\nSince Feature 657981, these two meta are de-coupled: \"author\" display on page UI, while \"ms.author\" is the one who follow up with when there are issue with the article (including bad meta, verbatims, ratings etc). This person agrees to maintain this article for MS.."
+        },
+        "open_to_public_contributors": {
+            "type": "boolean",
+            "description": "Indicates this content can be edited by public users or not."
+        },
+        "breadcrumb_path": {
+            "type": ["string", "null"],
+            "description": "Indicates the URL (without base URL) to get the global toc JSON file."
+        },
+        "layout": {
+            "type": ["string", "null"],
+            "description": "Indicates which template is applied to this content page.\nIf not specified by content, then decided by OPS system automatically."
+        },
+        "ROBOTS": {
+            "type": ["string", "null"],
+            "description": "Tells visiting robots whether a content may be indexed, or used to harvest more links.\nIf ROBOTS is not present in HTML, search engine will take it as \"INDEX,FOLLOW\" by default."
+        },
+        "api_scan": {
+            "type": "boolean",
+            "description": "Indicate whether the depot need to API Scan"
+        },
+        "product": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Identifies the Platform in which the API ships.  "
+        },
+        "topic_type": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Identifies topic as an API reference topic."
+        },
+        "api_type": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Identifies type of dependency being documented."
+        },
+        "api_location": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Identifies location of dependency."
+        },
+        "api_name": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Identifies the API name."
+        },
+        "api_extra_info": {
+            "type": ["string", "null"],
+            "description": "Other information which is specific to the API type."
+        },
+        "target_os": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Identifies the targeted OS/platform."
+        },
+        "ms.translationtype": {
+            "type": ["string", "null"],
+            "enum": [
+                "Human Translation",
+                "Machine Translation",
+                "HT",
+                "MT",
+                "MTE",
+                "MTE75",
+                "MTE95"
+            ],
+            "description": "It's to indicate the loc content is translated by machine or by human. It also somehow indicate the translation quality - human translation is considered as better translation quality.\nThe value is set by OL when content is handed back."
+        },
+        "f1_keywords": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "The keywords used by F1 Query service."
+        },
+        "dev_langs": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "The development language for current page. It's used by both F1 Query service and BI purpose.\nFor reference document, it's auto filled by OPS Build. \nFor conceptual document, it's to be filled by writer in content side. Note that in order to support F1 query properly, the meta name written in MD file should be \"dev_langs\"."
+        },
+        "helpviewer_keywords": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Keywords to be used by Help Viewer Index tab."
+        },
+        "contributors_to_exclude": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Indicates the contributors who will not be displayed on the published content. Those contributors might include:\n1. People who helped provisioning the repository.\n2. System account which bulk updates the content, e.g. adding metadata.\n3. Etc."
+        },
+        "titleSuffix": {
+            "type": ["string", "null"],
+            "description": "HTML <title> tag is currently composed of 2 to 3 pieces\n \n• \"title\" meta: Specified by the author in metadata, if not specified then pulled from the H1 of the topic when it is built\n• Site Identifier: For DOCS.MSFT, always “Microsoft Docs” in DOCS.MSFT template\n• Brand/Product/Service Identifier: pulled from titleSuffix metadata, not required and has no default value\n \n \nThe html <title> element is then composed as:\n \nIf titleSuffix is supplied\n        title meta + “ - \" + titleSuffix meta + “ | “ + Site Identifier\nElse\n        title meta + “ | “ + Site Identifier"
+        },
+        "monikers": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string"
+            },
+            "description": "Moniker is an alias for production family version"
+        },
+        "archive_url": {
+            "type": ["string", "null"],
+            "description": "Engagement PM will provide the value/URL once a product is archived and its landing page is created."
+        },
+        "current_version_url": {
+            "type": ["string", "null"],
+            "description": "If there is a newer version of the content on docs fresh than this metadata value should be the canonical url of the latest version of the same content."
+        }
+    },
+    "reserved": [
+        "content_type",
+        "document_id",
+        "ms.documentid",
+        "internal_document_id",
+        "locale",
+        "ms.contentlang",
+        "ms.locale",
+        "product_family",
+        "product_version",
+        "search.ms_sitename",
+        "search.ms_product",
+        "search.ms_docsetname",
+        "updated_at",
+        "ms.publishtime",
+        "toc_asset_id",
+        "original_content_git_url",
+        "ms.giturl",
+        "original_ref_skeleton_git_url",
+        "ms.gitsourceurl",
+        "toc_rel",
+        "site_name",
+        "ms.sitename",
+        "area",
+        "theme",
+        "theme_branch",
+        "theme_url",
+        "is_active",
+        "gitcommit",
+        "ms.gitcommit",
+        "ref_skeleton_gitcommit",
+        "ms.gitsourcecommit",
+        "Product",
+        "TopicType",
+        "APIType",
+        "APILocation",
+        "APIName",
+        "APIExtraInfo",
+        "TargetOS",
+        "sitemap_priority",
+        "AmbientContext",
+        "MN",
+        "ms.auth",
+        "ms.lang",
+        "ms.loc",
+        "ms.prodver",
+        "ms.puidhash",
+        "ms.contentsource",
+        "depot_name",
+        "ms.depotname",
+        "pagetype",
+        "ms.opspagetype",
+        "word_count",
+        "content_uri",
+        "publish_version",
+        "canonical_url",
+        "relative_path_to_theme_resources",
+        "is_dynamic_rendering",
+        "need_preview_pull_request",
+        "moniker_type",
+        "is_significant_update",
+        "document_version_independent_id",
+        "serviceData",
+        "is_hidden",
+        "redirect_document_id",
+        "cmProducts"
+    ]
+}

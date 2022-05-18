@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"Azure.Analytics.Purview.Scanning Reference","topic_0000000000000064.html"]];

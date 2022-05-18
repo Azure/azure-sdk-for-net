@@ -1,0 +1,2808 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommandLine</name>
+    </assembly>
+    <members>
+        <member name="T:RailwaySharp.ErrorHandling.Result`2">
+            <summary>
+            Represents the result of a computation.
+            </summary>
+            <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+            <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+        </member>
+        <member name="T:RailwaySharp.ErrorHandling.Ok`2">
+            <summary>
+            Represents the result of a successful computation.
+            </summary>
+            <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+            <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+        </member>
+        <member name="T:RailwaySharp.ErrorHandling.Bad`2">
+            <summary>
+            Represents the result of a failed computation.
+            </summary>
+            <typeparam name="TSuccess">Type that models the result of a successful computation.</typeparam>
+            <typeparam name="TMessage">Type that model a message related to a computation.</typeparam> 
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Result.FailWith``2(System.Collections.Generic.IEnumerable{``1})">
+            <summary>
+            Creates a Failure result with the given messages.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Result.FailWith``2(``1)">
+            <summary>
+            Creates a Failure result with the given message.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Result.Succeed``2(``0)">
+            <summary>
+            Creates a Success result with the given value.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Result.Succeed``2(``0,``1)">
+            <summary>
+            Creates a Success result with the given value and the given message.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Result.Succeed``2(``0,System.Collections.Generic.IEnumerable{``1})">
+            <summary>
+            Creates a Success result with the given value and the given messages.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Result.Try``1(System.Func{``0})">
+            <summary>
+            Executes the given function on a given success or captures the failure.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Ok``2(``0)">
+            <summary>
+            Wraps a value in a Success.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Pass``2(``0)">
+            <summary>
+            Wraps a value in a Success.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Warn``2(``1,``0)">
+            <summary>
+            Wraps a value in a Success and adds a message.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Fail``2(``1)">
+            <summary>
+            Wraps a message in a Failure.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Failed``2(RailwaySharp.ErrorHandling.Result{``0,``1})">
+            <summary>
+            Returns true if the result was not successful.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Either``3(System.Func{``0,System.Collections.Generic.IEnumerable{``1},``2},System.Func{System.Collections.Generic.IEnumerable{``1},``2},RailwaySharp.ErrorHandling.Result{``0,``1})">
+            <summary>
+            Takes a Result and maps it with successFunc if it is a Success otherwise it maps it with failureFunc.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.ReturnOrFail``2(RailwaySharp.ErrorHandling.Result{``0,``1})">
+            <summary>
+            If the given result is a Success the wrapped value will be returned. 
+            Otherwise the function throws an exception with Failure message of the result.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.MergeMessages``2(System.Collections.Generic.IEnumerable{``1},RailwaySharp.ErrorHandling.Result{``0,``1})">
+            <summary>
+            Appends the given messages with the messages in the given result.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Bind``3(System.Func{``0,RailwaySharp.ErrorHandling.Result{``1,``2}},RailwaySharp.ErrorHandling.Result{``0,``2})">
+            <summary>
+            If the result is a Success it executes the given function on the value.
+            Otherwise the exisiting failure is propagated.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Flatten``2(RailwaySharp.ErrorHandling.Result{RailwaySharp.ErrorHandling.Result{``0,``1},``1})">
+            <summary>
+            Flattens a nested result given the Failure types are equal.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Apply``3(RailwaySharp.ErrorHandling.Result{System.Func{``0,``1},``2},RailwaySharp.ErrorHandling.Result{``0,``2})">
+            <summary>
+            If the wrapped function is a success and the given result is a success the function is applied on the value. 
+            Otherwise the exisiting error messages are propagated.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Lift``3(System.Func{``0,``1},RailwaySharp.ErrorHandling.Result{``0,``2})">
+            <summary>
+            Lifts a function into a Result container and applies it on the given result.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Lift2``4(System.Func{``0,System.Func{``1,``2}},RailwaySharp.ErrorHandling.Result{``0,``3},RailwaySharp.ErrorHandling.Result{``1,``3})">
+            <summary>
+            Promote a function to a monad/applicative, scanning the monadic/applicative arguments from left to right.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.Trial.Collect``2(System.Collections.Generic.IEnumerable{RailwaySharp.ErrorHandling.Result{``0,``1}})">
+            <summary>
+            Collects a sequence of Results and accumulates their values.
+            If the sequence contains an error the error will be propagated.
+            </summary>
+        </member>
+        <member name="T:RailwaySharp.ErrorHandling.ResultExtensions">
+            <summary>
+            Extensions methods for easier usage.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.Match``2(RailwaySharp.ErrorHandling.Result{``0,``1},System.Action{``0,System.Collections.Generic.IEnumerable{``1}},System.Action{System.Collections.Generic.IEnumerable{``1}})">
+            <summary>
+            Allows pattern matching on Results.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.Either``3(RailwaySharp.ErrorHandling.Result{``0,``1},System.Func{``0,System.Collections.Generic.IEnumerable{``1},``2},System.Func{System.Collections.Generic.IEnumerable{``1},``2})">
+            <summary>
+            Allows pattern matching on Results.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.Map``3(RailwaySharp.ErrorHandling.Result{``0,``1},System.Func{``0,``2})">
+            <summary>
+            Lifts a Func into a Result and applies it on the given result.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.Collect``2(System.Collections.Generic.IEnumerable{RailwaySharp.ErrorHandling.Result{``0,``1}})">
+            <summary>
+            Collects a sequence of Results and accumulates their values.
+            If the sequence contains an error the error will be propagated.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.Flatten``2(RailwaySharp.ErrorHandling.Result{System.Collections.Generic.IEnumerable{RailwaySharp.ErrorHandling.Result{``0,``1}},``1})">
+            <summary>
+            Collects a sequence of Results and accumulates their values.
+            If the sequence contains an error the error will be propagated.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.SelectMany``3(RailwaySharp.ErrorHandling.Result{``0,``1},System.Func{``0,RailwaySharp.ErrorHandling.Result{``2,``1}})">
+            <summary>
+            If the result is a Success it executes the given Func on the value.
+            Otherwise the exisiting failure is propagated.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.SelectMany``4(RailwaySharp.ErrorHandling.Result{``0,``1},System.Func{``0,RailwaySharp.ErrorHandling.Result{``2,``1}},System.Func{``0,``2,``3})">
+            <summary>
+            If the result is a Success it executes the given Func on the value.
+            If the result of the Func is a Success it maps it using the given Func.
+            Otherwise the exisiting failure is propagated.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.Select``3(RailwaySharp.ErrorHandling.Result{``0,``1},System.Func{``0,``2})">
+            <summary>
+            Lifts a Func into a Result and applies it on the given result.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.FailedWith``2(RailwaySharp.ErrorHandling.Result{``0,``1})">
+            <summary>
+            Returns the error messages or fails if the result was a success.
+            </summary>
+        </member>
+        <member name="M:RailwaySharp.ErrorHandling.ResultExtensions.SucceededWith``2(RailwaySharp.ErrorHandling.Result{``0,``1})">
+            <summary>
+            Returns the result or fails if the result was an error.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Cartesian``3(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``1},System.Func{``0,``1,``2})">
+            <summary>
+            Returns the Cartesian product of two sequences by combining each element of the first set with each in the second
+            and applying the user=define projection to the pair.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Prepend``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+            Prepends a single value to a sequence.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Concat``1(``0,System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns a sequence consisting of the head element and the given tail elements.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Concat``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+            Returns a sequence consisting of the head elements and the given tail element.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Exclude``1(System.Collections.Generic.IEnumerable{``0},System.Int32,System.Int32)">
+            <summary>
+            Excludes <paramref name="count"/> elements from a sequence starting at a given index
+            </summary>
+            <typeparam name="T">The type of the elements of the sequence</typeparam>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Index``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Returns a sequence of <see cref="T:System.Collections.Generic.KeyValuePair`2"/> 
+            where the key is the zero-based index of the value in the source 
+            sequence.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Index``1(System.Collections.Generic.IEnumerable{``0},System.Int32)">
+            <summary>
+            Returns a sequence of <see cref="T:System.Collections.Generic.KeyValuePair`2"/> 
+            where the key is the index of the value in the source sequence.
+            An additional parameter specifies the starting index.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Fold``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>
+            Returns the result of applying a function to a sequence of 
+            1 element.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Fold``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,``1})">
+            <summary>
+            Returns the result of applying a function to a sequence of 
+            2 elements.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Fold``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,``0,``1})">
+            <summary>
+            Returns the result of applying a function to a sequence of 
+            3 elements.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Fold``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,``0,``0,``1})">
+            <summary>
+            Returns the result of applying a function to a sequence of 
+            4 elements.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Immediately executes the given action on each element in the source sequence.
+            </summary>
+            <typeparam name="T">The type of the elements in the sequence</typeparam>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Pairwise``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0,``1})">
+            <summary>
+            Returns a sequence resulting from applying a function to each 
+            element in the source sequence and its 
+            predecessor, with the exception of the first element which is 
+            only returned as the predecessor of the second element.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.ToDelimitedString``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates a delimited string from a sequence of values. The 
+            delimiter used depends on the current culture of the executing thread.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.ToDelimitedString``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Creates a delimited string from a sequence of values and
+            a given delimiter.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.TryHead``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Safe function that returns Just(first element) or None.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.ToMaybe``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Turns an empty sequence to Nothing, otherwise Just(sequence).
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Tail``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return everything except first element and throws exception if empty.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.TailNoFail``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Return everything except first element without throwing exception if empty.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Memorize``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Captures current state of a sequence.
+            </summary>
+        </member>
+        <member name="M:CSharpx.EnumerableExtensions.Materialize``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates an immutable copy of a sequence.
+            </summary>
+        </member>
+        <member name="T:CSharpx.MaybeType">
+            <summary>
+            Discriminator for <see cref="T:CSharpx.Maybe"/>.
+            </summary>
+        </member>
+        <member name="T:CSharpx.Maybe`1">
+            <summary>
+            The Maybe type models an optional value. A value of type Maybe a either contains a value of type a (represented as Just a),
+            or it is empty (represented as Nothing).
+            </summary>
+        </member>
+        <member name="P:CSharpx.Maybe`1.Tag">
+            <summary>
+            Type discriminator.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe`1.MatchJust(`0@)">
+            <summary>
+            Matches a value returning <c>true</c> and value itself via output parameter.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe`1.MatchNothing">
+            <summary>
+            Matches an empty value returning <c>true</c>.
+            </summary>
+        </member>
+        <member name="T:CSharpx.Nothing`1">
+            <summary>
+            Models a <see cref="T:CSharpx.Maybe"/> when in empty state.
+            </summary>
+        </member>
+        <member name="T:CSharpx.Just`1">
+            <summary>
+            Models a <see cref="T:CSharpx.Maybe"/> when contains a value.
+            </summary>
+        </member>
+        <member name="P:CSharpx.Just`1.Value">
+            <summary>
+            The wrapped value.
+            </summary>
+        </member>
+        <member name="T:CSharpx.Maybe">
+            <summary>
+            Provides static methods for manipulating <see cref="T:CSharpx.Maybe"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe.Nothing``1">
+            <summary>
+            Builds the empty case of <see cref="T:CSharpx.Maybe"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe.Just``1(``0)">
+            <summary>
+            Builds the case when <see cref="T:CSharpx.Maybe"/> contains a value.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe.Return``1(``0)">
+            <summary>
+            Inject a value into the monadic <see cref="T:CSharpx.Maybe`1"/> type.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe.Bind``2(CSharpx.Maybe{``0},System.Func{``0,CSharpx.Maybe{``1}})">
+            <summary>
+            Sequentially compose two actions, passing any value produced by the first as an argument to the second.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe.Map``2(CSharpx.Maybe{``0},System.Func{``0,``1})">
+            <summary>
+            Transforms an maybe value by using a specified mapping function.
+            </summary>
+        </member>
+        <member name="M:CSharpx.Maybe.Merge``2(CSharpx.Maybe{``0},CSharpx.Maybe{``1})">
+            <summary>
+            If both maybes contain a value, it merges them into a maybe with a tupled value.
+            </summary>
+        </member>
+        <member name="T:CSharpx.MaybeExtensions">
+            <summary>
+            Provides convenience extension methods for <see cref="T:CSharpx.Maybe"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Match``1(CSharpx.Maybe{``0},System.Action{``0},System.Action)">
+            <summary>
+            Provides pattern matching using <see cref="T:System.Action"/> delegates.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Match``2(CSharpx.Maybe{System.Tuple{``0,``1}},System.Action{``0,``1},System.Action)">
+            <summary>
+            Provides pattern matching using <see cref="T:System.Action"/> delegates over maybe with tupled wrapped value.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.MatchJust``2(CSharpx.Maybe{System.Tuple{``0,``1}},``0@,``1@)">
+            <summary>
+            Matches a value returning <c>true</c> and tupled value itself via two output parameters.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.ToMaybe``1(``0)">
+            <summary>
+            Equivalent to monadic <see cref="M:CSharpx.Maybe.Return``1(``0)"/> operation.
+            Builds a <see cref="T:CSharpx.Just`1"/> value in case <paramref name="value"/> is different from its default.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Bind``2(CSharpx.Maybe{``0},System.Func{``0,CSharpx.Maybe{``1}})">
+            <summary>
+            Invokes a function on this maybe value that itself yields a maybe.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Map``2(CSharpx.Maybe{``0},System.Func{``0,``1})">
+            <summary>
+            Transforms this maybe value by using a specified mapping function.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Select``2(CSharpx.Maybe{``0},System.Func{``0,``1})">
+            <summary>
+            Map operation compatible with Linq.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.SelectMany``3(CSharpx.Maybe{``0},System.Func{``0,CSharpx.Maybe{``1}},System.Func{``0,``1,``2})">
+            <summary>
+            Bind operation compatible with Linq.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Do``1(CSharpx.Maybe{``0},System.Action{``0})">
+            <summary>
+            If contans a value executes an <see cref="T:System.Action`1"/> delegate over it.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.Do``2(CSharpx.Maybe{System.Tuple{``0,``1}},System.Action{``0,``1})">
+            <summary>
+            If contans a value executes an <see cref="T:System.Action`2"/> delegate over it.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.IsJust``1(CSharpx.Maybe{``0})">
+            <summary>
+            Returns <c>true</c> iffits argument is of the form <see cref="T:CSharpx.Just`1"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.IsNothing``1(CSharpx.Maybe{``0})">
+            <summary>
+            Returns <c>true</c> iffits argument is of the form <see cref="T:CSharpx.Nothing`1"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.FromJust``1(CSharpx.Maybe{``0})">
+            <summary>
+            Extracts the element out of a <see cref="T:CSharpx.Just`1"/> and returns a default value if its argument is <see cref="T:CSharpx.Nothing`1"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.FromJustOrFail``1(CSharpx.Maybe{``0},System.Exception)">
+            <summary>
+            Extracts the element out of a <see cref="T:CSharpx.Just`1"/> and throws an error if its argument is <see cref="T:CSharpx.Nothing`1"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.GetValueOrDefault``1(CSharpx.Maybe{``0},``0)">
+            <summary>
+            If contains a values returns  it, otherwise returns <paramref name="noneValue"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.MapValueOrDefault``2(CSharpx.Maybe{``0},System.Func{``0,``1},``1)">
+            <summary>
+            If contains a values executes a mapping function over it, otherwise returns <paramref name="noneValue"/>.
+            </summary>
+        </member>
+        <member name="M:CSharpx.MaybeExtensions.ToEnumerable``1(CSharpx.Maybe{``0})">
+            <summary>
+            Returns an empty list when given <see cref="T:CSharpx.Nothing`1"/> or a singleton list when given a <see cref="T:CSharpx.Just`1"/>.
+            </summary>
+        </member>
+        <member name="T:CommandLine.BaseAttribute">
+            <summary>
+            Models a base attribute to define command line syntax.
+            </summary>
+        </member>
+        <member name="M:CommandLine.BaseAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.BaseAttribute"/> class.
+            </summary>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.Required">
+            <summary>
+            Gets or sets a value indicating whether a command line option is required.
+            </summary>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.Min">
+            <summary>
+            When applied to <see cref="T:System.Collections.Generic.IEnumerable`1"/> properties defines
+            the lower range of items.
+            </summary>
+            <remarks>If not set, no lower range is enforced.</remarks>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.Max">
+            <summary>
+            When applied to <see cref="T:System.Collections.Generic.IEnumerable`1"/> properties defines
+            the upper range of items.
+            </summary>
+            <remarks>If not set, no upper range is enforced.</remarks>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.Default">
+            <summary>
+            Gets or sets mapped property default value.
+            </summary>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.HelpText">
+            <summary>
+            Gets or sets a short description of this command line option. Usually a sentence summary.
+            </summary>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.MetaValue">
+            <summary>
+            Gets or sets mapped property meta value. Usually an uppercase hint of required value type.
+            </summary>
+        </member>
+        <member name="P:CommandLine.BaseAttribute.Hidden">
+            <summary>
+            Gets or sets a value indicating whether a command line option is visible in the help text.
+            </summary>
+        </member>
+        <member name="F:CommandLine.Core.Specification.conversionType">
+            This information is denormalized to decouple Specification from PropertyInfo.
+        </member>
+        <member name="F:CommandLine.Infrastructure.ReflectionHelper._overrides">
+            <summary>
+            Per thread assembly attribute overrides for testing.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Infrastructure.ReflectionHelper.SetAttributeOverride(System.Collections.Generic.IEnumerable{System.Attribute})">
+            <summary>
+            Assembly attribute overrides for testing.
+            </summary>
+            <remarks>
+            The implementation will fail if two or more attributes of the same type
+            are included in <paramref name="overrides"/>.
+            </remarks>
+            <param name="overrides">
+            Attributes that replace the existing assembly attributes or null,
+            to clear any testing attributes.
+            </param>
+        </member>
+        <member name="T:CommandLine.NameInfo">
+            <summary>
+            Models name information, used in <see cref="T:CommandLine.Error"/> instances.
+            </summary>
+        </member>
+        <member name="F:CommandLine.NameInfo.EmptyName">
+            <summary>
+            Represents an empty name information. Used when <see cref="T:CommandLine.Error"/> are tied to values,
+            rather than options.
+            </summary>
+        </member>
+        <member name="P:CommandLine.NameInfo.ShortName">
+            <summary>
+            Gets the short name of the name information.
+            </summary>
+        </member>
+        <member name="P:CommandLine.NameInfo.LongName">
+            <summary>
+            Gets the long name of the name information.
+            </summary>
+        </member>
+        <member name="P:CommandLine.NameInfo.NameText">
+            <summary>
+            Gets a formatted text with unified name information.
+            </summary>
+        </member>
+        <member name="M:CommandLine.NameInfo.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.NameInfo.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.NameInfo.Equals(CommandLine.NameInfo)">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.NameInfo"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.NameInfo"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.NameInfo"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.NullInstance">
+            <summary>
+            Models a null result when constructing a <see cref="T:CommandLine.ParserResult`1"/> in a faling verbs scenario.
+            </summary>
+        </member>
+        <member name="T:CommandLine.ErrorType">
+            <summary>
+            Discriminator enumeration of <see cref="T:CommandLine.Error"/> derivates.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.BadFormatTokenError">
+            <summary>
+            Value of <see cref="T:CommandLine.BadFormatTokenError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.MissingValueOptionError">
+            <summary>
+            Value of <see cref="T:CommandLine.MissingValueOptionError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.UnknownOptionError">
+            <summary>
+            Value of <see cref="T:CommandLine.UnknownOptionError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.MissingRequiredOptionError">
+            <summary>
+            Value of <see cref="T:CommandLine.MissingRequiredOptionError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.MutuallyExclusiveSetError">
+            <summary>
+            Value of <see cref="T:CommandLine.MutuallyExclusiveSetError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.BadFormatConversionError">
+            <summary>
+            Value of <see cref="T:CommandLine.BadFormatConversionError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.SequenceOutOfRangeError">
+            <summary>
+            Value of <see cref="T:CommandLine.SequenceOutOfRangeError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.RepeatedOptionError">
+            <summary>
+            Value of <see cref="T:CommandLine.RepeatedOptionError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.NoVerbSelectedError">
+            <summary>
+            Value of <see cref="T:CommandLine.NoVerbSelectedError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.BadVerbSelectedError">
+            <summary>
+            Value of <see cref="T:CommandLine.BadVerbSelectedError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.HelpRequestedError">
+            <summary>
+            Value of <see cref="T:CommandLine.HelpRequestedError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.HelpVerbRequestedError">
+            <summary>
+            Value of <see cref="T:CommandLine.HelpVerbRequestedError"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ErrorType.VersionRequestedError">
+            <summary>
+            Value of <see cref="T:CommandLine.VersionRequestedError"/> type.
+            </summary>
+        </member>
+        <member name="T:CommandLine.Error">
+            <summary>
+            Base type of all errors.
+            </summary>
+            <remarks>All errors are defined within the system. There's no reason to create custom derivate types.</remarks>
+        </member>
+        <member name="M:CommandLine.Error.#ctor(CommandLine.ErrorType,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Error"/> class.
+            </summary>
+            <param name="tag">Type discriminator tag.</param>
+            <param name="stopsProcessing">Tells if error stops parsing process.</param>
+        </member>
+        <member name="M:CommandLine.Error.#ctor(CommandLine.ErrorType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Error"/> class.
+            </summary>
+            <param name="tag">Type discriminator tag.</param>
+        </member>
+        <member name="P:CommandLine.Error.Tag">
+            <summary>
+            Error type discriminator, defined as <see cref="T:CommandLine.ErrorType"/> enumeration.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Error.StopsProcessing">
+            <summary>
+            Tells if error stops parsing process.
+            Filtered by <see cref="M:CommandLine.ErrorExtensions.OnlyMeaningfulOnes(System.Collections.Generic.IEnumerable{CommandLine.Error})"/>.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Error.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.Error.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.Error.Equals(CommandLine.Error)">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.Error"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.Error"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.Error"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.TokenError">
+            <summary>
+            Base type of all errors related to bad token detection.
+            </summary>
+        </member>
+        <member name="M:CommandLine.TokenError.#ctor(CommandLine.ErrorType,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.TokenError"/> class.
+            </summary>
+            <param name="tag">Error type.</param>
+            <param name="token">Problematic token.</param>
+        </member>
+        <member name="P:CommandLine.TokenError.Token">
+            <summary>
+            The string containing the token text.
+            </summary>
+        </member>
+        <member name="M:CommandLine.TokenError.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.TokenError.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.TokenError.Equals(CommandLine.TokenError)">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.TokenError"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.TokenError"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.TokenError"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.BadFormatTokenError">
+            <summary>
+            Models an error generated when an invalid token is detected.
+            </summary>
+        </member>
+        <member name="T:CommandLine.NamedError">
+            <summary>
+            Base type of all erros with name information.
+            </summary>
+        </member>
+        <member name="M:CommandLine.NamedError.#ctor(CommandLine.ErrorType,CommandLine.NameInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.NamedError"/> class.
+            </summary>
+            <param name="tag">Error type.</param>
+            <param name="nameInfo">Problematic name.</param>
+        </member>
+        <member name="P:CommandLine.NamedError.NameInfo">
+            <summary>
+            Name information relative to this error instance.
+            </summary>
+        </member>
+        <member name="M:CommandLine.NamedError.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.NamedError.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.NamedError.Equals(CommandLine.NamedError)">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.NamedError"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.NamedError"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.NamedError"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.MissingValueOptionError">
+            <summary>
+            Models an error generated when an option lacks its value.
+            </summary>
+        </member>
+        <member name="T:CommandLine.UnknownOptionError">
+            <summary>
+            Models an error generated when an unknown option is detected.
+            </summary>
+        </member>
+        <member name="T:CommandLine.MissingRequiredOptionError">
+            <summary>
+            Models an error generated when a required option is required.
+            </summary>
+        </member>
+        <member name="T:CommandLine.MutuallyExclusiveSetError">
+            <summary>
+            Models an error generated when a an option from another set is defined.
+            </summary>
+        </member>
+        <member name="P:CommandLine.MutuallyExclusiveSetError.SetName">
+            <summary>
+            Option's set name.
+            </summary>
+        </member>
+        <member name="T:CommandLine.BadFormatConversionError">
+            <summary>
+            Models an error generated when a value conversion fails.
+            </summary>
+        </member>
+        <member name="T:CommandLine.SequenceOutOfRangeError">
+            <summary>
+            Models an error generated when a sequence value lacks elements.
+            </summary>
+        </member>
+        <member name="T:CommandLine.RepeatedOptionError">
+            <summary>
+            Models an error generated when an option is repeated two or more times.
+            </summary>
+        </member>
+        <member name="T:CommandLine.BadVerbSelectedError">
+            <summary>
+            Models an error generated when an unknown verb is detected.
+            </summary>
+        </member>
+        <member name="T:CommandLine.HelpRequestedError">
+            <summary>
+            Models an error generated when a user explicitly requests help.
+            </summary>
+        </member>
+        <member name="T:CommandLine.HelpVerbRequestedError">
+            <summary>
+            Models an error generated when a user explicitly requests help in verb commands scenario.
+            </summary>
+        </member>
+        <member name="P:CommandLine.HelpVerbRequestedError.Verb">
+            <summary>
+            Verb command string.
+            </summary>
+        </member>
+        <member name="P:CommandLine.HelpVerbRequestedError.Type">
+            <summary>
+            <see cref="T:System.Type"/> of verb command.
+            </summary>
+        </member>
+        <member name="P:CommandLine.HelpVerbRequestedError.Matched">
+            <summary>
+            <value>true</value> if verb command is found; otherwise <value>false</value>.
+            </summary>
+        </member>
+        <member name="T:CommandLine.NoVerbSelectedError">
+            <summary>
+            Models an error generated when no verb is selected.
+            </summary>
+        </member>
+        <member name="T:CommandLine.VersionRequestedError">
+            <summary>
+            Models an error generated when a user explicitly requests version.
+            </summary>
+        </member>
+        <member name="T:CommandLine.OptionAttribute">
+            <summary>
+            Models an option specification.
+            </summary>
+        </member>
+        <member name="M:CommandLine.OptionAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.OptionAttribute"/> class.
+            The default long name will be inferred from target property.
+            </summary>
+        </member>
+        <member name="M:CommandLine.OptionAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.OptionAttribute"/> class.
+            </summary>
+            <param name="longName">The long name of the option.</param>
+        </member>
+        <member name="M:CommandLine.OptionAttribute.#ctor(System.Char,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.OptionAttribute"/> class.
+            </summary>
+            <param name="shortName">The short name of the option.</param>
+            <param name="longName">The long name of the option or null if not used.</param>
+        </member>
+        <member name="M:CommandLine.OptionAttribute.#ctor(System.Char)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.OptionAttribute"/> class.
+            </summary>
+            <param name="shortName">The short name of the option..</param>
+        </member>
+        <member name="P:CommandLine.OptionAttribute.LongName">
+            <summary>
+            Gets long name of this command line option. This name is usually a single english word.
+            </summary>
+        </member>
+        <member name="P:CommandLine.OptionAttribute.ShortName">
+            <summary>
+            Gets a short name of this command line option, made of one character.
+            </summary>
+        </member>
+        <member name="P:CommandLine.OptionAttribute.SetName">
+            <summary>
+            Gets or sets the option's mutually exclusive set name.
+            </summary>
+        </member>
+        <member name="P:CommandLine.OptionAttribute.Separator">
+            <summary>
+            When applying attribute to <see cref="T:System.Collections.Generic.IEnumerable`1"/> target properties,
+            it allows you to split an argument and consume its content as a sequence.
+            </summary>
+        </member>
+        <member name="T:CommandLine.Parser">
+            <summary>
+            Provides methods to parse command line arguments.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Parser.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Parser"/> class.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Parser.#ctor(System.Action{CommandLine.ParserSettings})">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Parser"/> class,
+            configurable with <see cref="T:CommandLine.ParserSettings"/> using a delegate.
+            </summary>
+            <param name="configuration">The <see cref="T:System.Action`1"/> delegate used to configure
+            aspects and behaviors of the parser.</param>
+        </member>
+        <member name="M:CommandLine.Parser.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:CommandLine.Parser"/> class.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Parser.Default">
+            <summary>
+            Gets the singleton instance created with basic defaults.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Parser.Settings">
+            <summary>
+            Gets the instance that implements <see cref="T:CommandLine.ParserSettings"/> in use.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Parser.ParseArguments``1(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments constructing values in an instance of type <typeparamref name="T"/>.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            </summary>
+            <typeparam name="T">Type of the target instance built with parsed value.</typeparam>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing an instance of type <typeparamref name="T"/> with parsed values
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+        </member>
+        <member name="M:CommandLine.Parser.ParseArguments``1(System.Func{``0},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments constructing values in an instance of type <typeparamref name="T"/>.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            </summary>
+            <typeparam name="T">Type of the target instance built with parsed value.</typeparam>
+            <param name="factory">A <see cref="T:System.Func`1"/> delegate used to intitalize the target instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing an instance of type <typeparamref name="T"/> with parsed values
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+        </member>
+        <member name="M:CommandLine.Parser.ParseArguments(System.Collections.Generic.IEnumerable{System.String},System.Type[])">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from the array of types supplied by <paramref name="types"/>.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <param name="types">A <see cref="T:System.Type"/> array used to supply verb alternatives.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="types"/> array is empty.</exception>
+            <remarks>All types must expose a parameterless constructor. It's stronly recommended to use a generic overload.</remarks>
+        </member>
+        <member name="M:CommandLine.Parser.Dispose">
+            <summary>
+            Frees resources owned by the instance.
+            </summary>
+        </member>
+        <member name="T:CommandLine.ParserExtensions">
+            <summary>
+            Defines generic overloads for <see cref="M:CommandLine.Parser.ParseArguments(System.Collections.Generic.IEnumerable{System.String},System.Type[])"/>.
+            </summary>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``2(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``3(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``4(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``5(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``6(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``7(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``8(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``9(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``10(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``11(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <typeparam name="T11">The type of the eleventh verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``12(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <typeparam name="T11">The type of the eleventh verb.</typeparam>
+            <typeparam name="T12">The type of the twelfth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``13(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <typeparam name="T11">The type of the eleventh verb.</typeparam>
+            <typeparam name="T12">The type of the twelfth verb.</typeparam>
+            <typeparam name="T13">The type of the thirteenth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``14(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <typeparam name="T11">The type of the eleventh verb.</typeparam>
+            <typeparam name="T12">The type of the twelfth verb.</typeparam>
+            <typeparam name="T13">The type of the thirteenth verb.</typeparam>
+            <typeparam name="T14">The type of the fourteenth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``15(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <typeparam name="T11">The type of the eleventh verb.</typeparam>
+            <typeparam name="T12">The type of the twelfth verb.</typeparam>
+            <typeparam name="T13">The type of the thirteenth verb.</typeparam>
+            <typeparam name="T14">The type of the fourteenth verb.</typeparam>
+            <typeparam name="T15">The type of the fifteenth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="M:CommandLine.ParserExtensions.ParseArguments``16(CommandLine.Parser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses a string array of command line arguments for verb commands scenario, constructing the proper instance from types as generic arguments.
+            Grammar rules are defined decorating public properties with appropriate attributes.
+            The <see cref="T:CommandLine.VerbAttribute"/> must be applied to types in the array.
+            </summary>
+            <typeparam name="T1">The type of the first verb.</typeparam>
+            <typeparam name="T2">The type of the second verb.</typeparam>
+            <typeparam name="T3">The type of the third verb.</typeparam>
+            <typeparam name="T4">The type of the fourth verb.</typeparam>
+            <typeparam name="T5">The type of the fifth verb.</typeparam>
+            <typeparam name="T6">The type of the sixth verb.</typeparam>
+            <typeparam name="T7">The type of the seventh verb.</typeparam>
+            <typeparam name="T8">The type of the eighth verb.</typeparam>
+            <typeparam name="T9">The type of the ninth verb.</typeparam>
+            <typeparam name="T10">The type of the tenth verb.</typeparam>
+            <typeparam name="T11">The type of the eleventh verb.</typeparam>
+            <typeparam name="T12">The type of the twelfth verb.</typeparam>
+            <typeparam name="T13">The type of the thirteenth verb.</typeparam>
+            <typeparam name="T14">The type of the fourteenth verb.</typeparam>
+            <typeparam name="T15">The type of the fifteenth verb.</typeparam>
+            <typeparam name="T16">The type of the sixteenth verb.</typeparam>
+            <param name="parser">A <see cref="T:CommandLine.Parser"/> instance.</param>
+            <param name="args">A <see cref="T:System.String"/> array of command line arguments, normally supplied by application entry point.</param>
+            <returns>A <see cref="T:CommandLine.ParserResult`1"/> containing the appropriate instance with parsed values as a <see cref="T:System.Object"/>
+            and a sequence of <see cref="T:CommandLine.Error"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown if one or more arguments are null.</exception>
+            <remarks>All types must expose a parameterless constructor.</remarks>
+        </member>
+        <member name="T:CommandLine.ParserResultType">
+            <summary>
+            Discriminator enumeration of <see cref="T:CommandLine.ParserResultType"/> derivates.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ParserResultType.Parsed">
+            <summary>
+            Value of <see cref="T:CommandLine.Parsed`1"/> type.
+            </summary>
+        </member>
+        <member name="F:CommandLine.ParserResultType.NotParsed">
+            <summary>
+            Value of <see cref="T:CommandLine.NotParsed`1"/> type.
+            </summary>
+        </member>
+        <member name="T:CommandLine.ParserResult`1">
+            <summary>
+            Models a parser result. When inherited by <see cref="T:CommandLine.Parsed`1"/>, it contains an instance of type <typeparamref name="T"/>
+            with parsed values.
+            When inherited by <see cref="T:CommandLine.NotParsed`1"/>, it contains a sequence of <see cref="T:CommandLine.Error"/>.
+            </summary>
+            <typeparam name="T">The type with attributes that define the syntax of parsing rules.</typeparam>
+        </member>
+        <member name="P:CommandLine.ParserResult`1.Tag">
+            <summary>
+            Parser result type discriminator, defined as <see cref="T:CommandLine.ParserResultType"/> enumeration.
+            </summary>
+        </member>
+        <member name="T:CommandLine.Parsed`1">
+            <summary>
+            It contains an instance of type <typeparamref name="T"/> with parsed values.
+            </summary>
+            <typeparam name="T">The type with attributes that define the syntax of parsing rules.</typeparam>
+        </member>
+        <member name="P:CommandLine.Parsed`1.Value">
+            <summary>
+            Gets the instance with parsed values.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Parsed`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.Parsed`1.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.Parsed`1.Equals(CommandLine.Parsed{`0})">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.Parsed`1"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.Parsed`1"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.Parsed`1"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.NotParsed`1">
+            <summary>
+            It contains a sequence of <see cref="T:CommandLine.Error"/>.
+            </summary>
+            <typeparam name="T">The type with attributes that define the syntax of parsing rules.</typeparam>
+        </member>
+        <member name="P:CommandLine.NotParsed`1.Errors">
+            <summary>
+            Gets the sequence of parsing errors.
+            </summary>
+        </member>
+        <member name="M:CommandLine.NotParsed`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.NotParsed`1.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.NotParsed`1.Equals(CommandLine.NotParsed{`0})">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.NotParsed`1"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.NotParsed`1"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.NotParsed`1"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.ParserResultExtensions">
+            <summary>
+            Provides convenience extension methods for <see cref="T:CommandLine.ParserResult`1"/>.
+            </summary>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.WithParsed``1(CommandLine.ParserResult{``0},System.Action{``0})">
+            <summary>
+            Executes <paramref name="action"/> if <see cref="T:CommandLine.ParserResult`1"/> contains
+            parsed values.
+            </summary>
+            <typeparam name="T">Type of the target instance built with parsed value.</typeparam>
+            <param name="result">An <see cref="T:CommandLine.ParserResult`1"/> instance.</param>
+            <param name="action">The <see cref="T:System.Action`1"/> to execute.</param>
+            <returns>The same <paramref name="result"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.WithParsed``1(CommandLine.ParserResult{System.Object},System.Action{``0})">
+            <summary>
+            Executes <paramref name="action"/> if parsed values are of <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">Type of the target instance built with parsed value.</typeparam>
+            <param name="result">An verb result instance.</param>
+            <param name="action">The <see cref="T:System.Action`1"/> to execute.</param>
+            <returns>The same <paramref name="result"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.WithNotParsed``1(CommandLine.ParserResult{``0},System.Action{System.Collections.Generic.IEnumerable{CommandLine.Error}})">
+            <summary>
+            Executes <paramref name="action"/> if <see cref="T:CommandLine.ParserResult`1"/> lacks
+            parsed values and contains errors.
+            </summary>
+            <typeparam name="T">Type of the target instance built with parsed value.</typeparam>
+            <param name="result">An <see cref="T:CommandLine.ParserResult`1"/> instance.</param>
+            <param name="action">The <see cref="T:System.Action"/> delegate to execute.</param>
+            <returns>The same <paramref name="result"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``2(CommandLine.ParserResult{``0},System.Func{``0,``1},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``1})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="TSource">Type of the target instance built with parsed value.</typeparam>
+            <typeparam name="TResult">The type of the new value.</typeparam>
+            <param name="result">An <see cref="T:CommandLine.ParserResult`1"/> instance.</param>
+            <param name="parsedFunc">Lambda executed on successful parsing.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``2(CommandLine.ParserResult{System.Object},System.Func{``0,``1},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``1})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``3(CommandLine.ParserResult{System.Object},System.Func{``0,``2},System.Func{``1,``2},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``2})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``4(CommandLine.ParserResult{System.Object},System.Func{``0,``3},System.Func{``1,``3},System.Func{``2,``3},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``3})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``5(CommandLine.ParserResult{System.Object},System.Func{``0,``4},System.Func{``1,``4},System.Func{``2,``4},System.Func{``3,``4},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``4})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``6(CommandLine.ParserResult{System.Object},System.Func{``0,``5},System.Func{``1,``5},System.Func{``2,``5},System.Func{``3,``5},System.Func{``4,``5},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``5})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``7(CommandLine.ParserResult{System.Object},System.Func{``0,``6},System.Func{``1,``6},System.Func{``2,``6},System.Func{``3,``6},System.Func{``4,``6},System.Func{``5,``6},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``6})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``8(CommandLine.ParserResult{System.Object},System.Func{``0,``7},System.Func{``1,``7},System.Func{``2,``7},System.Func{``3,``7},System.Func{``4,``7},System.Func{``5,``7},System.Func{``6,``7},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``7})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``9(CommandLine.ParserResult{System.Object},System.Func{``0,``8},System.Func{``1,``8},System.Func{``2,``8},System.Func{``3,``8},System.Func{``4,``8},System.Func{``5,``8},System.Func{``6,``8},System.Func{``7,``8},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``8})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``10(CommandLine.ParserResult{System.Object},System.Func{``0,``9},System.Func{``1,``9},System.Func{``2,``9},System.Func{``3,``9},System.Func{``4,``9},System.Func{``5,``9},System.Func{``6,``9},System.Func{``7,``9},System.Func{``8,``9},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``9})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``11(CommandLine.ParserResult{System.Object},System.Func{``0,``10},System.Func{``1,``10},System.Func{``2,``10},System.Func{``3,``10},System.Func{``4,``10},System.Func{``5,``10},System.Func{``6,``10},System.Func{``7,``10},System.Func{``8,``10},System.Func{``9,``10},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``10})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``12(CommandLine.ParserResult{System.Object},System.Func{``0,``11},System.Func{``1,``11},System.Func{``2,``11},System.Func{``3,``11},System.Func{``4,``11},System.Func{``5,``11},System.Func{``6,``11},System.Func{``7,``11},System.Func{``8,``11},System.Func{``9,``11},System.Func{``10,``11},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``11})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="T11">Eleventh verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="parsedFunc11">Lambda executed on successful parsing of <typeparamref name="T11"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``13(CommandLine.ParserResult{System.Object},System.Func{``0,``12},System.Func{``1,``12},System.Func{``2,``12},System.Func{``3,``12},System.Func{``4,``12},System.Func{``5,``12},System.Func{``6,``12},System.Func{``7,``12},System.Func{``8,``12},System.Func{``9,``12},System.Func{``10,``12},System.Func{``11,``12},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``12})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="T11">Eleventh verb type.</typeparam>
+            <typeparam name="T12">Twelfth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="parsedFunc11">Lambda executed on successful parsing of <typeparamref name="T11"/>.</param>
+            <param name="parsedFunc12">Lambda executed on successful parsing of <typeparamref name="T12"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``14(CommandLine.ParserResult{System.Object},System.Func{``0,``13},System.Func{``1,``13},System.Func{``2,``13},System.Func{``3,``13},System.Func{``4,``13},System.Func{``5,``13},System.Func{``6,``13},System.Func{``7,``13},System.Func{``8,``13},System.Func{``9,``13},System.Func{``10,``13},System.Func{``11,``13},System.Func{``12,``13},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``13})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="T11">Eleventh verb type.</typeparam>
+            <typeparam name="T12">Twelfth verb type.</typeparam>
+            <typeparam name="T13">Thirteenth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="parsedFunc11">Lambda executed on successful parsing of <typeparamref name="T11"/>.</param>
+            <param name="parsedFunc12">Lambda executed on successful parsing of <typeparamref name="T12"/>.</param>
+            <param name="parsedFunc13">Lambda executed on successful parsing of <typeparamref name="T13"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``15(CommandLine.ParserResult{System.Object},System.Func{``0,``14},System.Func{``1,``14},System.Func{``2,``14},System.Func{``3,``14},System.Func{``4,``14},System.Func{``5,``14},System.Func{``6,``14},System.Func{``7,``14},System.Func{``8,``14},System.Func{``9,``14},System.Func{``10,``14},System.Func{``11,``14},System.Func{``12,``14},System.Func{``13,``14},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``14})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="T11">Eleventh verb type.</typeparam>
+            <typeparam name="T12">Twelfth verb type.</typeparam>
+            <typeparam name="T13">Thirteenth verb type.</typeparam>
+            <typeparam name="T14">Fourteenth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="parsedFunc11">Lambda executed on successful parsing of <typeparamref name="T11"/>.</param>
+            <param name="parsedFunc12">Lambda executed on successful parsing of <typeparamref name="T12"/>.</param>
+            <param name="parsedFunc13">Lambda executed on successful parsing of <typeparamref name="T13"/>.</param>
+            <param name="parsedFunc14">Lambda executed on successful parsing of <typeparamref name="T14"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``16(CommandLine.ParserResult{System.Object},System.Func{``0,``15},System.Func{``1,``15},System.Func{``2,``15},System.Func{``3,``15},System.Func{``4,``15},System.Func{``5,``15},System.Func{``6,``15},System.Func{``7,``15},System.Func{``8,``15},System.Func{``9,``15},System.Func{``10,``15},System.Func{``11,``15},System.Func{``12,``15},System.Func{``13,``15},System.Func{``14,``15},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``15})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="T11">Eleventh verb type.</typeparam>
+            <typeparam name="T12">Twelfth verb type.</typeparam>
+            <typeparam name="T13">Thirteenth verb type.</typeparam>
+            <typeparam name="T14">Fourteenth verb type.</typeparam>
+            <typeparam name="T15">Fifteenth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="parsedFunc11">Lambda executed on successful parsing of <typeparamref name="T11"/>.</param>
+            <param name="parsedFunc12">Lambda executed on successful parsing of <typeparamref name="T12"/>.</param>
+            <param name="parsedFunc13">Lambda executed on successful parsing of <typeparamref name="T13"/>.</param>
+            <param name="parsedFunc14">Lambda executed on successful parsing of <typeparamref name="T14"/>.</param>
+            <param name="parsedFunc15">Lambda executed on successful parsing of <typeparamref name="T15"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="M:CommandLine.ParserResultExtensions.MapResult``17(CommandLine.ParserResult{System.Object},System.Func{``0,``16},System.Func{``1,``16},System.Func{``2,``16},System.Func{``3,``16},System.Func{``4,``16},System.Func{``5,``16},System.Func{``6,``16},System.Func{``7,``16},System.Func{``8,``16},System.Func{``9,``16},System.Func{``10,``16},System.Func{``11,``16},System.Func{``12,``16},System.Func{``13,``16},System.Func{``14,``16},System.Func{``15,``16},System.Func{System.Collections.Generic.IEnumerable{CommandLine.Error},``16})">
+            <summary>
+            Provides a way to transform result data into another value.
+            </summary>
+            <typeparam name="T1">First verb type.</typeparam>
+            <typeparam name="T2">Second verb type.</typeparam>
+            <typeparam name="T3">Third verb type.</typeparam>
+            <typeparam name="T4">Fourth verb type.</typeparam>
+            <typeparam name="T5">Fifth verb type.</typeparam>
+            <typeparam name="T6">Sixth verb type.</typeparam>
+            <typeparam name="T7">Seventh verb type.</typeparam>
+            <typeparam name="T8">Eighth verb type.</typeparam>
+            <typeparam name="T9">Ninth verb type.</typeparam>
+            <typeparam name="T10">Tenth verb type.</typeparam>
+            <typeparam name="T11">Eleventh verb type.</typeparam>
+            <typeparam name="T12">Twelfth verb type.</typeparam>
+            <typeparam name="T13">Thirteenth verb type.</typeparam>
+            <typeparam name="T14">Fourteenth verb type.</typeparam>
+            <typeparam name="T15">Fifteenth verb type.</typeparam>
+            <typeparam name="T16">Sixteenth verb type.</typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="result">The result in verb scenario.</param>
+            <param name="parsedFunc1">Lambda executed on successful parsing of <typeparamref name="T1"/>.</param>
+            <param name="parsedFunc2">Lambda executed on successful parsing of <typeparamref name="T2"/>.</param>
+            <param name="parsedFunc3">Lambda executed on successful parsing of <typeparamref name="T3"/>.</param>
+            <param name="parsedFunc4">Lambda executed on successful parsing of <typeparamref name="T4"/>.</param>
+            <param name="parsedFunc5">Lambda executed on successful parsing of <typeparamref name="T5"/>.</param>
+            <param name="parsedFunc6">Lambda executed on successful parsing of <typeparamref name="T6"/>.</param>
+            <param name="parsedFunc7">Lambda executed on successful parsing of <typeparamref name="T7"/>.</param>
+            <param name="parsedFunc8">Lambda executed on successful parsing of <typeparamref name="T8"/>.</param>
+            <param name="parsedFunc9">Lambda executed on successful parsing of <typeparamref name="T9"/>.</param>
+            <param name="parsedFunc10">Lambda executed on successful parsing of <typeparamref name="T10"/>.</param>
+            <param name="parsedFunc11">Lambda executed on successful parsing of <typeparamref name="T11"/>.</param>
+            <param name="parsedFunc12">Lambda executed on successful parsing of <typeparamref name="T12"/>.</param>
+            <param name="parsedFunc13">Lambda executed on successful parsing of <typeparamref name="T13"/>.</param>
+            <param name="parsedFunc14">Lambda executed on successful parsing of <typeparamref name="T14"/>.</param>
+            <param name="parsedFunc15">Lambda executed on successful parsing of <typeparamref name="T15"/>.</param>
+            <param name="parsedFunc16">Lambda executed on successful parsing of <typeparamref name="T16"/>.</param>
+            <param name="notParsedFunc">Lambda executed on failed parsing.</param>
+            <returns>The new value.</returns>
+        </member>
+        <member name="T:CommandLine.ParserSettings">
+            <summary>
+            Provides settings for <see cref="T:CommandLine.Parser"/>. Once consumed cannot be reused.
+            </summary>
+        </member>
+        <member name="M:CommandLine.ParserSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.ParserSettings"/> class.
+            </summary>
+        </member>
+        <member name="M:CommandLine.ParserSettings.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:CommandLine.ParserSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:CommandLine.ParserSettings.CaseSensitive">
+            <summary>
+            Gets or sets a value indicating whether perform case sensitive comparisons.
+            Note that case insensitivity only applies to <i>parameters</i>, not the values
+            assigned to them (for example, enum parsing).
+            </summary>
+        </member>
+        <member name="P:CommandLine.ParserSettings.CaseInsensitiveEnumValues">
+            <summary>
+            Gets or sets a value indicating whether perform case sensitive comparisons of <i>values</i>.
+            Note that case insensitivity only applies to <i>values</i>, not the parameters.
+            </summary>
+        </member>
+        <member name="P:CommandLine.ParserSettings.ParsingCulture">
+            <summary>
+            Gets or sets the culture used when parsing arguments to typed properties.
+            </summary>
+            <remarks>
+            Default is invariant culture, <see cref="P:System.Globalization.CultureInfo.InvariantCulture"/>.
+            </remarks>
+        </member>
+        <member name="P:CommandLine.ParserSettings.HelpWriter">
+            <summary>
+            Gets or sets the <see cref="T:System.IO.TextWriter"/> used for help method output.
+            Setting this property to null, will disable help screen.
+            </summary>
+            <remarks>
+            It is the caller's responsibility to dispose or close the <see cref="T:System.IO.TextWriter"/>.
+            </remarks>
+        </member>
+        <member name="P:CommandLine.ParserSettings.IgnoreUnknownArguments">
+            <summary>
+            Gets or sets a value indicating whether the parser shall move on to the next argument and ignore the given argument if it
+            encounter an unknown arguments
+            </summary>
+            <value>
+            <c>true</c> to allow parsing the arguments with different class options that do not have all the arguments.
+            </value>
+            <remarks>
+            This allows fragmented version class parsing, useful for project with add-on where add-ons also requires command line arguments but
+            when these are unknown by the main program at build time.
+            </remarks>
+        </member>
+        <member name="P:CommandLine.ParserSettings.EnableDashDash">
+            <summary>
+            Gets or sets a value indicating whether enable double dash '--' syntax,
+            that forces parsing of all subsequent tokens as values.
+            </summary>
+        </member>
+        <member name="P:CommandLine.ParserSettings.MaximumDisplayWidth">
+            <summary>
+            Gets or sets the maximum width of the display.  This determines word wrap when displaying the text.
+            </summary>
+        </member>
+        <member name="M:CommandLine.ParserSettings.Dispose">
+            <summary>
+            Frees resources owned by the instance.
+            </summary>
+        </member>
+        <member name="T:CommandLine.Text.AssemblyLicenseAttribute">
+            <summary>
+            Models a multiline assembly license text.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyLicenseAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyLicenseAttribute"/> class
+            with one line of text.
+            </summary>
+            <param name="line1">First line of license text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyLicenseAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyLicenseAttribute"/> class
+            with two lines of text.
+            </summary>
+            <param name="line1">First line of license text.</param>
+            <param name="line2">Second line of license text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyLicenseAttribute.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyLicenseAttribute"/> class
+            with three lines of text.
+            </summary>
+            <param name="line1">First line of license text.</param>
+            <param name="line2">Second line of license text.</param>
+            <param name="line3">Third line of license text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyLicenseAttribute.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyLicenseAttribute"/> class
+            with four lines of text.
+            </summary>
+            <param name="line1">First line of license text.</param>
+            <param name="line2">Second line of license text.</param>
+            <param name="line3">Third line of license text.</param>
+            <param name="line4">Fourth line of license text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyLicenseAttribute.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyLicenseAttribute"/> class
+            with five lines of text.
+            </summary>
+            <param name="line1">First line of license text.</param>
+            <param name="line2">Second line of license text.</param>
+            <param name="line3">Third line of license text.</param>
+            <param name="line4">Fourth line of license text.</param>
+            <param name="line5">Fifth line of license text.</param>
+        </member>
+        <member name="T:CommandLine.Text.AssemblyUsageAttribute">
+            <summary>
+            Models a multiline assembly usage text.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyUsageAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyUsageAttribute"/> class
+            with one line of text.
+            </summary>
+            <param name="line1">First line of usage text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyUsageAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyUsageAttribute"/> class
+            with two lines of text.
+            </summary>
+            <param name="line1">First line of usage text.</param>
+            <param name="line2">Second line of usage text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyUsageAttribute.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyUsageAttribute"/> class
+            with three lines of text.
+            </summary>
+            <param name="line1">First line of usage text.</param>
+            <param name="line2">Second line of usage text.</param>
+            <param name="line3">Third line of usage text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyUsageAttribute.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyUsageAttribute"/> class
+            with four lines of text.
+            </summary>
+            <param name="line1">First line of usage text.</param>
+            <param name="line2">Second line of usage text.</param>
+            <param name="line3">Third line of usage text.</param>
+            <param name="line4">Fourth line of usage text.</param>
+        </member>
+        <member name="M:CommandLine.Text.AssemblyUsageAttribute.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.AssemblyUsageAttribute"/> class
+            with five lines of text.
+            </summary>
+            <param name="line1">First line of usage text.</param>
+            <param name="line2">Second line of usage text.</param>
+            <param name="line3">Third line of usage text.</param>
+            <param name="line4">Fourth line of usage text.</param>
+            <param name="line5">Fifth line of usage text.</param>
+        </member>
+        <member name="T:CommandLine.Text.CopyrightInfo">
+            <summary>
+            Models the copyright part of an help text.
+            You can assign it where you assign any <see cref="T:System.String"/> instance.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.CopyrightInfo.Empty">
+            <summary>
+            An empty object used for initialization.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.CopyrightInfo"/> class
+            specifying author and year.
+            </summary>
+            <param name="author">The company or person holding the copyright.</param>
+            <param name="year">The year of coverage of copyright.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="author"/> is null or empty string.</exception>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.#ctor(System.String,System.Int32[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.CopyrightInfo"/> class
+            specifying author and copyrightYears.
+            </summary>
+            <param name="author">The company or person holding the copyright.</param>
+            <param name="years">The copyrightYears of coverage of copyright.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="author"/> is null or empty string.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when parameter <paramref name="years"/> is not supplied.</exception>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.#ctor(System.Boolean,System.String,System.Int32[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.CopyrightInfo"/> class
+            specifying symbol case, author and copyrightYears.
+            </summary>
+            <param name="isSymbolUpper">The case of the copyright symbol.</param>
+            <param name="author">The company or person holding the copyright.</param>
+            <param name="copyrightYears">The copyrightYears of coverage of copyright.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="author"/> is null or empty string.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when parameter <paramref name="copyrightYears"/> is not supplied.</exception>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.CopyrightInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.#ctor(System.Reflection.AssemblyCopyrightAttribute)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.CopyrightInfo"/> class
+            with an assembly attribute, this overrides all formatting.
+            </summary>
+            <param name="attribute">The attribute which text to use.</param>
+        </member>
+        <member name="P:CommandLine.Text.CopyrightInfo.Default">
+            <summary>
+            Gets the default copyright information.
+            Retrieved from <see cref="T:System.Reflection.AssemblyCopyrightAttribute"/>, if it exists,
+            otherwise it uses <see cref="T:System.Reflection.AssemblyCompanyAttribute"/> as copyright holder with the current year.
+            If neither exists it throws an <see cref="T:System.InvalidOperationException"/>.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.CopyrightInfo.CopyrightWord">
+            <summary>
+            Gets a different copyright word when overridden in a derived class.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.op_Implicit(CommandLine.Text.CopyrightInfo)~System.String">
+            <summary>
+            Converts the copyright instance to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="info">This <see cref="T:CommandLine.Text.CopyrightInfo"/> instance.</param>
+            <returns>The <see cref="T:System.String"/> that contains the copyright.</returns>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.ToString">
+            <summary>
+            Returns the copyright as a <see cref="T:System.String"/>.
+            </summary>
+            <returns>The <see cref="T:System.String"/> that contains the copyright.</returns>
+        </member>
+        <member name="M:CommandLine.Text.CopyrightInfo.FormatYears(System.Int32[])">
+            <summary>
+            When overridden in a derived class, allows to specify a new algorithm to render copyright copyrightYears
+            as a <see cref="T:System.String"/> instance.
+            </summary>
+            <param name="years">A <see cref="T:System.Int32"/> array of copyrightYears.</param>
+            <returns>A <see cref="T:System.String"/> instance with copyright copyrightYears.</returns>
+        </member>
+        <member name="T:CommandLine.Text.Example">
+            <summary>
+            Models a command line usage example.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.Example.#ctor(System.String,System.Collections.Generic.IEnumerable{CommandLine.UnParserSettings},System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.Example"/> class.
+            </summary>
+            <param name="helpText">Example description.</param>
+            <param name="formatStyles">A <see cref="T:CommandLine.UnParserSettings"/> instances sequence that defines command line arguments format.</param>
+            <param name="sample">A sample instance.</param>
+        </member>
+        <member name="M:CommandLine.Text.Example.#ctor(System.String,CommandLine.UnParserSettings,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.Example"/> class.
+            </summary>
+            <param name="helpText">Example description.</param>
+            <param name="formatStyle">A <see cref="T:CommandLine.UnParserSettings"/> instance that defines command line arguments format.</param>
+            <param name="sample">A sample instance.</param>
+        </member>
+        <member name="M:CommandLine.Text.Example.#ctor(System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.Example"/> class.
+            </summary>
+            <param name="helpText">Example description.</param>
+            <param name="sample">A sample instance.</param>
+        </member>
+        <member name="P:CommandLine.Text.Example.HelpText">
+            <summary>
+            Example description. 
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.Example.FormatStyles">
+            <summary>
+            A sequence of format styles.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.Example.Sample">
+            <summary>
+            A sample instance.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.Example.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
+            <returns><value>true</value> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="M:CommandLine.Text.Example.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <remarks>A hash code for the current <see cref="T:System.Object"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.Text.Example.Equals(CommandLine.Text.Example)">
+            <summary>
+            Returns a value that indicates whether the current instance and a specified <see cref="T:CommandLine.Text.Example"/> have the same value.
+            </summary>
+            <param name="other">The <see cref="T:CommandLine.Text.Example"/> instance to compare.</param>
+            <returns><value>true</value> if this instance of <see cref="T:CommandLine.Text.Example"/> and <paramref name="other"/> have the same value; otherwise, <value>false</value>.</returns>
+        </member>
+        <member name="T:CommandLine.Text.HeadingInfo">
+            <summary>
+            Models the heading part of an help text.
+            You can assign it where you assign any <see cref="T:System.String"/> instance.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.HeadingInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HeadingInfo"/> class
+            specifying program name and version.
+            </summary>
+            <param name="programName">The name of the program.</param>
+            <param name="version">The version of the program.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="programName"/> is null or empty string.</exception>
+        </member>
+        <member name="P:CommandLine.Text.HeadingInfo.Empty">
+            <summary>
+            An empty object used for initialization. 
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HeadingInfo.Default">
+            <summary>
+            Gets the default heading instance.
+            The title is retrieved from <see cref="T:System.Reflection.AssemblyTitleAttribute"/>,
+            or the assembly short name if its not defined.
+            The version is retrieved from <see cref="T:System.Reflection.AssemblyInformationalVersionAttribute"/>,
+            or the assembly version if its not defined.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.HeadingInfo.op_Implicit(CommandLine.Text.HeadingInfo)~System.String">
+            <summary>
+            Converts the heading to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="info">This <see cref="T:CommandLine.Text.HeadingInfo"/> instance.</param>
+            <returns>The <see cref="T:System.String"/> that contains the heading.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HeadingInfo.ToString">
+            <summary>
+            Returns the heading as a <see cref="T:System.String"/>.
+            </summary>
+            <returns>The <see cref="T:System.String"/> that contains the heading.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HeadingInfo.WriteMessage(System.String,System.IO.TextWriter)">
+            <summary>
+            Writes out a string and a new line using the program name specified in the constructor
+            and <paramref name="message"/> parameter.
+            </summary>
+            <param name="message">The <see cref="T:System.String"/> message to write.</param>
+            <param name="writer">The target <see cref="T:System.IO.TextWriter"/> derived type.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="message"/> is null or empty string.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="writer"/> is null.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HeadingInfo.WriteMessage(System.String)">
+            <summary>
+            Writes out a string and a new line using the program name specified in the constructor
+            and <paramref name="message"/> parameter to standard output stream.
+            </summary>
+            <param name="message">The <see cref="T:System.String"/> message to write.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="message"/> is null or empty string.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HeadingInfo.WriteError(System.String)">
+            <summary>
+            Writes out a string and a new line using the program name specified in the constructor
+            and <paramref name="message"/> parameter to standard error stream.
+            </summary>
+            <param name="message">The <see cref="T:System.String"/> message to write.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="message"/> is null or empty string.</exception>
+        </member>
+        <member name="T:CommandLine.Text.HelpText">
+            <summary>
+            Provides means to format an help screen.
+            You can assign it in place of a <see cref="T:System.String"/> instance.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.#ctor(CommandLine.Text.SentenceBuilder)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class 
+            specifying the sentence builder.
+            </summary>
+            <param name="sentenceBuilder">
+            A <see cref="P:CommandLine.Text.HelpText.SentenceBuilder"/> instance.
+            </param>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class
+            specifying heading string.
+            </summary>
+            <param name="heading">An heading string or an instance of <see cref="T:CommandLine.Text.HeadingInfo"/>.</param>
+            <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="heading"/> is null or empty string.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.#ctor(CommandLine.Text.SentenceBuilder,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class
+            specifying the sentence builder and heading string.
+            </summary>
+            <param name="sentenceBuilder">A <see cref="P:CommandLine.Text.HelpText.SentenceBuilder"/> instance.</param>
+            <param name="heading">A string with heading or an instance of <see cref="T:CommandLine.Text.HeadingInfo"/>.</param>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class
+            specifying heading and copyright strings.
+            </summary>
+            <param name="heading">A string with heading or an instance of <see cref="T:CommandLine.Text.HeadingInfo"/>.</param>
+            <param name="copyright">A string with copyright or an instance of <see cref="T:CommandLine.Text.CopyrightInfo"/>.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when one or more parameters are null or empty strings.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.#ctor(CommandLine.Text.SentenceBuilder,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class
+            specifying heading and copyright strings.
+            </summary>
+            <param name="sentenceBuilder">A <see cref="P:CommandLine.Text.HelpText.SentenceBuilder"/> instance.</param>
+            <param name="heading">A string with heading or an instance of <see cref="T:CommandLine.Text.HeadingInfo"/>.</param>
+            <param name="copyright">A string with copyright or an instance of <see cref="T:CommandLine.Text.CopyrightInfo"/>.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when one or more parameters are null or empty strings.</exception>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.Heading">
+            <summary>
+            Gets or sets the heading string.
+            You can directly assign a <see cref="T:CommandLine.Text.HeadingInfo"/> instance.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.Copyright">
+            <summary>
+            Gets or sets the copyright string.
+            You can directly assign a <see cref="T:CommandLine.Text.CopyrightInfo"/> instance.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.MaximumDisplayWidth">
+            <summary>
+            Gets or sets the maximum width of the display.  This determines word wrap when displaying the text.
+            </summary>
+            <value>The maximum width of the display.</value>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.AddDashesToOption">
+            <summary>
+            Gets or sets a value indicating whether the format of options should contain dashes.
+            It modifies behavior of <see cref="M:CommandLine.Text.HelpText.AddOptions``1(CommandLine.ParserResult{``0})"/> method.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.AdditionalNewLineAfterOption">
+            <summary>
+            Gets or sets a value indicating whether to add an additional line after the description of the specification.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.AddEnumValuesToHelpText">
+            <summary>
+            Gets or sets a value indicating whether to add the values of an enum after the description of the specification.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.SentenceBuilder">
+            <summary>
+            Gets the <see cref="P:CommandLine.Text.HelpText.SentenceBuilder"/> instance specified in constructor.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AutoBuild``1(CommandLine.ParserResult{``0},System.Func{CommandLine.Text.HelpText,CommandLine.Text.HelpText},System.Func{CommandLine.Text.Example,CommandLine.Text.Example},System.Boolean,System.Int32)">
+            <summary>
+            Creates a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class using common defaults.
+            </summary>
+            <returns>
+            An instance of <see cref="T:CommandLine.Text.HelpText"/> class.
+            </returns>
+            <param name='parserResult'>The <see cref="T:CommandLine.ParserResult`1"/> containing the instance that collected command line arguments parsed with <see cref="T:CommandLine.Parser"/> class.</param>
+            <param name='onError'>A delegate used to customize the text block of reporting parsing errors text block.</param>
+            <param name='onExample'>A delegate used to customize <see cref="T:CommandLine.Text.Example"/> model used to render text block of usage examples.</param>
+            <param name="verbsIndex">If true the output style is consistent with verb commands (no dashes), otherwise it outputs options.</param>
+            <param name="maxDisplayWidth">The maximum width of the display.</param>
+            <remarks>The parameter <paramref name="verbsIndex"/> is not ontly a metter of formatting, it controls whether to handle verbs or options.</remarks>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AutoBuild``1(CommandLine.ParserResult{``0},System.Int32)">
+            <summary>
+            Creates a new instance of the <see cref="T:CommandLine.Text.HelpText"/> class,
+            automatically handling verbs or options scenario.
+            </summary>
+            <param name='parserResult'>The <see cref="T:CommandLine.ParserResult`1"/> containing the instance that collected command line arguments parsed with <see cref="T:CommandLine.Parser"/> class.</param>
+            <param name="maxDisplayWidth">The maximum width of the display.</param>
+            <returns>
+            An instance of <see cref="T:CommandLine.Text.HelpText"/> class.
+            </returns>
+            <remarks>This feature is meant to be invoked automatically by the parser, setting the HelpWriter property
+            of <see cref="T:CommandLine.ParserSettings"/>.</remarks>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.DefaultParsingErrorsHandler``1(CommandLine.ParserResult{``0},CommandLine.Text.HelpText)">
+            <summary>
+            Supplies a default parsing error handler implementation.
+            </summary>
+            <param name='parserResult'>The <see cref="T:CommandLine.ParserResult`1"/> containing the instance that collected command line arguments parsed with <see cref="T:CommandLine.Parser"/> class.</param>
+            <param name="current">The <see cref="T:CommandLine.Text.HelpText"/> instance.</param>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.op_Implicit(CommandLine.Text.HelpText)~System.String">
+            <summary>
+            Converts the help instance to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="info">This <see cref="T:CommandLine.Text.HelpText"/> instance.</param>
+            <returns>The <see cref="T:System.String"/> that contains the help screen.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddPreOptionsLine(System.String)">
+            <summary>
+            Adds a text line after copyright and before options usage strings.
+            </summary>
+            <param name="value">A <see cref="T:System.String"/> instance.</param>
+            <returns>Updated <see cref="T:CommandLine.Text.HelpText"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="value"/> is null or empty string.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddPostOptionsLine(System.String)">
+            <summary>
+            Adds a text line at the bottom, after options usage string.
+            </summary>
+            <param name="value">A <see cref="T:System.String"/> instance.</param>
+            <returns>Updated <see cref="T:CommandLine.Text.HelpText"/> instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="value"/> is null or empty string.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddPreOptionsLines(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Adds text lines after copyright and before options usage strings.
+            </summary>
+            <param name="lines">A <see cref="T:System.String"/> sequence of line to add.</param>
+            <returns>Updated <see cref="T:CommandLine.Text.HelpText"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddPostOptionsLines(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Adds text lines at the bottom, after options usage string.
+            </summary>
+            <param name="lines">A <see cref="T:System.String"/> sequence of line to add.</param>
+            <returns>Updated <see cref="T:CommandLine.Text.HelpText"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddPreOptionsText(System.String)">
+            <summary>
+            Adds a text block of lines after copyright and before options usage strings.
+            </summary>
+            <param name="text">A <see cref="T:System.String"/> text block.</param>
+            <returns>Updated <see cref="T:CommandLine.Text.HelpText"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddPostOptionsText(System.String)">
+            <summary>
+            Adds a text block of lines at the bottom, after options usage string.
+            </summary>
+            <param name="text">A <see cref="T:System.String"/> text block.</param>
+            <returns>Updated <see cref="T:CommandLine.Text.HelpText"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddOptions``1(CommandLine.ParserResult{``0})">
+            <summary>
+            Adds a text block with options usage string.
+            </summary>
+            <param name="result">A parsing computation result.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="result"/> is null.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddVerbs(System.Type[])">
+            <summary>
+            Adds a text block with verbs usage string.
+            </summary>
+            <param name="types">The array of <see cref="T:System.Type"/> with verb commands.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="types"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="types"/> array is empty.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddOptions``1(System.Int32,CommandLine.ParserResult{``0})">
+            <summary>
+            Adds a text block with options usage string.
+            </summary>
+            <param name="maximumLength">The maximum length of the help screen.</param>
+            <param name="result">A parsing computation result.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="result"/> is null.</exception>    
+        </member>
+        <member name="M:CommandLine.Text.HelpText.AddVerbs(System.Int32,System.Type[])">
+            <summary>
+            Adds a text block with verbs usage string.
+            </summary>
+            <param name="maximumLength">The maximum length of the help screen.</param>
+            <param name="types">The array of <see cref="T:System.Type"/> with verb commands.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="types"/> is null.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="types"/> array is empty.</exception>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.RenderParsingErrorsText``1(CommandLine.ParserResult{``0},System.Func{CommandLine.Error,System.String},System.Func{System.Collections.Generic.IEnumerable{CommandLine.MutuallyExclusiveSetError},System.String},System.Int32)">
+            <summary>
+            Builds a string that contains a parsing error message.
+            </summary>
+            <param name='parserResult'>The <see cref="T:CommandLine.ParserResult`1"/> containing the instance that collected command line arguments parsed with <see cref="T:CommandLine.Parser"/> class.</param>
+            <param name="formatError">The error formatting delegate.</param>
+            <param name="formatMutuallyExclusiveSetErrors">The specialized <see cref="T:CommandLine.MutuallyExclusiveSetError"/> sequence formatting delegate.</param>
+            <param name="indent">Number of spaces used to indent text.</param>
+            <returns>The <see cref="T:System.String"/> that contains the parsing error message.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.RenderParsingErrorsTextAsLines``1(CommandLine.ParserResult{``0},System.Func{CommandLine.Error,System.String},System.Func{System.Collections.Generic.IEnumerable{CommandLine.MutuallyExclusiveSetError},System.String},System.Int32)">
+            <summary>
+            Builds a sequence of string that contains a parsing error message.
+            </summary>
+            <param name='parserResult'>The <see cref="T:CommandLine.ParserResult`1"/> containing the instance that collected command line arguments parsed with <see cref="T:CommandLine.Parser"/> class.</param>
+            <param name="formatError">The error formatting delegate.</param>
+            <param name="formatMutuallyExclusiveSetErrors">The specialized <see cref="T:CommandLine.MutuallyExclusiveSetError"/> sequence formatting delegate.</param>
+            <param name="indent">Number of spaces used to indent text.</param>
+            <returns>A sequence of <see cref="T:System.String"/> that contains the parsing error message.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.RenderUsageText``1(CommandLine.ParserResult{``0})">
+            <summary>
+            Builds a string with usage text block created using <see cref="T:CommandLine.Text.UsageAttribute"/> data and metadata.
+            </summary>
+            <typeparam name="T">Type of parsing computation result.</typeparam>
+            <param name="parserResult">A parsing computation result.</param>
+            <returns>Resulting formatted text.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.RenderUsageText``1(CommandLine.ParserResult{``0},System.Func{CommandLine.Text.Example,CommandLine.Text.Example})">
+            <summary>
+            Builds a string with usage text block created using <see cref="T:CommandLine.Text.UsageAttribute"/> data and metadata.
+            </summary>
+            <typeparam name="T">Type of parsing computation result.</typeparam>
+            <param name="parserResult">A parsing computation result.</param>
+            <param name="mapperFunc">A mapping lambda normally used to translate text in other languages.</param>
+            <returns>Resulting formatted text.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.RenderUsageTextAsLines``1(CommandLine.ParserResult{``0},System.Func{CommandLine.Text.Example,CommandLine.Text.Example})">
+            <summary>
+            Builds a string sequence with usage text block created using <see cref="T:CommandLine.Text.UsageAttribute"/> data and metadata.
+            </summary>
+            <typeparam name="T">Type of parsing computation result.</typeparam>
+            <param name="parserResult">A parsing computation result.</param>
+            <param name="mapperFunc">A mapping lambda normally used to translate text in other languages.</param>
+            <returns>Resulting formatted text.</returns>
+        </member>
+        <member name="M:CommandLine.Text.HelpText.ToString">
+            <summary>
+            Returns the help screen as a <see cref="T:System.String"/>.
+            </summary>
+            <returns>The <see cref="T:System.String"/> that contains the help screen.</returns>
+        </member>
+        <member name="T:CommandLine.Text.MultilineTextAttribute">
+            <summary>
+            Provides base properties for creating an attribute, used to define multiple lines of text.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.MultilineTextAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.MultilineTextAttribute"/> class. Used in derived type
+            using one line of text.
+            </summary>
+            <param name="line1">The first line of text.</param>
+        </member>
+        <member name="M:CommandLine.Text.MultilineTextAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.MultilineTextAttribute"/> class. Used in  type
+            using two lines of text.
+            </summary>
+            <param name="line1">The first line of text.</param>
+            <param name="line2">The second line of text.</param>
+        </member>
+        <member name="M:CommandLine.Text.MultilineTextAttribute.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.MultilineTextAttribute"/> class. Used in  type
+            using three lines of text.
+            </summary>
+            <param name="line1">The first line of text.</param>
+            <param name="line2">The second line of text.</param>
+            <param name="line3">The third line of text.</param>
+        </member>
+        <member name="M:CommandLine.Text.MultilineTextAttribute.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.MultilineTextAttribute"/> class. Used in type
+            using four lines of text.
+            </summary>
+            <param name="line1">The first line of text.</param>
+            <param name="line2">The second line of text.</param>
+            <param name="line3">The third line of text.</param>
+            <param name="line4">The fourth line of text.</param>
+        </member>
+        <member name="M:CommandLine.Text.MultilineTextAttribute.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.Text.MultilineTextAttribute"/> class. Used in type
+            using five lines of text.
+            </summary>
+            <param name="line1">The first line of text.</param>
+            <param name="line2">The second line of text.</param>
+            <param name="line3">The third line of text.</param>
+            <param name="line4">The fourth line of text.</param>
+            <param name="line5">The fifth line of text.</param>
+        </member>
+        <member name="P:CommandLine.Text.MultilineTextAttribute.Value">
+            <summary>
+            Gets the all non-blank lines as string.
+            </summary>
+            <value>A string of all non-blank lines.</value>
+        </member>
+        <member name="P:CommandLine.Text.MultilineTextAttribute.Line1">
+            <summary>
+            Gets the first line of text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.MultilineTextAttribute.Line2">
+            <summary>
+            Gets the second line of text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.MultilineTextAttribute.Line3">
+            <summary>
+            Gets third line of text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.MultilineTextAttribute.Line4">
+            <summary>
+            Gets the fourth line of text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.MultilineTextAttribute.Line5">
+            <summary>
+            Gets the fifth line of text.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.MultilineTextAttribute.GetLastLineWithText(System.String[])">
+            <summary>
+            Returns the last line with text. Preserves blank lines if user intended by skipping a line.
+            </summary>
+            <returns>The last index of line of the non-blank line.
+            </returns>
+            <param name='value'>The string array to process.</param>
+        </member>
+        <member name="T:CommandLine.Text.SentenceBuilder">
+            <summary>
+            Exposes standard delegates to provide a mean to customize part of help screen generation.
+            This type is consumed by <see cref="T:CommandLine.Text.HelpText"/>.
+            </summary>
+        </member>
+        <member name="M:CommandLine.Text.SentenceBuilder.Create">
+            <summary>
+            Create instance of <see cref="T:CommandLine.Text.SentenceBuilder"/>,
+            </summary>
+            <returns>The <see cref="T:CommandLine.Text.SentenceBuilder"/> instance.</returns>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.Factory">
+            <summary>
+            Factory to allow custom SentenceBuilder injection
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.RequiredWord">
+            <summary>
+            Gets a delegate that returns the word 'required'.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.ErrorsHeadingText">
+            <summary>
+            Gets a delegate that returns that errors block heading text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.UsageHeadingText">
+            <summary>
+            Gets a delegate that returns usage text block heading text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.HelpCommandText">
+            <summary>
+            Get a delegate that returns the help text of help command.
+            The delegates must accept a boolean that is equal <value>true</value> for options; otherwise <value>false</value> for verbs.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.VersionCommandText">
+            <summary>
+            Get a delegate that returns the help text of vesion command.
+            The delegates must accept a boolean that is equal <value>true</value> for options; otherwise <value>false</value> for verbs.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.FormatError">
+            <summary>
+            Gets a delegate that handles singular error formatting.
+            The delegates must accept an <see cref="T:CommandLine.Error"/> and returns a string.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.SentenceBuilder.FormatMutuallyExclusiveSetErrors">
+            <summary>
+            Gets a delegate that handles mutually exclusive set errors formatting.
+            The delegates must accept a sequence of <see cref="T:CommandLine.MutuallyExclusiveSetError"/> and returns a string.
+            </summary>
+        </member>
+        <member name="T:CommandLine.Text.UsageAttribute">
+            <summary>
+            Applied to a static property that yields a sequence of <see cref="T:CommandLine.Text.Example"/>,
+            provides data to render usage section of help screen.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.UsageAttribute.ApplicationAlias">
+            <summary>
+            Application name, script or any means that starts current program.
+            </summary>
+        </member>
+        <member name="T:CommandLine.UnParserSettings">
+            <summary>
+            Provides settings for when formatting command line from an options instance../>.
+            </summary>
+        </member>
+        <member name="P:CommandLine.UnParserSettings.PreferShortName">
+            <summary>
+            Gets or sets a value indicating whether unparsing process shall prefer short or long names.
+            </summary>
+        </member>
+        <member name="P:CommandLine.UnParserSettings.GroupSwitches">
+            <summary>
+            Gets or sets a value indicating whether unparsing process shall group switches.
+            </summary>
+        </member>
+        <member name="P:CommandLine.UnParserSettings.UseEqualToken">
+            <summary>
+            Gets or sets a value indicating whether unparsing process shall use equal sign with long names.
+            </summary>
+        </member>
+        <member name="M:CommandLine.UnParserSettings.WithGroupSwitchesOnly">
+            <summary>
+            Factory method that creates an instance of <see cref="T:CommandLine.UnParserSettings"/> with GroupSwitches set to true.
+            </summary>
+            <returns>A properly initalized <see cref="T:CommandLine.UnParserSettings"/> instance.</returns>
+        </member>
+        <member name="M:CommandLine.UnParserSettings.WithUseEqualTokenOnly">
+            <summary>
+            Factory method that creates an instance of <see cref="T:CommandLine.UnParserSettings"/> with UseEqualToken set to true.
+            </summary>
+            <returns>A properly initalized <see cref="T:CommandLine.UnParserSettings"/> instance.</returns>
+        </member>
+        <member name="T:CommandLine.UnParserExtensions">
+            <summary>
+            Provides overloads to unparse options instance.
+            </summary>
+        </member>
+        <member name="M:CommandLine.UnParserExtensions.FormatCommandLine``1(CommandLine.Parser,``0)">
+            <summary>
+            Format a command line argument string from a parsed instance. 
+            </summary>
+            <typeparam name="T">Type of <paramref name="options"/>.</typeparam>
+            <param name="parser">Parser instance.</param>
+            <param name="options">A parsed (or manually correctly constructed instance).</param>
+            <returns>A string with command line arguments.</returns>
+        </member>
+        <member name="M:CommandLine.UnParserExtensions.FormatCommandLine``1(CommandLine.Parser,``0,System.Action{CommandLine.UnParserSettings})">
+            <summary>
+            Format a command line argument string from a parsed instance. 
+            </summary>
+            <typeparam name="T">Type of <paramref name="options"/>.</typeparam>
+            <param name="parser">Parser instance.</param>
+            <param name="options">A parsed (or manually correctly constructed instance).</param>
+            <param name="configuration">The <see cref="T:System.Action`1"/> lambda used to configure
+            aspects and behaviors of the unparsersing process.</param>
+            <returns>A string with command line arguments.</returns>
+        </member>
+        <member name="T:CommandLine.ValueAttribute">
+            <summary>
+            Models an value specification, or better how to handle values not bound to options.
+            </summary>
+        </member>
+        <member name="M:CommandLine.ValueAttribute.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.ValueAttribute"/> class.
+            </summary>
+        </member>
+        <member name="P:CommandLine.ValueAttribute.Index">
+            <summary>
+            Gets the position this option has on the command line.
+            </summary>
+        </member>
+        <member name="P:CommandLine.ValueAttribute.MetaName">
+            <summary>
+            Gets or sets name of this positional value specification.
+            </summary>
+        </member>
+        <member name="T:CommandLine.VerbAttribute">
+            <summary>
+            Models a verb command specification.
+            </summary>
+        </member>
+        <member name="M:CommandLine.VerbAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.VerbAttribute"/> class.
+            </summary>
+            <param name="name">The long name of the verb command.</param>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="name"/> is null, empty or whitespace.</exception>
+        </member>
+        <member name="P:CommandLine.VerbAttribute.Name">
+            <summary>
+            Gets the verb name.
+            </summary>
+        </member>
+        <member name="P:CommandLine.VerbAttribute.Hidden">
+            <summary>
+            Gets or sets a value indicating whether a command line verb is visible in the help text.
+            </summary>
+        </member>
+        <member name="P:CommandLine.VerbAttribute.HelpText">
+            <summary>
+            Gets or sets a short description of this command line option. Usually a sentence summary. 
+            </summary>
+        </member>
+    </members>
+</doc>

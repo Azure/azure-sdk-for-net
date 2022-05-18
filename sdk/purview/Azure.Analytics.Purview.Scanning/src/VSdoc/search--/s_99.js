@@ -1,0 +1,1 @@
+search_result['99']=["topic_0000000000000041.html","PurviewScanningServiceClient.GetKeyVaultReference Method","Gets key vault information."];

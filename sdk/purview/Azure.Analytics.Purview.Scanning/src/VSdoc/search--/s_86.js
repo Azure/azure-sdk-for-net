@@ -1,0 +1,1 @@
+search_result['86']=["topic_0000000000000037.html","PurviewScanClient.CreateOrUpdateTrigger Method","Creates an instance of a trigger."];

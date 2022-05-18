@@ -1,0 +1,7 @@
+﻿/*  This is a custom CSS stylesheet that can override VSdocman built-in styling.
+    If you want to customize HTML-based output, create a copy of this file
+    (The name must be "vsdocman_overrides.css") in your External files folder
+    and add your styles there.
+
+    VSdocman will automatically include that file in the documentation.
+*/

@@ -1,0 +1,1 @@
+search_result['81']=["topic_0000000000000032.html","PurviewScanClient.CancelScanAsync Method","Cancels a scan."];

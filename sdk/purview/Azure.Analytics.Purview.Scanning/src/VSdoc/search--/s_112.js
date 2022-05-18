@@ -1,0 +1,1 @@
+search_result['112']=["topic_000000000000004E.html","PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync Method","Get a scan ruleset by version."];

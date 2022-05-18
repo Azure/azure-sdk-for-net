@@ -1,0 +1,1 @@
+c['24']=[['25',"PurviewDataSourceClient() Constructor","topic_0000000000000017.html",0],['26',"PurviewDataSourceClient(Uri, string, TokenCredential) Constructor","topic_0000000000000018.html",0],['27',"PurviewDataSourceClient(Uri, string, TokenCredential, PurviewScanningServiceClientOptions) Constructor","topic_0000000000000019.html",0]];

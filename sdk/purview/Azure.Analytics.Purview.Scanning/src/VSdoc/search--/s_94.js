@@ -1,0 +1,1 @@
+search_result['94']=["topic_000000000000003E.html","PurviewScanningServiceClient(Uri, TokenCredential) Constructor","Initializes a new instance of PurviewScanningServiceClient."];

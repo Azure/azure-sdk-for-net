@@ -1,0 +1,1 @@
+c['5']=[['6',"PurviewClassificationRuleClient Constructor","topic_0000000000000009_overloads--.html",1],['10',"Properties","topic_0000000000000001_props--.html",1],['12',"Methods","topic_0000000000000001_methods--.html",1]];

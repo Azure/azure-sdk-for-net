@@ -1,0 +1,141 @@
+/* CHM (IE11) overrides for msdn2019.css */
+
+/*********** Apply the values of the CSS variables from msdn2019.css explicitly. The CSS variables are not supported in IE 11 used by CHM viewer. */
+/*#region Common */
+
+a {
+    color: #1364c4;
+}
+
+a:visited {
+    color: #1364c4;
+}
+
+/*#endregion Common */
+
+
+
+/*#region HEADER */
+
+
+#header-top-container {
+    background-color: #e3e3e3;
+}
+
+/*#endregion HEADER end */
+
+
+.metadata {
+    color: #5e5e5e;
+}
+
+
+div#footer {
+    background-color: #e3e3e3;
+}
+
+.alert {
+    background-color: #d7eaf8;
+    border: 1px solid #d7eaf8;
+}
+
+/*#region Tables in main text */
+
+div#mainSection table {
+    border: 1px #cccccc solid;
+}
+
+
+div#mainSection table th {
+    border: 1px #cccccc solid;
+    background-color: #e3e3e3;
+}
+
+div#mainSection table td {
+    border: 1px #cccccc solid;
+}
+
+
+/* members list table, no vertical borders*/
+
+div#mainSection table.memberListTable {
+    border-top: 0px #e3e3e3 none;
+    border-bottom: 1px #e3e3e3 solid;
+    border-left: 0px #e3e3e3 none;
+    border-right: 0px #e3e3e3 none;
+}
+
+div#mainSection table.memberListTable th {
+    border-top: 0px #e3e3e3 none;
+    border-bottom: 1px #e3e3e3 solid;
+    border-left: 0px #e3e3e3 none;
+    border-right: 0px #e3e3e3 none;
+}
+
+div #mainSection table.memberListTable td {
+    border-top: 1px #e3e3e3 solid;
+    border-bottom: 1px #e3e3e3 solid;
+    border-left: 0px #e3e3e3 none;
+    border-right: 0px #e3e3e3 none;
+}
+
+
+
+/*#endregion */
+
+
+/*#region Code snippets */
+
+.codeSnippetTabs {
+    height: 1.5rem;
+}
+
+.codeSnippetTab {
+    height: 1.5rem;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 0px none #e3e3e3;
+    border-left: 1px solid #e3e3e3;
+}
+
+.csFirstTab {
+    border-left: 0px solid #e3e3e3;
+}
+
+.codeSnippetTabLeftCorner, .codeSnippetTabLeftCornerActive {
+    height: 1.5rem;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 0px none #e3e3e3;
+    border-left: 1px solid #e3e3e3;
+}
+
+.codeSnippetTabRightCorner, .codeSnippetTabRightCornerActive {
+    height: 1.5rem;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 0px none #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+}
+
+.codeSnippetCodeCollection {
+    border-top: solid 1px #e3e3e3;
+    border-right: solid 1px #e3e3e3;
+    border-bottom: solid 1px #e3e3e3;
+    border-left: solid 1px #e3e3e3;
+}
+
+.codeSnippetToolbar {
+    top: calc(1.5rem * -1);
+}
+
+
+/*#endregion Code snippets */
+
+
+
+/************ Hide breadcrumbs */
+#header-breadcrumbs {
+    display:none;
+}
+
+#headerLinks {
+    display: none;
+}

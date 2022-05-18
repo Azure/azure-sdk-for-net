@@ -436,113 +436,115 @@ namespace Azure.Analytics.Purview.Scanning
         /// Schema for <c>Request Body</c>:
         /// <code>
         /// {
-        ///   id: string, # Optional. Test id doc
-        ///   name: string,
+        ///   id: string, # Optional. <Description>Scan id.</Description>
+        ///   name: string, # Optional.
         ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
         ///   scanResults: [
         ///     {
-        ///       parentId: string,
-        ///       id: string,
-        ///       resourceId: string,
-        ///       status: string,
-        ///       assetsDiscovered: number,
-        ///       assetsClassified: number,
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
         ///       diagnostics: {
         ///         notifications: [
         ///           {
-        ///             message: string,
-        ///             code: number
+        ///             message: string, # Optional.
+        ///             code: number # Optional.
         ///           }
         ///         ],
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///         exceptionCountMap: # Optional. Dictionary&lt;string, number&gt;
         ///       },
-        ///       startTime: string (ISO 8601 Format),
-        ///       queuedTime: string (ISO 8601 Format),
-        ///       pipelineStartTime: string (ISO 8601 Format),
-        ///       endTime: string (ISO 8601 Format),
-        ///       scanRulesetVersion: number,
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
-        ///       errorMessage: string,
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: # Optional. &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: # Optional. &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string, # Optional.
         ///       error: {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
         ///         details: [
         ///           {
-        ///             code: string,
-        ///             message: string,
-        ///             target: string,
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
         ///             details: [ErrorModel]
         ///           }
         ///         ]
         ///       },
-        ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       runType: string, # Optional.
+        ///       dataSourceType: # Optional. &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: string,
-        ///   name: string,
+        /// <code>
+        /// {
+        ///   id: string, # Optional. <Description>Scan id.</Description>
+        ///   name: string, # Optional.
         ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
         ///   scanResults: [
         ///     {
-        ///       parentId: string,
-        ///       id: string,
-        ///       resourceId: string,
-        ///       status: string,
-        ///       assetsDiscovered: number,
-        ///       assetsClassified: number,
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
         ///       diagnostics: {
         ///         notifications: [
         ///           {
-        ///             message: string,
-        ///             code: number
+        ///             message: string, # Optional.
+        ///             code: number # Optional.
         ///           }
         ///         ],
-        ///         exceptionCountMap: Dictionary&lt;string, number&gt;
+        ///         exceptionCountMap: # Optional. Dictionary&lt;string, number&gt;
         ///       },
-        ///       startTime: string (ISO 8601 Format),
-        ///       queuedTime: string (ISO 8601 Format),
-        ///       pipelineStartTime: string (ISO 8601 Format),
-        ///       endTime: string (ISO 8601 Format),
-        ///       scanRulesetVersion: number,
-        ///       scanRulesetType: &quot;Custom&quot; | &quot;System&quot;,
-        ///       scanLevelType: &quot;Full&quot; | &quot;Incremental&quot;,
-        ///       errorMessage: string,
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: # Optional. &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType:  # Optional. &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string, # Optional.
         ///       error: {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
         ///         details: [
         ///           {
-        ///             code: string,
-        ///             message: string,
-        ///             target: string,
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
         ///             details: [ErrorModel]
         ///           }
         ///         ]
         ///       },
-        ///       runType: string,
-        ///       dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       runType: string, # Optional.
+        ///       dataSourceType: # Optional. &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
         /// }
         /// </code>
         /// Schema for <c>Response Error</c>:
-        /// <code>{
+        /// <code>
+        /// {
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
         ///     details: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
         ///         details: [ErrorModel]
         ///       }
         ///     ]
@@ -550,6 +552,93 @@ namespace Azure.Analytics.Purview.Scanning
         /// }
         /// </code>
         /// 
+        /// This sample shows how to call CreateOrUpdate with required parameters
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
+        /// var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
+        /// 
+        /// var data = new
+        /// {
+        ///     kind = "AzureSubscriptionCredential",
+        /// };
+        /// Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+        /// </code>
+        /// 
+        /// This sample shows how to call CreateOrUpdate with all the parameters
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
+        /// var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
+        /// 
+        /// var data = new
+        /// {
+        ///     id = "test-id",
+        ///     name = "test-name",
+        ///     kind = "AmazonS3Credential",
+        ///     scanResults = new[]
+        ///     {
+        ///             new
+        ///             {
+        ///                 parentId = "test-scanResults-parentId",
+        ///                 id = "test-scanResults-Id",
+        ///                 resourceId = "test-scanResults-resourceId",
+        ///                 status = "test-scanResults-status",
+        ///                 assetsDiscovered = 4513,
+        ///                 assetsClassified = 5423,
+        ///                 diagnostics = new
+        ///                 {
+        ///                     notifications = new[]
+        ///                     {
+        ///                         new
+        ///                         {
+        ///                             message = "test-scanResults-diagnostics-message",
+        ///                             code =  3423
+        ///                         }
+        ///                     },
+        ///                     exceptionCountMap = "Dictionary(string, number) how to pass"
+        ///                 },
+        ///                 startTime = "2022-05-10T13:57:31.2311892-04:00",
+        ///                 queuedTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///                 pipelineStartTime = "2022-05-10T15:57:31.2311892-04:00",
+        ///                 endTime = "2022-05-10T16:57:31.2311892-04:00",
+        ///                 scanRulesetVersion = 9284,
+        ///                 scanRulesetType = "Custom",
+        ///                 scanLevelType = "Full",
+        ///                 errorMessage = "test-scanResults-errorMessage",
+        ///                 error = new
+        ///                 {
+        ///                     code = "test-scanResults-error-code",
+        ///                     message = "test-scanResults-error-message",
+        ///                     target = "test-scanResults-error-target",
+        ///                     details = new[]
+        ///                     {
+        ///                         new
+        ///                         {
+        ///                             code = "test-scanResults-error-details-code",
+        ///                             message = "test-scanResults-error-details-message",
+        ///                             target = "test-scanResults-error-details-target",
+        ///                             details = new[]
+        ///                             {
+        ///                                 new
+        ///                                 {
+        ///                                 }
+        ///                             }
+        ///                         }
+        ///                     }
+        ///                 },
+        ///                 runType = "test-scanResults-runType",
+        ///                 dataSourceType = "AzureSubscription"
+        ///             },
+        ///         }
+        /// };
+        /// Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+        ///
+        /// </code>
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
