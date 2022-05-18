@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.3 (Unreleased)
+## 5.2.0-beta.3 (2022-05-18)
 
 ### Features Added
 - Added keyword argument `FhirVersion` to `AnalyzeHealthcareEntitiesOptions`. Use the keyword to indicate the version for the property `AnalyzeHealthcareEntitiesResult.FhirBundle`  that represents a FHIR compatible object for consumption in other Healthcare tools.
