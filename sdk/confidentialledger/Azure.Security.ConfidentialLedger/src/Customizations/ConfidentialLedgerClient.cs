@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Security.ConfidentialLedger.Models;
 
 namespace Azure.Security.ConfidentialLedger
@@ -100,6 +103,30 @@ namespace Azure.Security.ConfidentialLedger
             TransactionReceipt value = TransactionReceipt.FromResponse(response);
 
             return Response.FromValue(value, response);
+        }
+
+        /// <summary> A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
+        /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual AsyncPageable<LedgerEntry> GetLedgerEntriesValueAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
+        {
+            AsyncPageable<BinaryData> pageableBinaryData = GetLedgerEntriesAsync(collectionId, fromTransactionId, toTransactionId, new RequestContext{ CancellationToken = cancellationToken});
+
+            return PageableHelpers.Select(pageableBinaryData, response => PagedLedgerEntries.FromResponse(response).Entries);
+        }
+
+        /// <summary> A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned. </summary>
+        /// <param name="collectionId"> The collection id. </param>
+        /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
+        /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        public virtual Pageable<LedgerEntry> GetLedgerEntriesValue(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
+        {
+            Pageable<BinaryData> pageableBinaryData = GetLedgerEntries(collectionId, fromTransactionId, toTransactionId, new RequestContext{ CancellationToken = cancellationToken});
+
+            return PageableHelpers.Select(pageableBinaryData, response => PagedLedgerEntries.FromResponse(response).Entries);
         }
     }
 }

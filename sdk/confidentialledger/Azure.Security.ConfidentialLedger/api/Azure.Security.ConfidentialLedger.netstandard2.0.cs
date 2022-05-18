@@ -25,6 +25,8 @@ namespace Azure.Security.ConfidentialLedger
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEnclaveQuotesAsync(Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetLedgerEntries(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetLedgerEntriesAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<Azure.Security.ConfidentialLedger.Models.LedgerEntry> GetLedgerEntriesValue(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Security.ConfidentialLedger.Models.LedgerEntry> GetLedgerEntriesValueAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetLedgerEntry(string transactionId, string collectionId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetReceipt(string transactionId, Azure.RequestContext context = null) { throw null; }
@@ -103,6 +105,13 @@ namespace Azure.Security.ConfidentialLedger.Models
         internal LedgerConstitution() { }
         public string Digest { get { throw null; } }
         public string Script { get { throw null; } }
+    }
+    public partial class LedgerEntry
+    {
+        public LedgerEntry(string contents) { }
+        public Azure.Security.ConfidentialLedger.Models.LedgerCollection CollectionId { get { throw null; } }
+        public string Contents { get { throw null; } set { } }
+        public string TransactionId { get { throw null; } }
     }
     public partial class ReceiptContents
     {
