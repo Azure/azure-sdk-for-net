@@ -154,13 +154,32 @@ namespace EventHub.Tests.ScenarioTests
                     //New connection string 
                     var regenerateConnection_primary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, KeyType.PrimaryKey);
                     Assert.NotNull(regenerateConnection_primary);
-                    Assert.NotEqual(listKeysResponse.PrimaryKey, regenerateConnection_primary.PrimaryKey);
-                    Assert.Equal(listKeysResponse.SecondaryKey, regenerateConnection_primary.SecondaryKey);
+
+                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                    {
+                        Assert.Equal("Sanitized", regenerateConnection_primary.PrimaryKey);
+                        Assert.Equal("Sanitized", regenerateConnection_primary.SecondaryKey);
+                    }
+                    else if(HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        Assert.NotEqual(listKeysResponse.PrimaryKey, regenerateConnection_primary.PrimaryKey);
+                        Assert.Equal(listKeysResponse.SecondaryKey, regenerateConnection_primary.SecondaryKey);
+                    }
 
                     var regenerateConnection_secondary = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, KeyType.SecondaryKey);
                     Assert.NotNull(regenerateConnection_secondary);
-                    Assert.Equal(regenerateConnection_secondary.PrimaryKey, regenerateConnection_primary.PrimaryKey);
-                    Assert.NotEqual(regenerateConnection_secondary.SecondaryKey, regenerateConnection_primary.SecondaryKey);
+
+                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                    {
+                        Assert.Equal("Sanitized", regenerateConnection_secondary.PrimaryKey);
+                        Assert.Equal("Sanitized", regenerateConnection_secondary.SecondaryKey);
+                    }
+
+                    else if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        Assert.Equal(regenerateConnection_secondary.PrimaryKey, regenerateConnection_primary.PrimaryKey);
+                        Assert.NotEqual(regenerateConnection_secondary.SecondaryKey, regenerateConnection_primary.SecondaryKey);
+                    }
 
 
 

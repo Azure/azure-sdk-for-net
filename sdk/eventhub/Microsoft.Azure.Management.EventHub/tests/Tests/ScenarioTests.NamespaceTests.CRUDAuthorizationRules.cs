@@ -151,16 +151,34 @@ namespace EventHub.Tests.ScenarioTests
                     // Regenerate connection string to the namespace for a Authorization rule created
                     var NewKeysResponse_primary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.PrimaryKey);
                     Assert.NotNull(NewKeysResponse_primary);
-                    Assert.NotEqual(NewKeysResponse_primary.PrimaryKey, listKeysResponse.PrimaryKey);
-                    Assert.Equal(NewKeysResponse_primary.SecondaryKey, listKeysResponse.SecondaryKey);
+
+                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                    {
+                        Assert.Equal("Sanitized", NewKeysResponse_primary.PrimaryKey);
+                        Assert.Equal("Sanitized", NewKeysResponse_primary.SecondaryKey);
+                    }
+
+                    else if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        Assert.NotEqual(listKeysResponse.PrimaryKey, NewKeysResponse_primary.PrimaryKey);
+                        Assert.Equal(listKeysResponse.SecondaryKey, NewKeysResponse_primary.SecondaryKey);
+                    }
 
                     // Regenerate connection string to the namespace for a Authorization rule created
                     var NewKeysResponse_secondary = EventHubManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, KeyType.SecondaryKey);
                     Assert.NotNull(NewKeysResponse_secondary);
-                    Assert.Equal(NewKeysResponse_primary.PrimaryKey, NewKeysResponse_secondary.PrimaryKey);
-                    Assert.NotEqual(NewKeysResponse_primary.SecondaryKey, NewKeysResponse_secondary.SecondaryKey);
 
+                    if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                    {
+                        Assert.Equal("Sanitized", NewKeysResponse_secondary.PrimaryKey);
+                        Assert.Equal("Sanitized", NewKeysResponse_secondary.SecondaryKey);
+                    }
 
+                    else if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        Assert.Equal(NewKeysResponse_primary.PrimaryKey, NewKeysResponse_secondary.PrimaryKey);
+                        Assert.NotEqual(NewKeysResponse_primary.SecondaryKey, NewKeysResponse_secondary.SecondaryKey);
+                    }
 
                     // Delete namespace authorizationRule
                     EventHubManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
