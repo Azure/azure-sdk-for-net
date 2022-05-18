@@ -30,3 +30,5 @@ extends:
     Artifacts:
     - name: Azure.AI.TextAnalytics
       safeName: AzureAITextAnalytics
+    - name: Azure.AI.TextAnalytics.Legacy
+      safeName: AzureAITextAnalyticsLegacy
