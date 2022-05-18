@@ -10,7 +10,7 @@ Microsoft Azure Cognitive Services Anomaly Detector API enables you to monitor a
 Install the Azure Anomaly Detector client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.AI.AnomalyDetector --version 3.0.0-preview.3
+dotnet add package Azure.AI.AnomalyDetector --prerelease
 ```
 
 ### Prerequisites
@@ -48,8 +48,8 @@ var client = new AnomalyDetectorClient(new Uri(endpoint), credential);
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the `Azure.Identity` package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Anomaly Detector by assigning the `"Cognitive Services User"` role to your service principal.

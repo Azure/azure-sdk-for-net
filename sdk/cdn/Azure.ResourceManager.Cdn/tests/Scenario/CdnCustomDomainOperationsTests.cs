@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             var lro = await cdnEndpoint.GetCdnCustomDomains().GetAsync(cdnCustomDomainName);
             CdnCustomDomainResource cdnCustomDomain = lro.Value;
             Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.DisableCustomHttpsAsync());
-            CdnManagedHttpsOptions customDomainHttpsOptions = new CdnManagedHttpsOptions(ProtocolType.ServerNameIndication, new CdnCertificateSourceParameters(CdnCertificateSourceParametersTypeName.CdnCertificateSourceParameters, CertificateType.Dedicated));
-            CdnCustomDomainResource enabledCdnCustomDomain = await cdnCustomDomain.EnableCustomHttpsAsync(customDomainHttpsOptions);
+            CdnManagedHttpsContent customDomainHttpsContent = new CdnManagedHttpsContent(ProtocolType.ServerNameIndication, new CdnCertificateSourceDefinition(CdnCertificateSourceType.CdnCertificateSource, CdnManagedCertificateType.Dedicated));
+            CdnCustomDomainResource enabledCdnCustomDomain = await cdnCustomDomain.EnableCustomHttpsAsync(customDomainHttpsContent);
             Assert.AreEqual(enabledCdnCustomDomain.Data.CustomHttpsProvisioningState, CustomHttpsProvisioningState.Enabling);
         }
     }

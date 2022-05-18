@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -21,8 +19,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The configuration settings of the login flow, including the scopes that
     /// should be requested.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class LoginScopes : ProxyOnlyResource
+    public partial class LoginScopes
     {
         /// <summary>
         /// Initializes a new instance of the LoginScopes class.
@@ -35,14 +32,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the LoginScopes class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="scopes">A list of the scopes that should be requested
         /// while authenticating.</param>
-        public LoginScopes(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IList<string> scopes = default(IList<string>))
-            : base(id, name, kind, type)
+        public LoginScopes(IList<string> scopes = default(IList<string>))
         {
             Scopes = scopes;
             CustomInit();
@@ -57,7 +49,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets a list of the scopes that should be requested while
         /// authenticating.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.scopes")]
+        [JsonProperty(PropertyName = "scopes")]
         public IList<string> Scopes { get; set; }
 
     }

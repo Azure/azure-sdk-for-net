@@ -1,14 +1,16 @@
 # Release History
 
-## 12.0.0-preview.23 (Unreleased)
+## 12.0.0-preview.26 (Unreleased)
+- Added support for service version 2021-08-06.
 
-### Features Added
+## 12.0.0-preview.25 (2022-05-02)
+- Updated Change Feed to return 0 events when meta/segments.json file hasn't been created yet.
 
-### Breaking Changes
+## 12.0.0-preview.24 (2022-04-19)
+- Added ability to specify chunk download size with BlobChangeFeedClientOptions.MaximumTransferSize.
 
-### Bugs Fixed
-
-### Other Changes
+## 12.0.0-preview.23 (2022-04-13)
+- Fixed bug where BlobChangeFeedEvent.BlobChangeFeedEventData.PreviousInfo.WasBlobSoftDeleted was not being deserialized correctly.
 
 ## 12.0.0-preview.22 (2022-04-12)
 - Added support for service version 2021-06-08.

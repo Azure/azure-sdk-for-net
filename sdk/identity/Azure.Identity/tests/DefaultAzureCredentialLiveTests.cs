@@ -22,7 +22,7 @@ namespace Azure.Identity.Tests
             TestDiagnostics = false;
         }
 
-        [Test]
+        [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
         public async Task DefaultAzureCredential_UseVisualStudioCredential()
         {
@@ -59,7 +59,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential()
         {
@@ -98,7 +98,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
@@ -136,7 +136,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DefaultAzureCredential_UseAzureCliCredential()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -173,7 +173,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27020")]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
@@ -209,7 +209,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_CredentialUnavailableException()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -240,7 +240,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(AzurePowerShellCredential)}.{nameof(AzurePowerShellCredential.GetToken)}", scopes[4].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_FirstAuthenticationFailedException()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -270,7 +270,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public void DefaultAzureCredential_AllCredentialsHaveFailed_LastAuthenticationFailedException()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions

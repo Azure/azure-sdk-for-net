@@ -290,6 +290,11 @@ namespace Microsoft.Azure.Management.Synapse
         IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; }
 
         /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsOperations.
+        /// </summary>
+        IWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsOperations WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings { get; }
+
+        /// <summary>
         /// Gets the IWorkspacesOperations.
         /// </summary>
         IWorkspacesOperations Workspaces { get; }

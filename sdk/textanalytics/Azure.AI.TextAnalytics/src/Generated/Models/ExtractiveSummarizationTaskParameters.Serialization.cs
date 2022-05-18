@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -16,21 +15,6 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ModelVersion))
-            {
-                writer.WritePropertyName("model-version");
-                writer.WriteStringValue(ModelVersion);
-            }
-            if (Optional.IsDefined(LoggingOptOut))
-            {
-                writer.WritePropertyName("loggingOptOut");
-                writer.WriteBooleanValue(LoggingOptOut.Value);
-            }
-            if (Optional.IsDefined(StringIndexType))
-            {
-                writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.Value.ToString());
-            }
             if (Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount");
@@ -39,9 +23,82 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy");
-                writer.WriteStringValue(SortBy.Value.ToSerialString());
+                writer.WriteStringValue(SortBy.Value.ToString());
+            }
+            if (Optional.IsDefined(StringIndexType))
+            {
+                writer.WritePropertyName("stringIndexType");
+                writer.WriteStringValue(StringIndexType.Value.ToString());
+            }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion");
+                writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(LoggingOptOut))
+            {
+                writer.WritePropertyName("loggingOptOut");
+                writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static ExtractiveSummarizationTaskParameters DeserializeExtractiveSummarizationTaskParameters(JsonElement element)
+        {
+            Optional<int> sentenceCount = default;
+            Optional<ExtractiveSummarizationSortingCriteria> sortBy = default;
+            Optional<StringIndexType> stringIndexType = default;
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sentenceCount"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sentenceCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("sortBy"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sortBy = new ExtractiveSummarizationSortingCriteria(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("modelVersion"))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+            }
+            return new ExtractiveSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(sentenceCount), Optional.ToNullable(sortBy), Optional.ToNullable(stringIndexType));
         }
     }
 }

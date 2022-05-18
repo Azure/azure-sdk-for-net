@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleCacheExpirationAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleCacheExpirationAction(CacheExpirationActionParameters parameters)
+        public DeliveryRuleCacheExpirationAction(CacheExpirationActionDefinition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleCacheExpirationAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, CacheExpirationActionParameters parameters) : base(name)
+        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, CacheExpirationActionDefinition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public CacheExpirationActionParameters Parameters { get; set; }
+        public CacheExpirationActionDefinition Parameters { get; set; }
     }
 }

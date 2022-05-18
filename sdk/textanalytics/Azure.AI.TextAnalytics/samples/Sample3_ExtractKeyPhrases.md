@@ -1,10 +1,10 @@
 # Extracting Key Phrases from Documents
 
-This sample demonstrates how to extract key phrases from one or more documents. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to extract key phrases from one or more documents.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to extract key phrases from a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -79,7 +79,7 @@ Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesB
 ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+Console.WriteLine($"Results of \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)
@@ -149,7 +149,7 @@ Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesB
 ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+Console.WriteLine($"Results of \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)

@@ -24,9 +24,10 @@ namespace Azure.Data.Tables.Tests
         additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default, bool enableTenantDiscovery = false) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
+            _enableTenantDiscovery = enableTenantDiscovery;
             SanitizedHeaders.Add("My-Custom-Auth-Header");
             UriRegexSanitizers.Add(
                 new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
@@ -53,6 +54,7 @@ namespace Azure.Data.Tables.Tests
         protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
         protected const string IntTypePropertyName = "SomeIntProperty";
         protected readonly TableEndpointType _endpointType;
+        private readonly bool _enableTenantDiscovery;
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
@@ -114,6 +116,7 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
+            options.EnableTenantDiscovery = _enableTenantDiscovery;
 
             service = CreateService(ServiceUri, options);
 

@@ -40,19 +40,21 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="jobName">Job Name</param>
         /// <param name="status">Job Status</param>
-        /// <param name="percentageComplete">Percentage of completion.</param>
+        /// <param name="processedCount">Processed Count.</param>
+        /// <param name="totalCount">Total Count.</param>
         /// <param name="lastUpdatedUtcTime">Last Updated Time (ISO-8601
         /// format).</param>
         /// <param name="workerCount">Worker count</param>
         /// <param name="error">Error response for Faulted job</param>
-        public DataTransferJobGetResults(DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string id = default(string), string name = default(string), string type = default(string), string jobName = default(string), string status = default(string), double? percentageComplete = default(double?), System.DateTime? lastUpdatedUtcTime = default(System.DateTime?), int? workerCount = default(int?), ErrorResponse error = default(ErrorResponse))
+        public DataTransferJobGetResults(DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string id = default(string), string name = default(string), string type = default(string), string jobName = default(string), string status = default(string), long? processedCount = default(long?), long? totalCount = default(long?), System.DateTime? lastUpdatedUtcTime = default(System.DateTime?), int? workerCount = default(int?), ErrorResponse error = default(ErrorResponse))
             : base(id, name, type)
         {
             JobName = jobName;
             Source = source;
             Destination = destination;
             Status = status;
-            PercentageComplete = percentageComplete;
+            ProcessedCount = processedCount;
+            TotalCount = totalCount;
             LastUpdatedUtcTime = lastUpdatedUtcTime;
             WorkerCount = workerCount;
             Error = error;
@@ -89,10 +91,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets percentage of completion.
+        /// Gets processed Count.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.percentageComplete")]
-        public double? PercentageComplete { get; private set; }
+        [JsonProperty(PropertyName = "properties.processedCount")]
+        public long? ProcessedCount { get; private set; }
+
+        /// <summary>
+        /// Gets total Count.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.totalCount")]
+        public long? TotalCount { get; private set; }
 
         /// <summary>
         /// Gets last Updated Time (ISO-8601 format).

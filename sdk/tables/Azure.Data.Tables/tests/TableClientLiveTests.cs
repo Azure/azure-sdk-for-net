@@ -358,7 +358,7 @@ namespace Azure.Data.Tables.Tests
         public async Task CreateEntityWithETagProperty()
         {
             List<TableEntity> entityResults;
-            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue,1);
+            List<TableEntity> entitiesToCreate = CreateTableEntities(PartitionKeyValue, 1);
             entitiesToCreate[0]["ETag"] = "foo";
 
             // Create the new entities.
@@ -1445,7 +1445,7 @@ namespace Azure.Data.Tables.Tests
         [RecordedTest]
         public async Task IgnoresPropertiesWithIgnoreDataMember()
         {
-            var entity = new CustomizeSerializationEntity { PartitionKey = "partition", RowKey = "1", CurrentCount = 10, LastCount = 5, NamedProperty = "foo"};
+            var entity = new CustomizeSerializationEntity { PartitionKey = "partition", RowKey = "1", CurrentCount = 10, LastCount = 5, NamedProperty = "foo" };
 
             Assert.NotZero(entity.CountDiff);
 

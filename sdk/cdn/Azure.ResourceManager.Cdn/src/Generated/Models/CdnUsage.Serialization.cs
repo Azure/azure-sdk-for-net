@@ -14,16 +14,21 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static CdnUsage DeserializeCdnUsage(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             UsageUnit unit = default;
             long currentValue = default;
             long limit = default;
-            UsageName name = default;
+            CdnUsageResourceName name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))
@@ -43,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = CdnUsageResourceName.DeserializeCdnUsageResourceName(property.Value);
                     continue;
                 }
             }

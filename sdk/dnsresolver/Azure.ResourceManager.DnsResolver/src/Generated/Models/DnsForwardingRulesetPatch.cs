@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
-    internal partial class DnsForwardingRulesetPatch
+    public partial class DnsForwardingRulesetPatch
     {
         /// <summary> Initializes a new instance of DnsForwardingRulesetPatch. </summary>
         public DnsForwardingRulesetPatch()

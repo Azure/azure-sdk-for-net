@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
-    internal partial class PrivateLinkScopePatch
+    public partial class PrivateLinkScopePatch
     {
         /// <summary> Initializes a new instance of PrivateLinkScopePatch. </summary>
         public PrivateLinkScopePatch()

@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> The target performance tier of the disk if a tier change operation is in progress. </summary>
         public string PropertyUpdatesInProgressTargetTier
         {
-            get => PropertyUpdatesInProgress.TargetTier;
+            get => PropertyUpdatesInProgress?.TargetTier;
         }
 
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>

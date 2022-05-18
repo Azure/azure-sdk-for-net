@@ -13,8 +13,8 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 Install the Azure Resources management core library for .NET with [NuGet](https://www.nuget.org/):
 
-```PowerShell
-Install-Package Azure.ResourceManager -Version 1.0.0
+```dotnetcli
+dotnet add package Azure.ResourceManager
 ```
 
 ### Prerequisites

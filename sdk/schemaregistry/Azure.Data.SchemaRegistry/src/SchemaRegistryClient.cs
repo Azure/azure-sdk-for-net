@@ -37,7 +37,13 @@ namespace Azure.Data.SchemaRegistry
         {
         }
 
-        /// <summary>Initializes a new instance of <see cref="SchemaRegistryClient"/> for mocking.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryClient"/> class for mocking use in testing.
+        /// </summary>
+        /// <remarks>
+        /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
+        /// will not function correctly; virtual members are meant to be mocked.
+        ///</remarks>
         protected SchemaRegistryClient()
         {
         }

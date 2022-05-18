@@ -14,9 +14,9 @@ namespace Azure.AI.TextAnalytics.Models
     {
         /// <summary> Initializes a new instance of ClassificationResult. </summary>
         /// <param name="category"> Classification type. </param>
-        /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized classification. </param>
+        /// <param name="confidenceScore"> Confidence score between 0 and 1 of the recognized class. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
-        internal ClassificationResult(string category, double confidenceScore)
+        public ClassificationResult(string category, double confidenceScore)
         {
             if (category == null)
             {
@@ -28,8 +28,8 @@ namespace Azure.AI.TextAnalytics.Models
         }
 
         /// <summary> Classification type. </summary>
-        public string Category { get; }
-        /// <summary> Confidence score between 0 and 1 of the recognized classification. </summary>
-        public double ConfidenceScore { get; }
+        public string Category { get; set; }
+        /// <summary> Confidence score between 0 and 1 of the recognized class. </summary>
+        public double ConfidenceScore { get; set; }
     }
 }

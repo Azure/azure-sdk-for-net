@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Perf
     ///   A base class for Event Hubs performance test scenarios.
     /// </summary>
     ///
-    /// <seealso cref="Azure.Test.Perf.PerfTest{EventHubsOptions}" />
+    /// <seealso cref="PerfTest{EventHubsOptions}" />
     ///
     public abstract class EventHubsPerfTest<TOptions> : BatchPerfTest<TOptions> where TOptions : EventHubsOptions
     {

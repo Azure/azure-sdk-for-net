@@ -519,7 +519,14 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="args">The event args containing information related to the message.</param>
         protected internal virtual async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
         {
-            await _processMessageAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _processMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
         }
 
         /// <summary>
@@ -534,7 +541,14 @@ namespace Azure.Messaging.ServiceBus
 
         internal async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
         {
-            await _processSessionMessageAsync(args).ConfigureAwait(false);
+            try
+            {
+                await _processSessionMessageAsync(args).ConfigureAwait(false);
+            }
+            finally
+            {
+                args.EndExecutionScope();
+            }
         }
 
         internal async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
@@ -878,7 +892,7 @@ namespace Azure.Messaging.ServiceBus
                     catch (Exception ex)
                     {
                         // Don't bubble up exceptions raised from customer exception handler.
-                        Logger.ProcessorErrorHandlerThrewException(ex.ToString());
+                        Logger.ProcessorErrorHandlerThrewException(ex.ToString(), Identifier);
                     }
 
                     // This call will deadlock if awaited, as StopProcessingAsync awaits

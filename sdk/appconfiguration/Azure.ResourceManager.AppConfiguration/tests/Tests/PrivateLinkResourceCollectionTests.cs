@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            PrivateLinkResource linkResource = await ConfigStore.GetPrivateLinkResources().GetAsync("configurationStores");
+            AppConfigurationPrivateLinkResource linkResource = await ConfigStore.GetAppConfigurationPrivateLinkResources().GetAsync("configurationStores");
 
             Assert.NotNull(linkResource);
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAllTest()
         {
-            List<PrivateLinkResource> linkResources = await ConfigStore.GetPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
+            List<AppConfigurationPrivateLinkResource> linkResources = await ConfigStore.GetAppConfigurationPrivateLinkResources().GetAllAsync().ToEnumerableAsync();
 
             Assert.IsTrue(linkResources.Count > 0);
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task ExistsTest()
         {
-            bool linkResource = await ConfigStore.GetPrivateLinkResources().ExistsAsync("configurationStores");
+            bool linkResource = await ConfigStore.GetAppConfigurationPrivateLinkResources().ExistsAsync("configurationStores");
 
             Assert.IsTrue(linkResource);
         }

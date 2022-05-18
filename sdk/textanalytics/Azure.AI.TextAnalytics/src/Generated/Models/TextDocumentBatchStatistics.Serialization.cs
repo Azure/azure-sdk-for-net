@@ -10,8 +10,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class TextDocumentBatchStatistics
+    public partial class TextDocumentBatchStatistics : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documentsCount");
+            writer.WriteNumberValue(DocumentCount);
+            writer.WritePropertyName("validDocumentsCount");
+            writer.WriteNumberValue(ValidDocumentCount);
+            writer.WritePropertyName("erroneousDocumentsCount");
+            writer.WriteNumberValue(InvalidDocumentCount);
+            writer.WritePropertyName("transactionsCount");
+            writer.WriteNumberValue(TransactionCount);
+            writer.WriteEndObject();
+        }
+
         internal static TextDocumentBatchStatistics DeserializeTextDocumentBatchStatistics(JsonElement element)
         {
             int documentsCount = default;
