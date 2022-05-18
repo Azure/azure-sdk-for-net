@@ -247,6 +247,12 @@ public class Program
         await Task.Delay(TimeSpan.FromSeconds(1));
     }
 
+    /// <summary>
+    ///   Collects garbage collection environment metrics and sends them to Application Insights.
+    /// </summary>
+    ///
+    /// <param name="metrics">The <see cref="Metrics" /> instance to use to send metrics to Application Insights.</param>
+    ///
     private static void _updateEnvironmentStatistics(Metrics metrics)
     {
         metrics.Client.GetMetric(metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
@@ -254,6 +260,14 @@ public class Program
         metrics.Client.GetMetric(metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
     }
 
+    /// <summary>
+    ///   Starts a background task for each test that needs to be run, and waits for all
+    ///   test runs to completed before returning.
+    /// </summary>
+    ///
+    /// <param name="eventHubsConnectionString">The connection string to connect to the Event Hubs namespace for this test.</param>
+    /// <param name="eventHubName">The name of the Event Hub to send events to for this test.</param>
+    ///
     private static async Task<int> _getPartitionCount(string eventHubsConnectionString, string eventHubName)
     {
         int partitionCount;
