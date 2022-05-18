@@ -75,6 +75,8 @@ foreach ($res in $responses)
     LogDebug "No branch returned from the branch prefix $BranchPrefix on $Repo. Skipping..."
     continue
   }
+  $branch = $res.ref
+  $branchName = $branch.Replace("refs/heads/","")
   if ($LastCommitOlderThan) {
     if (!$res.object -or !$res.object.url) {
       LogWarning "No commit url returned from response. Skipping... "
@@ -82,8 +84,7 @@ foreach ($res in $responses)
     }
     try {
       $commitDate = Get-GithubReferenceCommitDate -commitUrl $res.object.url -AuthToken $AuthToken
-      if (!$commitDate) 
-      {
+      if (!$commitDate) {
         LogDebug "No last commit date found. Skipping."
         continue
       }
@@ -99,9 +100,6 @@ foreach ($res in $responses)
       exit 1
     }
   } 
-  
-  $branch = $res.ref
-  $branchName = $branch.Replace("refs/heads/","")
   $branchName -match $CentralPRRegex | Out-Null
   $pullRequestNumber = $Matches["PrNumber"]
   if ($pullRequestNumber) {
