@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2022-05-10)
+
+### Other Changes
+
+- Added support for GUID constructor parameters to be parsed directly from configuration.
 
 ## 1.1.1 (2021-09-07)
 

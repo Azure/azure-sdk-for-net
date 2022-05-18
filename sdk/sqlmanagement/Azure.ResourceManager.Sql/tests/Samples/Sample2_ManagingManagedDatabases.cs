@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
 {
     public class Sample2_ManagingManagedDatabases
     {
-        private ResourceGroup resourceGroup;
-        private ManagedInstance managedInstance;
+        private ResourceGroupResource resourceGroup;
+        private ManagedInstanceResource managedInstance;
 
         [SetUp]
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             this.resourceGroup = resourceGroup;
 
@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
                 MaintenanceConfigurationId = "/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
             string managedInstanceName = "myManagedInstance";
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             };
             string databaseName = "myDatabase";
             var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
-            ManagedDatabase managedDatabase = managedDatabaseLro.Value;
+            ManagedDatabaseResource managedDatabase = managedDatabaseLro.Value;
             #endregion
         }
 
@@ -117,8 +116,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_ListAllManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            AsyncPageable<ManagedDatabase> response = managedDatabaseCollection.GetAllAsync();
-            await foreach (ManagedDatabase managedDatabase in response)
+            AsyncPageable<ManagedDatabaseResource> response = managedDatabaseCollection.GetAllAsync();
+            await foreach (ManagedDatabaseResource managedDatabase in response)
             {
                 Console.WriteLine(managedDatabase.Data.Name);
             }
@@ -132,28 +131,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_GetAManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
+            ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
             Console.WriteLine(managedDatabase.Data.Name);
-            #endregion
-        }
-
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists()
-        {
-            #region Snippet:Managing_Sql_GetAManagedDatabasesIfExists
-            ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
-
-            ManagedDatabase managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
-            if (managedInstance != null)
-            {
-                Console.WriteLine(managedDatabase.Data.Name);
-            }
-
-            if (await managedDatabaseCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("Virtual network 'bar' exists.");
-            }
             #endregion
         }
 
@@ -164,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_DeleteAManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
+            ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
             await managedDatabase.DeleteAsync(WaitUntil.Completed);
             #endregion
         }

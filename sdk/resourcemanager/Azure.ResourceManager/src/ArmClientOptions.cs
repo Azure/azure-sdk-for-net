@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager
 {
@@ -19,10 +20,12 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets or sets Azure cloud environment.
         /// </summary>
-        public ArmEnvironment Environment { get; set; } = ArmEnvironment.AzureCloud;
+        public ArmEnvironment? Environment { get; set; }
 
         /// <summary>
         /// Sets the api version to use for a given resource type.
+        /// To find which API Versions are available in your environment you can use the <see cref="ResourceProviderResource.Get"/> method
+        /// for the provider namespace you are interested in.
         /// </summary>
         /// <param name="resourceType"> The resource type to set the version for. </param>
         /// <param name="apiVersion"> The api version to use. </param>

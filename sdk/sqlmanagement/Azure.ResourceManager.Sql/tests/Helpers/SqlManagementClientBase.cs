@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="location"></param>
         /// <param name="resourceGroup"></param>
         /// <returns></returns>
-        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , AzureLocation location, ResourceGroup resourceGroup)
+        protected async Task<ManagedInstanceResource> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , AzureLocation location, ResourceGroupResource resourceGroup)
         {
             //1. create NetworkSecurityGroup
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.Sql.Tests
                 MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="resourceGroup"></param>
         /// <param name=""></param>
         /// <returns></returns>
-        protected async Task<PrivateEndpoint> CreateDefaultPrivateEndpoint(ManagedInstance managedInstance,VirtualNetwork vnet, AzureLocation location, ResourceGroup resourceGroup)
+        protected async Task<PrivateEndpointResource> CreateDefaultPrivateEndpoint(ManagedInstanceResource managedInstance,VirtualNetworkResource vnet, AzureLocation location, ResourceGroupResource resourceGroup)
         {
             // Add new subnet
             SubnetData subnetData = new SubnetData()

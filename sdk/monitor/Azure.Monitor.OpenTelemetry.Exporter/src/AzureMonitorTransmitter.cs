@@ -34,17 +34,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             ConnectionString.ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
             _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
 
-            try
+            if (!options.DisableOfflineStorage)
             {
-                _storage = new FileStorage(options.StorageDirectory);
-            }
-            catch (Exception)
-            {
-                // TODO:
-                // log exception
-                // Remove this when we add an option to disable offline storage.
-                // So if someone opts in for storage and we cannot initialize, we can throw.
-                // Change needed on persistent storage side to throw if not able to create storage directory.
+                try
+                {
+                    _storage = new FileStorage(options.StorageDirectory);
+                }
+                catch (Exception)
+                {
+                    // TODO:
+                    // log exception
+                    // Remove this when we add an option to disable offline storage.
+                    // So if someone opts in for storage and we cannot initialize, we can throw.
+                    // Change needed on persistent storage side to throw if not able to create storage directory.
+                }
             }
         }
 

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        managedDiskCustomerKeyUri = null;
                         continue;
                     }
                     managedDiskCustomerKeyUri = new Uri(property.Value.GetString());
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        backupStorageCustomerKeyUri = null;
                         continue;
                     }
                     backupStorageCustomerKeyUri = new Uri(property.Value.GetString());

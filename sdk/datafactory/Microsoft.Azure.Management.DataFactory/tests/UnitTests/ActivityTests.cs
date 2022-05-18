@@ -2,14 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 using DataFactory.Tests.JsonSamples;
 using DataFactory.Tests.Utils;
 using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -34,7 +34,7 @@ namespace DataFactory.Tests.UnitTests
         {
             TestJsonSample<Activity>(jsonSample);
         }
-        
+
         [Fact]
         public void ExecutePipelineActivity_SDKSample()
         {
@@ -45,7 +45,8 @@ namespace DataFactory.Tests.UnitTests
                 Description = "Execute pipeline activity",
                 Pipeline = new PipelineReference(triggeredPipelineName),
                 Parameters = new Dictionary<string, object>(),
-                WaitOnCompletion = true
+                WaitOnCompletion = true,
+                Policy = new ExecutePipelineActivityPolicy()
             };
 
             var handler = new RecordedDelegatingHandler();
@@ -139,7 +140,8 @@ namespace DataFactory.Tests.UnitTests
                     Username = "test",
                     Password = new SecureString("fake"),
                     Type = "Basic"
-                }
+                },
+                DisableCertValidation = false
             };
 
             var handler = new RecordedDelegatingHandler();

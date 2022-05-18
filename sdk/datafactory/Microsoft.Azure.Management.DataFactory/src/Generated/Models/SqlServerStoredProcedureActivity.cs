@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="storedProcedureParameters">Value and type setting for
         /// stored procedure parameters. Example: "{Parameter1: {value: "1",
         /// type: "int"}}".</param>
-        public SqlServerStoredProcedureActivity(string name, object storedProcedureName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>))
+        public SqlServerStoredProcedureActivity(string name, object storedProcedureName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object storedProcedureParameters = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             StoredProcedureName = storedProcedureName;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.storedProcedureParameters")]
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; set; }
+        public object StoredProcedureParameters { get; set; }
 
         /// <summary>
         /// Validate the object.

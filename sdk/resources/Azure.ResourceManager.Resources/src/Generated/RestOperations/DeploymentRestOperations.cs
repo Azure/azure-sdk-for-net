@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal Azure.Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId)
+        internal Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentOperation>> GetAtScopeAsync(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentOperation>> GetAtScopeAsync(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperation value = default;
+                        ArmDeploymentOperation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
+                        value = ArmDeploymentOperation.DeserializeArmDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="deploymentName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentOperation> GetAtScope(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentOperation> GetAtScope(string scope, string deploymentName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperation value = default;
+                        ArmDeploymentOperation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentOperation.DeserializeDeploymentOperation(document.RootElement);
+                        value = ArmDeploymentOperation.DeserializeArmDeploymentOperation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListAtScopeRequest(string scope, string deploymentName, int? top)
+        internal Core.HttpMessage CreateListAtScopeRequest(string scope, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentOperationsListResult>> ListAtScopeAsync(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentOperationsListResult>> ListAtScopeAsync(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentOperationsListResult> ListAtScope(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentOperationsListResult> ListAtScope(string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal Azure.Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string deploymentName, int? top)
+        internal Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string deploymentName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentOperationsListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDeploymentOperationsListResult>> ListAtScopeNextPageAsync(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentOperationsListResult> ListAtScopeNextPage(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
+        public Response<ArmDeploymentOperationsListResult> ListAtScopeNextPage(string nextLink, string scope, string deploymentName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(scope, nameof(scope));
@@ -258,9 +258,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        DeploymentOperationsListResult value = default;
+                        ArmDeploymentOperationsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentOperationsListResult.DeserializeDeploymentOperationsListResult(document.RootElement);
+                        value = ArmDeploymentOperationsListResult.DeserializeArmDeploymentOperationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

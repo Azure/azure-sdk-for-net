@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> The properties for a group information object. </summary>
-    internal partial class GroupInformationProperties : PrivateLinkResourceProperties
+    internal partial class GroupInformationProperties : DeviceUpdatePrivateLinkResourceProperties
     {
         /// <summary> Initializes a new instance of GroupInformationProperties. </summary>
         internal GroupInformationProperties()

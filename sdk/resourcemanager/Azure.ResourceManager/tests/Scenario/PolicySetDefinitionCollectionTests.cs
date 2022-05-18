@@ -6,8 +6,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task CreateOrUpdateAtSubscription()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
-            SubscriptionPolicySetDefinition policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
             Assert.AreEqual(policySetDefinitionName, policySetDefinition.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policySetDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, null));
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtMgmtGroup()
         {
             //This test uses a pre-created management group.
-            ManagementGroup mgmtGroup = await GetCreatedManagementGroup();
+            ManagementGroupResource mgmtGroup = await GetCreatedManagementGroup();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            ManagementGroupPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
+            ManagementGroupPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
-            ManagementGroupPolicySetDefinition policySetDefinition = await CreatePolicySetDefinitionAtMgmtGroup(mgmtGroup, policyDefinition, policySetDefinitionName);
+            ManagementGroupPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtMgmtGroup(mgmtGroup, policyDefinition, policySetDefinitionName);
             Assert.AreEqual(policySetDefinitionName, policySetDefinition.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policySetDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, null));
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
-            SubscriptionPolicySetDefinition policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
             int count = 0;
             string policyType = "Custom";
             string filter = $"policyType eq '{policyType}'";
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             string policySetDefinitionName = Recording.GenerateAssetName("polSetDef-");
-            SubscriptionPolicySetDefinition policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
-            SubscriptionPolicySetDefinition getPolicySetDefinition = await subscription.GetSubscriptionPolicySetDefinitions().GetAsync(policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource policySetDefinition = await CreatePolicySetDefinitionAtSubscription(subscription, policyDefinition, policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource getPolicySetDefinition = await subscription.GetSubscriptionPolicySetDefinitions().GetAsync(policySetDefinitionName);
             AssertValidPolicySetDefinition(policySetDefinition, getPolicySetDefinition);
         }
 
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.Tests
         {
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
-                TenantPolicySetDefinition getBuiltInPolicySetDefinition = await tenant.GetTenantPolicySetDefinitions().GetAsync("75714362-cae7-409e-9b99-a8e5075b7fad");
+                TenantPolicySetDefinitionResource getBuiltInPolicySetDefinition = await tenant.GetTenantPolicySetDefinitions().GetAsync("75714362-cae7-409e-9b99-a8e5075b7fad");
                 Assert.AreEqual(getBuiltInPolicySetDefinition.Data.DisplayName, "Enable Azure Monitor for Virtual Machine Scale Sets");
             }
         }
 
-        private static void AssertValidPolicySetDefinition(SubscriptionPolicySetDefinition model, SubscriptionPolicySetDefinition getResult)
+        private static void AssertValidPolicySetDefinition(SubscriptionPolicySetDefinitionResource model, SubscriptionPolicySetDefinitionResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(model.Data.PolicyType, getResult.Data.PolicyType);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
+            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
             if (model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
                 Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
-                foreach (KeyValuePair<string, ParameterDefinitionsValue> kvp in model.Data.Parameters)
+                foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
-                    ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
+                    ArmPolicyParameter getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
                     Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {

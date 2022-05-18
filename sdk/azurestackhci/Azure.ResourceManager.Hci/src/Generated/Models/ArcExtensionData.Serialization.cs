@@ -51,47 +51,22 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
-                writer.WriteObjectValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings");
-                writer.WriteObjectValue(ProtectedSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.WritePropertyName("systemData");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("createdBy");
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (Optional.IsDefined(CreatedByType))
-            {
-                writer.WritePropertyName("createdByType");
-                writer.WriteStringValue(CreatedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(CreatedAt))
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedAt.Value, "O");
-            }
-            if (Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy");
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (Optional.IsDefined(LastModifiedByType))
-            {
-                writer.WritePropertyName("lastModifiedByType");
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(LastModifiedAt))
-            {
-                writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -110,14 +85,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> type0 = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<object> settings = default;
-            Optional<object> protectedSettings = default;
-            Optional<string> createdBy = default;
-            Optional<Models.CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<Models.CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -230,7 +199,7 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    settings = property1.Value.GetObject();
+                                    settings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
                                 if (property1.NameEquals("protectedSettings"))
@@ -240,7 +209,7 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    protectedSettings = property1.Value.GetObject();
+                                    protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
                             }
@@ -249,70 +218,8 @@ namespace Azure.ResourceManager.Hci
                     }
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("createdBy"))
-                        {
-                            createdBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdByType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdByType = new Models.CreatedByType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedBy"))
-                        {
-                            lastModifiedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedByType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedByType = new Models.CreatedByType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedAt"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new ArcExtensionData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new ArcExtensionData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value);
         }
     }
 }

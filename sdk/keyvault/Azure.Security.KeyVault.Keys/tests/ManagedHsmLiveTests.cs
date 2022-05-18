@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
         KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        KeyClientOptions.ServiceVersion.V7_3)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         protected internal override bool IsManagedHSM => true;
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRsaWithPublicExponent()
         {
             CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(3, publicExponent);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOctHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOctKey()
         {
             string keyName = Recording.GenerateId();
@@ -81,15 +81,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [TestCase(16)]
         [TestCase(32)]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task GetRandomBytes(int count)
         {
             byte[] rand = await Client.GetRandomBytesAsync(count);
             Assert.AreEqual(count, rand.Length);
         }
 
-        [Test]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseImportedKey()
         {
             string keyName = Recording.GenerateId();

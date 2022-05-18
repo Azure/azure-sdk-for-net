@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,33 +22,33 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-C-");
-            DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            DeploymentScript deploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;
+            var deploymentScriptData = await GetDeploymentScriptDataAsync();
+            var deploymentScript = (await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;
             Assert.AreEqual(deployScriptName, deploymentScript.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentScriptData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentScriptData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task ListByRg()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-L-");
-            DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData);
+            var deploymentScriptData = await GetDeploymentScriptDataAsync();
+            _ = await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData);
             int count = 0;
-            await foreach (var tempDeploymentScript in rg.GetDeploymentScripts().GetAllAsync())
+            await foreach (var tempDeploymentScript in rg.GetArmDeploymentScripts().GetAllAsync())
             {
                 count++;
             }
@@ -58,16 +59,16 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task ListBySub()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-L-");
-            DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData);
+            var deploymentScriptData = await GetDeploymentScriptDataAsync();
+            _ = await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData);
             int count = 0;
-            await foreach (var tempDeploymentScript in subscription.GetDeploymentScriptsAsync())
+            await foreach (var tempDeploymentScript in subscription.GetArmDeploymentScriptsAsync())
             {
                 if (tempDeploymentScript.Data.Name == deployScriptName)
                 {
@@ -81,16 +82,16 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-G-");
-            DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
-            DeploymentScript tempDeploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;
+            var deploymentScriptData = await GetDeploymentScriptDataAsync();
+            var tempDeploymentScript = (await rg.GetArmDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;
             AzurePowerShellScript deploymentScript = tempDeploymentScript.Data as AzurePowerShellScript;
-            DeploymentScript tempGetDeploymentScript = await rg.GetDeploymentScripts().GetAsync(deployScriptName);
+            ArmDeploymentScriptResource tempGetDeploymentScript = await rg.GetArmDeploymentScripts().GetAsync(deployScriptName);
             AzurePowerShellScript getdeploymentScript = tempGetDeploymentScript.Data as AzurePowerShellScript;
             AssertValidDeploymentScript(deploymentScript, getdeploymentScript);
         }
@@ -121,12 +122,19 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.NotNull(getResult.Status);
                 Assert.AreEqual(model.Status.ContainerInstanceId, getResult.Status.ContainerInstanceId);
                 Assert.AreEqual(model.Status.StorageAccountId, getResult.Status.StorageAccountId);
-                Assert.AreEqual(model.Status.StartTime, getResult.Status.StartTime);
-                Assert.AreEqual(model.Status.EndTime, getResult.Status.EndTime);
-                Assert.AreEqual(model.Status.ExpirationTime, getResult.Status.ExpirationTime);
+                Assert.AreEqual(model.Status.StartOn, getResult.Status.StartOn);
+                Assert.AreEqual(model.Status.EndOn, getResult.Status.EndOn);
+                Assert.AreEqual(model.Status.ExpirationOn, getResult.Status.ExpirationOn);
                 //Assert.AreEqual(model.Status.Error, getResult.Status.Error);
             }
-            Assert.AreEqual(model.Outputs, getResult.Outputs);
+            var modelOutputs = model.Outputs.ToObjectFromJson<Dictionary<string, object>>();
+            var getOutputs = getResult.Outputs.ToObjectFromJson<Dictionary<string, object>>();
+            Assert.AreEqual(modelOutputs.Count, getOutputs.Count);
+            foreach (var kv in modelOutputs)
+            {
+                Assert.IsTrue(getOutputs.ContainsKey(kv.Key));
+                Assert.AreEqual(kv.Value.ToString(), getOutputs[kv.Key].ToString());
+            }
             Assert.AreEqual(model.PrimaryScriptUri, getResult.PrimaryScriptUri);
             Assert.AreEqual(model.SupportingScriptUris, getResult.SupportingScriptUris);
             Assert.AreEqual(model.ScriptContent, getResult.ScriptContent);

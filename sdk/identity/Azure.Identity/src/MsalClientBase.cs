@@ -3,6 +3,8 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identitiy;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -11,6 +13,8 @@ namespace Azure.Identity
         where TClient : IClientApplicationBase
     {
         private readonly AsyncLockWithValue<TClient> _clientAsyncLock;
+        private bool _logAccountDetails;
+
         internal protected bool IsPiiLoggingEnabled { get; }
 
         /// <summary>
@@ -27,7 +31,8 @@ namespace Azure.Identity
             // variable rather than in code. In this case we need to validate the endpoint before we use it. However, we can't validate in
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
             // we validate here as all other credentials will create an MSAL client.
-            Validations.ValidateAuthorityHost(pipeline.AuthorityHost);
+            Validations.ValidateAuthorityHost(pipeline?.AuthorityHost);
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             ITokenCacheOptions cacheOptions = options as ITokenCacheOptions;
             IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
             Pipeline = pipeline;
@@ -76,6 +81,15 @@ namespace Azure.Identity
             if (!isPii || IsPiiLoggingEnabled)
             {
                 AzureIdentityEventSource.Singleton.LogMsal(level, message);
+            }
+        }
+
+        protected void LogAccountDetails(AuthenticationResult result)
+        {
+            if (_logAccountDetails)
+            {
+                var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.AccessToken);
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? result.TenantId, accountDetails.Upn ?? result.Account?.Username, accountDetails.ObjectId ?? result.UniqueId);
             }
         }
     }

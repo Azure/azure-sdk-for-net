@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
 #if SNIPPET
-            Uri receiptUri = <receiptUri>;
+            Uri receiptUri = new Uri("<receiptUri>");
 #else
             Uri receiptUri = FormRecognizerTestEnvironment.CreateUri("contoso-receipt.jpg");
 #endif

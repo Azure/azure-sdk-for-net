@@ -89,8 +89,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
-                writer.WriteStringValue(PrivateLinkResourceId);
+                if (PrivateLinkResourceId != null)
+                {
+                    writer.WritePropertyName("privateLinkResourceId");
+                    writer.WriteStringValue(PrivateLinkResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("privateLinkResourceId");
+                }
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {
@@ -117,9 +124,10 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<int?> weight = default;
             Optional<bool> enabled = default;
             Optional<string> privateLinkAlias = default;
-            Optional<string> privateLinkResourceId = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
             Optional<string> privateLinkLocation = default;
             Optional<string> privateLinkApprovalMessage = default;
+            Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -203,7 +211,12 @@ namespace Azure.ResourceManager.Cdn.Models
                         }
                         if (property0.NameEquals("privateLinkResourceId"))
                         {
-                            privateLinkResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateLinkResourceId = null;
+                                continue;
+                            }
+                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkLocation"))
@@ -216,11 +229,21 @@ namespace Azure.ResourceManager.Cdn.Models
                             privateLinkApprovalMessage = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("privateEndpointStatus"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateEndpointStatus = null;
+                                continue;
+                            }
+                            privateEndpointStatus = new PrivateEndpointStatus(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DeepCreatedOrigin(name, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value);
+            return new DeepCreatedOrigin(name, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(privateEndpointStatus));
         }
     }
 }

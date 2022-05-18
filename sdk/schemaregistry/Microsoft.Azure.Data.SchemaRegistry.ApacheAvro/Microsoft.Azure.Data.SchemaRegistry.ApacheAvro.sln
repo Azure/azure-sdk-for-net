@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.EventHubs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.ServiceBus", "..\..\servicebus\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj", "{69E3D417-F0A9-4C6B-B9C5-8C29E9F2A660}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Perf", "perf\Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Perf.csproj", "{B31ED76A-14DC-428E-9E57-46A974584635}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{1F40A16B-5809-4138-A362-CA360DE98A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F40A16B-5809-4138-A362-CA360DE98A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F40A16B-5809-4138-A362-CA360DE98A94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B31ED76A-14DC-428E-9E57-46A974584635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31ED76A-14DC-428E-9E57-46A974584635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31ED76A-14DC-428E-9E57-46A974584635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31ED76A-14DC-428E-9E57-46A974584635}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

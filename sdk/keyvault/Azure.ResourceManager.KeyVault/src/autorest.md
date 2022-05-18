@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
-require: https://github.com/Azure/azure-rest-api-specs/blob/d29e6eb4894005c52e67cb4b5ac3faf031113e7d/specification/keyvault/resource-manager/readme.md
 tag: package-2021-10
+output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -28,6 +28,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -38,7 +39,64 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  Managecontacts: ManageContacts
+  Getissuers: GetIssuers
+  Listissuers: Listissuers
+  Setissuers: SetIssuers
+  Deleteissuers: DeleteIssuers
+  Manageissuers: ManageIssuers
+  Regeneratekey: RegenerateKey
+  Deletesas: DeleteSas
+  Getsas: GetSas
+  Listsas: ListSas
+  Setsas: SetSas
+  Mhsm: ManagedHsm
+prompted-enum-values: Default
 directive:
+  - from: swagger-document
+    where: $.paths
+    transform: delete $['/subscriptions/{subscriptionId}/resources']
+  - from: swagger-document
+    where: $.definitions.Sku.properties.family
+    transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: $.definitions.ManagedHsmSku.properties.family
+    transform: delete $['x-ms-client-default']
+  - from: managedHsm.json
+    where: '$.definitions'
+    transform: >
+      $.ManagedHsmResource['x-ms-client-name'] = 'ManagedHsmTrackedResourceData';
+      $.ManagedHsmResource.properties.location['x-ms-format'] = 'azure-location';
+      $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
+      $.DeletedManagedHsmProperties.properties.location['x-ms-format'] = 'azure-location';
+      $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
+      $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
+      $.ManagedHsmProperties.properties.networkAcls['x-ms-client-name'] = 'NetworkRuleSet';
+      $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'HsmProvisioningState';
+      $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
+      $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+  - from: keyvault.json
+    where: '$.definitions'
+    transform: >
+      $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'NameAvailabilityReason';
+      $.Permissions.properties.keys.items['x-ms-enum']['name'] = 'KeyPermission';
+      $.Permissions.properties.secrets.items['x-ms-enum']['name'] = 'SecretPermission';
+      $.Permissions.properties.certificates.items['x-ms-enum']['name'] = 'CertificatePermission';
+      $.Permissions.properties.storage.items['x-ms-enum']['name'] = 'StoragePermission';
+      $.Resource['x-ms-client-name'] = 'KeyVaultResourceData';
+      $.IPRule.properties.value['x-ms-client-name'] = 'AddressRange';
+      $.DeletedVaultProperties.properties.location['x-ms-format'] = 'azure-location';
+      $.DeletedVaultProperties.properties.vaultId['x-ms-format'] = 'arm-id';
+      $.VaultCreateOrUpdateParameters.properties.location['x-ms-format'] = 'azure-location';
+      $.VaultAccessPolicyParameters.properties.location['x-ms-format'] = 'azure-location';
+      $.Vault.properties.location['x-ms-format'] = 'azure-location';
+      $.Vault['x-csharp-usage'] = 'model,input,output';
+      $.VaultProperties.properties.createMode['x-ms-enum']['name'] = 'VaultCreateMode';
+      $.Resource.properties.location['x-ms-format'] = 'azure-location';
+      $.PrivateEndpointConnectionItem.properties.etag['x-ms-format'] = 'etag';
+      $.PrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
+      $.PrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ActionsRequiredMessage';
+      $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule
@@ -47,25 +105,29 @@ directive:
       to: BaseAttributes
   - rename-model:
       from: Permissions
-      to: AccessPermissions
-  - from: swagger-document
-    where: $.paths
-    transform: delete $['/subscriptions/{subscriptionId}/resources']
-  - from: swagger-document
-    where: $['definitions']['Sku']['properties']['family']
-    transform: delete $['x-ms-client-default']
-  - from: swagger-document
-    where: $['definitions']['ManagedHsmSku']['properties']['family']
-    transform: delete $['x-ms-client-default']
-  - from: swagger-document
-    where: "$.definitions.CheckNameAvailabilityResult.properties.reason"
-    transform: >
-      $["x-ms-enum"] = {
-        "modelAsString": false,
-        "name": "NameAvailabilityReason"
-      }
-  - from: swagger-document
-    where: "$.definitions.Resource"
-    transform: >
-      $["x-ms-client-name"] = "KeyVaultResource";
+      to: IdentityAccessPermissions
+  - rename-model:
+      from: MHSMPrivateLinkResource
+      to: MHSMPrivateLinkResourceData
+  - rename-model:
+      from: PrivateLinkResource
+      to: PrivateLinkResourceData
+  - rename-model:
+      from: MHSMPrivateEndpointConnectionItem
+      to: MHSMPrivateEndpointConnectionItemData
+  - rename-model:
+      from: PrivateEndpointConnectionItem
+      to: PrivateEndpointConnectionItemData
+```
+
+### Tag: package-2021-10
+
+These settings apply only when `--tag=package-2021-10` is specified on the command line.
+
+```yaml $(tag) == 'package-2021-10'
+input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/common.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/keyvault.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/managedHsm.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/8b871ca35a08c43293fcbb2926e6062db4f6d85c/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2021-10-01/providers.json
 ```

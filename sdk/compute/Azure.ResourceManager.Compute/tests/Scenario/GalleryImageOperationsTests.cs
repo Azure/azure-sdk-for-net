@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryImageOperationsTests : ComputeTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private Gallery _gallery;
+        private ResourceGroupResource _resourceGroup;
+        private GalleryResource _gallery;
 
         public GalleryImageOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<Gallery> CreateGalleryAsync(string galleryName)
+        private async Task<GalleryResource> CreateGalleryAsync(string galleryName)
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return _gallery;
         }
 
-        private async Task<GalleryImage> CreateGalleryImageAsync(string galleryImageName)
+        private async Task<GalleryImageResource> CreateGalleryImageAsync(string galleryImageName)
         {
             var galleryName = Recording.GenerateAssetName("testGallery_");
             _gallery = await CreateGalleryAsync(galleryName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testGallery_");
             var image = await CreateGalleryImageAsync(name);
-            GalleryImage image2 = await image.GetAsync();
+            GalleryImageResource image2 = await image.GetAsync();
 
             ResourceDataHelper.AssertGalleryImage(image.Data, image2.Data);
         }
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var image = await CreateGalleryImageAsync(name);
             var description = "This is a gallery for test";
-            var update = new PatchableGalleryImageData()
+            var update = new GalleryImagePatch()
             {
                 OSType = OperatingSystemTypes.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
                 Description = description
             };
             var lro = await image.UpdateAsync(WaitUntil.Completed, update);
-            GalleryImage updatedGalleryImage = lro.Value;
+            GalleryImageResource updatedGalleryImage = lro.Value;
 
             Assert.AreEqual(description, updatedGalleryImage.Data.Description);
         }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             };
-            GalleryImage updatedGalleryImage = await image.SetTagsAsync(tags);
+            GalleryImageResource updatedGalleryImage = await image.SetTagsAsync(tags);
 
             Assert.AreEqual(tags, updatedGalleryImage.Data.Tags);
         }

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace Azure.Monitor.Query
+namespace Azure.Core
 {
     internal abstract class TypeBinder<TExchange>
     {

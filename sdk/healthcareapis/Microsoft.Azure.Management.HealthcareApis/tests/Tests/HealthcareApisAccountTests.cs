@@ -30,11 +30,11 @@ namespace HealthcareApis.Tests
                 // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                var workspace = HealthcareApisManagementTestUtilities.GetWorkspace();
 
                 // Create healthcare apis account
-                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
-                HealthcareApisManagementTestUtilities.VerifyAccountProperties(account, true);
+                var account = healthCareApisMgmtClient.Workspaces.BeginCreateOrUpdate(rgname, accountName, workspace);
+                HealthcareApisManagementTestUtilities.VerifyWorkspaceProperties(account);
             }
         }
 
@@ -52,37 +52,18 @@ namespace HealthcareApis.Tests
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Generate account name
-                string accountName = TestUtilities.GenerateName("hca");
+                string accountName = TestUtilities.GenerateName("workspace");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                var workspace = HealthcareApisManagementTestUtilities.GetWorkspace();
 
-                // Create healthcare apis account
-                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
-                Assert.Equal(Kind.Fhir, account.Kind);
-            }
-        }
+                var account = healthCareApisMgmtClient.Workspaces.BeginCreateOrUpdate(rgname, accountName, workspace);
 
-        [Fact]
-        public void HealthcareApisCreateWithParametersTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var fhirServiceName = TestUtilities.GenerateName("fhirservice");
 
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var resourcesClient = HealthcareApisManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var healthCareApisMgmtClient = HealthcareApisManagementTestUtilities.GetHealthcareApisManagementClient(context, handler);
+                var serviceDescription = HealthcareApisManagementTestUtilities.GetFhirService(false);
 
-                // Create resource group
-                var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
-
-                // Generate account name
-                string accountName = TestUtilities.GenerateName("hca");
-
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescriptionWithProperties();
-
-                // Create healthcareApis account
-                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
-                HealthcareApisManagementTestUtilities.VerifyAccountProperties(account, false);
+                var fhirService = healthCareApisMgmtClient.FhirServices.BeginCreateOrUpdate(rgname, accountName, fhirServiceName, serviceDescription);
+                Assert.Equal("fhir-R4", fhirService.Kind);
             }
         }
 
@@ -125,25 +106,31 @@ namespace HealthcareApis.Tests
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Generate account name
-                string accountName = TestUtilities.GenerateName("hca");
+                string workspaceName = TestUtilities.GenerateName("hca");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription(Kind.FhirR4);
+                var workspaceDescription = HealthcareApisManagementTestUtilities.GetWorkspace();
 
-                // Create healthcareApis account
-                var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                var workspace = healthCareApisMgmtClient.Workspaces.BeginCreateOrUpdate(rgname, workspaceName, workspaceDescription);
 
-                var servicePatchDescription = HealthcareApisManagementTestUtilities.GetServicePatchDescription();
+                string fhirServiceName = TestUtilities.GenerateName("fhirservice");
+
+                var fhirServiceDescription = HealthcareApisManagementTestUtilities.GetFhirService(false);
+
+                // Create FhirService
+                var fhirService = healthCareApisMgmtClient.FhirServices.BeginCreateOrUpdate(rgname, workspaceName, fhirServiceName, fhirServiceDescription);
+
+                var updatedFhirServiceDescription = HealthcareApisManagementTestUtilities.GetFhirService(true);
 
                 // Update Tags
-                var account = healthCareApisMgmtClient.Services.Update(rgname, accountName, servicePatchDescription);
-                Assert.True(account.Tags.Values.Contains("value3"));
-                Assert.True(account.Tags.Values.Contains("value4"));
-                Assert.False(account.Tags.Values.Contains("value1"));
-                Assert.False(account.Tags.Values.Contains("value2"));
+                var updatedFhirService = healthCareApisMgmtClient.FhirServices.BeginCreateOrUpdate(rgname, workspaceName, fhirServiceName, updatedFhirServiceDescription);
+                Assert.True(updatedFhirService.Tags.Values.Contains("value3"));
+                Assert.True(updatedFhirService.Tags.Values.Contains("value4"));
+                Assert.False(updatedFhirService.Tags.Values.Contains("value1"));
+                Assert.False(updatedFhirService.Tags.Values.Contains("value2"));
 
                 // Validate
-                var fetchedAccount = healthCareApisMgmtClient.Services.Get(rgname, accountName);
-                Assert.Equal(servicePatchDescription.Tags.Count, fetchedAccount.Tags.Count);
+                var fetchedAccount = healthCareApisMgmtClient.FhirServices.Get(rgname, workspaceName, fhirServiceName);
+                Assert.Equal(updatedFhirServiceDescription.Tags.Count, fetchedAccount.Tags.Count);
                 Assert.Collection(fetchedAccount.Tags,
                     (keyValue) => { Assert.Equal("key3", keyValue.Key); Assert.Equal("value3", keyValue.Value); },
                     (keyValue) => { Assert.Equal("key4", keyValue.Key); Assert.Equal("value4", keyValue.Value); },
@@ -165,19 +152,19 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                var accounts = healthCareApisMgmtClient.Services.ListByResourceGroup(rgname);
+                var accounts = healthCareApisMgmtClient.Workspaces.ListByResourceGroup(rgname);
 
                 Assert.Empty(accounts);
 
                 string accountName1 = HealthcareApisManagementTestUtilities.CreateHealthcareApisAccount(healthCareApisMgmtClient, rgname);
                 string accountName2 = HealthcareApisManagementTestUtilities.CreateHealthcareApisAccount(healthCareApisMgmtClient, rgname);
 
-                accounts = healthCareApisMgmtClient.Services.ListByResourceGroup(rgname);
+                accounts = healthCareApisMgmtClient.Workspaces.ListByResourceGroup(rgname);
 
                 Assert.Equal(2, accounts.Count());
 
-                HealthcareApisManagementTestUtilities.VerifyAccountProperties(accounts.First(), true);
-                HealthcareApisManagementTestUtilities.VerifyAccountProperties(accounts.Skip(1).First(), true);
+                HealthcareApisManagementTestUtilities.VerifyWorkspaceProperties(accounts.First());
+                HealthcareApisManagementTestUtilities.VerifyWorkspaceProperties(accounts.Skip(1).First());
             }
         }
 
@@ -195,17 +182,16 @@ namespace HealthcareApis.Tests
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 //generate account name
-                string accountName = TestUtilities.GenerateName("hca");
+                string workspaceName = TestUtilities.GenerateName("hca");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                var workspaceDescription = HealthcareApisManagementTestUtilities.GetWorkspace();
 
                 // Create healthcareApis account
-                var createdAccount = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                var workspace = healthCareApisMgmtClient.Workspaces.BeginCreateOrUpdate(rgname, workspaceName, workspaceDescription);
 
                 // Validate
-                var fetchedAccount = healthCareApisMgmtClient.Services.Get(rgname, accountName);
-                Assert.Equal(accountName, fetchedAccount.Name);
-                Assert.Equal("westus", fetchedAccount.Location);
+                var fetchedWorkspace = healthCareApisMgmtClient.Workspaces.Get(rgname, workspaceName);
+                Assert.Equal("westus2", fetchedWorkspace.Location);
             }
         }
 
@@ -225,13 +211,13 @@ namespace HealthcareApis.Tests
                 // Generate account name
                 string accountName = TestUtilities.GenerateName("hca");
 
-                var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                var workspace = HealthcareApisManagementTestUtilities.GetWorkspace();
 
                 // Create healthcareApis account
-                var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                var account = healthCareApisMgmtClient.Workspaces.BeginCreateOrUpdate(rgname, accountName, workspace);
 
                 // Delete an account
-                healthCareApisMgmtClient.Services.Delete(rgname, accountName);
+                healthCareApisMgmtClient.Workspaces.BeginDelete(rgname, accountName);
 
                 // Delete an account which does not exist
                 healthCareApisMgmtClient.Services.Delete(rgname, "missingaccount");
@@ -291,32 +277,32 @@ namespace HealthcareApis.Tests
                 // Create resource group
                 var rgname = HealthcareApisManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                { 
+                {
                     // prepare account properties
                     string accountName = TestUtilities.GenerateName("hca1234");
 
-                    var serviceDescription = HealthcareApisManagementTestUtilities.GetServiceDescription();
+                    var workspace = HealthcareApisManagementTestUtilities.GetWorkspace();
 
                     // Create healthcare apis account
-                    var account = healthCareApisMgmtClient.Services.CreateOrUpdate(rgname, accountName, serviceDescription);
+                    var account = healthCareApisMgmtClient.Workspaces.BeginCreateOrUpdate(rgname, accountName, workspace);
 
                     // Create private link resource
-                    var plResouces = healthCareApisMgmtClient.PrivateLinkResources.ListByService(rgname, accountName);
+                    var plResouces = healthCareApisMgmtClient.WorkspacePrivateLinkResources.ListByWorkspace(rgname, accountName);
 
                     PrivateEndpointConnection pec = null;
                     try
                     {
-                        pec = healthCareApisMgmtClient.PrivateEndpointConnections.Get(rgname, accountName, "notExistPCN");
+                        pec = healthCareApisMgmtClient.WorkspacePrivateEndpointConnections.Get(rgname, accountName, "notExistPCN");
                     }
                     catch { }
 
                     // verify
                     Assert.NotNull(plResouces);
-                    Assert.True(plResouces.Value.Count == 1);
-                    Assert.Equal("fhir", plResouces.Value[0].GroupId);
+                    Assert.True(plResouces.Count() == 1);
+                    Assert.Equal("healthcareworkspace", plResouces.First().GroupId);
                     Assert.Null(pec);
 
-                    var plConnections = healthCareApisMgmtClient.PrivateEndpointConnections.ListByService(rgname, accountName);
+                    var plConnections = healthCareApisMgmtClient.WorkspacePrivateEndpointConnections.ListByWorkspace(rgname, accountName);
                     Assert.True(plConnections.ToList().Count == 0);
                 }
             }

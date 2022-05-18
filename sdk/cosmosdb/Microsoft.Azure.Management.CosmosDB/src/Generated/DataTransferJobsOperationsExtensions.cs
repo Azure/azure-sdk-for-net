@@ -118,6 +118,144 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
+            /// Pause a Data Transfer Job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='jobName'>
+            /// Name of the Data Transfer Job
+            /// </param>
+            public static DataTransferJobGetResults Pause(this IDataTransferJobsOperations operations, string resourceGroupName, string accountName, string jobName)
+            {
+                return operations.PauseAsync(resourceGroupName, accountName, jobName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Pause a Data Transfer Job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='jobName'>
+            /// Name of the Data Transfer Job
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataTransferJobGetResults> PauseAsync(this IDataTransferJobsOperations operations, string resourceGroupName, string accountName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PauseWithHttpMessagesAsync(resourceGroupName, accountName, jobName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Resumes a Data Transfer Job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='jobName'>
+            /// Name of the Data Transfer Job
+            /// </param>
+            public static DataTransferJobGetResults Resume(this IDataTransferJobsOperations operations, string resourceGroupName, string accountName, string jobName)
+            {
+                return operations.ResumeAsync(resourceGroupName, accountName, jobName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Resumes a Data Transfer Job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='jobName'>
+            /// Name of the Data Transfer Job
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataTransferJobGetResults> ResumeAsync(this IDataTransferJobsOperations operations, string resourceGroupName, string accountName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResumeWithHttpMessagesAsync(resourceGroupName, accountName, jobName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Cancels a Data Transfer Job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='jobName'>
+            /// Name of the Data Transfer Job
+            /// </param>
+            public static DataTransferJobGetResults Cancel(this IDataTransferJobsOperations operations, string resourceGroupName, string accountName, string jobName)
+            {
+                return operations.CancelAsync(resourceGroupName, accountName, jobName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancels a Data Transfer Job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// Cosmos DB database account name.
+            /// </param>
+            /// <param name='jobName'>
+            /// Name of the Data Transfer Job
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataTransferJobGetResults> CancelAsync(this IDataTransferJobsOperations operations, string resourceGroupName, string accountName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CancelWithHttpMessagesAsync(resourceGroupName, accountName, jobName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get a list of Data Transfer jobs.
             /// </summary>
             /// <param name='operations'>

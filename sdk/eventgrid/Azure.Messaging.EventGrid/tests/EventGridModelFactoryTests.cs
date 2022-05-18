@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
 using NUnit.Framework;
 
@@ -296,6 +297,28 @@ namespace Azure.Messaging.EventGrid.Tests
 
             Assert.AreEqual(10, model.RecordingDurationMs);
             Assert.AreEqual("reason", model.SessionEndReason);
+
+            model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData(
+                EventGridModelFactory.AcsRecordingStorageInfoProperties(),
+                DateTimeOffset.Now,
+                10,
+                RecordingContentType.Audio,
+                RecordingChannelType.Mixed,
+                RecordingFormatType.Mp3);
+
+            Assert.AreEqual(10, model.RecordingDurationMs);
+            Assert.AreEqual(AcsRecordingContentType.Audio, model.ContentType);
+            Assert.AreEqual(AcsRecordingChannelType.Mixed, model.ChannelType);
+            Assert.AreEqual(AcsRecordingFormatType.Mp3, model.FormatType);
+
+            // back compat
+            Assert.AreEqual(RecordingContentType.Audio, model.RecordingContentType);
+            Assert.AreEqual(RecordingChannelType.Mixed, model.RecordingChannelType);
+            Assert.AreEqual(RecordingFormatType.Mp3, model.RecordingFormatType);
+
+            // empty params
+            model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData();
+            Assert.IsNotNull(model);
         }
 
         [Test]

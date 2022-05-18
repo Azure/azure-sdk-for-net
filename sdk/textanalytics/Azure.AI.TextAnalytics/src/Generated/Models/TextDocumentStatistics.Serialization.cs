@@ -10,8 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct TextDocumentStatistics
+    public partial struct TextDocumentStatistics : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("charactersCount");
+            writer.WriteNumberValue(CharacterCount);
+            writer.WritePropertyName("transactionsCount");
+            writer.WriteNumberValue(TransactionCount);
+            writer.WriteEndObject();
+        }
+
         internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element)
         {
             int charactersCount = default;

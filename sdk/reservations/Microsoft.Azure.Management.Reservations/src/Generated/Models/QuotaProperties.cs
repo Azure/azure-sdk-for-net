@@ -38,7 +38,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="name">Name of the resource provide by the resource
         /// provider. Use this property for quotaRequests resource
         /// operations.</param>
-        /// <param name="resourceType">The name of the resource type.</param>
+        /// <param name="resourceType">The name of the resource type. Possible
+        /// values include: 'standard', 'dedicated', 'lowPriority', 'shared',
+        /// 'serviceSpecific'</param>
         /// <param name="quotaPeriod">The time period over which the quota
         /// usage values are summarized. For example, P1D (per one day), PT1M
         /// (per one minute), and PT1S (per one second). This parameter is
@@ -46,7 +48,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// period is irrelevant.</param>
         /// <param name="properties">Additional properties for the specified
         /// resource provider.</param>
-        public QuotaProperties(int? limit = default(int?), int? currentValue = default(int?), string unit = default(string), ResourceName name = default(ResourceName), object resourceType = default(object), string quotaPeriod = default(string), object properties = default(object))
+        public QuotaProperties(int? limit = default(int?), int? currentValue = default(int?), string unit = default(string), ResourceName name = default(ResourceName), string resourceType = default(string), string quotaPeriod = default(string), object properties = default(object))
         {
             Limit = limit;
             CurrentValue = currentValue;
@@ -90,10 +92,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public ResourceName Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource type.
+        /// Gets or sets the name of the resource type. Possible values
+        /// include: 'standard', 'dedicated', 'lowPriority', 'shared',
+        /// 'serviceSpecific'
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
-        public object ResourceType { get; set; }
+        public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets the time period over which the quota usage values are

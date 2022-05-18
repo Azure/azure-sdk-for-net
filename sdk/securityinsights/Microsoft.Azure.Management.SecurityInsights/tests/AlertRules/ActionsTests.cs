@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Net;
-using Microsoft.Azure.Management.SecurityInsights;
+using System;
 using Microsoft.Azure.Management.SecurityInsights.Models;
+using Microsoft.Azure.Management.SecurityInsights.Tests.AlertRules;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
-using System;
 
 namespace Microsoft.Azure.Management.SecurityInsights.Tests
 {
@@ -31,20 +30,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var RuleId = Guid.NewGuid().ToString();
-                var Rule = new MicrosoftSecurityIncidentCreationAlertRule()
-                {
-                    ProductFilter = "Microsoft Cloud App Security",
-                    Enabled = true,
-                    DisplayName = "SDKTest"
-                };
+                var Rule = AlertRulesUtils.GetDefaultAlertRuleProperties();
                 SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
-                var Action = new ActionRequest
-                {
-                    LogicAppResourceId = TestHelper.ActionLAResourceID,
-                    TriggerUri = TestHelper.ActionLATriggerUri
-                };
+                var Action = AlertRulesUtils.GetDefaultAlertRuleActionProperties();
                 SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
+
                 var Actions = SecurityInsightsClient.Actions.ListByAlertRule(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
                 ValidateActions(Actions);
                 SecurityInsightsClient.AlertRules.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId);
@@ -58,20 +49,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var RuleId = Guid.NewGuid().ToString();
-                var Rule = new MicrosoftSecurityIncidentCreationAlertRule()
-                {
-                    ProductFilter = "Microsoft Cloud App Security",
-                    Enabled = true,
-                    DisplayName = "SDKTest"
-                };
+                var Rule = AlertRulesUtils.GetDefaultAlertRuleProperties();
 
-                var alertRule = SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
+                SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
-                var Action = new ActionRequest
-                {
-                    LogicAppResourceId = TestHelper.ActionLAResourceID,
-                    TriggerUri = TestHelper.ActionLATriggerUri
-                };
+                var Action = AlertRulesUtils.GetDefaultAlertRuleActionProperties();
 
                 var alertRuleAction = SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
                 ValidateAction(alertRuleAction);
@@ -86,20 +68,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var RuleId = Guid.NewGuid().ToString();
-                var Rule = new MicrosoftSecurityIncidentCreationAlertRule()
-                {
-                    ProductFilter = "Microsoft Cloud App Security",
-                    Enabled = true,
-                    DisplayName = "SDKTest"
-                };
+                var Rule = AlertRulesUtils.GetDefaultAlertRuleProperties();
 
                 SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
-                var Action = new ActionRequest
-                {
-                    LogicAppResourceId = TestHelper.ActionLAResourceID,
-                    TriggerUri = TestHelper.ActionLATriggerUri
-                };
+                var Action = AlertRulesUtils.GetDefaultAlertRuleActionProperties();
 
                 SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
                 var alertRuleAction = SecurityInsightsClient.Actions.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId);
@@ -115,20 +88,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 var RuleId = Guid.NewGuid().ToString();
-                var Rule = new MicrosoftSecurityIncidentCreationAlertRule()
-                {
-                    ProductFilter = "Microsoft Cloud App Security",
-                    Enabled = true,
-                    DisplayName = "SDKTest"
-                };
+                var Rule = AlertRulesUtils.GetDefaultAlertRuleProperties();
 
                 SecurityInsightsClient.AlertRules.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, Rule);
                 var ActionId = Guid.NewGuid().ToString();
-                var Action = new ActionRequest
-                {
-                    LogicAppResourceId = TestHelper.ActionLAResourceID,
-                    TriggerUri = TestHelper.ActionLATriggerUri
-                };
+                var Action = AlertRulesUtils.GetDefaultAlertRuleActionProperties();
 
                 SecurityInsightsClient.Actions.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId, Action);
                 SecurityInsightsClient.Actions.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, RuleId, ActionId);

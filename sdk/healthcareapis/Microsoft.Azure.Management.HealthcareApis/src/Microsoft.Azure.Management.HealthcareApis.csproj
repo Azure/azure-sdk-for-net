@@ -8,14 +8,14 @@
     <Description>Provides management capabilities for Microsoft Azure Healthcare Apis.</Description>
     <AssemblyTitle>Microsoft Azure Healthcare Apis Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.HealthcareApis</AssemblyName>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <RootNamespace>Microsoft.Azure.Management.HealthcareApis</RootNamespace>
-    <PackageTags>Microsoft Azure Healthcare Apis;HealthcareApis management;HealthcareApis;</PackageTags>
+    <PackageTags>Microsoft Azure Health Data Services;Health Data Services management;Health Data Services;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-    1) Change: Add support for private link and public network access setting
+    1) Change: Add support for FHIR, DICOM, and MedTech
     ]]></PackageReleaseNotes>
-    <PackageReleaseNotes>Management SDK for Healthcare APIs.</PackageReleaseNotes>
+    <PackageReleaseNotes>Management SDK for Health Data Services.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

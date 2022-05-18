@@ -753,7 +753,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -803,8 +803,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip549\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549\u0022,\r\n",
+        "  \u0022name\u0022: \u0022csmipv4publicip6685\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022c7494e0c-695a-4ca8-adc5-38aa0f9ebf23\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -868,7 +868,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -901,8 +901,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip549\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549\u0022,\r\n",
+        "  \u0022name\u0022: \u0022csmipv4publicip6685\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022ea7142e2-a35e-4e95-933f-f981a1dc078b\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -966,7 +966,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -999,8 +999,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip549\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549\u0022,\r\n",
+        "  \u0022name\u0022: \u0022csmipv4publicip6685\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022ea7142e2-a35e-4e95-933f-f981a1dc078b\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -1027,7 +1027,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685?api-version=2021-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1061,8 +1061,8 @@
       },
       "ResponseBody": [
         "{\r\n",
-        "  \u0022name\u0022: \u0022csmipv4publicip549\u0022,\r\n",
-        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549\u0022,\r\n",
+        "  \u0022name\u0022: \u0022csmipv4publicip6685\u0022,\r\n",
+        "  \u0022id\u0022: \u0022/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685\u0022,\r\n",
         "  \u0022etag\u0022: \u0022W/\\\u0022ea7142e2-a35e-4e95-933f-f981a1dc078b\\\u0022\u0022,\r\n",
         "  \u0022location\u0022: \u0022eastus\u0022,\r\n",
         "  \u0022tags\u0022: {\r\n",
@@ -1089,7 +1089,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip549?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg2945/providers/Microsoft.Network/publicIPAddresses/csmipv4publicip6685?api-version=2021-02-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

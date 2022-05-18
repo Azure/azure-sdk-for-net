@@ -7,7 +7,7 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// Base class representing collection of resources.
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the diagnostic options for this resource client.
         /// </summary>
-        protected internal DiagnosticsOptions DiagnosticOptions => Client.DiagnosticOptions;
+        protected internal DiagnosticsOptions Diagnostics => Client.Diagnostics;
 
         /// <summary>
         /// Gets the pipeline for this resource client.
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the base uri for this resource client.
         /// </summary>
-        protected internal Uri BaseUri => Client.BaseUri;
+        protected internal Uri Endpoint => Client.Endpoint;
 
         /// <summary>
         /// Gets the api version override if it has been set for the current client options.
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Core
         /// Gets a cached client to use for extension methods.
         /// </summary>
         /// <typeparam name="T"> The type of client to get. </typeparam>
-        /// <param name="func"> The constructor factory for the client. </param>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(Func<ArmClient, T> func)
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
             where T : class
         {
-            return _clientCache.GetOrAdd(typeof(T), (type) => { return func(Client); }) as T;
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(Client); }) as T;
         }
     }
 }

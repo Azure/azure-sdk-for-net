@@ -33,79 +33,86 @@ parameters:
     type: string
     default: ''
 steps:
-- template: /eng/common/pipelines/templates/steps/enable-long-path-support.yml
+  - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
+    - checkout: none
+    - pwsh: |
+        Write-Host "Skipping DocsMS Update because package list was empty."
+      displayName: Skip DocsMS Update
+  - ${{ else }}:
+    - template: /eng/common/pipelines/templates/steps/enable-long-path-support.yml
 
-- pwsh: |
-    Write-Host "###vso[task.setvariable variable=DocRepoLocation]${{ parameters.WorkingDirectory }}/doc"
-  displayName: Set $(DocRepoLocation)
+    - pwsh: |
+        Write-Host "###vso[task.setvariable variable=DocRepoLocation]${{ parameters.WorkingDirectory }}/doc"
+      displayName: Set $(DocRepoLocation)
 
-- template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-  parameters:
-    SkipDefaultCheckout: true
-    Repositories:
-      - Name: ${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }}
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+        SkipDefaultCheckout: true
+        Repositories:
+          - Name: ${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }}
+            WorkingDirectory: $(DocRepoLocation)
+        Paths: ${{ parameters.SparseCheckoutPaths }}
+
+    # If performing a daily docs build set the $(TargetBranchName) to a daily branch
+    # name and attempt to checkout the daily docs branch. If the branch doesn't
+    # exist, create it
+    - ${{ if eq(parameters.DailyDocsBuild, 'true') }}:
+      - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
+
+      - pwsh: |
+          $ErrorActionPreference = "Continue"
+          $RemoteName = "origin"
+          $BranchName = "$(TargetBranchName)"
+          # Fetch and checkout remote branch if it already exists otherwise create a new branch.
+          git ls-remote --exit-code --heads $RemoteName $BranchName
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "git fetch $RemoteName $BranchName"
+            git fetch $RemoteName $BranchName
+            Write-Host "git checkout $BranchName."
+            git checkout $BranchName
+          } else {
+            Write-Host "git checkout -b $BranchName."
+            git checkout -b $BranchName
+          }
+        displayName: Checkout daily docs branch if it exists
+        workingDirectory: $(DocRepoLocation)
+
+    # If NOT performing a daily docs build, set the $(TargetBranchName) to the 
+    # default branch of the documentation repository.
+    - ${{ if ne(parameters.DailyDocsBuild, 'true') }}:
+      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+        parameters:
+          WorkingDirectory: $(DocRepoLocation)
+          DefaultBranchVariableName: TargetBranchName
+    # Pull and build the docker image.
+    - ${{ if ne(parameters.DocValidationImageId, '') }}:
+      - template: /eng/common/pipelines/templates/steps/docker-pull-image.yml
+        parameters:
+          ContainerRegistryClientId: $(azuresdkimages-cr-clientid)
+          ContainerRegistryClientSecret: $(azuresdkimages-cr-clientsecret)
+          ImageId: '${{ parameters.DocValidationImageId }}'
+    - pwsh: |
+        $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
+        # Without -NoEnumerate, a single element array[T] gets unwrapped as a single item T.
+        $packageInfoLocations = ConvertFrom-Json $packageInfoJson -NoEnumerate
+        ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
+          -PackageInfoJsonLocations $packageInfoLocations `
+          -DocRepoLocation "$(DocRepoLocation)" `
+          -Language '${{parameters.Language}}' `
+          -RepoId '${{ parameters.RepoId }}' `
+          -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
+          -PackageSourceOverride '${{ parameters.PackageSourceOverride }}' `
+          -TenantId '$(opensource-aad-tenant-id)' `
+          -ClientId '$(opensource-aad-app-id)' `
+          -ClientSecret '$(opensource-aad-secret)' 
+      displayName: Apply Documentation Updates
+
+    - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+      parameters:
+        BaseRepoBranch: $(TargetBranchName)
+        BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+        CommitMsg: "Update docs metadata"
+        TargetRepoName: ${{ parameters.TargetDocRepoName }}
+        TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
         WorkingDirectory: $(DocRepoLocation)
-    Paths: ${{ parameters.SparseCheckoutPaths }}
-
-# If performing a daily docs build set the $(TargetBranchName) to a daily branch
-# name and attempt to checkout the daily docs branch. If the branch doesn't
-# exist, create it
-- ${{ if eq(parameters.DailyDocsBuild, 'true') }}:
-  - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
-
-  - pwsh: |
-      $ErrorActionPreference = "Continue"
-      $RemoteName = "origin"
-      $BranchName = "$(TargetBranchName)"
-      # Fetch and checkout remote branch if it already exists otherwise create a new branch.
-      git ls-remote --exit-code --heads $RemoteName $BranchName
-      if ($LASTEXITCODE -eq 0) {
-        Write-Host "git fetch $RemoteName $BranchName"
-        git fetch $RemoteName $BranchName
-        Write-Host "git checkout $BranchName."
-        git checkout $BranchName
-      } else {
-        Write-Host "git checkout -b $BranchName."
-        git checkout -b $BranchName
-      }
-    displayName: Checkout daily docs branch if it exists
-    workingDirectory: $(DocRepoLocation)
-
-# If NOT performing a daily docs build, set the $(TargetBranchName) to the 
-# default branch of the documentation repository.
-- ${{ if ne(parameters.DailyDocsBuild, 'true') }}:
-  - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-    parameters:
-      WorkingDirectory: $(DocRepoLocation)
-      DefaultBranchVariableName: TargetBranchName
-# Pull and build the docker image.
-- ${{ if ne(parameters.DocValidationImageId, '') }}:
-  - template: /eng/common/pipelines/templates/steps/docker-pull-image.yml
-    parameters:
-      ContainerRegistryClientId: $(azuresdkimages-cr-clientid)
-      ContainerRegistryClientSecret: $(azuresdkimages-cr-clientsecret)
-      ImageId: '${{ parameters.DocValidationImageId }}'
-- pwsh: |
-    $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
-    $packageInfoLocations = ConvertFrom-Json $packageInfoJson
-    ${{ parameters.ScriptDirectory }}/Update-DocsMsMetadata.ps1 `
-      -PackageInfoJsonLocations $packageInfoLocations `
-      -DocRepoLocation "$(DocRepoLocation)" `
-      -Language '${{parameters.Language}}' `
-      -RepoId '${{ parameters.RepoId }}' `
-      -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
-      -PackageSourceOverride '${{ parameters.PackageSourceOverride }}' `
-      -TenantId '$(opensource-aad-tenant-id)' `
-      -ClientId '$(opensource-aad-app-id)' `
-      -ClientSecret '$(opensource-aad-secret)' 
-  displayName: Apply Documentation Updates
-
-- template: /eng/common/pipelines/templates/steps/git-push-changes.yml
-  parameters:
-    BaseRepoBranch: $(TargetBranchName)
-    BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-    CommitMsg: "Update docs metadata"
-    TargetRepoName: ${{ parameters.TargetDocRepoName }}
-    TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
-    WorkingDirectory: $(DocRepoLocation)
-    ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+        ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}

@@ -51,14 +51,19 @@ namespace Azure.Core.TestFramework
             return InjectZeroPoller().WaitForCompletionResponseAsync(operation, null, cancellationToken);
         }
 
+        internal static object InvokeWaitForCompletion<T>(Operation<T> operation, CancellationToken cancellationToken)
+        {
+            return InjectZeroPoller().WaitForCompletionAsync(operation, null, cancellationToken);
+        }
+
         internal static object InvokeWaitForCompletion(object target, Type targetType, CancellationToken cancellationToken)
         {
-            // get the concrete instance of OperationPoller.ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T>, TimeSpan?, CancellationToken)
-            var poller = InjectZeroPoller();
-            var genericMethod = poller.GetType().GetMethods().Where(m => m.Name == PollerWaitForCompletionAsyncName).FirstOrDefault(m => m.GetParameters().Length == 3);
-            var method = genericMethod.MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
+            var method = typeof(OperationInterceptor)
+                .GetMethods(BindingFlags.Static | BindingFlags.NonPublic)
+                .First(m => m.IsGenericMethodDefinition && m.Name == nameof(InvokeWaitForCompletion))
+                .MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
 
-            return method.Invoke(InjectZeroPoller(), new object[] { target, null, cancellationToken});
+            return method.Invoke(null, new[] {target, cancellationToken});
         }
 
         private void CheckArguments(object[] invocationArguments)

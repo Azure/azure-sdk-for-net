@@ -19,15 +19,26 @@ namespace Azure.Analytics.Purview.Administration
     /// <summary> The PurviewMetadataPolicy service client. </summary>
     [CodeGenClient("PurviewMetadataPolicyClient")]
     [CodeGenSuppress("PurviewMetadataPolicyClient", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential), typeof(PurviewAccountClientOptions)})]
+    [CodeGenSuppress("PurviewMetadataPolicyClient", new Type[] { typeof(Uri), typeof(string), typeof(TokenCredential)})]
     public partial class PurviewMetadataPolicyClient
     {
         /// <summary> Initializes a new instance of PurviewMetadataPolicyClient. </summary>
         /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="collectionName"> The String to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public PurviewMetadataPolicyClient(Uri endpoint, string collectionName, TokenCredential credential) : this(endpoint, collectionName, credential, new PurviewMetadataClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewMetadataPolicyClient. </summary>
+        /// <param name="endpoint"> The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="collectionName"> The String to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/>, or <paramref name="credential"/> is null. </exception>
-        public PurviewMetadataPolicyClient(Uri endpoint, string collectionName, TokenCredential credential, PurviewMetadataClientOptions options = null)
+        public PurviewMetadataPolicyClient(Uri endpoint, string collectionName, TokenCredential credential, PurviewMetadataClientOptions options)
         {
             if (endpoint == null)
             {
@@ -44,7 +55,7 @@ namespace Azure.Analytics.Purview.Administration
 
             options ??= new PurviewMetadataClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;

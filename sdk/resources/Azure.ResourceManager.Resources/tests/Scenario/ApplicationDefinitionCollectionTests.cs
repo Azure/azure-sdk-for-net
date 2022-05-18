@@ -21,33 +21,33 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
-            ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
+            ArmApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
+            ArmApplicationDefinitionResource applicationDefinition = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
             Assert.AreEqual(applicationDefinitionName, applicationDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationDefinitionData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationDefinitionData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-L-");
-            ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData);
+            ArmApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
+            _ = await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData);
             int count = 0;
-            await foreach (var tempApplicationDefinition in rg.GetApplicationDefinitions().GetAllAsync())
+            await foreach (var tempApplicationDefinition in rg.GetArmApplicationDefinitions().GetAllAsync())
             {
                 count++;
             }
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-G-");
-            ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
-            ApplicationDefinition getApplicationDefinition = await rg.GetApplicationDefinitions().GetAsync(applicationDefinitionName);
+            ArmApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
+            ArmApplicationDefinitionResource applicationDefinition = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
+            ArmApplicationDefinitionResource getApplicationDefinition = await rg.GetArmApplicationDefinitions().GetAsync(applicationDefinitionName);
             AssertValidApplicationDefinition(applicationDefinition, getApplicationDefinition);
         }
 
-        private static void AssertValidApplicationDefinition(ApplicationDefinition model, ApplicationDefinition getResult)
+        private static void AssertValidApplicationDefinition(ArmApplicationDefinitionResource model, ArmApplicationDefinitionResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Data.Authorizations.Count, getResult.Data.Authorizations.Count);
                 for (int i = 0; i < model.Data.Authorizations.Count; ++i)
                 {
-                    ApplicationAuthorization modelAuthorizations = model.Data.Authorizations[i], getResultAuthorizations = getResult.Data.Authorizations[i];
+                    ArmApplicationAuthorization modelAuthorizations = model.Data.Authorizations[i], getResultAuthorizations = getResult.Data.Authorizations[i];
                     AssertValidAuthorizations(modelAuthorizations, getResultAuthorizations);
                 }
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Data.Artifacts.Count, getResult.Data.Artifacts.Count);
                 for (int i = 0; i < model.Data.Artifacts.Count; ++i)
                 {
-                    ApplicationDefinitionArtifact modelArtifacts = model.Data.Artifacts[i], getResultArtifacts = getResult.Data.Artifacts[i];
+                    ArmApplicationDefinitionArtifact modelArtifacts = model.Data.Artifacts[i], getResultArtifacts = getResult.Data.Artifacts[i];
                     AssertValidArtifacts(modelArtifacts, getResultArtifacts);
                 }
             }
@@ -154,26 +154,26 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Data.Policies.Count, getResult.Data.Policies.Count);
                 for (int i = 0; i < model.Data.Policies.Count; ++i)
                 {
-                    ApplicationPolicy policy = model.Data.Policies[i], getPolicy = getResult.Data.Policies[i];
+                    ArmApplicationPolicy policy = model.Data.Policies[i], getPolicy = getResult.Data.Policies[i];
                     AssertValidPolicy(policy, getPolicy);
                 }
             }
         }
 
-        private static void AssertValidAuthorizations(ApplicationAuthorization model, ApplicationAuthorization getResult)
+        private static void AssertValidAuthorizations(ArmApplicationAuthorization model, ArmApplicationAuthorization getResult)
         {
             Assert.AreEqual(model.PrincipalId, getResult.PrincipalId);
             Assert.AreEqual(model.RoleDefinitionId, getResult.RoleDefinitionId);
         }
 
-        private static void AssertValidArtifacts(ApplicationDefinitionArtifact model, ApplicationDefinitionArtifact getResult)
+        private static void AssertValidArtifacts(ArmApplicationDefinitionArtifact model, ArmApplicationDefinitionArtifact getResult)
         {
             Assert.AreEqual(model.Name, getResult.Name);
             Assert.AreEqual(model.Uri, getResult.Uri);
-            Assert.AreEqual(model.ApplicationArtifactType, getResult.ApplicationArtifactType);
+            Assert.AreEqual(model.ArtifactType, getResult.ArtifactType);
         }
 
-        private static void AssertValidPolicy(ApplicationPolicy model, ApplicationPolicy getResult)
+        private static void AssertValidPolicy(ArmApplicationPolicy model, ArmApplicationPolicy getResult)
         {
             Assert.AreEqual(model.Name, getResult.Name);
             Assert.AreEqual(model.Parameters, getResult.Parameters);

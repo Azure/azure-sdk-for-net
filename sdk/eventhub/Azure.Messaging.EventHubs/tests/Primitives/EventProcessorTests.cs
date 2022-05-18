@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -96,6 +97,29 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventProcessor<T>)
                     .GetProperty("ActivePartitionProcessors", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(processor);
+
+        /// <summary>
+        ///   Invokes the processor infrastructure method responsible for stopping a partition
+        ///   processing task, using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing should be stopped.</param>
+        /// <param name="reason">The reason why the processing is being stopped.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns><c>true</c> if the <paramref name="partitionId"/> was owned and was being processed; otherwise, <c>false</c>.</returns>
+        ///
+        private static Task<bool> InvokeTryStopProcessingPartitionAsync<T>(EventProcessor<T> processor,
+                                                                          string partitionId,
+                                                                          ProcessingStoppedReason reason,
+                                                                          CancellationToken cancellationToken) where T : EventProcessorPartition, new() =>
+            (Task<bool>)
+                typeof(EventProcessor<T>)
+                    .GetMethod("TryStopProcessingPartitionAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(processor, new object[] { partitionId, reason, cancellationToken });
 
         /// <summary>
         ///   A basic custom partition type, allowing for testing or processor functionality.
