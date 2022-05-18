@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("requestMessage");
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

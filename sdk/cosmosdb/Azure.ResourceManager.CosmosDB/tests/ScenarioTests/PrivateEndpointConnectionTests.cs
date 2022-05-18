@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             var privateEndpointConnection = privateEndpointConnections[0];
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual("Pending", privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
+            Assert.AreEqual("Pending", privateEndpointConnection.Data.ConnectionState.Status);
 
             _ = await PrivateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnection.Data.Name, new CosmosDBPrivateEndpointConnectionData()
             {
-                PrivateLinkServiceConnectionState = new CosmosDBPrivateLinkServiceConnectionStateProperty()
+                ConnectionState = new CosmosDBPrivateLinkServiceConnectionStateProperty()
                 {
                     Status = "Approved",
                     Description = "Approved by test",
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             privateEndpoint= await privateEndpoint.GetAsync();
             privateEndpointConnection = await PrivateEndpointConnectionCollection.GetAsync(privateEndpointConnection.Data.Name);
             VerifyPrivateEndpointConnections(privateEndpoint.Data.ManualPrivateLinkServiceConnections[0], privateEndpointConnection);
-            Assert.AreEqual("Approved", privateEndpointConnection.Data.PrivateLinkServiceConnectionState.Status);
+            Assert.AreEqual("Approved", privateEndpointConnection.Data.ConnectionState.Status);
         }
 
         [Test]
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);
             //Assert.AreEqual(expectedValue.Name, actualValue.Data.Name);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Status, actualValue.Data.PrivateLinkServiceConnectionState.Status);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.Description, actualValue.Data.PrivateLinkServiceConnectionState.Description);
-            Assert.AreEqual(expectedValue.PrivateLinkServiceConnectionState.ActionsRequired, actualValue.Data.PrivateLinkServiceConnectionState.ActionsRequired);
+            Assert.AreEqual(expectedValue.ConnectionState.Status, actualValue.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedValue.ConnectionState.Description, actualValue.Data.ConnectionState.Description);
+            Assert.AreEqual(expectedValue.ConnectionState.ActionsRequired, actualValue.Data.ConnectionState.ActionsRequired);
         }
     }
 }

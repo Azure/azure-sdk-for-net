@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGatewayPrivateEndpointConnectionData : Azure.ResourceManager.Network.Models.NetworkWritableSubResource
     {
         public ApplicationGatewayPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
@@ -2367,11 +2367,11 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkPrivateEndpointConnectionData : Azure.ResourceManager.Network.Models.NetworkWritableSubResource
     {
         public NetworkPrivateEndpointConnectionData() { }
+        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public string LinkIdentifier { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.PrivateEndpointData PrivateEndpoint { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
@@ -8465,10 +8465,10 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PrivateLinkServiceConnection : Azure.ResourceManager.Network.Models.NetworkWritableSubResource
     {
         public PrivateLinkServiceConnection() { }
+        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public string Etag { get { throw null; } }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string PrivateLinkServiceId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }

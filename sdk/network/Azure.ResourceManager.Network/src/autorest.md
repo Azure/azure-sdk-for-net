@@ -110,6 +110,15 @@ directive:
     where: $.definitions.VpnServerConfigurationProperties.properties.etag
     transform: 'return undefined'
     reason: the same property is defined in VpnServerConfiguration and service only returns value there
+# shorten "privateLinkServiceConnectionState" property name
+  - from: applicationGateway.json
+    where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties
+    transform: >
+      $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+  - from: privateEndpoint.json
+    where: $.definitions.PrivateLinkServiceConnectionProperties
+    transform: >
+      $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
 ```
 
 ### Tag: package-track2-preview
