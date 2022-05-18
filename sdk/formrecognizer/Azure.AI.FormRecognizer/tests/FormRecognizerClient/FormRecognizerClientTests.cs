@@ -362,13 +362,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartRecognizeCustomFormsValidatesTheModelIdFormat()
+        public void StartRecognizeCustomFormsAllowsNonUuidModelIdFormat()
         {
             var client = CreateClient();
             using var stream = new MemoryStream(Array.Empty<byte>());
             var options = new RecognizeCustomFormsOptions { ContentType = FormContentType.Jpeg };
 
-            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
+            Assert.DoesNotThrowAsync(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
         }
 
         /// <summary>
@@ -423,12 +423,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartRecognizeCustomFormsFromUriValidatesTheModelIdFormat()
+        public void StartRecognizeCustomFormsFromUriAllowsNonUuidModelIdFormat()
         {
             var client = CreateClient();
             var uri = new Uri("https://thatistheques.ti.on");
 
-            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri));
+            Assert.DoesNotThrowAsync(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri));
         }
 
         /// <summary>

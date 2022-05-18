@@ -185,8 +185,8 @@ namespace Azure.AI.FormRecognizer.Models
         async ValueTask<OperationState<RecognizedFormCollection>> IOperation<RecognizedFormCollection>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<AnalyzeOperationResult> response = async
-                ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+                ? await _serviceClient.GetAnalyzeFormResultAsync(_modelId, new Guid(_resultId), cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetAnalyzeFormResult(_modelId, new Guid(_resultId), cancellationToken);
 
             OperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

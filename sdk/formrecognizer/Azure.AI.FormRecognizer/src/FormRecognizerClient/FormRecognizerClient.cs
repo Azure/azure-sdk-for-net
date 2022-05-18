@@ -996,11 +996,10 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
                 FormContentType formContentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
 
                 Response response = ServiceClient.AnalyzeWithCustomModel(
-                    guid,
+                    modelId,
                     formContentType,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
                     recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
@@ -1039,11 +1038,9 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = ServiceClient.AnalyzeWithCustomModel(
-                    guid,
+                    modelId,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
                     recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     sourcePath,
@@ -1081,11 +1078,10 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
                 FormContentType formContentType = recognizeCustomFormsOptions.ContentType ?? DetectContentType(form, nameof(form));
 
                 Response response = await ServiceClient.AnalyzeWithCustomModelAsync(
-                    guid,
+                    modelId,
                     formContentType,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
                     recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
@@ -1124,11 +1120,9 @@ namespace Azure.AI.FormRecognizer
 
             try
             {
-                Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
-
                 SourcePath sourcePath = new SourcePath() { Source = formUri.AbsoluteUri };
                 Response response = await ServiceClient.AnalyzeWithCustomModelAsync(
-                    guid,
+                    modelId,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
                     recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     sourcePath,
