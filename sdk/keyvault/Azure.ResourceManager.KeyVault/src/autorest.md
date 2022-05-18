@@ -62,6 +62,14 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedHsmSku.properties.family
     transform: delete $['x-ms-client-default']
+  - from: keyvault.json
+    where: $.paths..parameters[?(@.name === "location")]
+    transform: >
+      $["x-ms-format"] = 'azure-location';
+  - from: managedHsm.json
+    where: $.paths..parameters[?(@.name === "location")]
+    transform: >
+      $["x-ms-format"] = 'azure-location';
   - from: managedHsm.json
     where: '$.definitions'
     transform: >
