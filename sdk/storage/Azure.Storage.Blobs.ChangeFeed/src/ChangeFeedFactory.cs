@@ -86,13 +86,20 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // Get last consumable
             BlobClient blobClient = _containerClient.GetBlobClient(Constants.ChangeFeed.MetaSegmentsPath);
             BlobDownloadStreamingResult blobDownloadInfo;
-            if (async)
+            try
             {
-                blobDownloadInfo = await blobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (async)
+                {
+                    blobDownloadInfo = await blobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    blobDownloadInfo = blobClient.DownloadStreaming(cancellationToken: cancellationToken);
+                }
             }
-            else
+            catch (RequestFailedException e ) when (e.ErrorCode == BlobErrorCode.BlobNotFound)
             {
-                blobDownloadInfo = blobClient.DownloadStreaming(cancellationToken: cancellationToken);
+                return ChangeFeed.Empty();
             }
 
             JsonDocument jsonMetaSegment;

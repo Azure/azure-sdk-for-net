@@ -86,6 +86,15 @@ directive:
     transform: >
       $["format"] = "duration";
       $["x-ms-format"] = "duration-constant";
+# shorten "privateLinkServiceConnectionState" property name
+  - from: applicationGateway.json
+    where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties
+    transform: >
+      $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+  - from: privateEndpoint.json
+    where: $.definitions.PrivateLinkServiceConnectionProperties
+    transform: >
+      $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
 ```
 
 ### Tag: package-track2-preview

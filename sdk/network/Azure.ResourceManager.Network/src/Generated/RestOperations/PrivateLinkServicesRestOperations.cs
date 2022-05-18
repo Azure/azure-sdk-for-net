@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="peConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionData>> GetPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkPrivateEndpointConnectionData>> GetPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -463,13 +463,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        NetworkPrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((NetworkPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="peConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionData> GetPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<NetworkPrivateEndpointConnectionData> GetPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -497,19 +497,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        NetworkPrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((NetworkPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdatePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, PrivateEndpointConnectionData data)
+        internal HttpMessage CreateUpdatePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, NetworkPrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionData>> UpdatePrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, PrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkPrivateEndpointConnectionData>> UpdatePrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, NetworkPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -558,9 +558,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        NetworkPrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionData> UpdatePrivateEndpointConnection(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, PrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public Response<NetworkPrivateEndpointConnectionData> UpdatePrivateEndpointConnection(string subscriptionId, string resourceGroupName, string serviceName, string peConnectionName, NetworkPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -591,9 +591,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionData value = default;
+                        NetworkPrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkPrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -719,9 +719,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        NetworkPrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListPrivateEndpointConnections(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<NetworkPrivateEndpointConnectionListResult> ListPrivateEndpointConnections(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -748,9 +748,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        NetworkPrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkPrivateEndpointConnectionListResult>> ListPrivateEndpointConnectionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1237,9 +1237,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        NetworkPrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionListResult> ListPrivateEndpointConnectionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<NetworkPrivateEndpointConnectionListResult> ListPrivateEndpointConnectionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1268,9 +1268,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionListResult value = default;
+                        NetworkPrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionListResult.DeserializePrivateEndpointConnectionListResult(document.RootElement);
+                        value = NetworkPrivateEndpointConnectionListResult.DeserializeNetworkPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location. </param>
         public StorageAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountData. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationOn, CustomDomain customDomain, SasPolicy sasPolicy, KeyPolicy keyPolicy, KeyCreationTime keyCreationTime, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, MinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, PublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, ProvisioningState? provisioningState, Endpoints primaryEndpoints, string primaryLocation, AccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, string secondaryLocation, AccountStatus? statusOfSecondary, DateTimeOffset? creationOn, CustomDomain customDomain, SasPolicy sasPolicy, KeyPolicy keyPolicy, KeyCreationTime keyCreationTime, Endpoints secondaryEndpoints, Encryption encryption, AccessTier? accessTier, AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, NetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, GeoReplicationStats geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, RoutingPreference routingPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, MinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, PublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -145,10 +145,9 @@ namespace Azure.ResourceManager.Storage
         /// <summary> KeyPolicy assigned to the storage account. </summary>
         internal KeyPolicy KeyPolicy { get; }
         /// <summary> The key expiration period in days. </summary>
-        public int KeyExpirationPeriodInDays
+        public int? KeyExpirationPeriodInDays
         {
-            get => KeyPolicy.KeyExpirationPeriodInDays;
-            set => KeyPolicy.KeyExpirationPeriodInDays = value;
+            get => KeyPolicy?.KeyExpirationPeriodInDays;
         }
 
         /// <summary> Storage account keys creation time. </summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
         public LargeFileSharesState? LargeFileSharesState { get; set; }
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         public RoutingPreference RoutingPreference { get; set; }
         /// <summary> Blob restore status. </summary>

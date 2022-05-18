@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public EventHubNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
+
         [TearDown]
         public async Task ClearNamespaces()
         {
@@ -399,7 +400,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [Test]
         [RecordedTest]
         [Ignore("returned id is invalid")]
-        public async Task GetPrivateLinkResources()
+        public async Task GetEventHubPrivateLinkResources()
         {
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
@@ -413,7 +414,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 return;
             }
 
-            Assert.Fail($"{nameof(EventHubNamespaceResource)}.{nameof(EventHubNamespaceResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(PrivateLinkResource)}.");
+            Assert.Fail($"{nameof(EventHubNamespaceResource)}.{nameof(EventHubNamespaceResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(EventHubsPrivateLinkResource)}.");
         }
     }
 }

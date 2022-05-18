@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 

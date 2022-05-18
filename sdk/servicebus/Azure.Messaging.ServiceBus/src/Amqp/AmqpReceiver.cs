@@ -241,8 +241,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // to log here.
                 throw;
             }
-            catch (TaskCanceledException)
-                when (_isProcessor)
+            catch (OperationCanceledException)
+                when (_isProcessor && cancellationToken.IsCancellationRequested)
             {
                 // do not log this as the processor is shutting down
                 throw;

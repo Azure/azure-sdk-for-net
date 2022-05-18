@@ -66,11 +66,19 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// disable local auth. Default value is false. When the property is
         /// set to true, only AAD token will be used to authenticate if user is
         /// allowed to publish to the topic.</param>
+        /// <param name="dataResidencyBoundary">Data Residency Boundary of the
+        /// resource. Possible values include: 'WithinGeopair',
+        /// 'WithinRegion'</param>
+        /// <param name="sku">The Sku pricing tier for the topic.</param>
         /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="kind">Kind of the resource. Possible values include:
+        /// 'Azure', 'AzureArc'</param>
+        /// <param name="extendedLocation">Extended location of the
         /// resource.</param>
         /// <param name="systemData">The system metadata relating to Topic
         /// resource.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), IdentityInfo identity = default(IdentityInfo), SystemData systemData = default(SystemData))
+        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), string dataResidencyBoundary = default(string), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), string kind = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -82,7 +90,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             DisableLocalAuth = disableLocalAuth;
+            DataResidencyBoundary = dataResidencyBoundary;
+            Sku = sku;
             Identity = identity;
+            Kind = kind;
+            ExtendedLocation = extendedLocation;
             SystemData = systemData;
             CustomInit();
         }
@@ -164,10 +176,36 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary>
+        /// Gets or sets data Residency Boundary of the resource. Possible
+        /// values include: 'WithinGeopair', 'WithinRegion'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataResidencyBoundary")]
+        public string DataResidencyBoundary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku pricing tier for the topic.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ResourceSku Sku { get; set; }
+
+        /// <summary>
         /// Gets or sets identity information for the resource.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets kind of the resource. Possible values include:
+        /// 'Azure', 'AzureArc'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets extended location of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets the system metadata relating to Topic resource.

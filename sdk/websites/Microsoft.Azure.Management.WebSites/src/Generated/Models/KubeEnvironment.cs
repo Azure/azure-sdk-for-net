@@ -52,6 +52,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="defaultDomain">Default Domain Name for the
         /// cluster</param>
         /// <param name="staticIp">Static IP of the KubeEnvironment</param>
+        /// <param name="environmentType">Type of Kubernetes Environment. Only
+        /// supported for Container App Environments with value as
+        /// Managed</param>
         /// <param name="arcConfiguration">Cluster configuration which
         /// determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
@@ -60,7 +63,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// enables the log daemon to export
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported</param>
-        public KubeEnvironment(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), KubeEnvironmentProvisioningState? provisioningState = default(KubeEnvironmentProvisioningState?), string deploymentErrors = default(string), bool? internalLoadBalancerEnabled = default(bool?), string defaultDomain = default(string), string staticIp = default(string), ArcConfiguration arcConfiguration = default(ArcConfiguration), AppLogsConfiguration appLogsConfiguration = default(AppLogsConfiguration), string aksResourceID = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
+        /// <param name="containerAppsConfiguration">Cluster configuration for
+        /// Container Apps Environments to configure Dapr Instrumentation Key
+        /// and VNET Configuration</param>
+        public KubeEnvironment(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), KubeEnvironmentProvisioningState? provisioningState = default(KubeEnvironmentProvisioningState?), string deploymentErrors = default(string), bool? internalLoadBalancerEnabled = default(bool?), string defaultDomain = default(string), string staticIp = default(string), string environmentType = default(string), ArcConfiguration arcConfiguration = default(ArcConfiguration), AppLogsConfiguration appLogsConfiguration = default(AppLogsConfiguration), ContainerAppsConfiguration containerAppsConfiguration = default(ContainerAppsConfiguration), string aksResourceID = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, kind, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -68,8 +74,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
             InternalLoadBalancerEnabled = internalLoadBalancerEnabled;
             DefaultDomain = defaultDomain;
             StaticIp = staticIp;
+            EnvironmentType = environmentType;
             ArcConfiguration = arcConfiguration;
             AppLogsConfiguration = appLogsConfiguration;
+            ContainerAppsConfiguration = containerAppsConfiguration;
             AksResourceID = aksResourceID;
             ExtendedLocation = extendedLocation;
             CustomInit();
@@ -116,6 +124,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string StaticIp { get; set; }
 
         /// <summary>
+        /// Gets or sets type of Kubernetes Environment. Only supported for
+        /// Container App Environments with value as Managed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.environmentType")]
+        public string EnvironmentType { get; set; }
+
+        /// <summary>
         /// Gets or sets cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
@@ -131,6 +146,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets cluster configuration for Container Apps Environments
+        /// to configure Dapr Instrumentation Key and VNET Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.containerAppsConfiguration")]
+        public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
 
         /// <summary>
         /// </summary>

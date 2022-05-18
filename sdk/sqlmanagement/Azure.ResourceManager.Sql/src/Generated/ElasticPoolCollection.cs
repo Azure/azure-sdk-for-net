@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolResource> GetAllAsync(int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticPoolResource> GetAllAsync(long? skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ElasticPoolResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolResource> GetAll(int? skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticPoolResource> GetAll(long? skip = null, CancellationToken cancellationToken = default)
         {
             Page<ElasticPoolResource> FirstPageFunc(int? pageSizeHint)
             {

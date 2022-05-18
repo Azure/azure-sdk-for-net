@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public PrivateLinkScopeData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        internal PrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal PrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
         public string ProvisioningState { get; }
         /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MonitorPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The storage redundancy type of the copied backup. </summary>
+    /// <summary> The storage account type used to store backups for this database. </summary>
     public readonly partial struct BackupStorageRedundancy : IEquatable<BackupStorageRedundancy>
     {
         private readonly string _value;
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         private const string GeoValue = "Geo";
         private const string LocalValue = "Local";
         private const string ZoneValue = "Zone";
+        private const string GeoZoneValue = "GeoZone";
 
         /// <summary> Geo. </summary>
         public static BackupStorageRedundancy Geo { get; } = new BackupStorageRedundancy(GeoValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static BackupStorageRedundancy Local { get; } = new BackupStorageRedundancy(LocalValue);
         /// <summary> Zone. </summary>
         public static BackupStorageRedundancy Zone { get; } = new BackupStorageRedundancy(ZoneValue);
+        /// <summary> GeoZone. </summary>
+        public static BackupStorageRedundancy GeoZone { get; } = new BackupStorageRedundancy(GeoZoneValue);
         /// <summary> Determines if two <see cref="BackupStorageRedundancy"/> values are the same. </summary>
         public static bool operator ==(BackupStorageRedundancy left, BackupStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupStorageRedundancy"/> values are not the same. </summary>

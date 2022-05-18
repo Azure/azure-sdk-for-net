@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.ServiceBus
             return new NetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the ServiceBusNamespace. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of ServiceBusPrivateEndpointConnectionResources in the ServiceBusNamespace. </summary>
+        /// <returns> An object representing collection of ServiceBusPrivateEndpointConnectionResources and their operations over a ServiceBusPrivateEndpointConnectionResource. </returns>
+        public virtual ServiceBusPrivateEndpointConnectionCollection GetServiceBusPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new ServiceBusPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusPrivateEndpointConnectionResource>> GetServiceBusPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceBusPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusPrivateEndpointConnectionResource> GetServiceBusPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetServiceBusPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DisasterRecoveryResources in the ServiceBusNamespace. </summary>
@@ -481,10 +481,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceBusPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServiceBusPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetPrivateLinkResources");
                 scope.Start();
@@ -508,10 +508,10 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceBusPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ServiceBusPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetPrivateLinkResources");
                 scope.Start();
