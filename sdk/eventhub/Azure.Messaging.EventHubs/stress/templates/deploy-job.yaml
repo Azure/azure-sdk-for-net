@@ -1,8 +1,18 @@
 {{- include "stress.deploy-job-template.from-job" (list . "stress.deploy-example") -}}
 {{- define "stress.deploy-example" -}}
 spec:
+  {{ if eq .Stress.Scenario "EventProd" }}
   completions: 2
   parallelism: 2
+  {{ end }}
+  {{ if eq .Stress.Scenario "BuffProd" }}
+  completions: 2
+  parallelism: 2
+  {{ end }}
+  {{ if eq .Stress.Scenario "Processor" }}
+  completions: 2
+  parallelism: 2
+  {{ end }}
   completionMode: Indexed
   template:
     metadata:
@@ -13,8 +23,8 @@ spec:
       containers:
         - name: role
           image: {{ .Values.image }}
-          command: ['dotnet', 'Azure.Messaging.EventHubs.Stress.dll']
-          {{- include "stress.container-env" . | nindent 10 }}
+          command: ['dotnet', 'Azure.Messaging.EventHubs.Stress.dll', '--test', '{{ .Stress.Scenario }}']
+          {{- include "stress-test-addons.container-env" . | nindent 10 }}
 {{- end -}}
 
 {{- define "stress.deploy-job-template.from-job" -}}
@@ -29,32 +39,4 @@ spec:
 {{- $tpl := fromYaml (include "stress-test-addons.deploy-job-template.tpl" $jobCtx) -}}
 {{- toYaml (merge $jobOverride $tpl) -}}
 {{- end }}
-{{- end -}}
-
-{{- define "stress.container-env" -}}
-env:
-  - name: ROLE_LIST
-    valueFrom:
-      configMapKeyRef:
-        name: "{{ lower .Stress.Scenario }}-configmap-3"
-        key: roles
-  - name: ENV_FILE
-    value: /mnt/outputs/.env
-  - name: POD_NAME
-    valueFrom:
-      fieldRef:
-        fieldPath: metadata.name
-  - name: POD_NAMESPACE
-    valueFrom:
-      fieldRef:
-        fieldPath: metadata.namespace
-  - name: DEBUG_SHARE
-    value: /mnt/share/$(POD_NAMESPACE)/$(POD_NAME)/
-  - name: DEBUG_SHARE_ROOT
-    value: /mnt/share/
-volumeMounts:
-  - name: test-env-{{ lower .Stress.Scenario }}-{{ .Release.Name }}-{{ .Release.Revision }}
-    mountPath: /mnt/outputs
-  - name: debug-file-share-{{ .Release.Name }}
-    mountPath: /mnt/share
 {{- end -}}
