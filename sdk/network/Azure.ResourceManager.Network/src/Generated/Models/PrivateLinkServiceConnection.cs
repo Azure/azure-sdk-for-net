@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="privateLinkServiceId"> The resource id of private link service. </param>
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal PrivateLinkServiceConnection(string id, string name, string resourceType, string etag, ProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id)
+        /// <param name="connectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
+        internal PrivateLinkServiceConnection(string id, string name, string resourceType, string etag, ProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState connectionState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             PrivateLinkServiceId = privateLinkServiceId;
             GroupIds = groupIds;
             RequestMessage = requestMessage;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </summary>
         public string RequestMessage { get; set; }
         /// <summary> A collection of read-only information about the state of the connection to the remote resource. </summary>
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public NetworkPrivateLinkServiceConnectionState ConnectionState { get; set; }
     }
 }
