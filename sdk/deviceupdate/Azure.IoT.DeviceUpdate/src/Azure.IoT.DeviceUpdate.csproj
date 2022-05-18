@@ -14,7 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
@@ -23,5 +22,8 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
+ <ItemGroup>
+   <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+ </ItemGroup>
 
 </Project>

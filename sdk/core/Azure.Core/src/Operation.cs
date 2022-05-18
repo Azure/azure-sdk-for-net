@@ -23,6 +23,10 @@ namespace Azure
         public abstract string Id { get; }
 
         /// <summary>
+        /// </summary>
+        public string ContinuationToken => throw new NotSupportedException();
+
+        /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>
         /// <remarks>
