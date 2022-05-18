@@ -184,8 +184,8 @@ namespace Azure.AI.FormRecognizer.Training
         async ValueTask<OperationState<CustomFormModelInfo>> IOperation<CustomFormModelInfo>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<CopyOperationResult> response = async
-                ? await _serviceClient.GetCustomModelCopyResultAsync(new Guid(_modelId), new Guid(_resultId), cancellationToken).ConfigureAwait(false)
-                : _serviceClient.GetCustomModelCopyResult(new Guid(_modelId), new Guid(_resultId), cancellationToken);
+                ? await _serviceClient.GetCustomModelCopyResultAsync(_modelId, new Guid(_resultId), cancellationToken).ConfigureAwait(false)
+                : _serviceClient.GetCustomModelCopyResult(_modelId, new Guid(_resultId), cancellationToken);
 
             OperationStatus status = response.Value.Status;
             Response rawResponse = response.GetRawResponse();

@@ -218,7 +218,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, FormContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(string modelId, FormContentType contentType, bool? includeTextDetails, IEnumerable<string> pages, Stream fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -255,7 +255,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(string modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -276,7 +276,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(string modelId, FormContentType contentType, bool? includeTextDetails = null, IEnumerable<string> pages = null, Stream fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, includeTextDetails, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -290,7 +290,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, IEnumerable<string> pages, SourcePath fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(string modelId, bool? includeTextDetails, IEnumerable<string> pages, SourcePath fileStream)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -328,7 +328,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(string modelId, bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, pages, fileStream);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -348,7 +348,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="pages"> Custom page numbers for multi-page documents(PDF/TIFF), input the number of the pages you want to get OCR result. For a range of pages, use a hyphen. Separate each page or range with a comma. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png, .tiff or .bmp type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(string modelId, bool? includeTextDetails = null, IEnumerable<string> pages = null, SourcePath fileStream = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, pages, fileStream);
             _pipeline.Send(message, cancellationToken);
@@ -362,7 +362,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetAnalyzeFormResultRequest(Guid modelId, Guid resultId)
+        internal HttpMessage CreateGetAnalyzeFormResultRequest(string modelId, Guid resultId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,7 +384,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnalyzeOperationResult>> GetAnalyzeFormResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeFormResultRequest(modelId, resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -406,7 +406,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Analyze operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeOperationResult> GetAnalyzeFormResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public Response<AnalyzeOperationResult> GetAnalyzeFormResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetAnalyzeFormResultRequest(modelId, resultId);
             _pipeline.Send(message, cancellationToken);
@@ -424,7 +424,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateCopyCustomModelRequest(Guid modelId, CopyRequest copyRequest)
+        internal HttpMessage CreateCopyCustomModelRequest(string modelId, CopyRequest copyRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -450,7 +450,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="copyRequest"> Copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FormRecognizerCopyCustomModelHeaders>> CopyCustomModelAsync(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FormRecognizerCopyCustomModelHeaders>> CopyCustomModelAsync(string modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
         {
             if (copyRequest == null)
             {
@@ -474,7 +474,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="copyRequest"> Copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copyRequest"/> is null. </exception>
-        public ResponseWithHeaders<FormRecognizerCopyCustomModelHeaders> CopyCustomModel(Guid modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FormRecognizerCopyCustomModelHeaders> CopyCustomModel(string modelId, CopyRequest copyRequest, CancellationToken cancellationToken = default)
         {
             if (copyRequest == null)
             {
@@ -493,7 +493,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelCopyResultRequest(Guid modelId, Guid resultId)
+        internal HttpMessage CreateGetCustomModelCopyResultRequest(string modelId, Guid resultId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -515,7 +515,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Copy operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CopyOperationResult>> GetCustomModelCopyResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public async Task<Response<CopyOperationResult>> GetCustomModelCopyResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelCopyResultRequest(modelId, resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -537,7 +537,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="resultId"> Copy operation result identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CopyOperationResult> GetCustomModelCopyResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
+        public Response<CopyOperationResult> GetCustomModelCopyResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetCustomModelCopyResultRequest(modelId, resultId);
             _pipeline.Send(message, cancellationToken);
