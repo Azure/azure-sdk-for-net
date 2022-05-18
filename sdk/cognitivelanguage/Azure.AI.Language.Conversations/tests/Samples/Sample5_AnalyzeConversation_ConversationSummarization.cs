@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
 
             var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
 
             var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()

@@ -22,13 +22,13 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ConversationalPIIResultsValue = "ConversationalPIIResults";
-        private const string ConversationalSummarizationResultsValue = "ConversationalSummarizationResults";
+        private const string ConversationalSummarizationResultsValue = "conversationalSummarizationResults";
+        private const string ConversationalPIIResultsValue = "conversationalPIIResults";
 
-        /// <summary> ConversationalPIIResults. </summary>
-        public static AnalyzeConversationResultsKind ConversationalPIIResults { get; } = new AnalyzeConversationResultsKind(ConversationalPIIResultsValue);
-        /// <summary> ConversationalSummarizationResults. </summary>
+        /// <summary> conversationalSummarizationResults. </summary>
         public static AnalyzeConversationResultsKind ConversationalSummarizationResults { get; } = new AnalyzeConversationResultsKind(ConversationalSummarizationResultsValue);
+        /// <summary> conversationalPIIResults. </summary>
+        public static AnalyzeConversationResultsKind ConversationalPIIResults { get; } = new AnalyzeConversationResultsKind(ConversationalPIIResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeConversationResultsKind left, AnalyzeConversationResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationResultsKind"/> values are not the same. </summary>

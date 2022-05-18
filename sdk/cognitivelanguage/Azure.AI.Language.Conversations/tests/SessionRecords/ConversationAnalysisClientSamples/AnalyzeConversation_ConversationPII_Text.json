@@ -9,9 +9,8 @@
         "Content-Length": "475",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-822edc67697094428348fd2ad7ad35f9-c0749ea104f3334c-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220518.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "c7dd81171e57e5b4701bf425ecd52914",
+        "x-ms-client-request-id": "bd0e8a43e4e7de22ef6180b2c337e47c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -58,46 +57,85 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "99b0f655-2825-4bae-af6d-920f23cd61d0",
+        "apim-request-id": "a9031747-5502-4bb2-9a88-1b2ea7f9c10b",
         "Content-Length": "0",
-        "Date": "Wed, 18 May 2022 14:24:17 GMT",
-        "operation-location": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/7be86cee-ba57-44a3-8f76-934e40f02e47?api-version=2022-05-15-preview",
+        "Date": "Wed, 18 May 2022 14:22:04 GMT",
+        "operation-location": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/3310e228-06bc-4282-a8b5-3ad0eb39697a?api-version=2022-05-15-preview",
         "Server": "istio-envoy",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "88",
+        "x-envoy-upstream-service-time": "326",
         "x-http2-stream-id": "3"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/7be86cee-ba57-44a3-8f76-934e40f02e47?api-version=2022-05-15-preview",
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/3310e228-06bc-4282-a8b5-3ad0eb39697a?api-version=2022-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220518.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "2ba3c5b0bae78df466b573107f28ec05",
+        "x-ms-client-request-id": "09afa67d456ca9cfb3dabf7af8ccd862",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "207c6d93-d3c7-49ce-bd3d-4c6875dac001",
-        "Content-Length": "914",
+        "apim-request-id": "cad0cd20-d8c1-432d-825a-0488282e3567",
+        "Content-Length": "283",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 18 May 2022 14:24:17 GMT",
+        "Date": "Wed, 18 May 2022 14:22:04 GMT",
         "Server": "istio-envoy",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "43",
+        "x-envoy-upstream-service-time": "14",
         "x-http2-stream-id": "3"
       },
       "ResponseBody": {
-        "jobId": "7be86cee-ba57-44a3-8f76-934e40f02e47",
-        "lastUpdatedDateTime": "2022-05-18T14:24:17Z",
-        "createdDateTime": "2022-05-18T14:24:17Z",
-        "expirationDateTime": "2022-05-19T14:24:17Z",
+        "jobId": "3310e228-06bc-4282-a8b5-3ad0eb39697a",
+        "lastUpdatedDateTime": "2022-05-18T14:22:04Z",
+        "createdDateTime": "2022-05-18T14:22:03Z",
+        "expirationDateTime": "2022-05-19T14:22:03Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/3310e228-06bc-4282-a8b5-3ad0eb39697a?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220518.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "807556df5c40991ea3ca980a04468af1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b2eb38f4-3e26-4775-8d10-52bdd78b206f",
+        "Content-Length": "913",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 18 May 2022 14:22:07 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "133",
+        "x-http2-stream-id": "3"
+      },
+      "ResponseBody": {
+        "jobId": "3310e228-06bc-4282-a8b5-3ad0eb39697a",
+        "lastUpdatedDateTime": "2022-05-18T14:22:05Z",
+        "createdDateTime": "2022-05-18T14:22:03Z",
+        "expirationDateTime": "2022-05-19T14:22:03Z",
         "status": "succeeded",
         "errors": [],
         "tasks": {
@@ -109,7 +147,7 @@
             {
               "kind": "conversationalPIIResults",
               "taskName": "analyze",
-              "lastUpdateDateTime": "2022-05-18T14:24:17.6178454Z",
+              "lastUpdateDateTime": "2022-05-18T14:22:05.019243Z",
               "status": "succeeded",
               "results": {
                 "conversations": [
@@ -169,6 +207,6 @@
   "Variables": {
     "AZURE_CONVERSATIONS_ENDPOINT": "https://clubuildppe.ppe.cognitiveservices.azure.com/",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1520776349"
+    "RandomSeed": "954650523"
   }
 }

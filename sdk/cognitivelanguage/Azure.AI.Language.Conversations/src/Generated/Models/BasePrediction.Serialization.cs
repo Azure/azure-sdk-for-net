@@ -18,8 +18,8 @@ namespace Azure.AI.Language.Conversations
             {
                 switch (discriminator.GetString())
                 {
-                    case "Orchestrator": return OrchestratorPrediction.DeserializeOrchestratorPrediction(element);
-                    case "CustomConversation": return ConversationPrediction.DeserializeConversationPrediction(element);
+                    case "Orchestration": return OrchestratorPrediction.DeserializeOrchestratorPrediction(element);
+                    case "Conversation": return ConversationPrediction.DeserializeConversationPrediction(element);
                 }
             }
             ProjectKind projectKind = default;

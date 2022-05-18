@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(customConversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.CustomConversation, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
             Assert.AreEqual("Setup", customConversationalTaskResult.Result.Prediction.TopIntent);
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(customConversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestrator, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, customConversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
             Assert.AreEqual("EmailIntent", customConversationalTaskResult.Result.Prediction.TopIntent);
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.CustomConversation, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.CustomConversation, topIntent.TargetProjectKind);
 
             // assert entities and intents
             Assert.IsNotEmpty(topIntent.Result.Prediction.Entities);
@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(customConversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestrator, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, customConversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
             Assert.AreEqual("RestaurantIntent", customConversationalTaskResult.Result.Prediction.TopIntent);
@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.Luis, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.Luis, topIntent.TargetProjectKind);
         }
 
         [RecordedTest]
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(customConversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestrator, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, customConversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
             Assert.AreEqual("ChitChat-QnA", customConversationalTaskResult.Result.Prediction.TopIntent);
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetProjectKind);
 
             // assert - top intent answers
             // Assert.IsNotEmpty(topIntent.Result.Answers);
@@ -166,7 +166,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 new TextConversation("1", "en", textConversationItems)
             };
 
-            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+            var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
 
             var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()

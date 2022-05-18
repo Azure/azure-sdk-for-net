@@ -22,11 +22,11 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SummaryValue = "summary";
+        private const string IssueValue = "issue";
         private const string ResolutionValue = "resolution";
 
-        /// <summary> summary. </summary>
-        public static SummaryAspect Summary { get; } = new SummaryAspect(SummaryValue);
+        /// <summary> issue. </summary>
+        public static SummaryAspect Issue { get; } = new SummaryAspect(IssueValue);
         /// <summary> resolution. </summary>
         public static SummaryAspect Resolution { get; } = new SummaryAspect(ResolutionValue);
         /// <summary> Determines if two <see cref="SummaryAspect"/> values are the same. </summary>

@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 new TranscriptConversation("1", "en", transcriptConversationItems)
             };
 
-            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+            var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
 
             var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task AnalyzeConversationSync_ConversationPII_Transcript()
+        public async Task AnalyzeConversationAsync_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
 

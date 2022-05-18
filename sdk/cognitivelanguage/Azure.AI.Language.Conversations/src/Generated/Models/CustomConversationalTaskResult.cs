@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations
             }
 
             Result = result;
-            Kind = AnalyzeConversationTaskResultsKind.CustomConversationResult;
+            Kind = AnalyzeConversationTaskResultsKind.ConversationResult;
         }
 
         /// <summary> Initializes a new instance of CustomConversationalTaskResult. </summary>

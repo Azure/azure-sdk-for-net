@@ -22,13 +22,13 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CustomConversationValue = "CustomConversation";
-        private const string OrchestratorValue = "Orchestrator";
+        private const string ConversationValue = "Conversation";
+        private const string OrchestrationValue = "Orchestration";
 
-        /// <summary> CustomConversation. </summary>
-        public static ProjectKind CustomConversation { get; } = new ProjectKind(CustomConversationValue);
-        /// <summary> Orchestrator. </summary>
-        public static ProjectKind Orchestrator { get; } = new ProjectKind(OrchestratorValue);
+        /// <summary> Conversation. </summary>
+        public static ProjectKind Conversation { get; } = new ProjectKind(ConversationValue);
+        /// <summary> Orchestration. </summary>
+        public static ProjectKind Orchestration { get; } = new ProjectKind(OrchestrationValue);
         /// <summary> Determines if two <see cref="ProjectKind"/> values are the same. </summary>
         public static bool operator ==(ProjectKind left, ProjectKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProjectKind"/> values are not the same. </summary>

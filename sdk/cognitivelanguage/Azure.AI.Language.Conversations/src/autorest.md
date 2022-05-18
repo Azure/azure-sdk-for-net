@@ -70,3 +70,112 @@ directive:
     from: AnalyzeConversation_JobStatus
     to: ConversationAnalysis_JobStatus
 ```
+
+### Async API swagger mismatches
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["ConversationSummarizationTaskParameters"]["properties"]["summaryAspects"]["items"]
+      transform: >
+        $["enum"] = [
+              "issue",
+              "resolution"
+            ];
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["AnalyzeConversationResultsKind"]
+      transform: >
+        $["enum"] = ["conversationalSummarizationResults", "conversationalPIIResults"];
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["AnalyzeConversationSummarizationResult"]
+      transform: >
+        $["x-ms-discriminator-value"] = "conversationalSummarizationResults";
+```
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["AnalyzeConversationConversationPIIResult"]
+      transform: >
+        $["x-ms-discriminator-value"] = "conversationalPIIResults";
+```
+
+### Sync API swagger mismatches
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["BasePrediction"]["properties"]["projectKind"]
+      transform: >
+        $["enum"] = ["Conversation", "Orchestration"];
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["ConversationPrediction"]
+      transform: >
+        $["x-ms-discriminator-value"] = "Conversation";
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["OrchestratorPrediction"]
+      transform: >
+        $["x-ms-discriminator-value"] = "Orchestration";
+```
+
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["AnalyzeConversationTaskKind"]
+      transform: >
+        $["enum"] = ["Conversation"];
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["CustomConversationalTask"]
+      transform: >
+        $["x-ms-discriminator-value"] = "Conversation";
+```
+
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["AnalyzeConversationTaskResultsKind"]
+      transform: >
+        $["enum"] = ["ConversationResult"];
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["CustomConversationalTaskResult"]
+      transform: >
+        $["x-ms-discriminator-value"] = "ConversationResult";
+```
+
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["AnalysisParameters"]["properties"]["targetProjectKind"]
+      transform: >
+        $["enum"] = [
+            "Luis",
+            "Conversation",
+            "QuestionAnswering",
+            "NonLinked"
+          ];
+```

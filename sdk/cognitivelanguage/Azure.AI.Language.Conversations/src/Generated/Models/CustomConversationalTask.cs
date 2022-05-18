@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations
 
             AnalysisInput = analysisInput;
             Parameters = parameters;
-            Kind = AnalyzeConversationTaskKind.CustomConversation;
+            Kind = AnalyzeConversationTaskKind.Conversation;
         }
 
         /// <summary> The input ConversationItem and its optional parameters. </summary>
