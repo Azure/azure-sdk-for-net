@@ -1961,7 +1961,7 @@ namespace Azure.Storage.Queues
 
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption))
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
 
@@ -3001,7 +3001,7 @@ namespace Azure.Storage.Queues
                     scope.Start();
                     if (UsingClientSideEncryption)
                     {
-                        message = await new QueueClientSideEncryptor(new ClientSideEncryptor(ClientConfiguration.ClientSideEncryption))
+                        message = await new QueueClientSideEncryptor(new ClientSideEncryptorV1_0(ClientConfiguration.ClientSideEncryption))
                             .ClientSideEncryptInternal(message, async, cancellationToken).ConfigureAwait(false);
                     }
                     QueueMessage queueSendMessage = null;

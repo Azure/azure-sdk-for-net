@@ -8,6 +8,7 @@ namespace Azure.Storage.Cryptography.Models
         public static class ClientSideEncryptionVersionString
         {
             public const string V1_0 = "1.0";
+            public const string V2_0 = "2.0";
         }
 
         public static string Serialize(this ClientSideEncryptionVersion version)
@@ -16,6 +17,8 @@ namespace Azure.Storage.Cryptography.Models
             {
                 case ClientSideEncryptionVersion.V1_0:
                     return ClientSideEncryptionVersionString.V1_0;
+                case ClientSideEncryptionVersion.V2_0:
+                    return ClientSideEncryptionVersionString.V2_0;
                 default:
                     // sanity check; serialize is in this file to make it easy to add the serialization cases
                     throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported();
@@ -28,6 +31,8 @@ namespace Azure.Storage.Cryptography.Models
             {
                 case ClientSideEncryptionVersionString.V1_0:
                     return ClientSideEncryptionVersion.V1_0;
+                case ClientSideEncryptionVersionString.V2_0:
+                    return ClientSideEncryptionVersion.V2_0;
                 default:
                     // This library doesn't support the stated encryption version
                     throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported(versionString);

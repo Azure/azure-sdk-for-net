@@ -33,9 +33,14 @@ namespace Azure.Storage.Cryptography.Models
         public EncryptionAgent EncryptionAgent { get; set; }
 
         /// <summary>
-        /// The content encryption IV.
+        /// The content encryption IV. Only present for v1.0.
         /// </summary>
         public byte[] ContentEncryptionIV { get; set; }
+
+        /// <summary>
+        /// Information about structure of authenticated encryption blocks. Only present for v2.0.
+        /// </summary>
+        public AuthenticationBlockInfo AuthenticationBlockInfo { get; set; }
 
 #pragma warning disable CA2227 // Collection properties should be read only
         /// <summary>
@@ -59,6 +64,40 @@ namespace Azure.Storage.Cryptography.Models
                 {
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
                     EncryptionVersion = ClientSideEncryptionVersion.V1_0
+                },
+                KeyWrappingMetadata = new Dictionary<string, string>()
+                {
+                    { Constants.ClientSideEncryption.AgentMetadataKey, AgentString }
+                },
+                WrappedContentKey = new KeyEnvelope()
+                {
+                    Algorithm = keyWrapAlgorithm,
+                    EncryptedKey = async
+                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, contentEncryptionKey, cancellationToken).ConfigureAwait(false)
+                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, contentEncryptionKey, cancellationToken),
+                    KeyId = keyEncryptionKey.KeyId
+                }
+            };
+
+        internal static async Task<EncryptionData> CreateInternalV2_0(
+            string keyWrapAlgorithm,
+            byte[] contentEncryptionKey,
+            IKeyEncryptionKey keyEncryptionKey,
+            bool async,
+            CancellationToken cancellationToken)
+            => new EncryptionData()
+            {
+                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
+                EncryptionAgent = new EncryptionAgent()
+                {
+                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesGcm256,
+                    EncryptionVersion = ClientSideEncryptionVersion.V2_0
+                },
+                AuthenticationBlockInfo = new AuthenticationBlockInfo()
+                {
+                    CiphertextLength = Constants.ClientSideEncryption.V2.EncryptionBlockSize,
+                    NonceLength = Constants.ClientSideEncryption.V2.NonceSize,
+                    Order = new List<string> { "nonce", "ciphertext", "tag" }
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {

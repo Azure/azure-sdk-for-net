@@ -1635,11 +1635,12 @@ namespace Azure.Storage.Blobs
 
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
+                var encryptor = new ClientSideEncryptorV1_0(ClientSideEncryption);
                 if (expectedContentLength.HasValue)
                 {
-                    expectedContentLength = ClientSideEncryptor.ExpectedCiphertextLength(expectedContentLength.Value);
+                    expectedContentLength = encryptor.ExpectedOutputContentLength(expectedContentLength.Value);
                 }
-                (content, options.Metadata) = await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                (content, options.Metadata) = await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptInternal(content, options.Metadata, async, cancellationToken).ConfigureAwait(false);
             }
 
@@ -1805,7 +1806,7 @@ namespace Azure.Storage.Blobs
                 //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 //}
 
-                return await new BlobClientSideEncryptor(new ClientSideEncryptor(ClientSideEncryption))
+                return await new BlobClientSideEncryptor(new ClientSideEncryptorV1_0(ClientSideEncryption))
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
                         overwrite,

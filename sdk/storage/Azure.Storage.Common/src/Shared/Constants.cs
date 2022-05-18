@@ -645,6 +645,13 @@ namespace Azure.Storage
             public const int EncryptionKeySizeBits = 256;
 
             public const string XMsRange = "x-ms-range";
+
+            internal static class V2
+            {
+                public const int EncryptionBlockSize = 4 * MB;
+                public const int NonceSize = 12;
+                public const int TagSize = 16;
+            }
         }
 
         /// <summary>
