@@ -1,4 +1,11 @@
 # Microsoft.Azure.Management.GuestConfiguration release notes
+## Changes in 3.0.0
+### Features
+Supports Assignment Source in ARG
+
+### Bug fixes
+None  
+
 ## Changes in 2.0.0
 ### Features
 Supports Assignment Type in ARG
