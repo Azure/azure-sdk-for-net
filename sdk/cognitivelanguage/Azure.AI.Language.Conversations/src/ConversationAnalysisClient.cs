@@ -87,19 +87,19 @@ namespace Azure.AI.Language.Conversations
             scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(customConversationalTask);
-
             try
             {
-                var response = await AnalyzeConversationAsync(content, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(customConversationalTask);
+
+                Response response = await AnalyzeConversationAsync(content, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
                         {
                             AnalyzeConversationTaskResult value = default;
-                            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             value = AnalyzeConversationTaskResult.DeserializeAnalyzeConversationTaskResult(document.RootElement);
                             return Response.FromValue(value, response);
                         }
@@ -142,12 +142,12 @@ namespace Azure.AI.Language.Conversations
             scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(customConversationalTask);
-
             try
             {
-                var response = AnalyzeConversation(content, new RequestContext() { CancellationToken = cancellationToken });
+                Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(customConversationalTask);
+
+                Response response = AnalyzeConversation(content, new RequestContext() { CancellationToken = cancellationToken });
 
                 switch (response.Status)
                 {
@@ -193,9 +193,6 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 Operation<AnalyzeConversationJobState> response = await SubmitJobAsync(content, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
-                // var rawResponse = responseHeaders.GetRawResponse();
-                // var headers = rawResponse.Headers;
-                //var operationLocation = headers.TryGetValue("Operation-Location", out string value) ? value : null;
                 return response;
             }
             catch (Exception ex)
@@ -228,11 +225,8 @@ namespace Azure.AI.Language.Conversations
 
             try
             {
-                Operation<AnalyzeConversationJobState> responseHeaders = SubmitJob(content, new RequestContext() { CancellationToken = cancellationToken });
-                // var rawResponse = responseHeaders.GetRawResponse();
-                // var headers = rawResponse.Headers;
-                //var operationLocation = headers.TryGetValue("Operation-Location", out string value) ? value : null;
-                return responseHeaders;
+                Operation<AnalyzeConversationJobState> response = SubmitJob(content, new RequestContext() { CancellationToken = cancellationToken });
+                return response;
             }
             catch (Exception ex)
             {
