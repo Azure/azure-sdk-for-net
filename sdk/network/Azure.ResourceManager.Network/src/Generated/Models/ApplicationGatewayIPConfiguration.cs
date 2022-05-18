@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed. </summary>
-    public partial class ApplicationGatewayIPConfiguration : SubResource
+    public partial class ApplicationGatewayIPConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
         public ApplicationGatewayIPConfiguration()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="subnet"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
-        internal ApplicationGatewayIPConfiguration(string id, string name, string etag, string resourceType, WritableSubResource subnet, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource subnet, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

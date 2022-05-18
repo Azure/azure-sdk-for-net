@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Common resource representation. </summary>
-    public partial class NetworkResourceData
+    public partial class NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkResourceData. </summary>
-        public NetworkResourceData()
+        /// <summary> Initializes a new instance of NetworkTrackedResourceData. </summary>
+        public NetworkTrackedResourceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkResourceData. </summary>
+        /// <summary> Initializes a new instance of NetworkTrackedResourceData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal NetworkResourceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags)
+        internal NetworkTrackedResourceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags)
         {
             Id = id;
             Name = name;

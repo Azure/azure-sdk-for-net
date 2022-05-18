@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGatewayNatRule data model. </summary>
-    public partial class VirtualNetworkGatewayNatRuleData : SubResource
+    public partial class VirtualNetworkGatewayNatRuleData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
         public VirtualNetworkGatewayNatRuleData()
@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT Rule resource. </param>
-        /// <param name="typePropertiesType"> The type of NAT rule for VPN NAT. </param>
+        /// <param name="vpnNatRuleType"> The type of NAT rule for VPN NAT. </param>
         /// <param name="mode"> The Source NAT direction of a VPN NAT. </param>
         /// <param name="internalMappings"> The private IP address internal mapping for NAT. </param>
         /// <param name="externalMappings"> The private IP address external mapping for NAT. </param>
         /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
-        internal VirtualNetworkGatewayNatRuleData(string id, string name, string etag, string resourceType, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId) : base(id)
+        internal VirtualNetworkGatewayNatRuleData(ResourceIdentifier id, string name, string etag, string resourceType, ProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId) : base(id)
         {
             Name = name;
             Etag = etag;
             ResourceType = resourceType;
             ProvisioningState = provisioningState;
-            TypePropertiesType = typePropertiesType;
+            VpnNatRuleType = vpnNatRuleType;
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the NAT Rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The type of NAT rule for VPN NAT. </summary>
-        public VpnNatRuleType? TypePropertiesType { get; set; }
+        public VpnNatRuleType? VpnNatRuleType { get; set; }
         /// <summary> The Source NAT direction of a VPN NAT. </summary>
         public VpnNatRuleMode? Mode { get; set; }
         /// <summary> The private IP address internal mapping for NAT. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PeerExpressRouteCircuitConnection data model. </summary>
-    public partial class PeerExpressRouteCircuitConnectionData : Models.SubResource
+    public partial class PeerExpressRouteCircuitConnectionData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionData. </summary>
         public PeerExpressRouteCircuitConnectionData()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionName"> The name of the express route circuit connection resource. </param>
         /// <param name="authResourceGuid"> The resource guid of the authorization used for the express route circuit connection. </param>
         /// <param name="provisioningState"> The provisioning state of the peer express route circuit connection resource. </param>
-        internal PeerExpressRouteCircuitConnectionData(string id, string name, string etag, string resourceType, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, ProvisioningState? provisioningState) : base(id)
+        internal PeerExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, CircuitConnectionStatus? circuitConnectionStatus, string connectionName, string authResourceGuid, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

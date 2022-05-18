@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterface data model. </summary>
-    public partial class NetworkInterfaceData : NetworkResourceData
+    public partial class NetworkInterfaceData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         public NetworkInterfaceData()

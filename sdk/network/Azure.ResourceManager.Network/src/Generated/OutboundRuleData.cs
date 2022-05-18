@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the OutboundRule data model. </summary>
-    public partial class OutboundRuleData : Models.SubResource
+    public partial class OutboundRuleData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of OutboundRuleData. </summary>
         public OutboundRuleData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
-        internal OutboundRuleData(string id, string name, string etag, string resourceType, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, ProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id)
+        internal OutboundRuleData(ResourceIdentifier id, string name, string etag, string resourceType, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, ProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id)
         {
             Name = name;
             Etag = etag;

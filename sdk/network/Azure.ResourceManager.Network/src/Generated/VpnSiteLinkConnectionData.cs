@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnSiteLinkConnection data model. </summary>
-    public partial class VpnSiteLinkConnectionData : Models.SubResource
+    public partial class VpnSiteLinkConnectionData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
         public VpnSiteLinkConnectionData()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
         /// <param name="ingressNatRules"> List of ingress NatRules. </param>
         /// <param name="egressNatRules"> List of egress NatRules. </param>
-        internal VpnSiteLinkConnectionData(string id, string name, string etag, string resourceType, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, ProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules) : base(id)
+        internal VpnSiteLinkConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> iPsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, ProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnGatewayNatRule data model. </summary>
-    public partial class VpnGatewayNatRuleData : Models.SubResource
+    public partial class VpnGatewayNatRuleData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>
         public VpnGatewayNatRuleData()
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT Rule resource. </param>
-        /// <param name="typePropertiesType"> The type of NAT rule for VPN NAT. </param>
+        /// <param name="vpnNatRuleType"> The type of NAT rule for VPN NAT. </param>
         /// <param name="mode"> The Source NAT direction of a VPN NAT. </param>
         /// <param name="internalMappings"> The private IP address internal mapping for NAT. </param>
         /// <param name="externalMappings"> The private IP address external mapping for NAT. </param>
         /// <param name="ipConfigurationId"> The IP Configuration ID this NAT rule applies to. </param>
         /// <param name="egressVpnSiteLinkConnections"> List of egress VpnSiteLinkConnections. </param>
         /// <param name="ingressVpnSiteLinkConnections"> List of ingress VpnSiteLinkConnections. </param>
-        internal VpnGatewayNatRuleData(string id, string name, string etag, string resourceType, ProvisioningState? provisioningState, VpnNatRuleType? typePropertiesType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id)
+        internal VpnGatewayNatRuleData(ResourceIdentifier id, string name, string etag, string resourceType, ProvisioningState? provisioningState, VpnNatRuleType? vpnNatRuleType, VpnNatRuleMode? mode, IList<VpnNatRuleMapping> internalMappings, IList<VpnNatRuleMapping> externalMappings, string ipConfigurationId, IReadOnlyList<WritableSubResource> egressVpnSiteLinkConnections, IReadOnlyList<WritableSubResource> ingressVpnSiteLinkConnections) : base(id)
         {
             Name = name;
             Etag = etag;
             ResourceType = resourceType;
             ProvisioningState = provisioningState;
-            TypePropertiesType = typePropertiesType;
+            VpnNatRuleType = vpnNatRuleType;
             Mode = mode;
             InternalMappings = internalMappings;
             ExternalMappings = externalMappings;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the NAT Rule resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The type of NAT rule for VPN NAT. </summary>
-        public VpnNatRuleType? TypePropertiesType { get; set; }
+        public VpnNatRuleType? VpnNatRuleType { get; set; }
         /// <summary> The Source NAT direction of a VPN NAT. </summary>
         public VpnNatRuleMode? Mode { get; set; }
         /// <summary> The private IP address internal mapping for NAT. </summary>

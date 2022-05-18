@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCrossConnectionPeering data model. </summary>
-    public partial class ExpressRouteCrossConnectionPeeringData : SubResource
+    public partial class ExpressRouteCrossConnectionPeeringData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
         public ExpressRouteCrossConnectionPeeringData()
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
         /// <param name="iPv6PeeringConfig"> The IPv6 peering configuration. </param>
-        internal ExpressRouteCrossConnectionPeeringData(string id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id)
+        internal ExpressRouteCrossConnectionPeeringData(ResourceIdentifier id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id)
         {
             Name = name;
             Etag = etag;

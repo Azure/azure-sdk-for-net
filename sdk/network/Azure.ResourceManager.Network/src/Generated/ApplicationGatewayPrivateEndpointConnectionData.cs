@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ApplicationGatewayPrivateEndpointConnection data model. </summary>
-    public partial class ApplicationGatewayPrivateEndpointConnectionData : SubResource
+    public partial class ApplicationGatewayPrivateEndpointConnectionData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
         public ApplicationGatewayPrivateEndpointConnectionData()
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal ApplicationGatewayPrivateEndpointConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
         {
             Name = name;
             Etag = etag;

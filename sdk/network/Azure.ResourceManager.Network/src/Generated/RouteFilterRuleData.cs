@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the RouteFilterRule data model. </summary>
-    public partial class RouteFilterRuleData : SubResource
+    public partial class RouteFilterRuleData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>
         public RouteFilterRuleData()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
         /// <param name="communities"> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal RouteFilterRuleData(string id, string name, string location, string etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, ProvisioningState? provisioningState) : base(id)
+        internal RouteFilterRuleData(ResourceIdentifier id, string name, string location, string etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Location = location;

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Trusted client certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayTrustedClientCertificate : SubResource
+    public partial class ApplicationGatewayTrustedClientCertificate : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayTrustedClientCertificate. </summary>
         public ApplicationGatewayTrustedClientCertificate()
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="validatedCertData"> Validated certificate data. </param>
         /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        internal ApplicationGatewayTrustedClientCertificate(string id, string name, string etag, string resourceType, string data, string validatedCertData, string clientCertIssuerDN, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string validatedCertData, string clientCertIssuerDN, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

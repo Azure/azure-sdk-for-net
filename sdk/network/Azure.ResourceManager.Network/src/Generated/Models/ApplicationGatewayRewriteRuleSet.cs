@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rewrite rule set of an application gateway. </summary>
-    public partial class ApplicationGatewayRewriteRuleSet : SubResource
+    public partial class ApplicationGatewayRewriteRuleSet : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
         public ApplicationGatewayRewriteRuleSet()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>
         /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
-        internal ApplicationGatewayRewriteRuleSet(string id, string name, string etag, IList<ApplicationGatewayRewriteRule> rewriteRules, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, string etag, IList<ApplicationGatewayRewriteRule> rewriteRules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

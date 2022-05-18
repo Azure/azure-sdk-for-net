@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Path rule of URL path map of an application gateway. </summary>
-    public partial class ApplicationGatewayPathRule : SubResource
+    public partial class ApplicationGatewayPathRule : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(string id, string name, string etag, string resourceType, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, string etag, string resourceType, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
         {
             Name = name;
             Etag = etag;

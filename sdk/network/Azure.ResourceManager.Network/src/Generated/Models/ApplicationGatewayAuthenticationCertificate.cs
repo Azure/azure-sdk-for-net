@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Authentication certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayAuthenticationCertificate : SubResource
+    public partial class ApplicationGatewayAuthenticationCertificate : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
         public ApplicationGatewayAuthenticationCertificate()
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        internal ApplicationGatewayAuthenticationCertificate(string id, string name, string etag, string resourceType, string data, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

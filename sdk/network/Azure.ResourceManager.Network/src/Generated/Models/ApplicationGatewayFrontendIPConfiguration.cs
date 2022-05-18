@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendIPConfiguration : SubResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         public ApplicationGatewayFrontendIPConfiguration()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. </param>
         /// <param name="privateLinkConfiguration"> Reference to the application gateway private link configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal ApplicationGatewayFrontendIPConfiguration(string id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, WritableSubResource privateLinkConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

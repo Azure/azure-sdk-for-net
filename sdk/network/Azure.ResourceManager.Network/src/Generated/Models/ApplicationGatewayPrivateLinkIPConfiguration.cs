@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIPConfiguration : SubResource
+    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIPConfiguration. </summary>
         public ApplicationGatewayPrivateLinkIPConfiguration()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
-        internal ApplicationGatewayPrivateLinkIPConfiguration(string id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? primary, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? primary, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

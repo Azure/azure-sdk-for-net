@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the InboundNatRule data model. </summary>
-    public partial class InboundNatRuleData : Models.SubResource
+    public partial class InboundNatRuleData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
         public InboundNatRuleData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableFloatingIP"> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
-        internal InboundNatRuleData(string id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, TransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, ProvisioningState? provisioningState) : base(id)
+        internal InboundNatRuleData(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, TransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

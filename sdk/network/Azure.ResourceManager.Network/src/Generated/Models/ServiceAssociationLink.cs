@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ServiceAssociationLink resource. </summary>
-    public partial class ServiceAssociationLink : SubResource
+    public partial class ServiceAssociationLink : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         public ServiceAssociationLink()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
-        internal ServiceAssociationLink(string id, string name, string etag, string resourceType, string linkedResourceType, string link, ProvisioningState? provisioningState, bool? allowDelete, IList<string> locations) : base(id)
+        internal ServiceAssociationLink(ResourceIdentifier id, string name, string etag, string resourceType, string linkedResourceType, string link, ProvisioningState? provisioningState, bool? allowDelete, IList<string> locations) : base(id)
         {
             Name = name;
             Etag = etag;

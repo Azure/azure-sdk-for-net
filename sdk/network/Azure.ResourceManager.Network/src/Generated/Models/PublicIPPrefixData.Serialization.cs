@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<IPTag>> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
-            Optional<IReadOnlyList<Resources.Models.SubResource>> publicIPAddresses = default;
+            Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
             Optional<WritableSubResource> loadBalancerFrontendIpConfiguration = default;
             Optional<WritableSubResource> customIPPrefix = default;
             Optional<string> resourceGuid = default;
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             publicIPAddresses = array;
                             continue;

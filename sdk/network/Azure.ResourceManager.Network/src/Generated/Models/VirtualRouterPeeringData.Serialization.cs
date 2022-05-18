@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<long> peerAsn = default;
             Optional<string> peerIp = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -70,7 +70,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

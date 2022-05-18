@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateLinkServiceConnection resource. </summary>
-    public partial class PrivateLinkServiceConnection : SubResource
+    public partial class PrivateLinkServiceConnection : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
         public PrivateLinkServiceConnection()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
-        internal PrivateLinkServiceConnection(string id, string name, string resourceType, string etag, ProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id)
+        internal PrivateLinkServiceConnection(ResourceIdentifier id, string name, string resourceType, string etag, ProvisioningState? provisioningState, string privateLinkServiceId, IList<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;

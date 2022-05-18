@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
             if (Optional.IsDefined(Prefix))
             {

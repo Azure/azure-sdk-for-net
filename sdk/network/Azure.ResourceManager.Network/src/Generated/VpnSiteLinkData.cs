@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnSiteLink data model. </summary>
-    public partial class VpnSiteLinkData : SubResource
+    public partial class VpnSiteLinkData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLinkData. </summary>
         public VpnSiteLinkData()
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdn"> FQDN of vpn-site-link. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(string id, string etag, string name, string resourceType, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
+        internal VpnSiteLinkData(ResourceIdentifier id, string etag, string name, string resourceType, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
         {
             Etag = etag;
             Name = name;

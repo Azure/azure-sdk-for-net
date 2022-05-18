@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the DdosCustomPolicy data model. </summary>
-    public partial class DdosCustomPolicyData : NetworkResourceData
+    public partial class DdosCustomPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
         public DdosCustomPolicyData()

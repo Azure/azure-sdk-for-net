@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BgpConnection data model. </summary>
-    public partial class BgpConnectionData : SubResource
+    public partial class BgpConnectionData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
         public BgpConnectionData()
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(string id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id)
+        internal BgpConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id)
         {
             Name = name;
             Etag = etag;

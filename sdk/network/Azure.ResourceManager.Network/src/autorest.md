@@ -82,10 +82,34 @@ directive:
   - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
   - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
   - from: virtualNetworkGateway.json
-    where: $.definitions.BgpPeerStatus.properties.connectedDuration
+    where: $.definitions
     transform: >
-      $["format"] = "duration";
-      $["x-ms-format"] = "duration-constant";
+      $.BgpPeerStatus.properties.connectedDuration["x-ms-format"] = "duration-constant";
+      $.IPConfigurationBgpPeeringAddress.properties.ipconfigurationId['x-ms-client-name'] = 'IPConfigurationId';
+      $.VirtualNetworkGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
+      $.SubResource['x-ms-client-name'] = 'NetworkWritableSubResource';
+      $.SubResource.properties.id['x-ms-format'] = 'arm-id';
+  - from: ipAllocation.json
+    where: $.definitions
+    transform: >
+      $.IpAllocationPropertiesFormat.properties.type['x-ms-client-name'] = 'IPAllocationType';
+  - from: virtualWan.json
+    where: $.definitions
+    transform: >
+      $.VirtualWanProperties.properties.type['x-ms-client-name'] = 'VirtualWanType';
+      $.VpnGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.name
+    transform: 'return undefined'
+    reason: the same property is defined in VpnServerConfiguration and service only returns value there
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.etag
+    transform: 'return undefined'
+    reason: the same property is defined in VpnServerConfiguration and service only returns value there
 ```
 
 ### Tag: package-track2-preview

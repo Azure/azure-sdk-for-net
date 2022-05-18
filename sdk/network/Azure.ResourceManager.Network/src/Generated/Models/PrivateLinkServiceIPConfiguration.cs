@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
-    public partial class PrivateLinkServiceIPConfiguration : SubResource
+    public partial class PrivateLinkServiceIPConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceIPConfiguration. </summary>
         public PrivateLinkServiceIPConfiguration()
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        internal PrivateLinkServiceIPConfiguration(string id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, ProvisioningState? provisioningState, IPVersion? privateIPAddressVersion) : base(id)
+        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, ProvisioningState? provisioningState, IPVersion? privateIPAddressVersion) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Redirect configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayRedirectConfiguration : SubResource
+    public partial class ApplicationGatewayRedirectConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         public ApplicationGatewayRedirectConfiguration()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="requestRoutingRules"> Request routing specifying redirect configuration. </param>
         /// <param name="urlPathMaps"> Url path maps specifying default redirect configuration. </param>
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
-        internal ApplicationGatewayRedirectConfiguration(string id, string name, string etag, string resourceType, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
+        internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id)
         {
             Name = name;
             Etag = etag;

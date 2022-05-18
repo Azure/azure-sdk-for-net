@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCircuit data model. </summary>
-    public partial class ExpressRouteCircuitData : NetworkResourceData
+    public partial class ExpressRouteCircuitData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
         public ExpressRouteCircuitData()

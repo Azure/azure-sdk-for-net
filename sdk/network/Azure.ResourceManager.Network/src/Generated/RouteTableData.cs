@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the RouteTable data model. </summary>
-    public partial class RouteTableData : NetworkResourceData
+    public partial class RouteTableData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of RouteTableData. </summary>
         public RouteTableData()

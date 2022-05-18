@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ResourceNavigationLink resource. </summary>
-    public partial class ResourceNavigationLink : SubResource
+    public partial class ResourceNavigationLink : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ResourceNavigationLink. </summary>
         public ResourceNavigationLink()
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
-        internal ResourceNavigationLink(string id, string name, string etag, string resourceType, string linkedResourceType, string link, ProvisioningState? provisioningState) : base(id)
+        internal ResourceNavigationLink(ResourceIdentifier id, string name, string etag, string resourceType, string linkedResourceType, string link, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the LocalNetworkGateway data model. </summary>
-    public partial class LocalNetworkGatewayData : NetworkResourceData
+    public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
         public LocalNetworkGatewayData()

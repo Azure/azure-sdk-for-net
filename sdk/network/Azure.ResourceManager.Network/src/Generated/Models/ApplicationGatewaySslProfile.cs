@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL profile of an application gateway. </summary>
-    public partial class ApplicationGatewaySslProfile : SubResource
+    public partial class ApplicationGatewaySslProfile : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
         public ApplicationGatewaySslProfile()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(string id, string name, string etag, string resourceType, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, string etag, string resourceType, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

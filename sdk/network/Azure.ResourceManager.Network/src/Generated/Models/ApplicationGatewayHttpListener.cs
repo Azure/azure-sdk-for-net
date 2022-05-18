@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Http listener of an application gateway. </summary>
-    public partial class ApplicationGatewayHttpListener : SubResource
+    public partial class ApplicationGatewayHttpListener : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
         /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayHttpListener(string id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id)
+        internal ApplicationGatewayHttpListener(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id)
         {
             Name = name;
             Etag = etag;

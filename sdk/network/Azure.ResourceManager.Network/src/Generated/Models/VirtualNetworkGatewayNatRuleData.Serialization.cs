@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(VpnNatRuleType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WriteStringValue(VpnNatRuleType.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<VpnNatRuleType> type0 = default;
             Optional<VpnNatRuleMode> mode = default;
@@ -99,7 +99,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

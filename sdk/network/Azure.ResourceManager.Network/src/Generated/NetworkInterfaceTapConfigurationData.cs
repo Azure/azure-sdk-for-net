@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterfaceTapConfiguration data model. </summary>
-    public partial class NetworkInterfaceTapConfigurationData : SubResource
+    public partial class NetworkInterfaceTapConfigurationData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
         public NetworkInterfaceTapConfigurationData()
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Sub Resource type. </param>
         /// <param name="virtualNetworkTap"> The reference to the Virtual Network Tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
-        internal NetworkInterfaceTapConfigurationData(string id, string name, string etag, string resourceType, VirtualNetworkTapData virtualNetworkTap, ProvisioningState? provisioningState) : base(id)
+        internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, string etag, string resourceType, VirtualNetworkTapData virtualNetworkTap, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

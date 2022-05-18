@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> UrlPathMaps give a url path to the backend mapping information for PathBasedRouting. </summary>
-    public partial class ApplicationGatewayUrlPathMap : SubResource
+    public partial class ApplicationGatewayUrlPathMap : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
         public ApplicationGatewayUrlPathMap()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultRedirectConfiguration"> Default redirect configuration resource of URL path map. </param>
         /// <param name="pathRules"> Path rule of URL path map resource. </param>
         /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        internal ApplicationGatewayUrlPathMap(string id, string name, string etag, string resourceType, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

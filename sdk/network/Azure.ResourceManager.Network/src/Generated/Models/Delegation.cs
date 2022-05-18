@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details the service to which the subnet is delegated. </summary>
-    public partial class Delegation : SubResource
+    public partial class Delegation : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of Delegation. </summary>
         public Delegation()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serviceName"> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <param name="provisioningState"> The provisioning state of the service delegation resource. </param>
-        internal Delegation(string id, string name, string etag, string resourceType, string serviceName, IReadOnlyList<string> actions, ProvisioningState? provisioningState) : base(id)
+        internal Delegation(ResourceIdentifier id, string name, string etag, string resourceType, string serviceName, IReadOnlyList<string> actions, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

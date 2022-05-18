@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request routing rule of an application gateway. </summary>
-    public partial class ApplicationGatewayRequestRoutingRule : SubResource
+    public partial class ApplicationGatewayRequestRoutingRule : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
         public ApplicationGatewayRequestRoutingRule()
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(string id, string name, string etag, string resourceType, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, string etag, string resourceType, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

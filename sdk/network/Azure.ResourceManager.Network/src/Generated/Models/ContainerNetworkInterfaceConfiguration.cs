@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Container network interface configuration child resource. </summary>
-    public partial class ContainerNetworkInterfaceConfiguration : SubResource
+    public partial class ContainerNetworkInterfaceConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
         public ContainerNetworkInterfaceConfiguration()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfigurations"> A list of ip configurations of the container network interface configuration. </param>
         /// <param name="containerNetworkInterfaces"> A list of container network interfaces created from this container network interface configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface configuration resource. </param>
-        internal ContainerNetworkInterfaceConfiguration(string id, string name, string resourceType, string etag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, string resourceType, string etag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;

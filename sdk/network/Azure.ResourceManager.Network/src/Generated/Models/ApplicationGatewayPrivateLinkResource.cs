@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateLink Resource of an application gateway. </summary>
-    public partial class ApplicationGatewayPrivateLinkResource : SubResource
+    public partial class ApplicationGatewayPrivateLinkResource : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkResource. </summary>
         public ApplicationGatewayPrivateLinkResource()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="groupId"> Group identifier of private link resource. </param>
         /// <param name="requiredMembers"> Required member names of private link resource. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
-        internal ApplicationGatewayPrivateLinkResource(string id, string name, string etag, string resourceType, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id)
+        internal ApplicationGatewayPrivateLinkResource(ResourceIdentifier id, string name, string etag, string resourceType, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FirewallPolicyRuleCollectionGroup data model. </summary>
-    public partial class FirewallPolicyRuleCollectionGroupData : SubResource
+    public partial class FirewallPolicyRuleCollectionGroupData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(string id, string name, string etag, string resourceType, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, ProvisioningState? provisioningState) : base(id)
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, string etag, string resourceType, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterfaceIPConfiguration data model. </summary>
-    public partial class NetworkInterfaceIPConfigurationData : Models.SubResource
+    public partial class NetworkInterfaceIPConfigurationData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
         public NetworkInterfaceIPConfigurationData()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        internal NetworkInterfaceIPConfigurationData(string id, string name, string etag, string resourceType, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id)
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id)
         {
             Name = name;
             Etag = etag;

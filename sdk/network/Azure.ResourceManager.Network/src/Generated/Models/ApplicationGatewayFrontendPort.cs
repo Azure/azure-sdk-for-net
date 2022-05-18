@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend port of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendPort : SubResource
+    public partial class ApplicationGatewayFrontendPort : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
         public ApplicationGatewayFrontendPort()
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="port"> Frontend port. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        internal ApplicationGatewayFrontendPort(string id, string name, string etag, string resourceType, int? port, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, string etag, string resourceType, int? port, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

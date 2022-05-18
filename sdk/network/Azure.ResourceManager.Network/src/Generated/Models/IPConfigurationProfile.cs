@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration profile child resource. </summary>
-    public partial class IPConfigurationProfile : SubResource
+    public partial class IPConfigurationProfile : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of IPConfigurationProfile. </summary>
         public IPConfigurationProfile()
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The reference to the subnet resource to create a container network interface ip configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration profile resource. </param>
-        internal IPConfigurationProfile(string id, string name, string resourceType, string etag, SubnetData subnet, ProvisioningState? provisioningState) : base(id)
+        internal IPConfigurationProfile(ResourceIdentifier id, string name, string resourceType, string etag, SubnetData subnet, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;

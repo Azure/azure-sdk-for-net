@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FrontendIPConfiguration data model. </summary>
-    public partial class FrontendIPConfigurationData : Models.SubResource
+    public partial class FrontendIPConfigurationData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
         public FrontendIPConfigurationData()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPPrefix"> The reference to the Public IP Prefix resource. </param>
         /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal FrontendIPConfigurationData(string id, string name, string etag, string resourceType, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, ProvisioningState? provisioningState) : base(id)
+        internal FrontendIPConfigurationData(ResourceIdentifier id, string name, string etag, string resourceType, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

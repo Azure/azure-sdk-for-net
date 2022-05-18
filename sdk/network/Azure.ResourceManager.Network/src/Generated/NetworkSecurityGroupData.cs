@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkSecurityGroup data model. </summary>
-    public partial class NetworkSecurityGroupData : NetworkResourceData
+    public partial class NetworkSecurityGroupData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
         public NetworkSecurityGroupData()

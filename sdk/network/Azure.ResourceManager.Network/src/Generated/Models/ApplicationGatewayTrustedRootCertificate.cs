@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Trusted Root certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayTrustedRootCertificate : SubResource
+    public partial class ApplicationGatewayTrustedRootCertificate : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
         public ApplicationGatewayTrustedRootCertificate()
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(string id, string name, string etag, string resourceType, string data, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

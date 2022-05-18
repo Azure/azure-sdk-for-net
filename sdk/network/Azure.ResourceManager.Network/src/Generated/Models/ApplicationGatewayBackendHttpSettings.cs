@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend address pool settings of an application gateway. </summary>
-    public partial class ApplicationGatewayBackendHttpSettings : SubResource
+    public partial class ApplicationGatewayBackendHttpSettings : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHttpSettings. </summary>
         public ApplicationGatewayBackendHttpSettings()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
-        internal ApplicationGatewayBackendHttpSettings(string id, string name, string etag, string resourceType, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayBackendHttpSettings(ResourceIdentifier id, string name, string etag, string resourceType, int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, WritableSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

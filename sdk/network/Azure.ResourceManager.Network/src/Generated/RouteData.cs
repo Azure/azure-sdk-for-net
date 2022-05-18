@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the Route data model. </summary>
-    public partial class RouteData : SubResource
+    public partial class RouteData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of RouteData. </summary>
         public RouteData()
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(string id, string name, string etag, string resourceType, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
+        internal RouteData(ResourceIdentifier id, string name, string etag, string resourceType, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall FQDN Tag Resource. </summary>
-    public partial class AzureFirewallFqdnTag : NetworkResourceData
+    public partial class AzureFirewallFqdnTag : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
         public AzureFirewallFqdnTag()

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Probe of the application gateway. </summary>
-    public partial class ApplicationGatewayProbe : SubResource
+    public partial class ApplicationGatewayProbe : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayProbe. </summary>
         public ApplicationGatewayProbe()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(string id, string name, string etag, string resourceType, ApplicationGatewayProtocol? protocol, string host, string path, int? interval, int? timeout, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, ProvisioningState? provisioningState, int? port) : base(id)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, string etag, string resourceType, ApplicationGatewayProtocol? protocol, string host, string path, int? interval, int? timeout, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, ProvisioningState? provisioningState, int? port) : base(id)
         {
             Name = name;
             Etag = etag;

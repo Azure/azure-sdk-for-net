@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Private Link Configuration on an application gateway. </summary>
-    public partial class ApplicationGatewayPrivateLinkConfiguration : SubResource
+    public partial class ApplicationGatewayPrivateLinkConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>
         public ApplicationGatewayPrivateLinkConfiguration()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
-        internal ApplicationGatewayPrivateLinkConfiguration(string id, string name, string etag, string resourceType, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayPrivateLinkConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

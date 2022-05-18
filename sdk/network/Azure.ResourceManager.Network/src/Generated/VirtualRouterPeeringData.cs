@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualRouterPeering data model. </summary>
-    public partial class VirtualRouterPeeringData : SubResource
+    public partial class VirtualRouterPeeringData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
         public VirtualRouterPeeringData()
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(string id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState) : base(id)
+        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

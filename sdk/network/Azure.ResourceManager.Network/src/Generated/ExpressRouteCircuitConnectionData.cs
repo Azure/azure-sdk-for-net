@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCircuitConnection data model. </summary>
-    public partial class ExpressRouteCircuitConnectionData : Models.SubResource
+    public partial class ExpressRouteCircuitConnectionData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
         public ExpressRouteCircuitConnectionData()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="iPv6CircuitConnectionConfig"> IPv6 Address PrefixProperties of the express route circuit connection. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
-        internal ExpressRouteCircuitConnectionData(string id, string name, string etag, string resourceType, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, ProvisioningState? provisioningState) : base(id)
+        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

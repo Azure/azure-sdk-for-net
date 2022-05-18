@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualApplianceSite data model. </summary>
-    public partial class VirtualApplianceSiteData : SubResource
+    public partial class VirtualApplianceSiteData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
         public VirtualApplianceSiteData()
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="addressPrefix"> Address Prefix. </param>
         /// <param name="o365Policy"> Office 365 Policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualApplianceSiteData(string id, string name, string etag, string resourceType, string addressPrefix, Office365PolicyProperties o365Policy, ProvisioningState? provisioningState) : base(id)
+        internal VirtualApplianceSiteData(ResourceIdentifier id, string name, string etag, string resourceType, string addressPrefix, Office365PolicyProperties o365Policy, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

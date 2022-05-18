@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a Virtual Machine. </summary>
-    internal partial class Vm : NetworkResourceData
+    internal partial class Vm : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of Vm. </summary>
         public Vm()

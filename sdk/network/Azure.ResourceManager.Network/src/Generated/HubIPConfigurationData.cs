@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the HubIPConfiguration data model. </summary>
-    public partial class HubIPConfigurationData : SubResource
+    public partial class HubIPConfigurationData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of HubIPConfigurationData. </summary>
         public HubIPConfigurationData()
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal HubIPConfigurationData(string id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal HubIPConfigurationData(ResourceIdentifier id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

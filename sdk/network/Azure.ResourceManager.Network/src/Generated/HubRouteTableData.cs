@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the HubRouteTable data model. </summary>
-    public partial class HubRouteTableData : SubResource
+    public partial class HubRouteTableData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of HubRouteTableData. </summary>
         public HubRouteTableData()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(string id, string name, string etag, string resourceType, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, ProvisioningState? provisioningState) : base(id)
+        internal HubRouteTableData(ResourceIdentifier id, string name, string etag, string resourceType, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

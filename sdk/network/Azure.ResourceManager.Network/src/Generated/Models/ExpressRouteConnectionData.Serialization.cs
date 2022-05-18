@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         internal static ExpressRouteConnectionData DeserializeExpressRouteConnectionData(JsonElement element)
         {
             string name = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<WritableSubResource> expressRouteCircuitPeering = default;
             Optional<string> authorizationKey = default;
@@ -80,7 +80,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

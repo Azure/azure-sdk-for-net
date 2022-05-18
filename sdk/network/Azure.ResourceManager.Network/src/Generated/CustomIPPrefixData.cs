@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the CustomIPPrefix data model. </summary>
-    public partial class CustomIPPrefixData : NetworkResourceData
+    public partial class CustomIPPrefixData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of CustomIPPrefixData. </summary>
         public CustomIPPrefixData()

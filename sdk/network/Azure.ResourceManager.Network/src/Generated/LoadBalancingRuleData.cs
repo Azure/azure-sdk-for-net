@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the LoadBalancingRule data model. </summary>
-    public partial class LoadBalancingRuleData : Models.SubResource
+    public partial class LoadBalancingRuleData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>
         public LoadBalancingRuleData()
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        internal LoadBalancingRuleData(string id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, WritableSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, WritableSubResource probe, TransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, ProvisioningState? provisioningState) : base(id)
+        internal LoadBalancingRuleData(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, WritableSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, WritableSubResource probe, TransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

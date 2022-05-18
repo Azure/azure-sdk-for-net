@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<int> priority = default;
             Optional<AzureFirewallNatRCAction> action = default;
             Optional<IList<AzureFirewallNatRule>> rules = default;
@@ -75,7 +75,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkTap data model. </summary>
-    public partial class VirtualNetworkTapData : NetworkResourceData
+    public partial class VirtualNetworkTapData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
         public VirtualNetworkTapData()

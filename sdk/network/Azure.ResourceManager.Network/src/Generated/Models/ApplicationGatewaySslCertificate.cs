@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL certificates of an application gateway. </summary>
-    public partial class ApplicationGatewaySslCertificate : SubResource
+    public partial class ApplicationGatewaySslCertificate : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
         public ApplicationGatewaySslCertificate()
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        internal ApplicationGatewaySslCertificate(string id, string name, string etag, string resourceType, string data, string password, string publicCertData, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string password, string publicCertData, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

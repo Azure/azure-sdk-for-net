@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration for virtual network gateway. </summary>
-    public partial class VirtualNetworkGatewayIPConfiguration : SubResource
+    public partial class VirtualNetworkGatewayIPConfiguration : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
         public VirtualNetworkGatewayIPConfiguration()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
         /// <param name="privateIPAddress"> Private IP Address for this gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway IP configuration resource. </param>
-        internal VirtualNetworkGatewayIPConfiguration(string id, string name, string etag, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, string privateIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal VirtualNetworkGatewayIPConfiguration(ResourceIdentifier id, string name, string etag, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, string privateIPAddress, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

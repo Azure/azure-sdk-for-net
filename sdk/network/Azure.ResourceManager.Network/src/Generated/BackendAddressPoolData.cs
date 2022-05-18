@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BackendAddressPool data model. </summary>
-    public partial class BackendAddressPoolData : Models.SubResource
+    public partial class BackendAddressPoolData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         public BackendAddressPoolData()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(string id, string name, string etag, string resourceType, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, string etag, string resourceType, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

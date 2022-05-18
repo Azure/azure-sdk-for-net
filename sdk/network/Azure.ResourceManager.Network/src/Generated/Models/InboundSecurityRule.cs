@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NVA Inbound Security Rule resource. </summary>
-    public partial class InboundSecurityRule : SubResource
+    public partial class InboundSecurityRule : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
         public InboundSecurityRule()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> NVA inbound security rule type. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRule(string id, string name, string etag, string resourceType, IList<InboundSecurityRules> rules, ProvisioningState? provisioningState) : base(id)
+        internal InboundSecurityRule(ResourceIdentifier id, string name, string etag, string resourceType, IList<InboundSecurityRules> rules, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BastionHost data model. </summary>
-    public partial class BastionHostData : NetworkResourceData
+    public partial class BastionHostData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of BastionHostData. </summary>
         public BastionHostData()

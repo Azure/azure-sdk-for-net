@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkPrivateEndpointConnection data model. </summary>
-    public partial class NetworkPrivateEndpointConnectionData : SubResource
+    public partial class NetworkPrivateEndpointConnectionData : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionData. </summary>
         public NetworkPrivateEndpointConnectionData()
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal NetworkPrivateEndpointConnectionData(string id, string name, string resourceType, string etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, string resourceType, string etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
         {
             Name = name;
             ResourceType = resourceType;

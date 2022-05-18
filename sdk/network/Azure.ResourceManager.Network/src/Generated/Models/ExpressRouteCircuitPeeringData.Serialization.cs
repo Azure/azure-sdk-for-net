@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<string> etag = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<ExpressRoutePeeringType> peeringType = default;
             Optional<ExpressRoutePeeringState> state = default;
             Optional<int> azureASN = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> lastModifiedBy = default;
             Optional<WritableSubResource> routeFilter = default;
             Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
-            Optional<Resources.Models.SubResource> expressRouteConnection = default;
+            Optional<SubResource> expressRouteConnection = default;
             Optional<IList<ExpressRouteCircuitConnectionData>> connections = default;
             Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> peeredConnections = default;
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -323,7 +328,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteConnection = JsonSerializer.Deserialize<Resources.Models.SubResource>(property0.Value.ToString());
+                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("connections"))

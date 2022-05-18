@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("allowVnetToVnetTraffic");
                 writer.WriteBooleanValue(AllowVnetToVnetTraffic.Value);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(VirtualWanType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType);
+                writer.WriteStringValue(VirtualWanType);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

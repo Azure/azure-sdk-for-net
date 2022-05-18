@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client revoked certificate of virtual network gateway. </summary>
-    public partial class VpnClientRevokedCertificate : SubResource
+    public partial class VpnClientRevokedCertificate : NetworkWritableSubResource
     {
         /// <summary> Initializes a new instance of VpnClientRevokedCertificate. </summary>
         public VpnClientRevokedCertificate()
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client revoked certificate resource. </param>
-        internal VpnClientRevokedCertificate(string id, string name, string etag, string thumbprint, ProvisioningState? provisioningState) : base(id)
+        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, string etag, string thumbprint, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;

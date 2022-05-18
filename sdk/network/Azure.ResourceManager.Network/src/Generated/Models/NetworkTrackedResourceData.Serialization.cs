@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkResourceData : IUtf8JsonSerializable
+    public partial class NetworkTrackedResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkResourceData DeserializeNetworkResourceData(JsonElement element)
+        internal static NetworkTrackedResourceData DeserializeNetworkTrackedResourceData(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkResourceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags));
+            return new NetworkTrackedResourceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags));
         }
     }
 }
