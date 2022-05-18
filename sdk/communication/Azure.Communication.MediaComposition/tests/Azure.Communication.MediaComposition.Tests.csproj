@@ -13,15 +13,12 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
-    <ProjectReference Include="..\Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
+    <ProjectReference Include="..\src\Azure.Communication.MediaComposition.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MediaCompositionClient\" />
   </ItemGroup>
 </Project>

@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition", "Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj", "{D5445861-C735-4A13-900F-3745FBD9566A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.MediaComposition.Tests", "Azure.Communication.MediaComposition.Tests\Azure.Communication.MediaComposition.Tests.csproj", "{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.MediaComposition.Tests", "Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj", "{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
