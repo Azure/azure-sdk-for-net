@@ -46,6 +46,16 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("aadTenantId");
                 writer.WriteStringValue(AadTenantId.Value);
             }
+            if (Optional.IsDefined(AadApplicationObjectId))
+            {
+                writer.WritePropertyName("aadApplicationObjectId");
+                writer.WriteStringValue(AadApplicationObjectId);
+            }
+            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("aadServicePrincipalObjectId");
+                writer.WriteStringValue(AadServicePrincipalObjectId);
+            }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties");
@@ -69,6 +79,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> cloudManagementEndpoint = default;
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
+            Optional<string> aadApplicationObjectId = default;
+            Optional<string> aadServicePrincipalObjectId = default;
             Optional<ClusterDesiredProperties> desiredProperties = default;
             Optional<ClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
@@ -76,6 +88,7 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> registrationTimestamp = default;
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastBillingTimestamp = default;
+            Optional<string> serviceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -177,6 +190,16 @@ namespace Azure.ResourceManager.Hci
                             aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("aadApplicationObjectId"))
+                        {
+                            aadApplicationObjectId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("aadServicePrincipalObjectId"))
+                        {
+                            aadServicePrincipalObjectId = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("desiredProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -242,11 +265,16 @@ namespace Azure.ResourceManager.Hci
                             lastBillingTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("serviceEndpoint"))
+                        {
+                            serviceEndpoint = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp));
+            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), aadApplicationObjectId.Value, aadServicePrincipalObjectId.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value);
         }
     }
 }
