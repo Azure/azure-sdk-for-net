@@ -10,16 +10,16 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class DiskOperationsTests : ComputeTestBase
+    public class ManagedDiskOperationsTests : ComputeTestBase
     {
-        public DiskOperationsTests(bool isAsync)
+        public ManagedDiskOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<DiskResource> CreateDiskAsync(string diskName)
+        private async Task<ManagedDiskResource> CreateDiskAsync(string diskName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetDisks();
+            var collection = (await CreateResourceGroupAsync()).GetManagedDisks();
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
             return lro.Value;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk1 = await CreateDiskAsync(diskName);
-            DiskResource disk2 = await disk1.GetAsync();
+            ManagedDiskResource disk2 = await disk1.GetAsync();
 
             ResourceDataHelper.AssertDisk(disk1.Data, disk2.Data);
         }
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskName = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(diskName);
             var newDiskSize = 20;
-            var update = new DiskPatch()
+            var update = new ManagedDiskPatch()
             {
                 DiskSizeGB = newDiskSize
             };
             var lro = await disk.UpdateAsync(WaitUntil.Completed, update);
-            DiskResource updatedDisk = lro.Value;
+            ManagedDiskResource updatedDisk = lro.Value;
 
             Assert.AreEqual(newDiskSize, updatedDisk.Data.DiskSizeGB);
         }
