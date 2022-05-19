@@ -34,9 +34,9 @@ namespace Azure.Storage.Cryptography
 
         public long ExpectedOutputContentLength(long plaintextLength)
         {
-            long numBlocks = plaintextLength / EncryptionBlockSize;
+            long numBlocks = plaintextLength / EncryptionRegionSize;
             // partial block check
-            if (plaintextLength % EncryptionBlockSize != 0)
+            if (plaintextLength % EncryptionRegionSize != 0)
             {
                 numBlocks += 1;
             }
@@ -52,20 +52,27 @@ namespace Azure.Storage.Cryptography
         /// <param name="async">Whether to wrap the content encryption key asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The wrapped stream to read from and the encryption metadata for the wrapped stream.</returns>
-        public Task<(Stream Ciphertext, EncryptionData EncryptionData)> EncryptInternal(
+        public async Task<(Stream Ciphertext, EncryptionData EncryptionData)> EncryptInternal(
             Stream plaintext,
             bool async,
             CancellationToken cancellationToken)
         {
             ValidateMembers();
 
-            //var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
-            //EncryptionData encryptionData = default;
-            //Stream ciphertext = default;
+            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
 
-            throw new NotImplementedException();
+            // transform is disposable but gets disposed by the stream
+            var gcm = new GcmAuthenticatedCryptographicTransform(generatedKey, TransformMode.Encrypt);
+            EncryptionData encryptionData = await CreateEncryptionDataInternal(generatedKey, async, cancellationToken)
+                .ConfigureAwait(false);
 
-            //return (ciphertext, encryptionData);
+            Stream ciphertext = new AuthenticatedRegionCryptoStream(
+                plaintext,
+                gcm,
+                EncryptionRegionSize,
+                CryptoStreamMode.Read);
+
+            return (ciphertext, encryptionData);
         }
 
         /// <summary>
@@ -76,21 +83,37 @@ namespace Azure.Storage.Cryptography
         /// <param name="async">Whether to wrap the content encryption key asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The encrypted data and the encryption metadata for the wrapped stream.</returns>
-        public Task<(byte[] Ciphertext, EncryptionData EncryptionData)> BufferedEncryptInternal(
+        public async Task<(byte[] Ciphertext, EncryptionData EncryptionData)> BufferedEncryptInternal(
             Stream plaintext,
             bool async,
             CancellationToken cancellationToken)
         {
             ValidateMembers();
 
-            //var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
-            //EncryptionData encryptionData = default;
-            //var ciphertext = new MemoryStream();
-            //byte[] bufferedCiphertext = default;
+            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            using var gcm = new GcmAuthenticatedCryptographicTransform(generatedKey, TransformMode.Encrypt);
+            EncryptionData encryptionData = await CreateEncryptionDataInternal(generatedKey, async, cancellationToken)
+                .ConfigureAwait(false);
 
-            throw new NotImplementedException();
+            var ciphertext = new MemoryStream();
+            var transformStream = new AuthenticatedRegionCryptoStream(
+                    ciphertext,
+                    gcm,
+                    EncryptionRegionSize,
+                    CryptoStreamMode.Write);
 
-            //return (bufferedCiphertext, encryptionData);
+            if (async)
+            {
+                await plaintext.CopyToAsync(transformStream).ConfigureAwait(false);
+            }
+            else
+            {
+                plaintext.CopyTo(transformStream);
+            }
+
+            await transformStream.FlushFinalInternal(async, cancellationToken).ConfigureAwait(false);
+
+            return (ciphertext.ToArray(), encryptionData);
         }
 
         /// <summary>
@@ -108,32 +131,42 @@ namespace Azure.Storage.Cryptography
         /// <returns>
         /// Content transform write stream and encryption metadata.
         /// </returns>
-        public Task<Stream> EncryptedOpenWriteInternal(
+        public async Task<Stream> EncryptedOpenWriteInternal(
             Func<EncryptionData, bool, CancellationToken, Task<Stream>> openWriteInternal,
             bool async,
             CancellationToken cancellationToken)
         {
             ValidateMembers();
 
-            //var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
-            //EncryptionData encryptionData = default;
-            //Stream writeStream = default;
+            var generatedKey = CreateKey(Constants.ClientSideEncryption.EncryptionKeySizeBits);
+            EncryptionData encryptionData = await CreateEncryptionDataInternal(generatedKey, async, cancellationToken)
+                .ConfigureAwait(false);
 
-            throw new NotImplementedException();
+            // transform is disposable but gets disposed by the stream
+            var gcm = new GcmAuthenticatedCryptographicTransform(generatedKey, TransformMode.Encrypt);
 
-            //return writeStream;
+            Stream writeStream = new AuthenticatedRegionCryptoStream(
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                // analyzer struggles to recognize async pattern with a Func instead of a proper method.
+                await openWriteInternal(encryptionData, async, cancellationToken).ConfigureAwait(false),
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                gcm,
+                EncryptionRegionSize,
+                CryptoStreamMode.Write);
+
+            return writeStream;
         }
 
         /// <summary>
         /// Creates <see cref="EncryptionData"/> from this instance data and a given AES provider.
         /// </summary>
         private async Task<EncryptionData> CreateEncryptionDataInternal(
-            AesCryptoServiceProvider aesProvider,
+            byte[] key,
             bool async,
             CancellationToken cancellationToken)
             => await EncryptionData.CreateInternalV2_0(
                 keyWrapAlgorithm: _keyWrapAlgorithm,
-                contentEncryptionKey: aesProvider.Key,
+                contentEncryptionKey: key,
                 keyEncryptionKey: _keyEncryptionKey,
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);

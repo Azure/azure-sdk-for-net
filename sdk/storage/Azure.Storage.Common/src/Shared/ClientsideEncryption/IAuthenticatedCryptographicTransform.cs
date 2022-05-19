@@ -10,7 +10,7 @@ using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
 {
-    internal interface IAuthenticatedCryptographicTransform
+    internal interface IAuthenticatedCryptographicTransform : IDisposable
     {
         TransformMode TransformMode { get; }
 

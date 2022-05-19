@@ -95,7 +95,7 @@ namespace Azure.Storage.Cryptography.Models
                 },
                 AuthenticationBlockInfo = new AuthenticationBlockInfo()
                 {
-                    CiphertextLength = Constants.ClientSideEncryption.V2.EncryptionBlockSize,
+                    CiphertextLength = Constants.ClientSideEncryption.V2.EncryptionRegionSize,
                     NonceLength = Constants.ClientSideEncryption.V2.NonceSize,
                     Order = new List<string> { "nonce", "ciphertext", "tag" }
                 },

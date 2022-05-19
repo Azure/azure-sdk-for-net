@@ -53,5 +53,11 @@ namespace Azure.Storage.Cryptography
                 default: throw new InvalidOperationException("TransformMode invalid for this operation.");
             }
         }
+
+        public void Dispose()
+        {
+            // TODO
+            throw new NotImplementedException();
+        }
     }
 }

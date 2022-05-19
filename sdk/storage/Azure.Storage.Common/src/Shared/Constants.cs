@@ -648,7 +648,7 @@ namespace Azure.Storage
 
             internal static class V2
             {
-                public const int EncryptionBlockSize = 4 * MB;
+                public const int EncryptionRegionSize = 4 * MB;
                 public const int NonceSize = 12;
                 public const int TagSize = 16;
             }

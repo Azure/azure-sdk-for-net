@@ -274,6 +274,7 @@ namespace Azure.Storage.Cryptography
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            _transform.Dispose();
             _innerStream?.Dispose();
         }
     }
