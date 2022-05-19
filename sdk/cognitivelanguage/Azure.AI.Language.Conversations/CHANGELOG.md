@@ -3,10 +3,13 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
-- ConversationPII
-- ConversationSummarization
+* Async conversation issue summarization task
+* Async conversation PII extraction task
 
 ### Breaking Changes
+- `Results` in `customConversationalTaskResult` changed to `Result`.
+- `TargetKind` enum changed to `TargetProjectKind`.
+- `CustomConversation` in `TargetProjectKind` changed to `Conversation`.
 
 ### Bugs Fixed
 
