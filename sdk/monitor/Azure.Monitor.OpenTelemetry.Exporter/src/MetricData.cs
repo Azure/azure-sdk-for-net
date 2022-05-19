@@ -27,12 +27,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             switch (metric.MetricType)
             {
                 case MetricType.DoubleSum:
-                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetSumDouble());
-                    metricDataPoint.DataPointType = DataPointType.Aggregation;
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetSumDouble())
+                    {
+                        DataPointType = DataPointType.Aggregation
+                    };
                     break;
                 case MetricType.DoubleGauge:
-                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueDouble());
-                    metricDataPoint.DataPointType = DataPointType.Measurement;
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueDouble())
+                    {
+                        DataPointType = DataPointType.Measurement
+                    };
+                    break;
+                case MetricType.LongSum:
+                    // potential for minor precision loss implicitly going from long->double
+                    // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetSumLong())
+                    {
+                        DataPointType = DataPointType.Aggregation
+                    };
+                    break;
+                case MetricType.LongGauge:
+                    // potential for minor precision loss implicitly going from long->double
+                    // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueLong())
+                    {
+                        DataPointType = DataPointType.Measurement
+                    };
                     break;
             }
 
@@ -45,5 +65,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             Properties.Add(AggregationIntervalMsKey, DefaultExportIntervalMilliseconds);
         }
+
+        internal static bool IsSupportedType(MetricType metricType) =>
+            metricType switch
+            {
+                MetricType.DoubleGauge => true,
+                MetricType.DoubleSum => true,
+                MetricType.LongGauge => true,
+                MetricType.LongSum => true,
+                _ => false
+            };
     }
 }
