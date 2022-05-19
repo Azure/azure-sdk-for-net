@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Test
         /// Mock encryption transform which adds a predictable nonce and tag around the input bytes.
         /// Input bytes remain untransformed.
         /// </summary>
-        public class MockEncryptTransform : IAuthenticatedCryptographicTransform
+        internal class MockEncryptTransform : IAuthenticatedCryptographicTransform
         {
             public TransformMode TransformMode => TransformMode.Encrypt;
             public int NonceLength { get; }
@@ -74,7 +74,7 @@ namespace Azure.Storage.Blobs.Test
         /// Mock encryption transform which strips known-length nonce and tag from bytes.
         /// Input bytes remain untransformed.
         /// </summary>
-        public class MockDecryptTransform : IAuthenticatedCryptographicTransform
+        internal class MockDecryptTransform : IAuthenticatedCryptographicTransform
         {
             public TransformMode TransformMode => TransformMode.Decrypt;
             public int NonceLength { get; }

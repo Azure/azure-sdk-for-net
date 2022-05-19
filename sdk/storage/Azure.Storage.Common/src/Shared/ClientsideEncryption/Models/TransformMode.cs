@@ -12,7 +12,7 @@ namespace Azure.Storage.Cryptography.Models
     /// <summary>
     /// Transformation mode for a give <see cref="IAuthenticatedCryptographicTransform"/>.
     /// </summary>
-    public enum TransformMode
+    internal enum TransformMode
     {
         /// <summary>
         /// Encryption mode.
