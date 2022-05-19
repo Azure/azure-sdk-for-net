@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="validatedCertData"> Validated certificate data. </param>
         /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string validatedCertData, string clientCertIssuerDN, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Distinguished name of client certificate issuer. </summary>
         public string ClientCertIssuerDN { get; }
         /// <summary> The provisioning state of the trusted client certificate resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

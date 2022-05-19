@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Sub Resource type. </param>
         /// <param name="virtualNetworkTap"> The reference to the Virtual Network Tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
-        internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, string etag, string resourceType, VirtualNetworkTapData virtualNetworkTap, ProvisioningState? provisioningState) : base(id)
+        internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, string etag, string resourceType, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The reference to the Virtual Network Tap resource. </summary>
         public VirtualNetworkTapData VirtualNetworkTap { get; set; }
         /// <summary> The provisioning state of the network interface tap configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

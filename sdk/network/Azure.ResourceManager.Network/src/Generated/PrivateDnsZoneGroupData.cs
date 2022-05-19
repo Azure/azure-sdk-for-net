@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>
         /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
-        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, string etag, ProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id)
+        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, string etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The provisioning state of the private dns zone group resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A collection of private dns zone configurations of the private dns zone group. </summary>
         public IList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get; }
     }

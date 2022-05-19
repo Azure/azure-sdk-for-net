@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> vlanId = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
             Optional<ExpressRouteCircuitStats> stats = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> gatewayManagerEtag = default;
             Optional<string> lastModifiedBy = default;
             Optional<WritableSubResource> routeFilter = default;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayManagerEtag"))

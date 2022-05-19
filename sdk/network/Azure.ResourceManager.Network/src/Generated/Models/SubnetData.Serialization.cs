@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
             Optional<IList<Delegation>> delegations = default;
             Optional<string> purpose = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<VirtualNetworkPrivateEndpointNetworkPolicies> privateEndpointNetworkPolicies = default;
             Optional<VirtualNetworkPrivateLinkServiceNetworkPolicies> privateLinkServiceNetworkPolicies = default;
             Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIpConfigurations = default;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointNetworkPolicies"))

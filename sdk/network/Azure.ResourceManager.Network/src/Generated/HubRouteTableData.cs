@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(ResourceIdentifier id, string name, string etag, string resourceType, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, ProvisioningState? provisioningState) : base(id)
+        internal HubRouteTableData(ResourceIdentifier id, string name, string etag, string resourceType, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of all connections that advertise to this route table. </summary>
         public IReadOnlyList<string> PropagatingConnections { get; }
         /// <summary> The provisioning state of the RouteTable resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

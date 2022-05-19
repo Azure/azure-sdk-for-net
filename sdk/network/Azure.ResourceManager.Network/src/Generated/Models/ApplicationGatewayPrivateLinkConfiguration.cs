@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
-        internal ApplicationGatewayPrivateLinkConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayPrivateLinkConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> An array of application gateway private link ip configurations. </summary>
         public IList<ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get; }
         /// <summary> The provisioning state of the application gateway private link configuration. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

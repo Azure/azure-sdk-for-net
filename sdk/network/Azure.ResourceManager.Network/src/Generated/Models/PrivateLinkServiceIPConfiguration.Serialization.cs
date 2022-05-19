@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<SubnetData> subnet = default;
             Optional<bool> primary = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IPVersion> privateIPAddressVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateIPAddressVersion"))

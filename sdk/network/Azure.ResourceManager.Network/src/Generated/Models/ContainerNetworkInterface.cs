@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="container"> Reference to the container to which this container network interface is attached. </param>
         /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
-        internal ContainerNetworkInterface(ResourceIdentifier id, string name, string resourceType, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterface(ResourceIdentifier id, string name, string resourceType, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Reference to the ip configuration on this container nic. </summary>
         public IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get; }
         /// <summary> The provisioning state of the container network interface resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

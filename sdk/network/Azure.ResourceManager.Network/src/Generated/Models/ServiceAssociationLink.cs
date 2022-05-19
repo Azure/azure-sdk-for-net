@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
-        internal ServiceAssociationLink(ResourceIdentifier id, string name, string etag, string resourceType, string linkedResourceType, string link, ProvisioningState? provisioningState, bool? allowDelete, IList<string> locations) : base(id)
+        internal ServiceAssociationLink(ResourceIdentifier id, string name, string etag, string resourceType, string linkedResourceType, string link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<string> locations) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Link to the external resource. </summary>
         public string Link { get; set; }
         /// <summary> The provisioning state of the service association link resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> If true, the resource can be deleted. </summary>
         public bool? AllowDelete { get; set; }
         /// <summary> A list of locations. </summary>

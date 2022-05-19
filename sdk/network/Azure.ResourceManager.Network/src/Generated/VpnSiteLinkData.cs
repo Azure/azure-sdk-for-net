@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdn"> FQDN of vpn-site-link. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(ResourceIdentifier id, string etag, string name, string resourceType, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
+        internal VpnSiteLinkData(ResourceIdentifier id, string etag, string name, string resourceType, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState) : base(id)
         {
             Etag = etag;
             Name = name;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The set of bgp properties. </summary>
         public VpnLinkBgpSettings BgpProperties { get; set; }
         /// <summary> The provisioning state of the VPN site link resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

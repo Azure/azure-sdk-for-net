@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>
         /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
-        internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, string etag, IList<ApplicationGatewayRewriteRule> rewriteRules, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, string etag, IList<ApplicationGatewayRewriteRule> rewriteRules, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Rewrite rules in the rewrite rule set. </summary>
         public IList<ApplicationGatewayRewriteRule> RewriteRules { get; }
         /// <summary> The provisioning state of the rewrite rule set resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

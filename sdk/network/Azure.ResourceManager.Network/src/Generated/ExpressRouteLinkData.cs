@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(ResourceIdentifier id, string name, string etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, ProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id)
+        internal ExpressRouteLinkData(ResourceIdentifier id, string name, string etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Administrative state of the physical port. </summary>
         public ExpressRouteLinkAdminState? AdminState { get; set; }
         /// <summary> The provisioning state of the express route link resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> MacSec configuration. </summary>
         public ExpressRouteLinkMacSecConfig MacSecConfig { get; set; }
     }

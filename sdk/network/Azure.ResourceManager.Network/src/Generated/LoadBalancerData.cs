@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRules"> The outbound rules. </param>
         /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
-        internal LoadBalancerData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, LoadBalancerSku sku, string etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<InboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, LoadBalancerSku sku, string etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<InboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The resource GUID property of the load balancer resource. </summary>
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the load balancer resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

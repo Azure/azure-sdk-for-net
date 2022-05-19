@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState) : base(id)
+        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Peer IP. </summary>
         public string PeerIP { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

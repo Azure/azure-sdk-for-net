@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfigurations"> A list of ip configurations of the container network interface configuration. </param>
         /// <param name="containerNetworkInterfaces"> A list of container network interfaces created from this container network interface configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface configuration resource. </param>
-        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, string resourceType, string etag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, ProvisioningState? provisioningState) : base(id)
+        internal ContainerNetworkInterfaceConfiguration(ResourceIdentifier id, string name, string resourceType, string etag, IList<IPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A list of container network interfaces created from this container network interface configuration. </summary>
         public IList<WritableSubResource> ContainerNetworkInterfaces { get; }
         /// <summary> The provisioning state of the container network interface configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client revoked certificate resource. </param>
-        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, string etag, string thumbprint, ProvisioningState? provisioningState) : base(id)
+        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, string etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The revoked VPN client certificate thumbprint. </summary>
         public string Thumbprint { get; set; }
         /// <summary> The provisioning state of the VPN client revoked certificate resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

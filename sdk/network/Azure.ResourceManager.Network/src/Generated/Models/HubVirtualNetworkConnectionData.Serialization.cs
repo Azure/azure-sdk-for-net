@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> allowRemoteVnetToUseHubVnetGateways = default;
             Optional<bool> enableInternetSecurity = default;
             Optional<RoutingConfiguration> routingConfiguration = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

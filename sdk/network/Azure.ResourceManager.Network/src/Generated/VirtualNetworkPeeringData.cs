@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id)
+        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The peering sync status of the virtual network peering. </summary>
         public VirtualNetworkPeeringLevel? PeeringSyncLevel { get; set; }
         /// <summary> The provisioning state of the virtual network peering resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> If we need to verify the provisioning state of the remote gateway. </summary>
         public bool? DoNotVerifyRemoteGateways { get; set; }
         /// <summary> The resourceGuid property of the Virtual Network peering resource. </summary>

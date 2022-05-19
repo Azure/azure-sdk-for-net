@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> NVA inbound security rule type. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRule(ResourceIdentifier id, string name, string etag, string resourceType, IList<InboundSecurityRules> rules, ProvisioningState? provisioningState) : base(id)
+        internal InboundSecurityRule(ResourceIdentifier id, string name, string etag, string resourceType, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of allowed rules. </summary>
         public IList<InboundSecurityRules> Rules { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

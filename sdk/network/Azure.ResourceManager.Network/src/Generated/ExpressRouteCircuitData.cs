@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        internal ExpressRouteCircuitData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, string etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, ProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, string etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
             Etag = etag;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </summary>
         public int? Stag { get; }
         /// <summary> The provisioning state of the express route circuit resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The GatewayManager Etag. </summary>
         public string GatewayManagerEtag { get; set; }
         /// <summary> Flag denoting global reach status. </summary>

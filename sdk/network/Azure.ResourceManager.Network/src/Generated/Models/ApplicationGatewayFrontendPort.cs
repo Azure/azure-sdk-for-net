@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="port"> Frontend port. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend port resource. </param>
-        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, string etag, string resourceType, int? port, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayFrontendPort(ResourceIdentifier id, string name, string etag, string resourceType, int? port, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Frontend port. </summary>
         public int? Port { get; set; }
         /// <summary> The provisioning state of the frontend port resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

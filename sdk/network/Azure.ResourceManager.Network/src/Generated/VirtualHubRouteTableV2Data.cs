@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routes"> List of all routes. </param>
         /// <param name="attachedConnections"> List of all connections attached to this route table v2. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual hub route table v2 resource. </param>
-        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, string etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, ProvisioningState? provisioningState) : base(id)
+        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, string etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of all connections attached to this route table v2. </summary>
         public IList<string> AttachedConnections { get; }
         /// <summary> The provisioning state of the virtual hub route table v2 resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<ConnectionMonitorTestGroup>> testGroups = default;
             Optional<IReadOnlyList<ConnectionMonitorOutput>> outputs = default;
             Optional<string> notes = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<string> monitoringStatus = default;
             Optional<ConnectionMonitorType> connectionMonitorType = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startTime"))

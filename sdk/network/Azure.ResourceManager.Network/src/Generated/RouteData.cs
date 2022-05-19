@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(ResourceIdentifier id, string name, string etag, string resourceType, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, ProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
+        internal RouteData(ResourceIdentifier id, string name, string etag, string resourceType, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </summary>
         public string NextHopIPAddress { get; set; }
         /// <summary> The provisioning state of the route resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>
         public bool? HasBgpOverride { get; set; }
     }

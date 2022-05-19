@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayTrustedRootCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </summary>
         public string KeyVaultSecretId { get; set; }
         /// <summary> The provisioning state of the trusted root certificate resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationKey"> The authorization key. </param>
         /// <param name="authorizationUseStatus"> The authorization use status. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, string etag, string resourceType, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, ProvisioningState? provisioningState) : base(id)
+        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, string etag, string resourceType, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The authorization use status. </summary>
         public AuthorizationUseStatus? AuthorizationUseStatus { get; set; }
         /// <summary> The provisioning state of the authorization resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

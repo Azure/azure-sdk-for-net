@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="subnet"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
-        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource subnet, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource subnet, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the application gateway IP configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id)
+        internal BgpConnectionData(ResourceIdentifier id, string name, string etag, string resourceType, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Peer IP. </summary>
         public string PeerIP { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of the VirtualHub to Peer. </summary>
         public HubBgpConnectionStatus? ConnectionState { get; }
     }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network security group resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
-        internal NetworkSecurityGroupData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkSecurityGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, string etag, IList<SecurityRuleData> securityRules, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<NetworkInterfaceData> networkInterfaces, IReadOnlyList<SubnetData> subnets, IReadOnlyList<FlowLogData> flowLogs, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             SecurityRules = securityRules;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The resource GUID property of the network security group resource. </summary>
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network security group resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

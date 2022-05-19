@@ -91,8 +91,12 @@ directive:
     where: $.definitions
     transform: >
       $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
+      $.Resource.properties.id['x-ms-format'] = 'arm-id';
+      $.Resource.properties.location['x-ms-format'] = 'azure-location';
+      $.Resource.properties.type['x-ms-format'] = 'resource-type';
       $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
+      $.ProvisioningState['x-ms-enum'].name = 'NetworkProvisioningState';
   - from: ipAllocation.json
     where: $.definitions
     transform: >
@@ -110,6 +114,28 @@ directive:
     where: $.definitions.VpnServerConfigurationProperties.properties.etag
     transform: 'return undefined'
     reason: the same property is defined in VpnServerConfiguration and service only returns value there
+  - from: swagger-document
+    where: $.definitions..resourceGuid
+    transform: >
+      $['format'] = 'uuid';
+  - from: swagger-document
+    where: $.definitions..targetResourceId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: azureFirewall.json
+    where: $.definitions.AzureFirewallIPGroups.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: networkWatcher.json
+    where: $.definitions
+    transform: >
+      $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
+      $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
+      $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
+  - from: usage.json
+    where: $.definitions.Usage.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
 # shorten "privateLinkServiceConnectionState" property name
   - from: applicationGateway.json
     where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties
@@ -119,10 +145,6 @@ directive:
     where: $.definitions.PrivateLinkServiceConnectionProperties
     transform: >
       $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
-  - from: swagger-document
-    where: $.definitions..resourceGuid
-    transform: >
-      $['format'] = 'uuid';
 ```
 
 ### Tag: package-track2-preview

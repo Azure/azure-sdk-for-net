@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> addressPrefix = default;
             Optional<RouteNextHopType> nextHopType = default;
             Optional<string> nextHopIpAddress = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> hasBgpOverride = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hasBgpOverride"))

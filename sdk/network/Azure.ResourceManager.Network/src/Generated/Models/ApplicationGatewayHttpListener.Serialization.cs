@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<WritableSubResource> sslCertificate = default;
             Optional<WritableSubResource> sslProfile = default;
             Optional<bool> requireServerNameIndication = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
             Optional<WritableSubResource> firewallPolicy = default;
             Optional<IList<string>> hostNames = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("customErrorConfigurations"))

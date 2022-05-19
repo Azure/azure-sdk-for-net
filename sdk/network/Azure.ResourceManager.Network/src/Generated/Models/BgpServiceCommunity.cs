@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serviceName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="bgpCommunities"> A list of bgp communities. </param>
-        internal BgpServiceCommunity(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string serviceName, IList<BGPCommunity> bgpCommunities) : base(id, name, resourceType, location, tags)
+        internal BgpServiceCommunity(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, string serviceName, IList<BGPCommunity> bgpCommunities) : base(id, name, resourceType, location, tags)
         {
             ServiceName = serviceName;
             BgpCommunities = bgpCommunities;

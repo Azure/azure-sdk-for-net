@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicIPAddress"> Reference of the PublicIP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
         /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
-        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource subnet, WritableSubResource publicIPAddress, ProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id)
+        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, IPAllocationMethod? privateIPAllocationMethod) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the bastion host IP configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Private IP allocation method. </summary>
         public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
     }

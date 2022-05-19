@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkUsage DeserializeNetworkUsage(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             UsageUnit unit = default;
             long currentValue = default;
             long limit = default;
@@ -23,7 +23,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))

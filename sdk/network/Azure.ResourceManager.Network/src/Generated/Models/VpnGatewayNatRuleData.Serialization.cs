@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> etag = default;
             Optional<string> type = default;
             Optional<ResourceIdentifier> id = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<VpnNatRuleType> type0 = default;
             Optional<VpnNatRuleMode> mode = default;
             Optional<IList<VpnNatRuleMapping>> internalMappings = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("type"))

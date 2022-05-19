@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
             Optional<int> allocatedOutboundPorts = default;
             Optional<IList<WritableSubResource>> frontendIPConfigurations = default;
             Optional<WritableSubResource> backendAddressPool = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<LoadBalancerOutboundRuleProtocol> protocol = default;
             Optional<bool> enableTcpReset = default;
             Optional<int> idleTimeoutInMinutes = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("protocol"))

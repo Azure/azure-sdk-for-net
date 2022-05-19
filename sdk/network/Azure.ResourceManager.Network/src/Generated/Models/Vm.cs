@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal Vm(string id, string name, string resourceType, string location, IDictionary<string, string> tags) : base(id, name, resourceType, location, tags)
+        internal Vm(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags) : base(id, name, resourceType, location, tags)
         {
         }
     }

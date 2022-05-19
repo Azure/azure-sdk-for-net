@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="addressPrefix"> Address Prefix. </param>
         /// <param name="o365Policy"> Office 365 Policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualApplianceSiteData(ResourceIdentifier id, string name, string etag, string resourceType, string addressPrefix, Office365PolicyProperties o365Policy, ProvisioningState? provisioningState) : base(id)
+        internal VirtualApplianceSiteData(ResourceIdentifier id, string name, string etag, string resourceType, string addressPrefix, Office365PolicyProperties o365Policy, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

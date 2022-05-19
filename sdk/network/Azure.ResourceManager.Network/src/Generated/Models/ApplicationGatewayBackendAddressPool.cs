@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendIPConfigurations"> Collection of references to IPs defined in network interfaces. </param>
         /// <param name="backendAddresses"> Backend addresses. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, string etag, string resourceType, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, string etag, string resourceType, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Backend addresses. </summary>
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

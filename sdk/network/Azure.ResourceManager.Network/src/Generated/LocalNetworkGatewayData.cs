@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpSettings"> Local network gateway&apos;s BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, string etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
@@ -67,6 +68,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The resource GUID property of the local network gateway resource. </summary>
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the local network gateway resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

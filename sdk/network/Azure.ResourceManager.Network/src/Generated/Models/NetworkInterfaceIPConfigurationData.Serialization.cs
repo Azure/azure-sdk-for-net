@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> primary = default;
             Optional<PublicIPAddressData> publicIPAddress = default;
             Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkConnectionProperties"))

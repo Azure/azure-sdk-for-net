@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, ProvisioningState? provisioningState, IPVersion? privateIPAddressVersion) : base(id)
+        internal PrivateLinkServiceIPConfiguration(ResourceIdentifier id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, IPVersion? privateIPAddressVersion) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Whether the ip configuration is primary or not. </summary>
         public bool? Primary { get; set; }
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
     }

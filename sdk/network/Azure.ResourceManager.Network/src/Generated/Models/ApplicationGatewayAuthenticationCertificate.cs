@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the authentication certificate resource. </param>
-        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayAuthenticationCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Certificate public data. </summary>
         public string Data { get; set; }
         /// <summary> The provisioning state of the authentication certificate resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

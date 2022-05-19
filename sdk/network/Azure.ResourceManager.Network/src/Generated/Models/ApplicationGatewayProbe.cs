@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, string etag, string resourceType, ApplicationGatewayProtocol? protocol, string host, string path, int? interval, int? timeout, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, ProvisioningState? provisioningState, int? port) : base(id)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, string etag, string resourceType, ApplicationGatewayProtocol? protocol, string host, string path, int? interval, int? timeout, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Criterion for classifying a healthy probe response. </summary>
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
         /// <summary> The provisioning state of the probe resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </summary>
         public int? Port { get; set; }
     }
