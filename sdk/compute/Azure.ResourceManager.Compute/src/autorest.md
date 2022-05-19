@@ -138,6 +138,10 @@ directive:
       $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
+      $.DiskProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
+      $.DiskUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
+      $.SnapshotProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
+      $.SnapshotUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.Encryption["x-ms-client-name"] = "DiskEncryption";
   - from: cloudService.json
     where: $.definitions
