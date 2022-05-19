@@ -47,11 +47,12 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
-        public CallingServerClient(Uri endpoint, TokenCredential credential)
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
-                new CallingServerClientOptions())
+                options ?? new CallingServerClientOptions())
         { }
 
         /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
@@ -63,24 +64,6 @@ namespace Azure.Communication.CallingServer
         endpoint,
         options ?? new CallingServerClientOptions(),
         ConnectionString.Parse(connectionString))
-        { }
-
-        private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
-        : this(
-        endpoint: endpoint.AbsoluteUri,
-        httpPipeline: options.BuildHttpPipeline(connectionString),
-        options: options)
-        { }
-
-        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
-        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public CallingServerClient(Uri endpoint, TokenCredential credential, CallingServerClientOptions options)
-            : this(
-                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(credential, nameof(credential)),
-                Argument.CheckNotNull(options, nameof(options)))
         { }
         #endregion
 
@@ -103,6 +86,9 @@ namespace Azure.Communication.CallingServer
             ServerCallRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
+        private CallingServerClient(Uri endpoint, CallingServerClientOptions options, ConnectionString connectionString)
+            : this(endpoint: endpoint.AbsoluteUri, httpPipeline: options.BuildHttpPipeline(connectionString), options: options)
+        { }
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallingServerClient"/> for mocking.</summary>
@@ -124,8 +110,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
-        public virtual async Task<Response<CallConnection>> CreateCallAsync(CommunicationIdentifier source, CommunicationIdentifier target, Uri callbackUri, CreateCallOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CallConnection>> CreateCallAsync(CommunicationIdentifier source, CommunicationIdentifier target, Uri callbackUri, CreateCallOptions options = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallingServerClient)}.{nameof(CreateCall)}");
             scope.Start();
@@ -133,8 +118,11 @@ namespace Azure.Communication.CallingServer
             {
                 CreateCallRequestInternal request = new CreateCallRequestInternal(CommunicationIdentifierSerializer.Serialize(target), CommunicationIdentifierSerializer.Serialize(source));
                 request.CallbackUri = callbackUri?.AbsoluteUri;
-                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
-                request.Subject = options.Subject;
+                if (options != null)
+                {
+                    request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    request.Subject = options.Subject;
+                }
 
                 var createCallResponse = await ServerCallRestClient.CreateCallAsync(request,
                     cancellationToken: cancellationToken
@@ -169,8 +157,11 @@ namespace Azure.Communication.CallingServer
             {
                 CreateCallRequestInternal request = new CreateCallRequestInternal(CommunicationIdentifierSerializer.Serialize(target), CommunicationIdentifierSerializer.Serialize(source));
                 request.CallbackUri = callbackUri?.AbsoluteUri;
-                request.Subject = options.Subject;
-                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                if (options != null)
+                {
+                    request.Subject = options.Subject;
+                    request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                }
 
                 var createCallResponse = ServerCallRestClient.CreateCall(request,
                     cancellationToken: cancellationToken
