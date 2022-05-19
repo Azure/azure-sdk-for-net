@@ -254,6 +254,77 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> MigrateMongoDBDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB
+        /// container
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Cosmos DB collection name.
+        /// </param>
+        /// <param name='retrieveThroughputParameters'>
+        /// The parameters to provide for retrieving throughput distribution
+        /// for the current MongoDB container.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> MongoDBContainerRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Redistribute throughput for an Azure Cosmos DB MongoDB container
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Cosmos DB collection name.
+        /// </param>
+        /// <param name='redistributeThroughputParameters'>
+        /// The parameters to provide for redistributing throughput for the
+        /// current MongoDB container.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> MongoDBContainerRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the MongoDB collection under an existing Azure Cosmos DB
         /// database account.
         /// </summary>
@@ -941,6 +1012,77 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ThroughputSettingsGetResults>> BeginMigrateMongoDBDatabaseToManualThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve throughput distribution for an Azure Cosmos DB MongoDB
+        /// container
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Cosmos DB collection name.
+        /// </param>
+        /// <param name='retrieveThroughputParameters'>
+        /// The parameters to provide for retrieving throughput distribution
+        /// for the current MongoDB container.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> BeginMongoDBContainerRetrieveThroughputDistributionWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, RetrieveThroughputParameters retrieveThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Redistribute throughput for an Azure Cosmos DB MongoDB container
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// Cosmos DB database account name.
+        /// </param>
+        /// <param name='databaseName'>
+        /// Cosmos DB database name.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Cosmos DB collection name.
+        /// </param>
+        /// <param name='redistributeThroughputParameters'>
+        /// The parameters to provide for redistributing throughput for the
+        /// current MongoDB container.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PhysicalPartitionThroughputInfoResult>> BeginMongoDBContainerRedistributeThroughputWithHttpMessagesAsync(string resourceGroupName, string accountName, string databaseName, string collectionName, RedistributeThroughputParameters redistributeThroughputParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an Azure Cosmos DB MongoDB Collection
         /// </summary>

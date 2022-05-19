@@ -43,7 +43,7 @@ namespace Compute.Tests
                         // when re-recording the test ensure that you use a valid packageReferenceId
                         // refer to https://microsoft.sharepoint.com/:w:/t/ComputeVM/EcYeD-HHrLZHpYyxo3iRCtkB-VeO8BuWE4dq4hoX9tlzEg?e=nOTgTu
                         // for how to create a valid VMApplication
-                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8", treatFailureAsDeploymentFailure: true, enableAutomaticUpgrade: true)
                     };
 
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
@@ -57,6 +57,9 @@ namespace Compute.Tests
                     Assert.NotNull(getVMResponse.ApplicationProfile);
                     Assert.NotNull(getVMResponse.ApplicationProfile.GalleryApplications);
                     Assert.Equal(1, getVMResponse.ApplicationProfile.GalleryApplications.Count);
+                    VMGalleryApplication vmGalleryApplication = getVMResponse.ApplicationProfile.GalleryApplications[0];
+                    Assert.True(vmGalleryApplication.TreatFailureAsDeploymentFailure);
+                    Assert.True(vmGalleryApplication.EnableAutomaticUpgrade);
                 }
                 finally
                 {

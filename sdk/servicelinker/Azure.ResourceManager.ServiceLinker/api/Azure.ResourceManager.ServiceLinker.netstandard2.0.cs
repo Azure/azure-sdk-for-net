@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ServiceLinker
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.Models.SourceConfigurationResult>> GetConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.LinkerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.LinkerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceLinker.Models.LinkerResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.ValidateResult> Validate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.ValidateResult>> ValidateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.ValidateOperationResult> Validate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceLinker.Models.ValidateOperationResult>> ValidateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LinkerResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceLinker.LinkerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceLinker.LinkerResource>, System.Collections.IEnumerable
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceLinker
         public string ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public string SecretStoreKeyVaultId { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType? SolutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? SolutionType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase TargetService { get { throw null; } set { } }
     }
     public static partial class ServiceLinkerExtensions
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }
         public string SecretStoreKeyVaultId { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType? SolutionType { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType? SolutionType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceLinker.Models.TargetServiceBase TargetService { get { throw null; } set { } }
     }
     public partial class SecretAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthInfoBase
@@ -201,15 +201,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string ClientId { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
     }
-    public partial class ValidateResult
+    public partial class ValidateOperationResult
     {
-        internal ValidateResult() { }
+        internal ValidateOperationResult() { }
         public Azure.ResourceManager.ServiceLinker.Models.AuthType? AuthType { get { throw null; } }
         public bool? IsConnectionAvailable { get { throw null; } }
         public string LinkerName { get { throw null; } }
         public System.DateTimeOffset? ReportEndTimeUtc { get { throw null; } }
         public System.DateTimeOffset? ReportStartTimeUtc { get { throw null; } }
+        public string ResourceId { get { throw null; } }
         public string SourceId { get { throw null; } }
+        public string Status { get { throw null; } }
         public string TargetId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceLinker.Models.ValidationResultItem> ValidationDetail { get { throw null; } }
     }
@@ -228,7 +230,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ValidationResultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Failure { get { throw null; } }
         public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Success { get { throw null; } }
         public static Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceLinker.Models.ValidationResultStatus other) { throw null; }
@@ -247,21 +249,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VNetSolutionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType>
+    public readonly partial struct VnetSolutionType : System.IEquatable<Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VNetSolutionType(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType PrivateLink { get { throw null; } }
-        public static Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType ServiceEndpoint { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType other) { throw null; }
+        public VnetSolutionType(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType PrivateLink { get { throw null; } }
+        public static Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType ServiceEndpoint { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VNetSolutionType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType left, Azure.ResourceManager.ServiceLinker.Models.VnetSolutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

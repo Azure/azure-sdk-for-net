@@ -71,7 +71,7 @@ namespace Azure.AI.Translation.Document
         public Azure.AI.Translation.Document.TranslationSource Source { get { throw null; } }
         public Azure.AI.Translation.Document.StorageInputType? StorageType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
-        public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
+        public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null, string categoryId = null) { }
     }
     public static partial class DocumentTranslationModelFactory
     {

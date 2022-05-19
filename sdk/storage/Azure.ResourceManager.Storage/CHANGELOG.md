@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.9 (2022-05-13)
+
+### Breaking Changes
+
+- Flattened property from a read-only model no longer has setters.
+- The type of flattened primitive property changed to its corresponding nullable type.
+- Renamed class `PrivateLinkResource` to `StoragePrivateLinkResource`.
+- Added an `Update` method using the implementation of `CreateOrUpdate` if the resource previously does not have a `Update` method.
 
 ## 1.0.0-beta.8 (2022-04-08)
 
