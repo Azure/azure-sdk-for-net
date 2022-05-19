@@ -174,7 +174,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 conversationSummarizationTask
             };
 
-            var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+            var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
 
             var jobResults = analyzeConversationOperation.Value;
@@ -224,7 +224,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 piiTask
             };
 
-            var analyzeConversationOperation = await Client.AnalyzeConversationAsync(input, tasks);
+            var analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
 
             var jobResults = analyzeConversationOperation.Value;
@@ -314,7 +314,7 @@ namespace Azure.AI.Language.Conversations.Tests
                 piiTask
             };
 
-            var analyzeConversationOperation = await Client.AnalyzeConversationAsync(input, tasks);
+            var analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
 
             await analyzeConversationOperation.WaitForCompletionAsync();
 

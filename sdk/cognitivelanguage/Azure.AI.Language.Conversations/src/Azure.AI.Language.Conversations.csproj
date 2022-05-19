@@ -7,6 +7,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="AnalyzeConversationOperation.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
@@ -19,6 +22,9 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated\Models\" />
   </ItemGroup>
 
 </Project>

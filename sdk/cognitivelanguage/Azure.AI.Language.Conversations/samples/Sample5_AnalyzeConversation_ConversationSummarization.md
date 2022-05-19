@@ -26,7 +26,7 @@ var input = new List<TextConversation>()
     new TextConversation("1", "en", textConversationItems)
 };
 
-var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Summary, SummaryAspect.Resolution });
+var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
 
 var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
 var tasks = new List<AnalyzeConversationLROTask>()
@@ -35,19 +35,19 @@ var tasks = new List<AnalyzeConversationLROTask>()
 };
 ```
 
-then you can start analyzing by calling the `AnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_StartAnalayzing
-var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
 ```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
-var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 

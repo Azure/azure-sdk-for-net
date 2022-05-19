@@ -45,14 +45,13 @@ Depending on the project chosen by your orchestration model, you may get results
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetProjectKind.QuestionAnswering)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
     KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result as KnowledgeBaseAnswer;
-
     Console.WriteLine("Answers: \n");
     /* foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
     {
@@ -70,7 +69,7 @@ if (targetIntentResult.TargetKind == TargetProjectKind.QuestionAnswering)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetProjectKind.CustomConversation)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.CustomConversation)
 {
     ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -116,7 +115,7 @@ if (targetIntentResult.TargetKind == TargetProjectKind.CustomConversation)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetProjectKind.Luis)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
 {
     LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
     BinaryData luisResponse = luisTargetIntentResult.Result;

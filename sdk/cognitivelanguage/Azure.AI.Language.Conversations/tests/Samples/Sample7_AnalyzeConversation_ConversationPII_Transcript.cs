@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
             #endregion
 
-            var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
+            var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
             analyzeConversationOperation.WaitForCompletion();
 
             #region Snippet:AnalyzeConversation_ConversationPII_Transcript_Results
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 piiTask
             };
 
-            var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+            var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
 
             var jobResults = analyzeConversationOperation.Value;

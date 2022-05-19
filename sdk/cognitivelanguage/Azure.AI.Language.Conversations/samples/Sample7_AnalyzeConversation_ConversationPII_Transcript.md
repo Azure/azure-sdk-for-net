@@ -59,7 +59,7 @@ var input = new List<TranscriptConversation>()
     new TranscriptConversation("1", "en", transcriptConversationItems)
 };
 
-var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
 
 var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
 var tasks = new List<AnalyzeConversationLROTask>()
@@ -68,19 +68,19 @@ var tasks = new List<AnalyzeConversationLROTask>()
 };
 ```
 
-then you can start analyzing by calling the `AnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_StartAnalayzing
-var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
 ```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
-var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 

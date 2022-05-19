@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             #region Snippet:AnalyzeConversation_StartAnalayzing
-            var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
+            var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
             analyzeConversationOperation.WaitForCompletion();
             #endregion
 
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             #region Snippet:AnalyzeConversationAsync_StartAnalayzing
-            var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+            var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
             #endregion
 

@@ -40,14 +40,14 @@ then you can start analyzing by calling the `AnalyzeConversation`, and because t
 ## Synchronous
 
 ```C# Snippet:AnalyzeConversation_StartAnalayzing
-var analyzeConversationOperation = client.AnalyzeConversation(input, tasks);
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
 ```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
-var analyzeConversationOperation = await client.AnalyzeConversationAsync(input, tasks);
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
