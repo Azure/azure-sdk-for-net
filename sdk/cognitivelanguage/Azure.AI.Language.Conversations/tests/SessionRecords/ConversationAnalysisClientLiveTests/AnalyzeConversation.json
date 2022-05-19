@@ -9,9 +9,9 @@
         "Content-Length": "227",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f1b217fd269a6044a04dd194ba8aee07-bb86a8022252144e-00",
+        "traceparent": "00-7fcbd27f3670074296685c6eda2c95d1-416b571381588648-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "eee248bd4dcc31894249f02fb3bae0e2",
+        "x-ms-client-request-id": "9b42d9b378a95965ec4953fbfa3358fa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8a239d6c-8e27-42a0-be1f-2df7094d03a0",
+        "apim-request-id": "4d9b6776-b816-46a4-85fb-e38a9c32ebd5",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:03:58 GMT",
+        "Date": "Thu, 19 May 2022 15:13:59 GMT",
         "Pragma": "no-cache",
-        "request-id": "8a239d6c-8e27-42a0-be1f-2df7094d03a0",
+        "request-id": "4d9b6776-b816-46a4-85fb-e38a9c32ebd5",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "97"
+        "x-envoy-upstream-service-time": "169"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -140,6 +140,6 @@
     "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_PROJECT_NAME": "EmailDomain",
-    "RandomSeed": "686722063"
+    "RandomSeed": "620860292"
   }
 }

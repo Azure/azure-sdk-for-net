@@ -5,13 +5,12 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
         "Content-Length": "228",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-431df2cfbc5a00488f955f51495c77f9-826b718068e91f46-00",
+        "traceparent": "00-263d8beb92f68a489fe5c5b1e69a46a3-1a1a64287bbecd49-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "07c0b25f7fec3b207b7db0c5769987d2",
+        "x-ms-client-request-id": "ccbb5d4eea3c1db5dec50984387ac961",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,13 +29,13 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "70420b29-1910-4b86-93fd-ee982c3c89ed",
+        "apim-request-id": "5677f898-d6dd-4871-a775-b1cf86d34d99",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:05:15 GMT",
+        "Date": "Thu, 19 May 2022 15:14:06 GMT",
         "Pragma": "no-cache",
-        "request-id": "70420b29-1910-4b86-93fd-ee982c3c89ed",
+        "request-id": "5677f898-d6dd-4871-a775-b1cf86d34d99",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
@@ -140,6 +139,6 @@
     "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_PROJECT_NAME": "EmailDomain",
-    "RandomSeed": "2063716558"
+    "RandomSeed": "1066095442"
   }
 }

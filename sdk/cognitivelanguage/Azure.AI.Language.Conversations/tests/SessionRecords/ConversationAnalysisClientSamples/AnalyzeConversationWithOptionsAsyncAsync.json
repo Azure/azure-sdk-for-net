@@ -8,9 +8,9 @@
         "Content-Length": "243",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e0508e02687f4844a04e3c3f2c4b755c-c6871e8819859241-00",
+        "traceparent": "00-1c03e232ef97ce40bb62a5cea16a40e4-e8761f0fe260ba46-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "73f8dd9134705dd887f8a0e9c1f4cf1f",
+        "x-ms-client-request-id": "f873ec46849bb2d32e26edbad903b253",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ca71a01e-e15a-4fde-8a97-f3274f465b51",
+        "apim-request-id": "fd95f4b7-1d46-4da1-826e-29c783ccf1f3",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:05:17 GMT",
+        "Date": "Thu, 19 May 2022 15:14:07 GMT",
         "Pragma": "no-cache",
-        "request-id": "ca71a01e-e15a-4fde-8a97-f3274f465b51",
+        "request-id": "fd95f4b7-1d46-4da1-826e-29c783ccf1f3",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "59"
+        "x-envoy-upstream-service-time": "69"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -140,6 +140,6 @@
     "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_PROJECT_NAME": "EmailDomain",
-    "RandomSeed": "127180621"
+    "RandomSeed": "1358841051"
   }
 }

@@ -8,9 +8,9 @@
         "Content-Length": "195",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-77686ba409bc9a4d9a4cb4595e1d6bcb-f8ab9cfc7ca27440-00",
+        "traceparent": "00-91af8c4e0615a040a5069053f464e893-375eca413b542f42-00",
         "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "76f6bbe7bc7fb884e75bd2f87b878c8e",
+        "x-ms-client-request-id": "4740f96d5255ec5f72963391f82b2b9e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +29,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b4ad63a2-000d-4179-a872-3a3cd1decf76",
+        "apim-request-id": "c84ea4ba-74ff-4ef4-88c3-8df8b4754bb1",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:04:01 GMT",
+        "Date": "Thu, 19 May 2022 15:14:02 GMT",
         "Pragma": "no-cache",
-        "request-id": "b4ad63a2-000d-4179-a872-3a3cd1decf76",
+        "request-id": "c84ea4ba-74ff-4ef4-88c3-8df8b4754bb1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "711"
+        "x-envoy-upstream-service-time": "860"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -127,6 +127,6 @@
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "2124707221"
+    "RandomSeed": "1213442443"
   }
 }
