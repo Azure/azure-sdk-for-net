@@ -15,17 +15,14 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TeamsJoinUrl))
-            {
-                writer.WritePropertyName("teamsJoinUrl");
-                writer.WriteStringValue(TeamsJoinUrl);
-            }
+            writer.WritePropertyName("teamsJoinUrl");
+            writer.WriteStringValue(TeamsJoinUrl);
             writer.WriteEndObject();
         }
 
         internal static TeamsMeeting DeserializeTeamsMeeting(JsonElement element)
         {
-            Optional<string> teamsJoinUrl = default;
+            string teamsJoinUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("teamsJoinUrl"))
@@ -34,7 +31,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new TeamsMeeting(teamsJoinUrl.Value);
+            return new TeamsMeeting(teamsJoinUrl);
         }
     }
 }

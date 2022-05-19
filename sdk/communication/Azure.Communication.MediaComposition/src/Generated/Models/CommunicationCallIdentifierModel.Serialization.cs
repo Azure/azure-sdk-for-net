@@ -15,17 +15,14 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Call))
-            {
-                writer.WritePropertyName("call");
-                writer.WriteStringValue(Call);
-            }
+            writer.WritePropertyName("call");
+            writer.WriteStringValue(Call);
             writer.WriteEndObject();
         }
 
         internal static CommunicationCallIdentifierModel DeserializeCommunicationCallIdentifierModel(JsonElement element)
         {
-            Optional<string> call = default;
+            string call = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("call"))
@@ -34,7 +31,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CommunicationCallIdentifierModel(call.Value);
+            return new CommunicationCallIdentifierModel(call);
         }
     }
 }

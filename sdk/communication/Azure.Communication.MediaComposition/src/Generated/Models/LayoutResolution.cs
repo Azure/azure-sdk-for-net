@@ -7,26 +7,21 @@
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    /// <summary> The Resolution. </summary>
+    /// <summary> The dimensions of the scene or objects in the scene. </summary>
     public partial class LayoutResolution
     {
         /// <summary> Initializes a new instance of LayoutResolution. </summary>
-        public LayoutResolution()
-        {
-        }
-
-        /// <summary> Initializes a new instance of LayoutResolution. </summary>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        internal LayoutResolution(int? width, int? height)
+        /// <param name="width"> Width of the object. </param>
+        /// <param name="height"> Height of the object. </param>
+        public LayoutResolution(int width, int height)
         {
             Width = width;
             Height = height;
         }
 
-        /// <summary> Gets or sets the width. </summary>
-        public int? Width { get; set; }
-        /// <summary> Gets or sets the height. </summary>
-        public int? Height { get; set; }
+        /// <summary> Width of the object. </summary>
+        public int Width { get; set; }
+        /// <summary> Height of the object. </summary>
+        public int Height { get; set; }
     }
 }

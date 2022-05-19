@@ -15,47 +15,31 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Width))
-            {
-                writer.WritePropertyName("width");
-                writer.WriteNumberValue(Width.Value);
-            }
-            if (Optional.IsDefined(Height))
-            {
-                writer.WritePropertyName("height");
-                writer.WriteNumberValue(Height.Value);
-            }
+            writer.WritePropertyName("width");
+            writer.WriteNumberValue(Width);
+            writer.WritePropertyName("height");
+            writer.WriteNumberValue(Height);
             writer.WriteEndObject();
         }
 
         internal static LayoutResolution DeserializeLayoutResolution(JsonElement element)
         {
-            Optional<int> width = default;
-            Optional<int> height = default;
+            int width = default;
+            int height = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("width"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     width = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("height"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     height = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new LayoutResolution(Optional.ToNullable(width), Optional.ToNullable(height));
+            return new LayoutResolution(width, height);
         }
     }
 }

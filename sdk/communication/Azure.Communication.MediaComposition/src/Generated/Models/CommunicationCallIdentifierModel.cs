@@ -5,24 +5,27 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The CommunicationCallIdentifierModel. </summary>
+    /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
     public partial class CommunicationCallIdentifierModel
     {
         /// <summary> Initializes a new instance of CommunicationCallIdentifierModel. </summary>
-        public CommunicationCallIdentifierModel()
+        /// <param name="call"> The id of the teams meeting or call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="call"/> is null. </exception>
+        public CommunicationCallIdentifierModel(string call)
         {
-        }
+            if (call == null)
+            {
+                throw new ArgumentNullException(nameof(call));
+            }
 
-        /// <summary> Initializes a new instance of CommunicationCallIdentifierModel. </summary>
-        /// <param name="call"></param>
-        internal CommunicationCallIdentifierModel(string call)
-        {
             Call = call;
         }
 
-        /// <summary> Gets or sets the call. </summary>
+        /// <summary> The id of the teams meeting or call. </summary>
         public string Call { get; set; }
     }
 }

@@ -16,32 +16,21 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resolution))
-            {
-                writer.WritePropertyName("resolution");
-                writer.WriteObjectValue(Resolution);
-            }
-            if (Optional.IsDefined(StreamUrl))
-            {
-                writer.WritePropertyName("streamUrl");
-                writer.WriteStringValue(StreamUrl);
-            }
+            writer.WritePropertyName("resolution");
+            writer.WriteObjectValue(Resolution);
+            writer.WritePropertyName("streamUrl");
+            writer.WriteStringValue(StreamUrl);
             writer.WriteEndObject();
         }
 
         internal static SrtStream DeserializeSrtStream(JsonElement element)
         {
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> streamUrl = default;
+            LayoutResolution resolution = default;
+            string streamUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resolution"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
                     continue;
                 }
@@ -51,7 +40,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new SrtStream(resolution.Value, streamUrl.Value);
+            return new SrtStream(resolution, streamUrl);
         }
     }
 }

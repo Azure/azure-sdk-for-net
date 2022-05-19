@@ -5,24 +5,27 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The GroupCall. </summary>
+    /// <summary> Group call to be used as an input or output. </summary>
     public partial class GroupCall
     {
         /// <summary> Initializes a new instance of GroupCall. </summary>
-        public GroupCall()
+        /// <param name="id"> Group call identifier. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public GroupCall(string id)
         {
-        }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-        /// <summary> Initializes a new instance of GroupCall. </summary>
-        /// <param name="id"></param>
-        internal GroupCall(string id)
-        {
             Id = id;
         }
 
-        /// <summary> Gets or sets the id. </summary>
+        /// <summary> Group call identifier. </summary>
         public string Id { get; set; }
     }
 }

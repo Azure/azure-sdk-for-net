@@ -136,9 +136,7 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                // TODO: what is this id and is it needed?
-                var id = new Guid().ToString();
-                return await RestClient.CreateAsync(mediaCompositionId, id, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -158,9 +156,7 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                // TODO: what is this id and is it needed?
-                var id = new Guid().ToString();
-                return RestClient.Create(mediaCompositionId, id, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken);
+                return RestClient.Create(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, CompositionStreamState.NotStarted, cancellationToken);
             }
             catch (Exception e)
             {
@@ -180,10 +176,9 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                // TODO: what is this id and how to retrieve for updates?
-                // Should the CompositionStreamState be exposed for update?
+                // TODO: remove the CompositionStreamState from updateAsync params?
                 var id = new Guid().ToString();
-                return await RestClient.UpdateAsync(mediaCompositionId, id, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
+                return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -203,10 +198,9 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                // TODO: what is this id and how to retrieve for updates?
-                // Should the CompositionStreamState be exposed for update?
+                // TODO: remove the CompositionStreamState from updateAsync params?
                 var id = new Guid().ToString();
-                return RestClient.Update(mediaCompositionId, id, layout, inputs, outputs, null, cancellationToken);
+                return RestClient.Update(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken);
             }
             catch (Exception e)
             {

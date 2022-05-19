@@ -5,42 +5,59 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The RtmpStream. </summary>
+    /// <summary> Rtmp stream to be used as an input or output. </summary>
     public partial class RtmpStream
     {
         /// <summary> Initializes a new instance of RtmpStream. </summary>
-        public RtmpStream()
+        /// <param name="streamKey"> Stream key of the stream. </param>
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="streamUrl"> The url of the stream. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="streamKey"/>, <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
+        public RtmpStream(string streamKey, LayoutResolution resolution, string streamUrl)
         {
+            if (streamKey == null)
+            {
+                throw new ArgumentNullException(nameof(streamKey));
+            }
+            if (resolution == null)
+            {
+                throw new ArgumentNullException(nameof(resolution));
+            }
+            if (streamUrl == null)
+            {
+                throw new ArgumentNullException(nameof(streamUrl));
+            }
+
+            StreamKey = streamKey;
+            Resolution = resolution;
+            StreamUrl = streamUrl;
         }
 
         /// <summary> Initializes a new instance of RtmpStream. </summary>
-        /// <param name="enableSsl"></param>
-        /// <param name="streamKey"></param>
-        /// <param name="resolution"></param>
-        /// <param name="streamUrl"></param>
-        /// <param name="mode"></param>
-        internal RtmpStream(bool? enableSsl, string streamKey, LayoutResolution resolution, string streamUrl, RtmpMode? mode)
+        /// <param name="streamKey"> Stream key of the stream. </param>
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="streamUrl"> The url of the stream. </param>
+        /// <param name="mode"> Rtmp mode. </param>
+        internal RtmpStream(string streamKey, LayoutResolution resolution, string streamUrl, RtmpMode? mode)
         {
-            EnableSsl = enableSsl;
             StreamKey = streamKey;
             Resolution = resolution;
             StreamUrl = streamUrl;
             Mode = mode;
         }
 
-        /// <summary> Gets or sets the enable ssl. </summary>
-        public bool? EnableSsl { get; set; }
-        /// <summary> Gets or sets the stream key. </summary>
+        /// <summary> Stream key of the stream. </summary>
         public string StreamKey { get; set; }
-        /// <summary> Gets or sets the resolution. </summary>
+        /// <summary> The dimensions of the scene or objects in the scene. </summary>
         public LayoutResolution Resolution { get; set; }
-        /// <summary> Gets or sets the stream url. </summary>
+        /// <summary> The url of the stream. </summary>
         public string StreamUrl { get; set; }
-        /// <summary> Gets or sets the mode. </summary>
+        /// <summary> Rtmp mode. </summary>
         public RtmpMode? Mode { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(AudiencePosition))
             {
                 writer.WritePropertyName("audiencePosition");
-                writer.WriteStringValue(AudiencePosition.Value.ToSerialString());
+                writer.WriteStringValue(AudiencePosition.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -62,7 +62,7 @@ namespace Azure.Communication.MediaComposition
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    audiencePosition = property.Value.GetString().ToAudiencePosition();
+                    audiencePosition = new AudiencePosition(property.Value.GetString());
                     continue;
                 }
             }

@@ -69,7 +69,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToSerialString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -196,7 +196,7 @@ namespace Azure.Communication.MediaComposition
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = property.Value.GetString().ToMediaInputType();
+                    kind = new MediaInputType(property.Value.GetString());
                     continue;
                 }
             }

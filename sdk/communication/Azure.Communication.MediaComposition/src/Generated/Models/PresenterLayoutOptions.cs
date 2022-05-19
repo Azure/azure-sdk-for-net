@@ -9,12 +9,12 @@ using System;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The PresenterLayoutOptions. </summary>
+    /// <summary> Configure the presenter layout. </summary>
     public partial class PresenterLayoutOptions
     {
         /// <summary> Initializes a new instance of PresenterLayoutOptions. </summary>
-        /// <param name="presenterId"></param>
-        /// <param name="supportId"></param>
+        /// <param name="presenterId"> Id of the presenter input. </param>
+        /// <param name="supportId"> Id of the support input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="supportId"/> is null. </exception>
         public PresenterLayoutOptions(string presenterId, string supportId)
         {
@@ -32,10 +32,10 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of PresenterLayoutOptions. </summary>
-        /// <param name="presenterId"></param>
-        /// <param name="supportId"></param>
-        /// <param name="supportPosition"></param>
-        /// <param name="supportAspectRatio"></param>
+        /// <param name="presenterId"> Id of the presenter input. </param>
+        /// <param name="supportId"> Id of the support input. </param>
+        /// <param name="supportPosition"> Position of the support stream. </param>
+        /// <param name="supportAspectRatio"> Aspect ratio of the support stream. </param>
         internal PresenterLayoutOptions(string presenterId, string supportId, SupportPosition? supportPosition, double? supportAspectRatio)
         {
             PresenterId = presenterId;
@@ -44,13 +44,13 @@ namespace Azure.Communication.MediaComposition
             SupportAspectRatio = supportAspectRatio;
         }
 
-        /// <summary> Gets or sets the presenter id. </summary>
+        /// <summary> Id of the presenter input. </summary>
         public string PresenterId { get; set; }
-        /// <summary> Gets or sets the support id. </summary>
+        /// <summary> Id of the support input. </summary>
         public string SupportId { get; set; }
-        /// <summary> Gets or sets the support position. </summary>
+        /// <summary> Position of the support stream. </summary>
         public SupportPosition? SupportPosition { get; set; }
-        /// <summary> Gets or sets the support aspect ratio. </summary>
+        /// <summary> Aspect ratio of the support stream. </summary>
         public double? SupportAspectRatio { get; set; }
     }
 }

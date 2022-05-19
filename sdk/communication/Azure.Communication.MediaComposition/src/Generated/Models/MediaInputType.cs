@@ -5,30 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The MediaInputType. </summary>
-    public enum MediaInputType
+    /// <summary> Kind of media input. </summary>
+    public readonly partial struct MediaInputType : IEquatable<MediaInputType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MediaInputType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MediaInputType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string GroupCallValue = "groupCall";
+        private const string RoomValue = "room";
+        private const string TeamsMeetingValue = "teamsMeeting";
+        private const string SrtValue = "srt";
+        private const string RtmpValue = "rtmp";
+        private const string ParticipantValue = "participant";
+        private const string ScreenShareValue = "screenShare";
+        private const string DominantSpeakerValue = "dominantSpeaker";
+        private const string ActivePresenterValue = "activePresenter";
+        private const string ImageValue = "image";
+
         /// <summary> groupCall. </summary>
-        GroupCall,
+        public static MediaInputType GroupCall { get; } = new MediaInputType(GroupCallValue);
         /// <summary> room. </summary>
-        Room,
+        public static MediaInputType Room { get; } = new MediaInputType(RoomValue);
         /// <summary> teamsMeeting. </summary>
-        TeamsMeeting,
+        public static MediaInputType TeamsMeeting { get; } = new MediaInputType(TeamsMeetingValue);
         /// <summary> srt. </summary>
-        Srt,
+        public static MediaInputType Srt { get; } = new MediaInputType(SrtValue);
         /// <summary> rtmp. </summary>
-        Rtmp,
+        public static MediaInputType Rtmp { get; } = new MediaInputType(RtmpValue);
         /// <summary> participant. </summary>
-        Participant,
+        public static MediaInputType Participant { get; } = new MediaInputType(ParticipantValue);
         /// <summary> screenShare. </summary>
-        ScreenShare,
+        public static MediaInputType ScreenShare { get; } = new MediaInputType(ScreenShareValue);
         /// <summary> dominantSpeaker. </summary>
-        DominantSpeaker,
+        public static MediaInputType DominantSpeaker { get; } = new MediaInputType(DominantSpeakerValue);
         /// <summary> activePresenter. </summary>
-        ActivePresenter,
+        public static MediaInputType ActivePresenter { get; } = new MediaInputType(ActivePresenterValue);
         /// <summary> image. </summary>
-        Image
+        public static MediaInputType Image { get; } = new MediaInputType(ImageValue);
+        /// <summary> Determines if two <see cref="MediaInputType"/> values are the same. </summary>
+        public static bool operator ==(MediaInputType left, MediaInputType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MediaInputType"/> values are not the same. </summary>
+        public static bool operator !=(MediaInputType left, MediaInputType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MediaInputType"/>. </summary>
+        public static implicit operator MediaInputType(string value) => new MediaInputType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MediaInputType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(MediaInputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

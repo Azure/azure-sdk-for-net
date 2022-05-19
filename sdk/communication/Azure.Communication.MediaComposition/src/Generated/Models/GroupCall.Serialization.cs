@@ -15,17 +15,14 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static GroupCall DeserializeGroupCall(JsonElement element)
         {
-            Optional<string> id = default;
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,7 +31,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new GroupCall(id.Value);
+            return new GroupCall(id);
         }
     }
 }

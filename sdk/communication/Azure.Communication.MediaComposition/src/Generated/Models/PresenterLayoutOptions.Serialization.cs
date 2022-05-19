@@ -22,7 +22,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(SupportPosition))
             {
                 writer.WritePropertyName("supportPosition");
-                writer.WriteStringValue(SupportPosition.Value.ToSerialString());
+                writer.WriteStringValue(SupportPosition.Value.ToString());
             }
             if (Optional.IsDefined(SupportAspectRatio))
             {
@@ -57,7 +57,7 @@ namespace Azure.Communication.MediaComposition
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    supportPosition = property.Value.GetString().ToSupportPosition();
+                    supportPosition = new SupportPosition(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportAspectRatio"))

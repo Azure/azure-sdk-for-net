@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The MediaCompositionBody. </summary>
+    /// <summary> Body of a media composition. </summary>
     public partial class MediaCompositionBody
     {
         /// <summary> Initializes a new instance of MediaCompositionBody. </summary>
@@ -22,11 +22,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of MediaCompositionBody. </summary>
-        /// <param name="id"></param>
-        /// <param name="layout"></param>
-        /// <param name="inputs"> Dictionary of &lt;MediaInput&gt;. </param>
-        /// <param name="outputs"> Dictionary of &lt;MediaOutput&gt;. </param>
-        /// <param name="streamState"></param>
+        /// <param name="id"> Id of the media composition. </param>
+        /// <param name="layout"> Configure a layout. </param>
+        /// <param name="inputs"> Inputs used in the composition. </param>
+        /// <param name="outputs"> Outputs used in the composition. </param>
+        /// <param name="streamState"> State of the composition stream. </param>
         internal MediaCompositionBody(string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState? streamState)
         {
             Id = id;
@@ -36,15 +36,15 @@ namespace Azure.Communication.MediaComposition
             StreamState = streamState;
         }
 
-        /// <summary> Gets or sets the id. </summary>
+        /// <summary> Id of the media composition. </summary>
         public string Id { get; set; }
-        /// <summary> Gets or sets the layout. </summary>
+        /// <summary> Configure a layout. </summary>
         public MediaCompositionLayout Layout { get; set; }
-        /// <summary> Dictionary of &lt;MediaInput&gt;. </summary>
+        /// <summary> Inputs used in the composition. </summary>
         public IDictionary<string, MediaInput> Inputs { get; }
-        /// <summary> Dictionary of &lt;MediaOutput&gt;. </summary>
+        /// <summary> Outputs used in the composition. </summary>
         public IDictionary<string, MediaOutput> Outputs { get; }
-        /// <summary> Gets or sets the stream state. </summary>
+        /// <summary> State of the composition stream. </summary>
         public CompositionStreamState? StreamState { get; set; }
     }
 }

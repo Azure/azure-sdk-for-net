@@ -52,7 +52,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(StreamState))
             {
                 writer.WritePropertyName("streamState");
-                writer.WriteStringValue(StreamState.Value.ToSerialString());
+                writer.WriteStringValue(StreamState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -118,7 +118,7 @@ namespace Azure.Communication.MediaComposition
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    streamState = property.Value.GetString().ToCompositionStreamState();
+                    streamState = new CompositionStreamState(property.Value.GetString());
                     continue;
                 }
             }

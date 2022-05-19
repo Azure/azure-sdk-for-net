@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </summary>
     public partial class CommunicationIdentifierModel
     {
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
@@ -16,25 +16,17 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
-        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
-        /// <param name="communicationUser"> The communication user. </param>
-        /// <param name="phoneNumber"> The phone number. </param>
-        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        internal CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        /// <param name="communicationUser"> A user that got created with an Azure Communication Services resource. </param>
+        /// <param name="microsoftTeamsUser"> &quot;A Microsoft Teams user. </param>
+        internal CommunicationIdentifierModel(CommunicationUserIdentifierModel communicationUser, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
-            RawId = rawId;
             CommunicationUser = communicationUser;
-            PhoneNumber = phoneNumber;
             MicrosoftTeamsUser = microsoftTeamsUser;
         }
 
-        /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
-        public string RawId { get; set; }
-        /// <summary> The communication user. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel CommunicationUser { get; set; }
-        /// <summary> The phone number. </summary>
-        public PhoneNumberIdentifierModel PhoneNumber { get; set; }
-        /// <summary> The Microsoft Teams user. </summary>
+        /// <summary> &quot;A Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; set; }
     }
 }

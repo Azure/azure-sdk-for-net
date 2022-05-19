@@ -16,38 +16,27 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteObjectValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteObjectValue(Id);
             if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri");
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(Call))
-            {
-                writer.WritePropertyName("call");
-                writer.WriteStringValue(Call);
-            }
+            writer.WritePropertyName("call");
+            writer.WriteStringValue(Call);
             writer.WriteEndObject();
         }
 
         internal static ParticipantInput DeserializeParticipantInput(JsonElement element)
         {
-            Optional<CommunicationIdentifierModel> id = default;
+            CommunicationIdentifierModel id = default;
             Optional<string> placeholderImageUri = default;
-            Optional<string> call = default;
+            string call = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     id = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
@@ -62,7 +51,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ParticipantInput(id.Value, placeholderImageUri.Value, call.Value);
+            return new ParticipantInput(id, placeholderImageUri.Value, call);
         }
     }
 }

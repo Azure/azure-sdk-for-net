@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -13,14 +14,28 @@ namespace Azure.Communication.MediaComposition.Models
     public partial class ParticipantInput
     {
         /// <summary> Initializes a new instance of ParticipantInput. </summary>
-        public ParticipantInput()
+        /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
+        /// <param name="call"> The id of the teams meeting or call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="call"/> is null. </exception>
+        public ParticipantInput(CommunicationIdentifierModel id, string call)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (call == null)
+            {
+                throw new ArgumentNullException(nameof(call));
+            }
+
+            Id = id;
+            Call = call;
         }
 
         /// <summary> Initializes a new instance of ParticipantInput. </summary>
-        /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
-        /// <param name="placeholderImageUri"></param>
-        /// <param name="call"></param>
+        /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
+        /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="call"> The id of the teams meeting or call. </param>
         internal ParticipantInput(CommunicationIdentifierModel id, string placeholderImageUri, string call)
         {
             Id = id;
@@ -28,11 +43,11 @@ namespace Azure.Communication.MediaComposition.Models
             Call = call;
         }
 
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </summary>
         public CommunicationIdentifierModel Id { get; set; }
-        /// <summary> Gets or sets the placeholder image uri. </summary>
+        /// <summary> Image url to be used if participant has no video stream. </summary>
         public string PlaceholderImageUri { get; set; }
-        /// <summary> Gets or sets the call. </summary>
+        /// <summary> The id of the teams meeting or call. </summary>
         public string Call { get; set; }
     }
 }

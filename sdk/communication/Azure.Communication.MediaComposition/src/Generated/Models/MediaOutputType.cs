@@ -5,20 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The MediaOutputType. </summary>
-    public enum MediaOutputType
+    /// <summary> Kind of media output. </summary>
+    public readonly partial struct MediaOutputType : IEquatable<MediaOutputType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MediaOutputType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MediaOutputType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string GroupCallValue = "groupCall";
+        private const string RoomValue = "room";
+        private const string TeamsMeetingValue = "teamsMeeting";
+        private const string SrtValue = "srt";
+        private const string RtmpValue = "rtmp";
+
         /// <summary> groupCall. </summary>
-        GroupCall,
+        public static MediaOutputType GroupCall { get; } = new MediaOutputType(GroupCallValue);
         /// <summary> room. </summary>
-        Room,
+        public static MediaOutputType Room { get; } = new MediaOutputType(RoomValue);
         /// <summary> teamsMeeting. </summary>
-        TeamsMeeting,
+        public static MediaOutputType TeamsMeeting { get; } = new MediaOutputType(TeamsMeetingValue);
         /// <summary> srt. </summary>
-        Srt,
+        public static MediaOutputType Srt { get; } = new MediaOutputType(SrtValue);
         /// <summary> rtmp. </summary>
-        Rtmp
+        public static MediaOutputType Rtmp { get; } = new MediaOutputType(RtmpValue);
+        /// <summary> Determines if two <see cref="MediaOutputType"/> values are the same. </summary>
+        public static bool operator ==(MediaOutputType left, MediaOutputType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MediaOutputType"/> values are not the same. </summary>
+        public static bool operator !=(MediaOutputType left, MediaOutputType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MediaOutputType"/>. </summary>
+        public static implicit operator MediaOutputType(string value) => new MediaOutputType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MediaOutputType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(MediaOutputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

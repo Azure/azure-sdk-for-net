@@ -9,11 +9,11 @@ using System;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> A Microsoft Teams user. </summary>
+    /// <summary> &quot;A Microsoft Teams user. </summary>
     public partial class MicrosoftTeamsUserIdentifierModel
     {
         /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
-        /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
+        /// <param name="userId"> The Id of the Microsoft Teams user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public MicrosoftTeamsUserIdentifierModel(string userId)
         {
@@ -25,22 +25,7 @@ namespace Azure.Communication.MediaComposition
             UserId = userId;
         }
 
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
-        /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
-        /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
-        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </param>
-        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud)
-        {
-            UserId = userId;
-            IsAnonymous = isAnonymous;
-            Cloud = cloud;
-        }
-
-        /// <summary> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </summary>
+        /// <summary> The Id of the Microsoft Teams user. </summary>
         public string UserId { get; set; }
-        /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
-        public bool? IsAnonymous { get; set; }
-        /// <summary> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </summary>
-        public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

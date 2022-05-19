@@ -5,62 +5,54 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Communication.MediaComposition;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    /// <summary> The Layout. </summary>
+    /// <summary> Configure a layout. </summary>
     public partial class MediaCompositionLayout
     {
         /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
         public MediaCompositionLayout()
         {
-            Layers = new ChangeTrackingDictionary<string, LayoutLayer>();
-            InputGroups = new ChangeTrackingDictionary<string, InputGroup>();
         }
 
         /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
-        /// <param name="resolution"></param>
-        /// <param name="grid"></param>
-        /// <param name="autoGrid"></param>
-        /// <param name="presenter"></param>
-        /// <param name="presentation"></param>
-        /// <param name="layers"> Dictionary of &lt;Layer&gt;. </param>
-        /// <param name="inputGroups"> Dictionary of &lt;InputGroup&gt;. </param>
-        /// <param name="placeholderImageUri"></param>
-        /// <param name="kind"></param>
-        internal MediaCompositionLayout(LayoutResolution resolution, GridLayoutOptions grid, AutoGridLayoutOptions autoGrid, PresenterLayoutOptions presenter, PresentationLayoutOptions presentation, IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups, string placeholderImageUri, LayoutType? kind)
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="grid"> Configure the grid layout. </param>
+        /// <param name="autoGrid"> Configure the autogrid layout. </param>
+        /// <param name="presenter"> Configure the presenter layout. </param>
+        /// <param name="presentation"> Configure the presentation layout. </param>
+        /// <param name="custom"> Configure custom layout. </param>
+        /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="kind"> Kind of layout. </param>
+        internal MediaCompositionLayout(LayoutResolution resolution, GridLayoutOptions grid, AutoGridLayoutOptions autoGrid, PresenterLayoutOptions presenter, PresentationLayoutOptions presentation, CustomLayoutOptions custom, string placeholderImageUri, LayoutType? kind)
         {
             Resolution = resolution;
             Grid = grid;
             AutoGrid = autoGrid;
             Presenter = presenter;
             Presentation = presentation;
-            Layers = layers;
-            InputGroups = inputGroups;
+            Custom = custom;
             PlaceholderImageUri = placeholderImageUri;
             Kind = kind;
         }
 
-        /// <summary> Gets or sets the resolution. </summary>
+        /// <summary> The dimensions of the scene or objects in the scene. </summary>
         public LayoutResolution Resolution { get; set; }
-        /// <summary> Gets or sets the grid. </summary>
+        /// <summary> Configure the grid layout. </summary>
         public GridLayoutOptions Grid { get; set; }
-        /// <summary> Gets or sets the auto grid. </summary>
+        /// <summary> Configure the autogrid layout. </summary>
         public AutoGridLayoutOptions AutoGrid { get; set; }
-        /// <summary> Gets or sets the presenter. </summary>
+        /// <summary> Configure the presenter layout. </summary>
         public PresenterLayoutOptions Presenter { get; set; }
-        /// <summary> Gets or sets the presentation. </summary>
+        /// <summary> Configure the presentation layout. </summary>
         public PresentationLayoutOptions Presentation { get; set; }
-        /// <summary> Dictionary of &lt;Layer&gt;. </summary>
-        public IDictionary<string, LayoutLayer> Layers { get; }
-        /// <summary> Dictionary of &lt;InputGroup&gt;. </summary>
-        public IDictionary<string, InputGroup> InputGroups { get; }
-        /// <summary> Gets or sets the placeholder image uri. </summary>
+        /// <summary> Configure custom layout. </summary>
+        public CustomLayoutOptions Custom { get; set; }
+        /// <summary> Set global placeholder image. </summary>
         public string PlaceholderImageUri { get; set; }
-        /// <summary> Gets or sets the kind. </summary>
+        /// <summary> Kind of layout. </summary>
         public LayoutType? Kind { get; set; }
     }
 }

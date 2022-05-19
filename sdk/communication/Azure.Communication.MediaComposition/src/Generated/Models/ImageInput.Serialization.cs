@@ -15,17 +15,14 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
-            {
-                writer.WritePropertyName("uri");
-                writer.WriteStringValue(Uri);
-            }
+            writer.WritePropertyName("uri");
+            writer.WriteStringValue(Uri);
             writer.WriteEndObject();
         }
 
         internal static ImageInput DeserializeImageInput(JsonElement element)
         {
-            Optional<string> uri = default;
+            string uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"))
@@ -34,7 +31,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new ImageInput(uri.Value);
+            return new ImageInput(uri);
         }
     }
 }

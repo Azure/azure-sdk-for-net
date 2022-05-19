@@ -9,7 +9,7 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The MediaInput. </summary>
+    /// <summary> Media input to be used in the composition. </summary>
     public partial class MediaInput
     {
         /// <summary> Initializes a new instance of MediaInput. </summary>
@@ -18,17 +18,17 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of MediaInput. </summary>
-        /// <param name="groupCall"></param>
-        /// <param name="room"></param>
-        /// <param name="teamsMeeting"></param>
-        /// <param name="rtmp"></param>
-        /// <param name="srt"></param>
+        /// <param name="groupCall"> Group call to be used as an input or output. </param>
+        /// <param name="room"> Group call to be used as an input or output. </param>
+        /// <param name="teamsMeeting"> A Teams meeting to be used as an input or output. </param>
+        /// <param name="rtmp"> Rtmp stream to be used as an input or output. </param>
+        /// <param name="srt"> Srt stream to be used as an input or output. </param>
         /// <param name="participant"></param>
-        /// <param name="activePresenter"></param>
-        /// <param name="dominantSpeaker"></param>
-        /// <param name="screenShare"></param>
-        /// <param name="image"></param>
-        /// <param name="kind"></param>
+        /// <param name="activePresenter"> Identifies a teams meeting or group call defined in inputs. </param>
+        /// <param name="dominantSpeaker"> Identifies a teams meeting or group call defined in inputs. </param>
+        /// <param name="screenShare"> Identifies a teams meeting or group call defined in inputs. </param>
+        /// <param name="image"> An image input. </param>
+        /// <param name="kind"> Kind of media input. </param>
         internal MediaInput(GroupCall groupCall, GroupCall room, TeamsMeeting teamsMeeting, RtmpStream rtmp, SrtStream srt, ParticipantInput participant, CommunicationCallIdentifierModel activePresenter, CommunicationCallIdentifierModel dominantSpeaker, CommunicationCallIdentifierModel screenShare, ImageInput image, MediaInputType? kind)
         {
             GroupCall = groupCall;
@@ -44,27 +44,27 @@ namespace Azure.Communication.MediaComposition
             Kind = kind;
         }
 
-        /// <summary> Gets or sets the group call. </summary>
+        /// <summary> Group call to be used as an input or output. </summary>
         public GroupCall GroupCall { get; set; }
-        /// <summary> Gets or sets the room. </summary>
+        /// <summary> Group call to be used as an input or output. </summary>
         public GroupCall Room { get; set; }
-        /// <summary> Gets or sets the teams meeting. </summary>
+        /// <summary> A Teams meeting to be used as an input or output. </summary>
         public TeamsMeeting TeamsMeeting { get; set; }
-        /// <summary> Gets or sets the rtmp. </summary>
+        /// <summary> Rtmp stream to be used as an input or output. </summary>
         public RtmpStream Rtmp { get; set; }
-        /// <summary> Gets or sets the srt. </summary>
+        /// <summary> Srt stream to be used as an input or output. </summary>
         public SrtStream Srt { get; set; }
         /// <summary> Gets or sets the participant. </summary>
         public ParticipantInput Participant { get; set; }
-        /// <summary> Gets or sets the active presenter. </summary>
+        /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
         public CommunicationCallIdentifierModel ActivePresenter { get; set; }
-        /// <summary> Gets or sets the dominant speaker. </summary>
+        /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
         public CommunicationCallIdentifierModel DominantSpeaker { get; set; }
-        /// <summary> Gets or sets the screen share. </summary>
+        /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
         public CommunicationCallIdentifierModel ScreenShare { get; set; }
-        /// <summary> Gets or sets the image. </summary>
+        /// <summary> An image input. </summary>
         public ImageInput Image { get; set; }
-        /// <summary> Gets or sets the kind. </summary>
+        /// <summary> Kind of media input. </summary>
         public MediaInputType? Kind { get; set; }
     }
 }

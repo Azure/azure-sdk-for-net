@@ -23,10 +23,10 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TrackDominantSpeaker))
+            if (Optional.IsDefined(HighlightDominantSpeaker))
             {
-                writer.WritePropertyName("trackDominantSpeaker");
-                writer.WriteBooleanValue(TrackDominantSpeaker.Value);
+                writer.WritePropertyName("highlightDominantSpeaker");
+                writer.WriteBooleanValue(HighlightDominantSpeaker.Value);
             }
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.Communication.MediaComposition
         internal static AutoGridLayoutOptions DeserializeAutoGridLayoutOptions(JsonElement element)
         {
             IList<string> inputIds = default;
-            Optional<bool> trackDominantSpeaker = default;
+            Optional<bool> highlightDominantSpeaker = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputIds"))
@@ -47,18 +47,18 @@ namespace Azure.Communication.MediaComposition
                     inputIds = array;
                     continue;
                 }
-                if (property.NameEquals("trackDominantSpeaker"))
+                if (property.NameEquals("highlightDominantSpeaker"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    trackDominantSpeaker = property.Value.GetBoolean();
+                    highlightDominantSpeaker = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AutoGridLayoutOptions(inputIds, Optional.ToNullable(trackDominantSpeaker));
+            return new AutoGridLayoutOptions(inputIds, Optional.ToNullable(highlightDominantSpeaker));
         }
     }
 }

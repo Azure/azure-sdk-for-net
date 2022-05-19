@@ -5,24 +5,27 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The TeamsMeeting. </summary>
+    /// <summary> A Teams meeting to be used as an input or output. </summary>
     public partial class TeamsMeeting
     {
         /// <summary> Initializes a new instance of TeamsMeeting. </summary>
-        public TeamsMeeting()
+        /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="teamsJoinUrl"/> is null. </exception>
+        public TeamsMeeting(string teamsJoinUrl)
         {
-        }
+            if (teamsJoinUrl == null)
+            {
+                throw new ArgumentNullException(nameof(teamsJoinUrl));
+            }
 
-        /// <summary> Initializes a new instance of TeamsMeeting. </summary>
-        /// <param name="teamsJoinUrl"></param>
-        internal TeamsMeeting(string teamsJoinUrl)
-        {
             TeamsJoinUrl = teamsJoinUrl;
         }
 
-        /// <summary> Gets or sets the teams join url. </summary>
+        /// <summary> The url from Teams to join the meeting. </summary>
         public string TeamsJoinUrl { get; set; }
     }
 }

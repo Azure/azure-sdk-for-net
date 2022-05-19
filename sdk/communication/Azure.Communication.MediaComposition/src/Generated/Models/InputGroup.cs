@@ -10,11 +10,11 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The InputGroup. </summary>
+    /// <summary> Configure input group to be used in custom layouts. </summary>
     public partial class InputGroup
     {
         /// <summary> Initializes a new instance of InputGroup. </summary>
-        /// <param name="inputIds"> Anything. </param>
+        /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public InputGroup(object inputIds)
         {
@@ -27,13 +27,13 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of InputGroup. </summary>
-        /// <param name="inputIds"> Anything. </param>
-        /// <param name="position"></param>
-        /// <param name="width"> Anything. </param>
-        /// <param name="height"> Anything. </param>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <param name="layer"></param>
+        /// <param name="inputIds"> Input ids to be included in the layout. </param>
+        /// <param name="position"> The (x,y) position on scene or input group. </param>
+        /// <param name="width"> The width of the input group container. Can be a number or percentage string. </param>
+        /// <param name="height"> The height of the input group container. Can be a number or percentage string. </param>
+        /// <param name="rows"> Number of rows. </param>
+        /// <param name="columns"> Number of columns. </param>
+        /// <param name="layer"> The layer this input group should appear on. </param>
         internal InputGroup(object inputIds, InputPosition position, object width, object height, int? rows, int? columns, string layer)
         {
             InputIds = inputIds;
@@ -45,19 +45,19 @@ namespace Azure.Communication.MediaComposition
             Layer = layer;
         }
 
-        /// <summary> Anything. </summary>
+        /// <summary> Input ids to be included in the layout. </summary>
         public object InputIds { get; set; }
-        /// <summary> Gets or sets the position. </summary>
+        /// <summary> The (x,y) position on scene or input group. </summary>
         public InputPosition Position { get; set; }
-        /// <summary> Anything. </summary>
+        /// <summary> The width of the input group container. Can be a number or percentage string. </summary>
         public object Width { get; set; }
-        /// <summary> Anything. </summary>
+        /// <summary> The height of the input group container. Can be a number or percentage string. </summary>
         public object Height { get; set; }
-        /// <summary> Gets or sets the rows. </summary>
+        /// <summary> Number of rows. </summary>
         public int? Rows { get; set; }
-        /// <summary> Gets or sets the columns. </summary>
+        /// <summary> Number of columns. </summary>
         public int? Columns { get; set; }
-        /// <summary> Gets or sets the layer. </summary>
+        /// <summary> The layer this input group should appear on. </summary>
         public string Layer { get; set; }
     }
 }

@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The GridLayoutOptions. </summary>
+    /// <summary> Configure the grid layout. </summary>
     public partial class GridLayoutOptions
     {
         /// <summary> Initializes a new instance of GridLayoutOptions. </summary>
-        /// <param name="rows"></param>
-        /// <param name="columns"></param>
-        /// <param name="inputIds"> Anything. </param>
+        /// <param name="rows"> Number of rows. </param>
+        /// <param name="columns"> Number of columns. </param>
+        /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public GridLayoutOptions(int rows, int columns, object inputIds)
         {
@@ -29,11 +29,11 @@ namespace Azure.Communication.MediaComposition
             InputIds = inputIds;
         }
 
-        /// <summary> Gets or sets the rows. </summary>
+        /// <summary> Number of rows. </summary>
         public int Rows { get; set; }
-        /// <summary> Gets or sets the columns. </summary>
+        /// <summary> Number of columns. </summary>
         public int Columns { get; set; }
-        /// <summary> Anything. </summary>
+        /// <summary> Input ids to be included in the layout. </summary>
         public object InputIds { get; set; }
     }
 }

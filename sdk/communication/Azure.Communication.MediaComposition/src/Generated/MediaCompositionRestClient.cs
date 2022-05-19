@@ -32,7 +32,7 @@ namespace Azure.Communication.MediaComposition
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public MediaCompositionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-06-26-preview")
+        public MediaCompositionRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-06-26-preview1")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -148,11 +148,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The String to use. </param>
-        /// <param name="id"> The MediaCompositionBodyId to use. </param>
-        /// <param name="layout"> The Layout to use. </param>
-        /// <param name="inputs"> Dictionary of &lt;MediaInput&gt;. </param>
-        /// <param name="outputs"> Dictionary of &lt;MediaOutput&gt;. </param>
-        /// <param name="streamState"> The CompositionStreamState to use. </param>
+        /// <param name="id"> Id of the media composition. </param>
+        /// <param name="layout"> Configure a layout. </param>
+        /// <param name="inputs"> Inputs used in the composition. </param>
+        /// <param name="outputs"> Outputs used in the composition. </param>
+        /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
         public async Task<Response<MediaCompositionBody>> CreateAsync(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
@@ -179,11 +179,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The String to use. </param>
-        /// <param name="id"> The MediaCompositionBodyId to use. </param>
-        /// <param name="layout"> The Layout to use. </param>
-        /// <param name="inputs"> Dictionary of &lt;MediaInput&gt;. </param>
-        /// <param name="outputs"> Dictionary of &lt;MediaOutput&gt;. </param>
-        /// <param name="streamState"> The CompositionStreamState to use. </param>
+        /// <param name="id"> Id of the media composition. </param>
+        /// <param name="layout"> Configure a layout. </param>
+        /// <param name="inputs"> Inputs used in the composition. </param>
+        /// <param name="outputs"> Outputs used in the composition. </param>
+        /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
         public Response<MediaCompositionBody> Create(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
@@ -250,11 +250,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The String to use. </param>
-        /// <param name="id"> The MediaCompositionBodyId to use. </param>
-        /// <param name="layout"> The Layout to use. </param>
-        /// <param name="inputs"> Dictionary of &lt;MediaInput&gt;. </param>
-        /// <param name="outputs"> Dictionary of &lt;MediaOutput&gt;. </param>
-        /// <param name="streamState"> The CompositionStreamState to use. </param>
+        /// <param name="id"> Id of the media composition. </param>
+        /// <param name="layout"> Configure a layout. </param>
+        /// <param name="inputs"> Inputs used in the composition. </param>
+        /// <param name="outputs"> Outputs used in the composition. </param>
+        /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
         public async Task<Response<MediaCompositionBody>> UpdateAsync(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
@@ -281,11 +281,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The String to use. </param>
-        /// <param name="id"> The MediaCompositionBodyId to use. </param>
-        /// <param name="layout"> The Layout to use. </param>
-        /// <param name="inputs"> Dictionary of &lt;MediaInput&gt;. </param>
-        /// <param name="outputs"> Dictionary of &lt;MediaOutput&gt;. </param>
-        /// <param name="streamState"> The CompositionStreamState to use. </param>
+        /// <param name="id"> Id of the media composition. </param>
+        /// <param name="layout"> Configure a layout. </param>
+        /// <param name="inputs"> Inputs used in the composition. </param>
+        /// <param name="outputs"> Outputs used in the composition. </param>
+        /// <param name="streamState"> State of the composition stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mediaCompositionId"/> is null. </exception>
         public Response<MediaCompositionBody> Update(string mediaCompositionId, string id = null, MediaCompositionLayout layout = null, IDictionary<string, MediaInput> inputs = null, IDictionary<string, MediaOutput> outputs = null, CompositionStreamState? streamState = null, CancellationToken cancellationToken = default)
@@ -402,7 +402,7 @@ namespace Azure.Communication.MediaComposition
                     {
                         CompositionStreamState value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetString().ToCompositionStreamState();
+                        value = new CompositionStreamState(document.RootElement.GetString());
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -428,7 +428,7 @@ namespace Azure.Communication.MediaComposition
                     {
                         CompositionStreamState value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetString().ToCompositionStreamState();
+                        value = new CompositionStreamState(document.RootElement.GetString());
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -470,7 +470,7 @@ namespace Azure.Communication.MediaComposition
                     {
                         CompositionStreamState value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = document.RootElement.GetString().ToCompositionStreamState();
+                        value = new CompositionStreamState(document.RootElement.GetString());
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -496,7 +496,7 @@ namespace Azure.Communication.MediaComposition
                     {
                         CompositionStreamState value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = document.RootElement.GetString().ToCompositionStreamState();
+                        value = new CompositionStreamState(document.RootElement.GetString());
                         return Response.FromValue(value, message.Response);
                     }
                 default:

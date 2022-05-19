@@ -5,20 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The LayoutType. </summary>
-    public enum LayoutType
+    /// <summary> Kind of layout. </summary>
+    public readonly partial struct LayoutType : IEquatable<LayoutType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LayoutType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LayoutType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string CustomValue = "custom";
+        private const string GridValue = "grid";
+        private const string AutoGridValue = "autoGrid";
+        private const string PresentationValue = "presentation";
+        private const string PresenterValue = "presenter";
+
         /// <summary> custom. </summary>
-        Custom,
+        public static LayoutType Custom { get; } = new LayoutType(CustomValue);
         /// <summary> grid. </summary>
-        Grid,
+        public static LayoutType Grid { get; } = new LayoutType(GridValue);
         /// <summary> autoGrid. </summary>
-        AutoGrid,
+        public static LayoutType AutoGrid { get; } = new LayoutType(AutoGridValue);
         /// <summary> presentation. </summary>
-        Presentation,
+        public static LayoutType Presentation { get; } = new LayoutType(PresentationValue);
         /// <summary> presenter. </summary>
-        Presenter
+        public static LayoutType Presenter { get; } = new LayoutType(PresenterValue);
+        /// <summary> Determines if two <see cref="LayoutType"/> values are the same. </summary>
+        public static bool operator ==(LayoutType left, LayoutType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LayoutType"/> values are not the same. </summary>
+        public static bool operator !=(LayoutType left, LayoutType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LayoutType"/>. </summary>
+        public static implicit operator LayoutType(string value) => new LayoutType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is LayoutType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(LayoutType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

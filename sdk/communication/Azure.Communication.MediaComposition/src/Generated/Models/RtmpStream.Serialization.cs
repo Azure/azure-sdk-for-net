@@ -16,53 +16,28 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableSsl))
-            {
-                writer.WritePropertyName("enableSsl");
-                writer.WriteBooleanValue(EnableSsl.Value);
-            }
-            if (Optional.IsDefined(StreamKey))
-            {
-                writer.WritePropertyName("streamKey");
-                writer.WriteStringValue(StreamKey);
-            }
-            if (Optional.IsDefined(Resolution))
-            {
-                writer.WritePropertyName("resolution");
-                writer.WriteObjectValue(Resolution);
-            }
-            if (Optional.IsDefined(StreamUrl))
-            {
-                writer.WritePropertyName("streamUrl");
-                writer.WriteStringValue(StreamUrl);
-            }
+            writer.WritePropertyName("streamKey");
+            writer.WriteStringValue(StreamKey);
+            writer.WritePropertyName("resolution");
+            writer.WriteObjectValue(Resolution);
+            writer.WritePropertyName("streamUrl");
+            writer.WriteStringValue(StreamUrl);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode");
-                writer.WriteStringValue(Mode.Value.ToSerialString());
+                writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static RtmpStream DeserializeRtmpStream(JsonElement element)
         {
-            Optional<bool> enableSsl = default;
-            Optional<string> streamKey = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> streamUrl = default;
+            string streamKey = default;
+            LayoutResolution resolution = default;
+            string streamUrl = default;
             Optional<RtmpMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableSsl"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    enableSsl = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("streamKey"))
                 {
                     streamKey = property.Value.GetString();
@@ -70,11 +45,6 @@ namespace Azure.Communication.MediaComposition
                 }
                 if (property.NameEquals("resolution"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
                     continue;
                 }
@@ -90,11 +60,11 @@ namespace Azure.Communication.MediaComposition
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    mode = property.Value.GetString().ToRtmpMode();
+                    mode = new RtmpMode(property.Value.GetString());
                     continue;
                 }
             }
-            return new RtmpStream(Optional.ToNullable(enableSsl), streamKey.Value, resolution.Value, streamUrl.Value, Optional.ToNullable(mode));
+            return new RtmpStream(streamKey, resolution, streamUrl, Optional.ToNullable(mode));
         }
     }
 }

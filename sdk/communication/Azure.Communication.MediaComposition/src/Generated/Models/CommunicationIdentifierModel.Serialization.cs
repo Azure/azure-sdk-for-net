@@ -15,20 +15,10 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawId))
-            {
-                writer.WritePropertyName("rawId");
-                writer.WriteStringValue(RawId);
-            }
             if (Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser");
                 writer.WriteObjectValue(CommunicationUser);
-            }
-            if (Optional.IsDefined(PhoneNumber))
-            {
-                writer.WritePropertyName("phoneNumber");
-                writer.WriteObjectValue(PhoneNumber);
             }
             if (Optional.IsDefined(MicrosoftTeamsUser))
             {
@@ -40,17 +30,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
-            Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
-            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawId"))
-                {
-                    rawId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("communicationUser"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -59,16 +42,6 @@ namespace Azure.Communication.MediaComposition
                         continue;
                     }
                     communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("phoneNumber"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsUser"))
@@ -82,7 +55,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(communicationUser.Value, microsoftTeamsUser.Value);
         }
     }
 }

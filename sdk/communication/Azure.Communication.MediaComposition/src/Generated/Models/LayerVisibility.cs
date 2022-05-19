@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The LayerVisibility. </summary>
-    public enum LayerVisibility
+    /// <summary> The visibility of the layer. </summary>
+    public readonly partial struct LayerVisibility : IEquatable<LayerVisibility>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LayerVisibility"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LayerVisibility(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string VisibleValue = "visible";
+        private const string HiddenValue = "hidden";
+
         /// <summary> visible. </summary>
-        Visible,
+        public static LayerVisibility Visible { get; } = new LayerVisibility(VisibleValue);
         /// <summary> hidden. </summary>
-        Hidden
+        public static LayerVisibility Hidden { get; } = new LayerVisibility(HiddenValue);
+        /// <summary> Determines if two <see cref="LayerVisibility"/> values are the same. </summary>
+        public static bool operator ==(LayerVisibility left, LayerVisibility right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LayerVisibility"/> values are not the same. </summary>
+        public static bool operator !=(LayerVisibility left, LayerVisibility right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LayerVisibility"/>. </summary>
+        public static implicit operator LayerVisibility(string value) => new LayerVisibility(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is LayerVisibility other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(LayerVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

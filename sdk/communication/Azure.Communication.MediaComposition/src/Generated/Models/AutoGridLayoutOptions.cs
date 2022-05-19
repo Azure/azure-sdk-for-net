@@ -11,11 +11,11 @@ using System.Linq;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The AutoGridLayoutOptions. </summary>
+    /// <summary> Configure the autogrid layout. </summary>
     public partial class AutoGridLayoutOptions
     {
         /// <summary> Initializes a new instance of AutoGridLayoutOptions. </summary>
-        /// <param name="inputIds"></param>
+        /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public AutoGridLayoutOptions(IEnumerable<string> inputIds)
         {
@@ -28,17 +28,17 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of AutoGridLayoutOptions. </summary>
-        /// <param name="inputIds"></param>
-        /// <param name="trackDominantSpeaker"></param>
-        internal AutoGridLayoutOptions(IList<string> inputIds, bool? trackDominantSpeaker)
+        /// <param name="inputIds"> Input ids to be included in the layout. </param>
+        /// <param name="highlightDominantSpeaker"> Toggle dominant speaker highlighting. </param>
+        internal AutoGridLayoutOptions(IList<string> inputIds, bool? highlightDominantSpeaker)
         {
             InputIds = inputIds;
-            TrackDominantSpeaker = trackDominantSpeaker;
+            HighlightDominantSpeaker = highlightDominantSpeaker;
         }
 
-        /// <summary> Gets the input ids. </summary>
+        /// <summary> Input ids to be included in the layout. </summary>
         public IList<string> InputIds { get; }
-        /// <summary> Gets or sets the track dominant speaker. </summary>
-        public bool? TrackDominantSpeaker { get; set; }
+        /// <summary> Toggle dominant speaker highlighting. </summary>
+        public bool? HighlightDominantSpeaker { get; set; }
     }
 }

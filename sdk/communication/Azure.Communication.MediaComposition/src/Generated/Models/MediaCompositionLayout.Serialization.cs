@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.MediaComposition;
 using Azure.Core;
@@ -42,27 +41,10 @@ namespace Azure.Communication.MediaComposition.Models
                 writer.WritePropertyName("presentation");
                 writer.WriteObjectValue(Presentation);
             }
-            if (Optional.IsCollectionDefined(Layers))
+            if (Optional.IsDefined(Custom))
             {
-                writer.WritePropertyName("layers");
-                writer.WriteStartObject();
-                foreach (var item in Layers)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(InputGroups))
-            {
-                writer.WritePropertyName("inputGroups");
-                writer.WriteStartObject();
-                foreach (var item in InputGroups)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("custom");
+                writer.WriteObjectValue(Custom);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -72,7 +54,7 @@ namespace Azure.Communication.MediaComposition.Models
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToSerialString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -84,8 +66,7 @@ namespace Azure.Communication.MediaComposition.Models
             Optional<AutoGridLayoutOptions> autoGrid = default;
             Optional<PresenterLayoutOptions> presenter = default;
             Optional<PresentationLayoutOptions> presentation = default;
-            Optional<IDictionary<string, LayoutLayer>> layers = default;
-            Optional<IDictionary<string, InputGroup>> inputGroups = default;
+            Optional<CustomLayoutOptions> custom = default;
             Optional<string> placeholderImageUri = default;
             Optional<LayoutType> kind = default;
             foreach (var property in element.EnumerateObject())
@@ -140,34 +121,14 @@ namespace Azure.Communication.MediaComposition.Models
                     presentation = PresentationLayoutOptions.DeserializePresentationLayoutOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("layers"))
+                if (property.NameEquals("custom"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, LayoutLayer> dictionary = new Dictionary<string, LayoutLayer>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, LayoutLayer.DeserializeLayoutLayer(property0.Value));
-                    }
-                    layers = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("inputGroups"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, InputGroup> dictionary = new Dictionary<string, InputGroup>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, InputGroup.DeserializeInputGroup(property0.Value));
-                    }
-                    inputGroups = dictionary;
+                    custom = CustomLayoutOptions.DeserializeCustomLayoutOptions(property.Value);
                     continue;
                 }
                 if (property.NameEquals("placeholderImageUri"))
@@ -182,11 +143,11 @@ namespace Azure.Communication.MediaComposition.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = property.Value.GetString().ToLayoutType();
+                    kind = new LayoutType(property.Value.GetString());
                     continue;
                 }
             }
-            return new MediaCompositionLayout(resolution.Value, grid.Value, autoGrid.Value, presenter.Value, presentation.Value, Optional.ToDictionary(layers), Optional.ToDictionary(inputGroups), placeholderImageUri.Value, Optional.ToNullable(kind));
+            return new MediaCompositionLayout(resolution.Value, grid.Value, autoGrid.Value, presenter.Value, presentation.Value, custom.Value, placeholderImageUri.Value, Optional.ToNullable(kind));
         }
     }
 }

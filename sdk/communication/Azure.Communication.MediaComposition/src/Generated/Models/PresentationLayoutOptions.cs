@@ -11,12 +11,12 @@ using System.Linq;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The PresentationLayoutOptions. </summary>
+    /// <summary> Configure the presentation layout. </summary>
     public partial class PresentationLayoutOptions
     {
         /// <summary> Initializes a new instance of PresentationLayoutOptions. </summary>
-        /// <param name="presenterId"></param>
-        /// <param name="audienceIds"></param>
+        /// <param name="presenterId"> Id of the presenter input. </param>
+        /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="audienceIds"/> is null. </exception>
         public PresentationLayoutOptions(string presenterId, IEnumerable<string> audienceIds)
         {
@@ -34,9 +34,9 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <summary> Initializes a new instance of PresentationLayoutOptions. </summary>
-        /// <param name="presenterId"></param>
-        /// <param name="audienceIds"></param>
-        /// <param name="audiencePosition"></param>
+        /// <param name="presenterId"> Id of the presenter input. </param>
+        /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
+        /// <param name="audiencePosition"> Position of the audience streams. </param>
         internal PresentationLayoutOptions(string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition)
         {
             PresenterId = presenterId;
@@ -44,11 +44,11 @@ namespace Azure.Communication.MediaComposition
             AudiencePosition = audiencePosition;
         }
 
-        /// <summary> Gets or sets the presenter id. </summary>
+        /// <summary> Id of the presenter input. </summary>
         public string PresenterId { get; set; }
-        /// <summary> Gets the audience ids. </summary>
+        /// <summary> Input ids to be included in the audience of layout. </summary>
         public IList<string> AudienceIds { get; }
-        /// <summary> Gets or sets the audience position. </summary>
+        /// <summary> Position of the audience streams. </summary>
         public AudiencePosition? AudiencePosition { get; set; }
     }
 }

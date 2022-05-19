@@ -5,30 +5,36 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The SrtStream. </summary>
+    /// <summary> Srt stream to be used as an input or output. </summary>
     public partial class SrtStream
     {
         /// <summary> Initializes a new instance of SrtStream. </summary>
-        public SrtStream()
+        /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
+        /// <param name="streamUrl"> The url of the stream. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
+        public SrtStream(LayoutResolution resolution, string streamUrl)
         {
-        }
+            if (resolution == null)
+            {
+                throw new ArgumentNullException(nameof(resolution));
+            }
+            if (streamUrl == null)
+            {
+                throw new ArgumentNullException(nameof(streamUrl));
+            }
 
-        /// <summary> Initializes a new instance of SrtStream. </summary>
-        /// <param name="resolution"></param>
-        /// <param name="streamUrl"></param>
-        internal SrtStream(LayoutResolution resolution, string streamUrl)
-        {
             Resolution = resolution;
             StreamUrl = streamUrl;
         }
 
-        /// <summary> Gets or sets the resolution. </summary>
+        /// <summary> The dimensions of the scene or objects in the scene. </summary>
         public LayoutResolution Resolution { get; set; }
-        /// <summary> Gets or sets the stream url. </summary>
+        /// <summary> The url of the stream. </summary>
         public string StreamUrl { get; set; }
     }
 }

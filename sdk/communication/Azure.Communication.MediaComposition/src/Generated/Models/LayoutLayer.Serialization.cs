@@ -21,7 +21,7 @@ namespace Azure.Communication.MediaComposition.Models
             if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility");
-                writer.WriteStringValue(Visibility.Value.ToSerialString());
+                writer.WriteStringValue(Visibility.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -44,7 +44,7 @@ namespace Azure.Communication.MediaComposition.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    visibility = property.Value.GetString().ToLayerVisibility();
+                    visibility = new LayerVisibility(property.Value.GetString());
                     continue;
                 }
             }
