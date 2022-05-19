@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger
     {
         /// <summary> LedgerCollection ids are user-created collections of ledger entries. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyList<LedgerCollection>>> GetCollectionsValueAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<LedgerCollection>>> GetCollectionValuesAsync(CancellationToken cancellationToken = default)
         {
             Response response = await GetCollectionsAsync(new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
             using var document = JsonDocument.Parse(response.ContentStream);
@@ -39,7 +39,7 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary> LedgerCollection ids are user-created collections of ledger entries. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyList<LedgerCollection>> GetCollectionsValue(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<LedgerCollection>> GetCollectionValues(CancellationToken cancellationToken = default)
         {
             Response response = GetCollections(new RequestContext { CancellationToken = cancellationToken });
             using var document = JsonDocument.Parse(response.ContentStream);
@@ -110,7 +110,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual AsyncPageable<LedgerEntry> GetLedgerEntriesValueAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LedgerEntry> GetLedgerEntryValuesAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
         {
             AsyncPageable<BinaryData> pageableBinaryData = GetLedgerEntriesAsync(collectionId, fromTransactionId, toTransactionId, new RequestContext{ CancellationToken = cancellationToken});
 
@@ -122,7 +122,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="fromTransactionId"> Specify the first transaction ID in a range. </param>
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual Pageable<LedgerEntry> GetLedgerEntriesValue(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LedgerEntry> GetLedgerEntryValues(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, CancellationToken cancellationToken = default)
         {
             Pageable<BinaryData> pageableBinaryData = GetLedgerEntries(collectionId, fromTransactionId, toTransactionId, new RequestContext{ CancellationToken = cancellationToken});
 
