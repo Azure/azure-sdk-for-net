@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NVA Inbound Security Rule resource. </summary>
-    public partial class InboundSecurityRule : NetworkWritableSubResource
+    public partial class InboundSecurityRule : NetworkSubResource
     {
         /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
         public InboundSecurityRule()

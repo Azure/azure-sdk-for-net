@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> type = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -107,7 +108,12 @@ namespace Azure.ResourceManager.Network
                     {
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -124,7 +130,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationSecurityGroupData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationSecurityGroupData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

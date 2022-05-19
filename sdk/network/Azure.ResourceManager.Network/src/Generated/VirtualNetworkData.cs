@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the virtual network. </param>
         /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
-        internal VirtualNetworkData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, string resourceGuid, ProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, ProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of peerings in a Virtual Network. </summary>
         public IList<VirtualNetworkPeeringData> VirtualNetworkPeerings { get; }
         /// <summary> The resourceGuid property of the Virtual Network resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </summary>

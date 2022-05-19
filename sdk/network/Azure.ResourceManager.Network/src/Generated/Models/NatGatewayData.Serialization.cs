@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<WritableSubResource>> publicIpAddresses = default;
             Optional<IList<WritableSubResource>> publicIpPrefixes = default;
             Optional<IReadOnlyList<WritableSubResource>> subnets = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -234,7 +235,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -251,7 +257,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NatGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToList(zones), etag.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToList(publicIpAddresses), Optional.ToList(publicIpPrefixes), Optional.ToList(subnets), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new NatGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToList(zones), etag.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToList(publicIpAddresses), Optional.ToList(publicIpPrefixes), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

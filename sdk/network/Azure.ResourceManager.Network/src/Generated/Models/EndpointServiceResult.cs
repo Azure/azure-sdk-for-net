@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Endpoint service. </summary>
-    public partial class EndpointServiceResult : NetworkWritableSubResource
+    public partial class EndpointServiceResult : NetworkSubResource
     {
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
         public EndpointServiceResult()

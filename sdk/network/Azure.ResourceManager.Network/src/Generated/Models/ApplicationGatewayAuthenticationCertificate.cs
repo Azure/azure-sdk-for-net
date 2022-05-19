@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Authentication certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayAuthenticationCertificate : NetworkWritableSubResource
+    public partial class ApplicationGatewayAuthenticationCertificate : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAuthenticationCertificate. </summary>
         public ApplicationGatewayAuthenticationCertificate()

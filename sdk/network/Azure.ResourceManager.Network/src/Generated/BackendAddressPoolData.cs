@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BackendAddressPool data model. </summary>
-    public partial class BackendAddressPoolData : NetworkWritableSubResource
+    public partial class BackendAddressPoolData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         public BackendAddressPoolData()

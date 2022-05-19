@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Container network interface configuration child resource. </summary>
-    public partial class ContainerNetworkInterfaceConfiguration : NetworkWritableSubResource
+    public partial class ContainerNetworkInterfaceConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
         public ContainerNetworkInterfaceConfiguration()

@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ResourceNavigationLink resource. </summary>
-    public partial class ResourceNavigationLink : NetworkWritableSubResource
+    public partial class ResourceNavigationLink : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ResourceNavigationLink. </summary>
         public ResourceNavigationLink()

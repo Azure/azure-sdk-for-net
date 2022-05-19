@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Path rule of URL path map of an application gateway. </summary>
-    public partial class ApplicationGatewayPathRule : NetworkWritableSubResource
+    public partial class ApplicationGatewayPathRule : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()

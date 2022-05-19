@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGatewayNatRule data model. </summary>
-    public partial class VirtualNetworkGatewayNatRuleData : NetworkWritableSubResource
+    public partial class VirtualNetworkGatewayNatRuleData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
         public VirtualNetworkGatewayNatRuleData()

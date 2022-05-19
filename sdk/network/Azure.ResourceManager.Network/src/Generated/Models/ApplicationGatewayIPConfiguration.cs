@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed. </summary>
-    public partial class ApplicationGatewayIPConfiguration : NetworkWritableSubResource
+    public partial class ApplicationGatewayIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
         public ApplicationGatewayIPConfiguration()

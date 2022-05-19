@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        internal PublicIPPrefixData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, string resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, resourceType, location, tags)
+        internal PublicIPPrefixData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, Guid? resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP prefix resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> NatGateway of Public IP Prefix. </summary>

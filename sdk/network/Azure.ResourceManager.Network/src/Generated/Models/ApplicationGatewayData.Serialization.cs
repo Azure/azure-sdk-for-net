@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -317,7 +318,7 @@ namespace Azure.ResourceManager.Network
             Optional<ApplicationGatewayAutoscaleConfiguration> autoscaleConfiguration = default;
             Optional<IList<ApplicationGatewayPrivateLinkConfiguration>> privateLinkConfigurations = default;
             Optional<IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
             Optional<bool> forceFirewallPolicyAssociation = default;
@@ -749,7 +750,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -791,7 +797,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
+            return new ApplicationGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
         }
     }
 }

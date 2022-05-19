@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteConnection data model. </summary>
-    public partial class ExpressRouteConnectionData : NetworkWritableSubResource
+    public partial class ExpressRouteConnectionData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
         /// <param name="name"> The name of the resource. </param>

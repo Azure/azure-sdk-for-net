@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Route Filter Resource. </summary>
-    internal partial class PatchRouteFilter : NetworkWritableSubResource
+    internal partial class PatchRouteFilter : NetworkSubResource
     {
         /// <summary> Initializes a new instance of PatchRouteFilter. </summary>
         public PatchRouteFilter()

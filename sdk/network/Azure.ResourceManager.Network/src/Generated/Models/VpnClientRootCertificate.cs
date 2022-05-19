@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client root certificate of virtual network gateway. </summary>
-    public partial class VpnClientRootCertificate : NetworkWritableSubResource
+    public partial class VpnClientRootCertificate : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
         /// <param name="publicCertData"> The certificate public data. </param>

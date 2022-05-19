@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the RouteFilterRule data model. </summary>
-    public partial class RouteFilterRuleData : NetworkWritableSubResource
+    public partial class RouteFilterRuleData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>
         public RouteFilterRuleData()

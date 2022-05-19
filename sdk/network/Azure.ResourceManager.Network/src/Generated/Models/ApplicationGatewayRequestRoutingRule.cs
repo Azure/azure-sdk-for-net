@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Request routing rule of an application gateway. </summary>
-    public partial class ApplicationGatewayRequestRoutingRule : NetworkWritableSubResource
+    public partial class ApplicationGatewayRequestRoutingRule : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
         public ApplicationGatewayRequestRoutingRule()

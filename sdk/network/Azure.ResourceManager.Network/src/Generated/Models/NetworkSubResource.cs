@@ -10,16 +10,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to another subresource. </summary>
-    public partial class NetworkWritableSubResource
+    public partial class NetworkSubResource
     {
-        /// <summary> Initializes a new instance of NetworkWritableSubResource. </summary>
-        public NetworkWritableSubResource()
+        /// <summary> Initializes a new instance of NetworkSubResource. </summary>
+        public NetworkSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkWritableSubResource. </summary>
+        /// <summary> Initializes a new instance of NetworkSubResource. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal NetworkWritableSubResource(ResourceIdentifier id)
+        internal NetworkSubResource(ResourceIdentifier id)
         {
             Id = id;
         }

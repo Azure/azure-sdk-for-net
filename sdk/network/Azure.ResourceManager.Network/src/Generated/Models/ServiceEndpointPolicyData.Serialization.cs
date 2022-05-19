@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<ServiceEndpointPolicyDefinitionData>> serviceEndpointPolicyDefinitions = default;
             Optional<IReadOnlyList<SubnetData>> subnets = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -155,7 +156,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ServiceEndpointPolicyData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new ServiceEndpointPolicyData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

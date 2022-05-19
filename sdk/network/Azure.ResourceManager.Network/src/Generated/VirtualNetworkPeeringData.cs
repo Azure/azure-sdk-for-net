@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkPeering data model. </summary>
-    public partial class VirtualNetworkPeeringData : NetworkWritableSubResource
+    public partial class VirtualNetworkPeeringData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
         public VirtualNetworkPeeringData()
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid) : base(id)
+        internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -123,6 +124,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> If we need to verify the provisioning state of the remote gateway. </summary>
         public bool? DoNotVerifyRemoteGateways { get; set; }
         /// <summary> The resourceGuid property of the Virtual Network peering resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

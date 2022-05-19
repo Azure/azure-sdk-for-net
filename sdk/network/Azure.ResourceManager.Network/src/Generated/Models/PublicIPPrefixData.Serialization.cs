@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
             Optional<WritableSubResource> loadBalancerFrontendIpConfiguration = default;
             Optional<WritableSubResource> customIPPrefix = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<NatGatewayData> natGateway = default;
             foreach (var property in element.EnumerateObject())
@@ -279,7 +280,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -306,7 +312,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, resourceGuid.Value, Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIpConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration profile child resource. </summary>
-    public partial class IPConfigurationProfile : NetworkWritableSubResource
+    public partial class IPConfigurationProfile : NetworkSubResource
     {
         /// <summary> Initializes a new instance of IPConfigurationProfile. </summary>
         public IPConfigurationProfile()

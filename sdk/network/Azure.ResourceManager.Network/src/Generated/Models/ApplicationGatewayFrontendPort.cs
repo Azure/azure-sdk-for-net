@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend port of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendPort : NetworkWritableSubResource
+    public partial class ApplicationGatewayFrontendPort : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
         public ApplicationGatewayFrontendPort()

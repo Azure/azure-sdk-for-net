@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Network
             Optional<ProtocolType> protocol = default;
             Optional<string> qosCollectionId = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> associatedNetworkInterfaces = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -275,7 +276,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -292,7 +298,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DscpConfigurationData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(markings), Optional.ToList(sourceIpRanges), Optional.ToList(destinationIpRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new DscpConfigurationData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(markings), Optional.ToList(sourceIpRanges), Optional.ToList(destinationIpRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

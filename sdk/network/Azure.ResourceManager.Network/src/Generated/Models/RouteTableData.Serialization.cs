@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<SubnetData>> subnets = default;
             Optional<bool> disableBgpRoutePropagation = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -175,14 +176,19 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new RouteTableData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(routes), Optional.ToList(subnets), Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new RouteTableData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(routes), Optional.ToList(subnets), Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> PrivateLinkServiceConnection resource. </summary>
-    public partial class PrivateLinkServiceConnection : NetworkWritableSubResource
+    public partial class PrivateLinkServiceConnection : NetworkSubResource
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
         public PrivateLinkServiceConnection()

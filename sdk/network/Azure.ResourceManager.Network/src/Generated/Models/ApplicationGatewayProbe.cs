@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Probe of the application gateway. </summary>
-    public partial class ApplicationGatewayProbe : NetworkWritableSubResource
+    public partial class ApplicationGatewayProbe : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayProbe. </summary>
         public ApplicationGatewayProbe()

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkWritableSubResource : IUtf8JsonSerializable
+    public partial class NetworkSubResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkWritableSubResource DeserializeNetworkWritableSubResource(JsonElement element)
+        internal static NetworkSubResource DeserializeNetworkSubResource(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkWritableSubResource(id.Value);
+            return new NetworkSubResource(id.Value);
         }
     }
 }

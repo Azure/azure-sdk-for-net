@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FrontendIPConfiguration data model. </summary>
-    public partial class FrontendIPConfigurationData : NetworkWritableSubResource
+    public partial class FrontendIPConfigurationData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
         public FrontendIPConfigurationData()

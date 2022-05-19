@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the InboundNatRule data model. </summary>
-    public partial class InboundNatRuleData : NetworkWritableSubResource
+    public partial class InboundNatRuleData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
         public InboundNatRuleData()

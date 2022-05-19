@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCrossConnectionPeering data model. </summary>
-    public partial class ExpressRouteCrossConnectionPeeringData : NetworkWritableSubResource
+    public partial class ExpressRouteCrossConnectionPeeringData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
         public ExpressRouteCrossConnectionPeeringData()

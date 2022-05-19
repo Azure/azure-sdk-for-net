@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An Ssl predefined policy. </summary>
-    internal partial class ApplicationGatewaySslPredefinedPolicy : NetworkWritableSubResource
+    internal partial class ApplicationGatewaySslPredefinedPolicy : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
         public ApplicationGatewaySslPredefinedPolicy()

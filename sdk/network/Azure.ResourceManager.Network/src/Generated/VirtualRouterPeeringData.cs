@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualRouterPeering data model. </summary>
-    public partial class VirtualRouterPeeringData : NetworkWritableSubResource
+    public partial class VirtualRouterPeeringData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
         public VirtualRouterPeeringData()

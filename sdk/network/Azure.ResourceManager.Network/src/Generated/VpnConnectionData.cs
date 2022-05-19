@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnConnection data model. </summary>
-    public partial class VpnConnectionData : NetworkWritableSubResource
+    public partial class VpnConnectionData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>
         public VpnConnectionData()

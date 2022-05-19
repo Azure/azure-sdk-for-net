@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The private link service ip configuration. </summary>
-    public partial class PrivateLinkServiceIPConfiguration : NetworkWritableSubResource
+    public partial class PrivateLinkServiceIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of PrivateLinkServiceIPConfiguration. </summary>
         public PrivateLinkServiceIPConfiguration()

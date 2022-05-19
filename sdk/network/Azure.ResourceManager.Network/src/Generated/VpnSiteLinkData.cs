@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnSiteLink data model. </summary>
-    public partial class VpnSiteLinkData : NetworkWritableSubResource
+    public partial class VpnSiteLinkData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VpnSiteLinkData. </summary>
         public VpnSiteLinkData()

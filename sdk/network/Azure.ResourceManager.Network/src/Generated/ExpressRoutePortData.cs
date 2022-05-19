@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePortData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, location, tags)
+        internal ExpressRoutePortData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, ProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Identity = identity;
@@ -84,6 +85,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the express route port resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the express route port resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

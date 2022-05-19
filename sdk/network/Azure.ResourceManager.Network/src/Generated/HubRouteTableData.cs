@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the HubRouteTable data model. </summary>
-    public partial class HubRouteTableData : NetworkWritableSubResource
+    public partial class HubRouteTableData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of HubRouteTableData. </summary>
         public HubRouteTableData()

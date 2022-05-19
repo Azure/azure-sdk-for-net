@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> networkInterfaceTapConfigurations = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<NetworkInterfaceIPConfigurationData> destinationNetworkInterfaceIPConfiguration = default;
             Optional<FrontendIPConfigurationData> destinationLoadBalancerFrontEndIPConfiguration = default;
@@ -141,7 +142,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -188,7 +194,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkTapData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(networkInterfaceTapConfigurations), resourceGuid.Value, Optional.ToNullable(provisioningState), destinationNetworkInterfaceIPConfiguration.Value, destinationLoadBalancerFrontEndIPConfiguration.Value, Optional.ToNullable(destinationPort));
+            return new VirtualNetworkTapData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(networkInterfaceTapConfigurations), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), destinationNetworkInterfaceIPConfiguration.Value, destinationLoadBalancerFrontEndIPConfiguration.Value, Optional.ToNullable(destinationPort));
         }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the OutboundRule data model. </summary>
-    public partial class OutboundRuleData : NetworkWritableSubResource
+    public partial class OutboundRuleData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of OutboundRuleData. </summary>
         public OutboundRuleData()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualHubRouteTableV2 data model. </summary>
-    public partial class VirtualHubRouteTableV2Data : NetworkWritableSubResource
+    public partial class VirtualHubRouteTableV2Data : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
         public VirtualHubRouteTableV2Data()

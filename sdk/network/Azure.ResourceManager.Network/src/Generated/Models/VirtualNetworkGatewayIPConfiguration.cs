@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration for virtual network gateway. </summary>
-    public partial class VirtualNetworkGatewayIPConfiguration : NetworkWritableSubResource
+    public partial class VirtualNetworkGatewayIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
         public VirtualNetworkGatewayIPConfiguration()

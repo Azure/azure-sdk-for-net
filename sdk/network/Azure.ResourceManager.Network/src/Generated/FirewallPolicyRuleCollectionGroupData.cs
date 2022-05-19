@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FirewallPolicyRuleCollectionGroup data model. </summary>
-    public partial class FirewallPolicyRuleCollectionGroupData : NetworkWritableSubResource
+    public partial class FirewallPolicyRuleCollectionGroupData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()

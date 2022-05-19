@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Azure Firewall. </summary>
-    public partial class AzureFirewallIPConfiguration : NetworkWritableSubResource
+    public partial class AzureFirewallIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
         public AzureFirewallIPConfiguration()

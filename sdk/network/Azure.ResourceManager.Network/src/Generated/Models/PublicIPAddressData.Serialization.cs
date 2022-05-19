@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> ipAddress = default;
             Optional<WritableSubResource> publicIPPrefix = default;
             Optional<int> idleTimeoutInMinutes = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<PublicIPAddressData> servicePublicIPAddress = default;
             Optional<NatGatewayData> natGateway = default;
@@ -340,7 +341,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -407,7 +413,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPAddressData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), resourceGuid.Value, Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

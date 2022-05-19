@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details the service to which the subnet is delegated. </summary>
-    public partial class Delegation : NetworkWritableSubResource
+    public partial class Delegation : NetworkSubResource
     {
         /// <summary> Initializes a new instance of Delegation. </summary>
         public Delegation()

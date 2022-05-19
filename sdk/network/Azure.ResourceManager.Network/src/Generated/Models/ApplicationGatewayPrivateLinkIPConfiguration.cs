@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkWritableSubResource
+    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIPConfiguration. </summary>
         public ApplicationGatewayPrivateLinkIPConfiguration()

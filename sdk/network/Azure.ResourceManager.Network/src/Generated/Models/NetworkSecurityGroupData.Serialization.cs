@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
             Optional<IReadOnlyList<SubnetData>> subnets = default;
             Optional<IReadOnlyList<FlowLogData>> flowLogs = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -197,7 +198,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -214,7 +220,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkSecurityGroupData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), resourceGuid.Value, Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, Optional.ToList(securityRules), Optional.ToList(defaultSecurityRules), Optional.ToList(networkInterfaces), Optional.ToList(subnets), Optional.ToList(flowLogs), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

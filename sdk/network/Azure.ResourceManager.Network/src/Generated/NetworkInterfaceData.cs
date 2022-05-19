@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nicType"> Type of Network Interface resource. </param>
         /// <param name="privateLinkService"> Privatelinkservice of the network interface resource. </param>
         /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
-        internal NetworkInterfaceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, string resourceGuid, ProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, resourceType, location, tags)
+        internal NetworkInterfaceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, Guid? resourceGuid, ProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The resource GUID property of the network interface resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network interface resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> WorkloadType of the NetworkInterface for BareMetal resources. </summary>

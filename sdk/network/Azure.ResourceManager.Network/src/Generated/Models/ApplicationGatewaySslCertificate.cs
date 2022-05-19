@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL certificates of an application gateway. </summary>
-    public partial class ApplicationGatewaySslCertificate : NetworkWritableSubResource
+    public partial class ApplicationGatewaySslCertificate : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
         public ApplicationGatewaySslCertificate()

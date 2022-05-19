@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BgpConnection data model. </summary>
-    public partial class BgpConnectionData : NetworkWritableSubResource
+    public partial class BgpConnectionData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
         public BgpConnectionData()

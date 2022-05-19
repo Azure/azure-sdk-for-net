@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Private Link Configuration on an application gateway. </summary>
-    public partial class ApplicationGatewayPrivateLinkConfiguration : NetworkWritableSubResource
+    public partial class ApplicationGatewayPrivateLinkConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>
         public ApplicationGatewayPrivateLinkConfiguration()

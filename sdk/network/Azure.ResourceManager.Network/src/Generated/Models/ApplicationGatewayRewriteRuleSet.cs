@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rewrite rule set of an application gateway. </summary>
-    public partial class ApplicationGatewayRewriteRuleSet : NetworkWritableSubResource
+    public partial class ApplicationGatewayRewriteRuleSet : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
         public ApplicationGatewayRewriteRuleSet()

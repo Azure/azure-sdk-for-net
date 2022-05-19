@@ -91,7 +91,7 @@ directive:
     where: $.definitions
     transform: >
       $.Resource['x-ms-client-name'] = 'NetworkTrackedResourceData';
-      $.SubResource['x-ms-client-name'] = 'NetworkWritableSubResource';
+      $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
   - from: ipAllocation.json
     where: $.definitions
@@ -119,6 +119,10 @@ directive:
     where: $.definitions.PrivateLinkServiceConnectionProperties
     transform: >
       $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+  - from: swagger-document
+    where: $.definitions..resourceGuid
+    transform: >
+      $['format'] = 'uuid';
 ```
 
 ### Tag: package-track2-preview

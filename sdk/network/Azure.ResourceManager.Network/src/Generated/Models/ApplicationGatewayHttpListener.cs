@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Http listener of an application gateway. </summary>
-    public partial class ApplicationGatewayHttpListener : NetworkWritableSubResource
+    public partial class ApplicationGatewayHttpListener : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()

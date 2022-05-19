@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> ServiceAssociationLink resource. </summary>
-    public partial class ServiceAssociationLink : NetworkWritableSubResource
+    public partial class ServiceAssociationLink : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         public ServiceAssociationLink()

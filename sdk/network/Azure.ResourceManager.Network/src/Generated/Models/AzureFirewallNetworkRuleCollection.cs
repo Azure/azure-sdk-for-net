@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network rule collection resource. </summary>
-    public partial class AzureFirewallNetworkRuleCollection : NetworkWritableSubResource
+    public partial class AzureFirewallNetworkRuleCollection : NetworkSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollection. </summary>
         public AzureFirewallNetworkRuleCollection()

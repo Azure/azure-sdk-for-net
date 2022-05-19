@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualApplianceSite data model. </summary>
-    public partial class VirtualApplianceSiteData : NetworkWritableSubResource
+    public partial class VirtualApplianceSiteData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
         public VirtualApplianceSiteData()

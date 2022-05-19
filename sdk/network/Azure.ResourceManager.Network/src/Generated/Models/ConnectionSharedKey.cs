@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for GetConnectionSharedKey API service call. </summary>
-    public partial class ConnectionSharedKey : NetworkWritableSubResource
+    public partial class ConnectionSharedKey : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
         /// <param name="value"> The virtual network connection shared key value. </param>

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Bastion Host. </summary>
-    public partial class BastionHostIPConfiguration : NetworkWritableSubResource
+    public partial class BastionHostIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
         public BastionHostIPConfiguration()

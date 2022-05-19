@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Inbound NAT pool of the load balancer. </summary>
-    public partial class InboundNatPool : NetworkWritableSubResource
+    public partial class InboundNatPool : NetworkSubResource
     {
         /// <summary> Initializes a new instance of InboundNatPool. </summary>
         public InboundNatPool()

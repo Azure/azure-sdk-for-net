@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.Network
             Optional<VirtualNetworkPeeringLevel> peeringSyncLevel = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<bool> doNotVerifyRemoteGateways = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -270,14 +271,19 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringData(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), resourceGuid.Value);
+            return new VirtualNetworkPeeringData(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
         }
     }
 }

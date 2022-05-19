@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="destinationNetworkInterfaceIPConfiguration"> The reference to the private IP Address of the collector nic that will receive the tap. </param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
-        internal VirtualNetworkTapData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkTapData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped. </summary>
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations { get; }
         /// <summary> The resource GUID property of the virtual network tap resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network tap resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The reference to the private IP Address of the collector nic that will receive the tap. </summary>

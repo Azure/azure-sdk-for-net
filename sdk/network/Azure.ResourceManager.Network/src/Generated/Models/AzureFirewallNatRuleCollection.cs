@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NAT rule collection resource. </summary>
-    public partial class AzureFirewallNatRuleCollection : NetworkWritableSubResource
+    public partial class AzureFirewallNatRuleCollection : NetworkSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
         public AzureFirewallNatRuleCollection()

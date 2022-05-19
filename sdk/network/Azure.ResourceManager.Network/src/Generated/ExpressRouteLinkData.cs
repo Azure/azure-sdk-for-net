@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteLink data model. </summary>
-    public partial class ExpressRouteLinkData : NetworkWritableSubResource
+    public partial class ExpressRouteLinkData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
         public ExpressRouteLinkData()

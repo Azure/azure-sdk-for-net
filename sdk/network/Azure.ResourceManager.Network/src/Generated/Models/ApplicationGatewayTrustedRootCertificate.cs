@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Trusted Root certificates of an application gateway. </summary>
-    public partial class ApplicationGatewayTrustedRootCertificate : NetworkWritableSubResource
+    public partial class ApplicationGatewayTrustedRootCertificate : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayTrustedRootCertificate. </summary>
         public ApplicationGatewayTrustedRootCertificate()

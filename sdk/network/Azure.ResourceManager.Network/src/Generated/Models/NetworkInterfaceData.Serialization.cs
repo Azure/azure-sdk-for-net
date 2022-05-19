@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableIPForwarding = default;
             Optional<IReadOnlyList<string>> hostedWorkloads = default;
             Optional<WritableSubResource> dscpConfiguration = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> workloadType = default;
             Optional<NetworkInterfaceNicType> nicType = default;
@@ -320,7 +321,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -372,7 +378,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkInterfaceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, resourceGuid.Value, Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase));
+            return new NetworkInterfaceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase));
         }
     }
 }

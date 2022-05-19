@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Frontend IP configuration of an application gateway. </summary>
-    public partial class ApplicationGatewayFrontendIPConfiguration : NetworkWritableSubResource
+    public partial class ApplicationGatewayFrontendIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
         public ApplicationGatewayFrontendIPConfiguration()

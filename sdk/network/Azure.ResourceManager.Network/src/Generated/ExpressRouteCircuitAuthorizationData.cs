@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCircuitAuthorization data model. </summary>
-    public partial class ExpressRouteCircuitAuthorizationData : NetworkWritableSubResource
+    public partial class ExpressRouteCircuitAuthorizationData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationData. </summary>
         public ExpressRouteCircuitAuthorizationData()

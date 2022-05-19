@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCircuitPeering data model. </summary>
-    public partial class ExpressRouteCircuitPeeringData : NetworkWritableSubResource
+    public partial class ExpressRouteCircuitPeeringData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringData. </summary>
         public ExpressRouteCircuitPeeringData()

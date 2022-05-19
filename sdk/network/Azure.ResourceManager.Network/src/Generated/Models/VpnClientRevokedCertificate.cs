@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VPN client revoked certificate of virtual network gateway. </summary>
-    public partial class VpnClientRevokedCertificate : NetworkWritableSubResource
+    public partial class VpnClientRevokedCertificate : NetworkSubResource
     {
         /// <summary> Initializes a new instance of VpnClientRevokedCertificate. </summary>
         public VpnClientRevokedCertificate()

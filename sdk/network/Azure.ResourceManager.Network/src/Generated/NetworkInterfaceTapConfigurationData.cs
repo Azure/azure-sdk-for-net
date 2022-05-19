@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterfaceTapConfiguration data model. </summary>
-    public partial class NetworkInterfaceTapConfigurationData : NetworkWritableSubResource
+    public partial class NetworkInterfaceTapConfigurationData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
         public NetworkInterfaceTapConfigurationData()

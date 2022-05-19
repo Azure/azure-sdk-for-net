@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2SConnectionConfiguration Resource. </summary>
-    public partial class P2SConnectionConfiguration : NetworkWritableSubResource
+    public partial class P2SConnectionConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
         public P2SConnectionConfiguration()

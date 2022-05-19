@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfileData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkProfileData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of chid container network interface configurations. </summary>
         public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; }
         /// <summary> The resource GUID property of the network profile resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network profile resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }
