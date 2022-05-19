@@ -4,7 +4,6 @@
     <Version>1.0.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsShippingLibrary>false</IsShippingLibrary>
-    <IsTestSupportProject>true</IsTestSupportProject>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
