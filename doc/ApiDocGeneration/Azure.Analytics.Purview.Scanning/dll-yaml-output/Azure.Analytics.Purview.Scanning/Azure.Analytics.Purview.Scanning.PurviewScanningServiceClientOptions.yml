@@ -1,0 +1,107 @@
+### YamlMime:ManagedReference
+items:
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  id: PurviewScanningServiceClientOptions
+  children:
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion)
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewScanningServiceClientOptions
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  type: Class
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Client options for PurviewScanningServiceClient.
+  syntax:
+    content: 'public class PurviewScanningServiceClientOptions : Azure.Core.ClientOptions'
+    content.csharp: 'public class PurviewScanningServiceClientOptions : Azure.Core.ClientOptions'
+    content.fsharp: >-
+      type PurviewScanningServiceClientOptions = class
+          inherit ClientOptions
+    content.vb: >-
+      Public Class PurviewScanningServiceClientOptions
+
+      Inherits ClientOptions
+  inheritance:
+  - Azure.Core.ClientOptions
+  implements: []
+  inheritedMembers: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion)
+  id: '#ctor(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion)'
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewScanningServiceClientOptions(PurviewScanningServiceClientOptions+ServiceVersion)
+  nameWithType: PurviewScanningServiceClientOptions.PurviewScanningServiceClientOptions(PurviewScanningServiceClientOptions+ServiceVersion)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.PurviewScanningServiceClientOptions(PurviewScanningServiceClientOptions+ServiceVersion)
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes new instance of PurviewScanningServiceClientOptions.
+  syntax:
+    content: public PurviewScanningServiceClientOptions (Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion version = Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions+ServiceVersion.V2018_12_01_preview);
+    parameters:
+    - id: version
+      type: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+      description: ''
+    content.csharp: public PurviewScanningServiceClientOptions (Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion version = Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions+ServiceVersion.V2018_12_01_preview);
+    content.fsharp: 'new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions : Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion -> Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions'
+    content.vb: Public Sub New (Optional version As PurviewScanningServiceClientOptions.ServiceVersion = Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions+ServiceVersion.V2018_12_01_preview)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+references:
+- uid: Azure.Analytics.Purview.Scanning
+  commentId: N:Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: Azure.Analytics.Purview.Scanning
+  nameWithType: Azure.Analytics.Purview.Scanning
+  fullName: Azure.Analytics.Purview.Scanning
+  type: namespace
+- uid: Azure.Core.ClientOptions
+  parent: Azure.Core
+  isExternal: true
+  name: ClientOptions
+  nameWithType: ClientOptions
+  fullName: Azure.Core.ClientOptions
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  isExternal: false
+  name: PurviewScanningServiceClientOptions(PurviewScanningServiceClientOptions+ServiceVersion)
+  nameWithType: PurviewScanningServiceClientOptions.PurviewScanningServiceClientOptions(PurviewScanningServiceClientOptions+ServiceVersion)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.PurviewScanningServiceClientOptions(PurviewScanningServiceClientOptions+ServiceVersion)
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  name: PurviewScanningServiceClientOptions
+  nameWithType: PurviewScanningServiceClientOptions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  name: PurviewScanningServiceClientOptions.ServiceVersion
+  nameWithType: PurviewScanningServiceClientOptions.ServiceVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  isExternal: false
+  name: PurviewScanningServiceClientOptions
+  nameWithType: PurviewScanningServiceClientOptions.PurviewScanningServiceClientOptions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.PurviewScanningServiceClientOptions
+  monikers:
+  - my-api
+  type: constructor

@@ -1,0 +1,64 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="Azure.Analytics.Purview.Scanning" Version="1.0.0.0">
+      <AssemblyPublicKey>[00 24 00 00 04 80 00 00 94 00 00 00 06 02 00 00 00 24 00 00 52 53 41 31 00 04 00 00 01 00 01 00 09 7a d5 2a bb ea a2 e1 a1 98 27 47 cc 01 06 53 4f 65 cf ea 67 07 ea ed 69 6a 3a 63 da ea 80 de 25 12 74 68 01 a7 e4 7f 88 e7 78 1e 71 af 96 0d 89 ba 2e 25 56 1f 70 b0 e2 db c9 33 19 e0 af 19 61 a7 19 cc f5 a4 d2 87 09 b2 b5 7a 5d 29 b7 c0 9d c8 d2 69 a4 90 eb e2 65 1c 4b 6e 67 38 c2 7c 5f b2 c0 24 69 fe 97 57 f0 a3 47 9a c3 10 d6 58 8a 50 a2 8d 7d d4 31 b9 07 fd 32 5e 18 b9 e8 ed ]</AssemblyPublicKey>
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute+DebuggingModes.Default | System.Diagnostics.DebuggableAttribute+DebuggingModes.DisableOptimizations | System.Diagnostics.DebuggableAttribute+DebuggingModes.IgnoreSymbolStoreSequencePoints | System.Diagnostics.DebuggableAttribute+DebuggingModes.EnableEditAndContinue)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("Microsoft Corporation")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("Debug")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("© Microsoft Corporation. All rights reserved.")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("An SDK for interacting with the Azure Purview Catalog service")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyFileVersion("1.0.0.0")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyInformationalVersion("1.0.0-alpha.20220519.1+0efad83ac60f640a6e7cfb5ead9f156fec184295")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/Azure/azure-sdk-for-net")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("Azure .NET SDK")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("Azure Purview Sacnning SDK")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Resources.NeutralResourcesLanguage("en-US")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.CompilationRelaxations(8)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName="")</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="Azure.Analytics.Purview.Scanning">
+      <Type Name="PurviewClassificationRuleClient" Kind="Class" />
+      <Type Name="PurviewDataSourceClient" Kind="Class" />
+      <Type Name="PurviewScanClient" Kind="Class" />
+      <Type Name="PurviewScanningServiceClient" Kind="Class" />
+      <Type Name="PurviewScanningServiceClientOptions" Kind="Class" />
+      <Type Name="PurviewScanningServiceClientOptions+ServiceVersion" Kind="Enumeration" />
+    </Namespace>
+  </Types>
+  <Title>Azure.Analytics.Purview.Scanning</Title>
+</Overview>

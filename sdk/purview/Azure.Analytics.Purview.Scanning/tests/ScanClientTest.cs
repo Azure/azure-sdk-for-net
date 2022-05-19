@@ -101,13 +101,8 @@ namespace Azure.Analytics.Purview.Scanning.Tests
         public async Task ScanOperations()
         {
             string dataSourceName = "test-datasource1009";
-            string scanName = "test-scan1009-2";
+            string scanName = "test-scan1009";
             var client = GetPurviewScanClient(dataSourceName, scanName);
-            //Create
-            var requiredData = new
-            {
-                kind = "AmazonS3Credential",
-            };
 
             var data = new
             {
@@ -134,7 +129,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                                     code =  3423
                                 }
                             },
-                            exceptionCountMap = "Dictionary(string, number) how to pass"
+                            exceptionCountMap = new Dictionary<string, int>(){{ "exceptionCountMapKey1", 4243}},
                         },
                         startTime = "2022-05-10T13:57:31.2311892-04:00",
                         queuedTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -166,38 +161,66 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                             }
                         },
                         runType = "test-scanResults-runType",
-                        dataSourceType = "AzureSubscription"
+                        dataSourceType = "AzureSubscription",
                     },
-                }
+                },
+                properties = new
+                {
+                    scanRulesetName = "properties-scanRulesetName",
+                    scanRulesetType = "Custom&quot",
+                    collection = new
+                    {
+                        lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00",
+                        referenceName = "properties-referenceName",
+                        type = "properties-type"
+                    },
+                    workers = 434,
+                    createdAt = "2022-05-10T16:57:31.2311892-04:00",
+                    lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00",
+                    connectedVia = new
+                    {
+                        referenceName = ""
+                    },
+                    credential = new
+                    {
+                        referenceName = "referenceName",
+                        credentialType = "AmazonARN",
+                    },
+                    roleARN = "roleRn"
+                },
             };
 
-            var dataTest = new
+            var requiredData = new
             {
-                name = scanName,
+                kind = "AzureSubscriptionCredential",
+            };
+
+            var testdata = new
+            {
+                // name = scanName,
                 kind = "AmazonS3Credential",
                 properties = new
                 {
                     credential = new
                     {
-                        referenceName = "test-credential1009",
+                        referenceName = "test-credential-s3",
                         credentialType = "AmazonARN"
-                    },
-                    collection = new
-                    {
-                        type = "CollectionReference",
-                        referenceName = "dotnetllcpurviewaccount"
                     }
                 }
             };
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(requiredData));
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(testdata));
             JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+            // Console.WriteLine(jsonResponse.GetProperty("id").GetString());
+            //Console.WriteLine(jsonResponse.GetProperty("name").GetString());
             Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
-            Assert.AreEqual(201, response.Status);
+            Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
+            Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());
+            Assert.AreEqual(200, response.Status);
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);
             JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
-            Assert.AreEqual("datasources/test-datasource1009/scans/test-scan1009-2", getBodyJson.GetProperty("id").GetString());
+            Assert.AreEqual("datasources/test-datasource1009/scans/test-scan1009", getBodyJson.GetProperty("id").GetString());
             //Delete
             Response deleteResponse = await client.DeleteAsync();
             Assert.AreEqual(200, deleteResponse.Status);

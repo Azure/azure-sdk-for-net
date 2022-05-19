@@ -433,12 +433,26 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads, as well as samples showing how to format these payloads in .NET.<br/>
+        /// Additional information can be found in the Purview service REST API documentation: <see href="https://docs.microsoft.com/en-us/rest/api/purview/"/><br/>
+        ///<br/>
+        /// This method takes a one of the scan types below as a payload. Please select a scan type to view the schema for this type.<br/>
+        /// <see href="AzureSubscriptionCredential"/><br/>
+        /// <see href="AzureSubscriptionMsi"/><br/>
+        /// <see href="AzureResourceGroupCredential"/><br/>
+        /// <see href="AzureResourceGroupMsi"/><br/>
+        /// <see href="AzureSynapseWorkspaceCredential"/><br/>
+        /// <see href="AmazonS3Credential"/><br/>
+        /// <see href="See More..."/># ~50+ types<br/>
+        /// <br/>
+        ///
+        /// Schema for AzureSubscriptionCredential <c>Request Body</c>:
         /// <code>
         /// {
+        /// # Base type properties
         ///   id: string, # Optional. <Description>Scan id.</Description>
         ///   name: string, # Optional.
-        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot; (required),
+        ///   kind: # Required. &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
         ///   scanResults: [
         ///     {
         ///       parentId: string, # Optional.
@@ -473,22 +487,122 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: string, # Optional.
         ///             message: string, # Optional.
         ///             target: string, # Optional.
-        ///             details: [ErrorModel]
+        ///             details: [ErrorModel] # Optional.
         ///           }
         ///         ]
         ///       },
         ///       runType: string, # Optional.
         ///       dataSourceType: # Optional. &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
-        ///     }
+        ///       }
         ///   ]
+        /// # Derived type properties
+        ///   properties: {
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: # Optional. &quot;Custom&quot; | &quot;System&quot;,
+        ///     collection: {
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///         referenceName: string, # Optional.
+        ///         type: string, # Optional.
+        ///       }
+        ///     workers: number # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///         referenceName: string, # Optional.
+        ///       }
+        ///     credential: { # Required.
+        ///         referenceName: string, # Required.
+        ///         credentialType: # Required. &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;,
+        ///       }
+        ///     roleARN: string # Optional.
+        ///   },
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        ///<br/>
+        ///
+        /// Schema for AmazonS3Credential <c>Request Body</c>:
         /// <code>
         /// {
+        /// # Base type properties
         ///   id: string, # Optional. <Description>Scan id.</Description>
         ///   name: string, # Optional.
-        ///   kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   kind: # Required. &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
+        ///   scanResults: [
+        ///     {
+        ///       parentId: string, # Optional.
+        ///       id: string, # Optional.
+        ///       resourceId: string, # Optional.
+        ///       status: string, # Optional.
+        ///       assetsDiscovered: number, # Optional.
+        ///       assetsClassified: number, # Optional.
+        ///       diagnostics: {
+        ///         notifications: [
+        ///           {
+        ///             message: string, # Optional.
+        ///             code: number # Optional.
+        ///           }
+        ///         ],
+        ///         exceptionCountMap: # Optional. Dictionary&lt;string, number&gt;
+        ///       },
+        ///       startTime: string (ISO 8601 Format), # Optional.
+        ///       queuedTime: string (ISO 8601 Format), # Optional.
+        ///       pipelineStartTime: string (ISO 8601 Format), # Optional.
+        ///       endTime: string (ISO 8601 Format), # Optional.
+        ///       scanRulesetVersion: number, # Optional.
+        ///       scanRulesetType: # Optional. &quot;Custom&quot; | &quot;System&quot;,
+        ///       scanLevelType: # Optional. &quot;Full&quot; | &quot;Incremental&quot;,
+        ///       errorMessage: string, # Optional.
+        ///       error: {
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [
+        ///           {
+        ///             code: string, # Optional.
+        ///             message: string, # Optional.
+        ///             target: string, # Optional.
+        ///             details: [ErrorModel] # Optional.
+        ///           }
+        ///         ]
+        ///       },
+        ///       runType: string, # Optional.
+        ///       dataSourceType: # Optional. &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
+        ///       }
+        ///   ]
+        /// # Derived type properties
+        ///   properties: {
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: # Optional. &quot;Custom&quot; | &quot;System&quot;,
+        ///     collection: {
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///         referenceName: string, # Optional.
+        ///         type: string, # Optional.
+        ///       }
+        ///     workers: number # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///         referenceName: string, # Optional.
+        ///       }
+        ///     credential: { # Required.
+        ///         referenceName: string, # Required.
+        ///         credentialType: # Required. &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;,
+        ///       }
+        ///     roleARN: string # Optional.
+        ///   },
+        /// }
+        /// </code>
+        /// ...<br/>
+        /// ...<br/>
+        /// ...<br/>
+        /// ...<br/>
+        /// Schema for AmazonS3Credential <c>Response Body</c>:
+        /// <code>
+        /// {
+        /// # Base type properties
+        ///   id: string, # Optional. <Description>Scan id.</Description>
+        ///   name: string, # Optional.
+        ///   kind: # Required. &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;,
         ///   scanResults: [
         ///     {
         ///       parentId: string, # Optional.
@@ -523,7 +637,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///             code: string, # Optional.
         ///             message: string, # Optional.
         ///             target: string, # Optional.
-        ///             details: [ErrorModel]
+        ///             details: [ErrorModel] # Optional.
         ///           }
         ///         ]
         ///       },
@@ -531,27 +645,39 @@ namespace Azure.Analytics.Purview.Scanning
         ///       dataSourceType: # Optional. &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;
         ///     }
         ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>
-        /// {
-        ///   error: {
-        ///     code: string, # Optional.
-        ///     message: string, # Optional.
-        ///     target: string, # Optional.
-        ///     details: [
-        ///       {
-        ///         code: string, # Optional.
-        ///         message: string, # Optional.
-        ///         target: string, # Optional.
-        ///         details: [ErrorModel]
+        ///   # Derived type properties
+        ///   properties: {
+        ///     scanRulesetName: string, # Optional.
+        ///     scanRulesetType: # Optional. &quot;Custom&quot; | &quot;System&quot;,
+        ///     collection: {
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///         referenceName: string, # Optional.
+        ///         type: string, # Optional.
         ///       }
-        ///     ]
-        ///   }
+        ///     workers: number # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///     connectedVia: {
+        ///         referenceName: string, # Optional.
+        ///       }
+        ///     credential: { # Required.
+        ///         referenceName: string, # Required.
+        ///         credentialType: # Required. &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;,
+        ///       }
+        ///     roleARN: string # Optional.
+        ///   },
         /// }
         /// </code>
+        /// ...<br/>
+        /// ...<br/>
+        /// ...<br/>
+        /// ...<br/>
+        /// <c>Error Response</c>:
+        /// <para>
+        /// We throw <see href="RequestFailedException"/> in case of error response.
+        /// </para>
         /// 
+        /// <para>
         /// This sample shows how to call CreateOrUpdate with required parameters
         /// <code>
         /// var credential = new DefaultAzureCredential();
@@ -561,10 +687,20 @@ namespace Azure.Analytics.Purview.Scanning
         /// var data = new
         /// {
         ///     kind = "AzureSubscriptionCredential",
+        ///     properties = new
+        ///     {
+        ///         credential = new
+        ///         {
+        ///             referenceName = "test-credential-s3",
+        ///             credentialType = "AmazonARN"
+        ///         }
+        ///      }
         /// };
         /// Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+        /// Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
+        /// Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());
         /// </code>
         /// 
         /// This sample shows how to call CreateOrUpdate with all the parameters
@@ -598,7 +734,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///                             code =  3423
         ///                         }
         ///                     },
-        ///                     exceptionCountMap = "Dictionary(string, number) how to pass"
+        ///                     exceptionCountMap = new Dictionary&lt;string, int&gt;(){{ "exceptionCountMapKey1", 4243}},
         ///                 },
         ///                 startTime = "2022-05-10T13:57:31.2311892-04:00",
         ///                 queuedTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -633,12 +769,39 @@ namespace Azure.Analytics.Purview.Scanning
         ///                 dataSourceType = "AzureSubscription"
         ///             },
         ///         }
+        ///     properties = new
+        ///      {
+        ///          scanRulesetName = "properties-scanRulesetName",
+        ///          scanRulesetType = "Customquot",
+        ///          collection = new
+        ///          {
+        ///              lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00",
+        ///              referenceName = "properties-referenceName",
+        ///              type = "properties-type"
+        ///          },
+        ///          workers = 434,
+        ///          createdAt = "2022-05-10T16:57:31.2311892-04:00",
+        ///          lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00"
+        ///          connectedVia = new
+        ///          {
+        ///              referenceName = "properties-connectedVia-referenceName"
+        ///          },
+        ///          credential = new
+        ///          {
+        ///              referenceName = "properties-credential-referenceName",
+        ///              credentialType = "AmazonARN",
+        ///          },
+        ///          roleARN = "roleRn"
+        ///      },
         /// };
         /// Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
         /// JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(jsonResponse.GetProperty("id").GetString());
+        /// Console.WriteLine(jsonResponse.GetProperty("name").GetString());
         /// Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
-        ///
+        /// ....
         /// </code>
+        /// </para>
         /// </remarks>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {

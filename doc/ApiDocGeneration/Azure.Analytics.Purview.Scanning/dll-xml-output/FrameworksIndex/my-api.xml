@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Framework Name="my-api">
+  <Assemblies>
+    <Assembly Name="Azure.Analytics.Purview.Scanning" Version="1.0.0.0" />
+  </Assemblies>
+  <Namespace Name="Azure.Analytics.Purview.Scanning">
+    <Type Name="Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient" Id="T:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient">
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)" />
+      <Member Id="P:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline" />
+    </Type>
+    <Type Name="Azure.Analytics.Purview.Scanning.PurviewDataSourceClient" Id="T:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient">
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Delete(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.DeleteAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetProperties(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetPropertiesAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScanClient(System.String)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScans(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.GetScansAsync(Azure.RequestContext)" />
+      <Member Id="P:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.Pipeline" />
+    </Type>
+    <Type Name="Azure.Analytics.Purview.Scanning.PurviewScanClient" Id="T:Azure.Analytics.Purview.Scanning.PurviewScanClient">
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync(Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan(System.String,System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync(System.String,System.String,Azure.RequestContext)" />
+      <Member Id="P:Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline" />
+    </Type>
+    <Type Name="Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient" Id="T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient">
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(System.String,Azure.RequestContext)" />
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)" />
+      <Member Id="P:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline" />
+    </Type>
+    <Type Name="Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions" Id="T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions">
+      <Member Id="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.#ctor(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion)" />
+    </Type>
+    <Type Name="Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions/ServiceVersion" Id="T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion">
+      <Member Id="F:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview" />
+    </Type>
+  </Namespace>
+</Framework>

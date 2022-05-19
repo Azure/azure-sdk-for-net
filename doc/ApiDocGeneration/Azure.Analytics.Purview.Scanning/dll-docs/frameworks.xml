@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Frameworks>
+  <Framework Name="my-api" Source="my-api">
+    <assemblySearchPath>dependencies\my-api</assemblySearchPath>
+    <import>my-api\Azure.Analytics.Purview.Scanning.xml</import>
+  </Framework>
+</Frameworks>

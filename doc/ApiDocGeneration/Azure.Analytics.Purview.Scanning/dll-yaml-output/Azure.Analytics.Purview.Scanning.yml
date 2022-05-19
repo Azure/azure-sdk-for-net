@@ -1,0 +1,69 @@
+### YamlMime:ManagedReference
+items:
+- uid: Azure.Analytics.Purview.Scanning
+  commentId: N:Azure.Analytics.Purview.Scanning
+  id: Azure.Analytics.Purview.Scanning
+  children:
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  - Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+  - Azure.Analytics.Purview.Scanning.PurviewScanClient
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  langs:
+  - csharp
+  name: Azure.Analytics.Purview.Scanning
+  nameWithType: Azure.Analytics.Purview.Scanning
+  fullName: Azure.Analytics.Purview.Scanning
+  type: Namespace
+  monikers:
+  - my-api
+references:
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewClassificationRuleClient
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  type: class
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewDataSourceClient
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+  type: class
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanClient
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanClient
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanClient
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanClient
+  type: class
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanningServiceClient
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  type: class
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanningServiceClientOptions
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  type: class
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanningServiceClientOptions.ServiceVersion
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  type: enum

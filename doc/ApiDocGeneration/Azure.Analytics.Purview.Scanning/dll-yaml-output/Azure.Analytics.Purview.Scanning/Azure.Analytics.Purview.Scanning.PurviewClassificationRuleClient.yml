@@ -1,0 +1,1349 @@
+### YamlMime:ManagedReference
+items:
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  id: PurviewClassificationRuleClient
+  children:
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewClassificationRuleClient
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  type: Class
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: The PurviewClassificationRule service client.
+  syntax:
+    content: public class PurviewClassificationRuleClient
+    content.csharp: public class PurviewClassificationRuleClient
+    content.fsharp: type PurviewClassificationRuleClient = class
+    content.vb: Public Class PurviewClassificationRuleClient
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
+  id: '#ctor'
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - vb
+  name: PurviewClassificationRuleClient()
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient()
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient()
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes a new instance of PurviewClassificationRuleClient for mocking.
+  syntax:
+    content: protected PurviewClassificationRuleClient ();
+    parameters: []
+    content.csharp: protected PurviewClassificationRuleClient ();
+    content.vb: Protected Sub New ()
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor*
+  exceptions: []
+  modifiers.csharp:
+  - protected
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
+  id: '#ctor(System.Uri,System.String,Azure.Core.TokenCredential)'
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewClassificationRuleClient(Uri, String, TokenCredential)
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential)
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes a new instance of PurviewClassificationRuleClient.
+  syntax:
+    content: public PurviewClassificationRuleClient (Uri endpoint, string classificationRuleName, Azure.Core.TokenCredential credential);
+    parameters:
+    - id: endpoint
+      type: System.Uri
+      description: 'The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com.'
+    - id: classificationRuleName
+      type: System.String
+      description: The String to use.
+    - id: credential
+      type: Azure.Core.TokenCredential
+      description: A credential used to authenticate to an Azure Service.
+    content.csharp: public PurviewClassificationRuleClient (Uri endpoint, string classificationRuleName, Azure.Core.TokenCredential credential);
+    content.fsharp: 'new Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient : Uri * string * Azure.Core.TokenCredential -> Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient'
+    content.vb: Public Sub New (endpoint As Uri, classificationRuleName As String, credential As TokenCredential)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">endpoint</code>, <code data-dev-comment-type="paramref">classificationRuleName</code> or <code data-dev-comment-type="paramref">credential</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">classificationRuleName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  id: '#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)'
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes a new instance of PurviewClassificationRuleClient.
+  syntax:
+    content: public PurviewClassificationRuleClient (Uri endpoint, string classificationRuleName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options);
+    parameters:
+    - id: endpoint
+      type: System.Uri
+      description: 'The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com.'
+    - id: classificationRuleName
+      type: System.String
+      description: The String to use.
+    - id: credential
+      type: Azure.Core.TokenCredential
+      description: A credential used to authenticate to an Azure Service.
+    - id: options
+      type: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+      description: The options for configuring the client.
+    content.csharp: public PurviewClassificationRuleClient (Uri endpoint, string classificationRuleName, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options);
+    content.fsharp: 'new Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient : Uri * string * Azure.Core.TokenCredential * Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions -> Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient'
+    content.vb: Public Sub New (endpoint As Uri, classificationRuleName As String, credential As TokenCredential, options As PurviewScanningServiceClientOptions)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">endpoint</code>, <code data-dev-comment-type="paramref">classificationRuleName</code> or <code data-dev-comment-type="paramref">credential</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">classificationRuleName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  id: CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: CreateOrUpdate(RequestContent, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.CreateOrUpdate(RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(RequestContent, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Creates or Updates a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Request Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom" (required)
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response CreateOrUpdate (Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    parameters:
+    - id: content
+      type: Azure.Core.RequestContent
+      description: The content to send as the body of the request.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response CreateOrUpdate (Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member CreateOrUpdate : Azure.Core.RequestContent * Azure.RequestContext -> Azure.Response
+
+      override this.CreateOrUpdate : Azure.Core.RequestContent * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function CreateOrUpdate (content As RequestContent, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  id: CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: CreateOrUpdateAsync(RequestContent, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.CreateOrUpdateAsync(RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(RequestContent, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Creates or Updates a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Request Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom" (required)
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync (Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    parameters:
+    - id: content
+      type: Azure.Core.RequestContent
+      description: The content to send as the body of the request.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync (Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member CreateOrUpdateAsync : Azure.Core.RequestContent * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.CreateOrUpdateAsync : Azure.Core.RequestContent * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function CreateOrUpdateAsync (content As RequestContent, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync*
+  exceptions: []
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)
+  id: Delete(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: Delete(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.Delete(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Deletes a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response Delete (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response Delete (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member Delete : Azure.RequestContext -> Azure.Response
+
+      override this.Delete : Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function Delete (Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)
+  id: DeleteAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: DeleteAsync(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.DeleteAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Deletes a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member DeleteAsync : Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.DeleteAsync : Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function DeleteAsync (Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync*
+  exceptions: []
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)
+  id: GetProperties(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetProperties(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetProperties(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response GetProperties (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response GetProperties (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetProperties : Azure.RequestContext -> Azure.Response
+
+      override this.GetProperties : Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function GetProperties (Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)
+  id: GetPropertiesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetPropertiesAsync(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetPropertiesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      kind: "System" | "Custom"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetPropertiesAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetPropertiesAsync : Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.GetPropertiesAsync : Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function GetPropertiesAsync (Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync*
+  exceptions: []
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)
+  id: GetVersions(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetVersions(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetVersions(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Lists the rule versions of a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          kind: "System" | "Custom"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetVersions (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetVersions (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetVersions : Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetVersions : Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetVersions (Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)
+  id: GetVersionsAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetVersionsAsync(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetVersionsAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Lists the rule versions of a classification rule.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          kind: "System" | "Custom"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetVersionsAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetVersionsAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetVersionsAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetVersionsAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetVersionsAsync (Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  commentId: P:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  id: Pipeline
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: Pipeline
+  nameWithType: PurviewClassificationRuleClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  type: Property
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: The HTTP pipeline for sending and receiving REST requests and responses.
+  syntax:
+    content: public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get; }
+    return:
+      type: Azure.Core.Pipeline.HttpPipeline
+      description: ''
+    content.csharp: public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get; }
+    content.fsharp: 'member this.Pipeline : Azure.Core.Pipeline.HttpPipeline'
+    content.vb: Public Overridable ReadOnly Property Pipeline As HttpPipeline
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  - get
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)
+  id: TagVersion(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: TagVersion(Int32, String, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.TagVersion(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(Int32, String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Sets Classification Action on a specific classification rule version.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanResultId: OperationResponseScanResultId,
+      startTime: string (ISO 8601 Format),
+      endTime: string (ISO 8601 Format),
+      status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorInfo]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response TagVersion (int classificationRuleVersion, string action, Azure.RequestContext context = null);
+    parameters:
+    - id: classificationRuleVersion
+      type: System.Int32
+      description: The Integer to use.
+    - id: action
+      type: System.String
+      description: 'The ClassificationAction to use. Allowed values: "Keep" | "Delete".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response TagVersion (int classificationRuleVersion, string action, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member TagVersion : int * string * Azure.RequestContext -> Azure.Response
+
+      override this.TagVersion : int * string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function TagVersion (classificationRuleVersion As Integer, action As String, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">action</code> is null.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  id: TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: TagVersionAsync(Int32, String, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.TagVersionAsync(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(Int32, String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Sets Classification Action on a specific classification rule version.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanResultId: OperationResponseScanResultId,
+      startTime: string (ISO 8601 Format),
+      endTime: string (ISO 8601 Format),
+      status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorInfo]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> TagVersionAsync (int classificationRuleVersion, string action, Azure.RequestContext context = null);
+    parameters:
+    - id: classificationRuleVersion
+      type: System.Int32
+      description: The Integer to use.
+    - id: action
+      type: System.String
+      description: 'The ClassificationAction to use. Allowed values: "Keep" | "Delete".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> TagVersionAsync (int classificationRuleVersion, string action, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member TagVersionAsync : int * string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.TagVersionAsync : int * string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function TagVersionAsync (classificationRuleVersion As Integer, action As String, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">action</code> is null.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+references:
+- uid: Azure.Analytics.Purview.Scanning
+  commentId: N:Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: Azure.Analytics.Purview.Scanning
+  nameWithType: Azure.Analytics.Purview.Scanning
+  fullName: Azure.Analytics.Purview.Scanning
+  type: namespace
+- uid: System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  isExternal: true
+  name: System.ArgumentNullException
+- uid: System.ArgumentException
+  isExternal: true
+  name: System.ArgumentException
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: PurviewClassificationRuleClient()
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient()
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient()
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: PurviewClassificationRuleClient(Uri, String, TokenCredential)
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential)
+  type: constructor
+- uid: System.Uri
+  parent: System
+  isExternal: true
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: Azure.Core.TokenCredential
+  parent: Azure.Core
+  isExternal: true
+  name: TokenCredential
+  nameWithType: TokenCredential
+  fullName: Azure.Core.TokenCredential
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor(System.Uri,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient(Uri, String, TokenCredential, PurviewScanningServiceClientOptions)
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanningServiceClientOptions
+  nameWithType: PurviewScanningServiceClientOptions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: CreateOrUpdate(RequestContent, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.CreateOrUpdate(RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate(RequestContent, RequestContext)
+  type: method
+- uid: Azure.Response
+  parent: Azure
+  isExternal: true
+  name: Response
+  nameWithType: Response
+  fullName: Azure.Response
+- uid: Azure.Core.RequestContent
+  parent: Azure.Core
+  isExternal: true
+  name: RequestContent
+  nameWithType: RequestContent
+  fullName: Azure.Core.RequestContent
+- uid: Azure.RequestContext
+  parent: Azure
+  isExternal: true
+  name: RequestContext
+  nameWithType: RequestContext
+  fullName: Azure.RequestContext
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: CreateOrUpdateAsync(RequestContent, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.CreateOrUpdateAsync(RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync(RequestContent, RequestContext)
+  type: method
+- uid: System.Threading.Tasks.Task`1
+  isExternal: true
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks.Task{Azure.Response}
+  parent: System.Threading.Tasks
+  name: Task<Response>
+  nameWithType: Task<Response>
+  fullName: System.Threading.Tasks.Task<Azure.Response>
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    nameWithType: Task
+    fullName: System.Threading.Tasks.Task
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Azure.Response
+    name: Response
+    nameWithType: Response
+    fullName: Azure.Response
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: Delete(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.Delete(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: DeleteAsync(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.DeleteAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetProperties(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetProperties(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetPropertiesAsync(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetPropertiesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetVersions(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetVersions(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions(RequestContext)
+  type: method
+- uid: Azure.Pageable`1
+  isExternal: true
+  name: Pageable
+  nameWithType: Pageable
+  fullName: Azure.Pageable
+- uid: System.BinaryData
+  isExternal: true
+  name: BinaryData
+  nameWithType: BinaryData
+  fullName: System.BinaryData
+- uid: Azure.Pageable{System.BinaryData}
+  parent: Azure
+  name: Pageable<BinaryData>
+  nameWithType: Pageable<BinaryData>
+  fullName: Azure.Pageable<System.BinaryData>
+  spec.csharp:
+  - uid: Azure.Pageable`1
+    name: Pageable
+    nameWithType: Pageable
+    fullName: Azure.Pageable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.BinaryData
+    name: BinaryData
+    nameWithType: BinaryData
+    fullName: System.BinaryData
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetVersionsAsync(RequestContext)
+  nameWithType: PurviewClassificationRuleClient.GetVersionsAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync(RequestContext)
+  type: method
+- uid: Azure.AsyncPageable`1
+  isExternal: true
+  name: AsyncPageable
+  nameWithType: AsyncPageable
+  fullName: Azure.AsyncPageable
+- uid: Azure.AsyncPageable{System.BinaryData}
+  parent: Azure
+  name: AsyncPageable<BinaryData>
+  nameWithType: AsyncPageable<BinaryData>
+  fullName: Azure.AsyncPageable<System.BinaryData>
+  spec.csharp:
+  - uid: Azure.AsyncPageable`1
+    name: AsyncPageable
+    nameWithType: AsyncPageable
+    fullName: Azure.AsyncPageable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.BinaryData
+    name: BinaryData
+    nameWithType: BinaryData
+    fullName: System.BinaryData
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: Pipeline
+  nameWithType: PurviewClassificationRuleClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  type: property
+- uid: Azure.Core.Pipeline.HttpPipeline
+  parent: Azure.Core.Pipeline
+  isExternal: true
+  name: HttpPipeline
+  nameWithType: HttpPipeline
+  fullName: Azure.Core.Pipeline.HttpPipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: TagVersion(Int32, String, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.TagVersion(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion(Int32, String, RequestContext)
+  type: method
+- uid: System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: TagVersionAsync(Int32, String, RequestContext)
+  nameWithType: PurviewClassificationRuleClient.TagVersionAsync(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync(Int32, String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.#ctor
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: PurviewClassificationRuleClient
+  nameWithType: PurviewClassificationRuleClient.PurviewClassificationRuleClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.PurviewClassificationRuleClient
+  monikers:
+  - my-api
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: CreateOrUpdate
+  nameWithType: PurviewClassificationRuleClient.CreateOrUpdate
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdate
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: CreateOrUpdateAsync
+  nameWithType: PurviewClassificationRuleClient.CreateOrUpdateAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.CreateOrUpdateAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: Delete
+  nameWithType: PurviewClassificationRuleClient.Delete
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Delete
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: DeleteAsync
+  nameWithType: PurviewClassificationRuleClient.DeleteAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.DeleteAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetProperties
+  nameWithType: PurviewClassificationRuleClient.GetProperties
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetProperties
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetPropertiesAsync
+  nameWithType: PurviewClassificationRuleClient.GetPropertiesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetVersions
+  nameWithType: PurviewClassificationRuleClient.GetVersions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersions
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: GetVersionsAsync
+  nameWithType: PurviewClassificationRuleClient.GetVersionsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetVersionsAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: Pipeline
+  nameWithType: PurviewClassificationRuleClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.Pipeline
+  monikers:
+  - my-api
+  type: property
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: TagVersion
+  nameWithType: PurviewClassificationRuleClient.TagVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersion
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  isExternal: false
+  name: TagVersionAsync
+  nameWithType: PurviewClassificationRuleClient.TagVersionAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.TagVersionAsync
+  monikers:
+  - my-api
+  type: method

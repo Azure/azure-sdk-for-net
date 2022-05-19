@@ -1,0 +1,85 @@
+### YamlMime:ManagedReference
+items:
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  id: PurviewScanningServiceClientOptions.ServiceVersion
+  children:
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewScanningServiceClientOptions.ServiceVersion
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  type: Enum
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: The version of the service to use.
+  syntax:
+    content: public enum PurviewScanningServiceClientOptions.ServiceVersion
+    content.csharp: public enum PurviewScanningServiceClientOptions.ServiceVersion
+    content.fsharp: 'type PurviewScanningServiceClientOptions.ServiceVersion = '
+    content.vb: Public Enum PurviewScanningServiceClientOptions.ServiceVersion
+  inheritance:
+  - System.Enum
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  commentId: F:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  id: V2018_12_01_preview
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: V2018_12_01_preview
+  nameWithType: PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  type: Field
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Service version "2018-12-01-preview".
+  syntax:
+    content: V2018_12_01_preview
+    return:
+      type: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+      description: ''
+    content.csharp: V2018_12_01_preview
+    content.fsharp: V2018_12_01_preview = 1
+    content.vb: V2018_12_01_preview
+  exceptions: []
+  literalValue: "1"
+  monikers:
+  - my-api
+references:
+- uid: Azure.Analytics.Purview.Scanning
+  commentId: N:Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: Azure.Analytics.Purview.Scanning
+  nameWithType: Azure.Analytics.Purview.Scanning
+  fullName: Azure.Analytics.Purview.Scanning
+  type: namespace
+- uid: System.Enum
+  parent: System
+  isExternal: true
+  name: Enum
+  nameWithType: Enum
+  fullName: System.Enum
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  isExternal: false
+  name: V2018_12_01_preview
+  nameWithType: PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview
+  type: field
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanningServiceClientOptions.ServiceVersion
+  nameWithType: PurviewScanningServiceClientOptions.ServiceVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion

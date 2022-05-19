@@ -1,0 +1,3575 @@
+### YamlMime:ManagedReference
+items:
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  commentId: T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  id: PurviewScanningServiceClient
+  children:
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)
+  - Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewScanningServiceClient
+  nameWithType: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  type: Class
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: The PurviewScanningService service client.
+  syntax:
+    content: public class PurviewScanningServiceClient
+    content.csharp: public class PurviewScanningServiceClient
+    content.fsharp: type PurviewScanningServiceClient = class
+    content.vb: Public Class PurviewScanningServiceClient
+  inheritance:
+  - System.Object
+  implements: []
+  inheritedMembers: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor
+  id: '#ctor'
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - vb
+  name: PurviewScanningServiceClient()
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient()
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient()
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes a new instance of PurviewScanningServiceClient for mocking.
+  syntax:
+    content: protected PurviewScanningServiceClient ();
+    parameters: []
+    content.csharp: protected PurviewScanningServiceClient ();
+    content.vb: Protected Sub New ()
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor*
+  exceptions: []
+  modifiers.csharp:
+  - protected
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential)
+  id: '#ctor(System.Uri,Azure.Core.TokenCredential)'
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewScanningServiceClient(Uri, TokenCredential)
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential)
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes a new instance of PurviewScanningServiceClient.
+  syntax:
+    content: public PurviewScanningServiceClient (Uri endpoint, Azure.Core.TokenCredential credential);
+    parameters:
+    - id: endpoint
+      type: System.Uri
+      description: 'The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com.'
+    - id: credential
+      type: Azure.Core.TokenCredential
+      description: A credential used to authenticate to an Azure Service.
+    content.csharp: public PurviewScanningServiceClient (Uri endpoint, Azure.Core.TokenCredential credential);
+    content.fsharp: 'new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient : Uri * Azure.Core.TokenCredential -> Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient'
+    content.vb: Public Sub New (endpoint As Uri, credential As TokenCredential)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">endpoint</code> or <code data-dev-comment-type="paramref">credential</code> is null.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  id: '#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)'
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: PurviewScanningServiceClient(Uri, TokenCredential, PurviewScanningServiceClientOptions)
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential, PurviewScanningServiceClientOptions)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential, PurviewScanningServiceClientOptions)
+  type: Constructor
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Initializes a new instance of PurviewScanningServiceClient.
+  syntax:
+    content: public PurviewScanningServiceClient (Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options);
+    parameters:
+    - id: endpoint
+      type: System.Uri
+      description: 'The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com.'
+    - id: credential
+      type: Azure.Core.TokenCredential
+      description: A credential used to authenticate to an Azure Service.
+    - id: options
+      type: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+      description: The options for configuring the client.
+    content.csharp: public PurviewScanningServiceClient (Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options);
+    content.fsharp: 'new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient : Uri * Azure.Core.TokenCredential * Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions -> Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient'
+    content.vb: Public Sub New (endpoint As Uri, credential As TokenCredential, options As PurviewScanningServiceClientOptions)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">endpoint</code> or <code data-dev-comment-type="paramref">credential</code> is null.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  id: CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: CreateOrUpdateKeyVaultReference(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(String, RequestContent, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Creates an instance of a key vault connection.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Request Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response CreateOrUpdateKeyVaultReference (string keyVaultName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    parameters:
+    - id: keyVaultName
+      type: System.String
+      description: The String to use.
+    - id: content
+      type: Azure.Core.RequestContent
+      description: The content to send as the body of the request.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response CreateOrUpdateKeyVaultReference (string keyVaultName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member CreateOrUpdateKeyVaultReference : string * Azure.Core.RequestContent * Azure.RequestContext -> Azure.Response
+
+      override this.CreateOrUpdateKeyVaultReference : string * Azure.Core.RequestContent * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function CreateOrUpdateKeyVaultReference (keyVaultName As String, content As RequestContent, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> or <code data-dev-comment-type="paramref">content</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  id: CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: CreateOrUpdateKeyVaultReferenceAsync(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(String, RequestContent, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Creates an instance of a key vault connection.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Request Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateKeyVaultReferenceAsync (string keyVaultName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    parameters:
+    - id: keyVaultName
+      type: System.String
+      description: The String to use.
+    - id: content
+      type: Azure.Core.RequestContent
+      description: The content to send as the body of the request.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateKeyVaultReferenceAsync (string keyVaultName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member CreateOrUpdateKeyVaultReferenceAsync : string * Azure.Core.RequestContent * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.CreateOrUpdateKeyVaultReferenceAsync : string * Azure.Core.RequestContent * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function CreateOrUpdateKeyVaultReferenceAsync (keyVaultName As String, content As RequestContent, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> or <code data-dev-comment-type="paramref">content</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  id: CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: CreateOrUpdateScanRuleset(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateScanRuleset(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(String, RequestContent, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Creates or Updates a scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Request Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI" (required)
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response CreateOrUpdateScanRuleset (string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    parameters:
+    - id: scanRulesetName
+      type: System.String
+      description: The String to use.
+    - id: content
+      type: Azure.Core.RequestContent
+      description: The content to send as the body of the request.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response CreateOrUpdateScanRuleset (string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member CreateOrUpdateScanRuleset : string * Azure.Core.RequestContent * Azure.RequestContext -> Azure.Response
+
+      override this.CreateOrUpdateScanRuleset : string * Azure.Core.RequestContent * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function CreateOrUpdateScanRuleset (scanRulesetName As String, content As RequestContent, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  id: CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: CreateOrUpdateScanRulesetAsync(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(String, RequestContent, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Creates or Updates a scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Request Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI" (required)
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateScanRulesetAsync (string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    parameters:
+    - id: scanRulesetName
+      type: System.String
+      description: The String to use.
+    - id: content
+      type: Azure.Core.RequestContent
+      description: The content to send as the body of the request.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateScanRulesetAsync (string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member CreateOrUpdateScanRulesetAsync : string * Azure.Core.RequestContent * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.CreateOrUpdateScanRulesetAsync : string * Azure.Core.RequestContent * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function CreateOrUpdateScanRulesetAsync (scanRulesetName As String, content As RequestContent, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(System.String,Azure.RequestContext)
+  id: DeleteKeyVaultReference(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: DeleteKeyVaultReference(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteKeyVaultReference(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Deletes the key vault connection associated with the account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response DeleteKeyVaultReference (string keyVaultName, Azure.RequestContext context = null);
+    parameters:
+    - id: keyVaultName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response DeleteKeyVaultReference (string keyVaultName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member DeleteKeyVaultReference : string * Azure.RequestContext -> Azure.Response
+
+      override this.DeleteKeyVaultReference : string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function DeleteKeyVaultReference (keyVaultName As String, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  id: DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: DeleteKeyVaultReferenceAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Deletes the key vault connection associated with the account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKeyVaultReferenceAsync (string keyVaultName, Azure.RequestContext context = null);
+    parameters:
+    - id: keyVaultName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> DeleteKeyVaultReferenceAsync (string keyVaultName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member DeleteKeyVaultReferenceAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.DeleteKeyVaultReferenceAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function DeleteKeyVaultReferenceAsync (keyVaultName As String, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(System.String,Azure.RequestContext)
+  id: DeleteScanRuleset(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: DeleteScanRuleset(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteScanRuleset(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Deletes a scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response DeleteScanRuleset (string scanRulesetName, Azure.RequestContext context = null);
+    parameters:
+    - id: scanRulesetName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response DeleteScanRuleset (string scanRulesetName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member DeleteScanRuleset : string * Azure.RequestContext -> Azure.Response
+
+      override this.DeleteScanRuleset : string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function DeleteScanRuleset (scanRulesetName As String, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(System.String,Azure.RequestContext)
+  id: DeleteScanRulesetAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: DeleteScanRulesetAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteScanRulesetAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Deletes a scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScanRulesetAsync (string scanRulesetName, Azure.RequestContext context = null);
+    parameters:
+    - id: scanRulesetName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScanRulesetAsync (string scanRulesetName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member DeleteScanRulesetAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.DeleteScanRulesetAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function DeleteScanRulesetAsync (scanRulesetName As String, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)
+  id: GetClassificationRuleClient(System.String)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetClassificationRuleClient(String)
+  nameWithType: PurviewScanningServiceClient.GetClassificationRuleClient(String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(String)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  syntax:
+    content: public virtual Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient (string classificationRuleName);
+    parameters:
+    - id: classificationRuleName
+      type: System.String
+      description: ''
+    return:
+      type: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+      description: ''
+    content.csharp: public virtual Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient (string classificationRuleName);
+    content.fsharp: >-
+      abstract member GetClassificationRuleClient : string -> Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+
+      override this.GetClassificationRuleClient : string -> Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+    content.vb: Public Overridable Function GetClassificationRuleClient (classificationRuleName As String) As PurviewClassificationRuleClient
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)
+  id: GetClassificationRules(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetClassificationRules(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetClassificationRules(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List classification rules in Account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          kind: "System" | "Custom"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetClassificationRules (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetClassificationRules (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetClassificationRules : Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetClassificationRules : Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetClassificationRules (Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(Azure.RequestContext)
+  id: GetClassificationRulesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetClassificationRulesAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetClassificationRulesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List classification rules in Account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          kind: "System" | "Custom"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetClassificationRulesAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetClassificationRulesAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetClassificationRulesAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetClassificationRulesAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetClassificationRulesAsync (Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)
+  id: GetDataSourceClient(System.String)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetDataSourceClient(String)
+  nameWithType: PurviewScanningServiceClient.GetDataSourceClient(String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(String)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  syntax:
+    content: public virtual Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient (string dataSourceName);
+    parameters:
+    - id: dataSourceName
+      type: System.String
+      description: ''
+    return:
+      type: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+      description: ''
+    content.csharp: public virtual Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient (string dataSourceName);
+    content.fsharp: >-
+      abstract member GetDataSourceClient : string -> Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+
+      override this.GetDataSourceClient : string -> Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+    content.vb: Public Overridable Function GetDataSourceClient (dataSourceName As String) As PurviewDataSourceClient
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)
+  id: GetDataSources(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetDataSources(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetDataSources(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List data sources in Data catalog.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI",
+          scans: [
+            {
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetDataSources (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetDataSources (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetDataSources : Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetDataSources : Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetDataSources (Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(Azure.RequestContext)
+  id: GetDataSourcesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetDataSourcesAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetDataSourcesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List data sources in Data catalog.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI",
+          scans: [
+            {
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetDataSourcesAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetDataSourcesAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetDataSourcesAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetDataSourcesAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetDataSourcesAsync (Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(System.String,Azure.RequestContext)
+  id: GetKeyVaultReference(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetKeyVaultReference(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReference(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Gets key vault information.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response GetKeyVaultReference (string keyVaultName, Azure.RequestContext context = null);
+    parameters:
+    - id: keyVaultName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response GetKeyVaultReference (string keyVaultName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetKeyVaultReference : string * Azure.RequestContext -> Azure.Response
+
+      override this.GetKeyVaultReference : string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function GetKeyVaultReference (keyVaultName As String, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  id: GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetKeyVaultReferenceAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferenceAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Gets key vault information.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      id: string,
+      name: string,
+      properties: {
+        baseUrl: string,
+        description: string
+      }
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetKeyVaultReferenceAsync (string keyVaultName, Azure.RequestContext context = null);
+    parameters:
+    - id: keyVaultName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetKeyVaultReferenceAsync (string keyVaultName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetKeyVaultReferenceAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.GetKeyVaultReferenceAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function GetKeyVaultReferenceAsync (keyVaultName As String, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">keyVaultName</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(Azure.RequestContext)
+  id: GetKeyVaultReferences(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetKeyVaultReferences(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferences(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List key vault connections in account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          properties: {
+            baseUrl: string,
+            description: string
+          }
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetKeyVaultReferences (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetKeyVaultReferences (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetKeyVaultReferences : Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetKeyVaultReferences : Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetKeyVaultReferences (Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(Azure.RequestContext)
+  id: GetKeyVaultReferencesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetKeyVaultReferencesAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferencesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List key vault connections in account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          id: string,
+          name: string,
+          properties: {
+            baseUrl: string,
+            description: string
+          }
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetKeyVaultReferencesAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetKeyVaultReferencesAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetKeyVaultReferencesAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetKeyVaultReferencesAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetKeyVaultReferencesAsync (Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(System.String,Azure.RequestContext)
+  id: GetLatestSystemRulesets(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetLatestSystemRulesets(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesets(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get the latest version of a system scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response GetLatestSystemRulesets (string dataSourceType = null, Azure.RequestContext context = null);
+    parameters:
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response GetLatestSystemRulesets (string dataSourceType = null, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetLatestSystemRulesets : string * Azure.RequestContext -> Azure.Response
+
+      override this.GetLatestSystemRulesets : string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function GetLatestSystemRulesets (Optional dataSourceType As String = null, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)
+  id: GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetLatestSystemRulesetsAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get the latest version of a system scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestSystemRulesetsAsync (string dataSourceType = null, Azure.RequestContext context = null);
+    parameters:
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetLatestSystemRulesetsAsync (string dataSourceType = null, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetLatestSystemRulesetsAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.GetLatestSystemRulesetsAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function GetLatestSystemRulesetsAsync (Optional dataSourceType As String = null, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync*
+  exceptions: []
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)
+  id: GetScanRuleset(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetScanRuleset(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRuleset(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response GetScanRuleset (string scanRulesetName, Azure.RequestContext context = null);
+    parameters:
+    - id: scanRulesetName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response GetScanRuleset (string scanRulesetName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetScanRuleset : string * Azure.RequestContext -> Azure.Response
+
+      override this.GetScanRuleset : string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function GetScanRuleset (scanRulesetName As String, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(System.String,Azure.RequestContext)
+  id: GetScanRulesetAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetScanRulesetAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRulesetAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a scan ruleset.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetScanRulesetAsync (string scanRulesetName, Azure.RequestContext context = null);
+    parameters:
+    - id: scanRulesetName
+      type: System.String
+      description: The String to use.
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetScanRulesetAsync (string scanRulesetName, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetScanRulesetAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.GetScanRulesetAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function GetScanRulesetAsync (scanRulesetName As String, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">scanRulesetName</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(Azure.RequestContext)
+  id: GetScanRulesets(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetScanRulesets(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRulesets(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List scan rulesets in Data catalog.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          scanRulesetType: "Custom" | "System",
+          status: "Enabled" | "Disabled",
+          version: number,
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetScanRulesets (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetScanRulesets (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetScanRulesets : Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetScanRulesets : Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetScanRulesets (Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(Azure.RequestContext)
+  id: GetScanRulesetsAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetScanRulesetsAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRulesetsAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List scan rulesets in Data catalog.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          scanRulesetType: "Custom" | "System",
+          status: "Enabled" | "Disabled",
+          version: number,
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetScanRulesetsAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetScanRulesetsAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetScanRulesetsAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetScanRulesetsAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetScanRulesetsAsync (Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(Azure.RequestContext)
+  id: GetSystemRulesets(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesets(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesets(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List all system scan rulesets for an account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          scanRulesetType: "Custom" | "System",
+          status: "Enabled" | "Disabled",
+          version: number,
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetSystemRulesets (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetSystemRulesets (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesets : Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetSystemRulesets : Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetSystemRulesets (Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(Azure.RequestContext)
+  id: GetSystemRulesetsAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List all system scan rulesets for an account.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          scanRulesetType: "Custom" | "System",
+          status: "Enabled" | "Disabled",
+          version: number,
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetSystemRulesetsAsync (Azure.RequestContext context = null);
+    parameters:
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetSystemRulesetsAsync (Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetSystemRulesetsAsync : Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetSystemRulesetsAsync (Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)
+  id: GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsForDataSource(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForDataSource(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a system scan ruleset for a data source.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response GetSystemRulesetsForDataSource (string dataSourceType, Azure.RequestContext context = null);
+    parameters:
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response GetSystemRulesetsForDataSource (string dataSourceType, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsForDataSource : string * Azure.RequestContext -> Azure.Response
+
+      override this.GetSystemRulesetsForDataSource : string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function GetSystemRulesetsForDataSource (dataSourceType As String, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">dataSourceType</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">dataSourceType</code> is an empty string, and was expected to be non-empty.
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)
+  id: GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsForDataSourceAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a system scan ruleset for a data source.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForDataSourceAsync (string dataSourceType, Azure.RequestContext context = null);
+    parameters:
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForDataSourceAsync (string dataSourceType, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsForDataSourceAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.GetSystemRulesetsForDataSourceAsync : string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function GetSystemRulesetsForDataSourceAsync (dataSourceType As String, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: <code data-dev-comment-type="paramref">dataSourceType</code> is null.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: <code data-dev-comment-type="paramref">dataSourceType</code> is an empty string, and was expected to be non-empty.
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)
+  id: GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsForVersion(Int32, String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForVersion(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(Int32, String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a scan ruleset by version.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Response GetSystemRulesetsForVersion (int version, string dataSourceType = null, Azure.RequestContext context = null);
+    parameters:
+    - id: version
+      type: System.Int32
+      description: The Integer to use.
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Response
+      description: ''
+    content.csharp: public virtual Azure.Response GetSystemRulesetsForVersion (int version, string dataSourceType = null, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsForVersion : int * string * Azure.RequestContext -> Azure.Response
+
+      override this.GetSystemRulesetsForVersion : int * string * Azure.RequestContext -> Azure.Response
+    content.vb: Public Overridable Function GetSystemRulesetsForVersion (version As Integer, Optional dataSourceType As String = null, Optional context As RequestContext = null) As Response
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  id: GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsForVersionAsync(Int32, String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(Int32, String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: Get a scan ruleset by version.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      scanRulesetType: "Custom" | "System",
+      status: "Enabled" | "Disabled",
+      version: number,
+      id: string,
+      name: string,
+      kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForVersionAsync (int version, string dataSourceType = null, Azure.RequestContext context = null);
+    parameters:
+    - id: version
+      type: System.Int32
+      description: The Integer to use.
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: System.Threading.Tasks.Task{Azure.Response}
+      description: ''
+    content.csharp: >-
+      [System.Diagnostics.DebuggerStepThrough]
+
+      public virtual System.Threading.Tasks.Task<Azure.Response> GetSystemRulesetsForVersionAsync (int version, string dataSourceType = null, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsForVersionAsync : int * string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+
+      override this.GetSystemRulesetsForVersionAsync : int * string * Azure.RequestContext -> System.Threading.Tasks.Task<Azure.Response>
+    content.vb: Public Overridable Function GetSystemRulesetsForVersionAsync (version As Integer, Optional dataSourceType As String = null, Optional context As RequestContext = null) As Task(Of Response)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync*
+  exceptions: []
+  attributes:
+  - type: System.Diagnostics.DebuggerStepThroughAttribute
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(System.String,Azure.RequestContext)
+  id: GetSystemRulesetsVersions(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsVersions(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsVersions(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List system scan ruleset versions in Data catalog.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          scanRulesetType: "Custom" | "System",
+          status: "Enabled" | "Disabled",
+          version: number,
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.Pageable<BinaryData> GetSystemRulesetsVersions (string dataSourceType = null, Azure.RequestContext context = null);
+    parameters:
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.Pageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.Pageable<BinaryData> GetSystemRulesetsVersions (string dataSourceType = null, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsVersions : string * Azure.RequestContext -> Azure.Pageable<BinaryData>
+
+      override this.GetSystemRulesetsVersions : string * Azure.RequestContext -> Azure.Pageable<BinaryData>
+    content.vb: Public Overridable Function GetSystemRulesetsVersions (Optional dataSourceType As String = null, Optional context As RequestContext = null) As Pageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)
+  commentId: M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)
+  id: GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: GetSystemRulesetsVersionsAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(String, RequestContext)
+  type: Method
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: List system scan ruleset versions in Data catalog.
+  remarks: >-
+    Schema for <code data-dev-comment-type="c">Response Body</code>:
+
+    <pre><code>{
+      value: [
+        {
+          scanRulesetType: "Custom" | "System",
+          status: "Enabled" | "Disabled",
+          version: number,
+          id: string,
+          name: string,
+          kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+        }
+      ],
+      nextLink: string,
+      count: number
+    }
+
+    </code></pre>
+
+    Schema for <code data-dev-comment-type="c">Response Error</code>:
+
+    <pre><code>{
+      error: {
+        code: string,
+        message: string,
+        target: string,
+        details: [
+          {
+            code: string,
+            message: string,
+            target: string,
+            details: [ErrorModel]
+          }
+        ]
+      }
+    }
+
+    </code></pre>
+  syntax:
+    content: public virtual Azure.AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync (string dataSourceType = null, Azure.RequestContext context = null);
+    parameters:
+    - id: dataSourceType
+      type: System.String
+      description: 'The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI".'
+    - id: context
+      type: Azure.RequestContext
+      description: The request context, which can override default behaviors on the request on a per-call basis.
+    return:
+      type: Azure.AsyncPageable{System.BinaryData}
+      description: ''
+    content.csharp: public virtual Azure.AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync (string dataSourceType = null, Azure.RequestContext context = null);
+    content.fsharp: >-
+      abstract member GetSystemRulesetsVersionsAsync : string * Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+
+      override this.GetSystemRulesetsVersionsAsync : string * Azure.RequestContext -> Azure.AsyncPageable<BinaryData>
+    content.vb: Public Overridable Function GetSystemRulesetsVersionsAsync (Optional dataSourceType As String = null, Optional context As RequestContext = null) As AsyncPageable(Of BinaryData)
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  monikers:
+  - my-api
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  commentId: P:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  id: Pipeline
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  langs:
+  - csharp
+  - fsharp
+  - vb
+  name: Pipeline
+  nameWithType: PurviewScanningServiceClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  type: Property
+  assemblies:
+  - Azure.Analytics.Purview.Scanning
+  namespace: Azure.Analytics.Purview.Scanning
+  summary: The HTTP pipeline for sending and receiving REST requests and responses.
+  syntax:
+    content: public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get; }
+    return:
+      type: Azure.Core.Pipeline.HttpPipeline
+      description: ''
+    content.csharp: public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get; }
+    content.fsharp: 'member this.Pipeline : Azure.Core.Pipeline.HttpPipeline'
+    content.vb: Public Overridable ReadOnly Property Pipeline As HttpPipeline
+  overload: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline*
+  exceptions: []
+  modifiers.csharp:
+  - public
+  - get
+  monikers:
+  - my-api
+references:
+- uid: Azure.Analytics.Purview.Scanning
+  commentId: N:Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: Azure.Analytics.Purview.Scanning
+  nameWithType: Azure.Analytics.Purview.Scanning
+  fullName: Azure.Analytics.Purview.Scanning
+  type: namespace
+- uid: System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.ArgumentNullException
+  isExternal: true
+  name: System.ArgumentNullException
+- uid: System.ArgumentException
+  isExternal: true
+  name: System.ArgumentException
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: PurviewScanningServiceClient()
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient()
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient()
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: PurviewScanningServiceClient(Uri, TokenCredential)
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential)
+  type: constructor
+- uid: System.Uri
+  parent: System
+  isExternal: true
+  name: Uri
+  nameWithType: Uri
+  fullName: System.Uri
+- uid: Azure.Core.TokenCredential
+  parent: Azure.Core
+  isExternal: true
+  name: TokenCredential
+  nameWithType: TokenCredential
+  fullName: Azure.Core.TokenCredential
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: PurviewScanningServiceClient(Uri, TokenCredential, PurviewScanningServiceClientOptions)
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential, PurviewScanningServiceClientOptions)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient(Uri, TokenCredential, PurviewScanningServiceClientOptions)
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewScanningServiceClientOptions
+  nameWithType: PurviewScanningServiceClientOptions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateKeyVaultReference(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(String, RequestContent, RequestContext)
+  type: method
+- uid: Azure.Response
+  parent: Azure
+  isExternal: true
+  name: Response
+  nameWithType: Response
+  fullName: Azure.Response
+- uid: System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: Azure.Core.RequestContent
+  parent: Azure.Core
+  isExternal: true
+  name: RequestContent
+  nameWithType: RequestContent
+  fullName: Azure.Core.RequestContent
+- uid: Azure.RequestContext
+  parent: Azure
+  isExternal: true
+  name: RequestContext
+  nameWithType: RequestContext
+  fullName: Azure.RequestContext
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateKeyVaultReferenceAsync(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(String, RequestContent, RequestContext)
+  type: method
+- uid: System.Threading.Tasks.Task`1
+  isExternal: true
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks.Task{Azure.Response}
+  parent: System.Threading.Tasks
+  name: Task<Response>
+  nameWithType: Task<Response>
+  fullName: System.Threading.Tasks.Task<Azure.Response>
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    nameWithType: Task
+    fullName: System.Threading.Tasks.Task
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Azure.Response
+    name: Response
+    nameWithType: Response
+    fullName: Azure.Response
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateScanRuleset(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateScanRuleset(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(String, RequestContent, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateScanRulesetAsync(String, RequestContent, RequestContext)
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(String, RequestContent, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(String, RequestContent, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteKeyVaultReference(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteKeyVaultReference(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteKeyVaultReferenceAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteScanRuleset(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteScanRuleset(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteScanRulesetAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.DeleteScanRulesetAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetClassificationRuleClient(String)
+  nameWithType: PurviewScanningServiceClient.GetClassificationRuleClient(String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(String)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewClassificationRuleClient
+  nameWithType: PurviewClassificationRuleClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetClassificationRules(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetClassificationRules(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(RequestContext)
+  type: method
+- uid: Azure.Pageable`1
+  isExternal: true
+  name: Pageable
+  nameWithType: Pageable
+  fullName: Azure.Pageable
+- uid: System.BinaryData
+  isExternal: true
+  name: BinaryData
+  nameWithType: BinaryData
+  fullName: System.BinaryData
+- uid: Azure.Pageable{System.BinaryData}
+  parent: Azure
+  name: Pageable<BinaryData>
+  nameWithType: Pageable<BinaryData>
+  fullName: Azure.Pageable<System.BinaryData>
+  spec.csharp:
+  - uid: Azure.Pageable`1
+    name: Pageable
+    nameWithType: Pageable
+    fullName: Azure.Pageable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.BinaryData
+    name: BinaryData
+    nameWithType: BinaryData
+    fullName: System.BinaryData
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetClassificationRulesAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetClassificationRulesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(RequestContext)
+  type: method
+- uid: Azure.AsyncPageable`1
+  isExternal: true
+  name: AsyncPageable
+  nameWithType: AsyncPageable
+  fullName: Azure.AsyncPageable
+- uid: Azure.AsyncPageable{System.BinaryData}
+  parent: Azure
+  name: AsyncPageable<BinaryData>
+  nameWithType: AsyncPageable<BinaryData>
+  fullName: Azure.AsyncPageable<System.BinaryData>
+  spec.csharp:
+  - uid: Azure.AsyncPageable`1
+    name: AsyncPageable
+    nameWithType: AsyncPageable
+    fullName: Azure.AsyncPageable
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.BinaryData
+    name: BinaryData
+    nameWithType: BinaryData
+    fullName: System.BinaryData
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetDataSourceClient(String)
+  nameWithType: PurviewScanningServiceClient.GetDataSourceClient(String)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(String)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+  parent: Azure.Analytics.Purview.Scanning
+  isExternal: false
+  name: PurviewDataSourceClient
+  nameWithType: PurviewDataSourceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetDataSources(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetDataSources(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetDataSourcesAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetDataSourcesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReference(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReference(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReferenceAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferenceAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReferences(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferences(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReferencesAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferencesAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetLatestSystemRulesets(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesets(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetLatestSystemRulesetsAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRuleset(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRuleset(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRulesetAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRulesetAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRulesets(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRulesets(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRulesetsAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetScanRulesetsAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesets(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesets(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsAsync(RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsAsync(RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForDataSource(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForDataSource(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForDataSourceAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForVersion(Int32, String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForVersion(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(Int32, String, RequestContext)
+  type: method
+- uid: System.Int32
+  parent: System
+  isExternal: true
+  name: Int32
+  nameWithType: Int32
+  fullName: System.Int32
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForVersionAsync(Int32, String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(Int32, String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(Int32, String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsVersions(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsVersions(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsVersionsAsync(String, RequestContext)
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(String, RequestContext)
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(String, RequestContext)
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: Pipeline
+  nameWithType: PurviewScanningServiceClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  type: property
+- uid: Azure.Core.Pipeline.HttpPipeline
+  parent: Azure.Core.Pipeline
+  isExternal: true
+  name: HttpPipeline
+  nameWithType: HttpPipeline
+  fullName: Azure.Core.Pipeline.HttpPipeline
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: PurviewScanningServiceClient
+  nameWithType: PurviewScanningServiceClient.PurviewScanningServiceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.PurviewScanningServiceClient
+  monikers:
+  - my-api
+  type: constructor
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateKeyVaultReference
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateKeyVaultReferenceAsync
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateScanRuleset
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateScanRuleset
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: CreateOrUpdateScanRulesetAsync
+  nameWithType: PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteKeyVaultReference
+  nameWithType: PurviewScanningServiceClient.DeleteKeyVaultReference
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteKeyVaultReferenceAsync
+  nameWithType: PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteScanRuleset
+  nameWithType: PurviewScanningServiceClient.DeleteScanRuleset
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: DeleteScanRulesetAsync
+  nameWithType: PurviewScanningServiceClient.DeleteScanRulesetAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetClassificationRuleClient
+  nameWithType: PurviewScanningServiceClient.GetClassificationRuleClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetClassificationRules
+  nameWithType: PurviewScanningServiceClient.GetClassificationRules
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetClassificationRulesAsync
+  nameWithType: PurviewScanningServiceClient.GetClassificationRulesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetDataSourceClient
+  nameWithType: PurviewScanningServiceClient.GetDataSourceClient
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetDataSources
+  nameWithType: PurviewScanningServiceClient.GetDataSources
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetDataSourcesAsync
+  nameWithType: PurviewScanningServiceClient.GetDataSourcesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReference
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReference
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReferenceAsync
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferenceAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReferences
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferences
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetKeyVaultReferencesAsync
+  nameWithType: PurviewScanningServiceClient.GetKeyVaultReferencesAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetLatestSystemRulesets
+  nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesets
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetLatestSystemRulesetsAsync
+  nameWithType: PurviewScanningServiceClient.GetLatestSystemRulesetsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRuleset
+  nameWithType: PurviewScanningServiceClient.GetScanRuleset
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRulesetAsync
+  nameWithType: PurviewScanningServiceClient.GetScanRulesetAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRulesets
+  nameWithType: PurviewScanningServiceClient.GetScanRulesets
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetScanRulesetsAsync
+  nameWithType: PurviewScanningServiceClient.GetScanRulesetsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesets
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesets
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsAsync
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForDataSource
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForDataSource
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForDataSourceAsync
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForVersion
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForVersion
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsForVersionAsync
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsVersions
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsVersions
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: GetSystemRulesetsVersionsAsync
+  nameWithType: PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync
+  monikers:
+  - my-api
+  type: method
+- uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline*
+  commentId: Overload:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  parent: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+  isExternal: false
+  name: Pipeline
+  nameWithType: PurviewScanningServiceClient.Pipeline
+  fullName: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline
+  monikers:
+  - my-api
+  type: property

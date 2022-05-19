@@ -1,0 +1,23 @@
+{
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\Azure.Analytics.Purview.Scanning\\PurviewDataSourceClient.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning\\Azure.Analytics.Purview.Scanning.PurviewDataSourceClient.yml"
+  ],
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\Azure.Analytics.Purview.Scanning\\PurviewScanClient.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning\\Azure.Analytics.Purview.Scanning.PurviewScanClient.yml"
+  ],
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\Azure.Analytics.Purview.Scanning\\PurviewScanningServiceClientOptions+ServiceVersion.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning\\Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.yml"
+  ],
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\Azure.Analytics.Purview.Scanning\\PurviewScanningServiceClientOptions.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning\\Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.yml"
+  ],
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\ns-Azure.Analytics.Purview.Scanning.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning.yml"
+  ],
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\Azure.Analytics.Purview.Scanning\\PurviewScanningServiceClient.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning\\Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.yml"
+  ],
+  "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-xml-output\\Azure.Analytics.Purview.Scanning\\PurviewClassificationRuleClient.xml": [
+    "C:\\Users\\shreja\\azure-sdk-for-net\\doc\\ApiDocGeneration\\Azure.Analytics.Purview.Scanning\\dll-yaml-output\\Azure.Analytics.Purview.Scanning\\Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.yml"
+  ]
+}

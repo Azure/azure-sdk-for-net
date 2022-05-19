@@ -1,0 +1,30 @@
+### YamlMime:TableOfContent
+- uid: Azure.Analytics.Purview.Scanning
+  name: Azure.Analytics.Purview.Scanning
+  items:
+  - uid: Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient
+    name: PurviewClassificationRuleClient
+    monikers:
+    - my-api
+  - uid: Azure.Analytics.Purview.Scanning.PurviewDataSourceClient
+    name: PurviewDataSourceClient
+    monikers:
+    - my-api
+  - uid: Azure.Analytics.Purview.Scanning.PurviewScanClient
+    name: PurviewScanClient
+    monikers:
+    - my-api
+  - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient
+    name: PurviewScanningServiceClient
+    monikers:
+    - my-api
+  - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions
+    name: PurviewScanningServiceClientOptions
+    monikers:
+    - my-api
+  - uid: Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion
+    name: PurviewScanningServiceClientOptions.ServiceVersion
+    monikers:
+    - my-api
+  monikers:
+  - my-api
