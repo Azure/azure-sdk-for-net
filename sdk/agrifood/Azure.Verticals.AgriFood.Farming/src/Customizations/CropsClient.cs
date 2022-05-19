@@ -24,7 +24,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Returns a paginated list of crop resources. </summary>
         /// <param name="options"> Options containing all optional parameters. <see cref="GetCropsOptions"/>. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual AsyncPageable<FoodCrop> GetCropsValueAsync(GetCropsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FoodCrop> GetCropsAsync(GetCropsOptions options, CancellationToken cancellationToken = default)
         {
             AsyncPageable<BinaryData> pageableBinaryData = GetCropsAsync(options?.Phenotypes, options?.Ids, options?.Names, options?.PropertyFilters,
                 options?.Statuses, options?.MinCreatedDateTime, options?.MaxCreatedDateTime, options?.MinLastModifiedDateTime, options?.MaxLastModifiedDateTime,
@@ -36,7 +36,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Returns a paginated list of crop resources. </summary>
         /// <param name="options"> Options containing all optional parameters. <see cref="GetCropsOptions"/>. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
-        public virtual Pageable<FoodCrop> GetCropsValue(GetCropsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FoodCrop> GetCrops(GetCropsOptions options, CancellationToken cancellationToken = default)
         {
             Pageable<BinaryData> pageableBinaryData = GetCrops(options?.Phenotypes, options?.Ids, options?.Names, options?.PropertyFilters,
                 options?.Statuses, options?.MinCreatedDateTime, options?.MaxCreatedDateTime, options?.MinLastModifiedDateTime, options?.MaxLastModifiedDateTime,
