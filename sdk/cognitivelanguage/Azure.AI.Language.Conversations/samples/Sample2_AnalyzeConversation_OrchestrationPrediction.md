@@ -51,15 +51,8 @@ if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-    KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result as KnowledgeBaseAnswer;
-    Console.WriteLine("Answers: \n");
-    /* foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
-    {
-        Console.WriteLine($"Answer: {answer.Answer}");
-        Console.WriteLine($"Confidence: {answer.Confidence}");
-        Console.WriteLine($"Source: {answer.Source}");
-        Console.WriteLine();
-    } */
+    BinaryData questionAnsweringResponse = qnaTargetIntentResult.Result;
+    Console.WriteLine($"Qustion Answering Response: {questionAnsweringResponse.ToString()}");
 }
 ```
 
@@ -69,7 +62,7 @@ if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetProjectKind == TargetProjectKind.CustomConversation)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
 {
     ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 

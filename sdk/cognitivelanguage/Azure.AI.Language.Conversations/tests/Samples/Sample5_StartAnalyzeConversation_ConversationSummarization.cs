@@ -94,7 +94,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 conversationSummarizationTask
             };
 
-            #region Snippet:AnalyzeConversationAsync_StartAnalayzing
+            #region Snippet:StartAnalyzeConversationAsync_StartAnalayzing
             var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
             #endregion

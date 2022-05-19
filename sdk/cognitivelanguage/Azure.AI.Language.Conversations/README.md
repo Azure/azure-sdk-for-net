@@ -247,7 +247,7 @@ To analyze a conversation using an orchestration project, you can then call the 
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetProjectKind == TargetProjectKind.CustomConversation)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
 {
     ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -298,15 +298,8 @@ if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-    KnowledgeBaseAnswer qnaAnswers = qnaTargetIntentResult.Result as KnowledgeBaseAnswer;
-    Console.WriteLine("Answers: \n");
-    /* foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
-    {
-        Console.WriteLine($"Answer: {answer.Answer}");
-        Console.WriteLine($"Confidence: {answer.Confidence}");
-        Console.WriteLine($"Source: {answer.Source}");
-        Console.WriteLine();
-    } */
+    BinaryData questionAnsweringResponse = qnaTargetIntentResult.Result;
+    Console.WriteLine($"Qustion Answering Response: {questionAnsweringResponse.ToString()}");
 }
 ```
 
@@ -328,7 +321,7 @@ if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
 
 first of all, you should prepare the input:
 
-```C# Snippet:AnalyzeConversation_ConversationSummarization_Input
+```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Input
 var textConversationItems = new List<TextConversationItem>()
 {
     new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
@@ -354,21 +347,21 @@ then you can start analyzing by calling the `StartAnalyzeConversation`, and beca
 
 ## Synchronous
 
-```C# Snippet:AnalyzeConversation_StartAnalayzing
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
 var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
 var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:AnalyzeConversation_ConversationSummarization_Results
+```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Results
 var jobResults = analyzeConversationOperation.Value;
 foreach (var result in jobResults.Tasks.Items)
 {
@@ -395,7 +388,7 @@ foreach (var result in jobResults.Tasks.Items)
 
 first of all, you should prepare the input:
 
-```C# Snippet:AnalyzeConversation_ConversationPII_Text_Input
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
 var textConversationItems = new List<TextConversationItem>()
 {
     new TextConversationItem("1", "0", "Is john doe?"),
@@ -421,21 +414,21 @@ then you can start analyzing by calling the `StartAnalyzeConversation`, and beca
 
 ## Synchronous
 
-```C# Snippet:AnalyzeConversation_StartAnalayzing
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
 var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
 var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:AnalyzeConversation_ConversationPII_Text_Results
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
 var jobResults = analyzeConversationOperation.Value;
 foreach (var result in jobResults.Tasks.Items)
 {
@@ -474,7 +467,7 @@ foreach (var result in jobResults.Tasks.Items)
 
 first of all, you should prepare the input:
 
-```C# Snippet:AnalyzeConversation_ConversationPII_Transcript_Input
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
 var transciprtConversationItemOne = new TranscriptConversationItem(
    id: "1",
    participantId: "speaker",
@@ -533,21 +526,21 @@ then you can start analyzing by calling the `StartAnalyzeConversation`, and beca
 
 ## Synchronous
 
-```C# Snippet:AnalyzeConversation_StartAnalayzing
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
 var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
 var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:AnalyzeConversation_ConversationPII_Transcript_Results
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
 var jobResults = analyzeConversationOperation.Value;
 foreach (var result in jobResults.Tasks.Items)
 {

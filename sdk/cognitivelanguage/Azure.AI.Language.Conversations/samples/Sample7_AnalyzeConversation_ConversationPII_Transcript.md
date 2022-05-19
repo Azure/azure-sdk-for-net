@@ -13,7 +13,7 @@ ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, cre
 
 Once you have created a client, you can prepare the input:
 
-```C# Snippet:AnalyzeConversation_ConversationPII_Transcript_Input
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
 var transciprtConversationItemOne = new TranscriptConversationItem(
    id: "1",
    participantId: "speaker",
@@ -72,21 +72,21 @@ then you can start analyzing by calling the `StartAnalyzeConversation`, and beca
 
 ## Synchronous
 
-```C# Snippet:AnalyzeConversation_StartAnalayzing
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
 var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:AnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
 var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:AnalyzeConversation_ConversationPII_Transcript_Results
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
 var jobResults = analyzeConversationOperation.Value;
 foreach (var result in jobResults.Tasks.Items)
 {

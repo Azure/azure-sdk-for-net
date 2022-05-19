@@ -881,7 +881,7 @@ namespace Azure.AI.Language.Conversations
     public partial class QuestionAnsweringTargetIntentResult : Azure.AI.Language.Conversations.TargetIntentResult
     {
         internal QuestionAnsweringTargetIntentResult() { }
-        public object Result { get { throw null; } }
+        public System.BinaryData Result { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RangeKind : System.IEquatable<Azure.AI.Language.Conversations.RangeKind>
@@ -1078,7 +1078,6 @@ namespace Azure.AI.Language.Conversations
         private readonly int _dummyPrimitive;
         public TargetProjectKind(string value) { throw null; }
         public static Azure.AI.Language.Conversations.TargetProjectKind Conversation { get { throw null; } }
-        public static Azure.AI.Language.Conversations.TargetProjectKind CustomConversation { get { throw null; } }
         public static Azure.AI.Language.Conversations.TargetProjectKind Luis { get { throw null; } }
         public static Azure.AI.Language.Conversations.TargetProjectKind NonLinked { get { throw null; } }
         public static Azure.AI.Language.Conversations.TargetProjectKind QuestionAnswering { get { throw null; } }
