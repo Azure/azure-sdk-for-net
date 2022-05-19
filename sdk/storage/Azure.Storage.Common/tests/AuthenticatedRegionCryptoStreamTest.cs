@@ -12,7 +12,7 @@ using Azure.Storage.Cryptography.Models;
 using NUnit;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Test
+namespace Azure.Storage.Test
 {
     /// <summary>
     /// This test theoretically belongs in common, but common's testing dependency on storage blobs combined with
