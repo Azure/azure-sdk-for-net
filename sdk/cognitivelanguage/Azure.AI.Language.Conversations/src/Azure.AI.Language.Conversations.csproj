@@ -7,9 +7,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="AnalyzeConversationOperation.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
