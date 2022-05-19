@@ -1585,11 +1585,11 @@
                  connectedVia: {
                      referenceName: string, # Optional.
                    }
+                 resourceTypes: string # Optional.
                  credential: { # Required.
                      referenceName: string, # Required.
                      credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
                    }
-                 roleARN: string # Optional.
                },
              }
              </code>

@@ -510,11 +510,11 @@ namespace Azure.Analytics.Purview.Scanning
         ///     connectedVia: {
         ///         referenceName: string, # Optional.
         ///       }
+        ///     resourceTypes: string # Optional.
         ///     credential: { # Required.
         ///         referenceName: string, # Required.
         ///         credentialType: # Required. &quot;AccountKey&quot; | &quot;ServicePrincipal&quot; | &quot;BasicAuth&quot; | &quot;SqlAuth&quot; | &quot;AmazonARN&quot;,
         ///       }
-        ///     roleARN: string # Optional.
         ///   },
         /// }
         /// </code>
