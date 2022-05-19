@@ -1,0 +1,281 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Connection": "keep-alive",
+        "Content-Length": "1300",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-1c07a692ec9c5340b050258b70126bd8-761e28898a778f4f-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "3e1f989e46046a0f90e0f50bc173ac2e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "itn": "hi",
+                  "maskedItn": "hi",
+                  "text": "Hi",
+                  "lexical": "hi",
+                  "audioTimings": [
+                    {
+                      "word": "hi",
+                      "offset": 4500000,
+                      "duration": 2800000
+                    }
+                  ],
+                  "id": "1",
+                  "participantId": "speaker"
+                },
+                {
+                  "itn": "jane doe",
+                  "maskedItn": "jane doe",
+                  "text": "Jane doe",
+                  "lexical": "jane doe",
+                  "audioTimings": [
+                    {
+                      "word": "jane",
+                      "offset": 7100000,
+                      "duration": 4800000
+                    },
+                    {
+                      "word": "jane",
+                      "offset": 12000000,
+                      "duration": 1700000
+                    }
+                  ],
+                  "id": "2",
+                  "participantId": "speaker"
+                },
+                {
+                  "itn": "hi jane what\u0027s your phone number",
+                  "maskedItn": "hi jane what\u0027s your phone number",
+                  "text": "Hi Jane, what\u0027s your phone number?",
+                  "lexical": "hi jane what\u0027s your phone number",
+                  "audioTimings": [
+                    {
+                      "word": "hi",
+                      "offset": 7700000,
+                      "duration": 3100000
+                    },
+                    {
+                      "word": "jane",
+                      "offset": 10900000,
+                      "duration": 5700000
+                    },
+                    {
+                      "word": "what\u0027s",
+                      "offset": 17300000,
+                      "duration": 2600000
+                    },
+                    {
+                      "word": "your",
+                      "offset": 20000000,
+                      "duration": 1600000
+                    },
+                    {
+                      "word": "phone",
+                      "offset": 21700000,
+                      "duration": 1700000
+                    },
+                    {
+                      "word": "number",
+                      "offset": 23500000,
+                      "duration": 2300000
+                    }
+                  ],
+                  "id": "3",
+                  "participantId": "agent"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "transcript"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "piiCategories": [
+                "All"
+              ],
+              "includeAudioRedaction": false,
+              "redactionSource": "lexical",
+              "modelVersion": "2022-05-15-preview",
+              "loggingOptOut": false
+            },
+            "kind": "ConversationalPIITask",
+            "taskName": "analyze"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "a64701cf-0eeb-4941-8721-2f802e0c4b25",
+        "Content-Length": "0",
+        "Date": "Thu, 19 May 2022 14:55:34 GMT",
+        "operation-location": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/2aac896c-bfd7-42fc-82f8-93d7ee62555a?api-version=2022-05-15-preview",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "143",
+        "x-http2-stream-id": "3"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/2aac896c-bfd7-42fc-82f8-93d7ee62555a?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "35d800b1fd5fb454c9dc200f9d73f2fa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f820f1eb-37ef-4708-8d97-559f59231f86",
+        "Content-Length": "280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 May 2022 14:55:34 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15",
+        "x-http2-stream-id": "5"
+      },
+      "ResponseBody": {
+        "jobId": "2aac896c-bfd7-42fc-82f8-93d7ee62555a",
+        "lastUpdatedDateTime": "2022-05-19T14:55:35Z",
+        "createdDateTime": "2022-05-19T14:55:35Z",
+        "expirationDateTime": "2022-05-20T14:55:35Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/2aac896c-bfd7-42fc-82f8-93d7ee62555a?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "45ab1a2f6d7da02d0b71ba490401f060",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "be25c9d7-fe70-4a06-8f99-7e21c1e643a1",
+        "Content-Length": "1138",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 May 2022 14:55:36 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "38",
+        "x-http2-stream-id": "5"
+      },
+      "ResponseBody": {
+        "jobId": "2aac896c-bfd7-42fc-82f8-93d7ee62555a",
+        "lastUpdatedDateTime": "2022-05-19T14:55:35Z",
+        "createdDateTime": "2022-05-19T14:55:35Z",
+        "expirationDateTime": "2022-05-20T14:55:35Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "conversationalPIIResults",
+              "taskName": "analyze",
+              "lastUpdateDateTime": "2022-05-19T14:55:35.6753033Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "id": "1",
+                    "conversationItems": [
+                      {
+                        "id": "1",
+                        "redactedContent": {
+                          "itn": "hi",
+                          "lexical": "hi",
+                          "maskedItn": "hi",
+                          "text": "Hi"
+                        },
+                        "entities": []
+                      },
+                      {
+                        "id": "2",
+                        "redactedContent": {
+                          "itn": "**** doe",
+                          "lexical": "**** doe",
+                          "maskedItn": "**** doe",
+                          "text": "**** doe"
+                        },
+                        "entities": [
+                          {
+                            "text": "jane",
+                            "category": "Name",
+                            "offset": 0,
+                            "length": 4,
+                            "confidenceScore": 0.85
+                          }
+                        ]
+                      },
+                      {
+                        "id": "3",
+                        "redactedContent": {
+                          "itn": "hi **** what\u0027s your phone number",
+                          "lexical": "hi **** what\u0027s your phone number",
+                          "maskedItn": "hi **** what\u0027s your phone number",
+                          "text": "Hi ****, what\u0027s your phone number?"
+                        },
+                        "entities": [
+                          {
+                            "text": "jane",
+                            "category": "Name",
+                            "offset": 3,
+                            "length": 4,
+                            "confidenceScore": 0.91
+                          }
+                        ]
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-05-15-preview"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://clubuildppe.ppe.cognitiveservices.azure.com/",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "1219249097"
+  }
+}

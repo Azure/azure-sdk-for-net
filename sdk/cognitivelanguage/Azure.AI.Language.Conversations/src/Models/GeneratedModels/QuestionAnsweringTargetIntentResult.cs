@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> It is a wrap up a Question Answering KB response. </summary>
@@ -24,11 +26,11 @@ namespace Azure.AI.Language.Conversations
         /// <param name="result"> The generated answer by a Question Answering KB. </param>
         internal QuestionAnsweringTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, object result) : base(targetProjectKind, apiVersion, confidence)
         {
-            Result = result;
+            Result = BinaryData.FromObjectAsJson(result);
             TargetProjectKind = targetProjectKind;
         }
 
         /// <summary> The generated answer by a Question Answering KB. </summary>
-        public object Result { get; }
+        public BinaryData Result { get; }
     }
 }

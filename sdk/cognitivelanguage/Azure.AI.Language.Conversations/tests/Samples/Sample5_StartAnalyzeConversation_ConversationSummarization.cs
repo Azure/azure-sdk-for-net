@@ -13,11 +13,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        public void AnalyzeConversation_ConversationSummarization()
+        public void StartAnalyzeConversation_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:AnalyzeConversation_ConversationSummarization_Input
+            #region Snippet:StartAnalyzeConversation_ConversationSummarization_Input
             var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
@@ -39,12 +39,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
             #endregion
 
-            #region Snippet:AnalyzeConversation_StartAnalayzing
+            #region Snippet:StartAnalyzeConversation_StartAnalayzing
             var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
             analyzeConversationOperation.WaitForCompletion();
             #endregion
 
-            #region Snippet:AnalyzeConversation_ConversationSummarization_Results
+            #region Snippet:StartAnalyzeConversation_ConversationSummarization_Results
             var jobResults = analyzeConversationOperation.Value;
             foreach (var result in jobResults.Tasks.Items)
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task AnalyzeConversationAsync_ConversationSummarization()
+        public async Task StartAnalyzeConversationAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
 

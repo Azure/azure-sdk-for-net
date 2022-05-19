@@ -13,11 +13,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        public void AnalyzeConversation_ConversationPII_Text()
+        public void StartAnalyzeConversation_ConversationPII_Text()
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:AnalyzeConversation_ConversationPII_Text_Input
+            #region Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
             var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "0", "Is john doe?"),
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
             analyzeConversationOperation.WaitForCompletion();
 
-            #region Snippet:AnalyzeConversation_ConversationPII_Text_Results
+            #region Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
             var jobResults = analyzeConversationOperation.Value;
             foreach (var result in jobResults.Tasks.Items)
             {
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task AnalyzeConversationAsync_ConversationPII_Text()
+        public async Task StartAnalyzeConversationAsync_ConversationPII_Text()
         {
             ConversationAnalysisClient client = Client;
 

@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Setup", customConversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("Read", customConversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
             var conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetProjectKind.CustomConversation, topIntent.TargetProjectKind);
+            Assert.AreEqual(TargetProjectKind.Conversation, topIntent.TargetProjectKind);
 
             // assert entities and intents
             Assert.IsNotEmpty(topIntent.Result.Prediction.Entities);
@@ -144,13 +144,10 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // assert - inent target kind
             Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetProjectKind);
-
-            // assert - top intent answers
-            // Assert.IsNotEmpty(topIntent.Result.Answers);
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversationAsync_ConversationSummarization()
+        public async Task StartAnalyzeConversationAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
 
@@ -202,7 +199,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversation_ConversationPII_TextInput()
+        public async Task StartAnalyzeConversationAsync_ConversationPII_TextInput()
         {
             var textConversationItems = new List<TextConversationItem>()
             {
@@ -259,7 +256,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeConversation_ConversationPII_TranscriptInput()
+        public async Task StartAnalyzeConversationAsync_ConversationPII_TranscriptInput()
         {
             var transciprtConversationItemOne = new TranscriptConversationItem(
                id: "1",

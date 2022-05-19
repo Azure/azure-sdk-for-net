@@ -1,0 +1,217 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "530",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-85e037d4e0eb364f98852d96300624e8-5f78e98f54d80446-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d6195abadd3b785c6d69b2e89435ba7d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hello, how can I help you?",
+                  "id": "1",
+                  "participantId": "Agent"
+                },
+                {
+                  "text": "How to upgrade Office? I am getting error messages the whole day.",
+                  "id": "2",
+                  "participantId": "Customer"
+                },
+                {
+                  "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+                  "id": "3",
+                  "participantId": "Agent"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "summaryAspects": [
+                "issue",
+                "resolution"
+              ]
+            },
+            "kind": "ConversationalSummarizationTask",
+            "taskName": "1"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "e3f95c5b-6a45-461e-8de7-1f3112a37138",
+        "Content-Length": "0",
+        "Date": "Thu, 19 May 2022 14:51:16 GMT",
+        "operation-location": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/9e26c9bb-adf6-4b79-b901-2b0591d9020c?api-version=2022-05-15-preview",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "85",
+        "x-http2-stream-id": "9"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/9e26c9bb-adf6-4b79-b901-2b0591d9020c?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2669858fb0807f471bed9f8673bd9ece",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e744aa9a-841c-4892-abbf-d68c5ad2f239",
+        "Content-Length": "283",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 May 2022 14:51:15 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "12",
+        "x-http2-stream-id": "7"
+      },
+      "ResponseBody": {
+        "jobId": "9e26c9bb-adf6-4b79-b901-2b0591d9020c",
+        "lastUpdatedDateTime": "2022-05-19T14:51:16Z",
+        "createdDateTime": "2022-05-19T14:51:16Z",
+        "expirationDateTime": "2022-05-20T14:51:16Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/9e26c9bb-adf6-4b79-b901-2b0591d9020c?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8a7f472f2a603258ee4f30d4415ab839",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3252dea5-e329-4daa-90d3-6b92312bf301",
+        "Content-Length": "280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 May 2022 14:51:17 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "12",
+        "x-http2-stream-id": "7"
+      },
+      "ResponseBody": {
+        "jobId": "9e26c9bb-adf6-4b79-b901-2b0591d9020c",
+        "lastUpdatedDateTime": "2022-05-19T14:51:17Z",
+        "createdDateTime": "2022-05-19T14:51:16Z",
+        "expirationDateTime": "2022-05-20T14:51:16Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/analyze-conversations/jobs/9e26c9bb-adf6-4b79-b901-2b0591d9020c?api-version=2022-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "00ed86385b0b0a63129abb4d3ed504af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "207ab7f0-c33a-436e-878a-022cb7304de7",
+        "Content-Length": "689",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 May 2022 14:51:18 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "34",
+        "x-http2-stream-id": "9"
+      },
+      "ResponseBody": {
+        "jobId": "9e26c9bb-adf6-4b79-b901-2b0591d9020c",
+        "lastUpdatedDateTime": "2022-05-19T14:51:18Z",
+        "createdDateTime": "2022-05-19T14:51:16Z",
+        "expirationDateTime": "2022-05-20T14:51:16Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "conversationalSummarizationResults",
+              "taskName": "1",
+              "lastUpdateDateTime": "2022-05-19T14:51:18.7890823Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "id": "1",
+                    "summaries": [
+                      {
+                        "aspect": "issue",
+                        "text": "Customer wants to upgrade Office"
+                      },
+                      {
+                        "aspect": "resolution",
+                        "text": "Asked for the error message | Asked for help to upgrade Office"
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-05-15-preview"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://clubuildppe.ppe.cognitiveservices.azure.com/",
+    "AZURE_CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "757025945"
+  }
+}

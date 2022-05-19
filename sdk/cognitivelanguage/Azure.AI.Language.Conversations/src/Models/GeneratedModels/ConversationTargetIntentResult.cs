@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         internal ConversationTargetIntentResult(double confidence) : base(confidence)
         {
-            TargetProjectKind = TargetProjectKind.CustomConversation;
+            TargetProjectKind = TargetProjectKind.Conversation;
         }
 
         /// <summary> Initializes a new instance of ConversationTargetIntentResult. </summary>

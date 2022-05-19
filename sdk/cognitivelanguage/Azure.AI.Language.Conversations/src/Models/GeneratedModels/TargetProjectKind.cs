@@ -26,7 +26,6 @@ namespace Azure.AI.Language.Conversations
         private const string ConversationValue = "Conversation";
         private const string QuestionAnsweringValue = "QuestionAnswering";
         private const string NonLinkedValue = "NonLinked";
-        private const string CustomConversationValue = "CustomConversation";
 
         /// <summary> Luis. </summary>
         public static TargetProjectKind Luis { get; } = new TargetProjectKind(LuisValue);
@@ -37,8 +36,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> NonLinked. </summary>
         public static TargetProjectKind NonLinked { get; } = new TargetProjectKind(NonLinkedValue);
         /// <summary> CustomConversation. </summary>
-        public static TargetProjectKind CustomConversation { get; } = new TargetProjectKind(CustomConversationValue);
-        /// <summary> Determines if two <see cref="TargetProjectKind"/> values are the same. </summary>
         public static bool operator ==(TargetProjectKind left, TargetProjectKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TargetProjectKind"/> values are not the same. </summary>
         public static bool operator !=(TargetProjectKind left, TargetProjectKind right) => !left.Equals(right);

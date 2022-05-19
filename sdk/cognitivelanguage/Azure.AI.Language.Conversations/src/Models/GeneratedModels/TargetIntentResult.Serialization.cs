@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Conversations
             {
                 switch (discriminator.GetString())
                 {
-                    case "CustomConversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element);
+                    case "Conversation": return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element);
                     case "Luis": return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element);
                     case "NonLinked": return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element);
                     case "QuestionAnswering": return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element);

@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Setup"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
         }
 
         [AsyncOnly]
@@ -151,7 +151,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Setup"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
         }
     }
 }

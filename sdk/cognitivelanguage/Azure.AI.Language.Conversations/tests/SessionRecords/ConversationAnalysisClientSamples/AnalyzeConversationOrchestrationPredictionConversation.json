@@ -5,12 +5,11 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
         "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220518.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "b001116979863fae1945a4ca2870f9e9",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b996b76b188daafb042b6d6bea551c6d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +28,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f3da4a35-45a5-4f98-9590-b74e4e8e573f",
+        "apim-request-id": "37935ba5-62c5-405f-bc1f-18cfdced0046",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Wed, 18 May 2022 14:19:25 GMT",
+        "Date": "Thu, 19 May 2022 15:04:58 GMT",
         "Pragma": "no-cache",
-        "request-id": "f3da4a35-45a5-4f98-9590-b74e4e8e573f",
+        "request-id": "37935ba5-62c5-405f-bc1f-18cfdced0046",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "200"
+        "x-envoy-upstream-service-time": "107"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -119,8 +118,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-05-19",
-                            "value": "2022-05-19"
+                            "timex": "2022-05-20",
+                            "value": "2022-05-20"
                           }
                         ],
                         "extraInformation": [
@@ -164,6 +163,6 @@
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "2104332183"
+    "RandomSeed": "798702750"
   }
 }

@@ -13,11 +13,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        public void AnalyzeConversation_ConversationPII_Transcript()
+        public void StartAnalyzeConversation_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:AnalyzeConversation_ConversationPII_Transcript_Input
+            #region Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
             var transciprtConversationItemOne = new TranscriptConversationItem(
                id: "1",
                participantId: "speaker",
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
             analyzeConversationOperation.WaitForCompletion();
 
-            #region Snippet:AnalyzeConversation_ConversationPII_Transcript_Results
+            #region Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
             var jobResults = analyzeConversationOperation.Value;
             foreach (var result in jobResults.Tasks.Items)
             {
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task AnalyzeConversationAsync_ConversationPII_Transcript()
+        public async Task StartAnalyzeConversationAsync_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
 

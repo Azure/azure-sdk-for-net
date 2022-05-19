@@ -5,12 +5,11 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
         "Content-Length": "195",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220518.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "59b5e3292a89c21fdcb1e81ca2666186",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "cf787f67e43c750aac4fe006ad1a9066",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,17 +28,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2e2702e9-0a96-41b0-8695-7cd8f7314403",
+        "apim-request-id": "590a6931-8651-40ad-9e54-cefe6f4d5cf5",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Wed, 18 May 2022 14:19:03 GMT",
+        "Date": "Thu, 19 May 2022 15:04:59 GMT",
         "Pragma": "no-cache",
-        "request-id": "2e2702e9-0a96-41b0-8695-7cd8f7314403",
+        "request-id": "590a6931-8651-40ad-9e54-cefe6f4d5cf5",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1122"
+        "x-envoy-upstream-service-time": "360"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -127,6 +126,6 @@
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
     "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "1656239112"
+    "RandomSeed": "2018817378"
   }
 }

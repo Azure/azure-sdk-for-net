@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Conversations
             options ??= new AnalyzeConversationOptions(textConversationItem);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}External");
             scope.AddAttribute("projectName", project.ProjectName);
             scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Conversations
             options ??= new AnalyzeConversationOptions(textConversationItem);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}External");
             scope.AddAttribute("projectName", project.ProjectName);
             scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
@@ -184,7 +184,7 @@ namespace Azure.AI.Language.Conversations
 
             AnalyzeConversationJobsInput analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(StartAnalyzeConversation)}");
             scope.Start();
 
             var content = new Utf8JsonRequestContent();
@@ -217,7 +217,7 @@ namespace Azure.AI.Language.Conversations
 
             AnalyzeConversationJobsInput analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(StartAnalyzeConversation)}");
             scope.Start();
 
             var content = new Utf8JsonRequestContent();

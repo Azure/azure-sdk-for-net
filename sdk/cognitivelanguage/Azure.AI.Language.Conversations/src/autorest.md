@@ -180,6 +180,14 @@ directive:
           ];
 ```
 
+```yaml
+directive:
+    - from: swagger-document
+      where: $["definitions"]["ConversationTargetIntentResult"]
+      transform: >
+        $["x-ms-discriminator-value"] = "Conversation";
+```
+
 ### Service Version
 ```yaml
 directive:
