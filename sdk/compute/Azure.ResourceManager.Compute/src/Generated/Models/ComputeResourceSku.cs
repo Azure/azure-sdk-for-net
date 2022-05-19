@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available Compute SKU. </summary>
-    public partial class ResourceSku
+    public partial class ComputeResourceSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
-        internal ResourceSku()
+        /// <summary> Initializes a new instance of ComputeResourceSku. </summary>
+        internal ComputeResourceSku()
         {
             Locations = new ChangeTrackingList<string>();
             LocationInfo = new ChangeTrackingList<ResourceSkuLocationInfo>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of ComputeResourceSku. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ResourceSkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal ComputeResourceSku(string resourceType, string name, string tier, string size, string family, string kind, ComputeResourceSkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ResourceSkuCosts> costs, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The Kind of resources that are supported in this SKU. </summary>
         public string Kind { get; }
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
-        public ResourceSkuCapacity Capacity { get; }
+        public ComputeResourceSkuCapacity Capacity { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
         public IReadOnlyList<string> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>

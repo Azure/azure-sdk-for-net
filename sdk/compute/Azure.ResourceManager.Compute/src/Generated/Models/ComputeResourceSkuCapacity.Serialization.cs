@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuCapacity
+    public partial class ComputeResourceSkuCapacity
     {
-        internal static ResourceSkuCapacity DeserializeResourceSkuCapacity(JsonElement element)
+        internal static ComputeResourceSkuCapacity DeserializeComputeResourceSkuCapacity(JsonElement element)
         {
             Optional<long> minimum = default;
             Optional<long> maximum = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
+            return new ComputeResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

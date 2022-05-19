@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The provisioning state of the restore point collection. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique id of the restore point collection. </summary>
-        public string RestorePointCollectionId { get; }
+        public string RestorePointGroupId { get; }
         /// <summary> A list containing all restore points created under this restore point collection. </summary>
         public IReadOnlyList<RestorePointData> RestorePoints { get; }
     }

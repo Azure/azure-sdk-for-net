@@ -111,13 +111,11 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
-#   - from: swagger-document
-#     where: $.definitions
-#     transform: >
-#       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
-#       $.SubResource.properties.id["x-ms-format"] = "arm-id";
-#       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
-#       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+  - from: skus.json
+    where: $.definitions
+    transform: >
+      $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
+      $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
   - from: compute.json
     where: $.definitions
     transform: >
@@ -127,10 +125,15 @@ directive:
       $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
+      $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
+      $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
+      $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
   - from: disk.json
     where: $.definitions
     transform: >

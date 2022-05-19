@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSku
+    public partial class ComputeResourceSku
     {
-        internal static ResourceSku DeserializeResourceSku(JsonElement element)
+        internal static ComputeResourceSku DeserializeComputeResourceSku(JsonElement element)
         {
             Optional<string> resourceType = default;
             Optional<string> name = default;
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<string> kind = default;
-            Optional<ResourceSkuCapacity> capacity = default;
+            Optional<ComputeResourceSkuCapacity> capacity = default;
             Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<ResourceSkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
+                    capacity = ComputeResourceSkuCapacity.DeserializeComputeResourceSkuCapacity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locations"))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions));
+            return new ComputeResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions));
         }
     }
 }

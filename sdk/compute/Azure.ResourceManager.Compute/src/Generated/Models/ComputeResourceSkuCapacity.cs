@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes scaling information of a SKU. </summary>
-    public partial class ResourceSkuCapacity
+    public partial class ComputeResourceSkuCapacity
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapacity. </summary>
-        internal ResourceSkuCapacity()
+        /// <summary> Initializes a new instance of ComputeResourceSkuCapacity. </summary>
+        internal ComputeResourceSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of ComputeResourceSkuCapacity. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity that can be set. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        internal ResourceSkuCapacity(long? minimum, long? maximum, long? @default, ResourceSkuCapacityScaleType? scaleType)
+        internal ComputeResourceSkuCapacity(long? minimum, long? maximum, long? @default, ResourceSkuCapacityScaleType? scaleType)
         {
             Minimum = minimum;
             Maximum = maximum;
