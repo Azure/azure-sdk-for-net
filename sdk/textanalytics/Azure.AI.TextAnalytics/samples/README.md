@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-text-analytics
+- language-service
 name: Azure Text Analytics samples for .NET
 description: Samples for the Azure.AI.TextAnalytics client library
 ---
