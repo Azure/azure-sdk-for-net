@@ -434,16 +434,16 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads, as well as samples showing how to format these payloads in .NET.<br/>
-        /// Additional information can be found in the Purview service REST API documentation: <see href="https://docs.microsoft.com/en-us/rest/api/purview/"/><br/>
+        /// Additional information can be found in the Purview service REST API documentation: <a href="https://docs.microsoft.com/en-us/rest/api/purview/">https://docs.microsoft.com/en-us/rest/api/purview/</a><br/>
         ///<br/>
         /// This method takes a one of the scan types below as a payload. Please select a scan type to view the schema for this type.<br/>
-        /// <see href="AzureSubscriptionCredential"/><br/>
-        /// <see href="AzureSubscriptionMsi"/><br/>
-        /// <see href="AzureResourceGroupCredential"/><br/>
-        /// <see href="AzureResourceGroupMsi"/><br/>
-        /// <see href="AzureSynapseWorkspaceCredential"/><br/>
-        /// <see href="AmazonS3Credential"/><br/>
-        /// <see href="See More..."/># ~50+ types<br/>
+        /// <a href="AzureSubscriptionCredential">AzureSubscriptionCredential</a><br/>
+        /// <a href="AzureSubscriptionMsi">AzureSubscriptionMsi</a><br/>
+        /// <a href="AzureResourceGroupCredential">AzureResourceGroupCredential</a><br/>
+        /// <a href="AzureResourceGroupMsi">AzureResourceGroupMsi</a><br/>
+        /// <a href="AzureSynapseWorkspaceCredential">AzureSynapseWorkspaceCredential</a><br/>
+        /// <a href="AmazonS3Credential">AmazonS3Credential</a><br/>
+        /// <a href="See More...">See More...</a># ~50+ types<br/>
         /// <br/>
         ///
         /// Schema for AzureSubscriptionCredential <c>Request Body</c>:
@@ -674,7 +674,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// ...<br/>
         /// <c>Error Response</c>:
         /// <para>
-        /// We throw <see href="RequestFailedException"/> in case of error response.
+        /// We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response.
         /// </para>
         /// 
         /// <para>
