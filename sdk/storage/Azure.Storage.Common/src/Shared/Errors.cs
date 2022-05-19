@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Azure.Storage
 {
@@ -63,6 +64,22 @@ namespace Azure.Storage
             if (stream != null && stream.CanSeek && stream.Length > 0 && stream.Position >= stream.Length)
             {
                 throw new ArgumentException($"{streamName}.{nameof(stream.Position)} must be less than {streamName}.{nameof(stream.Length)}. Please set {streamName}.{nameof(stream.Position)} to the start of the data to upload.");
+            }
+        }
+
+        public static void ThrowIfParamNull(object obj, string paramName)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException($"Param: \"{paramName}\" is null");
+            }
+        }
+
+        internal static void CheckCryptKeySize(int keySizeInBytes)
+        {
+            if (keySizeInBytes != (128 / 8) && keySizeInBytes != (192 / 8) && keySizeInBytes != (256 / 8))
+            {
+                throw new CryptographicException("SR.Cryptography_InvalidKeySize");
             }
         }
     }
