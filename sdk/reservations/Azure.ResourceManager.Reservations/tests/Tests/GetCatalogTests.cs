@@ -30,18 +30,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VirtualMachines", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("virtualMachines", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "virtualMachines", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -50,18 +39,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SqlDatabases", "westus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.IsTrue(item.ReservedResourceType.Equals("SQLManagedInstances") || item.ReservedResourceType.Equals("SQLDatabases"));
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus", item.Locations[0].Name);
-                Assert.AreEqual("West US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "SQLManagedInstances", "SQLDatabases", true, "westus", "West US");
         }
 
         [TestCase]
@@ -70,14 +48,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SuseLinux");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("SuseLinux", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "SuseLinux");
         }
 
         [TestCase]
@@ -86,18 +57,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SqlDataWarehouse", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("SqlDataWarehouse", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "SqlDataWarehouse", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -106,18 +66,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VMwareCloudSimple", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("VMwareCloudSimple", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "VMwareCloudSimple", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -126,14 +75,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("CosmosDb");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("CosmosDb", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "CosmosDb");
         }
 
         [TestCase]
@@ -142,14 +84,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("RedHat");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("RedHat", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "RedHat");
         }
 
         [TestCase]
@@ -158,14 +93,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("RedHatOsa");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("RedHatOsa", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "RedHatOsa");
         }
 
         [TestCase]
@@ -174,14 +102,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("Databricks");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("Databricks", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "Databricks");
         }
 
         [TestCase]
@@ -190,18 +111,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AppService", "westus2");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("AppService", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus2", item.Locations[0].Name);
-                Assert.AreEqual("West US 2", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "AppService", null, true, "westus2", "West US 2");
         }
 
         [TestCase]
@@ -210,18 +120,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("BlockBlob", "westus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("BlockBlob", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus", item.Locations[0].Name);
-                Assert.AreEqual("West US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "BlockBlob", null, true, "westus", "West US");
         }
 
         [TestCase]
@@ -230,18 +129,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("ManagedDisk", "westeurope");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("ManagedDisk", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westeurope", item.Locations[0].Name);
-                Assert.AreEqual("West Europe", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "ManagedDisk", null, true, "westeurope", "West Europe");
         }
 
         [TestCase]
@@ -250,18 +138,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("RedisCache", "westus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("RedisCache", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus", item.Locations[0].Name);
-                Assert.AreEqual("West US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "RedisCache", null, true, "westus", "West US");
         }
 
         [TestCase]
@@ -270,14 +147,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AzureDataExplorer");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("AzureDataExplorer", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "AzureDataExplorer");
         }
 
         [TestCase]
@@ -286,18 +156,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("MySql", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("MySql", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "MySql", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -306,18 +165,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("MariaDb", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("MariaDb", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "MariaDb", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -326,18 +174,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("PostgreSql", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("PostgreSql", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "PostgreSql", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -346,18 +183,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("DedicatedHost", "westeurope");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("DedicatedHost", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westeurope", item.Locations[0].Name);
-                Assert.AreEqual("West Europe", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "DedicatedHost", null, true, "westeurope", "West Europe");
         }
 
         [TestCase]
@@ -366,18 +192,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SapHana", "westus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("SapHana", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus", item.Locations[0].Name);
-                Assert.AreEqual("West US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "SapHana", null, true, "westus", "West US");
         }
 
         [TestCase]
@@ -386,18 +201,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AVS", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("AVS", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "AVS", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -406,18 +210,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("DataFactory", "eastus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("DataFactory", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("eastus", item.Locations[0].Name);
-                Assert.AreEqual("East US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "DataFactory", null, true, "eastus", "East US");
         }
 
         [TestCase]
@@ -429,15 +222,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 
             Assert.NotNull(catalogResult);
             Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("NetAppStorage", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus", item.Locations[0].Name);
-                Assert.AreEqual("West US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "NetAppStorage", null, true, "westus", "West US");
         }
 
         [TestCase]
@@ -446,18 +231,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AzureFiles", "westus");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("AzureFiles", item.ReservedResourceType);
-                Assert.NotNull(item.Locations);
-                Assert.IsTrue(item.Locations.Count == 1);
-                Assert.AreEqual("westus", item.Locations[0].Name);
-                Assert.AreEqual("West US", item.Locations[0].DisplayName);
-            });
+            CheckForCatalogResult(catalogResult, "AzureFiles", null, true, "westus", "West US");
         }
 
         [TestCase]
@@ -466,14 +240,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SqlEdge");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
-
-            Assert.NotNull(catalogResult);
-            Assert.IsTrue(catalogResult.Count > 0);
-
-            catalogResult.ForEach(item =>
-            {
-                Assert.AreEqual("SqlEdge", item.ReservedResourceType);
-            });
+            CheckForCatalogResult(catalogResult, "SqlEdge");
         }
 
         [TestCase]
@@ -482,13 +249,32 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VirtualMachineSoftware", publisherId: "test_test_pmc2pc1", offerId: "mnk_vmri_test_001", planId: "testplan001");
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
+            CheckForCatalogResult(catalogResult, "VirtualMachineSoftware");
+        }
 
+        private void CheckForCatalogResult(List<ReservationCatalog> catalogResult, string resourceTypeName, string alternateResourceTypeName = null, bool hasLocation = false, string location = null, string locationDisplayName = null)
+        {
             Assert.NotNull(catalogResult);
             Assert.IsTrue(catalogResult.Count > 0);
 
             catalogResult.ForEach(item =>
             {
-                Assert.AreEqual("VirtualMachineSoftware", item.ReservedResourceType);
+                if (alternateResourceTypeName != null)
+                {
+                    Assert.IsTrue(item.ReservedResourceType.Equals(resourceTypeName) || item.ReservedResourceType.Equals(alternateResourceTypeName));
+                }
+                else
+                {
+                    Assert.AreEqual(resourceTypeName, item.ReservedResourceType);
+                }
+
+                if (hasLocation)
+                {
+                    Assert.NotNull(item.Locations);
+                    Assert.IsTrue(item.Locations.Count == 1);
+                    Assert.AreEqual(location, item.Locations[0].Name);
+                    Assert.AreEqual(locationDisplayName, item.Locations[0].DisplayName);
+                }
             });
         }
     }
