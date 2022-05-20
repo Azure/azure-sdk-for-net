@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Tests
 {
     public class CalculatePriceTests : ReservationsManagementClientBase
     {
-        public TenantResource Tenant { get; set; }
+        private TenantResource Tenant { get; set; }
 
         public CalculatePriceTests(bool isAsync) : base(isAsync)
         {

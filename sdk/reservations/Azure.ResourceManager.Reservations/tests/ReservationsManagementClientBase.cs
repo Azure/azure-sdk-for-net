@@ -30,10 +30,5 @@ namespace Azure.ResourceManager.Reservations.Tests
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ResourceGroupsOperations = Subscription.GetResourceGroups();
         }
-
-        public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
-        {
-            return await Subscription.GetResourceGroups().GetAsync(name);
-        }
     }
 }
