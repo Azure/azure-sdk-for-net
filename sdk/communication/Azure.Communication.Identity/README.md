@@ -114,10 +114,10 @@ Response revokeResponse = await client.RevokeTokensAsync(user);
 Response deleteResponse = await client.DeleteUserAsync(user);
 ```
 
-### Exchanging AAD access token of a Teams User for a Communication Identity access token
+### Exchanging Azure AD access token of a Teams User for a Communication Identity access token
 
 ```C# Snippet:GetTokenForTeamsUserAsync
-Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken, appId, userId);
+Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(options);
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```

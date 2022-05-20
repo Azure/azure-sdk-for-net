@@ -158,14 +158,10 @@ namespace Azure.Communication.Identity.Samples
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var teamsUserParams = createTeamsUserParams().Result;
+            var options = createTeamsUserParams().Result;
             var client = CreateClientWithConnectionString();
-            var teamsToken = teamsUserParams.Token;
-            var appId = teamsUserParams.AppId;
-            var userId = teamsUserParams.UserId;
-
             #region Snippet:GetTokenForTeamsUser
-            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken, appId, userId);
+            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(options);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUser
@@ -179,15 +175,11 @@ namespace Azure.Communication.Identity.Samples
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var teamsUserParams = await createTeamsUserParams();
+            var options = await createTeamsUserParams();
             var client = CreateClientWithConnectionString();
 
-            var teamsToken = teamsUserParams.Token;
-            var appId = teamsUserParams.AppId;
-            var userId = teamsUserParams.UserId;
-
             #region Snippet:GetTokenForTeamsUserAsync
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(teamsToken, appId, userId);
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(options);
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUserAsync

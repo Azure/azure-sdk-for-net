@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
-using Azure.Communication.Identity.Tests.Infrastructure;
 using Azure.Core.TestFramework.Models;
+using Azure.Communication.Identity.Models;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -60,9 +60,9 @@ namespace Azure.Communication.Identity.Tests
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
-        protected async Task<TeamsUserParams> createTeamsUserParams()
+        protected async Task<GetTokenForTeamsUserOptions> createTeamsUserParams()
         {
-            TeamsUserParams teamsUserParams = new TeamsUserParams("Sanitized", "Sanitized", "Sanitized");
+            GetTokenForTeamsUserOptions options = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
             if (Mode != RecordedTestMode.Playback)
             {
                 IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
@@ -79,11 +79,11 @@ namespace Azure.Communication.Identity.Tests
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-                teamsUserParams.Token = result.AccessToken;
-                teamsUserParams.AppId = TestEnvironment.CommunicationM365AppId;
-                teamsUserParams.UserId = result.Account.HomeAccountId.ObjectId;
+                options.TeamsUserAadToken = result.AccessToken;
+                options.ClientId = TestEnvironment.CommunicationM365AppId;
+                options.UserObjectId = result.UniqueId;
             }
-            return teamsUserParams;
+            return options;
         }
     }
 }
