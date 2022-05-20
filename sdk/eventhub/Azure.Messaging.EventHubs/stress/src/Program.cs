@@ -118,6 +118,27 @@ public class Program
             testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
         }
 
+        if (opts.Test == "BurstBuffProd" || opts.Test == "BurstBufferedProducerTest" || opts.All)
+        {
+            // Get the needed resources for the buffered producer test: an event hub
+            var eventHubName = String.Empty;
+            environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
+            eventHubName = _promptForResources("Event Hub", "Burst Buffered Producer Test", eventHubName, opts.Interactive);
+
+            // Save resources in the test configuration
+            var testConfiguration = new TestConfiguration();
+            testConfiguration.EventHubsConnectionString = eventHubsConnectionString;
+            testConfiguration.EventHub = eventHubName;
+
+            var cancellationSource = new CancellationTokenSource();
+            var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
+            cancellationSource.CancelAfter(runDuration);
+
+            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BufferedProducerTest, out var roleList);
+
+            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
+        }
+
         if (opts.Test == "Processor" || opts.Test == "EventProcessorTest" || opts.All)
         {
             // Get the needed resources for the processor test: an event hub, storage account, and blob container name

@@ -122,9 +122,6 @@ output EVENTHUB_NAME_EVENT_PRODUCER_TEST string = eventHubEventProducer.name
 // Outputs for the BurstBufferedProducerTest scenario
 output EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST string = eventHubBurstBufferedProducer.name
 
-// Outputs for the ConcurrentBufferedProducerTest scenario
-output EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST string = eventHubConcurrentBufferedProducer.name
-
 // Outputs for the ProcessorTest scenario
 output EVENTHUB_NAME_PROCESSOR_TEST string = eventHubProcessor.name
 output STORAGE_BLOB_PROCESSOR_TEST string = processorTestName

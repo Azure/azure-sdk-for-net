@@ -51,13 +51,6 @@ public static class EnvironmentVariables
     public const string EventHubBurstBufferedProducerTest = "EVENTHUB_NAME_BURST_BUFFERED_PRODUCER_TEST";
 
     /// <summary>
-    ///   The name of the environment variable that holds the name of the Event Hub resource for the Event Hub
-    ///   concurrent Buffered Producer test scenario.
-    /// </summary>
-    ///
-    public const string EventHubConcurrentBufferedProducerTest = "EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST";
-
-    /// <summary>
     ///   The name of the environment variable that holds the name of the Event Hub resource for the processor test scenario.
     /// </summary>
     ///
