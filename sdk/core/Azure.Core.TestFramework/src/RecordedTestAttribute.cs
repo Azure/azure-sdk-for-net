@@ -109,10 +109,15 @@ namespace Azure.Core.TestFramework
                                 "Test timed out in initial run, but was retried successfully.");
                         }
                     }
+                    else
+                    {
+                        CheckForIgnoredServiceErrors(context);
+                    }
                 }
-
-                CheckForIgnoredServiceErrors(context);
-
+                else
+                {
+                    CheckForIgnoredServiceErrors(context);
+                }
                 return context.CurrentResult;
             }
 
