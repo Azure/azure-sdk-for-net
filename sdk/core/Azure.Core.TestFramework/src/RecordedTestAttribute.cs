@@ -29,26 +29,19 @@ namespace Azure.Core.TestFramework
 
             if (test.Fixture is RecordedTestBase fixture)
             {
-                return fixture.Mode == RecordedTestMode.Playback ? new PlaybackCommand(command) : new RecordedTestAttributeCommand(command);
+                return new RecordedTestAttributeCommand(command, fixture.Mode);
             }
 
             return command;
         }
 
-        private static bool IsTestFailed(TestExecutionContext context)
+        private class RecordedTestAttributeCommand : DelegatingTestCommand
         {
-            return context.CurrentResult.ResultState.Status switch
-            {
-                TestStatus.Passed => false,
-                TestStatus.Skipped => false,
-                _ => true
-            };
-        }
+            private readonly RecordedTestMode _mode;
 
-        private class PlaybackCommand : RecordedTestAttributeCommand
-        {
-            public PlaybackCommand(TestCommand innerCommand) : base(innerCommand)
+            public RecordedTestAttributeCommand(TestCommand innerCommand, RecordedTestMode mode) : base(innerCommand)
             {
+                _mode = mode;
             }
             public override TestResult Execute(TestExecutionContext context)
             {
@@ -56,7 +49,12 @@ namespace Azure.Core.TestFramework
                 context.CurrentResult = innerCommand.Execute(context);
 
                 // Check the result
-                if (IsTestFailed(context))
+                if (!IsTestFailed(context))
+                {
+                    return context.CurrentResult;
+                }
+
+                if (_mode == RecordedTestMode.Playback)
                 {
                     string resultMessage = context.CurrentResult.Message;
                     TestResult originalResult = context.CurrentResult;
@@ -73,7 +71,8 @@ namespace Azure.Core.TestFramework
                         if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                         {
                             context.CurrentResult.SetResult(ResultState.Error,
-                                "Test failed playback, but was successfully re-recorded (it should pass if re-run)." + Environment.NewLine +
+                                "Test failed playback, but was successfully re-recorded (it should pass if re-run)." +
+                                Environment.NewLine +
                                 Environment.NewLine +
                                 originalResult.Message);
                         }
@@ -110,53 +109,56 @@ namespace Azure.Core.TestFramework
                                 "Test timed out in initial run, but was retried successfully.");
                         }
                     }
+                    else
+                    {
+                        CheckForIgnoredServiceErrors(context);
+                    }
                 }
-
-                base.Execute(context);
-
+                else
+                {
+                    CheckForIgnoredServiceErrors(context);
+                }
                 return context.CurrentResult;
+            }
+
+            private void CheckForIgnoredServiceErrors(TestExecutionContext context)
+            {
+                // Check if there are any service errors we should ignore.
+                var ignoreServiceErrorAttributes = innerCommand.Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+                // Check parents for service errors to ignore.
+                var test = Test;
+                while (test.Parent is Test t)
+                {
+                    ignoreServiceErrorAttributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                    test = t;
+                }
+                foreach (IgnoreServiceErrorAttribute attr in ignoreServiceErrorAttributes)
+                {
+                    if (attr.Matches(context.CurrentResult.Message))
+                    {
+                        context.CurrentResult.SetResult(
+                            ResultState.Inconclusive,
+                            $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
+                            context.CurrentResult.StackTrace);
+                        break;
+                    }
+                }
             }
 
             private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
             {
                 fixture.Mode = mode;
             }
-        }
 
-        private class RecordedTestAttributeCommand : DelegatingTestCommand
-        {
-            public RecordedTestAttributeCommand(TestCommand innerCommand) : base(innerCommand)
+            private static bool IsTestFailed(TestExecutionContext context)
             {
-            }
-
-            public override TestResult Execute(TestExecutionContext context)
-            {
-                if (IsTestFailed(context))
+                return context.CurrentResult.ResultState.Status switch
                 {
-                    // Check if there are any service errors we should ignore.
-                    var ignoreServiceErrorAttributes = innerCommand.Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
-
-                    // Check parents for service errors to ignore.
-                    var test = Test;
-                    while (test.Parent is Test t)
-                    {
-                        ignoreServiceErrorAttributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
-                        test = t;
-                    }
-                    foreach (IgnoreServiceErrorAttribute attr in ignoreServiceErrorAttributes)
-                    {
-                        if (attr.Matches(context.CurrentResult.Message))
-                        {
-                            context.CurrentResult.SetResult(
-                                ResultState.Inconclusive,
-                                $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
-                                context.CurrentResult.StackTrace);
-                            break;
-                        }
-                    }
-                }
-
-                return context.CurrentResult;
+                    TestStatus.Passed => false,
+                    TestStatus.Skipped => false,
+                    _ => true
+                };
             }
         }
     }
