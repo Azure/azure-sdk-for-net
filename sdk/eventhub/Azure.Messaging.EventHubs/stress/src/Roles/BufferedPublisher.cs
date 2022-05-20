@@ -207,18 +207,6 @@ internal class BufferedPublisher
         }
     }
 
-    /// <summary>
-    ///   Collects information about the environment garbage collection and sends it to the Application
-    ///   Insights instance for this test run.
-    /// </summary>
-    ///
-    private void UpdateEnvironmentStatistics()
-    {
-        _metrics.Client.GetMetric(_metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-        _metrics.Client.GetMetric(_metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-        _metrics.Client.GetMetric(_metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
-    }
-
     // /// <summary>
     // ///   The method used by the Azure Event Listener to send heard exceptions to the Application
     // ///   Insights instance for this test run.

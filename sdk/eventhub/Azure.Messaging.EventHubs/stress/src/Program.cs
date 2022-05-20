@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 public class Program
 {
     /// <summary>
-    ///   Parses the command line arguments and runs the specified tests.
+    ///   Parses the command line <see cref="Options" /> and runs the specified tests.
     /// </summary>
     ///
     /// <param name="args">The command line inputs.</param>
@@ -36,8 +36,8 @@ public class Program
     }
 
     /// <summary>
-    ///   Starts a background task for each test that needs to be run, and waits for all
-    ///   test runs to completed before returning.
+    ///   Starts a background task for each test and role that needs to be run in this process, and waits for all
+    ///   test runs to completed before finishing the run.
     /// </summary>
     ///
     /// <param name="opts">The parsed command line inputs.</param>
@@ -58,12 +58,13 @@ public class Program
         environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out appInsightsKey);
         environment.TryGetValue(EnvironmentVariables.EventHubsConnectionString, out eventHubsConnectionString);
 
-        // TODO get from interactive mode if needed
+        // If not, and this is an interactive run, try and get them from the user.
+
+        eventHubsConnectionString = _promptForResources("Event Hubs Connection String", "all test runs", eventHubsConnectionString, opts.Interactive);
+        appInsightsKey = _promptForResources("Application Insights Instrumentation Key", "all test runs", appInsightsKey, opts.Interactive);
 
         // If a job index is provided, a single role is started, otherwise, all specified roles within the
         // test scenario runs are run in parallel.
-        environment.TryGetValue(EnvironmentVariables.JobCompletionIndex, out var job_index);
-        Console.WriteLine($"JOB INDEX: {job_index}");
 
         var roleConfiguration = new RoleConfiguration();
 
@@ -71,12 +72,12 @@ public class Program
 
         if (opts.Test == "EventProd" || opts.Test == "EventProducerTest" || opts.All)
         {
+            // Get the needed resources for the event producer test: an event hub
             var eventHubName = String.Empty;
             environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
+            eventHubName = _promptForResources("Event Hub", "Event Producer Test", eventHubName, opts.Interactive);
 
-            // TODO: check for interactive
-
-            // Set up the test's configuration
+            // Save resources in the test configuration
             var testConfiguration = new TestConfiguration();
             testConfiguration.EventHubsConnectionString = eventHubsConnectionString;
             testConfiguration.EventHub = eventHubName;
@@ -88,18 +89,17 @@ public class Program
             var metrics = new Metrics(appInsightsKey);
             roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.EventProducerTest, out var roleList);
 
-            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, job_index, cancellationSource.Token));
+            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
         }
 
         if (opts.Test == "BuffProd" || opts.Test == "BufferedProducerTest" || opts.All)
         {
-            // Get the resources for this specific test
+            // Get the needed resources for the buffered producer test: an event hub
             var eventHubName = String.Empty;
-            environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
+            environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
+            eventHubName = _promptForResources("Event Hub", "Buffered Producer Test", eventHubName, opts.Interactive);
 
-            // TODO: check for interactive
-
-            // Set up the test's configuration
+            // Save resources in the test configuration
             var testConfiguration = new TestConfiguration();
             testConfiguration.EventHubsConnectionString = eventHubsConnectionString;
             testConfiguration.EventHub = eventHubName;
@@ -111,30 +111,40 @@ public class Program
             var metrics = new Metrics(appInsightsKey);
             roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BufferedProducerTest, out var roleList);
 
-            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, job_index, cancellationSource.Token));
+            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
         }
 
         if (opts.Test == "Processor" || opts.Test == "EventProcessorTest" || opts.All)
         {
-            // Get the resources for this specific test
+            // Get the needed resources for the processor test: an event hub, storage account, and blob container name
             var eventHubName = String.Empty;
-            environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
+            var storageBlob = String.Empty;
+            var storageConnectionString = String.Empty;
+            environment.TryGetValue(EnvironmentVariables.EventHubProcessorTest, out eventHubName);
+            eventHubName = _promptForResources("Event Hub", "Event Processor Test", eventHubName, opts.Interactive);
 
-            // TODO: check for interactive
+            environment.TryGetValue(EnvironmentVariables.StorageBlobProcessorTest, out storageBlob);
+            storageBlob = _promptForResources("Storage Blob Name", "Event Processor Test", storageBlob, opts.Interactive);
 
-            // Set up the test's configuration
+            environment.TryGetValue(EnvironmentVariables.StorageAccountProcessorTest, out storageConnectionString);
+            storageConnectionString = _promptForResources("Storage Account Connection String", "Event Processor Test", storageConnectionString, opts.Interactive);
+
+            // Save resources in the test configuration
             var testConfiguration = new TestConfiguration();
             testConfiguration.EventHubsConnectionString = eventHubsConnectionString;
             testConfiguration.EventHub = eventHubName;
+            testConfiguration.StorageConnectionString = storageConnectionString;
+            testConfiguration.BlobContainer = storageBlob;
 
             var cancellationSource = new CancellationTokenSource();
             var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
             cancellationSource.CancelAfter(runDuration);
 
+            // Create the metrics client that connects to Application Insights
             var metrics = new Metrics(appInsightsKey);
-            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BufferedProducerTest, out var roleList);
+            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BasicProcessorTest, out var roleList);
 
-            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, job_index, cancellationSource.Token));
+            testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
         }
 
         await Task.WhenAll(testScenarioTasks).ConfigureAwait(false);
@@ -156,14 +166,14 @@ public class Program
                                            TestConfiguration testConfiguration,
                                            RoleConfiguration roleConfiguration,
                                            Metrics metrics,
-                                           string jobIndex,
+                                           string roleString,
                                            CancellationToken cancellationToken)
     {
         var scenarioTasks = new List<Task>();
         try
         {
             // This means the job index environment variable was not set, so run all roles for this scenario in parallel.
-            if (string.IsNullOrEmpty(jobIndex))
+            if (string.IsNullOrEmpty(roleString))
             {
                 foreach (var role in roleList)
                 {
@@ -172,7 +182,7 @@ public class Program
             }
             else
             {
-                scenarioTasks.Add(_runRole(roleList[int.Parse(jobIndex)], testConfiguration, roleConfiguration, metrics, cancellationToken));
+                scenarioTasks.Add(_runRole(roleList[int.Parse(roleString)], testConfiguration, roleConfiguration, metrics, cancellationToken));
             }
 
             while (!cancellationToken.IsCancellationRequested)
@@ -261,6 +271,34 @@ public class Program
     }
 
     /// <summary>
+    ///   Prompts the user using the command line for resources if they have not been provided yet.
+    /// </summary>
+    ///
+    /// <param name="resourceName">The name of the needed resource.</param>
+    /// <param name="testName">Which test(s) for which the resource is needed.</param>
+    /// <param name="currentValue">The current value of the resource.</param>
+    ///
+    private static string _promptForResources(string resourceName, string testName, string currentValue, bool interactive)
+    {
+        // If the resource hasn't been provided already, wait for it to be provided through the CLI
+        if (interactive)
+        {
+            while (string.IsNullOrEmpty(currentValue))
+            {
+                Console.Write($"Please provide the {resourceName} for {testName}: ");
+                currentValue = Console.ReadLine().Trim();
+            }
+        }
+
+        if (string.IsNullOrEmpty(currentValue))
+        {
+            throw new ArgumentNullException(resourceName);
+        }
+
+        return currentValue;
+    }
+
+    /// <summary>
     ///   Starts a background task for each test that needs to be run, and waits for all
     ///   test runs to completed before returning.
     /// </summary>
@@ -294,5 +332,8 @@ public class Program
 
         [Option('t', "test", HelpText = "Enter which test to run for a single test run.")]
         public string Test { get; set; }
+
+        [Option('r', "role", HelpText = "Enter which role.")]
+        public string Role { get; set; }
     }
 }

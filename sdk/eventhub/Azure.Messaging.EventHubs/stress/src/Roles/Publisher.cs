@@ -55,7 +55,7 @@ internal class Publisher
     ///   and monitors it while it sends events to this test's dedicated Event Hub.
     /// </summary>
     ///
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
     public async Task Start(CancellationToken cancellationToken)
     {
