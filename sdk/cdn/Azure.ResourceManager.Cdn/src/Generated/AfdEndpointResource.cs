@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor endpoint under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/usages
         /// Operation Id: AfdEndpoints_ListResourceUsage
         /// </summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor endpoint under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/usages
         /// Operation Id: AfdEndpoints_ListResourceUsage
         /// </summary>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.This api isn&apos;t work for apex domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/validateCustomDomain
         /// Operation Id: AfdEndpoints_ValidateCustomDomain
         /// </summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.This api isn&apos;t work for apex domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/validateCustomDomain
         /// Operation Id: AfdEndpoints_ValidateCustomDomain
         /// </summary>

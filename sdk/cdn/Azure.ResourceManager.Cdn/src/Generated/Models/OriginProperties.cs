@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource status of the origin. </summary>
         public OriginResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the origin. </summary>
-        public string ProvisioningState { get; }
+        public OriginProvisioningState? ProvisioningState { get; }
         /// <summary> The approval status for the connection to the Private Link. </summary>
         public PrivateEndpointStatus? PrivateEndpointStatus { get; }
     }

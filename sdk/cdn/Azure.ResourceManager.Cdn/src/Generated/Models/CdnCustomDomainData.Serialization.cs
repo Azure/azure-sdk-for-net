@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<CustomHttpsAvailabilityState> customHttpsProvisioningSubstate = default;
             Optional<CustomDomainHttpsContent> customHttpsParameters = default;
             Optional<string> validationData = default;
-            Optional<string> provisioningState = default;
+            Optional<CustomHttpsProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -141,14 +141,19 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new CustomHttpsProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CdnCustomDomainData(id, name, type, systemData, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, provisioningState.Value);
+            return new CdnCustomDomainData(id, name, type, systemData, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

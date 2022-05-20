@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType type = default;
             SystemData systemData = default;
             Optional<ProfileResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
+            Optional<ProfileProvisioningState> provisioningState = default;
             Optional<Guid> frontDoorId = default;
             Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,12 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new ProfileProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("frontDoorId"))
@@ -158,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), provisioningState.Value, Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
+            return new ProfileData(id, name, type, systemData, tags, location, sku, kind.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

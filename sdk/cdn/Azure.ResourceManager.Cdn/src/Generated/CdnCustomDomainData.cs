@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> The systemData. </param>
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <param name="resourceState"> Resource status of the custom domain. </param>
-        /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the custom domain. </param>
+        /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
         /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customDomainHttpsContent"> Certificate parameters for securing custom HTTPS. </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
-        /// <param name="provisioningState"> Provisioning status of the custom domain. </param>
-        internal CdnCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsAvailabilityState? customHttpsAvailabilityState, CustomDomainHttpsContent customDomainHttpsContent, string validationData, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
+        internal CdnCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, CustomDomainResourceState? resourceState, CustomHttpsProvisioningState? customHttpsProvisioningState, CustomHttpsAvailabilityState? customHttpsAvailabilityState, CustomDomainHttpsContent customDomainHttpsContent, string validationData, CustomHttpsProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             HostName = hostName;
             ResourceState = resourceState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn
         public string HostName { get; set; }
         /// <summary> Resource status of the custom domain. </summary>
         public CustomDomainResourceState? ResourceState { get; }
-        /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
+        /// <summary> Provisioning status of the custom domain. </summary>
         public CustomHttpsProvisioningState? CustomHttpsProvisioningState { get; }
         /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </summary>
         public CustomHttpsAvailabilityState? CustomHttpsAvailabilityState { get; }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn
         public CustomDomainHttpsContent CustomDomainHttpsContent { get; set; }
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>
         public string ValidationData { get; set; }
-        /// <summary> Provisioning status of the custom domain. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
+        public CustomHttpsProvisioningState? ProvisioningState { get; }
     }
 }
