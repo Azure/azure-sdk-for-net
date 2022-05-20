@@ -42,9 +42,11 @@ With the help of [Azure.ResourceManager.Template](https://github.com/Azure/azure
 sdk\<service name>\<package name>\tests\Azure.ResourceManager.<service>.Tests.csproj
 sdk\<service name>\<package name>\tests\<service>ManagementTestBase.cs
 sdk\<service name>\<package name>\tests\<service>ManagementTestEnvironment.cs
-sdk\<service name>\<package name>\tests\SessionRecords
 sdk\<service name>\<package name>\tests\Scenario
+sdk\<service name>\<package name>\tests\SessionRecords
 ```
+
+**Note**: Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
 
 ### Writing scenario tests
 
@@ -78,35 +80,38 @@ namespace Azure.ResourceManager.Service.Tests
             ExampleResource resource = await rg.GetExamples().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, new ExampleData());
             Assert.AreEqual(resourceName, resource.Data.Name);
         }
+    }
+}
 ```
 
-We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, we automatically rewrite our async API calls into their sync equivalents. Simply write your tests using only async APIs and the test framework will wrap the client with a proxy that forwards everything to the sync overloads automatically. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
+We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, we automatically convert our async API calls into their sync equivalents at runtime. Simply write your tests using only async APIs and the test framework will wrap the client with a proxy that forwards everything to the sync overloads automatically. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
 
 ### Running tests
 
 In order to run the tests, the following environment variables need to be set:
 
-```text
-- AZURE_TEST_MODE
-- AZURE_AUTHORITY_HOST
-- AZURE_CLIENT_ID
-- AZURE_CLIENT_SECRET
-- AZURE_SUBSCRIPTION_ID
-- AZURE_TENANT_ID
-```
+| Name | Value | Description |
+| :--- | :---- | :---------- |
+| AZURE_TEST_MODE | Record<sup>1</sup> | Specify in which mode the test will run |
+| AZURE_AUTHORITY_HOST | https://login.microsoftonline.com<sup>2</sup> | The host of the Azure Active Directory authority |
+| AZURE_CLIENT_ID | TBD<sup>3</sup> | The Service Principal Application ID |
+| AZURE_CLIENT_SECRET | TBD<sup>3</sup> | A Service Principal Authentication Key |
+| AZURE_SUBSCRIPTION_ID | TBD<sup>3</sup> | The Azure Subscription ID |
+| AZURE_TENANT_ID | TBD<sup>3</sup> | The AAD Tenant ID |
+
 **Note**:
 
-- Our testing framework supports three different test modes: `Live`, `Playback`, `Record`. In management plane, please set the `AZURE_TEST_MODE` to `Record` for your first test run, this will record HTTP requests and responses and store the record files in `SessionRecords` folder. After you have successfully recorded all the tests for the first time, you can change its value to `Playback`. If the tests locally fail due to recording session file mismatches at this point, the attribute `RecordedTest` will help enable automatically re-record failed tests. Also, the recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - <service> - tests` in the PR.
+1. Our testing framework supports three different test modes: `Live`, `Playback`, `Record`. In management plane, please set the `AZURE_TEST_MODE` to `Record` for your first test run, this will record HTTP requests and responses and store the record files in `SessionRecords` folder. Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#sanitizing). After you have successfully recorded all the tests for the first time, you can change its value to `Playback`. If the tests locally fail due to recording session file mismatches at this point, the attribute `RecordedTest` will help enable automatically re-record failed tests.
 
-- Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#sanitizing).
+2. You need to change its value depending on the Azure Cloud type you are using in your tests. `https://login.microsoftonline.com` only applies to Azure Public Cloud. 
 
-- `AZURE_AUTHORITY_HOST` should be `https://login.microsoftonline.com` if the azure service is deployed in Prod and `https://login.windows-ppe.net` if the service is in Dogfood. 
-
-- For the rest of the environment variables settings, please refer to this [document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
+3. These values depend on the subscription and token credential you are using for testing. Please refer to this [document](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md) to get the values.
 
 The easiest way to run the tests is via Visual Studio's test runner.
 
 You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp3.1` or `dotnet test -f net461`.
+
+If you are using system environment variables, make sure to restart Visual Studio or the terminal after setting or changing the environment variables.
 
 ### Samples
 
