@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource status of the origin group. </summary>
         public OriginGroupResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the origin group. </summary>
-        public string ProvisioningState { get; }
+        public OriginGroupProvisioningState? ProvisioningState { get; }
     }
 }

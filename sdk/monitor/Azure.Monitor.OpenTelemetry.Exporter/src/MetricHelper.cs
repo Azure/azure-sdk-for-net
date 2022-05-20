@@ -14,22 +14,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, string roleName, string roleInstance, string instrumentationKey)
         {
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
-            TelemetryItem telemetryItem;
-
+            List<TelemetryItem> telemetryItems = new();
             foreach (var metric in batch)
             {
-                if (metric.MetricType == MetricType.DoubleSum || metric.MetricType == MetricType.DoubleGauge)
+                if (MetricsData.IsSupportedType(metric.MetricType))
                 {
                     foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                     {
-                        telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, roleName, roleInstance, instrumentationKey);
-                        telemetryItem.Data = new MonitorBase
+                        telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, roleName, roleInstance, instrumentationKey)
                         {
-                            BaseType = "MetricData",
-                            BaseData = new MetricsData(Version, metric, metricPoint)
-                        };
-                        telemetryItems.Add(telemetryItem);
+                            Data = new MonitorBase
+                            {
+                                BaseType = "MetricData",
+                                BaseData = new MetricsData(Version, metric, metricPoint)
+                            }
+                        });
                     }
                 }
                 else
