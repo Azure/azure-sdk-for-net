@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework
 {
     [AttributeUsage(AttributeTargets.Method)]
     /// <summary>
-    /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure.
+    /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure when run in Playback mode.
     /// Tests that are re-recorded will complete with a error status and indicate that copying the updated recording to SessionRecords is needed.
     /// </summary>
     public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
@@ -26,20 +26,45 @@ namespace Azure.Core.TestFramework
             {
                 test = test.Parent;
             }
-            if (test.Fixture is RecordedTestBase fixture && fixture.Mode == RecordedTestMode.Playback)
+
+            if (test.Fixture is RecordedTestBase fixture)
             {
-                return new FallbackCommand(command);
+                return fixture.Mode == RecordedTestMode.Playback ? new PlaybackCommand(command) : new RecordedTestAttributeCommand(command);
             }
-            else
-            {
-                return command;
-            }
+
+            return command;
         }
 
-        private class FallbackCommand : DelegatingTestCommand
+        private static List<IgnoreServiceErrorAttribute> GetServiceErrorsToIgnore(Test test)
         {
-            public FallbackCommand(TestCommand innerCommand) : base(innerCommand)
-            { }
+            // Check if there are any service errors we should ignore.
+            List<IgnoreServiceErrorAttribute> attributes = test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+            // Check parents for service errors to ignore.
+            while (test.Parent is Test t)
+            {
+                attributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                test = t;
+            }
+
+            return attributes;
+        }
+
+        private static bool IsTestFailed(TestExecutionContext context)
+        {
+            return context.CurrentResult.ResultState.Status switch
+            {
+                TestStatus.Passed => false,
+                TestStatus.Skipped => false,
+                _ => true
+            };
+        }
+
+        private class PlaybackCommand : RecordedTestAttributeCommand
+        {
+            public PlaybackCommand(TestCommand innerCommand) : base(innerCommand)
+            {
+            }
             public override TestResult Execute(TestExecutionContext context)
             {
                 // Run the test
@@ -100,50 +125,56 @@ namespace Azure.Core.TestFramework
                                 "Test timed out in initial run, but was retried successfully.");
                         }
                     }
-                    else
+                }
+
+                base.Execute(context);
+
+                return context.CurrentResult;
+            }
+
+            private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
+            {
+                fixture.Mode = mode;
+            }
+        }
+
+        private class RecordedTestAttributeCommand : DelegatingTestCommand
+        {
+            private readonly List<IgnoreServiceErrorAttribute> _ignoreServiceErrorAttributes;
+            public RecordedTestAttributeCommand(TestCommand innerCommand) : base(innerCommand)
+            {
+                Test test = innerCommand.Test;
+
+                // Check if there are any service errors we should ignore.
+                _ignoreServiceErrorAttributes = innerCommand.Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+                // Check parents for service errors to ignore.
+                while (test.Parent is Test t)
+                {
+                    _ignoreServiceErrorAttributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                    test = t;
+                }
+            }
+
+            public override TestResult Execute(TestExecutionContext context)
+            {
+                if (IsTestFailed(context))
+                {
+                    foreach (IgnoreServiceErrorAttribute attr in _ignoreServiceErrorAttributes)
                     {
-                        // Check if there are any service errors we should ignore.
-                        List<IgnoreServiceErrorAttribute> attributes = Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
-
-                        // Check parents for service errors to ignore.
-                        ITest test = Test;
-                        while (test.Parent is Test t)
+                        if (attr.Matches(context.CurrentResult.Message))
                         {
-                            attributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
-                            test = t;
-                        }
-
-                        foreach (IgnoreServiceErrorAttribute attr in attributes)
-                        {
-                            if (attr.Matches(resultMessage))
-                            {
-                                context.CurrentResult.SetResult(
-                                    ResultState.Inconclusive,
-                                    $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
-                                    context.CurrentResult.StackTrace);
-                                break;
-                            }
+                            context.CurrentResult.SetResult(
+                                ResultState.Inconclusive,
+                                $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
+                                context.CurrentResult.StackTrace);
+                            break;
                         }
                     }
                 }
 
                 return context.CurrentResult;
             }
-
-            private static bool IsTestFailed(TestExecutionContext context)
-            {
-                return context.CurrentResult.ResultState.Status switch
-                {
-                    TestStatus.Passed => false,
-                    TestStatus.Skipped => false,
-                    _ => true
-                };
-            }
-        }
-
-        private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
-        {
-            fixture.Mode = mode;
         }
     }
 }
