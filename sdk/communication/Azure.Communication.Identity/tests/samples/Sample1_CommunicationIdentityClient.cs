@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
 using Azure.Communication.Identity.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -159,9 +160,14 @@ namespace Azure.Communication.Identity.Samples
             }
 
             var options = createTeamsUserParams().Result;
+            var teamsUserAadToken = options.TeamsUserAadToken;
+            var clientId = options.ClientId;
+            var userObjectId = options.UserObjectId;
+
             var client = CreateClientWithConnectionString();
+
             #region Snippet:GetTokenForTeamsUser
-            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(options);
+            Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUser
@@ -176,10 +182,14 @@ namespace Azure.Communication.Identity.Samples
             }
 
             var options = await createTeamsUserParams();
+            var teamsUserAadToken = options.TeamsUserAadToken;
+            var clientId = options.ClientId;
+            var userObjectId = options.UserObjectId;
+
             var client = CreateClientWithConnectionString();
 
             #region Snippet:GetTokenForTeamsUserAsync
-            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(options);
+            Response<AccessToken> tokenResponse = await client.GetTokenForTeamsUserAsync(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
             string token = tokenResponse.Value.Token;
             Console.WriteLine($"Token: {token}");
             #endregion Snippet:GetTokenForTeamsUserAsync

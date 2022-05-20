@@ -67,8 +67,13 @@ Console.WriteLine($"Expires On: {expiresOn}");
 
 The `CommunicationIdentityClient` can be used to exchange an Azure AD access token of a Teams user for a new Communication Identity access token with a matching expiration time.
 
+The `GetTokenForTeamsUser` function accepts the following parameters wrapped into the `GetTokenForTeamsUserOptions` option bag:
+- `teamsUserAadToken` Azure Active Directory access token of a Teams user
+- `clientId` Client ID of an Azure AD application to be verified against the appId claim in the Azure AD access token
+- `userObjectId` Object ID of an Azure AD user (Teams User) to be verified against the OID claim in the Azure AD access token
+
 ```C# Snippet:GetTokenForTeamsUser
-Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(options);
+Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```
