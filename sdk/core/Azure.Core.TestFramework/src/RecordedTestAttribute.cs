@@ -87,8 +87,10 @@ namespace Azure.Core.TestFramework
 
                         // revert RecordTestMode to Playback
                         SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Playback);
+                        return context.CurrentResult;
                     }
-                    else if (resultMessage.Contains(typeof(TestTimeoutException).FullName))
+
+                    if (resultMessage.Contains(typeof(TestTimeoutException).FullName))
                     {
                         // retry once
                         context.CurrentResult = context.CurrentTest.MakeTestResult();
@@ -108,16 +110,12 @@ namespace Azure.Core.TestFramework
                                 context.CurrentResult.ResultState,
                                 "Test timed out in initial run, but was retried successfully.");
                         }
-                    }
-                    else
-                    {
-                        CheckForIgnoredServiceErrors(context);
+
+                        return context.CurrentResult;
                     }
                 }
-                else
-                {
-                    CheckForIgnoredServiceErrors(context);
-                }
+
+                CheckForIgnoredServiceErrors(context);
                 return context.CurrentResult;
             }
 
