@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.Compute
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageResource> GetPublishersVirtualMachineImagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZones(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string edgeZone, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZonesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, string edgeZone, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ResourceSku> GetResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ResourceSku> GetResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Compute.RestorePointGroupResource> GetRestorePointGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string restorePointCollectionName, Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions? expand = default(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroupResource>> GetRestorePointGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string restorePointCollectionName, Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions? expand = default(Azure.ResourceManager.Compute.Models.RestorePointCollectionExpandOptions?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.RestorePointGroupResource GetRestorePointGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.Compute
     {
         public RestorePointGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string ProvisioningState { get { throw null; } }
-        public string RestorePointCollectionId { get { throw null; } }
+        public string RestorePointGroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.RestorePointData> RestorePoints { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointCollectionSourceProperties Source { get { throw null; } set { } }
     }
@@ -2458,6 +2458,31 @@ namespace Azure.ResourceManager.Compute.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputePrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
+    public partial class ComputeResourceSku
+    {
+        internal ComputeResourceSku() { }
+        public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacity Capacity { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCosts> Costs { get { throw null; } }
+        public string Family { get { throw null; } }
+        public string Kind { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuLocationInfo> LocationInfo { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuRestrictions> Restrictions { get { throw null; } }
+        public string Size { get { throw null; } }
+        public string Tier { get { throw null; } }
+    }
+    public partial class ComputeResourceSkuCapacity
+    {
+        internal ComputeResourceSkuCapacity() { }
+        public long? Default { get { throw null; } }
+        public long? Maximum { get { throw null; } }
+        public long? Minimum { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.ResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
+    }
     public partial class ComputeSku
     {
         public ComputeSku() { }
@@ -3424,24 +3449,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.IPVersion left, Azure.ResourceManager.Compute.Models.IPVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPVersions : System.IEquatable<Azure.ResourceManager.Compute.Models.IPVersions>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPVersions(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.IPVersions IPv4 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.IPVersions IPv6 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.IPVersions other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.IPVersions left, Azure.ResourceManager.Compute.Models.IPVersions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.IPVersions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.IPVersions left, Azure.ResourceManager.Compute.Models.IPVersions right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class KeyForDiskEncryptionSet
     {
         public KeyForDiskEncryptionSet(System.Uri keyUri) { }
@@ -4167,36 +4174,11 @@ namespace Azure.ResourceManager.Compute.Models
         public int? Max { get { throw null; } set { } }
         public int? Min { get { throw null; } set { } }
     }
-    public partial class ResourceSku
-    {
-        internal ResourceSku() { }
-        public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuCapacity Capacity { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCosts> Costs { get { throw null; } }
-        public string Family { get { throw null; } }
-        public string Kind { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuLocationInfo> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuRestrictions> Restrictions { get { throw null; } }
-        public string Size { get { throw null; } }
-        public string Tier { get { throw null; } }
-    }
     public partial class ResourceSkuCapabilities
     {
         internal ResourceSkuCapabilities() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
-    }
-    public partial class ResourceSkuCapacity
-    {
-        internal ResourceSkuCapacity() { }
-        public long? Default { get { throw null; } }
-        public long? Maximum { get { throw null; } }
-        public long? Minimum { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ResourceSkuCapacityScaleType? ScaleType { get { throw null; } }
     }
     public enum ResourceSkuCapacityScaleType
     {
@@ -4270,14 +4252,14 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RestorePointCollectionSourceProperties
     {
         public RestorePointCollectionSourceProperties() { }
-        public string Id { get { throw null; } set { } }
-        public string Location { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     public partial class RestorePointGroupPatch : Azure.ResourceManager.Compute.Models.ComputeUpdateResourceData
     {
         public RestorePointGroupPatch() { }
         public string ProvisioningState { get { throw null; } }
-        public string RestorePointCollectionId { get { throw null; } }
+        public string RestorePointGroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.RestorePointData> RestorePoints { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RestorePointCollectionSourceProperties Source { get { throw null; } set { } }
     }
@@ -4978,7 +4960,7 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.IPVersions? PrivateIPAddressVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachinePublicIPAddressConfiguration PublicIPAddressConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
@@ -5048,7 +5030,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineIPTag> IPTags { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.IPVersions? PublicIPAddressVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.IPVersion? PublicIPAddressVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PublicIPAllocationMethod? PublicIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PublicIPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.PublicIPAddressSku Sku { get { throw null; } set { } }
