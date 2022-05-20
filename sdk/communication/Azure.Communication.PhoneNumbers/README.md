@@ -243,4 +243,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[direct_routing]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/telephony/direct-routing-provisioning
+[direct_routing]: https://docs.microsoft.com/azure/communication-services/concepts/telephony/direct-routing-provisioning
