@@ -30,13 +30,17 @@ Here's an example using the Azure CLI:
 
 ### Key concepts
 
-Phone plans come in two types; Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
+This SDK provides functionality to easily manage `direct offer` and `direct routing` numbers.
 
-All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
+The `direct offer` numbers come in two types: Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
+They are managed using the `PhoneNumbersClient`
+
+The `direct routing` feature enables connecting your existing telephony infrastructure to ACS.
+The configuration is managed using the `SipRoutingClient`, which provides methods for setting up SIP trunks and Voice routing rules, in order to properly handle calls for your telephony subnet.
 
 ### Authenticate the client
 
-Phone Number clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
+Clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
 ```C# Snippet:CreatePhoneNumbersClient
 // Get a connection string to our Azure Communication resource.
@@ -44,7 +48,11 @@ var connectionString = "<connection_string>";
 var client = new PhoneNumbersClient(connectionString);
 ```
 
-Phone Number clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
+```C# Snippet:CreateSipRoutingClient
+var client = new SipRoutingClient(connectionString);
+```
+
+Clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
 `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
 
 ```C# Snippet:CreatePhoneNumbersClientWithTokenCredential
@@ -54,14 +62,29 @@ TokenCredential tokenCredential = new DefaultAzureCredential();
 client = new PhoneNumbersClient(endpoint, tokenCredential);
 ```
 
-### Phone number types overview
+```C# Snippet:CreateSipRoutingClientWithTokenCredential
+client = new SipRoutingClient(endpoint, tokenCredential);
+```
+
+### Phone numbers client
+
+#### Phone number types overview
 Phone numbers come in two types: Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
 
-### Searching, purchasing and releasing phone numbers
+All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
+
+#### Searching, purchasing and releasing phone numbers
 
 Phone numbers can be searched through the search creation API by providing an area code, quantity of phone numbers, application type, phone number type and capabilities. The provided quantity of phone numbers will be reserved for ten minutes and can be purchased within this time. If the search is not purchased, the phone numbers will become available to others after ten minutes. If the search is purchased, then the phone numbers are acquired for the Azure resources.
 
 Phone numbers can also be released using the release API.
+
+### SIP routing client
+
+Direct routing feature allows connecting customer-provided telephony infrastructure to Azure Communication Resources. In order to setup routing configuration properly, customer needs to supply the SIP trunk configuration and SIP routing rules for calls. SIP routing client provides the necessary interface for setting this configuration.
+
+When the call arrives, system tries to match the destination number with regex number patterns of defined routes. The first route to match the number will be selected. The order of regex matching is the same as the order of routes in configuration, therefore the order of routes matters.
+Once a route is matched, the call is routed to the first trunk in the route's trunks list. If the trunk is not available, next trunk in the list is selected.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -79,7 +102,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-### Creating a PhoneNumbersClient
+### PhoneNumbersClient
+
+#### Creating a PhoneNumbersClient
 
 To create a new `PhoneNumbersClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you have created the resource.
 
@@ -91,7 +116,7 @@ var connectionString = "<connection_string>";
 var client = new PhoneNumbersClient(connectionString);
 ```
 
-### Search phone numbers
+#### Search phone numbers
 
 Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
 
@@ -102,7 +127,7 @@ var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(country
 await searchOperation.WaitForCompletionAsync();
 ```
 
-### Purchase phone numbers
+#### Purchase phone numbers
 
 Phone numbers can be acquired through purchasing a search.
 
@@ -111,7 +136,7 @@ var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperat
 await purchaseOperation.WaitForCompletionResponseAsync();
 ```
 
-### Listing purchased phone numbers
+#### Listing purchased phone numbers
 
 You can list all phone numbers that have been purchased for your resource.
 
@@ -124,7 +149,7 @@ await foreach (var phoneNumber in purchasedPhoneNumbers)
 }
 ```
 
-### Release phone numbers
+#### Release phone numbers
 
 If you no longer need a phone number you can release it.
 
@@ -134,46 +159,10 @@ var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneN
 await releaseOperation.WaitForCompletionResponseAsync();
 ```
 
-## SIP routing client
-
-### Key concepts
-
-Direct routing feature allows for connecting customer-provided telephony infrastructure to Azure Communication Resources. In order to setup routing configuration properly, customer needs to supply the SIP trunk configuration and SIP routing rules for calls. SIP routing client provides the necessary interface for setting this configuration.
-
-When the call arrives, system tries to match the destination number with regex number patterns of defined routes. The first route to match the number will be selected. The order of regex matching is the same as the order of routes in configuration, therefore the order of routes matters.
-Once a route is matched, the call is routed to the first trunk in the route's trunks list. If the trunk is not available, next trunk in the list is selected.
-
-The SIP trunks need to be set up with the following information:
-- Fully qualified domain name (FQDN)
-- SIP signaling port number
-
-The SIP routing rules (SIP routes) need to be set up with minimum information containing:
-- Name of the route
-- Regex number pattern for matching the destination number to route
-- List of trunk FQDNs to route the call to.
-
-### Authenticate the client
-
-SIP routing client can be authenticated using connection string or Azure Active Directory the same way as PhoneNumbersClient.
-
-#### Connection string
-```C# Snippet:CreateSipRoutingClient
-// Get a connection string to Azure Communication resource.
-var connectionString = "<connection_string>";
-var client = new SipRoutingClient(connectionString);
-```
-
-#### Token credential
-```C# Snippet:CreateSipRoutingClientWithTokenCredential
-// Get an endpoint to our Azure Communication resource.
-var endpoint = new Uri("<endpoint_url>");
-TokenCredential tokenCredential = new DefaultAzureCredential();
-client = new SipRoutingClient(endpoint, tokenCredential);
-```
-
-### Examples
+### SipRoutingClient
 
 #### Retrieve SIP trunks and routes
+
 Get the list of currently configured trunks or routes.
 
 ```C# Snippet:RetrieveListAsync
@@ -182,6 +171,7 @@ var routesResponse = await client.GetRoutesAsync();
 ```
 
 #### Replace SIP trunks and routes
+
 Replace the list of currently configured trunks or routes.
 
 ```C# Snippet:ReplaceAsync
@@ -194,15 +184,18 @@ await client.SetRoutesAsync(newRoutes);
 ```
 
 #### Manage single trunk
+
 SIP trunks can be managed separately. User can retrieve, set or delete a single trunk.
 
-##### Retrieve single trunk
+#### Retrieve single trunk
+
 ```C# Snippet:RetrieveTrunkAsync
 // Get trunk object, based on it's FQDN.
 var fqdnToRetrieve = "<fqdn>";
 var trunkResponse = await client.GetTrunkAsync(fqdnToRetrieve);
 ```
-##### Set single trunk
+#### Set single trunk
+
 ```C# Snippet:SetTrunkAsync
 // Set function will either modify existing item or add new item to the collection.
 // The trunk is matched based on it's FQDN.
@@ -210,7 +203,8 @@ var trunkToSet = "<trunk_to_set>";
 await client.SetTrunkAsync(trunkToSet);
 ```
 
-##### Delete single trunk
+#### Delete single trunk
+
 ```C# Snippet:DeleteTrunkAsync
 // Deletes trunk with supplied FQDN.
 var fqdnToDelete = "<fqdn>";
@@ -222,6 +216,8 @@ await client.DeleteTrunkAsync(fqdnToDelete);
 ## Next steps
 
 [Read more about managing phone numbers][phone_numbers]
+
+[Read more about direct routing][direct_routing]
 
 ## Contributing
 
@@ -247,3 +243,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[direct_routing]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/telephony/direct-routing-provisioning
