@@ -61,9 +61,9 @@ function RetrievePRAndClose {
   foreach ($openPullRequest in $openPullRequests) {
     try 
     {
-      if ($PSCmdlet.ShouldProcess("[ $($openPullRequest.url)] with branch [ $branchName ] in [ $RepoId ]", "Closing the pull request")) {
-        Close-GithubPullRequest -apiurl $openPullRequest.url -AuthToken $AuthToken | Out-Null
-        Write-Host "Open pull Request [ $($openPullRequest.url)] associate with branch [ $branchName ] in repo [ $RepoId ] has been closed."
+      if ($PSCmdlet.ShouldProcess("[ $($openPullRequest.html_url) ] with branch [ $branchName ] in [ $RepoId ]", "Closing the pull request")) {
+        #Close-GithubPullRequest -apiurl $openPullRequest.url -AuthToken $AuthToken | Out-Null
+        Write-Host "Open pull Request [ $($openPullRequest.html_url) ] has been closed."
       }
     }
     catch
@@ -130,7 +130,7 @@ foreach ($res in $responses)
   
   try {
     if ($hasCentralPRClosedOrSkipChecking -and $PSCmdlet.ShouldProcess("[ $branchName ] in [ $RepoId ]", "Deleting branches on cleanup script")) {
-      Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
+      #Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
       Write-Host "The branch [ $branchName ] with sha [$($res.object.sha)] in [ $RepoId ] has been deleted."
     }
   }
