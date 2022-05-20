@@ -8087,7 +8087,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public NetworkTrackedResourceData() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }

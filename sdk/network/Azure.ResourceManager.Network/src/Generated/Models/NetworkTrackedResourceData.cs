@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal NetworkTrackedResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags)
+        internal NetworkTrackedResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags)
         {
             Id = id;
             Name = name;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource type. </summary>
         public ResourceType? ResourceType { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

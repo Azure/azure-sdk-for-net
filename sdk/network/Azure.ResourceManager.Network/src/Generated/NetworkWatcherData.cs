@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
-        internal NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;

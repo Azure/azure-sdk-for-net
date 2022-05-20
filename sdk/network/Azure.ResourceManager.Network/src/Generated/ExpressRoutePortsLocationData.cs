@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="contact"> Contact details of peering locations. </param>
         /// <param name="availableBandwidths"> The inventory of available ExpressRoutePort bandwidths. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port location resource. </param>
-        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Address = address;
             Contact = contact;

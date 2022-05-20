@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peeringLocations"> A list of peering locations. </param>
         /// <param name="bandwidthsOffered"> A list of bandwidths offered. </param>
         /// <param name="provisioningState"> The provisioning state of the express route service provider resource. </param>
-        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             PeeringLocations = peeringLocations;
             BandwidthsOffered = bandwidthsOffered;

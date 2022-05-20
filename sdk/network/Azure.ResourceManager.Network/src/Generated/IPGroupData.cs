@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
-        internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, string location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
+        internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
