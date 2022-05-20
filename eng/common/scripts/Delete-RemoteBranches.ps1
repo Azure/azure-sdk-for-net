@@ -10,7 +10,7 @@ param(
   $CentralRepoId,
   # We start from the sync PRs, use the branch name to get the PR number of central repo. E.g. sync-eng/common-(<branchName>)-(<PrNumber>). Have group name on PR number.
   # For sync-eng/common work, we use regex as "^sync-eng/common.*-(?<PrNumber>\d+).*$".
-  $CentralPRRegex,
+  $BranchRegex,
   # Date format: e.g. Tuesday, April 12, 2022 1:36:02 PM. Allow to use other date format.
   [AllowNull()]
   [DateTime]$LastCommitOlderThan,
@@ -30,7 +30,7 @@ function RetrievePRAndClose {
   )
 
   if (!$pullRequestNumber) {    
-    LogError "Failed to fetch PR number from regex: $CentralPRRegex."
+    LogError "Failed to fetch PR number from regex: $BranchRegex."
     exit 1
   }
   try {
@@ -89,12 +89,12 @@ catch {
 foreach ($res in $responses)
 {
   if (!$res -or !$res.ref) {
-    LogDebug "No branch returned from the branch prefix $CentralPRRegex on $Repo. Skipping..."
+    LogDebug "No branch returned from the branch prefix $BranchRegex on $Repo. Skipping..."
     continue
   }
   $branch = $res.ref
   $branchName = $branch.Replace("refs/heads/","")
-  if (!($branchName -match $CentralPRRegex)) {
+  if (!($branchName -match $BranchRegex)) {
     continue
   }
   $hasCentralPRClosedOrSkipChecking = $true
