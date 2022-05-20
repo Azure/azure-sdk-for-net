@@ -9,7 +9,7 @@ param(
   # CentralRepoId the original PR to generate sync PR. E.g Azure/azure-sdk-tools for eng/common
   $CentralRepoId,
   # We start from the sync PRs, use the branch name to get the PR number of central repo. E.g. sync-eng/common-(<branchName>)-(<PrNumber>). Have group name on PR number.
-  # For sync-eng/common work, we use regex as "^sync-eng/common.*-(?<PrNumber>\d+)$".
+  # For sync-eng/common work, we use regex as "^sync-eng/common.*-(?<PrNumber>\d+).*$".
   $CentralPRRegex,
   # Date format: e.g. Tuesday, April 12, 2022 1:36:02 PM. Allow to use other date format.
   [AllowNull()]
