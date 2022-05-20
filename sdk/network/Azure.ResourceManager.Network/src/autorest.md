@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-csharp: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
 require: https://github.com/Azure/azure-rest-api-specs/blob/7384176da46425e7899708f263e0598b851358c2/specification/network/resource-manager/readme.md
@@ -97,45 +96,6 @@ directive:
       $.SubResource['x-ms-client-name'] = 'NetworkSubResource';
       $.SubResource.properties.id['x-ms-format'] = 'arm-id';
       $.ProvisioningState['x-ms-enum'].name = 'NetworkProvisioningState';
-  - from: ipAllocation.json
-    where: $.definitions
-    transform: >
-      $.IpAllocationPropertiesFormat.properties.type['x-ms-client-name'] = 'IPAllocationType';
-  - from: virtualWan.json
-    where: $.definitions
-    transform: >
-      $.VirtualWanProperties.properties.type['x-ms-client-name'] = 'VirtualWanType';
-      $.VpnGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
-  - from: virtualWan.json
-    where: $.definitions.VpnServerConfigurationProperties.properties.name
-    transform: 'return undefined'
-    reason: the same property is defined in VpnServerConfiguration and service only returns value there
-  - from: virtualWan.json
-    where: $.definitions.VpnServerConfigurationProperties.properties.etag
-    transform: 'return undefined'
-    reason: the same property is defined in VpnServerConfiguration and service only returns value there
-  - from: swagger-document
-    where: $.definitions..resourceGuid
-    transform: >
-      $['format'] = 'uuid';
-  - from: swagger-document
-    where: $.definitions..targetResourceId
-    transform: >
-      $['x-ms-format'] = 'arm-id';
-  - from: azureFirewall.json
-    where: $.definitions.AzureFirewallIPGroups.properties.id
-    transform: >
-      $['x-ms-format'] = 'arm-id';
-  - from: networkWatcher.json
-    where: $.definitions
-    transform: >
-      $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
-      $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
-      $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
-  - from: usage.json
-    where: $.definitions.Usage.properties.id
-    transform: >
-      $['x-ms-format'] = 'arm-id';
   - from: network.json
     where: $.definitions
     transform: >
@@ -161,6 +121,7 @@ directive:
         "x-ms-azure-resource": true,
         "x-ms-client-name": "NetworkResourceData"
       }
+    reason: Add a network version of Resource (id, name are not read-only). The original (Network)Resource definition is actually a TrackedResource.
   - from: swagger-document
     where: $.definitions[?(@.allOf && @.properties.name && @.properties.type)]
     transform: >
@@ -170,6 +131,54 @@ directive:
         delete $.properties.name;
         delete $.properties.type;
       }
+    reason: Resources with id, name and type should inherit from NetworkResource instead of SubResource.
+  - from: ipAllocation.json
+    where: $.definitions
+    transform: >
+      $.IpAllocationPropertiesFormat.properties.type['x-ms-client-name'] = 'IPAllocationType';
+  - from: virtualWan.json
+    where: $.definitions
+    transform: >
+      $.VirtualWanProperties.properties.type['x-ms-client-name'] = 'VirtualWanType';
+      $.VpnGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.name
+    transform: 'return undefined'
+    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
+  - from: virtualWan.json
+    where: $.definitions.VpnServerConfigurationProperties.properties.etag
+    transform: 'return undefined'
+    reason: The same property is defined in VpnServerConfiguration and service only returns value there.
+  - from: swagger-document
+    where: $.definitions..resourceGuid
+    transform: >
+      $['format'] = 'uuid';
+  - from: swagger-document
+    where: $.definitions..targetResourceId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..location
+    transform: >
+      $['x-ms-format'] = 'azure-location';
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === "location")]
+    transform: >
+      $["x-ms-format"] = 'azure-location';
+  - from: azureFirewall.json
+    where: $.definitions.AzureFirewallIPGroups.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: networkWatcher.json
+    where: $.definitions
+    transform: >
+      $.FlowLogPropertiesFormat.properties.targetResourceGuid['format'] = 'uuid';
+      $.NetworkInterfaceAssociation.properties.id['x-ms-format'] = 'arm-id';
+      $.SubnetAssociation.properties.id['x-ms-format'] = 'arm-id';
+  - from: usage.json
+    where: $.definitions.Usage.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
 # shorten "privateLinkServiceConnectionState" property name
   - from: applicationGateway.json
     where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties

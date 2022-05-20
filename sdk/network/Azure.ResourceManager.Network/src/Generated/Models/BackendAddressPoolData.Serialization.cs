@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(TunnelInterfaces))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
             Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
             Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
@@ -116,7 +116,12 @@ namespace Azure.ResourceManager.Network
                     {
                         if (property0.NameEquals("location"))
                         {
-                            location = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            location = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tunnelInterfaces"))
@@ -218,7 +223,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, location.Value, Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToNullable(provisioningState));
+            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToNullable(provisioningState));
         }
     }
 }

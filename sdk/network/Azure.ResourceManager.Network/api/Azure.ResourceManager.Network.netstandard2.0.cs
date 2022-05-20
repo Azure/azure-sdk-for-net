@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Network
         public string Etag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancingRules { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OutboundRuleId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> OutboundRules { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
         public string Etag { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public int? MonitoringIntervalInSeconds { get { throw null; } }
         public string MonitoringStatus { get { throw null; } }
         public string Notes { get { throw null; } }
@@ -3180,7 +3180,7 @@ namespace Azure.ResourceManager.Network
         public Azure.ResourceManager.Network.Models.Access? Access { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Communities { get { throw null; } }
         public string Etag { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.RouteFilterRuleType? RouteFilterRuleType { get { throw null; } set { } }
@@ -5815,7 +5815,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool? AutoStart { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ConnectionMonitorDestination Destination { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorEndpoint> Endpoints { get { throw null; } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public int? MonitoringIntervalInSeconds { get { throw null; } set { } }
         public string Notes { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ConnectionMonitorOutput> Outputs { get { throw null; } }
@@ -8985,7 +8985,7 @@ namespace Azure.ResourceManager.Network.Models
         internal TopologyResource() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.TopologyAssociation> Associations { get { throw null; } }
         public string Id { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class TrafficAnalyticsConfigurationProperties

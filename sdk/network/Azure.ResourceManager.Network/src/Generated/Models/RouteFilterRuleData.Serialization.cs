@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Id))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<Access> access = default;
@@ -77,7 +77,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -153,7 +158,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteFilterRuleData(id.Value, name.Value, location.Value, etag.Value, Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(location), etag.Value, Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
         }
     }
 }
