@@ -617,6 +617,7 @@
              </code></para></remarks>
         <exception cref="T:System.ArgumentNullException">
           <paramref name="content" /> is null. </exception>
+        <exception cref="T:Azure.RequestFailedException"> Thrown in case of error response.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateOrUpdateAsync">

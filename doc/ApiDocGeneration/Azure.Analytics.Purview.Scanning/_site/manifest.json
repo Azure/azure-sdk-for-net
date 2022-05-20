@@ -48,7 +48,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Azure.Analytics.Purview.Scanning/Azure.Analytics.Purview.Scanning.PurviewScanClient.html",
-          "hash": "on1h6SwIfi3V+UInA4LC6A=="
+          "hash": "c2uwC1OuyawMmCp/jQ/UQw=="
         }
       },
       "is_incremental": false,
@@ -157,16 +157,16 @@
           "total_file_count": 0,
           "skipped_file_count": 0
         },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": false,
-          "incrementalPhase": "build",
-          "total_file_count": 7,
-          "skipped_file_count": 0
-        },
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 2,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 7,
           "skipped_file_count": 0
         }
       }

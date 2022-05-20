@@ -404,6 +404,9 @@ items:
   - type: System.ArgumentNullException
     commentId: T:System.ArgumentNullException
     description: <code data-dev-comment-type="paramref">content</code> is null.
+  - type: Azure.RequestFailedException
+    commentId: T:Azure.RequestFailedException
+    description: Thrown in case of error response.
   modifiers.csharp:
   - public
   monikers:
@@ -2506,6 +2509,9 @@ references:
 - uid: System.ArgumentException
   isExternal: true
   name: System.ArgumentException
+- uid: Azure.RequestFailedException
+  isExternal: true
+  name: Azure.RequestFailedException
 - uid: Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor
   parent: Azure.Analytics.Purview.Scanning.PurviewScanClient
   isExternal: false
