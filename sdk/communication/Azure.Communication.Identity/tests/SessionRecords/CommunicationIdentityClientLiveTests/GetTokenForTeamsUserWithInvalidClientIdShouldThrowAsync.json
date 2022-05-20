@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "62",
         "Content-Type": "application/json",
-        "traceparent": "00-6bd160d07b94ba65ac828e9af3745591-391a73485d90969d-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220418.1 (.NET 6.0.4; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "48916e36529bd302650450daf4f17f77",
+        "traceparent": "00-3e0bb13449b864a77da0f6b8c6e5d5c4-701a1176a3e038a7-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.1.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f2dee54b4ec4b8c188c87b0137db0c3d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 18 Apr 2022 11:58:41 GMT",
+        "x-ms-date": "Fri, 20 May 2022 08:59:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,27 +24,27 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-10-31-preview, 2022-06-01",
         "Content-Type": "application/json",
-        "Date": "Mon, 18 Apr 2022 11:58:40 GMT",
-        "MS-CV": "dEDneIWty0uoBB4MIG5omQ.0",
+        "Date": "Fri, 20 May 2022 08:59:15 GMT",
+        "MS-CV": "F0bvBGac3UewUdP\u002Ba0TKnA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0cVJdYgAAAABcju2NQBn7TZk8HVbc\u002BCWhUFJHMDFFREdFMDcxMgBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "0ZFiHYgAAAADZZlch86eYSJhbxnN67TG9TFRTRURHRTEyMTUAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "48916e36529bd302650450daf4f17f77",
-        "X-Processing-Time": "30ms"
+        "x-ms-client-request-id": "f2dee54b4ec4b8c188c87b0137db0c3d",
+        "X-Processing-Time": "121ms"
       },
       "ResponseBody": {
         "error": {
           "code": "ValidationError",
-          "message": "AAD application is not the expected one.",
+          "message": "Provided AppId has invalid format.",
           "target": "appId"
         }
       }
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.net/;accesskey=Kg==",
-    "RandomSeed": "1416772481"
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1979062934"
   }
 }
