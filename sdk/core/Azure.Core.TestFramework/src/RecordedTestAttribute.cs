@@ -125,27 +125,25 @@ namespace Azure.Core.TestFramework
 
         private class RecordedTestAttributeCommand : DelegatingTestCommand
         {
-            private readonly List<IgnoreServiceErrorAttribute> _ignoreServiceErrorAttributes;
             public RecordedTestAttributeCommand(TestCommand innerCommand) : base(innerCommand)
             {
-                Test test = innerCommand.Test;
-
-                // Check if there are any service errors we should ignore.
-                _ignoreServiceErrorAttributes = innerCommand.Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
-
-                // Check parents for service errors to ignore.
-                while (test.Parent is Test t)
-                {
-                    _ignoreServiceErrorAttributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
-                    test = t;
-                }
             }
 
             public override TestResult Execute(TestExecutionContext context)
             {
                 if (IsTestFailed(context))
                 {
-                    foreach (IgnoreServiceErrorAttribute attr in _ignoreServiceErrorAttributes)
+                    // Check if there are any service errors we should ignore.
+                    var ignoreServiceErrorAttributes = innerCommand.Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+                    // Check parents for service errors to ignore.
+                    var test = Test;
+                    while (test.Parent is Test t)
+                    {
+                        ignoreServiceErrorAttributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                        test = t;
+                    }
+                    foreach (IgnoreServiceErrorAttribute attr in ignoreServiceErrorAttributes)
                     {
                         if (attr.Matches(context.CurrentResult.Message))
                         {
