@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             Optional<OriginGroupResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
+            Optional<OriginGroupProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -171,14 +171,19 @@ namespace Azure.ResourceManager.Cdn
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new OriginGroupProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new CdnOriginGroupData(id, name, type, systemData, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), provisioningState.Value);
+            return new CdnOriginGroupData(id, name, type, systemData, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
         }
     }
 }
