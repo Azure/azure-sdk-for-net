@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Document
         }
         /// <summary>
         /// Sort results ascendingly if true, or descendingly if false.
-        /// Default value is false.
+        /// Default value is true.
         /// </summary>
         public bool Ascending { get; set; } = true;
 
