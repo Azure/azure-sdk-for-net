@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
-            VirtualMachinesAssociated = new ChangeTrackingList<Resources.Models.SubResource>();
+            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IList<string> zones, string reservationId, IReadOnlyList<Resources.Models.SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IList<string> zones, string reservationId, IReadOnlyList<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
         public string ReservationId { get; }
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The date time when the capacity reservation was last updated. </summary>
         public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>

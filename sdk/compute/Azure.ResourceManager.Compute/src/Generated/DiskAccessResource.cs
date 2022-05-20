@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: DiskAccesses_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ComputePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
                 scope.Start();
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: DiskAccesses_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<ComputePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _diskAccessClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
                 scope.Start();

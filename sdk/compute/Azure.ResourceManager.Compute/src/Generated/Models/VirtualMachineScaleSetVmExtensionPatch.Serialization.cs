@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(VirtualMachineExtensionType))
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(VirtualMachineExtensionType);
+                writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type0 = default;
@@ -103,7 +103,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

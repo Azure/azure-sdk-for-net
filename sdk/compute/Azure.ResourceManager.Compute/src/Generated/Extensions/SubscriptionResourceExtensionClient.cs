@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute
         private VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandRestClient;
         private ClientDiagnostics _resourceSkusClientDiagnostics;
         private ResourceSkusRestOperations _resourceSkusRestClient;
-        private ClientDiagnostics _diskClientDiagnostics;
-        private DisksRestOperations _diskRestClient;
+        private ClientDiagnostics _managedDiskDisksClientDiagnostics;
+        private DisksRestOperations _managedDiskDisksRestClient;
         private ClientDiagnostics _snapshotClientDiagnostics;
         private SnapshotsRestOperations _snapshotRestClient;
         private ClientDiagnostics _diskEncryptionSetClientDiagnostics;
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Compute
         private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandRestClient => _virtualMachineRunCommandRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineRunCommandResource.ResourceType));
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DiskClientDiagnostics => _diskClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskResource.ResourceType.Namespace, Diagnostics);
-        private DisksRestOperations DiskRestClient => _diskRestClient ??= new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiskResource.ResourceType));
+        private ClientDiagnostics ManagedDiskDisksClientDiagnostics => _managedDiskDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
+        private DisksRestOperations ManagedDiskDisksRestClient => _managedDiskDisksRestClient ??= new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDiskResource.ResourceType));
         private ClientDiagnostics SnapshotClientDiagnostics => _snapshotClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", SnapshotResource.ResourceType.Namespace, Diagnostics);
         private SnapshotsRestOperations SnapshotRestClient => _snapshotRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SnapshotResource.ResourceType));
         private ClientDiagnostics DiskEncryptionSetClientDiagnostics => _diskEncryptionSetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskEncryptionSetResource.ResourceType.Namespace, Diagnostics);
@@ -1860,9 +1860,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LogAnalytics>> ExportRequestRateByIntervalLogAnalyticAsync(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportRequestRateByIntervalLogAnalytic");
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
             try
             {
@@ -1888,9 +1888,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LogAnalytics> ExportRequestRateByIntervalLogAnalytic(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportRequestRateByIntervalLogAnalytic");
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
             try
             {
@@ -1916,9 +1916,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LogAnalytics>> ExportThrottledRequestsLogAnalyticAsync(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportThrottledRequestsLogAnalytic");
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsThrottledRequests");
             scope.Start();
             try
             {
@@ -1944,9 +1944,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LogAnalytics> ExportThrottledRequestsLogAnalytic(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportThrottledRequestsLogAnalytic");
+            using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsThrottledRequests");
             scope.Start();
             try
             {
@@ -2105,10 +2105,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeResourceSku> GetResourceSkusAsync(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ComputeResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -2123,7 +2123,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<ResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ComputeResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -2149,10 +2149,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. Only **location** filter is supported currently. </param>
         /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeResourceSku> GetResourceSkus(string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceSku> FirstPageFunc(int? pageSizeHint)
+            Page<ComputeResourceSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -2167,7 +2167,7 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<ResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ComputeResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ResourceSkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceSkus");
                 scope.Start();
@@ -2191,17 +2191,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Disks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiskResource> GetDisksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DiskResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedDiskResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DiskClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDisks");
+                using var scope = ManagedDiskDisksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedDisks");
                 scope.Start();
                 try
                 {
-                    var response = await DiskRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ManagedDiskDisksRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2209,14 +2209,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<DiskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedDiskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DiskClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDisks");
+                using var scope = ManagedDiskDisksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedDisks");
                 scope.Start();
                 try
                 {
-                    var response = await DiskRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ManagedDiskDisksRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2233,17 +2233,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: Disks_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiskResource> GetDisks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDiskResource> GetManagedDisks(CancellationToken cancellationToken = default)
         {
-            Page<DiskResource> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedDiskResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DiskClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDisks");
+                using var scope = ManagedDiskDisksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedDisks");
                 scope.Start();
                 try
                 {
-                    var response = DiskRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ManagedDiskDisksRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2251,14 +2251,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<DiskResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedDiskResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DiskClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDisks");
+                using var scope = ManagedDiskDisksClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedDisks");
                 scope.Start();
                 try
                 {
-                    var response = DiskRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ManagedDiskDisksRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDiskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

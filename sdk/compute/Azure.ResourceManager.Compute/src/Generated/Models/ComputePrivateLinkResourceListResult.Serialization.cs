@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputePrivateLinkResourceListResult DeserializeComputePrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ComputePrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<PrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComputePrivateLinkResource> array = new List<ComputePrivateLinkResource>();
+                    List<PrivateLinkResourceData> array = new List<PrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputePrivateLinkResource.DeserializeComputePrivateLinkResource(item));
+                        array.Add(PrivateLinkResourceData.DeserializePrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

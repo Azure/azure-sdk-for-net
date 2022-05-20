@@ -13,12 +13,12 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation. Only tags and sku.capacity can be updated. </summary>
-    public partial class CapacityReservationPatch : UpdateResource
+    public partial class CapacityReservationPatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of CapacityReservationPatch. </summary>
         public CapacityReservationPatch()
         {
-            VirtualMachinesAssociated = new ChangeTrackingList<Resources.Models.SubResource>();
+            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called &apos;CapacityReservationSupported&apos; set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
         public string ReservationId { get; }
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> VirtualMachinesAssociated { get; }
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The date time when the capacity reservation was last updated. </summary>
         public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>

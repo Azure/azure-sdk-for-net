@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the SharedGalleryImageVersion data model. </summary>
-    public partial class SharedGalleryImageVersionData : PirSharedGalleryResource
+    public partial class SharedGalleryImageVersionData : PirSharedGalleryResourceData
     {
         /// <summary> Initializes a new instance of SharedGalleryImageVersionData. </summary>
         internal SharedGalleryImageVersionData()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal SharedGalleryImageVersionData(string name, string location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, uniqueId)
+        internal SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, uniqueId)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;

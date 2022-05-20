@@ -24,23 +24,23 @@ namespace Azure.ResourceManager.Compute.Models
 
         private const string StandardLRSValue = "Standard_LRS";
         private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
-        private const string UltraSSDLRSValue = "UltraSSD_LRS";
+        private const string StandardSsdLRSValue = "StandardSSD_LRS";
+        private const string UltraSsdLRSValue = "UltraSSD_LRS";
         private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardSSDZRSValue = "StandardSSD_ZRS";
+        private const string StandardSsdZRSValue = "StandardSSD_ZRS";
 
         /// <summary> Standard_LRS. </summary>
         public static StorageAccountTypes StandardLRS { get; } = new StorageAccountTypes(StandardLRSValue);
         /// <summary> Premium_LRS. </summary>
         public static StorageAccountTypes PremiumLRS { get; } = new StorageAccountTypes(PremiumLRSValue);
         /// <summary> StandardSSD_LRS. </summary>
-        public static StorageAccountTypes StandardSSDLRS { get; } = new StorageAccountTypes(StandardSSDLRSValue);
+        public static StorageAccountTypes StandardSsdLRS { get; } = new StorageAccountTypes(StandardSsdLRSValue);
         /// <summary> UltraSSD_LRS. </summary>
-        public static StorageAccountTypes UltraSSDLRS { get; } = new StorageAccountTypes(UltraSSDLRSValue);
+        public static StorageAccountTypes UltraSsdLRS { get; } = new StorageAccountTypes(UltraSsdLRSValue);
         /// <summary> Premium_ZRS. </summary>
         public static StorageAccountTypes PremiumZRS { get; } = new StorageAccountTypes(PremiumZRSValue);
         /// <summary> StandardSSD_ZRS. </summary>
-        public static StorageAccountTypes StandardSSDZRS { get; } = new StorageAccountTypes(StandardSSDZRSValue);
+        public static StorageAccountTypes StandardSsdZRS { get; } = new StorageAccountTypes(StandardSsdZRSValue);
         /// <summary> Determines if two <see cref="StorageAccountTypes"/> values are the same. </summary>
         public static bool operator ==(StorageAccountTypes left, StorageAccountTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountTypes"/> values are not the same. </summary>

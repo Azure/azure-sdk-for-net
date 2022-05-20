@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UltraSSDEnabled))
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled");
-                writer.WriteBooleanValue(UltraSSDEnabled.Value);
+                writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
             if (Optional.IsDefined(HibernationEnabled))
             {

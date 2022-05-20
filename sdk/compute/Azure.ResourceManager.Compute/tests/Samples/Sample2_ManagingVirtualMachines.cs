@@ -4,6 +4,7 @@
 #region Snippet:Managing_VirtualMachines_Namespaces
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     {
                         new NetworkInterfaceReference()
                         {
-                            Id = "/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>",
+                            Id = new ResourceIdentifier("/subscriptions/<subscriptionId>/resourceGroups/<rgName>/providers/Microsoft.Network/networkInterfaces/<nicName>"),
                             Primary = true,
                         }
                     }

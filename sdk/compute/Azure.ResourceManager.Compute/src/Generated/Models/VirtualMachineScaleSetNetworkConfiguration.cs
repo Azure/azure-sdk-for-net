@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile&apos;s network configurations. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration : SubResource
+    public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
         /// <param name="name"> The network configuration name. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal VirtualMachineScaleSetNetworkConfiguration(string id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption) : base(id)
+        internal VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption) : base(id)
         {
             Name = name;
             Primary = primary;

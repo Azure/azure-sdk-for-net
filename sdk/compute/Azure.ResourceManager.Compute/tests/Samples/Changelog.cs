@@ -3,15 +3,14 @@
 
 #region Snippet:Changelog_New
             using Azure.Identity;
-            using Azure.ResourceManager;
             using Azure.ResourceManager.Compute.Models;
             using Azure.ResourceManager.Network;
             using Azure.ResourceManager.Network.Models;
             using Azure.ResourceManager.Resources;
             using Azure.ResourceManager.Resources.Models;
-            using System.Linq;
             using Azure.Core;
-using System;
+            using System;
+            using System.Linq;
 
 #if !SNIPPET
 using System.Threading.Tasks;
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             {
                 Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
                 Publisher = "Microsoft.Compute",
-                TypePropertiesType = "VMAccessAgent",
+                ExtensionType = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 ForceUpdateTag = "RerunExtension",

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between DiskAccess and Virtual Network. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal ComputePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Resources.Models.SubResource privateEndpoint, ComputePrivateLinkServiceConnectionState connectionState, ComputePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ComputePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, ComputePrivateLinkServiceConnectionState connectionState, ComputePrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The resource of private end point. </summary>
-        internal Resources.Models.SubResource PrivateEndpoint { get; }
+        internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
         {

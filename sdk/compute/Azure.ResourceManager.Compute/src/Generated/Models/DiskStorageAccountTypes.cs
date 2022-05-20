@@ -24,23 +24,23 @@ namespace Azure.ResourceManager.Compute.Models
 
         private const string StandardLRSValue = "Standard_LRS";
         private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
-        private const string UltraSSDLRSValue = "UltraSSD_LRS";
+        private const string StandardSsdLRSValue = "StandardSSD_LRS";
+        private const string UltraSsdLRSValue = "UltraSSD_LRS";
         private const string PremiumZRSValue = "Premium_ZRS";
-        private const string StandardSSDZRSValue = "StandardSSD_ZRS";
+        private const string StandardSsdZRSValue = "StandardSSD_ZRS";
 
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
         public static DiskStorageAccountTypes StandardLRS { get; } = new DiskStorageAccountTypes(StandardLRSValue);
         /// <summary> Premium SSD locally redundant storage. Best for production and performance sensitive workloads. </summary>
         public static DiskStorageAccountTypes PremiumLRS { get; } = new DiskStorageAccountTypes(PremiumLRSValue);
         /// <summary> Standard SSD locally redundant storage. Best for web servers, lightly used enterprise applications and dev/test. </summary>
-        public static DiskStorageAccountTypes StandardSSDLRS { get; } = new DiskStorageAccountTypes(StandardSSDLRSValue);
+        public static DiskStorageAccountTypes StandardSsdLRS { get; } = new DiskStorageAccountTypes(StandardSsdLRSValue);
         /// <summary> Ultra SSD locally redundant storage. Best for IO-intensive workloads such as SAP HANA, top tier databases (for example, SQL, Oracle), and other transaction-heavy workloads. </summary>
-        public static DiskStorageAccountTypes UltraSSDLRS { get; } = new DiskStorageAccountTypes(UltraSSDLRSValue);
+        public static DiskStorageAccountTypes UltraSsdLRS { get; } = new DiskStorageAccountTypes(UltraSsdLRSValue);
         /// <summary> Premium SSD zone redundant storage. Best for the production workloads that need storage resiliency against zone failures. </summary>
         public static DiskStorageAccountTypes PremiumZRS { get; } = new DiskStorageAccountTypes(PremiumZRSValue);
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
-        public static DiskStorageAccountTypes StandardSSDZRS { get; } = new DiskStorageAccountTypes(StandardSSDZRSValue);
+        public static DiskStorageAccountTypes StandardSsdZRS { get; } = new DiskStorageAccountTypes(StandardSsdZRSValue);
         /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are the same. </summary>
         public static bool operator ==(DiskStorageAccountTypes left, DiskStorageAccountTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are not the same. </summary>

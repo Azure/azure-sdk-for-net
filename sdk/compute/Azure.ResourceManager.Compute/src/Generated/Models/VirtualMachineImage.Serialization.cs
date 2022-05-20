@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
             Optional<IList<DataDiskImage>> dataDiskImages = default;
@@ -145,7 +145,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

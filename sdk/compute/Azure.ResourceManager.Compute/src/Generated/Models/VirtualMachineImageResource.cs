@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual machine image resource information. </summary>
-    public partial class VirtualMachineImageResource : SubResource
+    public partial class VirtualMachineImageResource : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineImageResource. </summary>
         /// <param name="name"> The name of the resource. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The supported Azure location of the resource. </param>
         /// <param name="tags"> Specifies the tags that are assigned to the virtual machine. For more information about using tags, see [Using tags to organize your Azure resources](https://docs.microsoft.com/azure/azure-resource-manager/resource-group-using-tags.md). </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        internal VirtualMachineImageResource(string id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id)
+        internal VirtualMachineImageResource(ResourceIdentifier id, string name, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation) : base(id)
         {
             Name = name;
             Location = location;

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes a cloud service extension profile. </summary>
         internal CloudServiceExtensionProfile ExtensionProfile { get; set; }
         /// <summary> List of extensions for the cloud service. </summary>
-        public IList<Extension> Extensions
+        public IList<CloudServiceExtension> Extensions
         {
             get
             {

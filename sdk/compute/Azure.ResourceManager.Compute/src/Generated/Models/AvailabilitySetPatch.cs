@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Only tags may be updated. </summary>
-    public partial class AvailabilitySetPatch : UpdateResource
+    public partial class AvailabilitySetPatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of AvailabilitySetPatch. </summary>
         public AvailabilitySetPatch()
