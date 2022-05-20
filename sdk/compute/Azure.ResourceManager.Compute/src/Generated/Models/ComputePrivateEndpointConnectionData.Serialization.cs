@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<Resources.Models.SubResource> privateEndpoint = default;
+            Optional<SubResource> privateEndpoint = default;
             Optional<ComputePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ComputePrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<Resources.Models.SubResource>(property0.Value.ToString());
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))

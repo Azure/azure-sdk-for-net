@@ -15,9 +15,10 @@ using Azure.Messaging.ServiceBus.Administration;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Manages rules for subscriptions.
+    /// The <see cref="ServiceBusRuleManager"/> allows rules for a subscription to be managed. The rule manager requires only
+    /// Listen claims, whereas the <see cref="ServiceBusAdministrationClient"/> requires Manage claims.
     /// </summary>
-    internal class ServiceBusRuleManager : IAsyncDisposable
+    public class ServiceBusRuleManager : IAsyncDisposable
     {
         /// <summary>
         /// The path of the Service Bus subscription that the rule manager is connected to, specific to the
@@ -107,12 +108,12 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public virtual async Task AddRuleAsync(
+        public virtual async Task CreateRuleAsync(
             string ruleName,
             RuleFilter filter,
             CancellationToken cancellationToken = default)
         {
-            await AddRuleAsync(new CreateRuleOptions(ruleName, filter), cancellationToken).ConfigureAwait(false);
+            await CreateRuleAsync(new CreateRuleOptions(ruleName, filter), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public virtual async Task AddRuleAsync(
+        public virtual async Task CreateRuleAsync(
             CreateRuleOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -164,7 +165,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public virtual async Task RemoveRuleAsync(
+        public virtual async Task DeleteRuleAsync(
             string ruleName,
             CancellationToken cancellationToken = default)
         {
@@ -234,16 +235,17 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Performs the task needed to clean up resources used by the <see cref="ServiceBusRuleManager" />.
         /// </summary>
-        ///
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CloseAsync()
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             IsClosed = true;
 
             ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusRuleManager), Identifier);
             try
             {
-                await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                await InnerRuleManager.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
