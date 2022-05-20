@@ -31,6 +31,9 @@ namespace Azure.AI.Translation.Document
         {
             Version = version;
             AddLoggedHeadersAndQueryParameters();
+
+            //Default Audience to Azure Public Cloud
+            Audience ??= DocumentTranslationAudience.AzurePublicCloud;
         }
 
         internal string GetVersionString()
@@ -53,6 +56,12 @@ namespace Azure.AI.Translation.Document
             /// </summary>
             V1_0 = 1
         }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="DocumentTranslationAudience.AzurePublicCloud" /> will be assumed.</value>
+        public DocumentTranslationAudience? Audience { get; set; }
 
         /// <summary>
         /// Add headers and query parameters that are considered safe for logging or including in
