@@ -49,6 +49,8 @@ var client = new PhoneNumbersClient(connectionString);
 ```
 
 ```C# Snippet:CreateSipRoutingClient
+// Get a connection string to Azure Communication resource.
+var connectionString = "<connection_string>";
 var client = new SipRoutingClient(connectionString);
 ```
 
@@ -63,6 +65,9 @@ client = new PhoneNumbersClient(endpoint, tokenCredential);
 ```
 
 ```C# Snippet:CreateSipRoutingClientWithTokenCredential
+// Get an endpoint to our Azure Communication resource.
+var endpoint = new Uri("<endpoint_url>");
+TokenCredential tokenCredential = new DefaultAzureCredential();
 client = new SipRoutingClient(endpoint, tokenCredential);
 ```
 
