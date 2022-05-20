@@ -33,15 +33,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
             /// <param name='checkNameAvailabilityRequest'>
             /// The check name availability request.
             /// </param>
-            public static CheckNameAvailabilityResponse CheckNameAvailability(this INamespacesOperations operations, string resourceGroupName, string managedEnvironmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest)
+            public static CheckNameAvailabilityResponse CheckNameAvailability(this INamespacesOperations operations, string resourceGroupName, string environmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest)
             {
-                return operations.CheckNameAvailabilityAsync(resourceGroupName, managedEnvironmentName, checkNameAvailabilityRequest).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(resourceGroupName, environmentName, checkNameAvailabilityRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
             /// <param name='checkNameAvailabilityRequest'>
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this INamespacesOperations operations, string resourceGroupName, string managedEnvironmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResponse> CheckNameAvailabilityAsync(this INamespacesOperations operations, string resourceGroupName, string environmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, managedEnvironmentName, checkNameAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, environmentName, checkNameAvailabilityRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

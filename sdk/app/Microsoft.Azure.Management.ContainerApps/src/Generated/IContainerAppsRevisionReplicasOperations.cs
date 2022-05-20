@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='revisionName'>
         /// Name of the Container App Revision.
         /// </param>
-        /// <param name='name'>
+        /// <param name='replicaName'>
         /// Name of the Container App Revision Replica.
         /// </param>
         /// <param name='customHeaders'>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Replica>> GetReplicaWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Replica>> GetReplicaWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, string replicaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List replicas for a Container App Revision.
         /// </summary>

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='customHeaders'>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DaprComponent>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DaprComponent>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a Dapr Component.
         /// </summary>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='daprComponentEnvelope'>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DaprComponent>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, DaprComponent daprComponentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DaprComponent>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, DaprComponent daprComponentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Dapr Component.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='customHeaders'>
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List secrets for a dapr component
         /// </summary>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='customHeaders'>
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DaprSecretsCollection>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DaprSecretsCollection>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the Dapr Components for a managed environment.
         /// </summary>

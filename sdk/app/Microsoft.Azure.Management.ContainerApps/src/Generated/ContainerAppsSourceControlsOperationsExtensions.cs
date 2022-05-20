@@ -73,12 +73,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
-            public static SourceControl Get(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static SourceControl Get(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName)
             {
-                return operations.GetAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, containerAppName, sourceControlName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SourceControl> GetAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SourceControl> GetAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Create or update the SourceControl for a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update the SourceControl for a Container App.
+            /// Create or update the SourceControl for a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -122,22 +122,22 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='sourceControlEnvelope'>
             /// Properties used to create a Container App SourceControl
             /// </param>
-            public static SourceControl CreateOrUpdate(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope)
+            public static SourceControl CreateOrUpdate(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, containerAppName, name, sourceControlEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, containerAppName, sourceControlName, sourceControlEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create or update the SourceControl for a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update the SourceControl for a Container App.
+            /// Create or update the SourceControl for a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='sourceControlEnvelope'>
@@ -157,9 +157,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SourceControl> CreateOrUpdateAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SourceControl> CreateOrUpdateAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, name, sourceControlEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, sourceControlEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Delete a Container App SourceControl.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App SourceControl.
+            /// Delete a Container App SourceControl.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,19 +180,19 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
-            public static void Delete(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static void Delete(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName)
             {
-                operations.DeleteAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, containerAppName, sourceControlName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Delete a Container App SourceControl.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App SourceControl.
+            /// Delete a Container App SourceControl.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -203,22 +203,22 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
             /// Create or update the SourceControl for a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update the SourceControl for a Container App.
+            /// Create or update the SourceControl for a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -229,22 +229,22 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='sourceControlEnvelope'>
             /// Properties used to create a Container App SourceControl
             /// </param>
-            public static SourceControl BeginCreateOrUpdate(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope)
+            public static SourceControl BeginCreateOrUpdate(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, containerAppName, name, sourceControlEnvelope).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, containerAppName, sourceControlName, sourceControlEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create or update the SourceControl for a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update the SourceControl for a Container App.
+            /// Create or update the SourceControl for a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='sourceControlEnvelope'>
@@ -264,9 +264,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SourceControl> BeginCreateOrUpdateAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SourceControl> BeginCreateOrUpdateAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, name, sourceControlEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, sourceControlEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Delete a Container App SourceControl.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App SourceControl.
+            /// Delete a Container App SourceControl.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -287,19 +287,19 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
-            public static void BeginDelete(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static void BeginDelete(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, containerAppName, sourceControlName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Delete a Container App SourceControl.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App SourceControl.
+            /// Delete a Container App SourceControl.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -310,15 +310,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='sourceControlName'>
             /// Name of the Container App SourceControl.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IContainerAppsSourceControlsOperations operations, string resourceGroupName, string containerAppName, string sourceControlName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

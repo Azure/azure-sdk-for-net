@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='authConfigName'>
         /// Name of the Container App AuthConfig.
         /// </param>
         /// <param name='customHeaders'>
@@ -75,13 +75,12 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AuthConfig>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AuthConfig>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string authConfigName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update the AuthConfig for a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update the AuthConfig for a Container
-        /// App.
+        /// Create or update the AuthConfig for a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='authConfigName'>
         /// Name of the Container App AuthConfig.
         /// </param>
         /// <param name='authConfigEnvelope'>
@@ -110,12 +109,12 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AuthConfig>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, AuthConfig authConfigEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AuthConfig>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string authConfigName, AuthConfig authConfigEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Container App AuthConfig.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App AuthConfig.
+        /// Delete a Container App AuthConfig.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -123,7 +122,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='authConfigName'>
         /// Name of the Container App AuthConfig.
         /// </param>
         /// <param name='customHeaders'>
@@ -138,7 +137,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string authConfigName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the Container App AuthConfigs in a given resource group.
         /// </summary>

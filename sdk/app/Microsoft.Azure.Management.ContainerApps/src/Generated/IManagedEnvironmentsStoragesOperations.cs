@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedEnvironmentStoragesCollection>> ListWithHttpMessagesAsync(string resourceGroupName, string envName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedEnvironmentStoragesCollection>> ListWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get storage for a managedEnvironment.
         /// </summary>
@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='storageName'>
         /// Name of the storage.
         /// </param>
         /// <param name='customHeaders'>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedEnvironmentStorage>> GetWithHttpMessagesAsync(string resourceGroupName, string envName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedEnvironmentStorage>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string storageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update storage for a managedEnvironment.
         /// </summary>
@@ -91,10 +91,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='storageName'>
         /// Name of the storage.
         /// </param>
         /// <param name='properties'>
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedEnvironmentStorage>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string envName, string name, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedEnvironmentStorage>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string storageName, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete storage for a managedEnvironment.
         /// </summary>
@@ -125,10 +125,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='storageName'>
         /// Name of the storage.
         /// </param>
         /// <param name='customHeaders'>
@@ -143,6 +143,6 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string envName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string storageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

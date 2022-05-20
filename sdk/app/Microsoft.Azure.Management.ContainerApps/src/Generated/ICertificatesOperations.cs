@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -47,17 +47,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Certificate>>> ListWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the specified Certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='certificateName'>
         /// Name of the Certificate.
         /// </param>
         /// <param name='customHeaders'>
@@ -75,17 +75,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Certificate>> GetWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Certificate>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or Update a Certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='certificateName'>
         /// Name of the Certificate.
         /// </param>
         /// <param name='certificateEnvelope'>
@@ -106,17 +106,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Certificate>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, string name, Certificate certificateEnvelope = default(Certificate), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Certificate>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string certificateName, Certificate certificateEnvelope = default(Certificate), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified Certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='certificateName'>
         /// Name of the Certificate.
         /// </param>
         /// <param name='customHeaders'>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update properties of a certificate
         /// </summary>
@@ -141,10 +141,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='certificateName'>
         /// Name of the Certificate.
         /// </param>
         /// <param name='tags'>
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Certificate>> UpdateWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Certificate>> UpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string certificateName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the Certificates in a given managed environment.
         /// </summary>

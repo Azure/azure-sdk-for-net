@@ -92,12 +92,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            public static ContainerApp Get(this IContainerAppsOperations operations, string resourceGroupName, string name)
+            public static ContainerApp Get(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName)
             {
-                return operations.GetAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, containerAppName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -109,15 +109,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContainerApp> GetAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContainerApp> GetAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, containerAppName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Create or update a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update a Container App.
+            /// Create or update a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,22 +135,22 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
             /// Properties used to create a container app
             /// </param>
-            public static ContainerApp CreateOrUpdate(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope)
+            public static ContainerApp CreateOrUpdate(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, name, containerAppEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, containerAppName, containerAppEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create or update a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update a Container App.
+            /// Create or update a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
@@ -167,9 +167,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContainerApp> CreateOrUpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContainerApp> CreateOrUpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Delete a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App.
+            /// Delete a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,19 +187,19 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            public static void Delete(this IContainerAppsOperations operations, string resourceGroupName, string name)
+            public static void Delete(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName)
             {
-                operations.DeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, containerAppName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Delete a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App.
+            /// Delete a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -207,15 +207,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -230,15 +230,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
             /// Properties of a Container App that need to be updated
             /// </param>
-            public static void Update(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope)
+            public static void Update(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope)
             {
-                operations.UpdateAsync(resourceGroupName, name, containerAppEnvelope).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, containerAppName, containerAppEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
@@ -262,9 +262,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -322,12 +322,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            public static SecretsCollection ListSecrets(this IContainerAppsOperations operations, string resourceGroupName, string name)
+            public static SecretsCollection ListSecrets(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName)
             {
-                return operations.ListSecretsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                return operations.ListSecretsAsync(resourceGroupName, containerAppName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -339,15 +339,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecretsCollection> ListSecretsAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecretsCollection> ListSecretsAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, containerAppName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Create or update a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update a Container App.
+            /// Create or update a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -365,22 +365,22 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
             /// Properties used to create a container app
             /// </param>
-            public static ContainerApp BeginCreateOrUpdate(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope)
+            public static ContainerApp BeginCreateOrUpdate(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, name, containerAppEnvelope).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, containerAppName, containerAppEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create or update a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update a Container App.
+            /// Create or update a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -388,7 +388,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
@@ -397,9 +397,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContainerApp> BeginCreateOrUpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ContainerApp> BeginCreateOrUpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Delete a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App.
+            /// Delete a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -417,19 +417,19 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            public static void BeginDelete(this IContainerAppsOperations operations, string resourceGroupName, string name)
+            public static void BeginDelete(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, containerAppName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Delete a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App.
+            /// Delete a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -437,15 +437,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -460,15 +460,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
             /// Properties of a Container App that need to be updated
             /// </param>
-            public static void BeginUpdate(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope)
+            public static void BeginUpdate(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope)
             {
-                operations.BeginUpdateAsync(resourceGroupName, name, containerAppEnvelope).GetAwaiter().GetResult();
+                operations.BeginUpdateAsync(resourceGroupName, containerAppName, containerAppEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='name'>
+            /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
             /// <param name='containerAppEnvelope'>
@@ -492,9 +492,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginUpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string name, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginUpdateAsync(this IContainerAppsOperations operations, string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, containerAppEnvelope, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

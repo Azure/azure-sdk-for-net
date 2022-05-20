@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='customHeaders'>
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceControl>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControl>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -288,9 +288,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "containerAppName");
             }
-            if (name == null)
+            if (sourceControlName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlName");
             }
             if (Client.ApiVersion == null)
             {
@@ -305,17 +305,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("containerAppName", containerAppName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("sourceControlName", sourceControlName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{containerAppName}", System.Uri.EscapeDataString(containerAppName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{sourceControlName}", System.Uri.EscapeDataString(sourceControlName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// Create or update the SourceControl for a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update the SourceControl for a Container App.
+        /// Create or update the SourceControl for a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='sourceControlEnvelope'>
@@ -465,10 +465,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SourceControl>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControl>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SourceControl> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, name, sourceControlEnvelope, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SourceControl> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, sourceControlEnvelope, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -476,7 +476,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// Delete a Container App SourceControl.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App SourceControl.
+        /// Delete a Container App SourceControl.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='customHeaders'>
@@ -493,10 +493,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, name, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, sourceControlName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -504,7 +504,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// Create or update the SourceControl for a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update the SourceControl for a Container App.
+        /// Create or update the SourceControl for a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='sourceControlEnvelope'>
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceControl>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControl>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -553,9 +553,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "containerAppName");
             }
-            if (name == null)
+            if (sourceControlName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlName");
             }
             if (sourceControlEnvelope == null)
             {
@@ -574,18 +574,18 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("containerAppName", containerAppName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("sourceControlName", sourceControlName);
                 tracingParameters.Add("sourceControlEnvelope", sourceControlEnvelope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{containerAppName}", System.Uri.EscapeDataString(containerAppName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{sourceControlName}", System.Uri.EscapeDataString(sourceControlName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -739,7 +739,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// Delete a Container App SourceControl.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App SourceControl.
+        /// Delete a Container App SourceControl.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -747,7 +747,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='customHeaders'>
@@ -768,7 +768,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -782,9 +782,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "containerAppName");
             }
-            if (name == null)
+            if (sourceControlName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlName");
             }
             if (Client.ApiVersion == null)
             {
@@ -799,17 +799,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("containerAppName", containerAppName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("sourceControlName", sourceControlName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{containerAppName}", System.Uri.EscapeDataString(containerAppName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{sourceControlName}", System.Uri.EscapeDataString(sourceControlName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

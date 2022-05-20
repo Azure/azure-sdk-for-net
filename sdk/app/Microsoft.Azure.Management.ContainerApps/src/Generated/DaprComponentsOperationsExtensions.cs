@@ -73,12 +73,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
-            public static DaprComponent Get(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name)
+            public static DaprComponent Get(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName)
             {
-                return operations.GetAsync(resourceGroupName, environmentName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, environmentName, componentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DaprComponent> GetAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DaprComponent> GetAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, environmentName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, environmentName, componentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -122,15 +122,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
             /// <param name='daprComponentEnvelope'>
             /// Configuration details of the Dapr Component.
             /// </param>
-            public static DaprComponent CreateOrUpdate(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name, DaprComponent daprComponentEnvelope)
+            public static DaprComponent CreateOrUpdate(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName, DaprComponent daprComponentEnvelope)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, environmentName, name, daprComponentEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, environmentName, componentName, daprComponentEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
             /// <param name='daprComponentEnvelope'>
@@ -157,9 +157,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DaprComponent> CreateOrUpdateAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name, DaprComponent daprComponentEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DaprComponent> CreateOrUpdateAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName, DaprComponent daprComponentEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, environmentName, name, daprComponentEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, environmentName, componentName, daprComponentEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -180,12 +180,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
-            public static void Delete(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name)
+            public static void Delete(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName)
             {
-                operations.DeleteAsync(resourceGroupName, environmentName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, environmentName, componentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -203,15 +203,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, environmentName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, environmentName, componentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -226,12 +226,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
-            public static DaprSecretsCollection ListSecrets(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name)
+            public static DaprSecretsCollection ListSecrets(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName)
             {
-                return operations.ListSecretsAsync(resourceGroupName, environmentName, name).GetAwaiter().GetResult();
+                return operations.ListSecretsAsync(resourceGroupName, environmentName, componentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -246,15 +246,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='componentName'>
             /// Name of the Dapr Component.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DaprSecretsCollection> ListSecretsAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DaprSecretsCollection> ListSecretsAsync(this IDaprComponentsOperations operations, string resourceGroupName, string environmentName, string componentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, environmentName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, environmentName, componentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            public static ManagedEnvironmentStoragesCollection List(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName)
+            public static ManagedEnvironmentStoragesCollection List(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName)
             {
-                return operations.ListAsync(resourceGroupName, envName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, environmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,15 +53,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagedEnvironmentStoragesCollection> ListAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagedEnvironmentStoragesCollection> ListAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, envName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, environmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -79,15 +79,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='storageName'>
             /// Name of the storage.
             /// </param>
-            public static ManagedEnvironmentStorage Get(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, string name)
+            public static ManagedEnvironmentStorage Get(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, string storageName)
             {
-                return operations.GetAsync(resourceGroupName, envName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, environmentName, storageName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,18 +102,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='storageName'>
             /// Name of the storage.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagedEnvironmentStorage> GetAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagedEnvironmentStorage> GetAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, string storageName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, envName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, environmentName, storageName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -131,18 +131,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='storageName'>
             /// Name of the storage.
             /// </param>
             /// <param name='properties'>
             /// Storage properties
             /// </param>
-            public static ManagedEnvironmentStorage CreateOrUpdate(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, string name, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties))
+            public static ManagedEnvironmentStorage CreateOrUpdate(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, string storageName, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, envName, name, properties).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, environmentName, storageName, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -157,10 +157,10 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='storageName'>
             /// Name of the storage.
             /// </param>
             /// <param name='properties'>
@@ -169,9 +169,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagedEnvironmentStorage> CreateOrUpdateAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, string name, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagedEnvironmentStorage> CreateOrUpdateAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, string storageName, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, envName, name, properties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, environmentName, storageName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -189,15 +189,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='storageName'>
             /// Name of the storage.
             /// </param>
-            public static void Delete(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, string name)
+            public static void Delete(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, string storageName)
             {
-                operations.DeleteAsync(resourceGroupName, envName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, environmentName, storageName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -212,18 +212,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='envName'>
+            /// <param name='environmentName'>
             /// Name of the Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='storageName'>
             /// Name of the storage.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string envName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IManagedEnvironmentsStoragesOperations operations, string resourceGroupName, string environmentName, string storageName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, envName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, environmentName, storageName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

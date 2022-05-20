@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='customHeaders'>
@@ -75,13 +75,12 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SourceControl>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControl>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update the SourceControl for a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update the SourceControl for a Container
-        /// App.
+        /// Create or update the SourceControl for a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='sourceControlEnvelope'>
@@ -110,12 +109,12 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SourceControl>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControl>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Container App SourceControl.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App SourceControl.
+        /// Delete a Container App SourceControl.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -123,7 +122,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='customHeaders'>
@@ -138,13 +137,12 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update the SourceControl for a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update the SourceControl for a Container
-        /// App.
+        /// Create or update the SourceControl for a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -152,7 +150,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='sourceControlEnvelope'>
@@ -173,12 +171,12 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SourceControl>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControl>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, SourceControl sourceControlEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Container App SourceControl.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App SourceControl.
+        /// Delete a Container App SourceControl.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -186,7 +184,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='sourceControlName'>
         /// Name of the Container App SourceControl.
         /// </param>
         /// <param name='customHeaders'>
@@ -201,7 +199,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string sourceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the Container App SourceControls in a given resource group.
         /// </summary>

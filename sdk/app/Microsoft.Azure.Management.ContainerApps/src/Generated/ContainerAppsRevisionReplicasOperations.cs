@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='revisionName'>
         /// Name of the Container App Revision.
         /// </param>
-        /// <param name='name'>
+        /// <param name='replicaName'>
         /// Name of the Container App Revision Replica.
         /// </param>
         /// <param name='customHeaders'>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Replica>> GetReplicaWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Replica>> GetReplicaWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, string replicaName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "revisionName");
             }
-            if (name == null)
+            if (replicaName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "replicaName");
             }
             if (Client.ApiVersion == null)
             {
@@ -122,18 +122,18 @@ namespace Microsoft.Azure.Management.ContainerApps
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("containerAppName", containerAppName);
                 tracingParameters.Add("revisionName", revisionName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("replicaName", replicaName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetReplica", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{containerAppName}", System.Uri.EscapeDataString(containerAppName));
             _url = _url.Replace("{revisionName}", System.Uri.EscapeDataString(revisionName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{replicaName}", System.Uri.EscapeDataString(replicaName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
