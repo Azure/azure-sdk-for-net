@@ -35,21 +35,6 @@ namespace Azure.Core.TestFramework
             return command;
         }
 
-        private static List<IgnoreServiceErrorAttribute> GetServiceErrorsToIgnore(Test test)
-        {
-            // Check if there are any service errors we should ignore.
-            List<IgnoreServiceErrorAttribute> attributes = test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
-
-            // Check parents for service errors to ignore.
-            while (test.Parent is Test t)
-            {
-                attributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
-                test = t;
-            }
-
-            return attributes;
-        }
-
         private static bool IsTestFailed(TestExecutionContext context)
         {
             return context.CurrentResult.ResultState.Status switch
