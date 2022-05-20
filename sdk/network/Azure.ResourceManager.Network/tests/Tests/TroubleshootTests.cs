@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
 //using Sku = Azure.ResourceManager.Storage.Models.Sku;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
+using SubResource = Azure.ResourceManager.Network.Models.NetworkSubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {

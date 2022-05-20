@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ServiceEndpointPolicyDefinition data model. </summary>
-    public partial class ServiceEndpointPolicyDefinitionData : SubResource
+    public partial class ServiceEndpointPolicyDefinitionData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
         public ServiceEndpointPolicyDefinitionData()
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="service"> Service endpoint name. </param>
         /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
-        internal ServiceEndpointPolicyDefinitionData(string id, string name, string etag, string description, string service, IList<string> serviceResources, ProvisioningState? provisioningState) : base(id)
+        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, string etag, string description, string service, IList<string> serviceResources, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of service resources. </summary>
         public IList<string> ServiceResources { get; }
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

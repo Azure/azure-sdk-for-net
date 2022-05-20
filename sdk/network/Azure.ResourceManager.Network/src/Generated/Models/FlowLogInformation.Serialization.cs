@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element)
         {
-            string targetResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
             string storageId = default;
             bool enabled = default;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("targetResourceId"))
                 {
-                    targetResourceId = property.Value.GetString();
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("flowAnalyticsConfiguration"))

@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a Virtual Machine. </summary>
-    internal partial class Vm : NetworkResourceData
+    internal partial class Vm : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of Vm. </summary>
         public Vm()
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal Vm(string id, string name, string resourceType, string location, IDictionary<string, string> tags) : base(id, name, resourceType, location, tags)
+        internal Vm(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, location, tags)
         {
         }
     }

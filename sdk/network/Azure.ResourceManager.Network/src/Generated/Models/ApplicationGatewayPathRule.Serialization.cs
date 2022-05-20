@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -70,37 +70,47 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayPathRule DeserializeApplicationGatewayPathRule(JsonElement element)
         {
-            Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<IList<string>> paths = default;
             Optional<WritableSubResource> backendAddressPool = default;
             Optional<WritableSubResource> backendHttpSettings = default;
             Optional<WritableSubResource> redirectConfiguration = default;
             Optional<WritableSubResource> rewriteRuleSet = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<WritableSubResource> firewallPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -174,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("firewallPolicy"))
@@ -191,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayPathRule(id.Value, name.Value, etag.Value, type.Value, Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, Optional.ToNullable(provisioningState), firewallPolicy);
+            return new ApplicationGatewayPathRule(id.Value, name.Value, Optional.ToNullable(type), etag.Value, Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, Optional.ToNullable(provisioningState), firewallPolicy);
         }
     }
 }

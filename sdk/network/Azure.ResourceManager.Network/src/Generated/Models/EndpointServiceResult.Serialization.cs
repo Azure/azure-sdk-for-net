@@ -20,16 +20,31 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
             writer.WriteEndObject();
         }
 
         internal static EndpointServiceResult DeserializeEndpointServiceResult(JsonElement element)
         {
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -37,16 +52,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new EndpointServiceResult(id.Value, name.Value, type.Value);
+            return new EndpointServiceResult(id.Value, name.Value, Optional.ToNullable(type));
         }
     }
 }

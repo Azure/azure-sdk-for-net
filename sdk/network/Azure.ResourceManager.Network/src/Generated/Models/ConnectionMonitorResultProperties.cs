@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the connection monitor. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The date and time when the connection monitor was started. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The monitoring status of the connection monitor. </summary>

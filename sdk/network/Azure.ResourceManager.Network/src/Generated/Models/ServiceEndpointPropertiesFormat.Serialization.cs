@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> service = default;
             Optional<IList<string>> locations = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("service"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NetworkProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

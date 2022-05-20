@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> ID of the resource. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="associations"> Holds the associations the resource has with other resources in the resource group. </param>
-        internal TopologyResource(string name, string id, string location, IReadOnlyList<TopologyAssociation> associations)
+        internal TopologyResource(string name, string id, AzureLocation? location, IReadOnlyList<TopologyAssociation> associations)
         {
             Name = name;
             Id = id;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> ID of the resource. </summary>
         public string Id { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Holds the associations the resource has with other resources in the resource group. </summary>
         public IReadOnlyList<TopologyAssociation> Associations { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the CustomIPPrefix data model. </summary>
-    public partial class CustomIPPrefixData : NetworkResourceData
+    public partial class CustomIPPrefixData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of CustomIPPrefixData. </summary>
         public CustomIPPrefixData()
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the custom IP prefix resource. </param>
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
-        internal CustomIPPrefixData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<string> zones, string cidr, string signedMessage, string authorizationMessage, CustomIPPrefixData customIPPrefixParent, IReadOnlyList<CustomIPPrefixData> childCustomIPPrefixes, CommissionedState? commissionedState, IReadOnlyList<WritableSubResource> publicIPPrefixes, string resourceGuid, string failedReason, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal CustomIPPrefixData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<string> zones, string cidr, string signedMessage, string authorizationMessage, CustomIPPrefixData customIPPrefixParent, IReadOnlyList<CustomIPPrefixData> childCustomIPPrefixes, CommissionedState? commissionedState, IReadOnlyList<WritableSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -80,10 +81,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The list of all referenced PublicIpPrefixes. </summary>
         public IReadOnlyList<WritableSubResource> PublicIPPrefixes { get; }
         /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The reason why resource is in failed state. </summary>
         public string FailedReason { get; }
         /// <summary> The provisioning state of the custom IP prefix resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

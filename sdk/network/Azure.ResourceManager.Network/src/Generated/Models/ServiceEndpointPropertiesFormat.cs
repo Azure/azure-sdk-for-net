@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint resource. </param>
-        internal ServiceEndpointPropertiesFormat(string service, IList<string> locations, ProvisioningState? provisioningState)
+        internal ServiceEndpointPropertiesFormat(string service, IList<string> locations, NetworkProvisioningState? provisioningState)
         {
             Service = service;
             Locations = locations;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A list of locations. </summary>
         public IList<string> Locations { get; }
         /// <summary> The provisioning state of the service endpoint resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

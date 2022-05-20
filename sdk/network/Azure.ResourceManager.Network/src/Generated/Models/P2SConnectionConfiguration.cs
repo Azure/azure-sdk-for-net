@@ -6,11 +6,12 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> P2SConnectionConfiguration Resource. </summary>
-    public partial class P2SConnectionConfiguration : SubResource
+    public partial class P2SConnectionConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
         public P2SConnectionConfiguration()
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        internal P2SConnectionConfiguration(string id, string name, string etag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, ProvisioningState? provisioningState) : base(id)
+        internal P2SConnectionConfiguration(ResourceIdentifier id, string name, string etag, AddressSpace vpnClientAddressPool, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -57,6 +58,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </summary>
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> The provisioning state of the P2SConnectionConfiguration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

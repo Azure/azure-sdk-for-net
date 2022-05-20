@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCrossConnectionPeering data model. </summary>
-    public partial class ExpressRouteCrossConnectionPeeringData : SubResource
+    public partial class ExpressRouteCrossConnectionPeeringData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
         public ExpressRouteCrossConnectionPeeringData()
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
         /// <param name="iPv6PeeringConfig"> The IPv6 peering configuration. </param>
-        internal ExpressRouteCrossConnectionPeeringData(string id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id)
+        internal ExpressRouteCrossConnectionPeeringData(ResourceIdentifier id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Microsoft peering configuration. </summary>
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
         /// <summary> The provisioning state of the express route cross connection peering resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The GatewayManager Etag. </summary>
         public string GatewayManagerEtag { get; set; }
         /// <summary> Who was the last to modify the peering. </summary>

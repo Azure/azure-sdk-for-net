@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the FirewallPolicyRuleCollectionGroup data model. </summary>
-    public partial class FirewallPolicyRuleCollectionGroupData : SubResource
+    public partial class FirewallPolicyRuleCollectionGroupData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()
@@ -22,33 +22,27 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Rule Group type. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(string id, string name, string etag, string resourceType, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, ProvisioningState? provisioningState) : base(id)
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             Priority = priority;
             RuleCollections = ruleCollections;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
-        /// <summary> Rule Group type. </summary>
-        public string ResourceType { get; }
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         public int? Priority { get; set; }
         /// <summary> Group of Firewall Policy rule collections. </summary>
         public IList<FirewallPolicyRuleCollection> RuleCollections { get; }
         /// <summary> The provisioning state of the firewall policy rule collection group resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

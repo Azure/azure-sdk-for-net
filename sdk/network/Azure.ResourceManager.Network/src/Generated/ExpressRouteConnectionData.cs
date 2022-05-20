@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteConnection data model. </summary>
-    public partial class ExpressRouteConnectionData : Models.SubResource
+    public partial class ExpressRouteConnectionData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
         /// <param name="name"> The name of the resource. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal ExpressRouteConnectionData(string id, string name, ProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, RoutingConfiguration routingConfiguration) : base(id)
+        internal ExpressRouteConnectionData(ResourceIdentifier id, string name, NetworkProvisioningState? provisioningState, WritableSubResource expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, RoutingConfiguration routingConfiguration) : base(id)
         {
             Name = name;
             ProvisioningState = provisioningState;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> The provisioning state of the express route connection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The ExpressRoute circuit peering. </summary>
         internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
         /// <summary> Gets or sets Id. </summary>

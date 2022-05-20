@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> id = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<TopologyAssociation>> associations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +33,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("associations"))
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TopologyResource(name.Value, id.Value, location.Value, Optional.ToList(associations));
+            return new TopologyResource(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations));
         }
     }
 }
