@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EndpointServiceResult : IUtf8JsonSerializable
+    public partial class NetworkResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static EndpointServiceResult DeserializeEndpointServiceResult(JsonElement element)
+        internal static NetworkResourceData DeserializeNetworkResourceData(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EndpointServiceResult(id.Value, name.Value, Optional.ToNullable(type));
+            return new NetworkResourceData(id.Value, name.Value, Optional.ToNullable(type));
         }
     }
 }

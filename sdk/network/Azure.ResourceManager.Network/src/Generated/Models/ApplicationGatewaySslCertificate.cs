@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL certificates of an application gateway. </summary>
-    public partial class ApplicationGatewaySslCertificate : NetworkSubResource
+    public partial class ApplicationGatewaySslCertificate : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
         public ApplicationGatewaySslCertificate()
@@ -19,19 +19,17 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the SSL certificate that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Base-64 encoded pfx certificate. Only applicable in PUT Request. </param>
         /// <param name="password"> Password for the pfx file specified in data. Only applicable in PUT request. </param>
         /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, string etag, string resourceType, string data, string password, string publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string data, string password, string publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             Data = data;
             Password = password;
             PublicCertData = publicCertData;
@@ -39,12 +37,8 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the SSL certificate that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
         /// <summary> Base-64 encoded pfx certificate. Only applicable in PUT Request. </summary>
         public string Data { get; set; }
         /// <summary> Password for the pfx file specified in data. Only applicable in PUT request. </summary>

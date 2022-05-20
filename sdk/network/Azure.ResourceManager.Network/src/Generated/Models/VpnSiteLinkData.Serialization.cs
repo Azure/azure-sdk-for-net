@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network
         internal static VpnSiteLinkData DeserializeVpnSiteLinkData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<VpnLinkProviderProperties> linkProperties = default;
             Optional<string> ipAddress = default;
             Optional<string> fqdn = default;
@@ -70,16 +70,6 @@ namespace Azure.ResourceManager.Network
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -88,6 +78,21 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteLinkData(id.Value, etag.Value, name.Value, type.Value, linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
+            return new VpnSiteLinkData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

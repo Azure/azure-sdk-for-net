@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Endpoint service. </summary>
-    public partial class EndpointServiceResult : NetworkSubResource
+    public partial class EndpointServiceResult : NetworkResourceData
     {
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
         public EndpointServiceResult()
@@ -19,17 +19,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the endpoint service. </param>
-        /// <param name="resourceType"> Type of the endpoint service. </param>
-        internal EndpointServiceResult(ResourceIdentifier id, string name, string resourceType) : base(id)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        internal EndpointServiceResult(ResourceIdentifier id, string name, ResourceType? resourceType) : base(id, name, resourceType)
         {
-            Name = name;
-            ResourceType = resourceType;
         }
-
-        /// <summary> Name of the endpoint service. </summary>
-        public string Name { get; }
-        /// <summary> Type of the endpoint service. </summary>
-        public string ResourceType { get; }
     }
 }

@@ -136,6 +136,40 @@ directive:
     where: $.definitions.Usage.properties.id
     transform: >
       $['x-ms-format'] = 'arm-id';
+  - from: network.json
+    where: $.definitions
+    transform: >
+      $.NetworkResource = {
+        "properties": {
+            "id": {
+              "type": "string",
+              "description": "Resource ID.",
+              "x-ms-format": "arm-id"
+            },
+            "name": {
+              "type": "string",
+              "description": "Resource name."
+            },
+            "type": {
+              "readOnly": true,
+              "type": "string",
+              "description": "Resource type.",
+              "x-ms-format": "resource-type"
+            }
+          },
+        "description": "Common resource representation.",
+        "x-ms-azure-resource": true,
+        "x-ms-client-name": "NetworkResourceData"
+      }
+  - from: swagger-document
+    where: $.definitions[?(@.allOf && @.properties.name && @.properties.type)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkResource');
+        delete $.properties.name;
+        delete $.properties.type;
+      }
 # shorten "privateLinkServiceConnectionState" property name
   - from: applicationGateway.json
     where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties

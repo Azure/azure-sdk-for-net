@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnGatewayNatRuleData DeserializeVpnGatewayNatRuleData(JsonElement element)
         {
-            Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> type = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<VpnNatRuleType> type0 = default;
             Optional<VpnNatRuleMode> mode = default;
@@ -85,19 +85,9 @@ namespace Azure.ResourceManager.Network
             Optional<IReadOnlyList<WritableSubResource>> ingressVpnSiteLinkConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -108,6 +98,21 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -218,7 +223,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnGatewayNatRuleData(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value, Optional.ToList(egressVpnSiteLinkConnections), Optional.ToList(ingressVpnSiteLinkConnections));
+            return new VpnGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value, Optional.ToList(egressVpnSiteLinkConnections), Optional.ToList(ingressVpnSiteLinkConnections));
         }
     }
 }

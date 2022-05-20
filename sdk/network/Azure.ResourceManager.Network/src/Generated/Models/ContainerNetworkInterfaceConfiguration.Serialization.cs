@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -55,25 +55,15 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ContainerNetworkInterfaceConfiguration DeserializeContainerNetworkInterfaceConfiguration(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> type = default;
             Optional<string> etag = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<IList<IPConfigurationProfile>> ipConfigurations = default;
             Optional<IList<WritableSubResource>> containerNetworkInterfaces = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
@@ -87,6 +77,21 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -142,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterfaceConfiguration(id.Value, name.Value, type.Value, etag.Value, Optional.ToList(ipConfigurations), Optional.ToList(containerNetworkInterfaces), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterfaceConfiguration(id.Value, name.Value, Optional.ToNullable(type), etag.Value, Optional.ToList(ipConfigurations), Optional.ToList(containerNetworkInterfaces), Optional.ToNullable(provisioningState));
         }
     }
 }

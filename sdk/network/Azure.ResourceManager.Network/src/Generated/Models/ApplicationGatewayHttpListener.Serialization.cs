@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element)
         {
-            Optional<string> name = default;
             Optional<string> etag = default;
-            Optional<string> type = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<WritableSubResource> frontendIPConfiguration = default;
             Optional<WritableSubResource> frontendPort = default;
             Optional<ApplicationGatewayProtocol> protocol = default;
@@ -112,19 +112,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> hostNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -135,6 +125,21 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -265,7 +270,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, etag.Value, type.Value, frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
+            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), etag.Value, frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
         }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCircuitPeering data model. </summary>
-    public partial class ExpressRouteCircuitPeeringData : NetworkSubResource
+    public partial class ExpressRouteCircuitPeeringData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringData. </summary>
         public ExpressRouteCircuitPeeringData()
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="peeringType"> The peering type. </param>
         /// <param name="state"> The peering state. </param>
         /// <param name="azureASN"> The Azure ASN. </param>
@@ -47,11 +47,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteConnection"> The ExpressRoute connection. </param>
         /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
-        internal ExpressRouteCircuitPeeringData(ResourceIdentifier id, string name, string etag, string resourceType, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, WritableSubResource routeFilter, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig, SubResource expressRouteConnection, IList<ExpressRouteCircuitConnectionData> connections, IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections) : base(id)
+        internal ExpressRouteCircuitPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, WritableSubResource routeFilter, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig, SubResource expressRouteConnection, IList<ExpressRouteCircuitConnectionData> connections, IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             PeeringType = peeringType;
             State = state;
             AzureASN = azureASN;
@@ -74,12 +72,8 @@ namespace Azure.ResourceManager.Network
             PeeredConnections = peeredConnections;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
         /// <summary> The peering type. </summary>
         public ExpressRoutePeeringType? PeeringType { get; set; }
         /// <summary> The peering state. </summary>
