@@ -1,4 +1,4 @@
-# Azure MachineLearningServices Management client library for .NET
+# Azure MachineLearning Management client library for .NET
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
 
@@ -6,10 +6,10 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure MachineLearningServices management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure MachineLearning management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.MachineLearningServices --prerelease
+dotnet add package Azure.ResourceManager.MachineLearning --prerelease
 ```
 
 ### Prerequisites

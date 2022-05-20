@@ -5,13 +5,13 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-library-name: MachineLearningServices
+library-name: MachineLearning
 require: https://raw.githubusercontent.com/forteddyt/azure-rest-api-specs/048b2943c472175892f744444af57a11d4093293/specification/machinelearningservices/resource-manager/readme.md
 tag: package-2022-02-01-preview
 modelerfour:
     lenient-model-deduplication: true
 clear-output-folder: true
-namespace: Azure.ResourceManager.MachineLearningServices
+namespace: Azure.ResourceManager.MachineLearning
 skip-csproj: true
 no-property-type-replacement: 
 - ResourceId

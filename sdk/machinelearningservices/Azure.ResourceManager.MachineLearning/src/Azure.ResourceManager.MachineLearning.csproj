@@ -5,7 +5,7 @@
       Azure management client SDK for Azure resource provider MachineLearningServices.
       This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
     </Description>
-    <PackageId>Azure.ResourceManager.MachineLearningServices</PackageId>
+    <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
   </PropertyGroup>
 
