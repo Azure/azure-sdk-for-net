@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Abstract class for AutoML tasks that train image (computer vision) models -

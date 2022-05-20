@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The estimated price info for using a VM of a particular OS type, tier, etc. </summary>
     public partial class EstimatedVMPrice

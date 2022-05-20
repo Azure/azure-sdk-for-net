@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Base definition of a schedule. </summary>
     public partial class ScheduleBase

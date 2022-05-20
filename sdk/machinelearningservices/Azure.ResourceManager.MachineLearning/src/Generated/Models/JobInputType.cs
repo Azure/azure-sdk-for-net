@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum to determine the Job Input Type. </summary>
     internal readonly partial struct JobInputType : IEquatable<JobInputType>

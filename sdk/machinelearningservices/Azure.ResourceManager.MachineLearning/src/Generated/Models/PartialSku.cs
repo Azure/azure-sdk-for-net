@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Common SKU definition. </summary>
     public partial class PartialSku
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </summary>
         public string Size { get; set; }
         /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
-        public MachineLearningServicesSkuTier? Tier { get; set; }
+        public MachineLearningSkuTier? Tier { get; set; }
     }
 }

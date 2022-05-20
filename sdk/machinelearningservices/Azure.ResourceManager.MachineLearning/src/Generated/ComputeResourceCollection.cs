@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="ComputeResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ComputeResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _computeResourceComputeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ComputeResource.ResourceType.Namespace, Diagnostics);
+            _computeResourceComputeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ComputeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ComputeResource.ResourceType, out string computeResourceComputeApiVersion);
             _computeResourceComputeRestClient = new ComputeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computeResourceComputeApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _computeResourceComputeRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _computeResourceComputeRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<ComputeResource>(new ComputeResourceOperationSource(Client), _computeResourceComputeClientDiagnostics, Pipeline, _computeResourceComputeRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

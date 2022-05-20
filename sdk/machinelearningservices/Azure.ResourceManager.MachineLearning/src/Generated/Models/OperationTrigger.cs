@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Trigger of operation. </summary>
     public readonly partial struct OperationTrigger : IEquatable<OperationTrigger>

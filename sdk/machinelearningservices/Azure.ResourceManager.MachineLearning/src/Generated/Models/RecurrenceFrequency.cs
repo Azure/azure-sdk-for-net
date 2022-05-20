@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum to describe the frequency of a recurrence schedule. </summary>
     public readonly partial struct RecurrenceFrequency : IEquatable<RecurrenceFrequency>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Determines how N-Cross validations value is determined. </summary>
     internal readonly partial struct NCrossValidationsMode : IEquatable<NCrossValidationsMode>

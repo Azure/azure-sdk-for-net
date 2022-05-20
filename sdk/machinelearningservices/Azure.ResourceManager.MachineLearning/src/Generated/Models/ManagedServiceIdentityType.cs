@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
     public readonly partial struct ManagedServiceIdentityType : IEquatable<ManagedServiceIdentityType>

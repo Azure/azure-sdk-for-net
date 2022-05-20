@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Validation settings for AutoML Table vertical tasks - Classification/Regression/Forecasting. </summary>
     public partial class TableVerticalValidationDataSettings : ValidationDataSettings

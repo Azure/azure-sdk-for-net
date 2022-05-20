@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Three lettered code specifying the currency of the VM price. Example: USD. </summary>
     public readonly partial struct BillingCurrency : IEquatable<BillingCurrency>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Secrets related to a Machine Learning compute based on Databricks. </summary>
     public partial class DatabricksComputeSecrets : ComputeSecrets

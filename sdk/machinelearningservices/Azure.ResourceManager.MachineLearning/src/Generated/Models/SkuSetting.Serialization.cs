@@ -8,14 +8,14 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class SkuSetting
     {
         internal static SkuSetting DeserializeSkuSetting(JsonElement element)
         {
             string name = default;
-            Optional<MachineLearningServicesSkuTier> tier = default;
+            Optional<MachineLearningSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = property.Value.GetString().ToMachineLearningServicesSkuTier();
+                    tier = property.Value.GetString().ToMachineLearningSkuTier();
                     continue;
                 }
             }

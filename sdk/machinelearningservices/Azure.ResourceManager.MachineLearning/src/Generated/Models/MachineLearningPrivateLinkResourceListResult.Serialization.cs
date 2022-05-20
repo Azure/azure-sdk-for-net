@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class MachineLearningServicesPrivateLinkResourceListResult
+    internal partial class MachineLearningPrivateLinkResourceListResult
     {
-        internal static MachineLearningServicesPrivateLinkResourceListResult DeserializeMachineLearningServicesPrivateLinkResourceListResult(JsonElement element)
+        internal static MachineLearningPrivateLinkResourceListResult DeserializeMachineLearningPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MachineLearningServicesPrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<MachineLearningPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningServicesPrivateLinkResource> array = new List<MachineLearningServicesPrivateLinkResource>();
+                    List<MachineLearningPrivateLinkResource> array = new List<MachineLearningPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningServicesPrivateLinkResource.DeserializeMachineLearningServicesPrivateLinkResource(item));
+                        array.Add(MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new MachineLearningServicesPrivateLinkResourceListResult(Optional.ToList(value));
+            return new MachineLearningPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

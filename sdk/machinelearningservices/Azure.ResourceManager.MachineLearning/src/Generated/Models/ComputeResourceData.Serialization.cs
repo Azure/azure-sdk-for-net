@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     public partial class ComputeResourceData : IUtf8JsonSerializable
     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<MachineLearningServicesSku> sku = default;
+            Optional<MachineLearningSku> sku = default;
             Optional<Compute> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = MachineLearningServicesSku.DeserializeMachineLearningServicesSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

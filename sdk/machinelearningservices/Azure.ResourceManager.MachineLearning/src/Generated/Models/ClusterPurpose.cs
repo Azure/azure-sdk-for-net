@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Intended usage of the cluster. </summary>
     public readonly partial struct ClusterPurpose : IEquatable<ClusterPurpose>

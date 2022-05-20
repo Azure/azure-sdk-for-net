@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices;
+using Azure.ResourceManager.MachineLearning;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> A paginated list of ComponentVersion entities. </summary>
     internal partial class ComponentVersionResourceArmPaginatedResult

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MLFlowModelJobOutput. </summary>
     public partial class MLFlowModelJobOutput : JobOutput

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Primary metrics for Regression task. </summary>
     public readonly partial struct RegressionPrimaryMetrics : IEquatable<RegressionPrimaryMetrics>

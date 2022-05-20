@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum for all Regression models supported by AutoML. </summary>
     public readonly partial struct RegressionModels : IEquatable<RegressionModels>

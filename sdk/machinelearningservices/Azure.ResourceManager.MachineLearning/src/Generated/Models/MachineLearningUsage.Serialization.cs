@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningServicesUsage
+    public partial class MachineLearningUsage
     {
-        internal static MachineLearningServicesUsage DeserializeMachineLearningServicesUsage(JsonElement element)
+        internal static MachineLearningUsage DeserializeMachineLearningUsage(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> amlWorkspaceLocation = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new MachineLearningServicesUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new MachineLearningUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

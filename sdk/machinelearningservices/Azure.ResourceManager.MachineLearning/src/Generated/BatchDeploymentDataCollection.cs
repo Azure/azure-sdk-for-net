@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="BatchDeploymentDataResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BatchDeploymentDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _batchDeploymentDataBatchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", BatchDeploymentDataResource.ResourceType.Namespace, Diagnostics);
+            _batchDeploymentDataBatchDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", BatchDeploymentDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BatchDeploymentDataResource.ResourceType, out string batchDeploymentDataBatchDeploymentsApiVersion);
             _batchDeploymentDataBatchDeploymentsRestClient = new BatchDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchDeploymentDataBatchDeploymentsApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _batchDeploymentDataBatchDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _batchDeploymentDataBatchDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchDeploymentDataResource>(new BatchDeploymentDataOperationSource(Client), _batchDeploymentDataBatchDeploymentsClientDiagnostics, Pipeline, _batchDeploymentDataBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The List WorkspaceQuotasByVMFamily operation response. </summary>
     internal partial class ListWorkspaceQuotas

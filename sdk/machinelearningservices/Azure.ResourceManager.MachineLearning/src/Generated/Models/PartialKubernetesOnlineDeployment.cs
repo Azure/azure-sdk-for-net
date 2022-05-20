@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
     internal partial class PartialKubernetesOnlineDeployment : PartialOnlineDeployment

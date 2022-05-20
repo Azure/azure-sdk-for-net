@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The parameters for updating a machine learning workspace. </summary>
     public partial class WorkspacePatch
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The resource tags for the machine learning workspace. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
-        public MachineLearningServicesSku Sku { get; set; }
+        public MachineLearningSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The description of this workspace. </summary>

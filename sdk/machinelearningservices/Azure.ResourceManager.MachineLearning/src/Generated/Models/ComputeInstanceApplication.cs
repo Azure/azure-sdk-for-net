@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an Aml Instance application and its connectivity endpoint URI. </summary>
     public partial class ComputeInstanceApplication

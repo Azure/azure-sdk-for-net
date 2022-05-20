@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Settings used for training the model.
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="nmsIouThreshold"> IOU threshold used during inference in NMS post processing. Must be a float in the range [0, 1]. </param>
         /// <param name="tileGridSize">
         /// The grid size to use for tiling each image. Note: TileGridSize must not be
-        /// None to enable small object detection logic. A tuple of two integers passed as a string.
+        /// None to enable small object detection logic. A string containing two integers in mxn format.
         /// Note: This settings is not supported for the &apos;yolov5&apos; algorithm.
         /// </param>
         /// <param name="tileOverlapRatio">
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public float? NmsIouThreshold { get; set; }
         /// <summary>
         /// The grid size to use for tiling each image. Note: TileGridSize must not be
-        /// None to enable small object detection logic. A tuple of two integers passed as a string.
+        /// None to enable small object detection logic. A string containing two integers in mxn format.
         /// Note: This settings is not supported for the &apos;yolov5&apos; algorithm.
         /// </summary>
         public string TileGridSize { get; set; }

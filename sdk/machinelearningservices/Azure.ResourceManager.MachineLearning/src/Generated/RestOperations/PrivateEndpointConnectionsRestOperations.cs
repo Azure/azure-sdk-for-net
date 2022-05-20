@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     internal partial class PrivateEndpointConnectionsRestOperations
     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineLearningServicesPrivateEndpointConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningPrivateEndpointConnectionListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        MachineLearningServicesPrivateEndpointConnectionListResult value = default;
+                        MachineLearningPrivateEndpointConnectionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MachineLearningServicesPrivateEndpointConnectionListResult.DeserializeMachineLearningServicesPrivateEndpointConnectionListResult(document.RootElement);
+                        value = MachineLearningPrivateEndpointConnectionListResult.DeserializeMachineLearningPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineLearningServicesPrivateEndpointConnectionListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<MachineLearningPrivateEndpointConnectionListResult> List(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        MachineLearningServicesPrivateEndpointConnectionListResult value = default;
+                        MachineLearningPrivateEndpointConnectionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MachineLearningServicesPrivateEndpointConnectionListResult.DeserializeMachineLearningServicesPrivateEndpointConnectionListResult(document.RootElement);
+                        value = MachineLearningPrivateEndpointConnectionListResult.DeserializeMachineLearningPrivateEndpointConnectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineLearningServicesPrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningPrivateEndpointConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        MachineLearningServicesPrivateEndpointConnectionData value = default;
+                        MachineLearningPrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(document.RootElement);
+                        value = MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MachineLearningServicesPrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((MachineLearningPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineLearningServicesPrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public Response<MachineLearningPrivateEndpointConnectionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        MachineLearningServicesPrivateEndpointConnectionData value = default;
+                        MachineLearningPrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(document.RootElement);
+                        value = MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MachineLearningServicesPrivateEndpointConnectionData)null, message.Response);
+                    return Response.FromValue((MachineLearningPrivateEndpointConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, MachineLearningServicesPrivateEndpointConnectionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, MachineLearningPrivateEndpointConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MachineLearningServicesPrivateEndpointConnectionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, MachineLearningServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningPrivateEndpointConnectionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, MachineLearningPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        MachineLearningServicesPrivateEndpointConnectionData value = default;
+                        MachineLearningPrivateEndpointConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(document.RootElement);
+                        value = MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MachineLearningServicesPrivateEndpointConnectionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, MachineLearningServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public Response<MachineLearningPrivateEndpointConnectionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string privateEndpointConnectionName, MachineLearningPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.MachineLearningServices
             {
                 case 200:
                     {
-                        MachineLearningServicesPrivateEndpointConnectionData value = default;
+                        MachineLearningPrivateEndpointConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(document.RootElement);
+                        value = MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

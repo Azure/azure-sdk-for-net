@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
     public partial class ForecastHorizon

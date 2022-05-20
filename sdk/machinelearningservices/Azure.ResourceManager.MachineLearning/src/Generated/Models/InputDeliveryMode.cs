@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum to determine the input data delivery mode. </summary>
     public readonly partial struct InputDeliveryMode : IEquatable<InputDeliveryMode>

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The SharedPrivateLinkResource. </summary>
     public partial class SharedPrivateLinkResource
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requestMessage"> Request message. </param>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        internal SharedPrivateLinkResource(string name, string privateLinkResourceId, string groupId, string requestMessage, MachineLearningServicesPrivateEndpointServiceConnectionStatus? status)
+        internal SharedPrivateLinkResource(string name, string privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status)
         {
             Name = name;
             PrivateLinkResourceId = privateLinkResourceId;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Request message. </summary>
         public string RequestMessage { get; set; }
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public MachineLearningServicesPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
     }
 }

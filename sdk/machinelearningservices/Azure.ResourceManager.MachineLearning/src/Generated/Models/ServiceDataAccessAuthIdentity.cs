@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ServiceDataAccessAuthIdentity. </summary>
     public readonly partial struct ServiceDataAccessAuthIdentity : IEquatable<ServiceDataAccessAuthIdentity>

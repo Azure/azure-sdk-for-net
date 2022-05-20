@@ -5,21 +5,21 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    public partial class MachineLearningServicesPrivateLinkServiceConnectionState
+    public partial class MachineLearningPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesPrivateLinkServiceConnectionState. </summary>
-        public MachineLearningServicesPrivateLinkServiceConnectionState()
+        /// <summary> Initializes a new instance of MachineLearningPrivateLinkServiceConnectionState. </summary>
+        public MachineLearningPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of MachineLearningPrivateLinkServiceConnectionState. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal MachineLearningServicesPrivateLinkServiceConnectionState(MachineLearningServicesPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
+        internal MachineLearningPrivateLinkServiceConnectionState(MachineLearningPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public MachineLearningServicesPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
         /// <summary> The reason for approval/rejection of the connection. </summary>
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>

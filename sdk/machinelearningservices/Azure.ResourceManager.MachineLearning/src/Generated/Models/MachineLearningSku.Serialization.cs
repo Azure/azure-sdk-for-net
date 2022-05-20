@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningServicesSku : IUtf8JsonSerializable
+    public partial class MachineLearningSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningServicesSku DeserializeMachineLearningServicesSku(JsonElement element)
+        internal static MachineLearningSku DeserializeMachineLearningSku(JsonElement element)
         {
             string name = default;
-            Optional<MachineLearningServicesSkuTier> tier = default;
+            Optional<MachineLearningSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<int> capacity = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tier = property.Value.GetString().ToMachineLearningServicesSkuTier();
+                    tier = property.Value.GetString().ToMachineLearningSkuTier();
                     continue;
                 }
                 if (property.NameEquals("size"))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new MachineLearningServicesSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
+            return new MachineLearningSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity));
         }
     }
 }

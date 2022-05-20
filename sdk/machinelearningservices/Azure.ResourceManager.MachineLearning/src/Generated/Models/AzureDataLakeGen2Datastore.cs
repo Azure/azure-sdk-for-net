@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure Data Lake Gen2 datastore configuration. </summary>
     public partial class AzureDataLakeGen2Datastore : DatastoreDetails

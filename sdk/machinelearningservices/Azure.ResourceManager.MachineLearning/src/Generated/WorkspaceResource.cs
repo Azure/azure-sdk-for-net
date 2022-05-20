@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a Workspace along with the instance operations that can be performed on it.
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string workspaceApiVersion);
             _workspaceRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _workspaceFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _workspaceFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _workspaceFeaturesRestClient = new WorkspaceFeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetComputeResources().Get(computeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MachineLearningServicesPrivateEndpointConnectionResources in the Workspace. </summary>
-        /// <returns> An object representing collection of MachineLearningServicesPrivateEndpointConnectionResources and their operations over a MachineLearningServicesPrivateEndpointConnectionResource. </returns>
-        public virtual MachineLearningServicesPrivateEndpointConnectionCollection GetMachineLearningServicesPrivateEndpointConnections()
+        /// <summary> Gets a collection of MachineLearningPrivateEndpointConnectionResources in the Workspace. </summary>
+        /// <returns> An object representing collection of MachineLearningPrivateEndpointConnectionResources and their operations over a MachineLearningPrivateEndpointConnectionResource. </returns>
+        public virtual MachineLearningPrivateEndpointConnectionCollection GetMachineLearningPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new MachineLearningServicesPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningServicesPrivateEndpointConnectionResource>> GetMachineLearningServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningPrivateEndpointConnectionResource>> GetMachineLearningPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await GetMachineLearningServicesPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MachineLearningServicesPrivateEndpointConnectionResource> GetMachineLearningServicesPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningPrivateEndpointConnectionResource> GetMachineLearningPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningServicesPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetMachineLearningPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkspaceConnectionResources in the Workspace. </summary>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _workspaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _workspaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _workspaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _workspaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _workspaceRestClient.DiagnoseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _workspaceRestClient.Diagnose(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _workspaceRestClient.ResyncKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _workspaceRestClient.ResyncKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _workspaceRestClient.PrepareNotebookAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<NotebookResourceInfo>(new NotebookResourceInfoOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<NotebookResourceInfo>(new NotebookResourceInfoOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _workspaceRestClient.PrepareNotebook(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<NotebookResourceInfo>(new NotebookResourceInfoOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<NotebookResourceInfo>(new NotebookResourceInfoOperationSource(), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1095,10 +1095,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningServicesPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningServicesPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("WorkspaceResource.GetPrivateLinkResources");
                 scope.Start();
@@ -1122,10 +1122,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningServicesPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningServicesPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("WorkspaceResource.GetPrivateLinkResources");
                 scope.Start();

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> An enum describing the unit of quota measurement. </summary>
     public readonly partial struct QuotaUnit : IEquatable<QuotaUnit>

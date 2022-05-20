@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>
     public readonly partial struct NodeState : IEquatable<NodeState>

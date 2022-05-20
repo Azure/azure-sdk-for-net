@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices;
+using Azure.ResourceManager.MachineLearning;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class EnvironmentContainerResourceArmPaginatedResult
     {

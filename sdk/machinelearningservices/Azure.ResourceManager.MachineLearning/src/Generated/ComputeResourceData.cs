@@ -7,10 +7,10 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary> A class representing the ComputeResource data model. </summary>
     public partial class ComputeResourceData : ResourceData
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="properties"> Compute properties. </param>
-        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, Compute properties) : base(id, name, resourceType, systemData)
+        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
-        public MachineLearningServicesSku Sku { get; set; }
+        public MachineLearningSku Sku { get; set; }
         /// <summary> Compute properties. </summary>
         public Compute Properties { get; set; }
     }

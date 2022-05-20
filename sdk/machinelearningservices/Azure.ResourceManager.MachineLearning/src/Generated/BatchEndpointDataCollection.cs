@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="BatchEndpointDataResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BatchEndpointDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _batchEndpointDataBatchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", BatchEndpointDataResource.ResourceType.Namespace, Diagnostics);
+            _batchEndpointDataBatchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", BatchEndpointDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BatchEndpointDataResource.ResourceType, out string batchEndpointDataBatchEndpointsApiVersion);
             _batchEndpointDataBatchEndpointsRestClient = new BatchEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchEndpointDataBatchEndpointsApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _batchEndpointDataBatchEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _batchEndpointDataBatchEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

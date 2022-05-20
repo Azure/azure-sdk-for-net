@@ -16,9 +16,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="ComponentContainerDataResource" /> and their operations.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ComponentContainerDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _componentContainerDataComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ComponentContainerDataResource.ResourceType.Namespace, Diagnostics);
+            _componentContainerDataComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ComponentContainerDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ComponentContainerDataResource.ResourceType, out string componentContainerDataComponentContainersApiVersion);
             _componentContainerDataComponentContainersRestClient = new ComponentContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentContainerDataComponentContainersApiVersion);
 #if DEBUG
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _componentContainerDataComponentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _componentContainerDataComponentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

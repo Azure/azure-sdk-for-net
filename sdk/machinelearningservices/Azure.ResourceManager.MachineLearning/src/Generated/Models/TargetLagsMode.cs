@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Target lags selection modes. </summary>
     internal readonly partial struct TargetLagsMode : IEquatable<TargetLagsMode>

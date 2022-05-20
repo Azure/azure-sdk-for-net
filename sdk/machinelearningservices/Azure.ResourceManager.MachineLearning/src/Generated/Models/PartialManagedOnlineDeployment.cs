@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a ManagedOnlineDeployment. </summary>
     internal partial class PartialManagedOnlineDeployment : PartialOnlineDeployment

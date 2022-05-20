@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Abstract class for AutoML tasks that use table dataset as input - such as Classification/Regression/Forecasting. </summary>
     internal partial class TableVertical

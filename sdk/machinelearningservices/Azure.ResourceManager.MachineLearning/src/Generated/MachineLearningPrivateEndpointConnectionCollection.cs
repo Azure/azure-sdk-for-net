@@ -17,31 +17,31 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
-    /// To get a <see cref="MachineLearningServicesPrivateEndpointConnectionCollection" /> instance call the GetMachineLearningServicesPrivateEndpointConnections method from an instance of <see cref="WorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningPrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="MachineLearningPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
+    /// To get a <see cref="MachineLearningPrivateEndpointConnectionCollection" /> instance call the GetMachineLearningPrivateEndpointConnections method from an instance of <see cref="WorkspaceResource" />.
     /// </summary>
-    public partial class MachineLearningServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MachineLearningServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<MachineLearningServicesPrivateEndpointConnectionResource>
+    public partial class MachineLearningPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MachineLearningPrivateEndpointConnectionResource>, IAsyncEnumerable<MachineLearningPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningServicesPrivateEndpointConnectionCollection"/> class for mocking. </summary>
-        protected MachineLearningServicesPrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningPrivateEndpointConnectionCollection"/> class for mocking. </summary>
+        protected MachineLearningPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningServicesPrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MachineLearningServicesPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", MachineLearningServicesPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningServicesPrivateEndpointConnectionResource.ResourceType, out string machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-            _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MachineLearningPrivateEndpointConnectionResource.ResourceType, out string machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MachineLearningServicesPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, MachineLearningServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, MachineLearningPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<MachineLearningServicesPrivateEndpointConnectionResource>(Response.FromValue(new MachineLearningServicesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var response = await _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningArmOperation<MachineLearningPrivateEndpointConnectionResource>(Response.FromValue(new MachineLearningPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MachineLearningServicesPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, MachineLearningServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, MachineLearningPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<MachineLearningServicesPrivateEndpointConnectionResource>(Response.FromValue(new MachineLearningServicesPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var response = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new MachineLearningArmOperation<MachineLearningPrivateEndpointConnectionResource>(Response.FromValue(new MachineLearningPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<MachineLearningServicesPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.Get");
+            using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<MachineLearningServicesPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.Get");
+            using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
+                var response = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineLearningServicesPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: PrivateEndpointConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningServicesPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.GetAll");
+                using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningServicesPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -210,17 +210,17 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// Operation Id: PrivateEndpointConnections_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningServicesPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.GetAll");
+                using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningServicesPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                    var response = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.Exists");
+            using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using var scope = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningServicesPrivateEndpointConnectionCollection.Exists");
+            using var scope = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("MachineLearningPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningServicesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
+                var response = _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             }
         }
 
-        IEnumerator<MachineLearningServicesPrivateEndpointConnectionResource> IEnumerable<MachineLearningServicesPrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<MachineLearningPrivateEndpointConnectionResource> IEnumerable<MachineLearningPrivateEndpointConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MachineLearningServicesPrivateEndpointConnectionResource> IAsyncEnumerable<MachineLearningServicesPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MachineLearningPrivateEndpointConnectionResource> IAsyncEnumerable<MachineLearningPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

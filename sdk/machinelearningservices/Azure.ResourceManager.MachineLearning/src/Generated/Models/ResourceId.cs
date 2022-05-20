@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Represents a resource ID. For example, for a subnet, it is the resource URL for the subnet. </summary>
     internal partial class ResourceId

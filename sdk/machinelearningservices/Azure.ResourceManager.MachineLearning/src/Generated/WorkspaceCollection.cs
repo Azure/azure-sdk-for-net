@@ -18,7 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkspaceResource" /> and their operations.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal WorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", WorkspaceResource.ResourceType.Namespace, Diagnostics);
+            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", WorkspaceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkspaceResource.ResourceType, out string workspaceApiVersion);
             _workspaceRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceApiVersion);
 #if DEBUG
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _workspaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _workspaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<WorkspaceResource>(new WorkspaceOperationSource(Client), _workspaceClientDiagnostics, Pipeline, _workspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

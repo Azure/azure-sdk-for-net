@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Forecast horizon determined automatically by system. </summary>
     public partial class AutoForecastHorizon : ForecastHorizon

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>

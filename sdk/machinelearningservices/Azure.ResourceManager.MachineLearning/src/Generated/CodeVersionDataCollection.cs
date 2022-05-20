@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="CodeVersionDataResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CodeVersionDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _codeVersionDataCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", CodeVersionDataResource.ResourceType.Namespace, Diagnostics);
+            _codeVersionDataCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", CodeVersionDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CodeVersionDataResource.ResourceType, out string codeVersionDataCodeVersionsApiVersion);
             _codeVersionDataCodeVersionsRestClient = new CodeVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, codeVersionDataCodeVersionsApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _codeVersionDataCodeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _codeVersionDataCodeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
     public partial class ImageSweepSettings

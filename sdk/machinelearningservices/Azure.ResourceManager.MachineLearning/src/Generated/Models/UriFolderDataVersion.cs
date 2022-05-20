@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> uri-folder data version entity. </summary>
     public partial class UriFolderDataVersion : DataVersionBaseDetails

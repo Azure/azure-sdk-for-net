@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Flag for generating lags for the numeric features. </summary>
     public readonly partial struct FeatureLags : IEquatable<FeatureLags>

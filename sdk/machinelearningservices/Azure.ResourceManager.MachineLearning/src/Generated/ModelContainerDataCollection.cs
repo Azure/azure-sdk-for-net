@@ -16,9 +16,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="ModelContainerDataResource" /> and their operations.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ModelContainerDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _modelContainerDataModelContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ModelContainerDataResource.ResourceType.Namespace, Diagnostics);
+            _modelContainerDataModelContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ModelContainerDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ModelContainerDataResource.ResourceType, out string modelContainerDataModelContainersApiVersion);
             _modelContainerDataModelContainersRestClient = new ModelContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, modelContainerDataModelContainersApiVersion);
 #if DEBUG
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _modelContainerDataModelContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<ModelContainerDataResource>(Response.FromValue(new ModelContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<ModelContainerDataResource>(Response.FromValue(new ModelContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _modelContainerDataModelContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<ModelContainerDataResource>(Response.FromValue(new ModelContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<ModelContainerDataResource>(Response.FromValue(new ModelContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,7 +17,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="OnlineDeploymentDataResource" /> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OnlineDeploymentDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _onlineDeploymentDataOnlineDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", OnlineDeploymentDataResource.ResourceType.Namespace, Diagnostics);
+            _onlineDeploymentDataOnlineDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", OnlineDeploymentDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OnlineDeploymentDataResource.ResourceType, out string onlineDeploymentDataOnlineDeploymentsApiVersion);
             _onlineDeploymentDataOnlineDeploymentsRestClient = new OnlineDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, onlineDeploymentDataOnlineDeploymentsApiVersion);
 #if DEBUG
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _onlineDeploymentDataOnlineDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<OnlineDeploymentDataResource>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<OnlineDeploymentDataResource>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _onlineDeploymentDataOnlineDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<OnlineDeploymentDataResource>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<OnlineDeploymentDataResource>(new OnlineDeploymentDataOperationSource(Client), _onlineDeploymentDataOnlineDeploymentsClientDiagnostics, Pipeline, _onlineDeploymentDataOnlineDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

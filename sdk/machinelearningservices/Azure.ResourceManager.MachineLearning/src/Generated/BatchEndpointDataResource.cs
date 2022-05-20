@@ -14,9 +14,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a BatchEndpointData along with the instance operations that can be performed on it.
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BatchEndpointDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _batchEndpointDataBatchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _batchEndpointDataBatchEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string batchEndpointDataBatchEndpointsApiVersion);
             _batchEndpointDataBatchEndpointsRestClient = new BatchEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, batchEndpointDataBatchEndpointsApiVersion);
 #if DEBUG
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _batchEndpointDataBatchEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _batchEndpointDataBatchEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _batchEndpointDataBatchEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _batchEndpointDataBatchEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<BatchEndpointDataResource>(new BatchEndpointDataOperationSource(Client), _batchEndpointDataBatchEndpointsClientDiagnostics, Pipeline, _batchEndpointDataBatchEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

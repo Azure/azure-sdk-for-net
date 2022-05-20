@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Empty/none datastore credentials. </summary>
     public partial class NoneDatastoreCredentials : DatastoreCredentials

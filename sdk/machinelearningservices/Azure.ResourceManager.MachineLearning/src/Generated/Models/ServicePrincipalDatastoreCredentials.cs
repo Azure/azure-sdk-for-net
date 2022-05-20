@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Service Principal datastore credentials configuration. </summary>
     public partial class ServicePrincipalDatastoreCredentials : DatastoreCredentials

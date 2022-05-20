@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Load Balancer Type. </summary>
     public readonly partial struct LoadBalancerType : IEquatable<LoadBalancerType>

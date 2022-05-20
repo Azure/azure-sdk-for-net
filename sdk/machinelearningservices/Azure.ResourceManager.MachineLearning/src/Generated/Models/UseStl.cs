@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Configure STL Decomposition of the time-series target column. </summary>
     public readonly partial struct UseStl : IEquatable<UseStl>

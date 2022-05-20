@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     internal class BatchEndpointDataOperationSource : IOperationSource<BatchEndpointDataResource>
     {

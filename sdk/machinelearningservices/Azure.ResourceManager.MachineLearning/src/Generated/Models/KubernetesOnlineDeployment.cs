@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
     public partial class KubernetesOnlineDeployment : OnlineDeploymentDetails

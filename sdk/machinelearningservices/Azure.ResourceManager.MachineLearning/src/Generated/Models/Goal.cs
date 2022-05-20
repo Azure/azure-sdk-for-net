@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines supported metric goals for hyperparameter tuning. </summary>
     public readonly partial struct Goal : IEquatable<Goal>

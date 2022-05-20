@@ -5,10 +5,10 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </summary>
-    public enum MachineLearningServicesSkuTier
+    public enum MachineLearningSkuTier
     {
         /// <summary> Free. </summary>
         Free,

@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a JobBaseData along with the instance operations that can be performed on it.
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal JobBaseDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobBaseDataJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _jobBaseDataJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string jobBaseDataJobsApiVersion);
             _jobBaseDataJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobBaseDataJobsApiVersion);
 #if DEBUG
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _jobBaseDataJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_jobBaseDataJobsClientDiagnostics, Pipeline, _jobBaseDataJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_jobBaseDataJobsClientDiagnostics, Pipeline, _jobBaseDataJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _jobBaseDataJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_jobBaseDataJobsClientDiagnostics, Pipeline, _jobBaseDataJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_jobBaseDataJobsClientDiagnostics, Pipeline, _jobBaseDataJobsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _jobBaseDataJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<JobBaseDataResource>(Response.FromValue(new JobBaseDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<JobBaseDataResource>(Response.FromValue(new JobBaseDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _jobBaseDataJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<JobBaseDataResource>(Response.FromValue(new JobBaseDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<JobBaseDataResource>(Response.FromValue(new JobBaseDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

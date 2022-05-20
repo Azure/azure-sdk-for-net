@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Certificate datastore credentials configuration. </summary>
     public partial class CertificateDatastoreCredentials : DatastoreCredentials

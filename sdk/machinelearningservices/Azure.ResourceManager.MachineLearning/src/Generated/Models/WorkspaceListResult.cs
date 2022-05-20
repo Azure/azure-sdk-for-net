@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices;
+using Azure.ResourceManager.MachineLearning;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The result of a request to list machine learning workspaces. </summary>
     internal partial class WorkspaceListResult

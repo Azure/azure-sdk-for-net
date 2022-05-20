@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The type of identity that created the resource. </summary>
     internal readonly partial struct CreatedByType : IEquatable<CreatedByType>

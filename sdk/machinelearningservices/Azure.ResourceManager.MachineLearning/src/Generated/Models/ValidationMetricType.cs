@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Metric computation method to use for validation metrics in image tasks. </summary>
     public readonly partial struct ValidationMetricType : IEquatable<ValidationMetricType>

@@ -16,9 +16,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="EnvironmentVersionDataResource" /> and their operations.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EnvironmentVersionDataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _environmentVersionDataEnvironmentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", EnvironmentVersionDataResource.ResourceType.Namespace, Diagnostics);
+            _environmentVersionDataEnvironmentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", EnvironmentVersionDataResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EnvironmentVersionDataResource.ResourceType, out string environmentVersionDataEnvironmentVersionsApiVersion);
             _environmentVersionDataEnvironmentVersionsRestClient = new EnvironmentVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, environmentVersionDataEnvironmentVersionsApiVersion);
 #if DEBUG
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _environmentVersionDataEnvironmentVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<EnvironmentVersionDataResource>(Response.FromValue(new EnvironmentVersionDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<EnvironmentVersionDataResource>(Response.FromValue(new EnvironmentVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _environmentVersionDataEnvironmentVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<EnvironmentVersionDataResource>(Response.FromValue(new EnvironmentVersionDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<EnvironmentVersionDataResource>(Response.FromValue(new EnvironmentVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

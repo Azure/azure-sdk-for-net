@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     public partial class WorkspaceData : IUtf8JsonSerializable
     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<MachineLearningServicesSku> sku = default;
+            Optional<MachineLearningSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<string> imageBuildCompute = default;
             Optional<bool> allowPublicAccessWhenBehindVnet = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IReadOnlyList<MachineLearningServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<IList<SharedPrivateLinkResource>> sharedPrivateLinkResources = default;
             Optional<NotebookResourceInfo> notebookInfo = default;
             Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = MachineLearningServicesSku.DeserializeMachineLearningServicesSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.MachineLearningServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MachineLearningServicesPrivateEndpointConnectionData> array = new List<MachineLearningServicesPrivateEndpointConnectionData>();
+                            List<MachineLearningPrivateEndpointConnectionData> array = new List<MachineLearningPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningServicesPrivateEndpointConnectionData.DeserializeMachineLearningServicesPrivateEndpointConnectionData(item));
+                                array.Add(MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Learning rate scheduler enum. </summary>
     public readonly partial struct LearningRateScheduler : IEquatable<LearningRateScheduler>

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Recurrence schedule definition. </summary>
     public partial class RecurrenceSchedule : ScheduleBase

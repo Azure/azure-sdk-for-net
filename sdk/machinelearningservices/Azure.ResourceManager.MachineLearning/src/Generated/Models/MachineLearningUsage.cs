@@ -5,17 +5,17 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Describes AML Resource Usage. </summary>
-    public partial class MachineLearningServicesUsage
+    public partial class MachineLearningUsage
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesUsage. </summary>
-        internal MachineLearningServicesUsage()
+        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
+        internal MachineLearningUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesUsage. </summary>
+        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="usageType"> Specifies the resource type. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal MachineLearningServicesUsage(string id, string amlWorkspaceLocation, string usageType, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
+        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;

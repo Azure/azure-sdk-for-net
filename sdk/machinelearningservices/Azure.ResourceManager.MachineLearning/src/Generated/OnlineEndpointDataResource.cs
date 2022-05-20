@@ -14,9 +14,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing an OnlineEndpointData along with the instance operations that can be performed on it.
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OnlineEndpointDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _onlineEndpointDataOnlineEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _onlineEndpointDataOnlineEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string onlineEndpointDataOnlineEndpointsApiVersion);
             _onlineEndpointDataOnlineEndpointsRestClient = new OnlineEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, onlineEndpointDataOnlineEndpointsApiVersion);
 #if DEBUG
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _onlineEndpointDataOnlineEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _onlineEndpointDataOnlineEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _onlineEndpointDataOnlineEndpointsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<OnlineEndpointDataResource>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<OnlineEndpointDataResource>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _onlineEndpointDataOnlineEndpointsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<OnlineEndpointDataResource>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<OnlineEndpointDataResource>(new OnlineEndpointDataOperationSource(Client), _onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _onlineEndpointDataOnlineEndpointsRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _onlineEndpointDataOnlineEndpointsRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_onlineEndpointDataOnlineEndpointsClientDiagnostics, Pipeline, _onlineEndpointDataOnlineEndpointsRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

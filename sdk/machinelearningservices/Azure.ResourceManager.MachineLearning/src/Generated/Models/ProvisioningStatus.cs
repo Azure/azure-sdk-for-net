@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The current deployment state of schedule. </summary>
     public readonly partial struct ProvisioningStatus : IEquatable<ProvisioningStatus>

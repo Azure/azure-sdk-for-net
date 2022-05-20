@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Target rolling windows size mode. </summary>
     internal readonly partial struct TargetRollingWindowSizeMode : IEquatable<TargetRollingWindowSizeMode>

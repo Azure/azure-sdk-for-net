@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a DatastoreData along with the instance operations that can be performed on it.
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatastoreDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datastoreDataDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _datastoreDataDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string datastoreDataDatastoresApiVersion);
             _datastoreDataDatastoresRestClient = new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datastoreDataDatastoresApiVersion);
 #if DEBUG
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _datastoreDataDatastoresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _datastoreDataDatastoresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _datastoreDataDatastoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, skipValidation, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<DatastoreDataResource>(Response.FromValue(new DatastoreDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<DatastoreDataResource>(Response.FromValue(new DatastoreDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _datastoreDataDatastoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, skipValidation, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<DatastoreDataResource>(Response.FromValue(new DatastoreDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<DatastoreDataResource>(Response.FromValue(new DatastoreDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

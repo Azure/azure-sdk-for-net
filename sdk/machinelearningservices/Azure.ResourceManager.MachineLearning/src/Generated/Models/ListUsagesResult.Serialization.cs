@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class ListUsagesResult
     {
         internal static ListUsagesResult DeserializeListUsagesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MachineLearningServicesUsage>> value = default;
+            Optional<IReadOnlyList<MachineLearningUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineLearningServicesUsage> array = new List<MachineLearningServicesUsage>();
+                    List<MachineLearningUsage> array = new List<MachineLearningUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningServicesUsage.DeserializeMachineLearningServicesUsage(item));
+                        array.Add(MachineLearningUsage.DeserializeMachineLearningUsage(item));
                     }
                     value = array;
                     continue;

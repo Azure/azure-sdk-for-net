@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     internal static class ProviderConstants
     {

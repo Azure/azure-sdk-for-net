@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Batch inference settings per deployment. </summary>
     public partial class BatchDeploymentDetails : EndpointDeploymentPropertiesBase

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Early termination policies enable canceling poor-performing runs before they complete. </summary>
     public partial class EarlyTerminationPolicy

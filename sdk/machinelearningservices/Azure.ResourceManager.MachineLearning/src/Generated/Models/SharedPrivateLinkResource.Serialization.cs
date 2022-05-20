@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class SharedPrivateLinkResource : IUtf8JsonSerializable
     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<string> privateLinkResourceId = default;
             Optional<string> groupId = default;
             Optional<string> requestMessage = default;
-            Optional<MachineLearningServicesPrivateEndpointServiceConnectionStatus> status = default;
+            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new MachineLearningServicesPrivateEndpointServiceConnectionStatus(property0.Value.GetString());
+                            status = new MachineLearningPrivateEndpointServiceConnectionStatus(property0.Value.GetString());
                             continue;
                         }
                     }

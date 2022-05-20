@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> N-Cross validations are specified by user. </summary>
     public partial class CustomNCrossValidations : NCrossValidations

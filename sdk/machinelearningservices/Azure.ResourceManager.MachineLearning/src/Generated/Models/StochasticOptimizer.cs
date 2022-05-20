@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Stochastic optimizer for image models. </summary>
     public readonly partial struct StochasticOptimizer : IEquatable<StochasticOptimizer>

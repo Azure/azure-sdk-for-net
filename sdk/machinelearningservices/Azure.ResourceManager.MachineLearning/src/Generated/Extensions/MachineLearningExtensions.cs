@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearningServices. </summary>
-    public static partial class MachineLearningServicesExtensions
+    /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearning. </summary>
+    public static partial class MachineLearningExtensions
     {
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An async collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineLearningServicesUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineLearningServicesUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -291,20 +291,20 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
         #endregion
 
-        #region MachineLearningServicesPrivateEndpointConnectionResource
+        #region MachineLearningPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningServicesPrivateEndpointConnectionResource" /> object. </returns>
-        public static MachineLearningServicesPrivateEndpointConnectionResource GetMachineLearningServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource" /> object. </returns>
+        public static MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineLearningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MachineLearningServicesPrivateEndpointConnectionResource(client, id);
+                MachineLearningPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new MachineLearningPrivateEndpointConnectionResource(client, id);
             }
             );
         }

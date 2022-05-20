@@ -7,21 +7,21 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the MachineLearningServicesPrivateEndpointConnection data model. </summary>
-    public partial class MachineLearningServicesPrivateEndpointConnectionData : ResourceData
+    /// <summary> A class representing the MachineLearningPrivateEndpointConnection data model. </summary>
+    public partial class MachineLearningPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesPrivateEndpointConnectionData. </summary>
-        public MachineLearningServicesPrivateEndpointConnectionData()
+        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        public MachineLearningPrivateEndpointConnectionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal MachineLearningServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, PrivateEndpoint privateEndpoint, MachineLearningServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, MachineLearningServicesPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, PrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
             Tags = tags;
             Sku = sku;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
-        public MachineLearningServicesSku Sku { get; set; }
+        public MachineLearningSku Sku { get; set; }
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpoint PrivateEndpoint { get; set; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public MachineLearningServicesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public MachineLearningServicesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

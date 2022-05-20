@@ -8,11 +8,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningServicesPrivateLinkResource : IUtf8JsonSerializable
+    public partial class MachineLearningPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,33 +47,33 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("requiredZoneNames");
-                writer.WriteStartArray();
-                foreach (var item in RequiredZoneNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("privateEndpoint");
+                writer.WriteObjectValue(PrivateEndpoint);
+            }
+            if (Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningServicesPrivateLinkResource DeserializeMachineLearningServicesPrivateLinkResource(JsonElement element)
+        internal static MachineLearningPrivateEndpointConnectionData DeserializeMachineLearningPrivateEndpointConnectionData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<MachineLearningServicesSku> sku = default;
+            Optional<MachineLearningSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
+            Optional<PrivateEndpoint> privateEndpoint = default;
+            Optional<MachineLearningPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<MachineLearningPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = MachineLearningServicesSku.DeserializeMachineLearningServicesSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -145,46 +146,41 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("groupId"))
-                        {
-                            groupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("requiredMembers"))
+                        if (property0.NameEquals("privateEndpoint"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            requiredMembers = array;
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("requiredZoneNames"))
+                        if (property0.NameEquals("privateLinkServiceConnectionState"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                array.Add(item.GetString());
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
                             }
-                            requiredZoneNames = array;
+                            provisioningState = new MachineLearningPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MachineLearningServicesPrivateLinkResource(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

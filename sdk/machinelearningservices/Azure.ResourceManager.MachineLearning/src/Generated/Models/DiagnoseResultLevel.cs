@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Level of workspace setup error. </summary>
     public readonly partial struct DiagnoseResultLevel : IEquatable<DiagnoseResultLevel>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The EarlyTerminationPolicyType. </summary>
     internal readonly partial struct EarlyTerminationPolicyType : IEquatable<EarlyTerminationPolicyType>

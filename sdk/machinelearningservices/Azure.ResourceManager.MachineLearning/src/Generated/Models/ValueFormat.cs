@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> format for the workspace connection value. </summary>
     public readonly partial struct ValueFormat : IEquatable<ValueFormat>

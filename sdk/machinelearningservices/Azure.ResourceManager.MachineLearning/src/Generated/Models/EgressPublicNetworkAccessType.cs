@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum to determine whether PublicNetworkAccess is Enabled or Disabled for egress of a deployment. </summary>
     public readonly partial struct EgressPublicNetworkAccessType : IEquatable<EgressPublicNetworkAccessType>

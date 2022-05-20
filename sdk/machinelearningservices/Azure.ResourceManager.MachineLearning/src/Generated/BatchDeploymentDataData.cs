@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary> A class representing the BatchDeploymentData data model. </summary>
     public partial class BatchDeploymentDataData : TrackedResourceData
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        internal BatchDeploymentDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, BatchDeploymentDetails properties, MachineLearningServicesSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal BatchDeploymentDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, BatchDeploymentDetails properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> [Required] Additional attributes of the entity. </summary>
         public BatchDeploymentDetails Properties { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
-        public MachineLearningServicesSku Sku { get; set; }
+        public MachineLearningSku Sku { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Target aggregate function. </summary>
     public readonly partial struct TargetAggregationFunction : IEquatable<TargetAggregationFunction>

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The EncryptionKeyVaultProperties. </summary>
     public partial class EncryptionKeyVaultProperties

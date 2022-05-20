@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum for all forecasting models supported by AutoML. </summary>
     public readonly partial struct ForecastingModels : IEquatable<ForecastingModels>

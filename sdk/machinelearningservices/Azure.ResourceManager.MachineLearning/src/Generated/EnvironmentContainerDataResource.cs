@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing an EnvironmentContainerData along with the instance operations that can be performed on it.
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EnvironmentContainerDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _environmentContainerDataEnvironmentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _environmentContainerDataEnvironmentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string environmentContainerDataEnvironmentContainersApiVersion);
             _environmentContainerDataEnvironmentContainersRestClient = new EnvironmentContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, environmentContainerDataEnvironmentContainersApiVersion);
 #if DEBUG
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _environmentContainerDataEnvironmentContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _environmentContainerDataEnvironmentContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _environmentContainerDataEnvironmentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<EnvironmentContainerDataResource>(Response.FromValue(new EnvironmentContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<EnvironmentContainerDataResource>(Response.FromValue(new EnvironmentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _environmentContainerDataEnvironmentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<EnvironmentContainerDataResource>(Response.FromValue(new EnvironmentContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<EnvironmentContainerDataResource>(Response.FromValue(new EnvironmentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Output data delivery mode enums. </summary>
     public readonly partial struct OutputDeliveryMode : IEquatable<OutputDeliveryMode>

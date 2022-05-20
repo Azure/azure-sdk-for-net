@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines a Sampling Algorithm that generates values randomly. </summary>
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm

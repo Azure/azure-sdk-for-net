@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The List Usages operation response. </summary>
     internal partial class ListUsagesResult
@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         internal ListUsagesResult()
         {
-            Value = new ChangeTrackingList<MachineLearningServicesUsage>();
+            Value = new ChangeTrackingList<MachineLearningUsage>();
         }
 
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         /// <param name="value"> The list of AML resource usages. </param>
         /// <param name="nextLink"> The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information. </param>
-        internal ListUsagesResult(IReadOnlyList<MachineLearningServicesUsage> value, string nextLink)
+        internal ListUsagesResult(IReadOnlyList<MachineLearningUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of AML resource usages. </summary>
-        public IReadOnlyList<MachineLearningServicesUsage> Value { get; }
+        public IReadOnlyList<MachineLearningUsage> Value { get; }
         /// <summary> The URI to fetch the next page of AML resource usage information. Call ListNext() with this to fetch the next page of AML resource usage information. </summary>
         public string NextLink { get; }
     }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> TODO - SKU scale type. </summary>
     public readonly partial struct SkuScaleType : IEquatable<SkuScaleType>

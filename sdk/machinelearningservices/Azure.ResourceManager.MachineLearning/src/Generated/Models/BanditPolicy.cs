@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an early termination policy based on slack criteria, and a frequency and delay interval for evaluation. </summary>
     public partial class BanditPolicy : EarlyTerminationPolicy

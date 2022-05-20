@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines a Sampling Algorithm that exhaustively generates every value combination in the space. </summary>
     public partial class GridSamplingAlgorithm : SamplingAlgorithm

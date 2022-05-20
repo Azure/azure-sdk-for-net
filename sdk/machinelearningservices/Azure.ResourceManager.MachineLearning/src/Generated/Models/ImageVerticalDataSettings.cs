@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
     public partial class ImageVerticalDataSettings : DataSettings

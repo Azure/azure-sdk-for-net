@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The parameter defining how if AutoML should handle short time series. </summary>
     public readonly partial struct ShortSeriesHandlingConfiguration : IEquatable<ShortSeriesHandlingConfiguration>

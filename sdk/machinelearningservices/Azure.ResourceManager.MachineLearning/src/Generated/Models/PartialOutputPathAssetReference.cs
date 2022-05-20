@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Reference to an asset via its path in a job output. </summary>
     internal partial class PartialOutputPathAssetReference : PartialAssetReferenceBase

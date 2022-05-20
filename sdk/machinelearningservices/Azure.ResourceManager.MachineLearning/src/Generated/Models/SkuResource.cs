@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Fulfills ARM Contract requirement to list all available SKUS for a resource. </summary>
     public partial class SkuResource

@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     public partial class BatchEndpointDataData : IUtf8JsonSerializable
     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             BatchEndpointDetails properties = default;
-            Optional<MachineLearningServicesSku> sku = default;
+            Optional<MachineLearningSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = MachineLearningServicesSku.DeserializeMachineLearningServicesSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

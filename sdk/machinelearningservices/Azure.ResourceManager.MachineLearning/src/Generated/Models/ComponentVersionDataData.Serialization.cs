@@ -7,10 +7,10 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     public partial class ComponentVersionDataData : IUtf8JsonSerializable
     {

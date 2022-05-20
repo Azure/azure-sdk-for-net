@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a ComponentContainerData along with the instance operations that can be performed on it.
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ComponentContainerDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _componentContainerDataComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _componentContainerDataComponentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string componentContainerDataComponentContainersApiVersion);
             _componentContainerDataComponentContainersRestClient = new ComponentContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, componentContainerDataComponentContainersApiVersion);
 #if DEBUG
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _componentContainerDataComponentContainersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _componentContainerDataComponentContainersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _componentContainerDataComponentContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _componentContainerDataComponentContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<ComponentContainerDataResource>(Response.FromValue(new ComponentContainerDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

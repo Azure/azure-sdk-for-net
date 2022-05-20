@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningServicesPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class MachineLearningPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningServicesPrivateLinkServiceConnectionState DeserializeMachineLearningServicesPrivateLinkServiceConnectionState(JsonElement element)
+        internal static MachineLearningPrivateLinkServiceConnectionState DeserializeMachineLearningPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<MachineLearningServicesPrivateEndpointServiceConnectionStatus> status = default;
+            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new MachineLearningServicesPrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    status = new MachineLearningPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     continue;
                 }
             }
-            return new MachineLearningServicesPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new MachineLearningPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
         }
     }
 }

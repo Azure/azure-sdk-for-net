@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> type of this storage account. </summary>
     public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The unit of time measurement for the specified VM price. Example: OneHour. </summary>
     public readonly partial struct UnitOfMeasure : IEquatable<UnitOfMeasure>

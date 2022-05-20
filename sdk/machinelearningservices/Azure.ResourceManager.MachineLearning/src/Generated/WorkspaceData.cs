@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary> A class representing the Workspace data model. </summary>
     public partial class WorkspaceData : ResourceData
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         public WorkspaceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<MachineLearningServicesPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResource>();
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
         /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningServicesPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, string tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData)
+        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, string tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
-        public MachineLearningServicesSku Sku { get; set; }
+        public MachineLearningSku Sku { get; set; }
         /// <summary> The immutable id associated with this workspace. </summary>
         public string WorkspaceId { get; }
         /// <summary> The description of this workspace. </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The list of private endpoint connections in the workspace. </summary>
-        public IReadOnlyList<MachineLearningServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MachineLearningPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources in this workspace. </summary>
         public IList<SharedPrivateLinkResource> SharedPrivateLinkResources { get; }
         /// <summary> The notebook info of Azure ML workspace. </summary>

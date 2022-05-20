@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Possible values for DeploymentProvisioningState. </summary>
     public readonly partial struct DeploymentProvisioningState : IEquatable<DeploymentProvisioningState>

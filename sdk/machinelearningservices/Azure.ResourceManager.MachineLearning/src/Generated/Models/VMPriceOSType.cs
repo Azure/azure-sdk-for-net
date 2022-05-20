@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Operating system type used by the VM. </summary>
     public readonly partial struct VMPriceOSType : IEquatable<VMPriceOSType>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Definition of a component version: defines resources that span component types. </summary>
     public partial class ComponentVersionDetails : AssetBase

@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         {
         }
 
-        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", WorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", WorkspaceResource.ResourceType.Namespace, Diagnostics);
         private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkspaceResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningServicesUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningServicesUsage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<MachineLearningServicesUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MachineLearningUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningServicesUsage> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningServicesUsage> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<MachineLearningServicesUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MachineLearningUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();

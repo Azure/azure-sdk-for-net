@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a CodeVersionData along with the instance operations that can be performed on it.
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CodeVersionDataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _codeVersionDataCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ResourceType.Namespace, Diagnostics);
+            _codeVersionDataCodeVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string codeVersionDataCodeVersionsApiVersion);
             _codeVersionDataCodeVersionsRestClient = new CodeVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, codeVersionDataCodeVersionsApiVersion);
 #if DEBUG
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _codeVersionDataCodeVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _codeVersionDataCodeVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation(response);
+                var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = await _codeVersionDataCodeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningServicesArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearningServices
             try
             {
                 var response = _codeVersionDataCodeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningServicesArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
+                var operation = new MachineLearningArmOperation<CodeVersionDataResource>(Response.FromValue(new CodeVersionDataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

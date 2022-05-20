@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MachineLearningServices.Models
+namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Primary metrics for classification multilabel tasks. </summary>
     public readonly partial struct ClassificationMultilabelPrimaryMetrics : IEquatable<ClassificationMultilabelPrimaryMetrics>

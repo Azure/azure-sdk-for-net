@@ -7,10 +7,10 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningServices.Models;
+using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.MachineLearningServices
+namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary> A class representing the ComponentVersionData data model. </summary>
     public partial class ComponentVersionDataData : ResourceData
