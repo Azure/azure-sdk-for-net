@@ -178,6 +178,13 @@
       "words": ["Fqdns"]
     },
     {
+      "filename": "**/sdk/dynatrace/**/*.cs",
+      "words": [
+        "Dynatrace",
+        "Liftr"
+      ]
+    },
+    {
       "filename": "**/sdk/elasticsan/**/*.cs",
       "words": [
         "iscsi",
