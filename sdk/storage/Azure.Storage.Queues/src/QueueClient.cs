@@ -2364,7 +2364,7 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>. Returns null if there are no messages in the queue.
         /// </returns>
         public virtual Response<PeekedMessage> PeekMessage(
             CancellationToken cancellationToken = default) =>
@@ -2384,7 +2384,7 @@ namespace Azure.Storage.Queues
         /// Optional <see cref="CancellationToken"/>
         /// </param>
         /// <returns>
-        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>
+        /// <see cref="Response{T}"/> where T is a <see cref="PeekedMessage"/>. Returns null if there are no messages in the queue.
         /// </returns>
         public virtual async Task<Response<PeekedMessage>> PeekMessageAsync(
             CancellationToken cancellationToken = default) =>
