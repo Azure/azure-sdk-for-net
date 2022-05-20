@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='revisionName'>
         /// Name of the Container App Revision.
         /// </param>
         /// <param name='customHeaders'>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Revision>> GetRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Revision>> GetRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Activates a revision for a Container App
         /// </summary>
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='revisionName'>
         /// Name of the Container App Revision.
         /// </param>
         /// <param name='customHeaders'>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ActivateRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ActivateRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deactivates a revision for a Container App
         /// </summary>
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='revisionName'>
         /// Name of the Container App Revision.
         /// </param>
         /// <param name='customHeaders'>
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeactivateRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeactivateRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restarts a revision for a Container App
         /// </summary>
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
-        /// <param name='name'>
+        /// <param name='revisionName'>
         /// Name of the Container App Revision.
         /// </param>
         /// <param name='customHeaders'>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> RestartRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> RestartRevisionWithHttpMessagesAsync(string resourceGroupName, string containerAppName, string revisionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the Revisions for a given Container App.
         /// </summary>

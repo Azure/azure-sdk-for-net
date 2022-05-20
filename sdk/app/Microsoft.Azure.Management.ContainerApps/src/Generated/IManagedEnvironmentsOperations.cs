@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedEnvironment>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedEnvironment>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a Managed Environment.
         /// </summary>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedEnvironment>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedEnvironment>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Managed Environment.
         /// </summary>
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update Managed Environment's properties.
         /// </summary>
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a Managed Environment.
         /// </summary>
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagedEnvironment>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagedEnvironment>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Managed Environment.
         /// </summary>
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update Managed Environment's properties.
         /// </summary>
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all Environments for a subscription.
         /// </summary>

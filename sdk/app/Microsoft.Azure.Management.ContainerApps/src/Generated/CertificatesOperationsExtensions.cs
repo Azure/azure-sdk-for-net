@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            public static IPage<Certificate> List(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName)
+            public static IPage<Certificate> List(this ICertificatesOperations operations, string resourceGroupName, string environmentName)
             {
-                return operations.ListAsync(resourceGroupName, managedEnvironmentName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, environmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,15 +49,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Certificate>> ListAsync(this ICertificatesOperations operations, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, managedEnvironmentName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, environmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -72,15 +72,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
-            public static Certificate Get(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name)
+            public static Certificate Get(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName)
             {
-                return operations.GetAsync(resourceGroupName, managedEnvironmentName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, environmentName, certificateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -92,18 +92,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Certificate> GetAsync(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Certificate> GetAsync(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, managedEnvironmentName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, environmentName, certificateName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -118,18 +118,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
             /// <param name='certificateEnvelope'>
             /// Certificate to be created or updated
             /// </param>
-            public static Certificate CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name, Certificate certificateEnvelope = default(Certificate))
+            public static Certificate CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName, Certificate certificateEnvelope = default(Certificate))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, managedEnvironmentName, name, certificateEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, environmentName, certificateName, certificateEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -141,10 +141,10 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
             /// <param name='certificateEnvelope'>
@@ -153,9 +153,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Certificate> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name, Certificate certificateEnvelope = default(Certificate), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Certificate> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName, Certificate certificateEnvelope = default(Certificate), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedEnvironmentName, name, certificateEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, environmentName, certificateName, certificateEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -170,15 +170,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
-            public static void Delete(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name)
+            public static void Delete(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName)
             {
-                operations.DeleteAsync(resourceGroupName, managedEnvironmentName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, environmentName, certificateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -190,18 +190,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, managedEnvironmentName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, environmentName, certificateName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -216,18 +216,18 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
             /// <param name='tags'>
             /// Application-specific metadata in the form of key-value pairs.
             /// </param>
-            public static Certificate Update(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Certificate Update(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, managedEnvironmentName, name, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, environmentName, certificateName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -242,10 +242,10 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            /// <param name='managedEnvironmentName'>
+            /// <param name='environmentName'>
             /// Name of the Managed Environment.
             /// </param>
-            /// <param name='name'>
+            /// <param name='certificateName'>
             /// Name of the Certificate.
             /// </param>
             /// <param name='tags'>
@@ -254,9 +254,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Certificate> UpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string managedEnvironmentName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Certificate> UpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string environmentName, string certificateName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, managedEnvironmentName, name, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, environmentName, certificateName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

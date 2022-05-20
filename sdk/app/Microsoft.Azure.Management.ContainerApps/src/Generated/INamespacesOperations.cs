@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
         /// <param name='checkNameAvailabilityRequest'>
@@ -53,6 +53,6 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string environmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

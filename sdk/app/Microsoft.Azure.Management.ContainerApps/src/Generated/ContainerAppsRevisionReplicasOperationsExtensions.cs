@@ -36,12 +36,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
-            /// <param name='name'>
+            /// <param name='replicaName'>
             /// Name of the Container App Revision Replica.
             /// </param>
-            public static Replica GetReplica(this IContainerAppsRevisionReplicasOperations operations, string resourceGroupName, string containerAppName, string revisionName, string name)
+            public static Replica GetReplica(this IContainerAppsRevisionReplicasOperations operations, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
             {
-                return operations.GetReplicaAsync(resourceGroupName, containerAppName, revisionName, name).GetAwaiter().GetResult();
+                return operations.GetReplicaAsync(resourceGroupName, containerAppName, revisionName, replicaName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -59,15 +59,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
-            /// <param name='name'>
+            /// <param name='replicaName'>
             /// Name of the Container App Revision Replica.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Replica> GetReplicaAsync(this IContainerAppsRevisionReplicasOperations operations, string resourceGroupName, string containerAppName, string revisionName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Replica> GetReplicaAsync(this IContainerAppsRevisionReplicasOperations operations, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetReplicaWithHttpMessagesAsync(resourceGroupName, containerAppName, revisionName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetReplicaWithHttpMessagesAsync(resourceGroupName, containerAppName, revisionName, replicaName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -444,7 +444,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedEnvironment>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedEnvironment>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -454,9 +454,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (name == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (Client.ApiVersion == null)
             {
@@ -470,16 +470,16 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -614,7 +614,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -626,10 +626,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagedEnvironment>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedEnvironment>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ManagedEnvironment> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, environmentEnvelope, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ManagedEnvironment> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, environmentName, environmentEnvelope, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -642,7 +642,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -651,10 +651,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, environmentName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -667,7 +667,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -679,10 +679,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, environmentEnvelope, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, environmentName, environmentEnvelope, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedEnvironment>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedEnvironment>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -732,9 +732,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (name == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (environmentEnvelope == null)
             {
@@ -752,17 +752,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("environmentEnvelope", environmentEnvelope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -921,7 +921,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -942,7 +942,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -952,9 +952,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (name == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (Client.ApiVersion == null)
             {
@@ -968,16 +968,16 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1094,7 +1094,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='environmentEnvelope'>
@@ -1118,7 +1118,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, ManagedEnvironment environmentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1128,9 +1128,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (name == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (environmentEnvelope == null)
             {
@@ -1148,17 +1148,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("environmentEnvelope", environmentEnvelope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

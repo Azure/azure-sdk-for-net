@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='customHeaders'>
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DaprComponent>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DaprComponent>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -288,9 +288,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (componentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "componentName");
             }
             if (Client.ApiVersion == null)
             {
@@ -305,17 +305,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("environmentName", environmentName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("componentName", componentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{componentName}", System.Uri.EscapeDataString(componentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='daprComponentEnvelope'>
@@ -480,7 +480,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DaprComponent>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, DaprComponent daprComponentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DaprComponent>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, DaprComponent daprComponentEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -494,9 +494,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (componentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "componentName");
             }
             if (daprComponentEnvelope == null)
             {
@@ -515,18 +515,18 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("environmentName", environmentName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("componentName", componentName);
                 tracingParameters.Add("daprComponentEnvelope", daprComponentEnvelope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{componentName}", System.Uri.EscapeDataString(componentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -670,7 +670,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='customHeaders'>
@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -705,9 +705,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (componentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "componentName");
             }
             if (Client.ApiVersion == null)
             {
@@ -722,17 +722,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("environmentName", environmentName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("componentName", componentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{componentName}", System.Uri.EscapeDataString(componentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -849,7 +849,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='componentName'>
         /// Name of the Dapr Component.
         /// </param>
         /// <param name='customHeaders'>
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DaprSecretsCollection>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string environmentName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DaprSecretsCollection>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string environmentName, string componentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -887,9 +887,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (componentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "componentName");
             }
             if (Client.ApiVersion == null)
             {
@@ -904,17 +904,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("environmentName", environmentName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("componentName", componentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSecrets", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{name}/listSecrets").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}/listSecrets").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{componentName}", System.Uri.EscapeDataString(componentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

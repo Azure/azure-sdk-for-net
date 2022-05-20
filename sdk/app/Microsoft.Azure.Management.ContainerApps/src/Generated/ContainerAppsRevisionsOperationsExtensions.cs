@@ -80,12 +80,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
-            public static Revision GetRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static Revision GetRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName)
             {
-                return operations.GetRevisionAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                return operations.GetRevisionAsync(resourceGroupName, containerAppName, revisionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -100,15 +100,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Revision> GetRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Revision> GetRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, revisionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -126,12 +126,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
-            public static void ActivateRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static void ActivateRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName)
             {
-                operations.ActivateRevisionAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                operations.ActivateRevisionAsync(resourceGroupName, containerAppName, revisionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,15 +146,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ActivateRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ActivateRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ActivateRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ActivateRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, revisionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -169,12 +169,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
-            public static void DeactivateRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static void DeactivateRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName)
             {
-                operations.DeactivateRevisionAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                operations.DeactivateRevisionAsync(resourceGroupName, containerAppName, revisionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,15 +189,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeactivateRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeactivateRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeactivateRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeactivateRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, revisionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -212,12 +212,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
-            public static void RestartRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static void RestartRevision(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName)
             {
-                operations.RestartRevisionAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                operations.RestartRevisionAsync(resourceGroupName, containerAppName, revisionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -232,15 +232,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='revisionName'>
             /// Name of the Container App Revision.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RestartRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RestartRevisionAsync(this IContainerAppsRevisionsOperations operations, string resourceGroupName, string containerAppName, string revisionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.RestartRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.RestartRevisionWithHttpMessagesAsync(resourceGroupName, containerAppName, revisionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

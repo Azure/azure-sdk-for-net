@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='customHeaders'>
@@ -88,17 +88,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContainerApp>> GetWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ContainerApp>> GetWithHttpMessagesAsync(string resourceGroupName, string containerAppName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update a Container App.
+        /// Create or update a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='containerAppEnvelope'>
@@ -119,17 +119,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContainerApp>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ContainerApp>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App.
+        /// Delete a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='customHeaders'>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update properties of a Container App
         /// </summary>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='containerAppEnvelope'>
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Analyzes a custom hostname for a Container App
         /// </summary>
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='customHeaders'>
@@ -225,17 +225,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SecretsCollection>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecretsCollection>> ListSecretsWithHttpMessagesAsync(string resourceGroupName, string containerAppName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Create or update a Container App.
+        /// Create or update a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='containerAppEnvelope'>
@@ -256,17 +256,17 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContainerApp>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ContainerApp>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Container App.
         /// </summary>
         /// <remarks>
-        /// Description for Delete a Container App.
+        /// Delete a Container App.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='customHeaders'>
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string containerAppName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update properties of a Container App
         /// </summary>
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='name'>
+        /// <param name='containerAppName'>
         /// Name of the Container App.
         /// </param>
         /// <param name='containerAppEnvelope'>
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string name, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string containerAppName, ContainerApp containerAppEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the Container Apps in a given subscription.
         /// </summary>

@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
         /// <param name='customHeaders'>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedEnvironmentStoragesCollection>> ListWithHttpMessagesAsync(string resourceGroupName, string envName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedEnvironmentStoragesCollection>> ListWithHttpMessagesAsync(string resourceGroupName, string environmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (envName == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "envName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (Client.ApiVersion == null)
             {
@@ -109,16 +109,16 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("envName", envName);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{envName}/storages").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{envName}", System.Uri.EscapeDataString(envName));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -253,10 +253,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='storageName'>
         /// Name of the storage.
         /// </param>
         /// <param name='customHeaders'>
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedEnvironmentStorage>> GetWithHttpMessagesAsync(string resourceGroupName, string envName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedEnvironmentStorage>> GetWithHttpMessagesAsync(string resourceGroupName, string environmentName, string storageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -290,13 +290,13 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (envName == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "envName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (storageName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageName");
             }
             if (Client.ApiVersion == null)
             {
@@ -310,18 +310,18 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("envName", envName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
+                tracingParameters.Add("storageName", storageName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{envName}/storages/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{envName}", System.Uri.EscapeDataString(envName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
+            _url = _url.Replace("{storageName}", System.Uri.EscapeDataString(storageName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -456,10 +456,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='storageName'>
         /// Name of the storage.
         /// </param>
         /// <param name='properties'>
@@ -486,7 +486,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedEnvironmentStorage>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string envName, string name, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedEnvironmentStorage>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string environmentName, string storageName, ManagedEnvironmentStorageProperties properties = default(ManagedEnvironmentStorageProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -496,13 +496,13 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (envName == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "envName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (storageName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageName");
             }
             if (Client.ApiVersion == null)
             {
@@ -521,19 +521,19 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("envName", envName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
+                tracingParameters.Add("storageName", storageName);
                 tracingParameters.Add("storageEnvelope", storageEnvelope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{envName}/storages/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{envName}", System.Uri.EscapeDataString(envName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
+            _url = _url.Replace("{storageName}", System.Uri.EscapeDataString(storageName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -674,10 +674,10 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='envName'>
+        /// <param name='environmentName'>
         /// Name of the Environment.
         /// </param>
-        /// <param name='name'>
+        /// <param name='storageName'>
         /// Name of the storage.
         /// </param>
         /// <param name='customHeaders'>
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string envName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string environmentName, string storageName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -708,13 +708,13 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (envName == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "envName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
-            if (name == null)
+            if (storageName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+                throw new ValidationException(ValidationRules.CannotBeNull, "storageName");
             }
             if (Client.ApiVersion == null)
             {
@@ -728,18 +728,18 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("envName", envName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("environmentName", environmentName);
+                tracingParameters.Add("storageName", storageName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{envName}/storages/{name}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{envName}", System.Uri.EscapeDataString(envName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
+            _url = _url.Replace("{storageName}", System.Uri.EscapeDataString(storageName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

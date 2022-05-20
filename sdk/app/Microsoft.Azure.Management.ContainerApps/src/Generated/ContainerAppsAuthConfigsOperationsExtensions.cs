@@ -73,12 +73,12 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='authConfigName'>
             /// Name of the Container App AuthConfig.
             /// </param>
-            public static AuthConfig Get(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static AuthConfig Get(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string authConfigName)
             {
-                return operations.GetAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, containerAppName, authConfigName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,15 +93,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='authConfigName'>
             /// Name of the Container App AuthConfig.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AuthConfig> GetAsync(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthConfig> GetAsync(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string authConfigName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, containerAppName, authConfigName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Create or update the AuthConfig for a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update the AuthConfig for a Container App.
+            /// Create or update the AuthConfig for a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -122,22 +122,22 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='authConfigName'>
             /// Name of the Container App AuthConfig.
             /// </param>
             /// <param name='authConfigEnvelope'>
             /// Properties used to create a Container App AuthConfig
             /// </param>
-            public static AuthConfig CreateOrUpdate(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string name, AuthConfig authConfigEnvelope)
+            public static AuthConfig CreateOrUpdate(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string authConfigName, AuthConfig authConfigEnvelope)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, containerAppName, name, authConfigEnvelope).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, containerAppName, authConfigName, authConfigEnvelope).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Create or update the AuthConfig for a Container App.
             /// </summary>
             /// <remarks>
-            /// Description for Create or update the AuthConfig for a Container App.
+            /// Create or update the AuthConfig for a Container App.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='authConfigName'>
             /// Name of the Container App AuthConfig.
             /// </param>
             /// <param name='authConfigEnvelope'>
@@ -157,9 +157,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AuthConfig> CreateOrUpdateAsync(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string name, AuthConfig authConfigEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthConfig> CreateOrUpdateAsync(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string authConfigName, AuthConfig authConfigEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, name, authConfigEnvelope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerAppName, authConfigName, authConfigEnvelope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// Delete a Container App AuthConfig.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App AuthConfig.
+            /// Delete a Container App AuthConfig.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,19 +180,19 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='authConfigName'>
             /// Name of the Container App AuthConfig.
             /// </param>
-            public static void Delete(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string name)
+            public static void Delete(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string authConfigName)
             {
-                operations.DeleteAsync(resourceGroupName, containerAppName, name).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, containerAppName, authConfigName).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Delete a Container App AuthConfig.
             /// </summary>
             /// <remarks>
-            /// Description for Delete a Container App AuthConfig.
+            /// Delete a Container App AuthConfig.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -203,15 +203,15 @@ namespace Microsoft.Azure.Management.ContainerApps
             /// <param name='containerAppName'>
             /// Name of the Container App.
             /// </param>
-            /// <param name='name'>
+            /// <param name='authConfigName'>
             /// Name of the Container App AuthConfig.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IContainerAppsAuthConfigsOperations operations, string resourceGroupName, string containerAppName, string authConfigName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerAppName, authConfigName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

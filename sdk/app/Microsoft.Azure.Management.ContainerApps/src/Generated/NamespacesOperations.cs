@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
-        /// <param name='managedEnvironmentName'>
+        /// <param name='environmentName'>
         /// Name of the Managed Environment.
         /// </param>
         /// <param name='checkNameAvailabilityRequest'>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.ContainerApps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string managedEnvironmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string environmentName, CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.ContainerApps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (managedEnvironmentName == null)
+            if (environmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "managedEnvironmentName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "environmentName");
             }
             if (checkNameAvailabilityRequest == null)
             {
@@ -116,17 +116,17 @@ namespace Microsoft.Azure.Management.ContainerApps
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("managedEnvironmentName", managedEnvironmentName);
+                tracingParameters.Add("environmentName", environmentName);
                 tracingParameters.Add("checkNameAvailabilityRequest", checkNameAvailabilityRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/checkNameAvailability").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{managedEnvironmentName}", System.Uri.EscapeDataString(managedEnvironmentName));
+            _url = _url.Replace("{environmentName}", System.Uri.EscapeDataString(environmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
