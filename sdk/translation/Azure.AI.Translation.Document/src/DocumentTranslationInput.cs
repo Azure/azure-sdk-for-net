@@ -62,5 +62,9 @@ namespace Azure.AI.Translation.Document
 
             Targets.Add(target);
         }
+
+        /// <summary> Storage URI kind of the input documents source string. </summary>
+        [CodeGenMember("StorageType")]
+        public StorageInputUriKind? StorageUriKind { get; set; }
     }
 }

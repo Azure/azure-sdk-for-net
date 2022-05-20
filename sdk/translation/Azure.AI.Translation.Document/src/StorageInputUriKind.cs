@@ -6,10 +6,10 @@ using Azure.Core;
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
-    /// Storage type of the input documents source.
+    /// Storage URI kind of the input documents source.
     /// </summary>
     [CodeGenModel("StorageInputType")]
-    public enum StorageInputType
+    public enum StorageInputUriKind
     {
         /// <summary>
         /// File
