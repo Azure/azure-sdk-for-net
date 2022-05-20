@@ -127,5 +127,5 @@ output EVENTHUB_NAME_CONCURRENT_BUFFERED_PRODUCER_TEST string = eventHubConcurre
 
 // Outputs for the ProcessorTest scenario
 output EVENTHUB_NAME_PROCESSOR_TEST string = eventHubProcessor.name
-output STORAGE_BLOB_PROCESSOR_TEST string = processorContainer.name
+output STORAGE_BLOB_PROCESSOR_TEST string = processorTestName
 output STORAGE_ACCOUNT_PROCESSOR_TEST string = blobStorageConnectionString

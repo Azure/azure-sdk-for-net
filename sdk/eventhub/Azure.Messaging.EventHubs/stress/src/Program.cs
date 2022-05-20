@@ -13,6 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
+using System.Diagnostics.Tracing;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -70,6 +72,10 @@ public class Program
 
         var testScenarioTasks = new List<Task>();
 
+        var metrics = new Metrics(appInsightsKey);
+
+        using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Error);
+
         if (opts.Test == "EventProd" || opts.Test == "EventProducerTest" || opts.All)
         {
             // Get the needed resources for the event producer test: an event hub
@@ -86,7 +92,6 @@ public class Program
             var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
             cancellationSource.CancelAfter(runDuration);
 
-            var metrics = new Metrics(appInsightsKey);
             roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.EventProducerTest, out var roleList);
 
             testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
@@ -108,7 +113,6 @@ public class Program
             var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
             cancellationSource.CancelAfter(runDuration);
 
-            var metrics = new Metrics(appInsightsKey);
             roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BufferedProducerTest, out var roleList);
 
             testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
@@ -140,8 +144,6 @@ public class Program
             var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
             cancellationSource.CancelAfter(runDuration);
 
-            // Create the metrics client that connects to Application Insights
-            var metrics = new Metrics(appInsightsKey);
             roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BasicProcessorTest, out var roleList);
 
             testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));

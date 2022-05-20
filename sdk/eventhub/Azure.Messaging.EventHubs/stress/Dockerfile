@@ -31,5 +31,5 @@ COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs.Processor/ /ap
 WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
 
 # The default is running just the "EventProducerTest"
-ENTRYPOINT ["dotnet Azure.Messaging.EventHubs.Stress.dll", "-t"]
+ENTRYPOINT ["dotnet Azure.Messaging.EventHubs.Stress.dll", "--test"]
 CMD ["EventProducerTest"]

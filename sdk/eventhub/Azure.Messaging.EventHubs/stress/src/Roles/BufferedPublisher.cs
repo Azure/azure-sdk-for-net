@@ -206,15 +206,4 @@ internal class BufferedPublisher
             _metrics.Client.TrackException(ex, eventProperties);
         }
     }
-
-    // /// <summary>
-    // ///   The method used by the Azure Event Listener to send heard exceptions to the Application
-    // ///   Insights instance for this test run.
-    // /// </summary>
-    // ///
-    // private void SendHeardException(EventWrittenEventArgs args, string level)
-    // {
-    //     var output = args.ToString();
-    //     _metrics.Client.TrackTrace($"EventWritten: {output} Level: {level}.");
-    // }
 }
