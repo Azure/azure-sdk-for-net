@@ -34,11 +34,11 @@ function RetrievePRAndClose {
     exit 1
   }
   try {
-    Write-Host "The repo [ $CentralRepoId ] pull request number is [ $pullRequestNumber ] "
     $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
     if ($centralPR.state -ne "closed") {
       return $false
     }
+    LogDebug "Found closed/merged pull request: $($centralPR.html_url)"
   }
   catch 
   {
