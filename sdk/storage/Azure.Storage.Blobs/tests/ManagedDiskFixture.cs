@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
                 ArmClient client = new ArmClient(tokenCredentials, _config.SubsriptionId);
                 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
                 _resourceGroup = await subscription.GetResourceGroups().GetAsync(_config.ResourceGroupName);
-                var disks = await _resourceGroup.GetDisks().GetAllAsync().ToListAsync();
+                var disks = await _resourceGroup.GetManagedDisks().GetAllAsync().ToListAsync();
                 var disk = disks.Where(d => d.Data.Name.Contains(_config.DiskNamePrefix)).First();
 
                 Snapshot1 = await CreateSnapshot(disk, _config.DiskNamePrefix + Guid.NewGuid().ToString().Replace("-", ""));
