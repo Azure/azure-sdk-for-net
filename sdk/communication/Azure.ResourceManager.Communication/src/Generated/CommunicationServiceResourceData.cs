@@ -12,29 +12,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing the CommunicationService data model. </summary>
-    public partial class CommunicationServiceData : ResourceData
+    /// <summary> A class representing the CommunicationServiceResource data model. </summary>
+    public partial class CommunicationServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
-        public CommunicationServiceData()
+        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
+        /// <param name="location"> The location. </param>
+        public CommunicationServiceResourceData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            LinkedDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
+        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
         /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
         /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
-        /// <param name="location"> The Azure location where the CommunicationService is running. </param>
-        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        internal CommunicationServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, string location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, string notificationHubId, string version, string immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -42,12 +44,11 @@ namespace Azure.ResourceManager.Communication
             NotificationHubId = notificationHubId;
             Version = version;
             ImmutableResourceId = immutableResourceId;
-            Location = location;
-            Tags = tags;
+            LinkedDomains = linkedDomains;
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CommunicationServicesProvisioningState? ProvisioningState { get; }
         /// <summary> FQDN of the CommunicationService instance. </summary>
         public string HostName { get; }
         /// <summary> The location where the communication service stores its data at rest. </summary>
@@ -58,9 +59,7 @@ namespace Azure.ResourceManager.Communication
         public string Version { get; }
         /// <summary> The immutable resource Id of the communication service. </summary>
         public string ImmutableResourceId { get; }
-        /// <summary> The Azure location where the CommunicationService is running. </summary>
-        public string Location { get; set; }
-        /// <summary> Tags of the service which is a list of key value pairs that describe the resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> List of email Domain resource Ids. </summary>
+        public IList<string> LinkedDomains { get; }
     }
 }

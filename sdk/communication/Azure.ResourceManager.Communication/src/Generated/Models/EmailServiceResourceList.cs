@@ -11,29 +11,29 @@ using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    /// <summary> Object that includes an array of CommunicationServices and a possible link for next set. </summary>
-    internal partial class CommunicationServiceResourceList
+    /// <summary> Object that includes an array of EmailServices and a possible link for next set. </summary>
+    internal partial class EmailServiceResourceList
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>
-        internal CommunicationServiceResourceList()
+        /// <summary> Initializes a new instance of EmailServiceResourceList. </summary>
+        internal EmailServiceResourceList()
         {
-            Value = new ChangeTrackingList<CommunicationServiceResourceData>();
+            Value = new ChangeTrackingList<EmailServiceResourceData>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>
-        /// <param name="value"> List of CommunicationService. </param>
+        /// <summary> Initializes a new instance of EmailServiceResourceList. </summary>
+        /// <param name="value"> List of EmailService. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal CommunicationServiceResourceList(IReadOnlyList<CommunicationServiceResourceData> value, string nextLink)
+        internal EmailServiceResourceList(IReadOnlyList<EmailServiceResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of CommunicationService. </summary>
-        public IReadOnlyList<CommunicationServiceResourceData> Value { get; }
+        /// <summary> List of EmailService. </summary>
+        public IReadOnlyList<EmailServiceResourceData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

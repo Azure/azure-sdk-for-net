@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.TestFramework;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -41,13 +43,32 @@ namespace Azure.ResourceManager.Communication.Tests
 
         internal async Task<CommunicationServiceResource> CreateDefaultCommunicationServices(string communicationServiceName, ResourceGroupResource _resourceGroup)
         {
-            CommunicationServiceData data = new CommunicationServiceData()
+            CommunicationServiceResourceData data = new CommunicationServiceResourceData(ResourceLocation)
             {
-                Location = ResourceLocation,
                 DataLocation = ResourceDataLocation,
             };
-            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             return communicationServiceLro.Value;
+        }
+
+        internal async Task<EmailServiceResource> CreateDefaultEmailServices(string emailServiceName, ResourceGroupResource _resourceGroup)
+        {
+            EmailServiceResourceData data = new EmailServiceResourceData(ResourceLocation)
+            {
+                DataLocation = ResourceDataLocation,
+            };
+            var emailServiceLro = await _resourceGroup.GetEmailServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, emailServiceName, data);
+            return emailServiceLro.Value;
+        }
+
+        internal async Task<DomainResource> CreateDefaultDomain(string domainName, EmailServiceResource emailService)
+        {
+            DomainResourceData data = new DomainResourceData(ResourceLocation)
+            {
+                ValidSenderUsernames = { {"username", "displayName" } }
+            };
+            var domainLro = await emailService.GetDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
+            return domainLro.Value;
         }
     }
 }

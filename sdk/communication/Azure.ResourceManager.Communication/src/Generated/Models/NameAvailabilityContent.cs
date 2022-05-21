@@ -5,35 +5,14 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
-    public partial class NameAvailabilityContent
+    public partial class NameAvailabilityContent : CheckNameAvailabilityRequest
     {
         /// <summary> Initializes a new instance of NameAvailabilityContent. </summary>
-        /// <param name="resourceType"> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
-        /// <param name="name"> The CommunicationService name to validate. e.g.&quot;my-CommunicationService-name-here&quot;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
-        public NameAvailabilityContent(string resourceType, string name)
+        public NameAvailabilityContent()
         {
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            ResourceType = resourceType;
-            Name = name;
         }
-
-        /// <summary> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </summary>
-        public string ResourceType { get; }
-        /// <summary> The CommunicationService name to validate. e.g.&quot;my-CommunicationService-name-here&quot;. </summary>
-        public string Name { get; }
     }
 }

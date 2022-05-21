@@ -12,11 +12,11 @@ using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    internal partial class CommunicationServiceResourceList
+    internal partial class DomainResourceList
     {
-        internal static CommunicationServiceResourceList DeserializeCommunicationServiceResourceList(JsonElement element)
+        internal static DomainResourceList DeserializeDomainResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<CommunicationServiceResourceData>> value = default;
+            Optional<IReadOnlyList<DomainResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Communication.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationServiceResourceData> array = new List<CommunicationServiceResourceData>();
+                    List<DomainResourceData> array = new List<DomainResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(item));
+                        array.Add(DomainResourceData.DeserializeDomainResourceData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new CommunicationServiceResourceList(Optional.ToList(value), nextLink.Value);
+            return new DomainResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -7,10 +7,11 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 azure-arm: true
 title: communication
 namespace: Azure.ResourceManager.Communication
-input-file:  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/54a98083200e56d88fe1182f2741a61aea91c788/specification/communication/resource-manager/Microsoft.Communication/stable/2020-08-20/CommunicationService.json
+require: https://github.com/Azure/azure-rest-api-specs/blob/4716fb039c67e1bee1d5448af9ce57e4942832fe/specification/communication/resource-manager/readme.md
+tag: package-preview-2021-10
+
 skip-csproj: true
-modelerfour:
-  flatten-payloads: false
+output-folder: Generated/
 override-operation-name:
   CommunicationService_CheckNameAvailability: CheckCommunicationNameAvailability
 
@@ -37,17 +38,31 @@ rename-rules:
   URI: Uri
 
 directive:
-  - rename-model:
-      from: CommunicationServiceResource
-      to: CommunicationService
-  - rename-model:
-      from: RegenerateKeyParameters
-      to: RegenerateKeyOptions
-  - rename-model:
-      from: NameAvailabilityParameters
-      to: NameAvailabilityOptions
-  - rename-model:
-      from: LinkNotificationHubParameters
-      to: LinkNotificationHubOptions
+  - remove-operation: CommunicationServices_Update
+  - remove-operation: Domains_Update
+  - remove-operation: EmailServices_Update
+#   - rename-model:
+#       from: CommunicationServiceResource
+#       to: CommunicationService
+#   - rename-model:
+#       from: RegenerateKeyParameters
+#       to: RegenerateKeyOptions
+#   - rename-model:
+#       from: NameAvailabilityParameters
+#       to: NameAvailabilityOptions
+#   - rename-model:
+#       from: LinkNotificationHubParameters
+#       to: LinkNotificationHubOptions
 
+```
+
+### Tag: package-preview-2021-10
+
+These settings apply only when `--tag=package-preview-2021-10` is specified on the command line.
+
+```yaml $(tag) == 'package-preview-2021-10'
+input-file:  
+  - ../REST/CommunicationServices.json
+  - ../REST/Domains.json
+  - ../REST/EmailServices.json
 ```

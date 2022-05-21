@@ -13,27 +13,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class CommunicationServiceData : IUtf8JsonSerializable
+    public partial class CommunicationServiceResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLocation))
@@ -41,44 +35,50 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("dataLocation");
                 writer.WriteStringValue(DataLocation);
             }
+            if (Optional.IsCollectionDefined(LinkedDomains))
+            {
+                writer.WritePropertyName("linkedDomains");
+                writer.WriteStartArray();
+                foreach (var item in LinkedDomains)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CommunicationServiceData DeserializeCommunicationServiceData(JsonElement element)
+        internal static CommunicationServiceResourceData DeserializeCommunicationServiceResourceData(JsonElement element)
         {
-            Optional<string> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CommunicationServicesProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<string> dataLocation = default;
             Optional<string> notificationHubId = default;
             Optional<string> version = default;
             Optional<string> immutableResourceId = default;
+            Optional<IList<string>> linkedDomains = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Communication
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CommunicationServicesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"))
@@ -145,11 +145,26 @@ namespace Azure.ResourceManager.Communication
                             immutableResourceId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("linkedDomains"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            linkedDomains = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new CommunicationServiceData(id, name, type, systemData, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
+            return new CommunicationServiceResourceData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, Optional.ToList(linkedDomains));
         }
     }
 }
