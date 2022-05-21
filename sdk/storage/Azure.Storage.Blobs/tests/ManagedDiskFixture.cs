@@ -103,7 +103,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             var grantOperation = await snapshot.GrantAccessAsync(WaitUntil.Completed,
                 new GrantAccessData(AccessLevel.Read, 3600));
             AccessUri accessUri = await grantOperation.WaitForCompletionAsync();
-            return new Uri(accessUri.AccessSAS);
+            return new Uri(accessUri.AccessSas);
         }
 
         private async Task RevokeAccess(SnapshotResource snapshot)
