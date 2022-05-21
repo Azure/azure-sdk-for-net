@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             }
         }
 
-        private async Task<SnapshotResource> CreateSnapshot(DiskResource disk, string name)
+        private async Task<SnapshotResource> CreateSnapshot(ManagedDiskResource disk, string name)
         {
             var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, name,
                 new SnapshotData(_config.Location)

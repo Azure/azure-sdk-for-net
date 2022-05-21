@@ -21,6 +21,7 @@ pr:
     include:
     - sdk/storage/
     - sdk/resourcemanager/
+    - sdk/compute/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
