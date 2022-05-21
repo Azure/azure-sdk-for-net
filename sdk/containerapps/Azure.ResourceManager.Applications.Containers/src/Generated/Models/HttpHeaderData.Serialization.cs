@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
-    public partial class HttpRequestDataHttpHeadersItem : IUtf8JsonSerializable
+    public partial class HttpHeaderData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpRequestDataHttpHeadersItem DeserializeHttpRequestDataHttpHeadersItem(JsonElement element)
+        internal static HttpHeaderData DeserializeHttpHeaderData(JsonElement element)
         {
             string name = default;
             string value = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                     continue;
                 }
             }
-            return new HttpRequestDataHttpHeadersItem(name, value);
+            return new HttpHeaderData(name, value);
         }
     }
 }
