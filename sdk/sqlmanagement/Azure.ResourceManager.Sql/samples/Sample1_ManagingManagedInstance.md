@@ -72,8 +72,8 @@ var vnetData = new VirtualNetworkData()
             {
                 new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
             },
-            RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-            NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+            RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+            NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
         }
     },
 };

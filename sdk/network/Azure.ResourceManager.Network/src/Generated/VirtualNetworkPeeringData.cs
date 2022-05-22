@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkPeering data model. </summary>
-    public partial class VirtualNetworkPeeringData : NetworkResourceData
+    public partial class VirtualNetworkPeeringData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
         public VirtualNetworkPeeringData()

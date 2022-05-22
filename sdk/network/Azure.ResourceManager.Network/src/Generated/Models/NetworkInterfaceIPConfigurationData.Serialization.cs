@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(ResourceType.Value);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(GatewayLoadBalancer))

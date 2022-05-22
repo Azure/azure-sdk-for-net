@@ -20,6 +20,7 @@ pr:
     include:
     - sdk/webpubsub/
     - sdk/resourcemanager/
+    - sdk/network/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
