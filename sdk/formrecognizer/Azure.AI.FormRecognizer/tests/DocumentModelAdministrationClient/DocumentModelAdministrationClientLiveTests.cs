@@ -202,6 +202,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/28705")]
         public async Task AdminOps(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -236,8 +237,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             await client.DeleteModelAsync(modelId);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetModelAsync(modelId));
-            Console.WriteLine(ex.ErrorCode);
+            Assert.ThrowsAsync<RequestFailedException>(() => client.GetModelAsync(modelId));
         }
 
         [RecordedTest]
