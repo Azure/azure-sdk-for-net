@@ -120,18 +120,42 @@ directive:
         "description": "Common resource representation.",
         "x-ms-azure-resource": true,
         "x-ms-client-name": "NetworkResourceData"
+      };
+      $.NetworkWritableResource = {
+        "properties": {
+            "id": {
+              "type": "string",
+              "description": "Resource ID.",
+              "x-ms-format": "arm-id"
+            },
+            "name": {
+              "type": "string",
+              "description": "Resource name."
+            },
+            "type": {
+              "type": "string",
+              "description": "Resource type.",
+              "x-ms-format": "resource-type"
+            }
+          },
+        "description": "Common resource representation.",
+        "x-ms-azure-resource": true,
+        "x-ms-client-name": "NetworkWritableResourceData"
       }
-    reason: Add a network version of Resource (id, name are not read-only). The original (Network)Resource definition is actually a TrackedResource.
+    reason: Add network versions of Resource (id, name are not read-only). The original (Network)Resource definition is actually a TrackedResource.
   - from: swagger-document
-    where: $.definitions[?(@.allOf && @.properties.name && @.properties.type)]
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.name.readOnly && @.properties.type)]
     transform: >
       if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
       {
-        $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkResource');
+        if ($.properties.type.readOnly)
+          $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkResource');
+        else
+          $.allOf[0]['$ref'] = $.allOf[0]['$ref'].replace('SubResource', 'NetworkWritableResource');
         delete $.properties.name;
         delete $.properties.type;
       }
-    reason: Resources with id, name and type should inherit from NetworkResource instead of SubResource.
+    reason: Resources with id, name and type should inherit from NetworkResource/NetworkWritableResource instead of SubResource.
   - from: ipAllocation.json
     where: $.definitions
     transform: >
