@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -124,6 +125,17 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(emailServiceName, emailService.Data.Name);
             Assert.AreEqual(_location, emailService.Data.Location);
             Assert.AreEqual(_dataLocation, emailService.Data.DataLocation);
+        }
+
+        [Test]
+        public async Task Update()
+        {
+            string emailServiceName = Recording.GenerateAssetName("email-service-");
+            var emailService1 = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
+            var patch = new EmailServiceResourcePatch();
+            var emailService2 = (await emailService1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            Assert.IsNotNull(emailService2);
+            Assert.AreEqual(emailService1.Data.Name, emailService2.Data.Name);
         }
 
         [Test]

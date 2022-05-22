@@ -128,6 +128,21 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         [Test]
+        public async Task Update()
+        {
+            string domainName = Recording.GenerateAssetName("domain-");
+            var domain1 = await CreateDefaultDomain(domainName, _emailService);
+            var patch = new DomainResourcePatch()
+            {
+                ValidSenderUsernames = { { "username2", "displayname2" } }
+            };
+            var domain2 = (await domain1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            Assert.IsNotNull(domain2);
+            Assert.AreEqual("username2", domain2.Data.ValidSenderUsernames.FirstOrDefault().Key);
+            Assert.AreEqual(domain1.Data.Name, domain2.Data.Name);
+        }
+
+        [Test]
         public async Task Delete()
         {
             string domainName = Recording.GenerateAssetName("domain-");

@@ -36,24 +36,6 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-
-directive:
-  - remove-operation: CommunicationServices_Update
-  - remove-operation: Domains_Update
-  - remove-operation: EmailServices_Update
-#   - rename-model:
-#       from: CommunicationServiceResource
-#       to: CommunicationService
-#   - rename-model:
-#       from: RegenerateKeyParameters
-#       to: RegenerateKeyOptions
-#   - rename-model:
-#       from: NameAvailabilityParameters
-#       to: NameAvailabilityOptions
-#   - rename-model:
-#       from: LinkNotificationHubParameters
-#       to: LinkNotificationHubOptions
-
 ```
 
 ### Tag: package-preview-2021-10

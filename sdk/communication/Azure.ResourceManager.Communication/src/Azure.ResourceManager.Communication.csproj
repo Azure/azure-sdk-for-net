@@ -8,9 +8,4 @@
     </Description>
     <PackageTags>azure;management;communication</PackageTags>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Custom\**" />
-    <EmbeddedResource Remove="Custom\**" />
-    <None Remove="Custom\**" />
-  </ItemGroup>
 </Project>

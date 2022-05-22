@@ -167,6 +167,21 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         [Test]
+        public async Task Update()
+        {
+            string communicationServiceName = Recording.GenerateAssetName("communication-service-");
+            var communication1 = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
+            var patch = new CommunicationServiceResourcePatch()
+            {
+                LinkedDomains = { "contoso.com" }
+            };
+            var communication2 = (await communication1.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            Assert.IsNotNull(communication2);
+            Assert.AreEqual("contoso.com", communication2.Data.LinkedDomains.FirstOrDefault());
+            Assert.AreEqual(communication1.Data.Name, communication2.Data.Name);
+        }
+
+        [Test]
         public async Task Delete()
         {
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
