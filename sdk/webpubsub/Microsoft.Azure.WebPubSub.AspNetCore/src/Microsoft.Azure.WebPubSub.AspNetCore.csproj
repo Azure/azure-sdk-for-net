@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Text.Json" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Text.Encodings.Web" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

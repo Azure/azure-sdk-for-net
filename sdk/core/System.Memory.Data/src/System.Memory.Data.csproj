@@ -6,7 +6,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.2</ApiCompatVersion>
     <Nullable>enable</Nullable>
-    <TargetFrameworks>net461;netstandard2.0;</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0;net6.0</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
     <AssemblyOriginatorKeyFile>Open.snk</AssemblyOriginatorKeyFile>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Text.Json" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Text.Encodings.Web" Condition="'$(TargetFramework)' != 'net6.0'" />
   </ItemGroup>
 </Project>

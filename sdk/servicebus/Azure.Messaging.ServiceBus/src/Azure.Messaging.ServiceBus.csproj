@@ -23,7 +23,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

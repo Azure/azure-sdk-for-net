@@ -219,7 +219,7 @@ namespace Azure.Core
         /// <remarks>If the <see cref="Kind"/> property is not <see cref="JsonValueKind.Object"/> this method throws <see cref="InvalidOperationException"/>.</remarks>
         public JsonData? Get(string propertyName)
         {
-            if (EnsureObject().TryGetValue(propertyName, out JsonData value))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData? value))
             {
                 return value;
             }
@@ -242,7 +242,7 @@ namespace Azure.Core
         /// <returns>A new instance of <typeparamref name="T"/> constructed from the underlying JSON value.</returns>
         public T To<T>(JsonSerializerOptions options)
         {
-            return JsonSerializer.Deserialize<T>(ToJsonString(), options);
+            return JsonSerializer.Deserialize<T>(ToJsonString(), options)!;
         }
 
         /// <summary>
@@ -919,7 +919,7 @@ namespace Azure.Core
                 return ToJsonString();
             }
 
-            return (_value ?? "<null>").ToString();
+            return (_value ?? "<null>").ToString()!;
         }
 
         /// <inheritdoc />
@@ -939,7 +939,9 @@ namespace Azure.Core
         }
 
         /// <inheritdoc />
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         public bool Equals(JsonData other)
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         {
             if (_kind != other._kind)
             {
@@ -1043,7 +1045,7 @@ namespace Azure.Core
 
         private JsonData GetPropertyValue(string propertyName)
         {
-            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData? element))
             {
                 return element;
             }
@@ -1065,7 +1067,7 @@ namespace Azure.Core
                 return Length;
             }
 
-            if (EnsureObject().TryGetValue(propertyName, out JsonData element))
+            if (EnsureObject().TryGetValue(propertyName, out JsonData? element))
             {
                 return element;
             }
@@ -1203,11 +1205,11 @@ namespace Azure.Core
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {

@@ -17,7 +17,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.ValueTuple" />
+    <PackageReference Include="System.ValueTuple" Condition="'$(TargetFramework)' != 'net6.0'" />
   </ItemGroup>
 
   <ItemGroup>

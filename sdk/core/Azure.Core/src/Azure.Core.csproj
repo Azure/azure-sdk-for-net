@@ -24,12 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.Numerics.Vectors" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Numerics.Vectors" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="System.Text.Json" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Text.Encodings.Web" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

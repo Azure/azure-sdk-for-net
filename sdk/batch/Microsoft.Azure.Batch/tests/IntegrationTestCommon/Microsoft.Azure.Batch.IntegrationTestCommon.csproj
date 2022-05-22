@@ -13,7 +13,7 @@
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="Portable.BouncyCastle" />
-    <PackageReference Include="System.IO.Compression" />
+    <PackageReference Include="System.IO.Compression" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="Microsoft.Azure.Management.Batch" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
   </ItemGroup>
