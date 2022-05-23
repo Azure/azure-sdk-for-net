@@ -1,6 +1,11 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others.
+Conversational Language Understanding - aka CLU for short - is a cloud-based conversational AI service which provides many language understanding capabilities like:
+
+- Conversation App: It's used in extracting intents and entities in conversations
+- Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
+- Conversational Issue Summarization: Used to summarize conversations in the form of issues, and final resolutions
+- Conversational PII: Used to extract and redact personally-identifiable info (PII)
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
 
@@ -17,9 +22,7 @@ dotnet add package Azure.AI.Language.Conversations --prerelease
 ### Prerequisites
 
 * An [Azure subscription][azure_subscription]
-* An existing Text Analytics resource
-
-> Note: the new unified Cognitive Language Services are not currently available for deployment.
+* An existing Azure Language Service Resource
 
 ### Authenticate the client
 
@@ -86,7 +89,7 @@ Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     conversationsProject);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
@@ -132,7 +135,6 @@ TextConversationItem input = new TextConversationItem(
     text: "Send an email to Carol about the tomorrow's demo.");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
-    IsLoggingEnabled = true,
     Verbose = true
 };
 
@@ -144,9 +146,9 @@ Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
@@ -202,9 +204,9 @@ Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
@@ -248,7 +250,7 @@ To analyze a conversation using an orchestration project, you can then call the 
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.Conversation)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
 {
     ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -293,22 +295,14 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-    KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
-
-    Console.WriteLine("Answers: \n");
-    foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
-    {
-        Console.WriteLine($"Answer: {answer.Answer}");
-        Console.WriteLine($"Confidence: {answer.Confidence}");
-        Console.WriteLine($"Source: {answer.Source}");
-        Console.WriteLine();
-    }
+    BinaryData questionAnsweringResponse = qnaTargetIntentResult.Result;
+    Console.WriteLine($"Qustion Answering Response: {questionAnsweringResponse.ToString()}");
 }
 ```
 
@@ -317,7 +311,7 @@ if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
 string respondingProjectName = orchestratorPrediction.TopIntent;
 TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.Luis)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
 {
     LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
     BinaryData luisResponse = luisTargetIntentResult.Result;
@@ -326,6 +320,263 @@ if (targetIntentResult.TargetKind == TargetKind.Luis)
 }
 ```
 
+### Analyze a conversation - Conversation Summarization
+
+First, you should prepare the input:
+
+```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Input
+var textConversationItems = new List<TextConversationItem>()
+{
+    new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+    new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+    new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
+};
+
+var input = new List<TextConversation>()
+{
+    new TextConversation("1", "en", textConversationItems)
+};
+
+var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
+
+var tasks = new List<AnalyzeConversationLROTask>()
+{
+    new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters),
+};
+```
+
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+
+## Synchronous
+
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+analyzeConversationOperation.WaitForCompletion();
+```
+
+## Asynchronous
+
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+await analyzeConversationOperation.WaitForCompletionAsync();
+```
+
+You can finally print the results:
+
+```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Results
+var jobResults = analyzeConversationOperation.Value;
+foreach (var result in jobResults.Tasks.Items)
+{
+    var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
+
+    var results = analyzeConversationSummarization.Results;
+
+    Console.WriteLine("Conversations:");
+    foreach (var conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation #:{conversation.Id}");
+        Console.WriteLine("Summaries:");
+        foreach (var summary in conversation.Summaries)
+        {
+            Console.WriteLine($"Text: {summary.Text}");
+            Console.WriteLine($"Aspect: {summary.Aspect}");
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+### Analyze a conversation - Conversation PII - Text Input
+
+First, you should prepare the input:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
+var textConversationItems = new List<TextConversationItem>()
+{
+    new TextConversationItem("1", "0", "Hi, I am John Doe."),
+    new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
+    new TextConversationItem("3", "0", "Pretty good."),
+};
+
+var input = new List<TextConversation>()
+{
+    new TextConversation("1", "en", textConversationItems)
+};
+
+var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+
+var tasks = new List<AnalyzeConversationLROTask>()
+{
+    new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
+};
+```
+
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+
+## Synchronous
+
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+analyzeConversationOperation.WaitForCompletion();
+```
+
+## Asynchronous
+
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+await analyzeConversationOperation.WaitForCompletionAsync();
+```
+
+You can finally print the results:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
+var jobResults = analyzeConversationOperation.Value;
+foreach (var result in jobResults.Tasks.Items)
+{
+    var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+
+    var results = analyzeConversationPIIResult.Results;
+
+    Console.WriteLine("Conversations:");
+    foreach (var conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation #:{conversation.Id}");
+        Console.WriteLine("Conversation Items: ");
+        foreach (var conversationItem in conversation.ConversationItems)
+        {
+            Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
+
+            Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
+
+            Console.WriteLine("Entities:");
+            foreach (var entity in conversationItem.Entities)
+            {
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+### Analyze a conversation - Conversation PII - Transcript Input
+
+First, you should prepare the input:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
+var transciprtConversationItemOne = new TranscriptConversationItem(
+   id: "1",
+   participantId: "speaker",
+   itn: "hi",
+   maskedItn: "hi",
+   text: "Hi",
+   lexical: "hi");
+transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
+
+var transciprtConversationItemTwo = new TranscriptConversationItem(
+   id: "2",
+   participantId: "speaker",
+   itn: "jane doe",
+   maskedItn: "jane doe",
+   text: "Jane doe",
+   lexical: "jane doe");
+transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
+transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
+
+var transciprtConversationItemThree = new TranscriptConversationItem(
+    id: "3",
+    participantId: "agent",
+    itn: "hi jane what's your phone number",
+    maskedItn: "hi jane what's your phone number",
+    text: "Hi Jane, what's your phone number?",
+    lexical: "hi jane what's your phone number");
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
+
+var transcriptConversationItems = new List<TranscriptConversationItem>()
+{
+    transciprtConversationItemOne,
+    transciprtConversationItemTwo,
+    transciprtConversationItemThree,
+};
+
+var input = new List<TranscriptConversation>()
+{
+    new TranscriptConversation("1", "en", transcriptConversationItems)
+};
+
+var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
+
+var tasks = new List<AnalyzeConversationLROTask>()
+{
+    new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
+};
+```
+
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+
+## Synchronous
+
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+analyzeConversationOperation.WaitForCompletion();
+```
+
+## Asynchronous
+
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+await analyzeConversationOperation.WaitForCompletionAsync();
+```
+
+You can finally print the results:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
+var jobResults = analyzeConversationOperation.Value;
+foreach (var result in jobResults.Tasks.Items)
+{
+    var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+
+    var results = analyzeConversationPIIResult.Results;
+
+    Console.WriteLine("Conversations:");
+    foreach (var conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation #:{conversation.Id}");
+        Console.WriteLine("Conversation Items: ");
+        foreach (var conversationItem in conversation.ConversationItems)
+        {
+            Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
+
+            Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
+            Console.WriteLine($"Redacted Lexical: {conversationItem.RedactedContent.Lexical}");
+            Console.WriteLine($"Redacted AudioTimings: {conversationItem.RedactedContent.AudioTimings}");
+            Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
+
+            Console.WriteLine("Entities:");
+            foreach (var entity in conversationItem.Entities)
+            {
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine();
+    }
+}
+```
 
 ## Troubleshooting
 

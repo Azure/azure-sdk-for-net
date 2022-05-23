@@ -30,32 +30,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.OrchestrationProject);
 #endif
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
             #endregion
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
+            if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
             {
                 Console.WriteLine($"Top intent: {respondingProjectName}");
 
                 QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-                KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
-
-                Console.WriteLine("Answers: \n");
-                foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
-                {
-                    Console.WriteLine($"Answer: {answer.Answer}");
-                    Console.WriteLine($"Confidence: {answer.Confidence}");
-                    Console.WriteLine($"Source: {answer.Source}");
-                    Console.WriteLine();
-                }
+                BinaryData questionAnsweringResponse = qnaTargetIntentResult.Result;
+                Console.WriteLine($"Qustion Answering Response: {questionAnsweringResponse.ToString()}");
             }
             #endregion
-            Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.QuestionAnswering));
+            Assert.That(targetIntentResult.TargetProjectKind, Is.EqualTo(TargetProjectKind.QuestionAnswering));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("ChitChat-QnA"));
         }
 
@@ -69,13 +61,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetKind == TargetKind.Conversation)
+            if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
             {
                 ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -114,7 +106,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
             #endregion
-            Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Conversation));
+            Assert.That(targetIntentResult.TargetProjectKind, Is.EqualTo(TargetProjectKind.Conversation));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("EmailIntent"));
         }
 
@@ -129,13 +121,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetKind == TargetKind.Luis)
+            if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
             {
                 LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
                 BinaryData luisResponse = luisTargetIntentResult.Result;
@@ -144,7 +136,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
 
-            Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
+            Assert.That(targetIntentResult.TargetProjectKind, Is.EqualTo(TargetProjectKind.Luis));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RestaurantIntent"));
         }
 
@@ -166,30 +158,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.OrchestrationProject);
 #endif
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
             #endregion
 
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
+            if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
             {
                 Console.WriteLine($"Top intent: {respondingProjectName}");
 
                 QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-                KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
-
-                Console.WriteLine("Answers: \n");
-                foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
-                {
-                    Console.WriteLine($"Answer: {answer.Answer}");
-                    Console.WriteLine($"Confidence: {answer.Confidence}");
-                    Console.WriteLine($"Source: {answer.Source}");
-                    Console.WriteLine();
-                }
+                BinaryData questionAnsweringResponse = qnaTargetIntentResult.Result;
+                Console.WriteLine($"Qustion Answering Response: {questionAnsweringResponse.ToString()}");
             }
-            Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.QuestionAnswering));
+            Assert.That(targetIntentResult.TargetProjectKind, Is.EqualTo(TargetProjectKind.QuestionAnswering));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("ChitChat-QnA"));
         }
 
@@ -204,12 +188,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
 
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetKind == TargetKind.Conversation)
+            if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
             {
                 ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -248,7 +232,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             }
 
-            Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Conversation));
+            Assert.That(targetIntentResult.TargetProjectKind, Is.EqualTo(TargetProjectKind.Conversation));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("EmailIntent"));
         }
 
@@ -263,12 +247,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.OrchestrationProject);
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
 
             string respondingProjectName = orchestratorPrediction.TopIntent;
             TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
 
-            if (targetIntentResult.TargetKind == TargetKind.Luis)
+            if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
             {
                 LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
                 BinaryData luisResponse = luisTargetIntentResult.Result;
@@ -276,7 +260,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 Console.WriteLine($"LUIS Response: {luisResponse.ToString()}");
             }
 
-            Assert.That(targetIntentResult.TargetKind, Is.EqualTo(TargetKind.Luis));
+            Assert.That(targetIntentResult.TargetProjectKind, Is.EqualTo(TargetProjectKind.Luis));
             Assert.That(orchestratorPrediction.TopIntent, Is.EqualTo("RestaurantIntent"));
         }
     }

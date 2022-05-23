@@ -22,7 +22,6 @@ TextConversationItem input = new TextConversationItem(
     text: "Send an email to Carol about the tomorrow's demo.");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
-    IsLoggingEnabled = true,
     Verbose = true
 };
 
@@ -34,9 +33,9 @@ Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
@@ -79,7 +78,6 @@ TextConversationItem input = new TextConversationItem(
     text: "Send an email to Carol about the tomorrow's demo.");
 AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
-    IsLoggingEnabled = true,
     Verbose = true
 };
 
@@ -91,9 +89,9 @@ Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversat
     options);
 
 CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
