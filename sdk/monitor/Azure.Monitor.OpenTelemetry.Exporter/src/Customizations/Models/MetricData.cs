@@ -54,6 +54,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                         DataPointType = DataPointType.Measurement
                     };
                     break;
+                case MetricType.Histogram:
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetHistogramSum());
+                    metricDataPoint.DataPointType = DataPointType.Aggregation;
+                    long histogramCount = metricPoint.GetHistogramCount();
+                    // Current schema only supports int values for count
+                    // if the value is within integer range we will use it otherwise ignore it.
+                    metricDataPoint.Count = (histogramCount <= int.MaxValue && histogramCount >= int.MinValue) ? (int?)histogramCount : null;
+                    break;
             }
 
             metricDataPoints.Add(metricDataPoint);
@@ -73,6 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 MetricType.DoubleSum => true,
                 MetricType.LongGauge => true,
                 MetricType.LongSum => true,
+                MetricType.Histogram => true,
                 _ => false
             };
     }
