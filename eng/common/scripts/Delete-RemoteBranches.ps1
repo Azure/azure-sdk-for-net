@@ -57,7 +57,7 @@ foreach ($res in $responses)
   $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
 
   if (!$CentralRepoId -and $openPullRequests.Count -gt 0) {
-    LogDebug "Central PR check is disabled and found open PRs associate with branch [ $branchName ]. Skipping..."
+    LogDebug "CentralRepoId is not configured and found open PRs associate with branch [ $branchName ]. Skipping..."
     continue
   }
 
