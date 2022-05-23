@@ -3,6 +3,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentFilterOrder
     {
         public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool ascending = true) { }
+        public bool Ascending { get { throw null; } set { } }
         public Azure.AI.Translation.Document.DocumentFilterProperty Property { get { throw null; } set { } }
     }
     public enum DocumentFilterProperty
@@ -160,7 +161,8 @@ namespace Azure.AI.Translation.Document
     }
     public partial class TranslationFilterOrder
     {
-        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool asc = true) { }
+        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool ascending = true) { }
+        public bool Ascending { get { throw null; } set { } }
         public Azure.AI.Translation.Document.TranslationFilterProperty Property { get { throw null; } set { } }
     }
     public enum TranslationFilterProperty
