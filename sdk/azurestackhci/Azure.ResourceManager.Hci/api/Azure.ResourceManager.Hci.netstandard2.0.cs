@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.Hci
     public partial class HciClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public HciClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string AadApplicationObjectId { get { throw null; } set { } }
+        public System.Guid? AadApplicationObjectId { get { throw null; } set { } }
         public System.Guid? AadClientId { get { throw null; } set { } }
-        public string AadServicePrincipalObjectId { get { throw null; } set { } }
+        public System.Guid? AadServicePrincipalObjectId { get { throw null; } set { } }
         public System.Guid? AadTenantId { get { throw null; } set { } }
         public string BillingModel { get { throw null; } }
         public System.Guid? CloudId { get { throw null; } }

@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(AadApplicationObjectId))
             {
                 writer.WritePropertyName("aadApplicationObjectId");
-                writer.WriteStringValue(AadApplicationObjectId);
+                writer.WriteStringValue(AadApplicationObjectId.Value);
             }
             if (Optional.IsDefined(AadServicePrincipalObjectId))
             {
                 writer.WritePropertyName("aadServicePrincipalObjectId");
-                writer.WriteStringValue(AadServicePrincipalObjectId);
+                writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> cloudManagementEndpoint = default;
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
-            Optional<string> aadApplicationObjectId = default;
-            Optional<string> aadServicePrincipalObjectId = default;
+            Optional<Guid> aadApplicationObjectId = default;
+            Optional<Guid> aadServicePrincipalObjectId = default;
             Optional<ClusterDesiredProperties> desiredProperties = default;
             Optional<ClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
@@ -192,12 +192,22 @@ namespace Azure.ResourceManager.Hci
                         }
                         if (property0.NameEquals("aadApplicationObjectId"))
                         {
-                            aadApplicationObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("aadServicePrincipalObjectId"))
                         {
-                            aadServicePrincipalObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("desiredProperties"))
@@ -274,7 +284,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), aadApplicationObjectId.Value, aadServicePrincipalObjectId.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value);
+            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value);
         }
     }
 }

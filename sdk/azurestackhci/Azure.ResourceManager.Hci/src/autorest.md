@@ -54,6 +54,8 @@ directive:
       $.aadClientId.format = "uuid";
       $.aadTenantId.format = "uuid";
       $.cloudId.format = "uuid";
+      $.aadApplicationObjectId.format = "uuid";
+      $.aadServicePrincipalObjectId.format = "uuid";
   - from: clusters.json
     where: $.definitions.ClusterPatchProperties.properties
     transform: >

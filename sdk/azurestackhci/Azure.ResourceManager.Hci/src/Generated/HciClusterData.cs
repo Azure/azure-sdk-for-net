@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="lastSyncTimestamp"> Most recent cluster sync timestamp. </param>
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, string aadApplicationObjectId, string aadServicePrincipalObjectId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, ClusterDesiredProperties desiredProperties, ClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Tenant id of cluster AAD identity. </summary>
         public Guid? AadTenantId { get; set; }
         /// <summary> Object id of cluster AAD identity. </summary>
-        public string AadApplicationObjectId { get; set; }
+        public Guid? AadApplicationObjectId { get; set; }
         /// <summary> Id of cluster identity service principal. </summary>
-        public string AadServicePrincipalObjectId { get; set; }
+        public Guid? AadServicePrincipalObjectId { get; set; }
         /// <summary> Desired properties of the cluster. </summary>
         public ClusterDesiredProperties DesiredProperties { get; set; }
         /// <summary> Properties reported by cluster agent. </summary>
