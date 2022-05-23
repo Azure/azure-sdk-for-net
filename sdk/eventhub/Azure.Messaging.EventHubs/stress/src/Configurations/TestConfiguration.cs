@@ -44,5 +44,5 @@ internal class TestConfiguration
     ///   The number of hours to run a test scenario for.
     /// </summary>
     ///
-    public int DurationInHours = 120;
+    public int DurationInHours = 2;
 }

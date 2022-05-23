@@ -134,7 +134,7 @@ public class Program
             var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
             cancellationSource.CancelAfter(runDuration);
 
-            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BufferedProducerTest, out var roleList);
+            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BurstBufferedProducerTest, out var roleList);
 
             testScenarioTasks.Add(_runScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, cancellationSource.Token));
         }
@@ -274,6 +274,14 @@ public class Program
             var processConfiguration = new ProcessorConfiguration();
             var processor = new Processor(testConfiguration, processConfiguration, metrics, partitionCount.Result);
             await processor.Start(cancellationToken);
+        }
+
+        if (role == RoleConfiguration.BurstBufferedPublisher)
+        {
+            var publisherConfiguration = new BufferedPublisherConfiguration();
+            publisherConfiguration.ProducerPublishingDelay = TimeSpan.FromMinutes(25);
+            var publisher = new BufferedPublisher(testConfiguration, publisherConfiguration, metrics);
+            await publisher.Start(cancellationToken);
         }
 
         //return Task.CompletedTask;

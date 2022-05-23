@@ -33,6 +33,12 @@ internal class RoleConfiguration
     public static string BufferedPublisher = "bufferedpublisher";
 
     /// <summary>
+    ///   The name of the burst buffered publisher role.
+    /// </summary>
+    ///
+    public static string BurstBufferedPublisher = "burstbufferedpublisher";
+
+    /// <summary>
     ///   The name of the processor role.
     /// </summary>
     ///
@@ -70,6 +76,12 @@ internal class RoleConfiguration
     ///
     public static string BasicReadTest = "BasicReadTest";
 
+    /// <summary>
+    ///   The name of the burst buffered producer test scenario.
+    /// </summary>
+    ///
+    public static string BurstBufferedProducerTest = "BurstBufferedProducerTest";
+
     // Roles needed for each scenario
 
     /// <summary>
@@ -91,6 +103,12 @@ internal class RoleConfiguration
     private static string[] _processorTestRoles = {Publisher, Processor};
 
     /// <summary>
+    ///   The set of roles to deploy for the burst buffered producer test scenario.
+    /// </summary>
+    ///
+    private static string[] _burstBufferedProducerRoles = {BurstBufferedPublisher, BurstBufferedPublisher};
+
+    /// <summary>
     ///   Initializes a new instance of the <see cref="RoleConfiguration" \> class.
     /// </summary>
     ///
@@ -101,5 +119,6 @@ internal class RoleConfiguration
         TestScenarioRoles[EventProducerTest] = new List<string>(_eventProducerTestRoles);
         TestScenarioRoles[BufferedProducerTest] = new List<string>(_bufferedProducerTestRoles);
         TestScenarioRoles[BasicProcessorTest] = new List<string>(_processorTestRoles);
+        TestScenarioRoles[BurstBufferedProducerTest] = new List<string>(_burstBufferedProducerRoles);
     }
 }
