@@ -60,27 +60,22 @@ foreach ($res in $responses)
   }
   $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
 
-  # If no central PR numver retrieved from branch regex, and there are open sync PR(s) associate with branch.
-  if (!$pullRequestNumber -and $openPullRequest.Count -gt 0) {
-    LogError "PR number not found from $CentralPRRegex. And there are open sync PR(s) associate with branch. Skipping."
-    continue
-  } 
-  if ($pullRequestNumber) {
-    try {
-      $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
-      LogDebug "Found closed/merged pull request: $($centralPR.html_url)"
-      if ($centralPR.state -ne "closed") {
-        continue
-      }
-    }
-    catch 
-    {
-      if ($openPullRequests.Count -gt 0) {
-        LogDebug "PR number [ $pullRequestNumber ] from [ $CentralRepoId ]. And there are open sync PR(s) associate with branch. Skipping."
-        continue
-      }
+  try {
+    $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
+    LogDebug "Found central PR pull request: $($centralPR.html_url)"
+    if ($centralPR.state -ne "closed") {
+      # Skipping if there open central PR number retrieved from branch regex.
+      continue
     }
   }
+  catch 
+  {
+    if ($openPullRequests.Count -gt 0) {
+      LogDebug "PR number [ $pullRequestNumber ] from [ $CentralRepoId ]. And there are open sync PR(s) associate with branch. Skipping."
+      continue
+    }
+  }
+  
 
   # Two conditions to close sync open PRs.
   # 2. Central repo PR not exist and no open sync PRs
