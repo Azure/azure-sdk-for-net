@@ -43,10 +43,6 @@ foreach ($res in $responses)
     continue
   }
 
-  # check central PR
-  # If central PR exist and open, then skip
-  $pullRequestNumber = $Matches["PrNumber"]
-    
   # Get all open sync PRs associate with branch.
   try {
     $head = "${RepoId}:${branchName}"
@@ -60,39 +56,39 @@ foreach ($res in $responses)
   }
   $openPullRequests = $pullRequests | ? { $_.State -eq "open" }
 
-  try {
-    $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
-    LogDebug "Found central PR pull request: $($centralPR.html_url)"
-    if ($centralPR.state -ne "closed") {
-      # Skipping if there open central PR number retrieved from branch regex.
-      continue
-    }
+  if (!CentralRepoId -and $openPullRequests.Count -gt 0) {
+    LogDebug "Central PR check is disabled and found open PRs associate with branch [ $branchName ]. Skipping..."
+    continue
   }
-  catch 
-  {
-    if ($openPullRequests.Count -gt 0) {
-      LogDebug "PR number [ $pullRequestNumber ] from [ $CentralRepoId ]. And there are open sync PR(s) associate with branch. Skipping."
-      continue
-    }
-  }
-  
 
-  # Two conditions to close sync open PRs.
-  # 2. Central repo PR not exist and no open sync PRs
-  # 2. Central repo PR exists and closed.
-  foreach ($openPullRequest in $openPullRequests) {
-    try 
-    {
-      if ($PSCmdlet.ShouldProcess("[ $($openPullRequest.html_url) ] with branch [ $branchName ] in [ $RepoId ]", "Closing the pull request")) {
-        Close-GithubPullRequest -apiurl $openPullRequest.url -AuthToken $AuthToken | Out-Null
-        Write-Host "Open pull Request [ $($openPullRequest.html_url) ] has been closed."
+  # check central PR
+  if ($CentralRepoId) {
+    $pullRequestNumber = $Matches["PrNumber"]
+    # If central PR number found, then skip
+    if (!$pullRequestNumber) {
+      LogWarning "No PR number fetched from the branch. Please check the branch name [ $branchName ]. Skipping..."
+      continue
+    }
+      
+    try {
+      $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
+      LogDebug "Found central PR pull request: $($centralPR.html_url)"
+      if ($centralPR.state -ne "closed") {
+        # Skipping if there open central PR number for the branch.
+        continue
       }
     }
-    catch
+    catch 
     {
-      LogError "Close-GithubPullRequest failed with exception:`n$_"
-      exit 1
+      # If there is no central PR for the PR number, log error and skip.
+      LogError "Get-GitHubPullRequests failed with exception:`n$_"
+      LogError "Not found PR number [ $pullRequestNumber ] from [ $CentralRepoId ]. Skipping..."
+      continue
     }
+  }
+
+  foreach ($openPullRequest in $openPullRequests) {
+    LogDebug "Open pull Request [ $($openPullRequest.html_url) ] will be closed after branch deletion."
   }
 
   # If there is date filter, then check if branch last commit older than the date.
