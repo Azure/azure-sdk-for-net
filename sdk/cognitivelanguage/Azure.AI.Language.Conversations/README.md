@@ -1,6 +1,11 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others.
+Conversational Language Understanding - aka CLU for short - is a cloud-based conversational AI service which provides many language understanding capabilities like:
+
+- Conversation App: It's used in extracting intents and entities in conversations
+- Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
+- Conversational Issue Summarization: Used to summarize conversations in the form of issues, and final resolutions
+- Conversational PII: Used to extract and redact personally-identifiable info (PII)
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
 
@@ -17,9 +22,7 @@ dotnet add package Azure.AI.Language.Conversations --prerelease
 ### Prerequisites
 
 * An [Azure subscription][azure_subscription]
-* An existing Text Analytics resource
-
-> Note: the new unified Cognitive Language Services are not currently available for deployment.
+* An existing Azure Language Service Resource
 
 ### Authenticate the client
 
@@ -319,7 +322,7 @@ if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
 
 ### Analyze a conversation - Conversation Summarization
 
-first of all, you should prepare the input:
+First, you should prepare the input:
 
 ```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Input
 var textConversationItems = new List<TextConversationItem>()
@@ -343,7 +346,7 @@ var tasks = new List<AnalyzeConversationLROTask>()
 };
 ```
 
-then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
@@ -386,7 +389,7 @@ foreach (var result in jobResults.Tasks.Items)
 
 ### Analyze a conversation - Conversation PII - Text Input
 
-first of all, you should prepare the input:
+First, you should prepare the input:
 
 ```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
 var textConversationItems = new List<TextConversationItem>()
@@ -410,7 +413,7 @@ var tasks = new List<AnalyzeConversationLROTask>()
 };
 ```
 
-then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
@@ -465,7 +468,7 @@ foreach (var result in jobResults.Tasks.Items)
 
 ### Analyze a conversation - Conversation PII - Transcript Input
 
-first of all, you should prepare the input:
+First, you should prepare the input:
 
 ```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
 var transciprtConversationItemOne = new TranscriptConversationItem(
@@ -522,7 +525,7 @@ var tasks = new List<AnalyzeConversationLROTask>()
 };
 ```
 
-then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 

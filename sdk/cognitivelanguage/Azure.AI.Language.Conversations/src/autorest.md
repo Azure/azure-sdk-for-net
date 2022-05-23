@@ -60,15 +60,11 @@ directive:
 ```yaml
 directive:
 - rename-operation:
-    from: AnalyzeConversation_SubmitJob
-    to: ConversationAnalysis_SubmitJob
-```
-
-```yaml
-directive:
+  from: AnalyzeConversation_SubmitJob
+  to: ConversationAnalysis_SubmitJob
 - rename-operation:
-    from: AnalyzeConversation_JobStatus
-    to: ConversationAnalysis_JobStatus
+  from: AnalyzeConversation_JobStatus
+  to: ConversationAnalysis_JobStatus
 ```
 
 ### Async API swagger mismatches

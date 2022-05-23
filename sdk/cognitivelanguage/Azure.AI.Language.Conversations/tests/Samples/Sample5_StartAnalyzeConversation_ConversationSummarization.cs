@@ -32,10 +32,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
 
-            var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()
             {
-                conversationSummarizationTask
+                new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters),
             };
             #endregion
 
@@ -88,10 +87,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
 
-            var conversationSummarizationTask = new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()
             {
-                conversationSummarizationTask
+                new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters),
             };
 
             #region Snippet:StartAnalyzeConversationAsync_StartAnalayzing

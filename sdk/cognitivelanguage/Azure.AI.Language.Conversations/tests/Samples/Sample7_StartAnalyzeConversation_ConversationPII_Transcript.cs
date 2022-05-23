@@ -65,10 +65,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
 
-            var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()
             {
-                piiTask
+                new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
             };
             #endregion
 
@@ -167,10 +166,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
 
-            var piiTask = new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters);
             var tasks = new List<AnalyzeConversationLROTask>()
             {
-                piiTask
+                new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
             };
 
             var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
