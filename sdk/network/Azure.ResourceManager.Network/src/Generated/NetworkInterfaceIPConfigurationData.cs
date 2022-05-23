@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterfaceIPConfiguration data model. </summary>
-    public partial class NetworkInterfaceIPConfigurationData : NetworkResourceData
+    public partial class NetworkInterfaceIPConfigurationData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
         public NetworkInterfaceIPConfigurationData()

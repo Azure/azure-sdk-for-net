@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             //create private endpoint (privateEndpoint of WebPubSUb will be generated automatically)
             var privateEndPointData = new PrivateEndpointData()
             {
-                Subnet = new SubnetData() { Id = $"{_vnet.Id}" + "/subnets/subnet02" },
+                Subnet = new SubnetData() { Id = new ResourceIdentifier($"{_vnet.Id}" + "/subnets/subnet02") },
                 Location = "westus2",
                 PrivateLinkServiceConnections =
                 {
