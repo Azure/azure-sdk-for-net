@@ -88,7 +88,7 @@ foreach ($res in $responses)
   }
 
   foreach ($openPullRequest in $openPullRequests) {
-    LogDebug "Open pull Request [ $($openPullRequest.html_url) ] will be closed after branch deletion."
+    Write-Host "Open pull Request [ $($openPullRequest.html_url) ] will be closed after branch deletion."
   }
 
   # If there is date filter, then check if branch last commit older than the date.
