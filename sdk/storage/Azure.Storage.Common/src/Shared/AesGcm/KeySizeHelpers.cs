@@ -4,6 +4,12 @@ using System.Security.Cryptography;
 
 namespace Azure.Storage
 {
+    /// <summary>
+    /// Taken from
+    /// https://github.com/dotnet/runtime/blob/main/src/libraries/Common/src/System/Security/Cryptography/KeySizeHelpers.cs
+    ///
+    /// SHOULD NOT BE CHANGED WITHOUT COORDINATING WITH BCL TEAM
+    /// </summary>
     internal static class KeySizeHelpers
     {
         internal static KeySizes[] CloneKeySizesArray(this KeySizes[] src)

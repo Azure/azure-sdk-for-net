@@ -31,14 +31,10 @@
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
-    <Compile Include="Shared\AeadCommon.cs" />
-    <Compile Include="Shared\AesGcmWindows.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
     <Compile Include="Shared\GeoRedundantReadPolicy.cs" />
-    <Compile Include="Shared\Interop.cs" />
-    <Compile Include="Shared\KeySizeHelpers.cs" />
     <Compile Include="Shared\SasExtensions.cs" />
     <Compile Include="Shared\SasQueryParametersInternals.cs" />
     <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />

@@ -8,6 +8,12 @@ using System.Security.Cryptography;
 
 namespace Azure.Storage
 {
+    /// <summary>
+    /// Taken from
+    /// https://github.com/dotnet/runtime/blob/main/src/libraries/System.Security.Cryptography/src/System/Security/Cryptography/AeadCommon.Windows.cs
+    ///
+    /// SHOULD NOT BE CHANGED WITHOUT COORDINATING WITH BCL TEAM
+    /// </summary>
     internal static partial class AeadCommon
     {
         internal static unsafe void Encrypt(

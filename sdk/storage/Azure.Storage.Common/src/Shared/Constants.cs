@@ -645,6 +645,14 @@ namespace Azure.Storage
             public const int EncryptionKeySizeBits = 256;
 
             public const string XMsRange = "x-ms-range";
+
+            public const string BCRYPT_AES_ALGORITHM = "AES";
+
+            public const string BCRYPT_CHAIN_MODE_GCM = "ChainingModeGCM";
+
+            public const string BCRYPT_CHAINING_MODE = "ChainingMode";
+
+            internal const string BCryptdll = "BCrypt.dll";
         }
 
         /// <summary>
