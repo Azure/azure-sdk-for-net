@@ -393,7 +393,7 @@ First, you should prepare the input:
 ```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
 var textConversationItems = new List<TextConversationItem>()
 {
-    new TextConversationItem("1", "0", "Is john doe?"),
+    new TextConversationItem("1", "0", "Hi, I am John Doe."),
     new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
     new TextConversationItem("3", "0", "Pretty good."),
 };
