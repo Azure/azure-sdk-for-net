@@ -68,10 +68,10 @@ foreach ($res in $responses)
   if ($pullRequestNumber) {
     try {
       $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
+      LogDebug "Found closed/merged pull request: $($centralPR.html_url)"
       if ($centralPR.state -ne "closed") {
         continue
       }
-      LogDebug "Found closed/merged pull request: $($centralPR.html_url)"
     }
     catch 
     {
@@ -126,7 +126,7 @@ foreach ($res in $responses)
   } 
   
   try {
-    if ($hasCentralPRClosedOrSkipChecking -and $PSCmdlet.ShouldProcess("[ $branchName ] in [ $RepoId ]", "Deleting branches on cleanup script")) {
+    if ($PSCmdlet.ShouldProcess("[ $branchName ] in [ $RepoId ]", "Deleting branches on cleanup script")) {
       Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
       Write-Host "The branch [ $branchName ] with sha [$($res.object.sha)] in [ $RepoId ] has been deleted."
     }
