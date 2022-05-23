@@ -66,7 +66,7 @@ foreach ($res in $responses)
     $pullRequestNumber = $Matches["PrNumber"]
     # If central PR number found, then skip
     if (!$pullRequestNumber) {
-      LogWarning "No PR number fetched from the branch. Please check the branch name [ $branchName ]. Skipping..."
+      LogError "No PR number found in the branch name. Please check the branch name [ $branchName ]. Skipping..."
       continue
     }
       
