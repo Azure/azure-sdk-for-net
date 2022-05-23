@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -12,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkProfile data model. </summary>
-    public partial class NetworkProfileData : NetworkResourceData
+    public partial class NetworkProfileData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>
         public NetworkProfileData()
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfileData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
@@ -48,8 +49,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of chid container network interface configurations. </summary>
         public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; }
         /// <summary> The resource GUID property of the network profile resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network profile resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

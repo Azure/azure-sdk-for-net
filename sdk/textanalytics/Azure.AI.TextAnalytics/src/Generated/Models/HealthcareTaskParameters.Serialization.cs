@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
-            Optional<HealthcareTaskParametersFhirVersion> fhirVersion = default;
+            Optional<FhirVersion> fhirVersion = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fhirVersion = new HealthcareTaskParametersFhirVersion(property.Value.GetString());
+                    fhirVersion = new FhirVersion(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stringIndexType"))

@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Resource status of the endpoint. </summary>
         public EndpointResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the endpoint. </summary>
-        public string ProvisioningState { get; }
+        public EndpointProvisioningState? ProvisioningState { get; }
     }
 }

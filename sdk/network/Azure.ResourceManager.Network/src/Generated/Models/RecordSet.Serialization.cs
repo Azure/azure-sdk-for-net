@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> recordType = default;
             Optional<string> recordSetName = default;
             Optional<string> fqdn = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> ttl = default;
             Optional<IReadOnlyList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NetworkProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ttl"))

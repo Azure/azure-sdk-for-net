@@ -62,12 +62,16 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedHsmSku.properties.family
     transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === 'location')]
+    transform: >
+      $['x-ms-format'] = 'azure-location';
   - from: managedHsm.json
     where: '$.definitions'
     transform: >
-      $.ManagedHsmResource['x-ms-client-name'] = 'KeyVaultTrackedResourceData';
-      $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
+      $.ManagedHsmResource['x-ms-client-name'] = 'ManagedHsmTrackedResourceData';
       $.ManagedHsmResource.properties.location['x-ms-format'] = 'azure-location';
+      $.MHSMIPRule.properties.value['x-ms-client-name'] = 'AddressRange';
       $.DeletedManagedHsmProperties.properties.location['x-ms-format'] = 'azure-location';
       $.DeletedManagedHsmProperties.properties.mhsmId['x-ms-format'] = 'arm-id';
       $.MHSMPrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
@@ -90,6 +94,7 @@ directive:
       $.VaultCreateOrUpdateParameters.properties.location['x-ms-format'] = 'azure-location';
       $.VaultAccessPolicyParameters.properties.location['x-ms-format'] = 'azure-location';
       $.Vault.properties.location['x-ms-format'] = 'azure-location';
+      $.Vault['x-csharp-usage'] = 'model,input,output';
       $.VaultProperties.properties.createMode['x-ms-enum']['name'] = 'VaultCreateMode';
       $.Resource.properties.location['x-ms-format'] = 'azure-location';
       $.PrivateEndpointConnectionItem.properties.etag['x-ms-format'] = 'etag';

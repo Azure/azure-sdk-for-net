@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions(TextAnalyticsClientOptions.ServiceVersion.V2022_04_01_Preview));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             string documentA = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar
                                 cómo invocar el método de Detección de idioma del servicio de Text Analytics en Microsoft Azure.
@@ -70,7 +70,7 @@ namespace Azure.AI.TextAnalytics.Samples
             DetectLanguageResultCollection documentsLanguage = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+            Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
             Console.WriteLine("");
 
             foreach (DetectLanguageResult documentLanguage in documentsLanguage)

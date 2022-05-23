@@ -31,8 +31,8 @@ namespace Compute.Tests
                 ProtectedSettings = "{}",
                 EnableAutomaticUpgrade = false,
             };
-            typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
@@ -119,7 +119,7 @@ namespace Compute.Tests
 
                     // Add another extension to the VM with protectedSettingsFromKeyVault
                     var vmExtension2 = GetTestVMExtension();
-                    AddProtectedSettingsFromKeyVaultToExtension(vmExtension2, rgName);
+                    AddProtectedSettingsFromKeyVaultToExtension(vmExtension2);
 
                     //For now we just validate that the protectedSettingsFromKeyVault has been accepted and persisted. Since we didn't create a KV, this failure is expected
                     try
@@ -163,13 +163,14 @@ namespace Compute.Tests
             Assert.NotNull(vmExtInstanceView.Statuses[0].Message);
         }
 
-        private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension, string resourceGroupName)
+        private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension)
         {
             vmExtension.ProtectedSettings = null;
-            string idValue = string.Format("subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/kvName", m_subId, resourceGroupName);
+            //string idValue = string.Format("subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/kvName", m_subId, resourceGroupName);
+            string idValue = string.Format("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/keyVaultInSoutheastAsia");
             string sourceVaultId = string.Format("\"id\": \"{0}\"", idValue);
             string sourceVault = "{ " + sourceVaultId + " }";
-            string secret = string.Format("\"secretUrl\": \"{0}\"", "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e");
+            string secret = string.Format("\"secretUrl\": \"{0}\"", "https://keyvaultinsoutheastasia.vault.azure.net/secrets/SecretForTest/2375df95e3da463c81c43c300f6506ab");
             vmExtension.ProtectedSettingsFromKeyVault = new JRaw("{ " + string.Format("\"sourceVault\": {0},{1}", sourceVault, secret) + " }");
         }
     }

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpconfigurationId))
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId");
-                writer.WriteStringValue(IpconfigurationId);
+                writer.WriteStringValue(IPConfigurationId);
             }
             if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
             {

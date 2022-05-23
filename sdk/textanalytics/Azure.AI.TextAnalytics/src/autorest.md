@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/deyaaeldeen/azure-rest-api-specs/e524c9183623dcff66ba3a43079a506357033fd4/specification/cognitiveservices/data-plane/Language/preview/2022-04-01-preview/textanalytics.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/6655ded81f1f0a0ba172ae0dddf5d62898e87c96/specification/cognitiveservices/data-plane/Language/preview/2022-04-01-preview/textanalytics.json
 generation1-convenience-client: true
 ```
 
@@ -65,14 +65,4 @@ directive:
   transform: >
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
-```
-
-### Make taskName non-required
-This should be deleted in service v3.2 when service enables taskName again
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.TaskState
-  transform: >
-    $["required"] = ["status", "lastUpdateDateTime"]
 ```

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static CapacityReservationUtilization DeserializeCapacityReservationUtilization(JsonElement element)
         {
-            Optional<IReadOnlyList<Resources.Models.SubResource>> virtualMachinesAllocated = default;
+            Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachinesAllocated"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                     }
                     virtualMachinesAllocated = array;
                     continue;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -44,8 +45,8 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> resourceGuid = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<WritableSubResource>> virtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,7 +101,12 @@ namespace Azure.ResourceManager.Network
                     {
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworks"))
@@ -132,7 +138,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name, type, systemData, tags, location, etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, systemData, tags, location, etag.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
         }
     }
 }
