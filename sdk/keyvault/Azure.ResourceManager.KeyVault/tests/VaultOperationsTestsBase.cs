@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public ResourceGroupResource ResourceGroupResource { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
-            : base(isAsync)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
