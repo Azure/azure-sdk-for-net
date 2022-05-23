@@ -75,7 +75,7 @@ foreach ($res in $responses)
     }
     catch 
     {
-      if ($openPullRequest.Count -gt 0) {
+      if ($openPullRequests.Count -gt 0) {
         LogDebug "PR number [ $pullRequestNumber ] from [ $CentralRepoId ]. And there are open sync PR(s) associate with branch. Skipping."
         continue
       }
