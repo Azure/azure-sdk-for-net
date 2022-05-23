@@ -952,20 +952,20 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         public Azure.ResourceManager.Applications.Containers.Models.ClientRegistration Registration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ValidationAllowedAudiences { get { throw null; } }
     }
+    public partial class HttpHeaderData
+    {
+        public HttpHeaderData(string name, string value) { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
     public partial class HttpRequestData
     {
         public HttpRequestData(int port) { }
         public string Host { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.HttpRequestDataHttpHeadersItem> HttpHeaders { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Applications.Containers.Models.HttpHeaderData> HttpHeaders { get { throw null; } }
         public string Path { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
         public Azure.ResourceManager.Applications.Containers.Models.HttpScheme? Scheme { get { throw null; } set { } }
-    }
-    public partial class HttpRequestDataHttpHeadersItem
-    {
-        public HttpRequestDataHttpHeadersItem(string name, string value) { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
     }
     public partial class HttpScaleRule
     {
