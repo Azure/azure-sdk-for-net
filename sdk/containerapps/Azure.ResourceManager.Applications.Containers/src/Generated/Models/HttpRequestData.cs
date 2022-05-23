@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         public HttpRequestData(int port)
         {
-            HttpHeaders = new ChangeTrackingList<HttpRequestDataHttpHeadersItem>();
+            HttpHeaders = new ChangeTrackingList<HttpHeaderData>();
             Port = port;
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         /// <param name="scheme"> Scheme to use for connecting to the host. Defaults to HTTP. </param>
-        internal HttpRequestData(string host, IList<HttpRequestDataHttpHeadersItem> httpHeaders, string path, int port, HttpScheme? scheme)
+        internal HttpRequestData(string host, IList<HttpHeaderData> httpHeaders, string path, int port, HttpScheme? scheme)
         {
             Host = host;
             HttpHeaders = httpHeaders;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </summary>
         public string Host { get; set; }
         /// <summary> Custom headers to set in the request. HTTP allows repeated headers. </summary>
-        public IList<HttpRequestDataHttpHeadersItem> HttpHeaders { get; }
+        public IList<HttpHeaderData> HttpHeaders { get; }
         /// <summary> Path to access on the HTTP server. </summary>
         public string Path { get; set; }
         /// <summary> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </summary>

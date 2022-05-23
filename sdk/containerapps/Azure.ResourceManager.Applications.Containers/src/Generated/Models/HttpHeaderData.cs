@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Applications.Containers.Models
 {
     /// <summary> HTTPHeader describes a custom header to be used in HTTP probes. </summary>
-    public partial class HttpRequestDataHttpHeadersItem
+    public partial class HttpHeaderData
     {
-        /// <summary> Initializes a new instance of HttpRequestDataHttpHeadersItem. </summary>
+        /// <summary> Initializes a new instance of HttpHeaderData. </summary>
         /// <param name="name"> The header field name. </param>
         /// <param name="value"> The header field value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public HttpRequestDataHttpHeadersItem(string name, string value)
+        public HttpHeaderData(string name, string value)
         {
             if (name == null)
             {
