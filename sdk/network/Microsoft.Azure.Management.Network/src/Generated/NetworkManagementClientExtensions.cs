@@ -22,6 +22,238 @@ namespace Microsoft.Azure.Management.Network
     public static partial class NetworkManagementClientExtensions
     {
             /// <summary>
+            /// Lists active connectivity configurations in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            public static ActiveConnectivityConfigurationsListResult ListActiveConnectivityConfigurations(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName)
+            {
+                return operations.ListActiveConnectivityConfigurationsAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists active connectivity configurations in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActiveConnectivityConfigurationsListResult> ListActiveConnectivityConfigurationsAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListActiveConnectivityConfigurationsWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists active security admin rules in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            public static ActiveSecurityAdminRulesListResult ListActiveSecurityAdminRules(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName)
+            {
+                return operations.ListActiveSecurityAdminRulesAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists active security admin rules in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActiveSecurityAdminRulesListResult> ListActiveSecurityAdminRulesAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListActiveSecurityAdminRulesWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists Active Security User Rules in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            public static ActiveSecurityUserRulesListResult ListActiveSecurityUserRules(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName)
+            {
+                return operations.ListActiveSecurityUserRulesAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists Active Security User Rules in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActiveSecurityUserRulesListResult> ListActiveSecurityUserRulesAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListActiveSecurityUserRulesWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all effective connectivity configurations applied on a virtual
+            /// network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to list correct page.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            public static NetworkManagerEffectiveConnectivityConfigurationListResult ListNetworkManagerEffectiveConnectivityConfigurations(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName)
+            {
+                return operations.ListNetworkManagerEffectiveConnectivityConfigurationsAsync(parameters, resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all effective connectivity configurations applied on a virtual
+            /// network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to list correct page.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkManagerEffectiveConnectivityConfigurationListResult> ListNetworkManagerEffectiveConnectivityConfigurationsAsync(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(parameters, resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List all effective security admin rules applied on a virtual network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to list correct page.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            public static NetworkManagerEffectiveSecurityAdminRulesListResult ListNetworkManagerEffectiveSecurityAdminRules(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName)
+            {
+                return operations.ListNetworkManagerEffectiveSecurityAdminRulesAsync(parameters, resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all effective security admin rules applied on a virtual network.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to list correct page.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NetworkManagerEffectiveSecurityAdminRulesListResult> ListNetworkManagerEffectiveSecurityAdminRulesAsync(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(parameters, resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates a Bastion Shareable Links for all the VMs specified in the request.
             /// </summary>
             /// <param name='operations'>
