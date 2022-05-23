@@ -343,9 +343,106 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file.
+        /// The <see cref="Create(DataLakePathCreateOptions, CancellationToken)"/> operation creates a file.
         /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
-        /// an existing file, consider using the <see cref="CreateIfNotExists"/> API.
+        /// an existing file, consider using the <see cref="CreateIfNotExists(DataLakePathCreateOptions, CancellationToken)"/> API.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> Create(
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Create)}");
+
+            try
+            {
+                scope.Start();
+
+                return base.Create(
+                    resourceType: PathResourceType.File,
+                    options: options,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateAsync(DataLakePathCreateOptions, CancellationToken)"/> operation creates a file.
+        /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing file, consider using the <see cref="CreateIfNotExistsAsync(DataLakePathCreateOptions, CancellationToken)"/> API.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> CreateAsync(
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Create)}");
+
+            try
+            {
+                scope.Start();
+
+                return await base.CreateAsync(
+                    resourceType: PathResourceType.File,
+                    options: options,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Create(PathHttpHeaders, Metadata, string, string, DataLakeRequestConditions, CancellationToken)"/> operation creates a file.
+        /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing file, consider using the <see cref="CreateIfNotExists(PathHttpHeaders, Metadata, string, string, CancellationToken)"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -387,13 +484,16 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Create(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            DataLakeRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Create)}");
 
@@ -422,9 +522,9 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="Create"/> operation creates a file.
+        /// The <see cref="CreateAsync(PathHttpHeaders, Metadata, string, string, DataLakeRequestConditions, CancellationToken)"/> operation creates a file.
         /// If the file already exists, it will be overwritten.  If you don't intent to overwrite
-        /// an existing file, consider using the <see cref="CreateIfNotExistsAsync"/> API.
+        /// an existing file, consider using the <see cref="CreateIfNotExistsAsync(PathHttpHeaders, Metadata, string, string, CancellationToken)"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -466,13 +566,16 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> CreateAsync(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            DataLakeRequestConditions conditions,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Create)}");
 
@@ -504,7 +607,102 @@ namespace Azure.Storage.Files.DataLake
 
         #region Create If Not Exists
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a file.
+        /// The <see cref="CreateIfNotExists(DataLakePathCreateOptions, CancellationToken)"/> operation creates a file.
+        /// If the file already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> CreateIfNotExists(
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
+
+            try
+            {
+                scope.Start();
+
+                return base.CreateIfNotExists(
+                    resourceType: PathResourceType.File,
+                    options: options,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(DataLakePathCreateOptions, CancellationToken)"/> operation creates a file.
+        /// If the file already exists, it is not changed.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
+            DataLakePathCreateOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
+
+            try
+            {
+                scope.Start();
+
+                return await base.CreateIfNotExistsAsync(
+                    resourceType: PathResourceType.File,
+                    options: options,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(PathHttpHeaders, Metadata, string, string, CancellationToken)"/> operation creates a file.
         /// If the file already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -543,12 +741,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> CreateIfNotExists(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
 
@@ -576,7 +777,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a file.
+        /// The <see cref="CreateIfNotExistsAsync(PathHttpHeaders, Metadata, string, string, CancellationToken)"/> operation creates a file.
         /// If the file already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -615,12 +816,15 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
-            PathHttpHeaders httpHeaders = default,
-            Metadata metadata = default,
-            string permissions = default,
-            string umask = default,
-            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            PathHttpHeaders httpHeaders,
+            Metadata metadata,
+            string permissions,
+            string umask,
+            CancellationToken cancellationToken)
         {
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
 
@@ -4698,6 +4902,13 @@ namespace Azure.Storage.Files.DataLake
                         metadata: default,
                         permissions: default,
                         umask: default,
+                        owner: default,
+                        group: default,
+                        accessControlList: default,
+                        leaseId: default,
+                        leaseDuration: default,
+                        timeToExpire: default,
+                        expiresOn: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -4737,6 +4948,13 @@ namespace Azure.Storage.Files.DataLake
                             metadata: default,
                             permissions: default,
                             umask: default,
+                            owner: default,
+                            group: default,
+                            accessControlList: default,
+                            leaseId: default,
+                            leaseDuration: default,
+                            timeToExpire: default,
+                            expiresOn: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)
@@ -4796,14 +5014,21 @@ namespace Azure.Storage.Files.DataLake
             {
                 InitializeDestination = async (args, async, cancellationToken)
                     => await client.CreateInternal(
-                        PathResourceType.File,
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Permissions,
-                        args.Umask,
-                        args.Conditions,
-                        async,
-                        cancellationToken).ConfigureAwait(false),
+                        resourceType: PathResourceType.File,
+                        httpHeaders: args.HttpHeaders,
+                        metadata: args.Metadata,
+                        permissions: args.Permissions,
+                        umask: args.Umask,
+                        owner: default,
+                        group: default,
+                        accessControlList: default,
+                        leaseId: default,
+                        leaseDuration: default,
+                        timeToExpire: default,
+                        expiresOn: default,
+                        conditions: args.Conditions,
+                        async: async,
+                        cancellationToken: cancellationToken).ConfigureAwait(false),
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.

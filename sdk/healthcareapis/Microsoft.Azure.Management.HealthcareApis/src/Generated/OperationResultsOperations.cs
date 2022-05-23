@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<object>> GetWithHttpMessagesAsync(string locationName, string operationResultId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationResultsDescription>> GetWithHttpMessagesAsync(string locationName, string operationResultId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<object>();
+            var _result = new AzureOperationResponse<OperationResultsDescription>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -223,24 +223,6 @@ namespace Microsoft.Azure.Management.HealthcareApis
                 try
                 {
                     _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationResultsDescription>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 404)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorDetails>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

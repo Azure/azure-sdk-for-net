@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnGateway data model. </summary>
-    public partial class VpnGatewayData : NetworkResourceData
+    public partial class VpnGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>
         public VpnGatewayData()
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
-        internal VpnGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags)
+        internal VpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             VirtualHub = virtualHub;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The provisioning state of the VPN gateway resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The scale unit for this vpn gateway. </summary>
         public int? VpnGatewayScaleUnit { get; set; }
         /// <summary> List of all IPs configured on the gateway. </summary>

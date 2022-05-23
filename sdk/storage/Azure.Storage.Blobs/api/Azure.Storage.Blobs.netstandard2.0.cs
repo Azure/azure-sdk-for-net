@@ -71,6 +71,7 @@ namespace Azure.Storage.Blobs
             V2021_02_12 = 10,
             V2021_04_10 = 11,
             V2021_06_08 = 12,
+            V2021_08_06 = 13,
         }
     }
     public partial class BlobContainerClient
@@ -227,6 +228,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.AccessTier P60 { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier P70 { get { throw null; } }
         public static Azure.Storage.Blobs.Models.AccessTier P80 { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.AccessTier Premium { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.Models.AccessTier other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The PiiTaskParameters. </summary>
-    internal partial class PiiTaskParameters
+    /// <summary> Supported parameters for a PII Entities Recognition task. </summary>
+    internal partial class PiiTaskParameters : PreBuiltTaskParameters
     {
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
         public PiiTaskParameters()
@@ -20,13 +20,22 @@ namespace Azure.AI.TextAnalytics.Models
             PiiCategories = new ChangeTrackingList<PiiEntityCategory>();
         }
 
-        /// <summary> Gets or sets the domain. </summary>
-        public PiiTaskParametersDomain? Domain { get; set; }
-        /// <summary> Gets or sets the model version. </summary>
-        public string ModelVersion { get; set; }
-        /// <summary> Gets or sets the logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> Gets or sets the string index type. </summary>
+        /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="modelVersion"></param>
+        /// <param name="domain"> The PII domain used for PII Entity Recognition. </param>
+        /// <param name="piiCategories"> (Optional) describes the PII categories to return. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        internal PiiTaskParameters(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiEntityCategory> piiCategories, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        {
+            Domain = domain;
+            PiiCategories = piiCategories;
+            StringIndexType = stringIndexType;
+        }
+
+        /// <summary> The PII domain used for PII Entity Recognition. </summary>
+        public PiiDomain? Domain { get; set; }
+        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }
 }

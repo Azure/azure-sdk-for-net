@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataProtection.Backup</PackageId>
 		<Description>Provides developers with libraries for data protection under Azure Resource manager.</Description>
-		<Version>2.0.0.1</Version>
+		<Version>2.1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataProtection.Backup</AssemblyName>
 		<PackageTags>DataProtection;Backup;</PackageTags>
 		<PackageReleaseNotes>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateLinkResourcesWrapper(IEnumerable<PrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResource> value)
         {
             if (value == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<PrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<AppServicePrivateLinkResource> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PrivateLinkResource> Value { get; }
+        public IReadOnlyList<AppServicePrivateLinkResource> Value { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// A set of metrics that can be used to monitor communication between the client and service.
     /// </summary>
-    public class ServiceBusTransportMetrics
+    internal class ServiceBusTransportMetrics
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusTransportMetrics"/> class for mocking.

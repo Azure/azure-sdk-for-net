@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
         internal static SharedGalleryImageData DeserializeSharedGalleryImageData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<OperatingSystemTypes> osType = default;
             Optional<OperatingSystemStateTypes> osState = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
@@ -38,7 +38,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -166,7 +171,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryImageData(name.Value, location.Value, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
+            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value);
         }
     }
 }

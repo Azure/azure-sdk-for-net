@@ -41,16 +41,25 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="endpoint"> Account endpoint. </param>
         /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
+        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
+        /// <param name="endpoint"> Account endpoint. </param>
+        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
-        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options = null)
+        public DeviceManagementClient(string endpoint, string instanceId, TokenCredential credential, DeviceUpdateClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(instanceId, nameof(instanceId));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new DeviceUpdateClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;

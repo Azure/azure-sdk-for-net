@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("maintenanceConfigurationId");
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
+            {
+                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

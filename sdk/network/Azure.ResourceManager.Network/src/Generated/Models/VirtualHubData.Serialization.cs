@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.Network
         internal static VirtualHubData DeserializeVirtualHubData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> virtualWan = default;
             Optional<WritableSubResource> vpnGateway = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> securityPartnerProvider = default;
             Optional<string> addressPrefix = default;
             Optional<VirtualHubRouteTable> routeTable = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> securityProviderName = default;
             Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
             Optional<string> sku = default;
@@ -166,7 +166,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -176,12 +181,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -290,7 +305,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("securityProviderName"))
@@ -407,7 +422,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualHubData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualWan, vpnGateway, p2SVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway));
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, virtualWan, vpnGateway, p2SVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway));
         }
     }
 }

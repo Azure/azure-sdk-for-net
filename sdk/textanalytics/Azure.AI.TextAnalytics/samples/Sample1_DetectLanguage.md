@@ -1,10 +1,10 @@
 # Detecting the Language of Documents
 
-This sample demonstrates how to detect the language that one or more documents are written in. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to detect the language that one or more documents are written in.
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to detect the language a document is written in, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to detect the language a document is written in, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -80,7 +80,7 @@ Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(d
 DetectLanguageResultCollection documentsLanguage = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (DetectLanguageResult documentLanguage in documentsLanguage)
@@ -153,7 +153,7 @@ Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(d
 DetectLanguageResultCollection documentsLanguage = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
+Console.WriteLine($"Results of \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
 Console.WriteLine("");
 
 foreach (DetectLanguageResult documentLanguage in documentsLanguage)

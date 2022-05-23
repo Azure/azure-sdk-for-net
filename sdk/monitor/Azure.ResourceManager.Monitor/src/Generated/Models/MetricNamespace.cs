@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The metric namespace name. </summary>
         public string MetricNamespaceNameValue
         {
-            get => Properties.MetricNamespaceNameValue;
+            get => Properties?.MetricNamespaceNameValue;
         }
     }
 }

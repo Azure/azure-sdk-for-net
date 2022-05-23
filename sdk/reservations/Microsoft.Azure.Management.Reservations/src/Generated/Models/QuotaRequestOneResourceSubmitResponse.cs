@@ -39,13 +39,19 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="name">The name of the quota request.</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.Capacity/ServiceLimits"</param>
-        /// <param name="provisioningState">The quota request status.</param>
+        /// <param name="provisioningState">The quota request status. Possible
+        /// values include: 'Accepted', 'Invalid', 'Succeeded', 'Failed',
+        /// 'InProgress'</param>
         /// <param name="message">User friendly status message.</param>
         /// <param name="requestSubmitTime">The time when the quota request was
         /// submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the
         /// ISO 8601 standard.</param>
+        /// <param name="id1">The quota request ID.</param>
+        /// <param name="name1">The name of the quota request.</param>
+        /// <param name="type1">Type of resource.
+        /// "Microsoft.Capacity/ServiceLimits"</param>
         /// <param name="properties">Quota properties for the resource.</param>
-        public QuotaRequestOneResourceSubmitResponse(string id = default(string), string name = default(string), string type = default(string), object provisioningState = default(object), string message = default(string), System.DateTime? requestSubmitTime = default(System.DateTime?), QuotaProperties properties = default(QuotaProperties))
+        public QuotaRequestOneResourceSubmitResponse(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string message = default(string), System.DateTime? requestSubmitTime = default(System.DateTime?), string id1 = default(string), string name1 = default(string), string type1 = default(string), QuotaProperties properties = default(QuotaProperties))
         {
             Id = id;
             Name = name;
@@ -53,6 +59,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
             ProvisioningState = provisioningState;
             Message = message;
             RequestSubmitTime = requestSubmitTime;
+            Id1 = id1;
+            Name1 = name1;
+            Type1 = type1;
             Properties = properties;
             CustomInit();
         }
@@ -81,10 +90,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the quota request status.
+        /// Gets the quota request status. Possible values include: 'Accepted',
+        /// 'Invalid', 'Succeeded', 'Failed', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public object ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets user friendly status message.
@@ -98,6 +108,24 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestSubmitTime")]
         public System.DateTime? RequestSubmitTime { get; private set; }
+
+        /// <summary>
+        /// Gets the quota request ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.properties.id")]
+        public string Id1 { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the quota request.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.properties.name")]
+        public string Name1 { get; private set; }
+
+        /// <summary>
+        /// Gets type of resource. "Microsoft.Capacity/ServiceLimits"
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.properties.type")]
+        public string Type1 { get; private set; }
 
         /// <summary>
         /// Gets or sets quota properties for the resource.

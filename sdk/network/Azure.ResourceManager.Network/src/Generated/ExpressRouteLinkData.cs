@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteLink data model. </summary>
-    public partial class ExpressRouteLinkData : SubResource
+    public partial class ExpressRouteLinkData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
         public ExpressRouteLinkData()
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(string id, string name, string etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, ProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id)
+        internal ExpressRouteLinkData(ResourceIdentifier id, string name, string etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Administrative state of the physical port. </summary>
         public ExpressRouteLinkAdminState? AdminState { get; set; }
         /// <summary> The provisioning state of the express route link resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> MacSec configuration. </summary>
         public ExpressRouteLinkMacSecConfig MacSecConfig { get; set; }
     }

@@ -1,114 +1,117 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/general?showStats=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "191",
+        "Accept": "application/json",
+        "Content-Length": "285",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a1a0312056cd134cb0b91b7f38723e70-f280029c6d19b244-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "3d6191fdfe339ad3e9a9a23dfab389e2",
+        "traceparent": "00-3bade01e1de8d848bac782f92cb02031-09a7256fef108d43-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "888bd421120d5303f5a6eaa30b84dfe4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "Microsoft was founded by Bill Gates and Paul Allen.",
-            "language": "en"
-          },
-          {
-            "id": "1",
-            "text": "My cat and my dog might need to see a veterinarian.",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Microsoft was founded by Bill Gates and Paul Allen.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "My cat and my dog might need to see a veterinarian.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "069302b5-77cb-4c0e-b5d1-7165382e1d08",
+        "apim-request-id": "e201b6e7-fa1a-4237-9aba-5a8d69a1a029",
+        "Content-Length": "762",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Mon, 25 Oct 2021 21:20:26 GMT",
+        "Date": "Fri, 29 Apr 2022 23:18:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "16"
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
-        "statistics": {
-          "documentsCount": 2,
-          "validDocumentsCount": 2,
-          "erroneousDocumentsCount": 0,
-          "transactionsCount": 2
-        },
-        "documents": [
-          {
-            "id": "0",
-            "statistics": {
-              "charactersCount": 51,
-              "transactionsCount": 1
-            },
-            "entities": [
-              {
-                "text": "Microsoft",
-                "category": "Organization",
-                "offset": 0,
-                "length": 9,
-                "confidenceScore": 1.0
-              },
-              {
-                "text": "Bill Gates",
-                "category": "Person",
-                "offset": 25,
-                "length": 10,
-                "confidenceScore": 1.0
-              },
-              {
-                "text": "Paul Allen",
-                "category": "Person",
-                "offset": 40,
-                "length": 10,
-                "confidenceScore": 1.0
-              }
-            ],
-            "warnings": []
+        "kind": "EntityRecognitionResults",
+        "results": {
+          "statistics": {
+            "documentsCount": 2,
+            "validDocumentsCount": 2,
+            "erroneousDocumentsCount": 0,
+            "transactionsCount": 2
           },
-          {
-            "id": "1",
-            "statistics": {
-              "charactersCount": 51,
-              "transactionsCount": 1
+          "documents": [
+            {
+              "id": "0",
+              "statistics": {
+                "charactersCount": 51,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "text": "Microsoft",
+                  "category": "Organization",
+                  "offset": 0,
+                  "length": 9,
+                  "confidenceScore": 1.0
+                },
+                {
+                  "text": "Bill Gates",
+                  "category": "Person",
+                  "offset": 25,
+                  "length": 10,
+                  "confidenceScore": 1.0
+                },
+                {
+                  "text": "Paul Allen",
+                  "category": "Person",
+                  "offset": 40,
+                  "length": 10,
+                  "confidenceScore": 1.0
+                }
+              ],
+              "warnings": []
             },
-            "entities": [
-              {
-                "text": "veterinarian",
-                "category": "PersonType",
-                "offset": 38,
-                "length": 12,
-                "confidenceScore": 1.0
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2021-06-01"
+            {
+              "id": "1",
+              "statistics": {
+                "charactersCount": 51,
+                "transactionsCount": 1
+              },
+              "entities": [
+                {
+                  "text": "veterinarian",
+                  "category": "PersonType",
+                  "offset": 38,
+                  "length": 12,
+                  "confidenceScore": 1.0
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-06-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "915085791",
+    "RandomSeed": "1610582068",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

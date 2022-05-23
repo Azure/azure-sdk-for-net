@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         BlobClientOptions.ServiceVersion.V2021_02_12,
         BlobClientOptions.ServiceVersion.V2021_04_10,
         BlobClientOptions.ServiceVersion.V2021_06_08,
+        BlobClientOptions.ServiceVersion.V2021_08_06,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
     RecordingServiceVersion = StorageVersionExtensions.MaxVersion,

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static OriginGroupOverrideAction DeserializeOriginGroupOverrideAction(JsonElement element)
         {
-            OriginGroupOverrideActionParameters parameters = default;
+            OriginGroupOverrideActionDefinition parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = OriginGroupOverrideActionParameters.DeserializeOriginGroupOverrideActionParameters(property.Value);
+                    parameters = OriginGroupOverrideActionDefinition.DeserializeOriginGroupOverrideActionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the packet capture session. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

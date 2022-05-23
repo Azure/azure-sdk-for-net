@@ -3,8 +3,11 @@
 ## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Added optional parameter `categoryId` to the `DocumentTranslationInput.AddTarget`.
 
 ### Breaking Changes
+- Renamed type `StorageInputType` to `StorageInputUriKind`.
+- Renamed property `StorageType` to `StorageUriKind` in `DocumentTranslationInput`.
 
 ### Bugs Fixed
 
