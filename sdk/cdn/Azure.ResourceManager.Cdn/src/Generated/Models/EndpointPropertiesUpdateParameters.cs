@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ContentTypesToCompress = new ChangeTrackingList<string>();
             GeoFilters = new ChangeTrackingList<GeoFilter>();
-            UrlSigningKeys = new ChangeTrackingList<UrlSigningKey>();
+            UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
         }
 
         /// <summary> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
@@ -44,23 +44,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> A reference to the origin group. </summary>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; }
         /// <summary> Resource ID. </summary>
-        public string DefaultOriginGroupId
+        public ResourceIdentifier DefaultOriginGroupId
         {
-            get => DefaultOriginGroup.Id;
-            set => DefaultOriginGroup.Id = value;
+            get => DefaultOriginGroup?.Id;
         }
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
-        public IReadOnlyList<UrlSigningKey> UrlSigningKeys { get; }
+        public IReadOnlyList<UriSigningKey> UriSigningKeys { get; }
         /// <summary> A policy that specifies the delivery rules to be used for an endpoint. </summary>
-        public EndpointPropertiesUpdateParametersDeliveryPolicy DeliveryPolicy { get; }
+        public EndpointDeliveryPolicy DeliveryPolicy { get; }
         /// <summary> Defines the Web Application Firewall policy for the endpoint (if applicable). </summary>
         internal EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; }
         /// <summary> Resource ID. </summary>
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
-            get => WebApplicationFirewallPolicyLink.Id;
-            set => WebApplicationFirewallPolicyLink.Id = value;
+            get => WebApplicationFirewallPolicyLink?.Id;
         }
     }
 }

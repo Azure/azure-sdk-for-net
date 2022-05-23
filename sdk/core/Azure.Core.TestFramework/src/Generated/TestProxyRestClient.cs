@@ -239,7 +239,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        internal HttpMessage CreateStopRecordRequest(string xRecordingId, IDictionary<string, string> variables)
+        internal HttpMessage CreateStopRecordRequest(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,6 +249,10 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/record/stop", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
+            if (xRecordingSkip != null)
+            {
+                request.Headers.Add("x-recording-skip", xRecordingSkip);
+            }
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
@@ -265,9 +269,10 @@ namespace Azure.Core.TestFramework
         /// <summary> Stop recording for a test. </summary>
         /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
+        /// <param name="xRecordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
-        public async Task<Response> StopRecordAsync(string xRecordingId, IDictionary<string, string> variables, CancellationToken cancellationToken = default)
+        public async Task<Response> StopRecordAsync(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip = null, CancellationToken cancellationToken = default)
         {
             if (xRecordingId == null)
             {
@@ -278,7 +283,7 @@ namespace Azure.Core.TestFramework
                 throw new ArgumentNullException(nameof(variables));
             }
 
-            using var message = CreateStopRecordRequest(xRecordingId, variables);
+            using var message = CreateStopRecordRequest(xRecordingId, variables, xRecordingSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -292,9 +297,10 @@ namespace Azure.Core.TestFramework
         /// <summary> Stop recording for a test. </summary>
         /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
+        /// <param name="xRecordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
-        public Response StopRecord(string xRecordingId, IDictionary<string, string> variables, CancellationToken cancellationToken = default)
+        public Response StopRecord(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip = null, CancellationToken cancellationToken = default)
         {
             if (xRecordingId == null)
             {
@@ -305,7 +311,7 @@ namespace Azure.Core.TestFramework
                 throw new ArgumentNullException(nameof(variables));
             }
 
-            using var message = CreateStopRecordRequest(xRecordingId, variables);
+            using var message = CreateStopRecordRequest(xRecordingId, variables, xRecordingSkip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -404,7 +410,7 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add header sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -427,7 +433,7 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add header sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

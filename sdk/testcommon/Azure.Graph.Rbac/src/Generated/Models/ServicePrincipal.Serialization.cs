@@ -38,8 +38,8 @@ namespace Azure.Graph.Rbac.Models
             Optional<string> servicePrincipalType = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<string> objectId = default;
-            Optional<string> objectType = default;
-            Optional<DateTimeOffset> deletionTimestamp = default;
+            string objectType = default;
+            Optional<DateTimeOffset?> deletionTimestamp = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -253,7 +253,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        deletionTimestamp = null;
                         continue;
                     }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
@@ -262,7 +262,7 @@ namespace Azure.Graph.Rbac.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServicePrincipal(objectId.Value, objectType.Value, Optional.ToNullable(deletionTimestamp), additionalProperties, Optional.ToNullable(accountEnabled), Optional.ToList(alternativeNames), appDisplayName.Value, appId.Value, appOwnerTenantId.Value, Optional.ToNullable(appRoleAssignmentRequired), Optional.ToList(appRoles), displayName.Value, errorUrl.Value, homepage.Value, Optional.ToList(keyCredentials), logoutUrl.Value, Optional.ToList(oauth2Permissions), Optional.ToList(passwordCredentials), preferredTokenSigningKeyThumbprint.Value, publisherName.Value, Optional.ToList(replyUrls), samlMetadataUrl.Value, Optional.ToList(servicePrincipalNames), servicePrincipalType.Value, Optional.ToList(tags));
+            return new ServicePrincipal(objectId.Value, objectType, Optional.ToNullable(deletionTimestamp), additionalProperties, Optional.ToNullable(accountEnabled), Optional.ToList(alternativeNames), appDisplayName.Value, appId.Value, appOwnerTenantId.Value, Optional.ToNullable(appRoleAssignmentRequired), Optional.ToList(appRoles), displayName.Value, errorUrl.Value, homepage.Value, Optional.ToList(keyCredentials), logoutUrl.Value, Optional.ToList(oauth2Permissions), Optional.ToList(passwordCredentials), preferredTokenSigningKeyThumbprint.Value, publisherName.Value, Optional.ToList(replyUrls), samlMetadataUrl.Value, Optional.ToList(servicePrincipalNames), servicePrincipalType.Value, Optional.ToList(tags));
         }
     }
 }

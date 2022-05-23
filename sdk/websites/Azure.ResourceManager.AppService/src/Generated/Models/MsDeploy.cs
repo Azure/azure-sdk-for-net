@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of MsDeploy. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="packageUri"> Package URI. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        internal MsDeploy(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, type, systemData, kind)
+        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline) : base(id, name, resourceType, systemData, kind)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;

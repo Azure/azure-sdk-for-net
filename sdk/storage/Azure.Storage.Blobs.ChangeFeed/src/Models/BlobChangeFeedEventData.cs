@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             record.TryGetValue(Constants.ChangeFeed.EventData.Snapshot, out object snapshotObject);
             Snapshot = (string)snapshotObject;
             UpdatedBlobProperties = ExtractBlobProperties(record);
-            AsyncOperationInfo = ExtractAsyncOperationInfo(record);
+            LongRunningOperationInfo = ExtractAsyncOperationInfo(record);
             UpdatedBlobTags = ExtractUpdatedBlobTags(record);
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// AsyncOperationInfo.
         /// </summary>
-        public BlobOperationResult AsyncOperationInfo { get; internal set; }
+        public BlobOperationResult LongRunningOperationInfo { get; internal set; }
 
         /// <summary>
         /// Blob tags that were updated during this event.
@@ -202,7 +202,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.WasBlobSoftDeleted, out object wasBlobSoftDeletedObject);
             if (wasBlobSoftDeletedObject != null)
             {
-                previousInfo.WasBlobSoftDeleted = (bool)wasBlobSoftDeletedObject;
+                previousInfo.WasBlobSoftDeleted = bool.Parse((string)wasBlobSoftDeletedObject);
             }
 
             previousInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.BlobVersion, out object blobVersionObject);
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.WasAsyncOperation, out object wasAsyncOperationObject);
             if (wasAsyncOperationObject != null)
             {
-                asyncOperationInfo.IsAsync = (bool)wasAsyncOperationObject;
+                asyncOperationInfo.IsAsync = bool.Parse((string)wasAsyncOperationObject);
             }
 
             asyncOperationInfoDictionary.TryGetValue(Constants.ChangeFeed.EventData.CopyId, out object copyIdObject);

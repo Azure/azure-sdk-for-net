@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ContinuousModeBackupPolicy. </summary>
         public ContinuousModeBackupPolicy()
         {
-            Type = BackupPolicyType.Continuous;
+            PolicyType = BackupPolicyType.Continuous;
         }
 
         /// <summary> Initializes a new instance of ContinuousModeBackupPolicy. </summary>
-        /// <param name="type"> Describes the mode of backups. </param>
+        /// <param name="policyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        internal ContinuousModeBackupPolicy(BackupPolicyType type, BackupPolicyMigrationState migrationState) : base(type, migrationState)
+        internal ContinuousModeBackupPolicy(BackupPolicyType policyType, BackupPolicyMigrationState migrationState) : base(policyType, migrationState)
         {
-            Type = type;
+            PolicyType = policyType;
         }
     }
 }

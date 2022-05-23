@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ResourceListResult. </summary>
         internal ResourceListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultResource>();
+            Value = new ChangeTrackingList<KeyVaultResourceData>();
         }
 
         /// <summary> The list of vault resources. </summary>
-        public IReadOnlyList<KeyVaultResource> Value { get; }
+        public IReadOnlyList<KeyVaultResourceData> Value { get; }
         /// <summary> The URL to get the next set of vault resources. </summary>
         public string NextLink { get; }
     }

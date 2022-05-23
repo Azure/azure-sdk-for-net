@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of MsixPackageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="imagePath"> VHD/CIM image path on Network Share. </param>
         /// <param name="packageName"> Package Name from appxmanifest.xml. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="version"> Package Version found in the appxmanifest.xml. </param>
         /// <param name="lastUpdated"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
-        internal MsixPackageData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string imagePath, string packageName, string packageFamilyName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdated, IList<MsixPackageApplications> packageApplications) : base(id, name, type, systemData)
+        internal MsixPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string imagePath, string packageName, string packageFamilyName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdated, IList<MsixPackageApplications> packageApplications) : base(id, name, resourceType, systemData)
         {
             ImagePath = imagePath;
             PackageName = packageName;

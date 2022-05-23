@@ -50,14 +50,21 @@ namespace Azure.AI.Translation.Document
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
         /// <see cref="DocumentTranslationClient.GetSupportedGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
-        public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default)
+        /// <param name="categoryId">Category/custom model ID for using custom translation.</param>
+        public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default, string categoryId = default)
         {
             var target = new TranslationTarget(targetUri, languageCode);
             if (glossary != null)
             {
                 target.Glossaries.Add(glossary);
             }
+            target.CategoryId = categoryId;
+
             Targets.Add(target);
         }
+
+        /// <summary> Storage URI kind of the input documents source string. </summary>
+        [CodeGenMember("StorageType")]
+        public StorageInputUriKind? StorageUriKind { get; set; }
     }
 }

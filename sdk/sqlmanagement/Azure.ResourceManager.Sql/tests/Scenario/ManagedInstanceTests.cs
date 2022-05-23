@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class ManagedInstanceTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         private string SubnetId;
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup resourceGroup = rgLro.Value;
+            ResourceGroupResource resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
 
             //Prerequisites: 1. create NetworkSecurityGroup
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
-                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
                     }
                 },
             };
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<ManagedInstance> CreateOrUpdateManagedInstance(string managedInstanceName)
+        private async Task<ManagedInstanceResource> CreateOrUpdateManagedInstance(string managedInstanceName)
         {
             ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
             {
@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
             var managedInstanceLro = await _resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
@@ -113,6 +112,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("Re-record before GA")]
         public async Task ManagedInstanceApiTests()
         {
             //Because MangedInstance deployment takes a lot of time(more than 4.5 hours), the test cases are not separated separately

@@ -18,7 +18,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Managing_ServiceBusQueues_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -26,8 +26,8 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_ServiceBusQueues_CreateResourceGroup
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = operation.Value;
+ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 
 After we have the resource group created, we can create a namespace
@@ -35,7 +35,7 @@ After we have the resource group created, we can create a namespace
 ```C# Snippet:Managing_ServiceBusQueues_CreateNamespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
+ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ServiceBusQueueCollection serviceBusQueueCollection = serviceBusNamespace.GetServiceBusQueues();
 ```
 
@@ -45,13 +45,13 @@ Now that we have a namespace, we can manage the queues inside this namespace.
 
 ```C# Snippet:Managing_ServiceBusQueues_CreateQueue
 string queueName = "myQueue";
-ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
+ServiceBusQueueResource serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
 ```
 
 ***List all queues***
 
 ```C# Snippet:Managing_ServiceBusQueues_ListQueues
-await foreach (ServiceBusQueue serviceBusQueue in serviceBusQueueCollection.GetAllAsync())
+await foreach (ServiceBusQueueResource serviceBusQueue in serviceBusQueueCollection.GetAllAsync())
 {
     Console.WriteLine(serviceBusQueue.Id.Name);
 }
@@ -60,27 +60,13 @@ await foreach (ServiceBusQueue serviceBusQueue in serviceBusQueueCollection.GetA
 ***Get a queue***
 
 ```C# Snippet:Managing_ServiceBusQueues_GetQueue
-ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
-```
-
-***Try to get a queue if it exists***
-
-```C# Snippet:Managing_ServiceBusQueues_GetQueueIfExists
-ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetIfExistsAsync("foo");
-if (serviceBusQueue != null)
-{
-    Console.WriteLine("queue 'foo' exists");
-}
-if (await serviceBusQueueCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("queue 'bar' exists");
-}
+ServiceBusQueueResource serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
 ```
 
 ***Delete a queue***
 
 ```C# Snippet:Managing_ServiceBusQueues_DeleteQueue
-ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
+ServiceBusQueueResource serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
 await serviceBusQueue.DeleteAsync(WaitUntil.Completed);
 ```
 

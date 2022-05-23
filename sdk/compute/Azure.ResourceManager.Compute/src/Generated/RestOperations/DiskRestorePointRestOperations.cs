@@ -13,13 +13,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     internal partial class DiskRestorePointRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-08-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGrantAccessRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData)
+        internal HttpMessage CreateGrantAccessRequest(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -240,9 +239,9 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(grantAccessData);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -252,20 +251,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
+        /// <param name="data"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/> or <paramref name="grantAccessData"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GrantAccessAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public async Task<Response> GrantAccessAsync(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
-            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData);
+            using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -283,20 +282,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointCollectionName"> The name of the restore point collection that the disk restore point belongs. </param>
         /// <param name="vmRestorePointName"> The name of the vm restore point that the disk disk restore point belongs. </param>
         /// <param name="diskRestorePointName"> The name of the disk restore point created. </param>
-        /// <param name="grantAccessData"> Access data object supplied in the body of the get disk access operation. </param>
+        /// <param name="data"> Access data object supplied in the body of the get disk access operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/> or <paramref name="grantAccessData"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/>, <paramref name="diskRestorePointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointCollectionName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GrantAccess(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData grantAccessData, CancellationToken cancellationToken = default)
+        public Response GrantAccess(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
             Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
-            Argument.AssertNotNull(grantAccessData, nameof(grantAccessData));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, grantAccessData);
+            using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointCollectionName, vmRestorePointName, diskRestorePointName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -401,7 +400,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

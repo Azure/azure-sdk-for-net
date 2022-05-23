@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The session detail for a target. </summary>
@@ -18,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique id for the session. </summary>
         public string SessionId { get; }
         /// <summary> The time when the session started. </summary>
-        public object StartTime { get; }
+        public BinaryData StartTime { get; }
         /// <summary> The subscription id for the target virtual machine. </summary>
         public string TargetSubscriptionId { get; }
         /// <summary> The type of the resource. </summary>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The protocol used to connect to the target. </summary>
         public BastionConnectProtocol? Protocol { get; }
         /// <summary> The resource id of the target. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Duration in mins the session has been active. </summary>
         public float? SessionDurationInMins { get; }
     }

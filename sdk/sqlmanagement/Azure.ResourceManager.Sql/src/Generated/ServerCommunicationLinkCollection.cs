@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerCommunicationLink and their operations over its parent. </summary>
-    public partial class ServerCommunicationLinkCollection : ArmCollection, IEnumerable<ServerCommunicationLink>, IAsyncEnumerable<ServerCommunicationLink>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerCommunicationLinkResource" /> and their operations.
+    /// Each <see cref="ServerCommunicationLinkResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerCommunicationLinkCollection" /> instance call the GetServerCommunicationLinks method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
+    public partial class ServerCommunicationLinkCollection : ArmCollection, IEnumerable<ServerCommunicationLinkResource>, IAsyncEnumerable<ServerCommunicationLinkResource>
     {
         private readonly ClientDiagnostics _serverCommunicationLinkClientDiagnostics;
         private readonly ServerCommunicationLinksRestOperations _serverCommunicationLinkRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerCommunicationLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverCommunicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerCommunicationLink.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ServerCommunicationLink.ResourceType, out string serverCommunicationLinkApiVersion);
-            _serverCommunicationLinkRestClient = new ServerCommunicationLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverCommunicationLinkApiVersion);
+            _serverCommunicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerCommunicationLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerCommunicationLinkResource.ResourceType, out string serverCommunicationLinkApiVersion);
+            _serverCommunicationLinkRestClient = new ServerCommunicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverCommunicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlServer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -55,23 +58,23 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}
         /// Operation Id: ServerCommunicationLinks_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
-        /// <param name="parameters"> The required parameters for creating a server communication link. </param>
+        /// <param name="data"> The required parameters for creating a server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerCommunicationLink>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationLinkName, ServerCommunicationLinkData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServerCommunicationLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationLinkName, ServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serverCommunicationLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ServerCommunicationLink>(new ServerCommunicationLinkOperationSource(Client), _serverCommunicationLinkClientDiagnostics, Pipeline, _serverCommunicationLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _serverCommunicationLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ServerCommunicationLinkResource>(new ServerCommunicationLinkOperationSource(Client), _serverCommunicationLinkClientDiagnostics, Pipeline, _serverCommunicationLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,23 +91,23 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}
         /// Operation Id: ServerCommunicationLinks_CreateOrUpdate
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="communicationLinkName"> The name of the server communication link. </param>
-        /// <param name="parameters"> The required parameters for creating a server communication link. </param>
+        /// <param name="data"> The required parameters for creating a server communication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ServerCommunicationLink> CreateOrUpdate(WaitUntil waitUntil, string communicationLinkName, ServerCommunicationLinkData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ServerCommunicationLinkResource> CreateOrUpdate(WaitUntil waitUntil, string communicationLinkName, ServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serverCommunicationLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ServerCommunicationLink>(new ServerCommunicationLinkOperationSource(Client), _serverCommunicationLinkClientDiagnostics, Pipeline, _serverCommunicationLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _serverCommunicationLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data, cancellationToken);
+                var operation = new SqlArmOperation<ServerCommunicationLinkResource>(new ServerCommunicationLinkOperationSource(Client), _serverCommunicationLinkClientDiagnostics, Pipeline, _serverCommunicationLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        public virtual async Task<Response<ServerCommunicationLink>> GetAsync(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerCommunicationLinkResource>> GetAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _serverCommunicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        public virtual Response<ServerCommunicationLink> Get(string communicationLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerCommunicationLinkResource> Get(string communicationLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _serverCommunicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServerCommunicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +183,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerCommunicationLinks_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerCommunicationLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerCommunicationLink> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerCommunicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerCommunicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerCommunicationLink>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerCommunicationLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverCommunicationLinkRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLink(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -207,17 +210,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerCommunicationLinks_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerCommunicationLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerCommunicationLink> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerCommunicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerCommunicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServerCommunicationLink> FirstPageFunc(int? pageSizeHint)
+            Page<ServerCommunicationLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverCommunicationLinkRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLink(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerCommunicationLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,7 +248,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverCommunicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +275,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(communicationLinkName, cancellationToken: cancellationToken);
+                var response = _serverCommunicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -282,65 +285,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}
-        /// Operation Id: ServerCommunicationLinks_Get
-        /// </summary>
-        /// <param name="communicationLinkName"> The name of the server communication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        public virtual async Task<Response<ServerCommunicationLink>> GetIfExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
-
-            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverCommunicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}
-        /// Operation Id: ServerCommunicationLinks_Get
-        /// </summary>
-        /// <param name="communicationLinkName"> The name of the server communication link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
-        public virtual Response<ServerCommunicationLink> GetIfExists(string communicationLinkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
-
-            using var scope = _serverCommunicationLinkClientDiagnostics.CreateScope("ServerCommunicationLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _serverCommunicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerCommunicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerCommunicationLink(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ServerCommunicationLink> IEnumerable<ServerCommunicationLink>.GetEnumerator()
+        IEnumerator<ServerCommunicationLinkResource> IEnumerable<ServerCommunicationLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -350,7 +295,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerCommunicationLink> IAsyncEnumerable<ServerCommunicationLink>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerCommunicationLinkResource> IAsyncEnumerable<ServerCommunicationLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

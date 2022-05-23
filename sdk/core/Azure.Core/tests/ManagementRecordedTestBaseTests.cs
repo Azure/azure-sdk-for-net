@@ -146,8 +146,8 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Completed, true);
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await testResourceOp.WaitForCompletionAsync());
+            var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Started, true);
+            Assert.ThrowsAsync(typeof(RequestFailedException), async () => await testResourceOp.WaitForCompletionAsync());
         }
 
         [Test]
@@ -180,7 +180,7 @@ namespace Azure.Core.Tests.Management
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource testResource = client.GetTestResource();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            Assert.DoesNotThrowAsync( async () => testResource = await testResource.GetForwardsCallTrueAsync());
+            Assert.DoesNotThrowAsync(async () => testResource = await testResource.GetForwardsCallTrueAsync());
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Core.Tests.Management
             TestResource testResource = client.GetTestResource();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallFalseAsync());
-            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
         }
 
         [Test]
@@ -201,7 +201,39 @@ namespace Azure.Core.Tests.Management
             TestResource testResource = client.GetTestResource();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             var ex = Assert.ThrowsAsync<InvalidOperationException>(async () => testResource = await testResource.GetForwardsCallDefaultAsync());
-            Assert.AreEqual(ex.Message, "Expected some diagnostic scopes to be created, found none");
+            StringAssert.Contains("Expected some diagnostic scopes to be created other than the Azure.Core scopes", ex.Message);
+        }
+
+        [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.Playback)]
+        [TestCase(RecordedTestMode.Live)]
+        public async Task ValidateWaitOverride(RecordedTestMode mode)
+        {
+            // keep the curent test mode and restore it back when finished, otherwise it will invoke unnecessary clean-up
+            var currentMode = Mode;
+
+            Mode = mode;
+            try
+            {
+                ManagementTestClient testClient = InstrumentClient(new ManagementTestClient());
+                TestResource testResource = testClient.GetTestResource();
+                Stopwatch sw = Stopwatch.StartNew();
+                testResource = (await testResource.GetLroAsync(WaitUntil.Completed)).Value;
+                sw.Stop();
+                Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+                if (mode == RecordedTestMode.Playback)
+                {
+                    Assert.Less(sw.ElapsedMilliseconds, 1000);
+                }
+                else
+                {
+                    Assert.That(sw.ElapsedMilliseconds, Is.GreaterThanOrEqualTo(1000).Within(25));
+                }
+            }
+            finally
+            {
+                Mode = currentMode;
+            }
         }
     }
 }

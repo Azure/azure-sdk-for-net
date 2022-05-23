@@ -11,13 +11,13 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class RuleProperties : RuleUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RuleProperties. </summary>
-        public RuleProperties()
+        internal RuleProperties()
         {
         }
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

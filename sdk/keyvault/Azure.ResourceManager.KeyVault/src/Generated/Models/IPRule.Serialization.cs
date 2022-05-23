@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value");
-            writer.WriteStringValue(Value);
+            writer.WriteStringValue(AddressRange);
             writer.WriteEndObject();
         }
 

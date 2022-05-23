@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     internal partial class CassandraResourcesRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-15";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateListCassandraKeyspacesRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateCassandraKeyspaceRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters)
+        internal HttpMessage CreateCreateUpdateCassandraKeyspaceRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -224,10 +223,10 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createUpdateCassandraKeyspaceParameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -236,19 +235,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="createUpdateCassandraKeyspaceParameters"> The parameters to provide for the current Cassandra keyspace. </param>
+        /// <param name="content"> The parameters to provide for the current Cassandra keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateCassandraKeyspaceAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateCassandraKeyspaceAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(createUpdateCassandraKeyspaceParameters, nameof(createUpdateCassandraKeyspaceParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, createUpdateCassandraKeyspaceParameters);
+            using var message = CreateCreateUpdateCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -265,19 +264,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="createUpdateCassandraKeyspaceParameters"> The parameters to provide for the current Cassandra keyspace. </param>
+        /// <param name="content"> The parameters to provide for the current Cassandra keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateCassandraKeyspace(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateCassandraKeyspace(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, CassandraKeyspaceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(createUpdateCassandraKeyspaceParameters, nameof(createUpdateCassandraKeyspaceParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, createUpdateCassandraKeyspaceParameters);
+            using var message = CreateCreateUpdateCassandraKeyspaceRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -306,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(keyspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -383,7 +382,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -453,7 +452,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateCassandraKeyspaceThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData updateThroughputParameters)
+        internal HttpMessage CreateUpdateCassandraKeyspaceThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -473,10 +472,10 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateThroughputParameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -485,19 +484,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
+        /// <param name="data"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateCassandraKeyspaceThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateCassandraKeyspaceThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, updateThroughputParameters);
+            using var message = CreateUpdateCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -514,19 +513,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
+        /// <param name="data"> The RUs per second of the parameters to provide for the current Cassandra Keyspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateCassandraKeyspaceThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateCassandraKeyspaceThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
-            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, updateThroughputParameters);
+            using var message = CreateUpdateCassandraKeyspaceThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -557,7 +556,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -634,7 +633,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -711,7 +710,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -797,7 +796,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -871,7 +870,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateUpdateCassandraTableRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateUpdateData createUpdateCassandraTableParameters)
+        internal HttpMessage CreateCreateUpdateCassandraTableRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -892,10 +891,10 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createUpdateCassandraTableParameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -905,20 +904,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
-        /// <param name="createUpdateCassandraTableParameters"> The parameters to provide for the current Cassandra Table. </param>
+        /// <param name="content"> The parameters to provide for the current Cassandra Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateUpdateCassandraTableAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateUpdateData createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateUpdateCassandraTableAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNull(createUpdateCassandraTableParameters, nameof(createUpdateCassandraTableParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, createUpdateCassandraTableParameters);
+            using var message = CreateCreateUpdateCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -936,20 +935,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
-        /// <param name="createUpdateCassandraTableParameters"> The parameters to provide for the current Cassandra Table. </param>
+        /// <param name="content"> The parameters to provide for the current Cassandra Table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="createUpdateCassandraTableParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateUpdateCassandraTable(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateUpdateData createUpdateCassandraTableParameters, CancellationToken cancellationToken = default)
+        public Response CreateUpdateCassandraTable(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, CassandraTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNull(createUpdateCassandraTableParameters, nameof(createUpdateCassandraTableParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUpdateCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, createUpdateCassandraTableParameters);
+            using var message = CreateCreateUpdateCassandraTableRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -980,7 +979,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendPath(tableName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1063,7 +1062,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1137,7 +1136,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateUpdateCassandraTableThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData updateThroughputParameters)
+        internal HttpMessage CreateUpdateCassandraTableThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1159,10 +1158,10 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateThroughputParameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1172,20 +1171,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
+        /// <param name="data"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateCassandraTableThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateCassandraTableThroughputAsync(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, updateThroughputParameters);
+            using var message = CreateUpdateCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1203,20 +1202,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="keyspaceName"> Cosmos DB keyspace name. </param>
         /// <param name="tableName"> Cosmos DB table name. </param>
-        /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
+        /// <param name="data"> The RUs per second of the parameters to provide for the current Cassandra table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="updateThroughputParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/>, <paramref name="tableName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="keyspaceName"/> or <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateCassandraTableThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
+        public Response UpdateCassandraTableThroughput(string subscriptionId, string resourceGroupName, string accountName, string keyspaceName, string tableName, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, updateThroughputParameters);
+            using var message = CreateUpdateCassandraTableThroughputRequest(subscriptionId, resourceGroupName, accountName, keyspaceName, tableName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1249,7 +1248,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1332,7 +1331,7 @@ namespace Azure.ResourceManager.CosmosDB
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

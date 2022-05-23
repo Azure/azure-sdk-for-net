@@ -18,6 +18,7 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AzureKeyCredential
@@ -350,6 +351,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
@@ -387,7 +389,7 @@ namespace Azure.Core
     }
     public partial class DiagnosticsOptions
     {
-        internal DiagnosticsOptions() { }
+        protected internal DiagnosticsOptions() { }
         public string? ApplicationId { get { throw null; } set { } }
         public static string? DefaultApplicationId { get { throw null; } set { } }
         public bool IsDistributedTracingEnabled { get { throw null; } set { } }
@@ -1019,5 +1021,14 @@ namespace Azure.Messaging
     {
         Binary = 0,
         Json = 1,
+    }
+    public partial class MessageContent
+    {
+        public MessageContent() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
     }
 }

@@ -4,18 +4,18 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4946dbb5b2893a77ce52d08e2a855056e1acd361/specification/sql/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 model-namespace: false
 public-clients: false
 head-as-boolean: false
 clear-output-folder: true
-modelerfour:
-  seal-single-value-enum-by-default: true
 skip-csproj: true
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -29,6 +29,11 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
@@ -42,6 +47,10 @@ override-operation-name:
   ManagedInstances_ListByManagedInstance: GetTopQueries
   ManagedDatabases_ListInaccessibleByInstance: GetInaccessibleManagedDatabases
   ManagedDatabaseQueries_ListByQuery: GetQueryStatistics
+  Metrics_ListDatabase: GetMetrics
+  MetricDefinitions_ListDatabase: GetMetricDefinitions
+  Metrics_ListElasticPool: GetMetrics
+  MetricDefinitions_ListElasticPool: GetMetricDefinitions
 request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}
 request-path-to-resource-name:
@@ -68,6 +77,18 @@ directive:
     - rename-operation:
         from: DataMaskingRules_ListByDatabase
         to: DataMaskingRules_List
+    - rename-operation:
+        from: Databases_ListMetrics
+        to: Metrics_ListDatabase
+    - rename-operation:
+        from: Databases_ListMetricDefinitions
+        to: MetricDefinitions_ListDatabase
+    - rename-operation:
+        from: ElasticPools_ListMetrics
+        to: Metrics_ListElasticPool
+    - rename-operation:
+        from: ElasticPools_ListMetricDefinitions
+        to: MetricDefinitions_ListElasticPool
     - rename-model:
         from: UnlinkParameters
         to: UnlinkOptions
@@ -119,6 +140,10 @@ directive:
       where: $.definitions.DatabaseProperties.properties.sampleName['x-ms-enum']
       transform: >
           $['name'] = "SampleSchemaName"
+    - from: Databases.json
+      where: $.definitions.DatabaseUpdateProperties.properties.sampleName['x-ms-enum']
+      transform: >
+          $['name'] = "SampleSchemaName"
     - from: MaintenanceWindows.json
       where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
       transform: >
@@ -136,4 +161,13 @@ directive:
       where: $.definitions.MaintenanceWindowTimeRange.properties.duration
       transform: >
           $.format = "duration";
+# shorten "privateLinkServiceConnectionState" property name
+    - from: ManagedInstances.json
+      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
+      transform: >
+          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
+    - from: ManagedInstancePrivateEndpointConnections.json
+      where: $.definitions.ManagedInstancePrivateEndpointConnectionProperties
+      transform: >
+          $.properties.privateLinkServiceConnectionState["x-ms-client-name"] = "connectionState";
 ```

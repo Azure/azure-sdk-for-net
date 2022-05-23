@@ -13,13 +13,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineScaleSetVMsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.Compute
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-07-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVmReimageInput)
+        internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,14 +55,14 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimage", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (vmScaleSetVmReimageInput != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(vmScaleSetVmReimageInput);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -72,18 +71,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="vmScaleSetVmReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
+        /// <param name="content"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVmReimageInput = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ReimageAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, vmScaleSetVmReimageInput);
+            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -100,18 +99,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="vmScaleSetVmReimageInput"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
+        /// <param name="content"> Parameters for the Reimaging Virtual machine in ScaleSet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Reimage(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageOptions vmScaleSetVmReimageInput = null, CancellationToken cancellationToken = default)
+        public Response Reimage(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmReimageContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, vmScaleSetVmReimageInput);
+            using var message = CreateReimageRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimageall", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/deallocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmData parameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -294,10 +293,10 @@ namespace Azure.ResourceManager.Compute
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(data);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -306,19 +305,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set where the extension should be create or updated. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="parameters"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
+        /// <param name="data"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -335,19 +334,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set where the extension should be create or updated. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="parameters"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
+        /// <param name="data"> Parameters supplied to the Update Virtual Machine Scale Sets VM operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmData parameters, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, parameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -464,7 +463,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -555,7 +554,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -650,7 +649,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -740,7 +739,7 @@ namespace Azure.ResourceManager.Compute
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -818,7 +817,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/restart", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -894,7 +893,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -970,7 +969,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/redeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1051,7 +1050,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1137,7 +1136,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/performMaintenance", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1213,7 +1212,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/simulateEviction", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1269,7 +1268,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateRunCommandRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput parameters)
+        internal HttpMessage CreateRunCommandRequest(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1289,10 +1288,10 @@ namespace Azure.ResourceManager.Compute
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(input);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1301,19 +1300,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
+        /// <param name="input"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RunCommandAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> RunCommandAsync(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateRunCommandRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, parameters);
+            using var message = CreateRunCommandRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1330,19 +1329,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="instanceId"> The instance ID of the virtual machine. </param>
-        /// <param name="parameters"> Parameters supplied to the Run command operation. </param>
+        /// <param name="input"> Parameters supplied to the Run command operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/>, <paramref name="instanceId"/> or <paramref name="input"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmScaleSetName"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RunCommand(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput parameters, CancellationToken cancellationToken = default)
+        public Response RunCommand(string subscriptionId, string resourceGroupName, string vmScaleSetName, string instanceId, RunCommandInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateRunCommandRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, parameters);
+            using var message = CreateRunCommandRequest(subscriptionId, resourceGroupName, vmScaleSetName, instanceId, input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1364,7 +1363,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

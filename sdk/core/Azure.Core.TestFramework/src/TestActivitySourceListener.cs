@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Core.Tests
 {
@@ -31,7 +32,15 @@ namespace Azure.Core.Tests
                         Activities.Enqueue(activity);
                     }
                 },
-                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllDataAndRecorded
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+                {
+                    if (options.Tags.Any(t => t.Key == "sampled-out" && bool.TrueString == t.Value.ToString()))
+                    {
+                        return ActivitySamplingResult.None;
+                    }
+
+                    return ActivitySamplingResult.AllDataAndRecorded;
+                }
             };
 
             ActivitySource.AddActivityListener(_listener);

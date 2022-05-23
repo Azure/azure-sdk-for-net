@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
     public class DiskPoolTests : StoragePoolTestBase
     {
         private string SubnetResourceId;
-        protected ResourceGroup _resourceGroup;
+        protected ResourceGroupResource _resourceGroup;
 
         public DiskPoolTests(bool isAsync) : base(isAsync)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var diskPoolCollection = _resourceGroup.GetDiskPools();
 
             var sku = new StoragePoolSku("Standard_S1");
-            var diskPoolCreate = new DiskPoolCreate(sku, DefaultLocation, SubnetResourceId) {};
+            var diskPoolCreate = new DiskPoolCreateOrUpdateContent(sku, DefaultLocation, SubnetResourceId) {};
             diskPoolCreate.AvailabilityZones.Add("1");
             // the following additional capability is not needed for non-test disk pools
             diskPoolCreate.AdditionalCapabilities.Add("DiskPool.SkipInfrastructureDeployment");

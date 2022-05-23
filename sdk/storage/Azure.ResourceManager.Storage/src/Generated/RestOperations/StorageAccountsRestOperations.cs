@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     internal partial class StorageAccountsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.Storage
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-08-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, StorageAccountCheckNameAvailabilityParameters accountName)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, StorageAccountCheckNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -52,25 +51,25 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(accountName);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, StorageAccountCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, accountName);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -88,16 +87,16 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Checks that the storage account name is valid and is not already in use. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
+        /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, StorageAccountCheckNameAvailabilityParameters accountName, CancellationToken cancellationToken = default)
+        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, StorageAccountCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, accountName);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountCreateParameters parameters)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,10 +129,10 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -141,18 +140,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide for the created account. </param>
+        /// <param name="content"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -168,18 +167,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide for the created account. </param>
+        /// <param name="content"> The parameters to provide for the created account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string accountName, StorageAccountCreateParameters parameters, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string accountName, StorageAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(accountName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -280,7 +279,7 @@ namespace Azure.ResourceManager.Storage
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -348,7 +347,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, PatchableStorageAccountData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -365,10 +364,10 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(patch);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -376,18 +375,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="data"> The parameters to provide for the updated account. </param>
+        /// <param name="patch"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, PatchableStorageAccountData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -407,18 +406,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="data"> The parameters to provide for the updated account. </param>
+        /// <param name="patch"> The parameters to provide for the updated account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountData> Update(string subscriptionId, string resourceGroupName, string accountName, PatchableStorageAccountData data, CancellationToken cancellationToken = default)
+        public Response<StorageAccountData> Update(string subscriptionId, string resourceGroupName, string accountName, StorageAccountPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -447,7 +446,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -516,7 +515,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -592,7 +591,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("$expand", "kerb", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -654,7 +653,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -672,10 +671,10 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenerateKey);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -683,18 +682,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="regenerateKey"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="regenerateKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountListKeysResult>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountListKeysResult>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(regenerateKey, nameof(regenerateKey));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, regenerateKey);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -714,18 +713,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="regenerateKey"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="regenerateKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountListKeysResult> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyParameters regenerateKey, CancellationToken cancellationToken = default)
+        public Response<StorageAccountListKeysResult> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(regenerateKey, nameof(regenerateKey));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, regenerateKey);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -741,7 +740,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateListAccountSASRequest(string subscriptionId, string resourceGroupName, string accountName, AccountSasParameters parameters)
+        internal HttpMessage CreateListAccountSasRequest(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -759,10 +758,10 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -770,18 +769,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide to list SAS credentials for the storage account. </param>
+        /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListAccountSasResponse>> ListAccountSASAsync(string subscriptionId, string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ListAccountSasResponse>> ListAccountSasAsync(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListAccountSASRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateListAccountSasRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -801,18 +800,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide to list SAS credentials for the storage account. </param>
+        /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListAccountSasResponse> ListAccountSAS(string subscriptionId, string resourceGroupName, string accountName, AccountSasParameters parameters, CancellationToken cancellationToken = default)
+        public Response<ListAccountSasResponse> ListAccountSas(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListAccountSASRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateListAccountSasRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -828,7 +827,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateListServiceSASRequest(string subscriptionId, string resourceGroupName, string accountName, ServiceSasParameters parameters)
+        internal HttpMessage CreateListServiceSasRequest(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -846,10 +845,10 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -857,18 +856,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide to list service SAS credentials. </param>
+        /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListServiceSasResponse>> ListServiceSASAsync(string subscriptionId, string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ListServiceSasResponse>> ListServiceSasAsync(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListServiceSASRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateListServiceSasRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -888,18 +887,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide to list service SAS credentials. </param>
+        /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListServiceSasResponse> ListServiceSAS(string subscriptionId, string resourceGroupName, string accountName, ServiceSasParameters parameters, CancellationToken cancellationToken = default)
+        public Response<ListServiceSasResponse> ListServiceSas(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListServiceSASRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateListServiceSasRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -931,7 +930,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/failover", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1003,7 +1002,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("requestType", requestType, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1078,7 +1077,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1132,7 +1131,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        internal HttpMessage CreateRestoreBlobRangesRequest(string subscriptionId, string resourceGroupName, string accountName, BlobRestoreParameters parameters)
+        internal HttpMessage CreateRestoreBlobRangesRequest(string subscriptionId, string resourceGroupName, string accountName, BlobRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1150,10 +1149,10 @@ namespace Azure.ResourceManager.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1161,18 +1160,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
+        /// <param name="content"> The parameters to provide for restore blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestoreBlobRangesAsync(string subscriptionId, string resourceGroupName, string accountName, BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> RestoreBlobRangesAsync(string subscriptionId, string resourceGroupName, string accountName, BlobRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestoreBlobRangesRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateRestoreBlobRangesRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1188,18 +1187,18 @@ namespace Azure.ResourceManager.Storage
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
-        /// <param name="parameters"> The parameters to provide for restore blob ranges. </param>
+        /// <param name="content"> The parameters to provide for restore blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RestoreBlobRanges(string subscriptionId, string resourceGroupName, string accountName, BlobRestoreParameters parameters, CancellationToken cancellationToken = default)
+        public Response RestoreBlobRanges(string subscriptionId, string resourceGroupName, string accountName, BlobRestoreContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRestoreBlobRangesRequest(subscriptionId, resourceGroupName, accountName, parameters);
+            using var message = CreateRestoreBlobRangesRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1227,7 +1226,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/revokeUserDelegationKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1289,7 +1288,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1357,7 +1356,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

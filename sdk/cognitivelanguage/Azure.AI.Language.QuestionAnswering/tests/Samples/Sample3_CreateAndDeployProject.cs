@@ -24,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
-            newProjectName = "newFAQ";
+            newProjectName = CreateTestProjectName();
 #endif
             RequestContent creationRequestContent = RequestContent.Create(
                 new {
@@ -134,7 +134,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
-            newProjectName = "newFAQ";
+            newProjectName = CreateTestProjectName();
 #endif
             RequestContent creationRequestContent = RequestContent.Create(
                 new

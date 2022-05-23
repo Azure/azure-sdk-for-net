@@ -25,6 +25,9 @@
 **Dependencies :** To ensure that the same versions of dependencies are used for all projects in the repo, package versions are managed from a central location in `eng\Packages.Data.props`. When adding package references you should first ensure that an **Update** reference of the package with the version exist in the **Packages.Data.props** then **Include** the reference without the version in your .csproj. Contact [azuresdkengsysteam@microsoft.com](mailto:azuresdkengsysteam@microsoft.com) if you need to change  versions for packages already present in **Packages.Data.props**
 
 **Line Endings :** If working on windows OS ensure git is installed with `Checkout Windows-style, commit Unix-style` option or `core.autocrlf` set to *true* in git config. If working on Unix based Linux or MacOS ensure git is installed with `Checkout as-is, commit Unix-style` option or `core.autocrlf` set to *input* in git config
+
+----
+
 # Management Libraries
 
 ## TO BUILD:
@@ -97,6 +100,8 @@ If for any reason there is an update to the build tools, you will then need to f
 We have created a dotnet template to make creating new management SDK library easier than ever.
 
 See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/main/eng/templates/README.md)].
+
+----
 
 # Client Libraries
 
@@ -335,80 +340,42 @@ To prepare a package for release you should make use of `.\eng\common\scripts\Pr
 - `<ReleaseDate>` - Optional: provide a specific date for when you plan to release the package. If one isn't given then one will be calculated based on the normal monthly shipping schedule.
 - `<ReleaseTrackingOnly>` - Optional: Switch that if passed will only update the release tracking data in DevOps and not update any versioning info or do validation in the local repo.
 
-## On-boarding New Libraries
+## On-boarding New Generated Code Library
 
 ### Project Structure
 
-In `sdk\< Service Name >`, you will find projects for services that have already been implemented
+In `sdk\< Service Name >`, you will find projects for services that have already been implemented.
 
-1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) _(defined in AzSdk.reference.props)_
-2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md)
-   - Client library packages are in a folder name like **_Microsoft.Azure.< ServiceName >_**
-   - Management library packages are in a folder named like **_Microsoft.Azure.Management.< Resource Provider Name >_**
+1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) *(defined in AzSdk.reference.props)*
+2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md).
+   - Client library packages are in a folder name like ***Microsoft.Azure.< ServiceName >***
+   - Management library packages are in a folder named like ***Microsoft.Azure.Management.< Resource Provider Name >***
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
    - The folder **'Generated'** contains the generated code
    - The folder **'Customizations'** contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
    - The file **generate.cmd**, used to generate library code for the given package, can also be found in this project
 
-### Standard Process
+### On-boarding (Data plane) Generated Clients
+
+See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md) for details.
+
+### On-boarding Data Plane (Gen 1) Convenience Clients And Management Plane Generated Clients
+
+#### Standard Process
 
 1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](https://swagger.io)
-4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
-5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
-6. **MANDATORY**: Add or update tests for the newly generated code.
-7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
-9. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-10. The pull requests will be reviewed and merged by the Azure SDK team
+4. Install the latest version of AutoRest. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+5. Create a branch in your fork of Azure SDK for .NET.
+6. Generate the codes. See [Generating Client Codes](#generating-client-codes) below.
+7. **MANDATORY**: Add or update tests for the newly generated code.
+8. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+9. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+10. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+11. The pull requests will be reviewed and merged by the Azure SDK team
 
-### New Resource Provider
-
-1. If you have never created an SDK for your service before, you will need the following things to get your SDK in the repo
-2. Follow the standard process described above.
-3. Project names helps in using basic heuristics in finding projects as well it's associated test projects during CI process.
-4. Create a new directory using the name of your service as specified in [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo
-5. Follow the the directory structure below
-
-```
-sdk\<service name>\<package name>\README.md
-sdk\<service name>\<package name>\*src*
-sdk\<service name>\<package name>\*tests*
-sdk\<service name>\<package name>\*samples*
-```
-
-e.g.
-
-```
-sdk\eventgrid\Microsoft.Azure.EventGrid\src\Microsoft.Azure.EventGrid.csproj
-sdk\eventgrid\Microsoft.Azure.EventGrid\tests\Microsoft.Azure.EventGrid.Tests.csproj
-sdk\eventgrid\Microsoft.Azure.Management.EventGrid\src\Microsoft.Azure.Management.EventGrid.csproj
-sdk\eventgrid\Microsoft.Azure.Management.EventGrid\tests\Microsoft.Azure.Management.EventGrid.Tests.csproj
-```
-
-> Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo, that your csproj files starts with **Microsoft.Azure**
-> , that test files end with **.Tests** and that management plane project files contain **.Management.**
-If you are adding a new service directory, ensure that it is mapped to a friendly name at [ServiceMapping](https://github.com/Azure/azure-sdk-for-net/blob/8c1f53e9099bd5a674f9e77be7e4b1541cd6ab08/doc/ApiDocGeneration/Generate-DocIndex.ps1#L9-L64)
-
-
-7. Copy .csproj from any other .csproj and update the following information in the new .csproj
-
-   | Project Properties  |
-   | ------------------- |
-   | AssemblyTitle       |
-   | Description         |
-   | VersionPrefix       |
-   | PackageTags         |
-   | PackageReleaseNotes |
-   |                     |
-
-> PackageReleaseNotes are important because this information is displayed on https://www.nuget.org when your nuget package is published
-
-8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
-   During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
-
-## On-boarding New generated code library
+#### Generating Client Codes
 
 1. Install templates for both data-plane and management-plane (control-plan) SDKs:
 
@@ -570,3 +537,7 @@ For more information on how we version see [Versioning](https://github.com/Azure
 ## Breaking Changes
 
 For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/breaking-change-rules.md)
+
+## Debugging
+
+The libraries shipped out of this repo have [source link](https://docs.microsoft.com/dotnet/standard/library-guidance/sourcelink#using-source-link) enabled. Source link allows for symbols to be dynamically loaded while debugging, which allows you to step into the Azure SDK source code. This is often helpful when trying to step into Azure.Core code, as it is a package reference for most libraries. To enable using source link with the Azure SDK libraries in Visual Studio, you will need to check off Microsoft Symbol Servers as one of your Symbol file locations. Additionally, make sure that "Just My Code" is **_NOT_** enabled.

@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of UserSession and their operations over its parent. </summary>
-    public partial class UserSessionCollection : ArmCollection, IEnumerable<UserSession>, IAsyncEnumerable<UserSession>
+    /// <summary>
+    /// A class representing a collection of <see cref="UserSessionResource" /> and their operations.
+    /// Each <see cref="UserSessionResource" /> in the collection will belong to the same instance of <see cref="SessionHostResource" />.
+    /// To get an <see cref="UserSessionCollection" /> instance call the GetUserSessions method from an instance of <see cref="SessionHostResource" />.
+    /// </summary>
+    public partial class UserSessionCollection : ArmCollection, IEnumerable<UserSessionResource>, IAsyncEnumerable<UserSessionResource>
     {
         private readonly ClientDiagnostics _userSessionClientDiagnostics;
         private readonly UserSessionsRestOperations _userSessionRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal UserSessionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSession.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(UserSession.ResourceType, out string userSessionApiVersion);
-            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userSessionApiVersion);
+            _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSessionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(UserSessionResource.ResourceType, out string userSessionApiVersion);
+            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, userSessionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SessionHost.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SessionHost.ResourceType), nameof(id));
+            if (id.ResourceType != SessionHostResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SessionHostResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public virtual async Task<Response<UserSession>> GetAsync(string userSessionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserSessionResource>> GetAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = await _userSessionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new UserSession(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new UserSessionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public virtual Response<UserSession> Get(string userSessionId, CancellationToken cancellationToken = default)
+        public virtual Response<UserSessionResource> Get(string userSessionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
@@ -99,7 +102,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = _userSessionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new UserSession(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new UserSessionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +117,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: UserSessions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSession" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSession> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UserSessionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<UserSession>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<UserSessionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _userSessionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSession(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +135,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<UserSession>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<UserSessionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _userSessionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSession(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +159,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: UserSessions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSession" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSession> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UserSessionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<UserSession> FirstPageFunc(int? pageSizeHint)
+            Page<UserSessionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _userSessionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSession(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +177,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<UserSession> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<UserSessionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _userSessionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new UserSession(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new UserSessionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -209,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(userSessionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _userSessionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,7 +239,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(userSessionId, cancellationToken: cancellationToken);
+                var response = _userSessionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,65 +249,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}
-        /// Operation Id: UserSessions_Get
-        /// </summary>
-        /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public virtual async Task<Response<UserSession>> GetIfExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
-
-            using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _userSessionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<UserSession>(null, response.GetRawResponse());
-                return Response.FromValue(new UserSession(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}
-        /// Operation Id: UserSessions_Get
-        /// </summary>
-        /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public virtual Response<UserSession> GetIfExists(string userSessionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
-
-            using var scope = _userSessionClientDiagnostics.CreateScope("UserSessionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _userSessionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<UserSession>(null, response.GetRawResponse());
-                return Response.FromValue(new UserSession(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<UserSession> IEnumerable<UserSession>.GetEnumerator()
+        IEnumerator<UserSessionResource> IEnumerable<UserSessionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +259,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<UserSession> IAsyncEnumerable<UserSession>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<UserSessionResource> IAsyncEnumerable<UserSessionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

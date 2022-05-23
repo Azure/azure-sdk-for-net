@@ -3912,7 +3912,7 @@ namespace Azure.Storage.Files.Shares
             UploadRangeInternal(
                 range: range,
                 content: content,
-                rangeContentMD5: default,
+                rangeContentMD5: options?.TransactionalContentHash,
                 progressHandler: options?.ProgressHandler,
                 conditions: options?.Conditions,
                 fileLastWrittenMode: options?.FileLastWrittenMode,
@@ -3957,7 +3957,7 @@ namespace Azure.Storage.Files.Shares
             await UploadRangeInternal(
                 range: range,
                 content: content,
-                rangeContentMD5: default,
+                rangeContentMD5: options?.TransactionalContentHash,
                 progressHandler: options?.ProgressHandler,
                 conditions: options?.Conditions,
                 fileLastWrittenMode: options?.FileLastWrittenMode,

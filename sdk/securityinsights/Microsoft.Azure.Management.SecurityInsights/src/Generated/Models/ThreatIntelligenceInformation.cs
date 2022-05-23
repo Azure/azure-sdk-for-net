@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -31,10 +30,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the ThreatIntelligenceInformation
         /// class.
         /// </summary>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
-        public ThreatIntelligenceInformation(string etag = default(string))
+        public ThreatIntelligenceInformation(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string))
+            : base(id, name, type, systemData, etag)
         {
-            Etag = etag;
             CustomInit();
         }
 
@@ -42,12 +49,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets etag of the azure resource
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
 
     }
 }

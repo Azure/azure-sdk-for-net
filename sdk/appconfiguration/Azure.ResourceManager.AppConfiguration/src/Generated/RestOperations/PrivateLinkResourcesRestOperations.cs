@@ -13,13 +13,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppConfiguration.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     internal partial class PrivateLinkResourcesRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -34,8 +33,8 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-06-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _apiVersion = apiVersion ?? "2021-10-01-preview";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateListByConfigurationStoreRequest(string subscriptionId, string resourceGroupName, string configStoreName)
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreAsync(string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppConfigurationPrivateLinkResourceListResult>> ListByConfigurationStoreAsync(string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -78,9 +77,9 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        PrivateLinkResourceListResult value = default;
+                        AppConfigurationPrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
+                        value = AppConfigurationPrivateLinkResourceListResult.DeserializeAppConfigurationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkResourceListResult> ListByConfigurationStore(string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public Response<AppConfigurationPrivateLinkResourceListResult> ListByConfigurationStore(string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,9 +106,9 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        PrivateLinkResourceListResult value = default;
+                        AppConfigurationPrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
+                        value = AppConfigurationPrivateLinkResourceListResult.DeserializeAppConfigurationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppConfigurationPrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -160,13 +159,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        PrivateLinkResourceData value = default;
+                        AppConfigurationPrivateLinkResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourceData.DeserializePrivateLinkResourceData(document.RootElement);
+                        value = AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((AppConfigurationPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configStoreName"/> or <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
+        public Response<AppConfigurationPrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string configStoreName, string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -193,13 +192,13 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        PrivateLinkResourceData value = default;
+                        AppConfigurationPrivateLinkResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourceData.DeserializePrivateLinkResourceData(document.RootElement);
+                        value = AppConfigurationPrivateLinkResourceData.DeserializeAppConfigurationPrivateLinkResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateLinkResourceData)null, message.Response);
+                    return Response.FromValue((AppConfigurationPrivateLinkResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.AppConfiguration
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkResourceListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppConfigurationPrivateLinkResourceListResult>> ListByConfigurationStoreNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -240,9 +239,9 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        PrivateLinkResourceListResult value = default;
+                        AppConfigurationPrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
+                        value = AppConfigurationPrivateLinkResourceListResult.DeserializeAppConfigurationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkResourceListResult> ListByConfigurationStoreNextPage(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
+        public Response<AppConfigurationPrivateLinkResourceListResult> ListByConfigurationStoreNextPage(string nextLink, string subscriptionId, string resourceGroupName, string configStoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -271,9 +270,9 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 case 200:
                     {
-                        PrivateLinkResourceListResult value = default;
+                        AppConfigurationPrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkResourceListResult.DeserializePrivateLinkResourceListResult(document.RootElement);
+                        value = AppConfigurationPrivateLinkResourceListResult.DeserializeAppConfigurationPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

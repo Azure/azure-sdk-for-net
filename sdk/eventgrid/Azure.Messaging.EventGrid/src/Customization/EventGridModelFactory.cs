@@ -437,7 +437,33 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, string sessionEndReason)
         {
-            return AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo: recordingStorageInfo, recordingStartTime: recordingStartTime, recordingDurationMs: recordingDurationMs, sessionEndReason: sessionEndReason, recordingChannelType: null);
+            return AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo: recordingStorageInfo, recordingStartTime: recordingStartTime, recordingDurationMs: recordingDurationMs, sessionEndReason: sessionEndReason, channelType: null);
+        }
+
+        /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>
+        /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
+        /// <param name="recordingStartTime"> The time at which the recording started. </param>
+        /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
+        /// <param name="recordingContentType"> The recording content type- AudioVideo, or Audio. </param>
+        /// <param name="recordingChannelType"> The recording  channel type - Mixed, Unmixed. </param>
+        /// <param name="recordingFormatType"> The recording format type - Mp4, Mp3, Wav. </param>
+        /// <param name="sessionEndReason"> The reason for ending recording session. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, string sessionEndReason = null)
+        {
+            var contentType = recordingContentType != null ? new AcsRecordingContentType(recordingContentType.ToString()) : null;
+            var channelType = recordingChannelType != null ? new AcsRecordingChannelType(recordingChannelType.ToString()) : null;
+            var formatType = recordingFormatType != null ? new AcsRecordingFormatType(recordingFormatType.ToString()) : null;
+            return AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
+        }
+
+        /// <summary> Initializes a new instance of AcsRecordingFileStatusUpdatedEventData. </summary>
+        /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData()
+        {
+            return new AcsRecordingFileStatusUpdatedEventData(null, null, null, null, null, null, null);
         }
 
         /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>

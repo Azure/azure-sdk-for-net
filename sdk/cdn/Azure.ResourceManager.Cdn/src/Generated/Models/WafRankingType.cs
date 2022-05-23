@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RuleIdValue = "ruleId";
         private const string UserAgentValue = "userAgent";
         private const string ClientIPValue = "clientIp";
-        private const string UrlValue = "url";
-        private const string CountryValue = "country";
+        private const string UriValue = "url";
+        private const string CountryOrRegionValue = "countryOrRegion";
         private const string RuleTypeValue = "ruleType";
 
         /// <summary> action. </summary>
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> clientIp. </summary>
         public static WafRankingType ClientIP { get; } = new WafRankingType(ClientIPValue);
         /// <summary> url. </summary>
-        public static WafRankingType Url { get; } = new WafRankingType(UrlValue);
-        /// <summary> country. </summary>
-        public static WafRankingType Country { get; } = new WafRankingType(CountryValue);
+        public static WafRankingType Uri { get; } = new WafRankingType(UriValue);
+        /// <summary> countryOrRegion. </summary>
+        public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);
         /// <summary> ruleType. </summary>
         public static WafRankingType RuleType { get; } = new WafRankingType(RuleTypeValue);
         /// <summary> Determines if two <see cref="WafRankingType"/> values are the same. </summary>

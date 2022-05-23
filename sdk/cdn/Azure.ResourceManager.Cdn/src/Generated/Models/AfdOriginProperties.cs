@@ -11,13 +11,13 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class AfdOriginProperties : AfdOriginUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdOriginProperties. </summary>
-        public AfdOriginProperties()
+        internal AfdOriginProperties()
         {
         }
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

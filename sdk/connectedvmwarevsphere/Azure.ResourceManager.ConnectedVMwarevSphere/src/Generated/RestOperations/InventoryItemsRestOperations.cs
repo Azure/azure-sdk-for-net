@@ -13,13 +13,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     internal partial class InventoryItemsRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2020-10-01-preview";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData body)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,14 +55,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
+            if (data != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
+                content.JsonWriter.WriteObjectValue(data);
                 request.Content = content;
             }
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -72,18 +71,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, body);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -104,18 +103,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
         /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vcenterName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vcenterName, string inventoryItemName, InventoryItemData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, body);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vcenterName, inventoryItemName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -384,7 +383,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

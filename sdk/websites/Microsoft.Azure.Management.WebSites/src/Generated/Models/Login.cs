@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -21,8 +19,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// The configuration settings of the login flow of users using App Service
     /// Authentication/Authorization.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class Login : ProxyOnlyResource
+    public partial class Login
     {
         /// <summary>
         /// Initializes a new instance of the Login class.
@@ -35,10 +32,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Login class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource Name.</param>
-        /// <param name="kind">Kind of resource.</param>
-        /// <param name="type">Resource type.</param>
         /// <param name="routes">The routes that specify the endpoints used for
         /// login and logout requests.</param>
         /// <param name="tokenStore">The configuration settings of the token
@@ -58,8 +51,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// session cookie's expiration.</param>
         /// <param name="nonce">The configuration settings of the nonce used in
         /// the login flow.</param>
-        public Login(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), LoginRoutes routes = default(LoginRoutes), TokenStore tokenStore = default(TokenStore), bool? preserveUrlFragmentsForLogins = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), CookieExpiration cookieExpiration = default(CookieExpiration), Nonce nonce = default(Nonce))
-            : base(id, name, kind, type)
+        public Login(LoginRoutes routes = default(LoginRoutes), TokenStore tokenStore = default(TokenStore), bool? preserveUrlFragmentsForLogins = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), CookieExpiration cookieExpiration = default(CookieExpiration), Nonce nonce = default(Nonce))
         {
             Routes = routes;
             TokenStore = tokenStore;
@@ -79,13 +71,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Gets or sets the routes that specify the endpoints used for login
         /// and logout requests.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.routes")]
+        [JsonProperty(PropertyName = "routes")]
         public LoginRoutes Routes { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the token store.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.tokenStore")]
+        [JsonProperty(PropertyName = "tokenStore")]
         public TokenStore TokenStore { get; set; }
 
         /// <summary>
@@ -93,7 +85,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// fragments from the request are preserved after the login request is
         /// made; otherwise, &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.preserveUrlFragmentsForLogins")]
+        [JsonProperty(PropertyName = "preserveUrlFragmentsForLogins")]
         public bool? PreserveUrlFragmentsForLogins { get; set; }
 
         /// <summary>
@@ -105,21 +97,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Note that URLs within the current domain are always implicitly
         /// allowed.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.allowedExternalRedirectUrls")]
+        [JsonProperty(PropertyName = "allowedExternalRedirectUrls")]
         public IList<string> AllowedExternalRedirectUrls { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the session cookie's
         /// expiration.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.cookieExpiration")]
+        [JsonProperty(PropertyName = "cookieExpiration")]
         public CookieExpiration CookieExpiration { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration settings of the nonce used in the
         /// login flow.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.nonce")]
+        [JsonProperty(PropertyName = "nonce")]
         public Nonce Nonce { get; set; }
 
     }

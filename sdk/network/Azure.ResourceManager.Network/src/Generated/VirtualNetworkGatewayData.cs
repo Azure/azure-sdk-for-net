@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkGateway data model. </summary>
-    public partial class VirtualNetworkGatewayData : NetworkResourceData
+    public partial class VirtualNetworkGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
         public VirtualNetworkGatewayData()
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vNetExtendedLocationResourceId"> Customer vnet resource id. VirtualNetworkGateway of type local gateway is associated with the customer vnet. </param>
         /// <param name="natRules"> NatRules for virtual network gateway. </param>
         /// <param name="enableBgpRouteTranslationForNat"> EnableBgpRouteTranslationForNat flag. </param>
-        internal VirtualNetworkGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, string resourceGuid, ProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, string vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, type, location, tags)
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, WritableSubResource gatewayDefaultSite, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, BgpSettings bgpSettings, AddressSpace customRoutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, string vNetExtendedLocationResourceId, IList<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -126,9 +127,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The resource GUID property of the virtual network gateway resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network gateway resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Whether dns forwarding is enabled or not. </summary>
         public bool? EnableDnsForwarding { get; set; }
         /// <summary> The IP address allocated by the gateway to which dns requests can be sent. </summary>

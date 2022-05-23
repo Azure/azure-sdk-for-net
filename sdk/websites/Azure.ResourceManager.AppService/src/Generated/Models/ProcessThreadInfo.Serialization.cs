@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("base_priority");
                 writer.WriteNumberValue(BasePriority.Value);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(TotalProcessorTime))
             {

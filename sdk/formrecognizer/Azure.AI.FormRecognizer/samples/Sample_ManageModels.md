@@ -51,7 +51,7 @@ await foreach (DocumentModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
@@ -96,7 +96,7 @@ foreach (DocumentModelInfo modelInfo in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;

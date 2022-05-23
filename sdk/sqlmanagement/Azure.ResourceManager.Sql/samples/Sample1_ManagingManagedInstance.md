@@ -21,20 +21,20 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.GetDefaultSubscription();
+SubscriptionResource subscription = armClient.GetDefaultSubscription();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
 
 ```C# Snippet:Readme_GetResourceGroupCollection
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = lro.Value;
+ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = lro.Value;
 ```
 
 Now that we have the resource group created, we can manage the managed instance inside this resource group.
@@ -70,10 +70,10 @@ var vnetData = new VirtualNetworkData()
             AddressPrefix = "10.10.2.0/24",
             Delegations =
             {
-                new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
             },
-            RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-            NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+            RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+            NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
         }
     },
 };
@@ -92,12 +92,11 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
     MaintenanceConfigurationId = "/subscriptions/0000-0000-0000-0000/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
     ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
     TimezoneId = "UTC",
-    StorageAccountType = new StorageAccountType("GRS"),
     ZoneRedundant = false,
 };
 string managedInstanceName = "myManagedInstance";
 var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
-ManagedInstance managedInstance = managedInstanceLro.Value;
+ManagedInstanceResource managedInstance = managedInstanceLro.Value;
 ```
 
 ***List all managed instance***
@@ -105,8 +104,8 @@ ManagedInstance managedInstance = managedInstanceLro.Value;
 ```C# Snippet:Managing_Sql_ListAllManagedInstances
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-AsyncPageable<ManagedInstance> response = managedInstanceCollection.GetAllAsync();
-await foreach (ManagedInstance managedInstance in response)
+AsyncPageable<ManagedInstanceResource> response = managedInstanceCollection.GetAllAsync();
+await foreach (ManagedInstanceResource managedInstance in response)
 {
     Console.WriteLine(managedInstance.Data.Name);
 }
@@ -117,25 +116,8 @@ await foreach (ManagedInstance managedInstance in response)
 ```C# Snippet:Managing_Sql_GetAManagedInstance
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
 Console.WriteLine(managedInstance.Data.Name);
-```
-
-***Try to get a managed instance if it exists***
-
-```C# Snippet:Managing_Sql_GetAManagedInstanceIfExists
-ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
-
-ManagedInstance managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
-if (managedInstance != null)
-{
-    Console.WriteLine(managedInstance.Data.Name);
-}
-
-if (await managedInstanceCollection.ExistsAsync("bar"))
-{
-    Console.WriteLine("Virtual network 'bar' exists.");
-}
 ```
 
 ***Delete a managed instance***
@@ -143,7 +125,7 @@ if (await managedInstanceCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_Sql_DeleteAManagedInstance
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
 await managedInstance.DeleteAsync(WaitUntil.Completed);
 ```
 

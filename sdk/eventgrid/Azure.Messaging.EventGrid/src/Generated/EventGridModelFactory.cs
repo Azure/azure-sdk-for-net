@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
@@ -1655,14 +1654,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
-        /// <param name="recordingContentType"> The recording content type- AudioVideo, or Audio. </param>
-        /// <param name="recordingChannelType"> The recording  channel type - Mixed, Unmixed. </param>
-        /// <param name="recordingFormatType"> The recording format type - Mp4, Mp3, Wav. </param>
+        /// <param name="contentType"> The recording content type- AudioVideo, or Audio. </param>
+        /// <param name="channelType"> The recording  channel type - Mixed, Unmixed. </param>
+        /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, RecordingContentType? recordingContentType = null, RecordingChannelType? recordingChannelType = null, RecordingFormatType? recordingFormatType = null, string sessionEndReason = null)
+        public static AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, AcsRecordingContentType? contentType = null, AcsRecordingChannelType? channelType = null, AcsRecordingFormatType? formatType = null, string sessionEndReason = null)
         {
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, recordingContentType, recordingChannelType, recordingFormatType, sessionEndReason);
+            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo, recordingStartTime, recordingDurationMs, contentType, channelType, formatType, sessionEndReason);
         }
 
         /// <summary> Initializes a new instance of AcsRecordingStorageInfoProperties. </summary>
@@ -1859,6 +1858,39 @@ namespace Azure.Messaging.EventGrid
         public static ApiManagementApiReleaseDeletedEventData ApiManagementApiReleaseDeletedEventData(string resourceUri = null)
         {
             return new ApiManagementApiReleaseDeletedEventData(resourceUri);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareFhirResourceCreatedEventData. </summary>
+        /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
+        /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
+        /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
+        /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceCreatedEventData"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
+        {
+            return new HealthcareFhirResourceCreatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareFhirResourceUpdatedEventData. </summary>
+        /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
+        /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
+        /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
+        /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceUpdatedEventData"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
+        {
+            return new HealthcareFhirResourceUpdatedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareFhirResourceDeletedEventData. </summary>
+        /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
+        /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
+        /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
+        /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareFhirResourceDeletedEventData"/> instance for mocking. </returns>
+        public static HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType = null, string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = null)
+        {
+            return new HealthcareFhirResourceDeletedEventData(fhirResourceType, fhirServiceHostName, fhirResourceId, fhirResourceVersionId);
         }
     }
 }

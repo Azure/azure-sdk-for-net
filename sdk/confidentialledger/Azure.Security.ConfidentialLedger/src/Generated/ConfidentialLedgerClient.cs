@@ -36,6 +36,14 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
+        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
+        /// <param name="ledgerUri"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ledgerUri"/> or <paramref name="credential"/> is null. </exception>
+        public ConfidentialLedgerClient(Uri ledgerUri, TokenCredential credential) : this(ledgerUri, credential, new ConfidentialLedgerClientOptions())
+        {
+        }
+
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
@@ -986,7 +994,12 @@ namespace Azure.Security.ConfidentialLedger
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return GetLedgerEntriesImplementationAsync("ConfidentialLedgerClient.GetLedgerEntries", subLedgerId, fromTransactionId, toTransactionId, context);
+        }
+
+        private AsyncPageable<BinaryData> GetLedgerEntriesImplementationAsync(string diagnosticsScopeName, string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1033,7 +1046,12 @@ namespace Azure.Security.ConfidentialLedger
         /// </remarks>
         public virtual Pageable<BinaryData> GetLedgerEntries(string subLedgerId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "ConfidentialLedgerClient.GetLedgerEntries");
+            return GetLedgerEntriesImplementation("ConfidentialLedgerClient.GetLedgerEntries", subLedgerId, fromTransactionId, toTransactionId, context);
+        }
+
+        private Pageable<BinaryData> GetLedgerEntriesImplementation(string diagnosticsScopeName, string subLedgerId, string fromTransactionId, string toTransactionId, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do

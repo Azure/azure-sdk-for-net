@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -28,10 +29,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType);
+                writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -51,12 +52,20 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
-                writer.WriteObjectValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings");
-                writer.WriteObjectValue(ProtectedSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(InstanceView))
             {
@@ -76,15 +85,15 @@ namespace Azure.ResourceManager.Compute
         {
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type0 = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
             Optional<bool> enableAutomaticUpgrade = default;
-            Optional<object> settings = default;
-            Optional<object> protectedSettings = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<VirtualMachineExtensionInstanceView> instanceView = default;
             Optional<bool> suppressFailures = default;
@@ -102,7 +111,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -161,7 +175,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            settings = property0.Value.GetObject();
+                            settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protectedSettings"))
@@ -171,7 +185,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettings = property0.Value.GetObject();
+                            protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

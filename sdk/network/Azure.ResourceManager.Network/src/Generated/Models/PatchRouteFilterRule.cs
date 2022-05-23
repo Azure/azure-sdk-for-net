@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Route Filter Rule Resource. </summary>
-    internal partial class PatchRouteFilterRule : SubResource
+    internal partial class PatchRouteFilterRule : NetworkSubResource
     {
         /// <summary> Initializes a new instance of PatchRouteFilterRule. </summary>
         public PatchRouteFilterRule()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
         /// <param name="communities"> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal PatchRouteFilterRule(string id, string name, string etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, ProvisioningState? provisioningState) : base(id)
+        internal PatchRouteFilterRule(ResourceIdentifier id, string name, string etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </summary>
         public IList<string> Communities { get; }
         /// <summary> The provisioning state of the route filter rule resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

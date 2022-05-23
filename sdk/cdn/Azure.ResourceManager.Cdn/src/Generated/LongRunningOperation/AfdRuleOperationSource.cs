@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdRuleOperationSource : IOperationSource<AfdRule>
+    internal class AfdRuleOperationSource : IOperationSource<AfdRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        AfdRule IOperationSource<AfdRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdRuleResource IOperationSource<AfdRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdRuleData.DeserializeAfdRuleData(document.RootElement);
-            return new AfdRule(_client, data);
+            return new AfdRuleResource(_client, data);
         }
 
-        async ValueTask<AfdRule> IOperationSource<AfdRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdRuleResource> IOperationSource<AfdRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdRuleData.DeserializeAfdRuleData(document.RootElement);
-            return new AfdRule(_client, data);
+            return new AfdRuleResource(_client, data);
         }
     }
 }

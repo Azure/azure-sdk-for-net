@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of HostNameBindingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="siteName"> App Service app name. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="sslState"> SSL type. </param>
         /// <param name="thumbprint"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP) : base(id, name, type, systemData, kind)
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP) : base(id, name, resourceType, systemData, kind)
         {
             SiteName = siteName;
             DomainId = domainId;

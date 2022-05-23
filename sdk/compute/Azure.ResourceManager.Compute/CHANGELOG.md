@@ -1,14 +1,37 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Rename plenty of classes and property names.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-04-08)
+
+### Breaking Changes
+
+- Simplify `type` property names.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+
+### Other Changes
+
+- Upgrade dependency to Azure.ResourceManager 1.0.0
+
+## 1.0.0-beta.7 (2022-03-31)
+
+### Breaking Changes
+
+- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Renamed some models to more comprehensive names.
+- `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
+- Removed `GetIfExists` methods from all the resource classes.
+- All properties of the type `object` were changed to `BinaryData`.
 
 ## 1.0.0-beta.6 (2022-01-29)
 
@@ -198,22 +221,22 @@ await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, 
 After upgrade:
 ```C# Snippet:Changelog_New
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using System.Linq;
 using Azure.Core;
+using System;
+using System.Linq;
 
 var armClient = new ArmClient(new DefaultAzureCredential());
 
 var location = AzureLocation.WestUS;
-// Create ResourceGroup
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, "myResourceGroup", new ResourceGroupData(location));
-ResourceGroup resourceGroup = rgOperation.Value;
+// Create ResourceGroupResource
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ArmOperation<ResourceGroupResource> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, "myResourceGroup", new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = rgOperation.Value;
 
 // Create AvailabilitySet
 var availabilitySetData = new AvailabilitySetData(location)
@@ -222,8 +245,8 @@ var availabilitySetData = new AvailabilitySetData(location)
     PlatformFaultDomainCount = 2,
     Sku = new ComputeSku() { Name = "Aligned" }
 };
-ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(WaitUntil.Completed, "myAvailabilitySet", availabilitySetData);
-AvailabilitySet availabilitySet = asetOperation.Value;
+ArmOperation<AvailabilitySetResource> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(WaitUntil.Completed, "myAvailabilitySet", availabilitySetData);
+AvailabilitySetResource availabilitySet = asetOperation.Value;
 
 // Create VNet
 var vnetData = new VirtualNetworkData()
@@ -239,8 +262,8 @@ var vnetData = new VirtualNetworkData()
     },
 };
 vnetData.AddressPrefixes.Add("10.0.0.0/16");
-ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualNetwork", vnetData);
-VirtualNetwork vnet = vnetOperation.Value;
+ArmOperation<VirtualNetworkResource> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualNetwork", vnetData);
+VirtualNetworkResource vnet = vnetOperation.Value;
 
 // Create Network interface
 var nicData = new NetworkInterfaceData()
@@ -257,8 +280,8 @@ var nicData = new NetworkInterfaceData()
         }
     }
 };
-ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, "myNetworkInterface", nicData);
-NetworkInterface nic = nicOperation.Value;
+ArmOperation<NetworkInterfaceResource> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, "myNetworkInterface", nicData);
+NetworkInterfaceResource nic = nicOperation.Value;
 
 var vmData = new VirtualMachineData(location)
 {
@@ -283,8 +306,8 @@ var vmData = new VirtualMachineData(location)
     },
     HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
 };
-ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
-VirtualMachine vm = vmOperation.Value;
+ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
+VirtualMachineResource vm = vmOperation.Value;
 ```
 
 #### Object Model Changes
@@ -315,11 +338,11 @@ var vmExtension = new VirtualMachineExtensionData(AzureLocation.WestUS)
 {
     Tags = { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
     Publisher = "Microsoft.Compute",
-    TypePropertiesType = "VMAccessAgent",
+    ExtensionType = "VMAccessAgent",
     TypeHandlerVersion = "2.0",
     AutoUpgradeMinorVersion = true,
     ForceUpdateTag = "RerunExtension",
-    Settings = "{}",
-    ProtectedSettings = "{}"
+    Settings = BinaryData.FromObjectAsJson(new { }),
+    ProtectedSettings = BinaryData.FromObjectAsJson(new { })
 };
 ```

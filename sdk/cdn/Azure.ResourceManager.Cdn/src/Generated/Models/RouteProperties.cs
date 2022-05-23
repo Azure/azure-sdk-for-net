@@ -11,13 +11,13 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class RouteProperties : RouteUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RouteProperties. </summary>
-        public RouteProperties()
+        internal RouteProperties()
         {
         }
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

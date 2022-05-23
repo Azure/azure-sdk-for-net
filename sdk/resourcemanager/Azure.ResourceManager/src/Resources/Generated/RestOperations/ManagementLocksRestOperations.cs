@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     internal partial class ManagementLocksRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -35,10 +34,10 @@ namespace Azure.ResourceManager.Resources
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2016-09-01";
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData parameters)
+        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,26 +53,26 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update a management lock by scope. </summary>
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagementLockData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementLockData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, parameters);
+            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,17 +92,17 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Create or update a management lock by scope. </summary>
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagementLockData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        public Response<ManagementLockData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, parameters);
+            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(lockName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

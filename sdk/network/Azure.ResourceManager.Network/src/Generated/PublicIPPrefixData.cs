@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -13,20 +14,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PublicIPPrefix data model. </summary>
-    public partial class PublicIPPrefixData : NetworkResourceData
+    public partial class PublicIPPrefixData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>
         public PublicIPPrefixData()
         {
             Zones = new ChangeTrackingList<string>();
             IPTags = new ChangeTrackingList<IPTag>();
-            PublicIPAddresses = new ChangeTrackingList<Resources.Models.SubResource>();
+            PublicIPAddresses = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        internal PublicIPPrefixData(string id, string name, string type, string location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<Resources.Models.SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, string resourceGuid, ProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, type, location, tags)
+        internal PublicIPPrefixData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPPrefixSku sku, string etag, IList<string> zones, IPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -78,14 +79,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> The allocated Prefix. </summary>
         public string IPPrefix { get; }
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> PublicIPAddresses { get; }
+        public IReadOnlyList<SubResource> PublicIPAddresses { get; }
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         internal WritableSubResource LoadBalancerFrontendIPConfiguration { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
         {
-            get => LoadBalancerFrontendIPConfiguration.Id;
-            set => LoadBalancerFrontendIPConfiguration.Id = value;
+            get => LoadBalancerFrontendIPConfiguration?.Id;
         }
 
         /// <summary> The customIpPrefix that this prefix is associated with. </summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The resource GUID property of the public IP prefix resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the public IP prefix resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> NatGateway of Public IP Prefix. </summary>
         public NatGatewayData NatGateway { get; set; }
     }

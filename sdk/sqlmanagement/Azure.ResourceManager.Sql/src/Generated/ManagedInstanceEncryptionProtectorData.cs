@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="serverKeyName"> The name of the managed instance key. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string serverKeyName, ServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, type, systemData)
+        internal ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serverKeyName, ServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyName = serverKeyName;

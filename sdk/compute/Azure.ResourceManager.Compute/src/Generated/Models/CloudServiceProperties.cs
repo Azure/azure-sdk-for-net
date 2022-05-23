@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -18,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of CloudServiceProperties. </summary>
-        /// <param name="packageUrl">
+        /// <param name="packageUri">
         /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
         /// This is a write-only property and is not returned in GET calls.
         /// </param>
         /// <param name="configuration"> Specifies the XML service configuration (.cscfg) for the cloud service. </param>
-        /// <param name="configurationUrl">
+        /// <param name="configurationUri">
         /// Specifies a URL that refers to the location of the service configuration in the Blob service. The service package URL  can be Shared Access Signature (SAS) URI from any storage account.
         /// This is a write-only property and is not returned in GET calls.
         /// </param>
@@ -46,11 +47,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extensionProfile"> Describes a cloud service extension profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
-        internal CloudServiceProperties(string packageUrl, string configuration, string configurationUrl, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId)
+        internal CloudServiceProperties(Uri packageUri, string configuration, Uri configurationUri, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId)
         {
-            PackageUrl = packageUrl;
+            PackageUri = packageUri;
             Configuration = configuration;
-            ConfigurationUrl = configurationUrl;
+            ConfigurationUri = configurationUri;
             StartCloudService = startCloudService;
             AllowModelOverride = allowModelOverride;
             UpgradeMode = upgradeMode;
@@ -66,14 +67,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// Specifies a URL that refers to the location of the service package in the Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage account.
         /// This is a write-only property and is not returned in GET calls.
         /// </summary>
-        public string PackageUrl { get; set; }
+        public Uri PackageUri { get; set; }
         /// <summary> Specifies the XML service configuration (.cscfg) for the cloud service. </summary>
         public string Configuration { get; set; }
         /// <summary>
         /// Specifies a URL that refers to the location of the service configuration in the Blob service. The service package URL  can be Shared Access Signature (SAS) URI from any storage account.
         /// This is a write-only property and is not returned in GET calls.
         /// </summary>
-        public string ConfigurationUrl { get; set; }
+        public Uri ConfigurationUri { get; set; }
         /// <summary>
         /// (Optional) Indicates whether to start the cloud service immediately after it is created. The default value is `true`.
         /// If false, the service model is still deployed, but the code is not run immediately. Instead, the service is PoweredOff until you call Start, at which time the service will be started. A deployed service still incurs charges, even if it is poweredoff.
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes a cloud service extension profile. </summary>
         internal CloudServiceExtensionProfile ExtensionProfile { get; set; }
         /// <summary> List of extensions for the cloud service. </summary>
-        public IList<Extension> Extensions
+        public IList<CloudServiceExtension> Extensions
         {
             get
             {

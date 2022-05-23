@@ -19,22 +19,22 @@ namespace Microsoft.Azure.Management.RedisEnterprise
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Cache", "Databases", "2021-03-01"),
-                new Tuple<string, string, string>("Cache", "Operations", "2021-03-01"),
-                new Tuple<string, string, string>("Cache", "OperationsStatus", "2021-03-01"),
-                new Tuple<string, string, string>("Cache", "PrivateEndpointConnections", "2021-03-01"),
-                new Tuple<string, string, string>("Cache", "PrivateLinkResources", "2021-03-01"),
-                new Tuple<string, string, string>("Cache", "RedisEnterprise", "2021-03-01"),
+                new Tuple<string, string, string>("Cache", "Databases", "2022-01-01"),
+                new Tuple<string, string, string>("Cache", "Operations", "2022-01-01"),
+                new Tuple<string, string, string>("Cache", "OperationsStatus", "2022-01-01"),
+                new Tuple<string, string, string>("Cache", "PrivateEndpointConnections", "2022-01-01"),
+                new Tuple<string, string, string>("Cache", "PrivateLinkResources", "2022-01-01"),
+                new Tuple<string, string, string>("Cache", "RedisEnterprise", "2022-01-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/redisenterprise/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\repos\\feb21\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.3.2";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/redisenterprise/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\prravikumar\\repo\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "379ee7309b62268464be1e14b0f9022a9283c2a4";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "e7d2d8c48cf6f8f63de7e252c467930449b5fd88";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
