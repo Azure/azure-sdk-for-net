@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ServiceLinker.Tests
 {
-    public class servicelinkerManagementTestEnvironment : TestEnvironment
+    public class ServicelinkerManagementTestEnvironment : TestEnvironment
     {
     }
 }
