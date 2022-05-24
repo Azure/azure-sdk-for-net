@@ -6,7 +6,7 @@ using System;
 namespace Azure.Messaging.EventHubs.Stress;
 
 /// <summary>
-///   Theis class holds the set of all the names of the variables to use from the .env environment file.
+///   This class holds the set of all the names of the variables to use from the .env environment file.
 /// </summary>
 ///
 public static class EnvironmentVariables
