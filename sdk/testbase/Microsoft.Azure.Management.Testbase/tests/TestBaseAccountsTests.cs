@@ -57,7 +57,7 @@ namespace TestBase.Tests
                 //Location must be Global, otherwise will receive a BadRequest message
                 parameters.Location = "Global";//Global , North Europe , SoutheastAsia
                 parameters.Sku = sku;
-                parameters.Tags = new Dictionary<string, string>() { { testBaseAccountName + "_kaifa", "tagvalue" } };
+                parameters.Tags = new Dictionary<string, string>() { { testBaseAccountName + "_test", "tagvalue" } };
 
                 //After testing, it still cannot be created successfully. A BadRequest exception is thrown. 2021-4-23
                 //Operation returned an invalid status code 'NotFound' 2021-4-25

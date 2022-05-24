@@ -19,12 +19,12 @@ namespace TestBase.Tests
     public class TestbaseBase
     {
         protected const string TestPrefix = "testbase";
-        protected string t_ResourceGroupName= "testbase_rg";
-        protected string t_TestBaseAccountName= "testBaseAccount_kaifa";
+        protected string t_ResourceGroupName= "integration-test";
+        protected string t_TestBaseAccountName= "testbasemka";
         /// <summary>
         /// package name + "-" + Version , e.g. package1-1.0.0
         /// </summary>
-        protected string t_PackageName = "package2_kaifa-1.0";//Package name + "-" + Version
+        protected string t_PackageName = "packagemka1-v1";//Package name + "-" + Version
         protected string t_CustomerEventName = "testbase6336_event";
 
         protected TestBaseClient t_TestBaseClient;
