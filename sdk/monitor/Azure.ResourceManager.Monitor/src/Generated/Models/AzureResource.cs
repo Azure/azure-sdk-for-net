@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Azure resource kind. </param>
         /// <param name="identity"> Azure resource identity. </param>
-        internal AzureResource(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string identity) : base(id, name, resourceType, systemData, tags, location)
+        internal AzureResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="categoryType"> The type of the diagnostic settings category. </param>
-        internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, CategoryType? categoryType) : base(id, name, resourceType, systemData)
+        internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CategoryType? categoryType) : base(id, name, resourceType, systemData)
         {
             CategoryType = categoryType;
         }

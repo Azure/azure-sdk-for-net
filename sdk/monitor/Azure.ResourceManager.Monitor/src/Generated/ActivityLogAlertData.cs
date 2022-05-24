@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="condition"> The condition that will cause this alert to activate. </param>
         /// <param name="actions"> The actions that will activate when the condition is met. </param>
         /// <param name="description"> A description of this activity log alert. </param>
-        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, bool? enabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, resourceType, systemData, tags, location)
+        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, bool? enabled, ActivityLogAlertAllOfCondition condition, ActivityLogAlertActionList actions, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             Scopes = scopes;
             Enabled = enabled;

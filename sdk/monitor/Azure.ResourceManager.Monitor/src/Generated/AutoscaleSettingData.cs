@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="namePropertiesName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, string targetResourceId, string targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, string targetResourceId, string targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Profiles = profiles;
             Notifications = notifications;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal MonitorPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, WritableSubResource privateEndpoint, MonitorPrivateLinkServiceConnectionStateProperty connectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        internal MonitorPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, MonitorPrivateLinkServiceConnectionStateProperty connectionState, string provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;

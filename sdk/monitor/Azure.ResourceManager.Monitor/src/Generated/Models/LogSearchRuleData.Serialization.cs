@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            ResourceManager.Models.SystemData systemData = default;
+            SystemData systemData = default;
             Optional<string> createdWithApiVersion = default;
             Optional<bool> isLegacyLogAnalyticsRule = default;
             Optional<string> description = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
