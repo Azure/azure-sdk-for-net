@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The protocol used to connect to the target. </summary>
         public BastionConnectProtocol? Protocol { get; }
         /// <summary> The resource id of the target. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Duration in mins the session has been active. </summary>
         public float? SessionDurationInMins { get; }
     }

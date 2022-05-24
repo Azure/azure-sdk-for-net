@@ -7,11 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.15.0-preview</Version>
-    <PackageTags>Reservations;Capacity_2020-10-01-preview;Capacity_2020-10-25;</PackageTags>
+		<Version>1.16.0-preview</Version>
+    <PackageTags>Reservations;Capacity_2022-03-01;Capacity_2020-10-25;</PackageTags>
 		<PackageReleaseNotes>
-      Adding Quota GA 2020-10-25 APIs and Reservation 2020-10-01-preview APIs to sdk.
-      Removed AutoQuotaIncrease APIs from GA version. It's available in preview version -1.14.0-preview.
+      Adding Reservation 2022-03-01 APIs to sdk.
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

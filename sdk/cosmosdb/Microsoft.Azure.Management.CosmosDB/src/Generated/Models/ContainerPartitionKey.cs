@@ -94,16 +94,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Version != null)
+            if (Version > 2)
             {
-                if (Version > 2)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Version", 2);
-                }
-                if (Version < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Version", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Version", 2);
+            }
+            if (Version < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Version", 1);
             }
         }
     }
