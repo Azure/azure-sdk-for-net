@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Applications.Containers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetReplicaRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string name)
+        internal HttpMessage CreateGetReplicaRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/revisions/", false);
             uri.AppendPath(revisionName, true);
             uri.AppendPath("/replicas/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(replicaName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerAppReplicaData>> GetReplicaAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerAppReplicaData>> GetReplicaAsync(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var message = CreateGetReplicaRequest(subscriptionId, resourceGroupName, containerAppName, revisionName, name);
+            using var message = CreateGetReplicaRequest(subscriptionId, resourceGroupName, containerAppName, revisionName, replicaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerAppReplicaData> GetReplica(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="revisionName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerAppReplicaData> GetReplica(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var message = CreateGetReplicaRequest(subscriptionId, resourceGroupName, containerAppName, revisionName, name);
+            using var message = CreateGetReplicaRequest(subscriptionId, resourceGroupName, containerAppName, revisionName, replicaName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

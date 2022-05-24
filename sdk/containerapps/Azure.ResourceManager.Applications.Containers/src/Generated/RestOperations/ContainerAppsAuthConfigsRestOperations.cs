@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string containerAppName, string name)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
             uri.AppendPath("/authConfigs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(authConfigName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -142,18 +142,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthConfigData>> GetAsync(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AuthConfigData>> GetAsync(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, containerAppName, name);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, containerAppName, authConfigName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -175,18 +175,18 @@ namespace Azure.ResourceManager.Applications.Containers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthConfigData> Get(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AuthConfigData> Get(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, containerAppName, name);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, containerAppName, authConfigName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string containerAppName, string name, AuthConfigData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, AuthConfigData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
             uri.AppendPath("/authConfigs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(authConfigName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -230,24 +230,24 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Description for Create or update the AuthConfig for a Container App. </summary>
+        /// <summary> Create or update the AuthConfig for a Container App. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="data"> Properties used to create a Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthConfigData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string containerAppName, string name, AuthConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AuthConfigData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, AuthConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, name, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, authConfigName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -263,24 +263,24 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Description for Create or update the AuthConfig for a Container App. </summary>
+        /// <summary> Create or update the AuthConfig for a Container App. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="data"> Properties used to create a Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthConfigData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string containerAppName, string name, AuthConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/>, <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AuthConfigData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, AuthConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, name, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, containerAppName, authConfigName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string containerAppName, string name)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Applications.Containers
             uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
             uri.AppendPath(containerAppName, true);
             uri.AppendPath("/authConfigs/", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(authConfigName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -318,22 +318,22 @@ namespace Azure.ResourceManager.Applications.Containers
             return message;
         }
 
-        /// <summary> Description for Delete a Container App AuthConfig. </summary>
+        /// <summary> Delete a Container App AuthConfig. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, name);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, authConfigName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -345,22 +345,22 @@ namespace Azure.ResourceManager.Applications.Containers
             }
         }
 
-        /// <summary> Description for Delete a Container App AuthConfig. </summary>
+        /// <summary> Delete a Container App AuthConfig. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string containerAppName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="containerAppName"/> or <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string containerAppName, string authConfigName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, name);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, containerAppName, authConfigName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
