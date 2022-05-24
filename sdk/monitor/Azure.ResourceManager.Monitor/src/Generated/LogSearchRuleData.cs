@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="source"> Data Source against which rule will Query Data. </param>
         /// <param name="schedule"> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </param>
         /// <param name="action"> Action needs to be taken on rule execution. </param>
-        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action) : base(id, name, resourceType, systemData, tags, location, kind, etag)
+        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string etag, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, Enabled? enabled, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action) : base(id, name, resourceType, systemData, tags, location, kind, etag)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;

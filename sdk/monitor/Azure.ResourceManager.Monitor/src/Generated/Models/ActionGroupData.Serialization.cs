@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             Optional<string> groupShortName = default;
             Optional<bool> enabled = default;
             Optional<IList<EmailReceiver>> emailReceivers = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The alert status properties of the metric alert status. </param>
-        internal MetricAlertStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricAlertStatusProperties properties) : base(id, name, resourceType, systemData)
+        internal MetricAlertStatus(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, MetricAlertStatusProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
