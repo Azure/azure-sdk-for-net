@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="action"> action that is performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
+        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
         {
             NamePropertiesName = namePropertiesName;
             Description = description;

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
         /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
-        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool enabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated) : base(id, name, resourceType, systemData, tags, location)
+        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool enabled, IList<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Severity = severity;
