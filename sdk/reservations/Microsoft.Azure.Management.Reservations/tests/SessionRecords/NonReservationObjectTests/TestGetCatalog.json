@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=VirtualMachines&location=westus",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1WaXJ0dWFsTWFjaGluZXMmbG9jYXRpb249d2VzdHVz",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=VirtualMachines&location=westus",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1WaXJ0dWFsTWFjaGluZXMmbG9jYXRpb249d2VzdHVz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -70,8 +70,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=SqlDatabases&location=southeastasia",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1TcWxEYXRhYmFzZXMmbG9jYXRpb249c291dGhlYXN0YXNpYQ==",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=SqlDatabases&location=southeastasia",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1TcWxEYXRhYmFzZXMmbG9jYXRpb249c291dGhlYXN0YXNpYQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -139,8 +139,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=SqlDataWarehouse&location=eastus",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1TcWxEYXRhV2FyZWhvdXNlJmxvY2F0aW9uPWVhc3R1cw==",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=SqlDataWarehouse&location=eastus",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1TcWxEYXRhV2FyZWhvdXNlJmxvY2F0aW9uPWVhc3R1cw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -208,8 +208,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=VMwareCloudSimple&location=eastus",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1WTXdhcmVDbG91ZFNpbXBsZSZsb2NhdGlvbj1lYXN0dXM=",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=VMwareCloudSimple&location=eastus",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1WTXdhcmVDbG91ZFNpbXBsZSZsb2NhdGlvbj1lYXN0dXM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -277,8 +277,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=SuseLinux",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1TdXNlTGludXg=",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=SuseLinux",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1TdXNlTGludXg=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -346,8 +346,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=CosmosDb",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1Db3Ntb3NEYg==",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=CosmosDb",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1Db3Ntb3NEYg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -415,8 +415,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=RedHat",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1SZWRIYXQ=",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=RedHat",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1SZWRIYXQ=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -484,8 +484,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2019-04-01-preview&reservedResourceType=RedHatOsa",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAxOS0wNC0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1SZWRIYXRPc2E=",
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=RedHatOsa",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1SZWRIYXRPc2E=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -550,6 +550,75 @@
         ]
       },
       "ResponseBody": "[\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_general_purpose_v3_16_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"16 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"990e1842-dbfe-4a5c-8f7a-3bc021f667b2\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"16 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_general_purpose_v3_8_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"8 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"0cf72fdb-8e27-4e40-881c-edc6d4f5d944\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"8 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_compute_optimized_v2_4_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"4 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"f6be36df-12c0-4438-b686-6837a702bf32\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"4 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_memory_optimized_v3_8_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"8 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"28576259-2f76-44a4-9076-f61f2ad41e93\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"8 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_general_purpose_v3_32_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"32 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"04747909-677b-46ce-be41-06f92d65e1c4\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"32 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_memory_optimized_v3_4_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"4 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"45383e4c-8bf0-4316-84fe-34c67da46fb5\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"4 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_memory_optimized_v3_32_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"32 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"dd9d8d30-99d0-4955-b1f6-5a0c7780b37b\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"32 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_compute_optimized_v2_16_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"16 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"23aaae57-a49d-43b2-8530-7f7ec23d6b49\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"16 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_compute_optimized_v2_8_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"8 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"7d777ed2-45f5-4722-8dc3-9e2cab5baa80\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"8 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_compute_optimized_v2_32_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Compute Optimized v2\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"32 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"63cdc84f-e717-4ed3-b76a-6a1a224ad3b0\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"32 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_memory_optimized_v3_16_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift Memory Optimized v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"16 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"a7059f69-9291-45df-8308-4b13942a1794\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"16 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  },\r\n  {\r\n    \"resourceType\": \"RedHatOsa\",\r\n    \"name\": \"red_hat_openshift_general_purpose_v3_4_vcpu\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"Azure Red Hat OpenShift General Purpose v3\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"4 vCPU\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"c54bdb2d-d6dd-42a2-893c-a29f4e5220c4\"\r\n      },\r\n      {\r\n        \"name\": \"MeterType\",\r\n        \"value\": \"1 Compute Hour\"\r\n      },\r\n      {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"4 vCPU\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForSubscription\"\r\n      }\r\n    ]\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80/providers/Microsoft.Capacity/catalogs?api-version=2022-03-01&reservedResourceType=VirtualMachineSoftware",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDNhZTQ4ZTUtZGJiMi00NjE4LWFmZDQtZmIxYjg1NTljYjgwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2F0YWxvZ3M/YXBpLXZlcnNpb249MjAyMi0wMy0wMSZyZXNlcnZlZFJlc291cmNlVHlwZT1WaXJ0dWFsTWFjaGluZVNvZnR3YXJlJnB1Ymxpc2hlcklkPXRlc3RfdGVzdF9wbWMycGMxJm9mZmVySWQ9bW5rX3ZtcmlfdGVzdF8wMDEmcGxhbklkPXRlc3RwbGFuMDAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2e962796-f4fb-4c8b-9945-79895b95625e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.11.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 28 Oct 2019 03:59:33 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-test": [
+          "{\"contact\":\"kgautam\",\"scenarios\":\"v6-recurrence-test,time-scale:35040,AcceleratedPayment\",\"retention\":\"1/26/2020 3:59:33 AM\"}"
+        ],
+        "x-ms-request-id": [
+          "westus:29cf8bcc-39b2-4835-ad17-ce750a7b9068"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-correlation-request-id": [
+          "3d0b5d31-3412-401e-801d-bb13d034dce9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191028T035933Z:3d0b5d31-3412-401e-801d-bb13d034dce9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Content-Length": [
+          "1124"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"resourceType\": \"VirtualMachineSoftware\",\r\n    \"name\": \"test_test_pmc2pc1.mnk_vmri_test_001.testplan001.10core\",\r\n    \"terms\": [\r\n      \"P1Y\",\r\n      \"P3Y\",\r\n      \"P5Y\"\r\n    ],\r\n    \"billingPlans\": {\r\n      \"p1Y\": [\r\n        \"Upfront\",\r\n        \"Monthly\"\r\n      ],\r\n      \"p3Y\": [\r\n        \"Upfront\",\r\n        \"Monthly\"\r\n      ],\r\n      \"p5Y\": [\r\n        \"Upfront\",\r\n        \"Monthly\"\r\n      ]\r\n    },\r\n    \"skuProperties\": [\r\n      {\r\n        \"name\": \"Cores\",\r\n        \"value\": \"48\"\r\n      },\r\n      {\r\n        \"name\": \"vCpu\",\r\n        \"value\": \"10\"\r\n      },\r\n      {\r\n        \"name\": \"ReservationsAutofitRatio\",\r\n        \"value\": \"48\"\r\n      },\r\n      {\r\n        \"name\": \"ProductShortName\",\r\n        \"value\": \"VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\"\r\n      },\r\n      {\r\n        \"name\": \"ProductTitle\",\r\n        \"value\": \"VirtualMachineSoftware - MNK VMRI Test 001 - Test Plan 001\"\r\n      },\r\n      {\r\n        \"name\": \"SkuName\",\r\n        \"value\": \"NV48s v3\"\r\n      },\r\n      {\r\n        \"name\": \"MeterId\",\r\n        \"value\": \"10core\"\r\n      },\r\n      {\r\n        \"name\": \"PublisherId\",\r\n        \"value\": \"test_test_pmc2pc1\"\r\n      },\r\n      {\r\n        \"name\": \"OfferId\",\r\n        \"value\": \"mnk_vmri_test_001\"\r\n      },\r\n      {\r\n        \"name\": \"PlanId\",\r\n        \"value\": \"testplan001\"\r\n      },\r\n      {\r\n        \"name\": \"LegalTermsUri\",\r\n        \"value\": \"http://mockuri.abc\"\r\n      },\r\n     {\r\n        \"name\": \"SkuDisplayName\",\r\n        \"value\": \"MNK VMRI Test 001 - Test Plan 001\"\r\n      }\r\n    ],\r\n    \"restrictions\": [\r\n      {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P3Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForOffer\"\r\n      },\r\n    {\r\n        \"type\": \"Term\",\r\n        \"values\": [\r\n          \"P5Y\"\r\n        ],\r\n        \"reasonCode\": \"NotAvailableForOffer\"\r\n      }\r\n    ]\r\n  }\r\n    ]\r\n",
       "StatusCode": 200
     }
   ],

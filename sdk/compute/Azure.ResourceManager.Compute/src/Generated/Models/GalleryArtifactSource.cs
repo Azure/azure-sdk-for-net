@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryArtifactSource. </summary>
         /// <param name="managedImage"> The managed artifact. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedImage"/> is null. </exception>
-        internal GalleryArtifactSource(Resources.Models.SubResource managedImage)
+        internal GalleryArtifactSource(SubResource managedImage)
         {
             if (managedImage == null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The managed artifact. </summary>
-        internal Resources.Models.SubResource ManagedImage { get; }
+        internal SubResource ManagedImage { get; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier ManagedImageId
         {

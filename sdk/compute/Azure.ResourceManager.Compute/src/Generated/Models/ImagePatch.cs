@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source user image virtual hard disk. Only tags may be updated. </summary>
-    public partial class ImagePatch : UpdateResource
+    public partial class ImagePatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of ImagePatch. </summary>
         public ImagePatch()

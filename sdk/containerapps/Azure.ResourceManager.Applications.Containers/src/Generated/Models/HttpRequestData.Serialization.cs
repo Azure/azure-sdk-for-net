@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
         internal static HttpRequestData DeserializeHttpRequestData(JsonElement element)
         {
             Optional<string> host = default;
-            Optional<IList<HttpRequestDataHttpHeadersItem>> httpHeaders = default;
+            Optional<IList<HttpHeaderData>> httpHeaders = default;
             Optional<string> path = default;
             int port = default;
             Optional<HttpScheme> scheme = default;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HttpRequestDataHttpHeadersItem> array = new List<HttpRequestDataHttpHeadersItem>();
+                    List<HttpHeaderData> array = new List<HttpHeaderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpRequestDataHttpHeadersItem.DeserializeHttpRequestDataHttpHeadersItem(item));
+                        array.Add(HttpHeaderData.DeserializeHttpHeaderData(item));
                     }
                     httpHeaders = array;
                     continue;

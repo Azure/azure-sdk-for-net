@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the IPGroup data model. </summary>
-    public partial class IPGroupData : NetworkResourceData
+    public partial class IPGroupData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of IPGroupData. </summary>
         public IPGroupData()
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
-        internal IPGroupData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
+        internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The provisioning state of the IpGroups resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>
         public IList<string> IPAddresses { get; }
         /// <summary> List of references to Firewall resources that this IpGroups is associated with. </summary>

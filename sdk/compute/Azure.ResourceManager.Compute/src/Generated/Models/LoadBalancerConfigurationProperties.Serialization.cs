@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frontendIPConfigurations");
+            writer.WritePropertyName("frontendIpConfigurations");
             writer.WriteStartArray();
             foreach (var item in FrontendIPConfigurations)
             {
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LoadBalancerConfigurationProperties DeserializeLoadBalancerConfigurationProperties(JsonElement element)
         {
-            IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default;
+            IList<LoadBalancerFrontendIPConfiguration> frontendIpConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frontendIPConfigurations"))
+                if (property.NameEquals("frontendIpConfigurations"))
                 {
                     List<LoadBalancerFrontendIPConfiguration> array = new List<LoadBalancerFrontendIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item));
                     }
-                    frontendIPConfigurations = array;
+                    frontendIpConfigurations = array;
                     continue;
                 }
             }
-            return new LoadBalancerConfigurationProperties(frontendIPConfigurations);
+            return new LoadBalancerConfigurationProperties(frontendIpConfigurations);
         }
     }
 }

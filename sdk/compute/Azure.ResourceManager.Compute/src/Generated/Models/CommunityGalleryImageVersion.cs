@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
-    public partial class CommunityGalleryImageVersion : PirCommunityGalleryResource
+    public partial class CommunityGalleryImageVersion : PirCommunityGalleryResourceData
     {
         /// <summary> Initializes a new instance of CommunityGalleryImageVersion. </summary>
         internal CommunityGalleryImageVersion()
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal CommunityGalleryImageVersion(string name, string location, string resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, resourceType, uniqueId)
+        internal CommunityGalleryImageVersion(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, resourceType, uniqueId)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;
