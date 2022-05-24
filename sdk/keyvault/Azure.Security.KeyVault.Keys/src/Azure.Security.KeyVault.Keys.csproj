@@ -19,9 +19,13 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Memory" Condition="'$(TargetFramework)' != 'net6.0'" />
-    <PackageReference Include="System.Text.Json" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <!-- These packages are included as part net6.0; the external references are not needed. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,8 +11,12 @@
     <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0107;</NoWarn>
   </PropertyGroup>
 
+  <!-- These packages are included as part net6.0; the external references are not needed. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+  </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" />

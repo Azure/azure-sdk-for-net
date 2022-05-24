@@ -23,8 +23,12 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Condition="'$(TargetFramework)' != 'net6.0'" />
     <PackageReference Include="System.Memory.Data" />
+  </ItemGroup>
+
+  <!-- These packages are included as part net6.0; the external references are not needed. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
   </ItemGroup>
 
   <!-- Import Azure.Core shared source -->
