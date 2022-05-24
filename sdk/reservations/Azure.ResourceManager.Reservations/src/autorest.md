@@ -57,7 +57,7 @@ directive:
       $.ReservationOrderResponse.properties.etag['x-ms-format'] = 'etag';
       $.PurchaseRequest['x-ms-client-name'] = 'PurchaseRequestContent';
       $.Price['x-ms-client-name'] = 'PurchasePrice';
-       $.Catalog.properties.resourceType['x-ms-client-name'] = 'reservedResourceType';
+      $.Catalog.properties.resourceType['x-ms-client-name'] = 'reservedResourceType';
       $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
       $.Catalog.properties.locations.items['x-ms-format'] = 'azure-location';
       $.Catalog['x-ms-client-name'] = 'ReservationCatalog';

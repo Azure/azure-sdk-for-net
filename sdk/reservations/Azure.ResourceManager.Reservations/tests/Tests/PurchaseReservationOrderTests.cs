@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.Reservations.Tests
     {
         private TenantResource Tenant { get; set; }
         private ReservationOrderResponseCollection collection { get; set; }
-        private PurchaseRequestContent purchaseRequestContent { get; set; }
 
         public PurchaseReservationOrderTests(bool isAsync) : base(isAsync)
         {
@@ -33,26 +32,13 @@ namespace Azure.ResourceManager.Reservations.Tests
                 Tenant = tenantResources.ToArray()[0];
                 collection = Tenant.GetReservationOrderResponses();
             }
-
-            purchaseRequestContent = new PurchaseRequestContent(
-                sku: new ReservationsSkuName("Standard_B1ls"),
-                location: new Core.AzureLocation("westus"),
-                reservedResourceType: new ReservedResourceType("VirtualMachines"),
-                billingScopeId: "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-                term: new ReservationTerm("P1Y"),
-                billingPlan: new ReservationBillingPlan("Monthly"),
-                quantity: 1,
-                displayName: "testVM",
-                appliedScopeType: new AppliedScopeType("Shared"),
-                renew: false,
-                reservedResourceProperties: new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
-                appliedScopes: null);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestPurchaseReservationOrderSharedScopeMonthly()
         {
+            var purchaseRequestContent = CreatePurchaseRequestContent("Shared", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
             var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
@@ -64,7 +50,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestPurchaseReservationOrderSharedScopeUpfront()
         {
-            purchaseRequestContent.BillingPlan = new ReservationBillingPlan("Upfront");
+            var purchaseRequestContent = CreatePurchaseRequestContent("Shared", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
             var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
 
@@ -76,12 +62,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestPurchaseReservationOrderSingleScopeMonthly()
         {
-            var appliedScopes = new List<string>();
-            appliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
-            purchaseRequestContent.BillingPlan = new ReservationBillingPlan("Monthly");
-            purchaseRequestContent.AppliedScopeType = new AppliedScopeType("Single");
-            purchaseRequestContent.AppliedScopes = appliedScopes;
-
+            var purchaseRequestContent = CreatePurchaseRequestContent("Single", "Monthly");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
             var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
             await purchaseResponse.WaitForCompletionAsync();
@@ -92,12 +73,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestPurchaseReservationOrderSingleScopeUpfront()
         {
-            var appliedScopes = new List<string>();
-            appliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
-            purchaseRequestContent.BillingPlan = new ReservationBillingPlan("Upfront");
-            purchaseRequestContent.AppliedScopeType = new AppliedScopeType("Single");
-            purchaseRequestContent.AppliedScopes = appliedScopes;
-
+            var purchaseRequestContent = CreatePurchaseRequestContent("Single", "Upfront");
             var response = await Tenant.CalculateReservationOrderAsync(purchaseRequestContent);
             var purchaseResponse = await collection.CreateOrUpdateAsync(WaitUntil.Completed, response.Value.Properties.ReservationOrderId, purchaseRequestContent);
             await purchaseResponse.WaitForCompletionAsync();
@@ -118,6 +94,31 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(purchaseRequest.Term.ToString(), purchaseResponse.Value.Data.Term.ToString());
             Assert.IsNotNull(purchaseResponse.Value.Data.Reservations);
             Assert.AreEqual(1, purchaseResponse.Value.Data.Reservations.Count);
+        }
+
+        private PurchaseRequestContent CreatePurchaseRequestContent(string scope, string billingPlan)
+        {
+            var request = new PurchaseRequestContent
+            {
+                Sku = new ReservationsSkuName("Standard_B1ls"),
+                Location = new Core.AzureLocation("westus"),
+                ReservedResourceType = new ReservedResourceType("VirtualMachines"),
+                BillingScopeId = "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+                Term = new ReservationTerm("P1Y"),
+                BillingPlan = new ReservationBillingPlan(billingPlan),
+                Quantity = 1,
+                DisplayName = "testVM",
+                AppliedScopeType = new AppliedScopeType(scope),
+                Renew = false,
+                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
+            };
+
+            if (scope.Equals("Single"))
+            {
+                request.AppliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
+            }
+
+            return request;
         }
     }
 }

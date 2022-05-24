@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("appliedScopeType");
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliedScopes) && AppliedScopes != null)
+            if (Optional.IsCollectionDefined(AppliedScopes))
             {
                 writer.WritePropertyName("appliedScopes");
                 writer.WriteStartArray();

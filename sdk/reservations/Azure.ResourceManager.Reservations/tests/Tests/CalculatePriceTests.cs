@@ -36,95 +36,39 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestCalculatePriceForSharedScopeMonthly()
         {
-            var requestContent = new PurchaseRequestContent(
-                sku: new ReservationsSkuName("Standard_B1ls"),
-                location: new Core.AzureLocation("westus"),
-                reservedResourceType: new ReservedResourceType("VirtualMachines"),
-                billingScopeId: "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-                term: new ReservationTerm("P1Y"),
-                billingPlan: new ReservationBillingPlan("Monthly"),
-                quantity: 1,
-                displayName: "testVM",
-                appliedScopeType: new AppliedScopeType("Shared"),
-                renew: false,
-                reservedResourceProperties: new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
-                appliedScopes: null);
-
-            var response = await Tenant.CalculateReservationOrderAsync(requestContent);
-            testForMonthly(response);
+            var billingPlan = "Monthly";
+            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Shared", billingPlan));
+            testCalculatePriceResponse(response, billingPlan);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestCalculatePriceForSharedScopeUpfront()
         {
-            var requestContent = new PurchaseRequestContent(
-                sku: new ReservationsSkuName("Standard_B1ls"),
-                location: new Core.AzureLocation("westus"),
-                reservedResourceType: new ReservedResourceType("VirtualMachines"),
-                billingScopeId: "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-                term: new ReservationTerm("P1Y"),
-                billingPlan: new ReservationBillingPlan("Upfront"),
-                quantity: 1,
-                displayName: "testVM",
-                appliedScopeType: new AppliedScopeType("Shared"),
-                renew: false,
-                reservedResourceProperties: new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
-                appliedScopes: null);
-
-            var response = await Tenant.CalculateReservationOrderAsync(requestContent);
-            testForUpfront(response);
+            var billingPlan = "Upfront";
+            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Shared", billingPlan));
+            testCalculatePriceResponse(response, billingPlan);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestCalculatePriceForSingleScopeMonthly()
         {
-            var appliedScopes = new List<string>();
-            appliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
-            var requestContent = new PurchaseRequestContent(
-                sku: new ReservationsSkuName("Standard_B1ls"),
-                location: new Core.AzureLocation("westus"),
-                reservedResourceType: new ReservedResourceType("VirtualMachines"),
-                billingScopeId: "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-                term: new ReservationTerm("P1Y"),
-                billingPlan: new ReservationBillingPlan("Monthly"),
-                quantity: 1,
-                displayName: "testVM",
-                appliedScopeType: new AppliedScopeType("Single"),
-                renew: false,
-                reservedResourceProperties: new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
-                appliedScopes: appliedScopes);
-
-            var response = await Tenant.CalculateReservationOrderAsync(requestContent);
-            testForMonthly(response);
+            var billingPlan = "Monthly";
+            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Single", billingPlan));
+            testCalculatePriceResponse(response, billingPlan);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestCalculatePriceForSingleScopeUpfront()
         {
-            var appliedScopes = new List<string>();
-            appliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
-            var requestContent = new PurchaseRequestContent(
-                sku: new ReservationsSkuName("Standard_B1ls"),
-                location: new Core.AzureLocation("westus"),
-                reservedResourceType: new ReservedResourceType("VirtualMachines"),
-                billingScopeId: "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
-                term: new ReservationTerm("P1Y"),
-                billingPlan: new ReservationBillingPlan("Upfront"),
-                quantity: 1,
-                displayName: "testVM",
-                appliedScopeType: new AppliedScopeType("Single"),
-                renew: false,
-                reservedResourceProperties: new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
-                appliedScopes: appliedScopes);
-
-            var response = await Tenant.CalculateReservationOrderAsync(requestContent);
-            testForUpfront(response);
+            var billingPlan = "Upfront";
+            var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Single", billingPlan));
+            testCalculatePriceResponse(response, billingPlan);
         }
 
-        private void testForUpfront(Response<CalculatePriceResponse> response)
+        private void testCalculatePriceResponse(Response<CalculatePriceResponse> response, string billingPlan)
         {
             var price = response.Value;
 
@@ -135,28 +79,47 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual("USD", price.Properties.PricingCurrencyTotal.CurrencyCode);
             Assert.IsTrue(price.Properties.PricingCurrencyTotal.Amount > 0);
             Assert.IsNotEmpty(price.Properties.ReservationOrderId);
-            Assert.IsEmpty(price.Properties.PaymentSchedule);
-        }
 
-        private void testForMonthly(Response<CalculatePriceResponse> response)
-        {
-            var price = response.Value;
-
-            // Should return 200 with monthly price
-            Assert.AreEqual(200, response.GetRawResponse().Status);
-            Assert.AreEqual("USD", price.Properties.BillingCurrencyTotal.CurrencyCode);
-            Assert.IsTrue(price.Properties.BillingCurrencyTotal.Amount > 0);
-            Assert.AreEqual("USD", price.Properties.PricingCurrencyTotal.CurrencyCode);
-            Assert.IsTrue(price.Properties.PricingCurrencyTotal.Amount > 0);
-            Assert.IsNotEmpty(price.Properties.ReservationOrderId);
-            Assert.AreEqual(12, price.Properties.PaymentSchedule.Count);
-            foreach (var item in price.Properties.PaymentSchedule)
+            if (billingPlan.Equals("Upfront"))
             {
-                Assert.AreEqual("USD", item.PricingCurrencyTotal.CurrencyCode);
-                Assert.IsTrue(item.PricingCurrencyTotal.Amount > 0);
-                Assert.IsNotNull(item.DueOn);
-                Assert.AreEqual(PaymentStatus.Scheduled, item.Status);
+                Assert.IsEmpty(price.Properties.PaymentSchedule);
             }
+            else
+            {
+                Assert.AreEqual(12, price.Properties.PaymentSchedule.Count);
+                foreach (var item in price.Properties.PaymentSchedule)
+                {
+                    Assert.AreEqual("USD", item.PricingCurrencyTotal.CurrencyCode);
+                    Assert.IsTrue(item.PricingCurrencyTotal.Amount > 0);
+                    Assert.IsNotNull(item.DueOn);
+                    Assert.AreEqual(PaymentStatus.Scheduled, item.Status);
+                }
+            }
+        }
+
+        private PurchaseRequestContent CreatePurchaseRequestContent(string scope, string billingPlan)
+        {
+            var request = new PurchaseRequestContent
+            {
+                Sku = new ReservationsSkuName("Standard_B1ls"),
+                Location = new Core.AzureLocation("westus"),
+                ReservedResourceType = new ReservedResourceType("VirtualMachines"),
+                BillingScopeId = "/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93",
+                Term = new ReservationTerm("P1Y"),
+                BillingPlan = new ReservationBillingPlan(billingPlan),
+                Quantity = 1,
+                DisplayName = "testVM",
+                AppliedScopeType = new AppliedScopeType(scope),
+                Renew = false,
+                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
+            };
+
+            if (scope.Equals("Single"))
+            {
+                request.AppliedScopes.Add("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93");
+            }
+
+            return request;
         }
     }
 }
