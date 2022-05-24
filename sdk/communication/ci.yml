@@ -32,6 +32,8 @@ extends:
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
       safeName: AzureCommunicationCommon
+    - name: Azure.Communication.Email
+      safeName: AzureCommunicationEmail
     - name: Azure.Communication.Sms
       safeName: AzureCommunicationSms
     - name: Azure.Communication.Identity
