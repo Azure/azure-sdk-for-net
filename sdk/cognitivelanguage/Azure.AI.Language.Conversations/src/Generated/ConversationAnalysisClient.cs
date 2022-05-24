@@ -28,6 +28,24 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ConversationsClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Analyzes the input conversation utterance. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -46,7 +64,7 @@ namespace Azure.AI.Language.Conversations
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///     message: string,
         ///     target: string,
         ///     details: [Error],
@@ -98,7 +116,7 @@ namespace Azure.AI.Language.Conversations
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///     message: string,
         ///     target: string,
         ///     details: [Error],
@@ -142,12 +160,12 @@ namespace Azure.AI.Language.Conversations
         ///   displayName: string,
         ///   createdDateTime: string (ISO 8601 Format),
         ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: JobStateJobId,
-        ///   lastUpdateDateTime: string (ISO 8601 Format),
-        ///   status: JobState,
+        ///   jobId: string,
+        ///   lastUpdatedDateTime: string (ISO 8601 Format),
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///       message: string,
         ///       target: string,
         ///       details: [Error],
@@ -169,7 +187,7 @@ namespace Azure.AI.Language.Conversations
         ///     items: [
         ///       {
         ///         lastUpdateDateTime: string (ISO 8601 Format),
-        ///         status: TaskState,
+        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///         taskName: string,
         ///         kind: &quot;conversationalSummarizationResults&quot; | &quot;conversationalPIIResults&quot;
         ///       }
@@ -186,7 +204,7 @@ namespace Azure.AI.Language.Conversations
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///     message: string,
         ///     target: string,
         ///     details: [Error],
@@ -228,12 +246,12 @@ namespace Azure.AI.Language.Conversations
         ///   displayName: string,
         ///   createdDateTime: string (ISO 8601 Format),
         ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: JobStateJobId,
-        ///   lastUpdateDateTime: string (ISO 8601 Format),
-        ///   status: JobState,
+        ///   jobId: string,
+        ///   lastUpdatedDateTime: string (ISO 8601 Format),
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///       message: string,
         ///       target: string,
         ///       details: [Error],
@@ -255,7 +273,7 @@ namespace Azure.AI.Language.Conversations
         ///     items: [
         ///       {
         ///         lastUpdateDateTime: string (ISO 8601 Format),
-        ///         status: TaskState,
+        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///         taskName: string,
         ///         kind: &quot;conversationalSummarizationResults&quot; | &quot;conversationalPIIResults&quot;
         ///       }
@@ -272,7 +290,7 @@ namespace Azure.AI.Language.Conversations
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///     message: string,
         ///     target: string,
         ///     details: [Error],
@@ -334,7 +352,7 @@ namespace Azure.AI.Language.Conversations
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///     message: string,
         ///     target: string,
         ///     details: [Error],
@@ -398,7 +416,7 @@ namespace Azure.AI.Language.Conversations
         /// Schema for <c>Response Error</c>:
         /// <code>{
         ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
+        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
         ///     message: string,
         ///     target: string,
         ///     details: [Error],
