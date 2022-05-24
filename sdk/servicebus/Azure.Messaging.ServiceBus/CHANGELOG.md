@@ -232,7 +232,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Fixed
 - Multiple enhancements were made to the transport paths for publishing and reading events to reduce memory allocations and increase performance. (A community contribution, courtesy of _[danielmarbach](https://github.com/danielmarbach))_
-- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of _[mikaelkolkinn](https://github.com/mikaelkolkinn))_
+- Fixed an issue where constructing a new `CreateRuleOption` from a `RuleProperties` would fail if the `CorrelationId` was null. (A community contribution, courtesy of Mikael Kolkinn
 
 ## 7.1.1 (2021-03-10)
 
