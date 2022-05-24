@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class CrossPlatformMessagingRestClient
+    internal partial class ThreadlessMessagingRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;
@@ -24,13 +24,13 @@ namespace Azure.Communication.Chat
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of CrossPlatformMessagingRestClient. </summary>
+        /// <summary> Initializes a new instance of ThreadlessMessagingRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CrossPlatformMessagingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-04-21-preview8")
+        public ThreadlessMessagingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2022-04-21-preview8")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -38,19 +38,19 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendNotificationRequest(string @from, string to, NotificationType? type, string content, NotificationMedia media, NotificationTemplate template)
+        internal HttpMessage CreateSendMessageRequest(string @from, string to, ThreadlessMessageType? type, string content, MessageMedia media, MessageTemplate template)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/chat/notifications", false);
+            uri.AppendPath("/chat/messages:send", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendNotificationRequest()
+            var model = new SendThreadlessMessageRequest()
             {
                 From = @from,
                 To = to,
@@ -65,25 +65,25 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Sends a Cross-platform messaging notification. </summary>
+        /// <summary> Sends a threadless Cross-platform message. </summary>
         /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The cross-platform messaging notification type. </param>
-        /// <param name="content"> Broadcasr chat message content. </param>
+        /// <param name="type"> The cross-platform threadless message type. </param>
+        /// <param name="content"> Threadless message content. </param>
         /// <param name="media"> The media Object. </param>
-        /// <param name="template"> The template object used to create notification templates. </param>
+        /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SendNotificationResult>> SendNotificationAsync(string @from = null, string to = null, NotificationType? type = null, string content = null, NotificationMedia media = null, NotificationTemplate template = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendThreadlessMessageResult>> SendMessageAsync(string @from = null, string to = null, ThreadlessMessageType? type = null, string content = null, MessageMedia media = null, MessageTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendNotificationRequest(@from, to, type, content, media, template);
+            using var message = CreateSendMessageRequest(@from, to, type, content, media, template);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     {
-                        SendNotificationResult value = default;
+                        SendThreadlessMessageResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SendNotificationResult.DeserializeSendNotificationResult(document.RootElement);
+                        value = SendThreadlessMessageResult.DeserializeSendThreadlessMessageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -91,25 +91,25 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Sends a Cross-platform messaging notification. </summary>
+        /// <summary> Sends a threadless Cross-platform message. </summary>
         /// <param name="from"> The from identifier that is owned by the authenticated account. </param>
         /// <param name="to"> The channel user identifiers of the recipient. </param>
-        /// <param name="type"> The cross-platform messaging notification type. </param>
-        /// <param name="content"> Broadcasr chat message content. </param>
+        /// <param name="type"> The cross-platform threadless message type. </param>
+        /// <param name="content"> Threadless message content. </param>
         /// <param name="media"> The media Object. </param>
-        /// <param name="template"> The template object used to create notification templates. </param>
+        /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SendNotificationResult> SendNotification(string @from = null, string to = null, NotificationType? type = null, string content = null, NotificationMedia media = null, NotificationTemplate template = null, CancellationToken cancellationToken = default)
+        public Response<SendThreadlessMessageResult> SendMessage(string @from = null, string to = null, ThreadlessMessageType? type = null, string content = null, MessageMedia media = null, MessageTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendNotificationRequest(@from, to, type, content, media, template);
+            using var message = CreateSendMessageRequest(@from, to, type, content, media, template);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     {
-                        SendNotificationResult value = default;
+                        SendThreadlessMessageResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SendNotificationResult.DeserializeSendNotificationResult(document.RootElement);
+                        value = SendThreadlessMessageResult.DeserializeSendThreadlessMessageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

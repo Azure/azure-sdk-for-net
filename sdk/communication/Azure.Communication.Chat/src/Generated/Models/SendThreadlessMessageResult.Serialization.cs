@@ -10,11 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class SendNotificationResult
+    public partial class SendThreadlessMessageResult
     {
-        internal static SendNotificationResult DeserializeSendNotificationResult(JsonElement element)
+        internal static SendThreadlessMessageResult DeserializeSendThreadlessMessageResult(JsonElement element)
         {
             string id = default;
+            string status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -22,8 +23,13 @@ namespace Azure.Communication.Chat
                     id = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("status"))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
             }
-            return new SendNotificationResult(id);
+            return new SendThreadlessMessageResult(id, status);
         }
     }
 }
