@@ -23,5 +23,5 @@ This client library allows to do following operations:
  - Send Email Messages [synchronously][sample_email] or [asynchronously][sample_email_async]
  
 <!-- LINKS -->
-[sample_email]: https://www.bing.com
-[sample_email_async]: https://www.bing.com
+[sample_email]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Email/samples/Sample1_SendEmail.md
+[sample_email_async]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Email/samples/Sample1_SendEmailAsync.md

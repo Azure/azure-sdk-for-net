@@ -179,10 +179,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[package]: https://www.nuget.org/packages/Azure.Communication.Common/
+[package]: https://www.nuget.org/packages/Azure.Communication.Email
 [product_docs]: https://aka.ms/acsemail/overview
-[nextsteps]:https://aka.ms/acsemail/qs-sendmail
+[nextsteps]:https://aka.ms/acsemail/qs-sendmail?pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication
-[email_attachmentTypes]: https://www.bing.com
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Email/src
+[email_attachmentTypes]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.Email/src/Generated/Models/EmailAttachmentType.cs
 [domain_overview]: https://aka.ms/acsemail/domainsoverview
