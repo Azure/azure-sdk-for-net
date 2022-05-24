@@ -9,7 +9,7 @@
 * [Add default storage initialization for logs and metrics](https://github.com/Azure/azure-sdk-for-net/pull/28506)
 * [Add disable storage switch](https://github.com/Azure/azure-sdk-for-net/pull/28446)
 * [Transmit from storage](https://github.com/Azure/azure-sdk-for-net/pull/26762)
-* [Add Exception Telemetry](https://github.com/Azure/azure-sdk-for-net/pull/26670)
+* [Add exception telemetry](https://github.com/Azure/azure-sdk-for-net/pull/26670)
 * [Storage transmission evaluator](https://github.com/Azure/azure-sdk-for-net/pull/26976)
 * [Add metrics exporter](https://github.com/Azure/azure-sdk-for-net/pull/26651)
 * [Add default storage location and initialization for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
