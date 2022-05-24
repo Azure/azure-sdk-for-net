@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Applications.Containers
     public partial class ContainerAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -98,32 +98,32 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a AuthConfig of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AuthConfigResource>> GetAuthConfigAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AuthConfigResource>> GetAuthConfigAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            return await GetAuthConfigs().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAuthConfigs().GetAsync(authConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a AuthConfig of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AuthConfigResource> GetAuthConfig(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AuthConfigResource> GetAuthConfig(string authConfigName, CancellationToken cancellationToken = default)
         {
-            return GetAuthConfigs().Get(name, cancellationToken);
+            return GetAuthConfigs().Get(authConfigName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppRevisionResources in the ContainerApp. </summary>
@@ -135,32 +135,32 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a revision of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision. </param>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppRevisionResource>> GetContainerAppRevisionAsync(string revisionName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerAppRevisions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppRevisions().GetAsync(revisionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a revision of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision. </param>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppRevisionResource> GetContainerAppRevision(string revisionName, CancellationToken cancellationToken = default)
         {
-            return GetContainerAppRevisions().Get(name, cancellationToken);
+            return GetContainerAppRevisions().Get(revisionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SourceControlResources in the ContainerApp. </summary>
@@ -172,37 +172,37 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a SourceControl of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}
         /// Operation Id: ContainerAppsSourceControls_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App SourceControl. </param>
+        /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SourceControlResource>> GetSourceControlAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControlResource>> GetSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            return await GetSourceControls().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetSourceControls().GetAsync(sourceControlName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a SourceControl of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/sourcecontrols/{sourceControlName}
         /// Operation Id: ContainerAppsSourceControls_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App SourceControl. </param>
+        /// <param name="sourceControlName"> Name of the Container App SourceControl. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SourceControlResource> GetSourceControl(string name, CancellationToken cancellationToken = default)
+        public virtual Response<SourceControlResource> GetSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            return GetSourceControls().Get(name, cancellationToken);
+            return GetSourceControls().Get(sourceControlName, cancellationToken);
         }
 
         /// <summary>
         /// Get the properties of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the properties of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Description for Delete a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Delete a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Description for Delete a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Delete a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Patches a Container App using JSON Merge Patch
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Patches a Container App using JSON Merge Patch
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// List secrets for a container app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}/listSecrets
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/listSecrets
         /// Operation Id: ContainerApps_ListSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// List secrets for a container app
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}/listSecrets
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/listSecrets
         /// Operation Id: ContainerApps_ListSecrets
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
         /// Operation Id: ContainerApps_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
