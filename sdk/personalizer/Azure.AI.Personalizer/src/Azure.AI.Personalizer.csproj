@@ -22,8 +22,12 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="RL.Net" VersionOverride="0.1.0-preview3" />
-    <!-- Why not 6.0.5 here? -->
-    <PackageReference Include="System.Text.Json" VersionOverride="6.0.1" Condition="'$(TargetFramework)' != 'net6.0'" />
+  </ItemGroup>
+
+  <!-- These packages are included as part net6.0; the external references are not needed. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <!-- Consider changing this to 6.0.4. -->
+    <PackageReference Include="System.Text.Json" VersionOverride="6.0.1" />
   </ItemGroup>
 
 </Project>
