@@ -166,7 +166,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             else
             {
                 statusCode = httpMessage.Response.Status;
-                switch (status)
+                switch (statusCode)
                 {
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
