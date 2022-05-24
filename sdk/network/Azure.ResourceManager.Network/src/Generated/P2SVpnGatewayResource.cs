@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "P2SVpnGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal P2SVpnGatewayResource(ArmClient client, P2SVpnGatewayData data) : this(client, new ResourceIdentifier(data.Id))
+        internal P2SVpnGatewayResource(ArmClient client, P2SVpnGatewayData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

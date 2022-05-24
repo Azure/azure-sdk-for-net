@@ -26,11 +26,19 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// Initializes a new instance of the OperationResponse class.
         /// </summary>
-        public OperationResponse(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string))
+        /// <param name="name">Name of the operation</param>
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
+        /// <param name="display">Display of the operation</param>
+        /// <param name="origin">Origin of the operation</param>
+        /// <param name="properties">Properties of the operation</param>
+        public OperationResponse(string name = default(string), bool? isDataAction = default(bool?), OperationDisplay display = default(OperationDisplay), string origin = default(string), object properties = default(object))
         {
             Name = name;
+            IsDataAction = isDataAction;
             Display = display;
             Origin = origin;
+            Properties = properties;
             CustomInit();
         }
 
@@ -40,19 +48,34 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets name of the operation
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets display of the operation
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public OperationDisplay Display { get; set; }
 
         /// <summary>
+        /// Gets or sets origin of the operation
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of the operation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
     }
 }

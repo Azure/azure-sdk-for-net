@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Compute
             return GetCachedClient(Client => new CapacityReservationGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DiskResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiskResources and their operations over a DiskResource. </returns>
-        public virtual DiskCollection GetDisks()
+        /// <summary> Gets a collection of ManagedDiskResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedDiskResources and their operations over a ManagedDiskResource. </returns>
+        public virtual ManagedDiskCollection GetManagedDisks()
         {
-            return GetCachedClient(Client => new DiskCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedDiskCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>

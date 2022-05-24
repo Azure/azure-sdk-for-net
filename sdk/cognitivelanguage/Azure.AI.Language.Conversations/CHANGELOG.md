@@ -1,10 +1,14 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+* Added Conversation issue summarization task (Long-running operation)
+* Added Conversation PII extraction task (Long-running operation)
 
 ### Breaking Changes
+- Client now uses python dictionaries for method parameters and results instead of classes.
+- Many input and result parameter name changes in `analyze_conversation()` method
 
 ### Bugs Fixed
 
