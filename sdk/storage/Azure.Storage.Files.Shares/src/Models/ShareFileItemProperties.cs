@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.Models
         public DateTimeOffset? LastWrittenOn { get; }
 
         /// <summary>
-        /// The time this time was changed.
+        /// The time this item was changed.
         /// </summary>
         public DateTimeOffset? ChangedOn { get; }
 

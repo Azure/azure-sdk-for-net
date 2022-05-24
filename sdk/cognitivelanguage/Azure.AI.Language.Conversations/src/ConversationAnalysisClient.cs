@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -12,12 +16,8 @@ namespace Azure.AI.Language.Conversations
     /// <summary>
     /// The <see cref="ConversationAnalysisClient"/> allows you analyze conversations.
     /// </summary>
-    public class ConversationAnalysisClient
+    public partial class ConversationAnalysisClient
     {
-        internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-
-        private readonly ConversationAnalysisRestClient _analysisRestClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationAnalysisClient"/> class.
         /// </summary>
@@ -40,15 +40,16 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            Endpoint = endpoint;
+            _endpoint = endpoint;
             options ??= new ConversationAnalysisClientOptions();
 
-            Diagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
                 new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
 
-            _analysisRestClient = new(Diagnostics, Pipeline, Endpoint, options.Version);
+            _keyCredential = credential;
+            _apiVersion = options.Version;
         }
 
         /// <summary>
@@ -57,21 +58,6 @@ namespace Azure.AI.Language.Conversations
         protected ConversationAnalysisClient()
         {
         }
-
-        /// <summary>
-        /// Get the service endpoint for this client.
-        /// </summary>
-        public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// Gets the <see cref="ClientDiagnostics"/> for this client.
-        /// </summary>
-        private protected virtual ClientDiagnostics Diagnostics { get; }
-
-        /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> for this client.
-        /// </summary>
-        private protected virtual HttpPipeline Pipeline { get; }
 
         /// <summary>Analyzes a conversational utterance.</summary>
         /// <param name="utterance">The conversation utterance to be analyzed.</param>
@@ -96,14 +82,30 @@ namespace Azure.AI.Language.Conversations
             options ??= new AnalyzeConversationOptions(textConversationItem);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}External");
             scope.AddAttribute("projectName", project.ProjectName);
             scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
             try
             {
-                return await _analysisRestClient.AnalyzeConversationAsync(customConversationalTask, cancellationToken).ConfigureAwait(false);
+                Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(customConversationalTask);
+
+                Response response = await AnalyzeConversationAsync(content, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        {
+                            AnalyzeConversationTaskResult value = default;
+                            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            value = AnalyzeConversationTaskResult.DeserializeAnalyzeConversationTaskResult(document.RootElement);
+                            return Response.FromValue(value, response);
+                        }
+                    default:
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {
@@ -135,20 +137,158 @@ namespace Azure.AI.Language.Conversations
             options ??= new AnalyzeConversationOptions(textConversationItem);
             CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}External");
             scope.AddAttribute("projectName", project.ProjectName);
             scope.AddAttribute("deploymentName", project.DeploymentName);
             scope.Start();
 
             try
             {
-                return _analysisRestClient.AnalyzeConversation(customConversationalTask, cancellationToken);
+                Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(customConversationalTask);
+
+                Response response = AnalyzeConversation(content, new RequestContext() { CancellationToken = cancellationToken });
+
+                switch (response.Status)
+                {
+                    case 200:
+                        {
+                            AnalyzeConversationTaskResult value = default;
+                            using var document = JsonDocument.Parse(response.ContentStream);
+                            value = AnalyzeConversationTaskResult.DeserializeAnalyzeConversationTaskResult(document.RootElement);
+                            return Response.FromValue(value, response);
+                        }
+                    default:
+                        throw ClientDiagnostics.CreateRequestFailedException(response);
+                }
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>Analyzes a conversational utterance.</summary>
+        /// <param name="input">The <see cref="GeneratedConversation"/> used for tasks input.</param>
+        /// <param name="tasks"> <see cref="AnalyzeConversationLROTask"/> defines the tasks to be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="input"/> or <paramref name="tasks"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="input"/> or <paramref name="tasks"/> is empty.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        public virtual async Task<Operation<AnalyzeConversationJobState>> StartAnalyzeConversationAsync(IEnumerable<GeneratedConversation> input, IEnumerable<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(input, nameof(input));
+            Argument.AssertNotNull(tasks, nameof(tasks));
+
+            MultiLanguageConversationAnalysisInput multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+
+            AnalyzeConversationJobsInput analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(StartAnalyzeConversation)}");
+            scope.Start();
+
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeConversationJobsInput);
+
+            try
+            {
+                Operation<AnalyzeConversationJobState> response = await SubmitJobAsync(content, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>Analyzes a conversational utterance.</summary>
+        /// <param name="input">The <see cref="GeneratedConversation"/> used for tasks input.</param>
+        /// <param name="tasks"> <see cref="AnalyzeConversationLROTask"/> defines the tasks to be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="input"/> or <paramref name="tasks"/> or is null.</exception>
+        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
+        /// <exception cref="ArgumentException"><paramref name="input"/> or <paramref name="tasks"/> is empty.</exception>
+        public virtual Operation<AnalyzeConversationJobState> StartAnalyzeConversation(IEnumerable<GeneratedConversation> input, IEnumerable<AnalyzeConversationLROTask> tasks, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(input, nameof(input));
+            Argument.AssertNotNull(tasks, nameof(tasks));
+
+            MultiLanguageConversationAnalysisInput multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+
+            AnalyzeConversationJobsInput analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(StartAnalyzeConversation)}");
+            scope.Start();
+
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeConversationJobsInput);
+
+            try
+            {
+                Operation<AnalyzeConversationJobState> response = SubmitJob(content, new RequestContext() { CancellationToken = cancellationToken });
+                return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private static AnalyzeConversationJobState ConvertResponseToResult(Response response)
+        {
+            using var document = JsonDocument.Parse(response.ContentStream);
+            return AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(document.RootElement);
+        }
+
+        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual async Task<Operation<AnalyzeConversationJobState>> SubmitJobAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.SubmitJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSubmitJobRequest(content, context);
+                return await LowLevelOperationHelpers.ProcessMessageAsync<AnalyzeConversationJobState>(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, WaitUntil.Started, ConvertResponseToResult).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual Operation<AnalyzeConversationJobState> SubmitJob(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.SubmitJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSubmitJobRequest(content, context);
+                return LowLevelOperationHelpers.ProcessMessage<AnalyzeConversationJobState>(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, WaitUntil.Started, ConvertResponseToResult);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> returns the authorization header. </summary>
+        public static string GetAuthorizationHeader()
+        {
+            return AuthorizationHeader;
         }
     }
 }
