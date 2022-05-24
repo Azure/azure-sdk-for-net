@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public BatchEndpointData(AzureLocation location, BatchEndpointDetails properties) : base(location)
+        public BatchEndpointData(AzureLocation location, BatchEndpointProperties properties) : base(location)
         {
             if (properties == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        internal BatchEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, BatchEndpointDetails properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal BatchEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, BatchEndpointProperties properties, MachineLearningSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </summary>
         public string Kind { get; set; }
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public BatchEndpointDetails Properties { get; set; }
+        public BatchEndpointProperties Properties { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public MachineLearningSku Sku { get; set; }
     }

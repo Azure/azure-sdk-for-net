@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         internal WorkspaceListResult()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<MachineLearningWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         /// <param name="value"> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of machine learning workspaces. </param>
-        internal WorkspaceListResult(IReadOnlyList<WorkspaceData> value, string nextLink)
+        internal WorkspaceListResult(IReadOnlyList<MachineLearningWorkspaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        public IReadOnlyList<MachineLearningWorkspaceData> Value { get; }
         /// <summary> The URI that can be used to request the next list of machine learning workspaces. </summary>
         public string NextLink { get; }
     }

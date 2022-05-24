@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of ComponentVersionData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ComponentVersionData(ComponentVersionDetails properties)
+        public ComponentVersionData(ComponentVersionProperties properties)
         {
             if (properties == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal ComponentVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComponentVersionDetails properties) : base(id, name, resourceType, systemData)
+        internal ComponentVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComponentVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public ComponentVersionDetails Properties { get; set; }
+        public ComponentVersionProperties Properties { get; set; }
     }
 }

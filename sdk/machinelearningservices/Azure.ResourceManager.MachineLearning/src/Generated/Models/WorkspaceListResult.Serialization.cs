@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static WorkspaceListResult DeserializeWorkspaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkspaceData>> value = default;
+            Optional<IReadOnlyList<MachineLearningWorkspaceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<MachineLearningWorkspaceData> array = new List<MachineLearningWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
+                        array.Add(MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(item));
                     }
                     value = array;
                     continue;

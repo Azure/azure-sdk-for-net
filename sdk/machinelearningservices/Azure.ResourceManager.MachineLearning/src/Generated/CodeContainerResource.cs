@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// A Class representing a CodeContainer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CodeContainerResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCodeContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetCodeContainer method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetCodeContainer method.
     /// </summary>
     public partial class CodeContainerResource : ArmResource
     {

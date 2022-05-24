@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Command job definition. </summary>
-    public partial class CommandJob : JobBaseDetails
+    public partial class CommandJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of CommandJob. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>

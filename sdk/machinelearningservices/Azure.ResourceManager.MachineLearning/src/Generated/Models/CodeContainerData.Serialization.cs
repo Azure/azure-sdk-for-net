@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static CodeContainerData DeserializeCodeContainerData(JsonElement element)
         {
-            CodeContainerDetails properties = default;
+            CodeContainerProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = CodeContainerDetails.DeserializeCodeContainerDetails(property.Value);
+                    properties = CodeContainerProperties.DeserializeCodeContainerProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

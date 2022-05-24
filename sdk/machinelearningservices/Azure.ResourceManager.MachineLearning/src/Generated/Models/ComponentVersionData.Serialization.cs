@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static ComponentVersionData DeserializeComponentVersionData(JsonElement element)
         {
-            ComponentVersionDetails properties = default;
+            ComponentVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = ComponentVersionDetails.DeserializeComponentVersionDetails(property.Value);
+                    properties = ComponentVersionProperties.DeserializeComponentVersionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

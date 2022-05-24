@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
-            BatchDeploymentDetails properties = default;
+            BatchDeploymentProperties properties = default;
             Optional<MachineLearningSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = BatchDeploymentDetails.DeserializeBatchDeploymentDetails(property.Value);
+                    properties = BatchDeploymentProperties.DeserializeBatchDeploymentProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))

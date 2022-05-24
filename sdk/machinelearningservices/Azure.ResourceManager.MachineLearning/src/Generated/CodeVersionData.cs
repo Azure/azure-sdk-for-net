@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of CodeVersionData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public CodeVersionData(CodeVersionDetails properties)
+        public CodeVersionData(CodeVersionProperties properties)
         {
             if (properties == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal CodeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CodeVersionDetails properties) : base(id, name, resourceType, systemData)
+        internal CodeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CodeVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public CodeVersionDetails Properties { get; set; }
+        public CodeVersionProperties Properties { get; set; }
     }
 }

@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceResource> GetWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspacesAsync(skip, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceResource> GetWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkspaces(skip, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
         }
 
         /// <summary>
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.MachineLearning
             );
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of MachineLearningWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public static WorkspaceCollection GetWorkspaces(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MachineLearningWorkspaceResources and their operations over a MachineLearningWorkspaceResource. </returns>
+        public static MachineLearningWorkspaceCollection GetMachineLearningWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkspaces();
+            return GetExtensionClient(resourceGroupResource).GetMachineLearningWorkspaces();
         }
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkspaceResource>> GetWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MachineLearningWorkspaceResource>> GetMachineLearningWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetMachineLearningWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,25 +248,25 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkspaceResource> GetWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<MachineLearningWorkspaceResource> GetMachineLearningWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkspaces().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetMachineLearningWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        #region WorkspaceResource
+        #region MachineLearningWorkspaceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkspaceResource" /> object. </returns>
-        public static WorkspaceResource GetWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceResource" /> object. </returns>
+        public static MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkspaceResource.ValidateResourceId(id);
-                return new WorkspaceResource(client, id);
+                MachineLearningWorkspaceResource.ValidateResourceId(id);
+                return new MachineLearningWorkspaceResource(client, id);
             }
             );
         }
@@ -500,134 +500,134 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region EnvironmentContainerDataResource
+        #region EnvironmentContainerResource
         /// <summary>
-        /// Gets an object representing an <see cref="EnvironmentContainerDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnvironmentContainerDataResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentContainerDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EnvironmentContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EnvironmentContainerResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnvironmentContainerDataResource" /> object. </returns>
-        public static EnvironmentContainerDataResource GetEnvironmentContainerDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnvironmentContainerResource" /> object. </returns>
+        public static EnvironmentContainerResource GetEnvironmentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EnvironmentContainerDataResource.ValidateResourceId(id);
-                return new EnvironmentContainerDataResource(client, id);
+                EnvironmentContainerResource.ValidateResourceId(id);
+                return new EnvironmentContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EnvironmentVersionDataResource
+        #region EnvironmentVersionResource
         /// <summary>
-        /// Gets an object representing an <see cref="EnvironmentVersionDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnvironmentVersionDataResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentVersionDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="EnvironmentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EnvironmentVersionResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EnvironmentVersionDataResource" /> object. </returns>
-        public static EnvironmentVersionDataResource GetEnvironmentVersionDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EnvironmentVersionResource" /> object. </returns>
+        public static EnvironmentVersionResource GetEnvironmentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EnvironmentVersionDataResource.ValidateResourceId(id);
-                return new EnvironmentVersionDataResource(client, id);
+                EnvironmentVersionResource.ValidateResourceId(id);
+                return new EnvironmentVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobBaseDataResource
+        #region MachineLearningJobResource
         /// <summary>
-        /// Gets an object representing a <see cref="JobBaseDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobBaseDataResource.CreateResourceIdentifier" /> to create a <see cref="JobBaseDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningJobResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobBaseDataResource" /> object. </returns>
-        public static JobBaseDataResource GetJobBaseDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningJobResource" /> object. </returns>
+        public static MachineLearningJobResource GetMachineLearningJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                JobBaseDataResource.ValidateResourceId(id);
-                return new JobBaseDataResource(client, id);
+                MachineLearningJobResource.ValidateResourceId(id);
+                return new MachineLearningJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ModelContainerDataResource
+        #region ModelContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ModelContainerDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ModelContainerDataResource.CreateResourceIdentifier" /> to create a <see cref="ModelContainerDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="ModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ModelContainerDataResource" /> object. </returns>
-        public static ModelContainerDataResource GetModelContainerDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ModelContainerResource" /> object. </returns>
+        public static ModelContainerResource GetModelContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ModelContainerDataResource.ValidateResourceId(id);
-                return new ModelContainerDataResource(client, id);
+                ModelContainerResource.ValidateResourceId(id);
+                return new ModelContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ModelVersionDataResource
+        #region ModelVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ModelVersionDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ModelVersionDataResource.CreateResourceIdentifier" /> to create a <see cref="ModelVersionDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ModelVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ModelVersionResource.CreateResourceIdentifier" /> to create a <see cref="ModelVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ModelVersionDataResource" /> object. </returns>
-        public static ModelVersionDataResource GetModelVersionDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ModelVersionResource" /> object. </returns>
+        public static ModelVersionResource GetModelVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ModelVersionDataResource.ValidateResourceId(id);
-                return new ModelVersionDataResource(client, id);
+                ModelVersionResource.ValidateResourceId(id);
+                return new ModelVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OnlineEndpointDataResource
+        #region OnlineEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="OnlineEndpointDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OnlineEndpointDataResource.CreateResourceIdentifier" /> to create an <see cref="OnlineEndpointDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OnlineEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OnlineEndpointResource.CreateResourceIdentifier" /> to create an <see cref="OnlineEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OnlineEndpointDataResource" /> object. </returns>
-        public static OnlineEndpointDataResource GetOnlineEndpointDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OnlineEndpointResource" /> object. </returns>
+        public static OnlineEndpointResource GetOnlineEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OnlineEndpointDataResource.ValidateResourceId(id);
-                return new OnlineEndpointDataResource(client, id);
+                OnlineEndpointResource.ValidateResourceId(id);
+                return new OnlineEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OnlineDeploymentDataResource
+        #region OnlineDeploymentResource
         /// <summary>
-        /// Gets an object representing an <see cref="OnlineDeploymentDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OnlineDeploymentDataResource.CreateResourceIdentifier" /> to create an <see cref="OnlineDeploymentDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OnlineDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OnlineDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="OnlineDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OnlineDeploymentDataResource" /> object. </returns>
-        public static OnlineDeploymentDataResource GetOnlineDeploymentDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OnlineDeploymentResource" /> object. </returns>
+        public static OnlineDeploymentResource GetOnlineDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OnlineDeploymentDataResource.ValidateResourceId(id);
-                return new OnlineDeploymentDataResource(client, id);
+                OnlineDeploymentResource.ValidateResourceId(id);
+                return new OnlineDeploymentResource(client, id);
             }
             );
         }

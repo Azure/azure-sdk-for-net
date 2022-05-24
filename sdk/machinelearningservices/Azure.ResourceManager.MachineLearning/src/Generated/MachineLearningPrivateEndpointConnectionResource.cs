@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// A Class representing a MachineLearningPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetMachineLearningPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningPrivateEndpointConnection method.
     /// </summary>
     public partial class MachineLearningPrivateEndpointConnectionResource : ArmResource
     {

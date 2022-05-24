@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// A Class representing a WorkspaceConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkspaceConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetWorkspaceConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetWorkspaceConnection method.
     /// </summary>
     public partial class WorkspaceConnectionResource : ArmResource
     {

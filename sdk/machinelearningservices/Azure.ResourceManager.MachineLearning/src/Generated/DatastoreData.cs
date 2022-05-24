@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of DatastoreData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DatastoreData(DatastoreDetails properties)
+        public DatastoreData(DatastoreProperties properties)
         {
             if (properties == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal DatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatastoreDetails properties) : base(id, name, resourceType, systemData)
+        internal DatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatastoreProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public DatastoreDetails Properties { get; set; }
+        public DatastoreProperties Properties { get; set; }
     }
 }

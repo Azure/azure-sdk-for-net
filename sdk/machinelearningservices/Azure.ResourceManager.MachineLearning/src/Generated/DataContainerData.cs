@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of DataContainerData. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataContainerData(DataContainerDetails properties)
+        public DataContainerData(DataContainerProperties properties)
         {
             if (properties == null)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal DataContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataContainerDetails properties) : base(id, name, resourceType, systemData)
+        internal DataContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataContainerProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>
-        public DataContainerDetails Properties { get; set; }
+        public DataContainerProperties Properties { get; set; }
     }
 }

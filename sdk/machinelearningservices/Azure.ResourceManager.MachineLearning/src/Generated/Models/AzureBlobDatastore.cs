@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure Blob datastore configuration. </summary>
-    public partial class AzureBlobDatastore : DatastoreDetails
+    public partial class AzureBlobDatastore : DatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureBlobDatastore. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

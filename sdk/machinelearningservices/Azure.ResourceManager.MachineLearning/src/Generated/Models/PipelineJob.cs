@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Pipeline Job definition: defines generic to MFE attributes. </summary>
-    public partial class PipelineJob : JobBaseDetails
+    public partial class PipelineJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of PipelineJob. </summary>
         public PipelineJob()

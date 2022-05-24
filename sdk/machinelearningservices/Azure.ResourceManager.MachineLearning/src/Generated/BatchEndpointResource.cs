@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// A Class representing a BatchEndpoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchEndpointResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetBatchEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetBatchEndpoint method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetBatchEndpoint method.
     /// </summary>
     public partial class BatchEndpointResource : ArmResource
     {

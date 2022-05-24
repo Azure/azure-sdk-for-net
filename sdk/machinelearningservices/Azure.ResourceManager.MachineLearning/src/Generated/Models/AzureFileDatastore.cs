@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure File datastore configuration. </summary>
-    public partial class AzureFileDatastore : DatastoreDetails
+    public partial class AzureFileDatastore : DatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

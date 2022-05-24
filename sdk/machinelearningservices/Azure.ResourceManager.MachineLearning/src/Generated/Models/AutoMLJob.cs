@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Use this class for executing AutoML tasks like Classification/Regression etc.
     /// See TaskType enum for all the tasks supported.
     /// </summary>
-    public partial class AutoMLJob : JobBaseDetails
+    public partial class AutoMLJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of AutoMLJob. </summary>
         /// <param name="taskDetails"> [Required] This represents scenario which can be one of Tables/NLP/Image. </param>

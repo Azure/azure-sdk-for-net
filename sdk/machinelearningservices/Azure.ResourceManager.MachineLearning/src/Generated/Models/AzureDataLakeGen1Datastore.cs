@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure Data Lake Gen1 datastore configuration. </summary>
-    public partial class AzureDataLakeGen1Datastore : DatastoreDetails
+    public partial class AzureDataLakeGen1Datastore : DatastoreProperties
     {
         /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

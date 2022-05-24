@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
         internal RegistryListCredentialsResult()
         {
-            Passwords = new ChangeTrackingList<Password>();
+            Passwords = new ChangeTrackingList<PasswordDetail>();
         }
 
         /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
         /// <param name="location"></param>
         /// <param name="username"></param>
         /// <param name="passwords"></param>
-        internal RegistryListCredentialsResult(string location, string username, IReadOnlyList<Password> passwords)
+        internal RegistryListCredentialsResult(string location, string username, IReadOnlyList<PasswordDetail> passwords)
         {
             Location = location;
             Username = username;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the username. </summary>
         public string Username { get; }
         /// <summary> Gets the passwords. </summary>
-        public IReadOnlyList<Password> Passwords { get; }
+        public IReadOnlyList<PasswordDetail> Passwords { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static JobBaseResourceArmPaginatedResult DeserializeJobBaseResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<JobBaseDataData>> value = default;
+            Optional<IReadOnlyList<MachineLearningJobData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobBaseDataData> array = new List<JobBaseDataData>();
+                    List<MachineLearningJobData> array = new List<MachineLearningJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobBaseDataData.DeserializeJobBaseDataData(item));
+                        array.Add(MachineLearningJobData.DeserializeMachineLearningJobData(item));
                     }
                     value = array;
                     continue;

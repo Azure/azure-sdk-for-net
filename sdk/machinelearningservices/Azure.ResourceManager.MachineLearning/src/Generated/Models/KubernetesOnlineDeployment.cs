@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
-    public partial class KubernetesOnlineDeployment : OnlineDeploymentDetails
+    public partial class KubernetesOnlineDeployment : OnlineDeploymentProperties
     {
         /// <summary> Initializes a new instance of KubernetesOnlineDeployment. </summary>
         public KubernetesOnlineDeployment()

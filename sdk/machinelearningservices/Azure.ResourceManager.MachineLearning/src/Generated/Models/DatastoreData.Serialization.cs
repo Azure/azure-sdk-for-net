@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static DatastoreData DeserializeDatastoreData(JsonElement element)
         {
-            DatastoreDetails properties = default;
+            DatastoreProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = DatastoreDetails.DeserializeDatastoreDetails(property.Value);
+                    properties = DatastoreProperties.DeserializeDatastoreProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

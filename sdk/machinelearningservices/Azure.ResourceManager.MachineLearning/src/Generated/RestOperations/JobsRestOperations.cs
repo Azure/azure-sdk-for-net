@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobBaseDataData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningJobData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -273,13 +273,13 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        JobBaseDataData value = default;
+                        MachineLearningJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobBaseDataData.DeserializeJobBaseDataData(document.RootElement);
+                        value = MachineLearningJobData.DeserializeMachineLearningJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobBaseDataData)null, message.Response);
+                    return Response.FromValue((MachineLearningJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobBaseDataData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
+        public Response<MachineLearningJobData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -306,19 +306,19 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        JobBaseDataData value = default;
+                        MachineLearningJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobBaseDataData.DeserializeJobBaseDataData(document.RootElement);
+                        value = MachineLearningJobData.DeserializeMachineLearningJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((JobBaseDataData)null, message.Response);
+                    return Response.FromValue((MachineLearningJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string id, JobBaseDataData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobBaseDataData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string id, JobBaseDataData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningJobData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -368,9 +368,9 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                 case 201:
                     {
-                        JobBaseDataData value = default;
+                        MachineLearningJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobBaseDataData.DeserializeJobBaseDataData(document.RootElement);
+                        value = MachineLearningJobData.DeserializeMachineLearningJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobBaseDataData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string id, JobBaseDataData data, CancellationToken cancellationToken = default)
+        public Response<MachineLearningJobData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string id, MachineLearningJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                 case 201:
                     {
-                        JobBaseDataData value = default;
+                        MachineLearningJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobBaseDataData.DeserializeJobBaseDataData(document.RootElement);
+                        value = MachineLearningJobData.DeserializeMachineLearningJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

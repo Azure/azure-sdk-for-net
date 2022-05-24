@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static OnlineDeploymentTrackedResourceArmPaginatedResult DeserializeOnlineDeploymentTrackedResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<OnlineDeploymentDataData>> value = default;
+            Optional<IReadOnlyList<OnlineDeploymentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OnlineDeploymentDataData> array = new List<OnlineDeploymentDataData>();
+                    List<OnlineDeploymentData> array = new List<OnlineDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OnlineDeploymentDataData.DeserializeOnlineDeploymentDataData(item));
+                        array.Add(OnlineDeploymentData.DeserializeOnlineDeploymentData(item));
                     }
                     value = array;
                     continue;

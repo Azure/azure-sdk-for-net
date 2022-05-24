@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// A Class representing a ComponentContainer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ComponentContainerResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetComponentContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetComponentContainer method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetComponentContainer method.
     /// </summary>
     public partial class ComponentContainerResource : ArmResource
     {

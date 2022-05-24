@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static CodeVersionData DeserializeCodeVersionData(JsonElement element)
         {
-            CodeVersionDetails properties = default;
+            CodeVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = CodeVersionDetails.DeserializeCodeVersionDetails(property.Value);
+                    properties = CodeVersionProperties.DeserializeCodeVersionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

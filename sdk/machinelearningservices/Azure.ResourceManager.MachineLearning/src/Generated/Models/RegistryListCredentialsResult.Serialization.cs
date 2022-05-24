@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> location = default;
             Optional<string> username = default;
-            Optional<IReadOnlyList<Password>> passwords = default;
+            Optional<IReadOnlyList<PasswordDetail>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Password> array = new List<Password>();
+                    List<PasswordDetail> array = new List<PasswordDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Password.DeserializePassword(item));
+                        array.Add(PasswordDetail.DeserializePasswordDetail(item));
                     }
                     passwords = array;
                     continue;

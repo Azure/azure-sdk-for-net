@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties specific to a ManagedOnlineDeployment. </summary>
-    public partial class ManagedOnlineDeployment : OnlineDeploymentDetails
+    public partial class ManagedOnlineDeployment : OnlineDeploymentProperties
     {
         /// <summary> Initializes a new instance of ManagedOnlineDeployment. </summary>
         public ManagedOnlineDeployment()

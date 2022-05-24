@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The HdfsDatastore. </summary>
-    public partial class HdfsDatastore : DatastoreDetails
+    public partial class HdfsDatastore : DatastoreProperties
     {
         /// <summary> Initializes a new instance of HdfsDatastore. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

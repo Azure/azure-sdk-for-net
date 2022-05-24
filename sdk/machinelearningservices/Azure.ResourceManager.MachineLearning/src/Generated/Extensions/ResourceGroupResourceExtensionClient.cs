@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MachineLearning
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkspaceResources and their operations over a WorkspaceResource. </returns>
-        public virtual WorkspaceCollection GetWorkspaces()
+        /// <summary> Gets a collection of MachineLearningWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MachineLearningWorkspaceResources and their operations over a MachineLearningWorkspaceResource. </returns>
+        public virtual MachineLearningWorkspaceCollection GetMachineLearningWorkspaces()
         {
-            return GetCachedClient(Client => new WorkspaceCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningWorkspaceCollection(Client, Id));
         }
     }
 }

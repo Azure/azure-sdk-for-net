@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
-            BatchEndpointDetails properties = default;
+            BatchEndpointProperties properties = default;
             Optional<MachineLearningSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = BatchEndpointDetails.DeserializeBatchEndpointDetails(property.Value);
+                    properties = BatchEndpointProperties.DeserializeBatchEndpointProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))

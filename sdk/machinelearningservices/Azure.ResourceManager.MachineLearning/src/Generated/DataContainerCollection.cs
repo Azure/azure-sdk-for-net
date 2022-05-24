@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="DataContainerResource" /> and their operations.
-    /// Each <see cref="DataContainerResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
-    /// To get a <see cref="DataContainerCollection" /> instance call the GetDataContainers method from an instance of <see cref="WorkspaceResource" />.
+    /// Each <see cref="DataContainerResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// To get a <see cref="DataContainerCollection" /> instance call the GetDataContainers method from an instance of <see cref="MachineLearningWorkspaceResource" />.
     /// </summary>
     public partial class DataContainerCollection : ArmCollection, IEnumerable<DataContainerResource>, IAsyncEnumerable<DataContainerResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != MachineLearningWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

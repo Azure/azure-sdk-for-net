@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Sweep job definition. </summary>
-    public partial class SweepJob : JobBaseDetails
+    public partial class SweepJob : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of SweepJob. </summary>
         /// <param name="objective"> [Required] Optimization objective. </param>

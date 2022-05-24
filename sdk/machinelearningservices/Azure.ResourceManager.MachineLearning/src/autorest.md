@@ -102,6 +102,7 @@ directive:
     where: $.definitions
     transform: >
       $.PrivateEndpointConnection.properties.location["x-ms-format"] = "azure-location";
+      $.Workspace["x-ms-client-name"] = "MachineLearningWorkspace";
       $.Workspace.properties.location["x-ms-format"] = "azure-location";
       $.WorkspaceProperties.properties.tenantId["format"] = "uuid";
       $.ComputeResource["x-ms-client-name"] = "MachineLearningCompute";
@@ -114,18 +115,41 @@ directive:
       $.Databricks["x-ms-client-name"] = "DatabricksCompute";
       $.DataLakeAnalytics["x-ms-client-name"] = "DataLakeAnalyticsCompute";
       $.SynapseSpark["x-ms-client-name"] = "SynapseSparkCompute";
+      $.Password["x-ms-client-name"] = "PasswordDetail";
   - from: mfe.json
     where: $.definitions
     transform: >
       $.CodeContainerResource["x-ms-client-name"] = "CodeContainer";
+      $.CodeContainer["x-ms-client-name"] = "CodeContainerProperties";
       $.BatchDeploymentTrackedResource["x-ms-client-name"] = "BatchDeployment";
+      $.BatchDeployment["x-ms-client-name"] = "BatchDeploymentProperties";
       $.PartialBatchDeploymentPartialTrackedResource.properties.location["x-ms-format"] = "azure-location";
       $.BatchEndpointTrackedResource["x-ms-client-name"] = "BatchEndpoint";
+      $.BatchEndpoint["x-ms-client-name"] = "BatchEndpointProperties";
       $.CodeVersionResource["x-ms-client-name"] = "CodeVersion";
+      $.CodeVersion["x-ms-client-name"] = "CodeVersionProperties";
       $.ComponentContainerResource["x-ms-client-name"] = "ComponentContainer";
+      $.ComponentContainer["x-ms-client-name"] = "ComponentContainerProperties";
       $.ComponentVersionResource["x-ms-client-name"] = "ComponentVersion";
+      $.ComponentVersion["x-ms-client-name"] = "ComponentVersionProperties";
       $.DataContainerResource["x-ms-client-name"] = "DataContainer";
+      $.DataContainer["x-ms-client-name"] = "DataContainerProperties";
       $.DatastoreResource["x-ms-client-name"] = "Datastore";
+      $.Datastore["x-ms-client-name"] = "DatastoreProperties";
       $.DataVersionBaseResource["x-ms-client-name"] = "DataVersionBase";
       $.DataVersionBase["x-ms-client-name"] = "DataVersionBaseProperties";
+      $.EnvironmentContainerResource["x-ms-client-name"] = "EnvironmentContainer";
+      $.EnvironmentContainer["x-ms-client-name"] = "EnvironmentContainerProperties";
+      $.EnvironmentVersionResource["x-ms-client-name"] = "EnvironmentVersion";
+      $.EnvironmentVersion["x-ms-client-name"] = "EnvironmentVersionProperties";
+      $.JobBaseResource["x-ms-client-name"] = "MachineLearningJob";
+      $.JobBase["x-ms-client-name"] = "MachineLearningJobProperties";
+      $.ModelContainerResource["x-ms-client-name"] = "ModelContainer";
+      $.ModelContainer["x-ms-client-name"] = "ModelContainerProperties";
+      $.ModelVersionResource["x-ms-client-name"] = "ModelVersion";
+      $.ModelVersion["x-ms-client-name"] = "ModelVersionProperties";
+      $.OnlineDeploymentTrackedResource["x-ms-client-name"] = "OnlineDeployment";
+      $.OnlineDeployment["x-ms-client-name"] = "OnlineDeploymentProperties";
+      $.OnlineEndpointTrackedResource["x-ms-client-name"] = "OnlineEndpoint";
+      $.OnlineEndpoint["x-ms-client-name"] = "OnlineEndpointProperties";
 ```
