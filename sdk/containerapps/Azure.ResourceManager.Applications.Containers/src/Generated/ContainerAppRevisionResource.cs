@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Applications.Containers
     public partial class ContainerAppRevisionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppRevisionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,37 +95,37 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a replica for a Container App Revision.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppReplicaResource>> GetContainerAppReplicaAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppReplicaResource>> GetContainerAppReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerAppReplicas().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a replica for a Container App Revision.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppReplicaResource> GetContainerAppReplica(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppReplicaResource> GetContainerAppReplica(string replicaName, CancellationToken cancellationToken = default)
         {
-            return GetContainerAppReplicas().Get(name, cancellationToken);
+            return GetContainerAppReplicas().Get(replicaName, cancellationToken);
         }
 
         /// <summary>
         /// Get a revision of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a revision of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}
         /// Operation Id: ContainerAppsRevisions_GetRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Activates a revision for a Container App
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}/activate
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/activate
         /// Operation Id: ContainerAppsRevisions_ActivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Activates a revision for a Container App
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}/activate
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/activate
         /// Operation Id: ContainerAppsRevisions_ActivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Deactivates a revision for a Container App
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}/deactivate
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/deactivate
         /// Operation Id: ContainerAppsRevisions_DeactivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Deactivates a revision for a Container App
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}/deactivate
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/deactivate
         /// Operation Id: ContainerAppsRevisions_DeactivateRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Restarts a revision for a Container App
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}/restart
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/restart
         /// Operation Id: ContainerAppsRevisions_RestartRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Restarts a revision for a Container App
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{name}/restart
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/restart
         /// Operation Id: ContainerAppsRevisions_RestartRevision
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
