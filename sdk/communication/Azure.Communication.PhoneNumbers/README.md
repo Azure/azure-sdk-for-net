@@ -195,6 +195,7 @@ SIP trunks can be managed separately. User can retrieve, set or delete a single 
 #### Retrieve single trunk
 
 ```C# Snippet:RetrieveTrunkAsync
+// Get trunk object, based on it's FQDN.
 var fqdnToRetrieve = "<fqdn>";
 var trunkResponse = await client.GetTrunkAsync(fqdnToRetrieve);
 ```
@@ -210,6 +211,7 @@ await client.SetTrunkAsync(trunkToSet);
 #### Delete single trunk
 
 ```C# Snippet:DeleteTrunkAsync
+// Deletes trunk with supplied FQDN.
 var fqdnToDelete = "<fqdn>";
 await client.DeleteTrunkAsync(fqdnToDelete);
 ```
