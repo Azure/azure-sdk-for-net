@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.0.0-beta.1</Version>
     <Description>
-      Azure management client SDK for Azure resource provider MachineLearningServices.
+      Azure management client SDK for Azure resource provider MachineLearning.
       This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
     </Description>
     <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
