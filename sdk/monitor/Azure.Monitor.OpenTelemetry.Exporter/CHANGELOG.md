@@ -12,7 +12,7 @@
 * [Add Exception Telemetry](https://github.com/Azure/azure-sdk-for-net/pull/26670)
 * [Storage transmission evaluator](https://github.com/Azure/azure-sdk-for-net/pull/26976)
 * [Add metrics exporter](https://github.com/Azure/azure-sdk-for-net/pull/26651)
-* [Add default storage location and initialzation for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
+* [Add default storage location and initialization for traces](https://github.com/Azure/azure-sdk-for-net/pull/26494)
 * [Change AzureMonitorExporterLoggingExtensions from internal to public](https://github.com/Azure/azure-sdk-for-net/pull/26355)
 
 ### Breaking Changes
