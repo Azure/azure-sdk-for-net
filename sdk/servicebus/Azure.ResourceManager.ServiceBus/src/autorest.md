@@ -12,8 +12,12 @@ skip-csproj: true
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
-    Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
-    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+  Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
+  DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
+# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
+modelerfour:
+  lenient-model-deduplication: true
 
 rename-rules:
   CPU: Cpu
@@ -38,6 +42,15 @@ rename-rules:
   URI: Uri
 
 directive:
+    - from: namespace-preview.json
+      where: $.definitions.Encryption
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.Identity
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.userAssignedIdentityProperties
+      transform: $['x-ms-client-flatten'] = false
     - rename-model:
         from: SBNamespace
         to: ServiceBusNamespace
@@ -182,10 +195,10 @@ directive:
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
     - rename-model:
         from: RegenerateAccessKeyParameters
-        to: RegenerateAccessKeyOptions
+        to: RegenerateAccessKeyContent
     - rename-model:
         from: ServiceBusNamespaceUpdateParameters
-        to: ServiceBusNamespaceUpdateOptions
+        to: ServiceBusNamespaceUpdateContent
     - from: swagger-document
       where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
       transform: $['x-ms-client-name'] = 'iPRules'
@@ -196,7 +209,7 @@ directive:
       where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
       transform: >
         $['x-ms-enum'] = {
-          "name": "ProvisioningStateDisasterRecovery",
+          "name": "DisasterRecoveryProvisioningState",
           "modelAsString": false
         }
 ```

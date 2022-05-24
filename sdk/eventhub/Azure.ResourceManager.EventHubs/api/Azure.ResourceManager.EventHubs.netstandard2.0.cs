@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventHubs
         public string AlternateName { get { throw null; } set { } }
         public string PartnerNamespace { get { throw null; } set { } }
         public long? PendingReplicationOperationsCount { get { throw null; } }
-        public Azure.ResourceManager.EventHubs.Models.ProvisioningStateDisasterRecovery? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.DisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.RoleDisasterRecovery? Role { get { throw null; } }
     }
     public partial class DisasterRecoveryResource : Azure.ResourceManager.ArmResource
@@ -585,6 +585,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.DefaultAction left, Azure.ResourceManager.EventHubs.Models.DefaultAction right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum DisasterRecoveryProvisioningState
+    {
+        Accepted = 0,
+        Succeeded = 1,
+        Failed = 2,
+    }
     public enum EncodingCaptureDescription
     {
         Avro = 0,
@@ -768,12 +774,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static implicit operator Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus left, Azure.ResourceManager.EventHubs.Models.PrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public enum ProvisioningStateDisasterRecovery
-    {
-        Accepted = 0,
-        Succeeded = 1,
-        Failed = 2,
     }
     public partial class ProxyResource : Azure.ResourceManager.Models.ResourceData
     {

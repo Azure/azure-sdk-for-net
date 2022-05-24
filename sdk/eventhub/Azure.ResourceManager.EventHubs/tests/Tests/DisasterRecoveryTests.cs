@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             //wait for completion, this may take several minutes in live and record mode
             armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
+            while (armDisasterRecovery.Data.ProvisioningState != DisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await armDisasterRecovery.BreakPairingAsync();
             armDisasterRecovery = await eHNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (armDisasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
+            while (armDisasterRecovery.Data.ProvisioningState != DisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {

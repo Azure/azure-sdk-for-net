@@ -600,7 +600,6 @@ title: ManagementClient
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
 request-path-to-parent:
-  /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
 operation-positions:
   ManagementGroups_CheckNameAvailability: collection
