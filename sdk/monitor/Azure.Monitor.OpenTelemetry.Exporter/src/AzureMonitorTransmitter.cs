@@ -153,6 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private ExportResult HandleFailures(HttpMessage httpMessage)
         {
             ExportResult result = ExportResult.Failure;
+            int statusCode = 0;
             byte[] content;
             int retryInterval;
 
@@ -161,12 +162,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // HttpRequestException
                 content = HttpPipelineHelper.GetRequestContent(httpMessage.Request.Content);
                 result = _storage.SaveTelemetry(content, HttpPipelineHelper.MinimumRetryInterval);
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", "Network Error: Telemetry will be stored offline for retry");
             }
             else
             {
-                var status = httpMessage.Response.Status;
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {status}: Telemetry will be stored offline for retry");
+                statusCode = httpMessage.Response.Status;
                 switch (status)
                 {
                     case ResponseStatusCodes.PartialSuccess:
@@ -203,25 +202,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
+            if (result == ExportResult.Success)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is dropped");
+            }
+
             return result;
         }
 
         private void HandleFailures(HttpMessage httpMessage, IPersistentBlob blob)
         {
             int retryInterval;
+            int statusCode = 0;
+            bool shouldRetry = true;
 
             if (!httpMessage.HasResponse)
             {
                 // HttpRequestException
                 // Extend lease time so that it is not picked again for retry.
                 blob.Lease(HttpPipelineHelper.MinimumRetryInterval);
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", "Network Error");
             }
             else
             {
-                var status = httpMessage.Response.Status;
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", $"Error code is {status}");
-                switch (status)
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
                 {
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
@@ -254,8 +262,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     default:
                         // Log Non-Retriable Status and don't retry or store;
                         // File will be cleared by maintenance job
+                        shouldRetry = false;
                         break;
                 }
+            }
+
+            if (shouldRetry)
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is dropped");
             }
         }
     }
