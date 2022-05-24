@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Azure.Analytics.Purview.Scanning/1.0.0-alpha.20220520.1": {
+      "Azure.Analytics.Purview.Scanning/1.0.0-alpha.20220524.1": {
         "dependencies": {
           "Azure.ClientSdk.Analyzers": "0.1.1-dev.20220111.2",
           "Azure.Core": "1.24.0",
@@ -213,7 +213,7 @@
     }
   },
   "libraries": {
-    "Azure.Analytics.Purview.Scanning/1.0.0-alpha.20220520.1": {
+    "Azure.Analytics.Purview.Scanning/1.0.0-alpha.20220524.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

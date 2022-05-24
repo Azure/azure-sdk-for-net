@@ -592,7 +592,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CancelScanAsync
       <td>
         <span class="pull-right"><span class="xref">Azure.Core.RequestContent</span></span>
         <span class="parametername">content</span>
-        <p><p>The content to send as the body of the request.</p>
+        <p><p>The content to send as the body of the request. The details of the content are below in the remarks.</p>
 </p>
       </td>
     </tr>
@@ -611,7 +611,8 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CancelScanAsync
     <tr>
       <td>
         <span class="xref">Azure.Response</span>
-        <p>
+        <p><p>The details of the response are below in the remarks.</p>
+</p>
       </td>
     </tr>
   </table>
@@ -625,7 +626,7 @@ public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CancelScanAsync
   <h5 id="Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Below is the JSON schema for the request and response payloads, as well as samples showing how to format these payloads in .NET.<br>
 Additional information can be found in the Purview service REST API documentation: <a href="https://docs.microsoft.com/en-us/rest/api/purview/">https://docs.microsoft.com/en-us/rest/api/purview/</a><br><br>
-This method takes a one of the scan types below as a payload. Please select a scan type to view the schema for this type.<br><a href="AzureSubscriptionCredential">AzureSubscriptionCredential</a><br><a href="AzureSubscriptionMsi">AzureSubscriptionMsi</a><br><a href="AzureResourceGroupCredential">AzureResourceGroupCredential</a><br><a href="AzureResourceGroupMsi">AzureResourceGroupMsi</a><br><a href="AzureSynapseWorkspaceCredential">AzureSynapseWorkspaceCredential</a><br><a href="AmazonS3Credential">AmazonS3Credential</a><br><a href="See More...">See More...</a># ~50+ types<br><br></p>
+This method takes one of the scan types below as a payload. Please select a scan type to view the schema for this type.<br><a href="AzureSubscriptionCredential">AzureSubscriptionCredential</a><br><a href="AzureSubscriptionMsi">AzureSubscriptionMsi</a><br><a href="AzureResourceGroupCredential">AzureResourceGroupCredential</a><br><a href="AzureResourceGroupMsi">AzureResourceGroupMsi</a><br><a href="AzureSynapseWorkspaceCredential">AzureSynapseWorkspaceCredential</a><br><a href="AmazonS3Credential">AmazonS3Credential</a><br><a href="See More...">See More...</a># ~50+ types<br><br></p>
 <p>Schema for AzureSubscriptionCredential <code data-dev-comment-type="c">Request Body</code>:</p>
  <pre><code>
  {
@@ -852,132 +853,133 @@ Schema for AmazonS3Credential <code data-dev-comment-type="c">Response Body</cod
 ...<br><code data-dev-comment-type="c">Error Response</code>:</p>
  <p>
  We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response.
- </p><p>
- This sample shows how to call CreateOrUpdate with required parameters
- <pre><code>
- var credential = new DefaultAzureCredential();
- var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
- var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
- 
- var data = new
- {
-     kind = "AmazonS3Credential",
-     properties = new
-     {
-         credential = new
-         {
-             referenceName = "test-credential-s3",
-             credentialType = "AmazonARN"
-         }
-      }
- };
- Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
- JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
- Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
- Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
- Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());
- </code></pre>
- 
- This sample shows how to call CreateOrUpdate with all the parameters
- <pre><code>
- var credential = new DefaultAzureCredential();
- var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
- var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
- 
- var data = new
- {
-     id = "test-id",
-     name = "test-name",
-     kind = "AmazonS3Credential",
-     scanResults = new[]
-     {
-             new
-             {
-                 parentId = "test-scanResults-parentId",
-                 id = "test-scanResults-Id",
-                 resourceId = "test-scanResults-resourceId",
-                 status = "test-scanResults-status",
-                 assetsDiscovered = 4513,
-                 assetsClassified = 5423,
-                 diagnostics = new
-                 {
-                     notifications = new[]
-                     {
-                         new
-                         {
-                             message = "test-scanResults-diagnostics-message",
-                             code =  3423
-                         }
-                     },
-                     exceptionCountMap = new Dictionary&lt;string, int&gt;(){{ "exceptionCountMapKey1", 4243}},
-                 },
-                 startTime = "2022-05-10T13:57:31.2311892-04:00",
-                 queuedTime = "2022-05-10T14:57:31.2311892-04:00",
-                 pipelineStartTime = "2022-05-10T15:57:31.2311892-04:00",
-                 endTime = "2022-05-10T16:57:31.2311892-04:00",
-                 scanRulesetVersion = 9284,
-                 scanRulesetType = "Custom",
-                 scanLevelType = "Full",
-                 errorMessage = "test-scanResults-errorMessage",
-                 error = new
-                 {
-                     code = "test-scanResults-error-code",
-                     message = "test-scanResults-error-message",
-                     target = "test-scanResults-error-target",
-                     details = new[]
-                     {
-                         new
-                         {
-                             code = "test-scanResults-error-details-code",
-                             message = "test-scanResults-error-details-message",
-                             target = "test-scanResults-error-details-target",
-                             details = new[]
-                             {
-                                 new
-                                 {
-                                 }
-                             }
-                         }
-                     }
-                 },
-                 runType = "test-scanResults-runType",
-                 dataSourceType = "AzureSubscription"
-             },
-         }
-     properties = new
-      {
-          scanRulesetName = "properties-scanRulesetName",
-          scanRulesetType = "Customquot",
-          collection = new
-          {
-              lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00",
-              referenceName = "properties-referenceName",
-              type = "properties-type"
-          },
-          workers = 434,
-          createdAt = "2022-05-10T16:57:31.2311892-04:00",
-          lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00"
-          connectedVia = new
-          {
-              referenceName = "properties-connectedVia-referenceName"
-          },
-          credential = new
-          {
-              referenceName = "properties-credential-referenceName",
-              credentialType = "AmazonARN",
-          },
-          roleARN = "roleRn"
-      },
- };
- Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
- JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
- Console.WriteLine(jsonResponse.GetProperty("id").GetString());
- Console.WriteLine(jsonResponse.GetProperty("name").GetString());
- Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
- ....
- </code></pre></p>
+ </p>
 </div>
   
+  <h5 id="Azure_Analytics_Purview_Scanning_PurviewScanClient_CreateOrUpdate_Azure_Core_RequestContent_Azure_RequestContext__examples">Examples</h5>
+  <p>This sample shows how to call CreateOrUpdate with required parameters</p>
+<pre><code>
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
+var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
+
+var data = new
+{
+    kind = "AmazonS3Credential",
+    properties = new
+    {
+        credential = new
+        {
+            referenceName = "test-credential-s3",
+            credentialType = "AmazonARN"
+        }
+     }
+};
+Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
+Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());
+</code></pre>
+<p>This sample shows how to call CreateOrUpdate with all the parameters</p>
+<pre><code>
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
+var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
+
+var data = new
+{
+    id = "test-id",
+    name = "test-name",
+    kind = "AmazonS3Credential",
+    scanResults = new[]
+    {
+            new
+            {
+                parentId = "test-scanResults-parentId",
+                id = "test-scanResults-Id",
+                resourceId = "test-scanResults-resourceId",
+                status = "test-scanResults-status",
+                assetsDiscovered = 4513,
+                assetsClassified = 5423,
+                diagnostics = new
+                {
+                    notifications = new[]
+                    {
+                        new
+                        {
+                            message = "test-scanResults-diagnostics-message",
+                            code =  3423
+                        }
+                    },
+                    exceptionCountMap = new Dictionary&lt;string, int&gt;(){{ "exceptionCountMapKey1", 4243}},
+                },
+                startTime = "2022-05-10T13:57:31.2311892-04:00",
+                queuedTime = "2022-05-10T14:57:31.2311892-04:00",
+                pipelineStartTime = "2022-05-10T15:57:31.2311892-04:00",
+                endTime = "2022-05-10T16:57:31.2311892-04:00",
+                scanRulesetVersion = 9284,
+                scanRulesetType = "Custom",
+                scanLevelType = "Full",
+                errorMessage = "test-scanResults-errorMessage",
+                error = new
+                {
+                    code = "test-scanResults-error-code",
+                    message = "test-scanResults-error-message",
+                    target = "test-scanResults-error-target",
+                    details = new[]
+                    {
+                        new
+                        {
+                            code = "test-scanResults-error-details-code",
+                            message = "test-scanResults-error-details-message",
+                            target = "test-scanResults-error-details-target",
+                            details = new[]
+                            {
+                                new
+                                {
+                                }
+                            }
+                        }
+                    }
+                },
+                runType = "test-scanResults-runType",
+                dataSourceType = "AzureSubscription"
+            },
+        }
+    properties = new
+     {
+         scanRulesetName = "properties-scanRulesetName",
+         scanRulesetType = "Customquot",
+         collection = new
+         {
+             lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00",
+             referenceName = "properties-referenceName",
+             type = "properties-type"
+         },
+         workers = 434,
+         createdAt = "2022-05-10T16:57:31.2311892-04:00",
+         lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00"
+         connectedVia = new
+         {
+             referenceName = "properties-connectedVia-referenceName"
+         },
+         credential = new
+         {
+             referenceName = "properties-credential-referenceName",
+             credentialType = "AmazonARN",
+         },
+         roleARN = "roleRn"
+     },
+};
+Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+Console.WriteLine(jsonResponse.GetProperty("id").GetString());
+Console.WriteLine(jsonResponse.GetProperty("name").GetString());
+Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+....
+</code></pre>
+
   
   <h5 class="exceptions">Exceptions</h5>
   <table>

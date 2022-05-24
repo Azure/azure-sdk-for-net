@@ -280,7 +280,7 @@ document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
 	</dd>
 </dl>
 <p>
-	The content to send as the body of the request. 
+	The content to send as the body of the request. The details of the content are below in the remarks. 
 </p>
 <dl paramName="context" class="parameterList">
 	<dt>
@@ -301,6 +301,9 @@ document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
 	<h4 class="subHeading">
 		Return Value</h4>
 	<strong>Response</strong> 
+		<p>
+		The details of the response are below in the remarks. 
+	</p>
 	
 
 
@@ -377,7 +380,7 @@ document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
 			Below is the JSON schema for the request and response payloads, as well as samples showing how to format these payloads in .NET.&nbsp;<br />
  Additional information can be found in the Purview service REST API documentation: <a href="https://docs.microsoft.com/en-us/rest/api/purview/">https://docs.microsoft.com/en-us/rest/api/purview/</a>&nbsp;<br />
 &nbsp;<br />
- This method takes a one of the scan types below as a payload. Please select a scan type to view the schema for this type.&nbsp;<br />
+ This method takes one of the scan types below as a payload. Please select a scan type to view the schema for this type.&nbsp;<br />
  <a href="AzureSubscriptionCredential">AzureSubscriptionCredential</a>&nbsp;<br />
  <a href="AzureSubscriptionMsi">AzureSubscriptionMsi</a>&nbsp;<br />
  <a href="AzureResourceGroupCredential">AzureResourceGroupCredential</a>&nbsp;<br />
@@ -641,9 +644,18 @@ document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
  <p>
  We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response.
  </p>
+	</div>					
+</div>
 
- <p>
- This sample shows how to call CreateOrUpdate with required parameters
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Example</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="codeExampleSection" class="section">	
+This sample shows how to call CreateOrUpdate with required parameters
  			<div class="codeSnippetCodeCollection">
 				<div class="codeSnippetToolbar">
 					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
@@ -781,12 +793,9 @@ document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
   ....
   					</pre>			
 				</div>
-			</div>
- </p>
+			</div>										
 	</div>					
 </div>
-
-
 
 
 
