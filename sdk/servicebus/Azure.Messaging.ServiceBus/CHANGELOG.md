@@ -221,7 +221,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
-- Mikael Kolkinn _([GitHub](https://github.com/mikaelkolkinn))_
+- Mikael Kolkinn
 
 ### Added
 - Updated dependency on Azure.Core.Amqp to support Value/Sequence AMQP message bodies.
