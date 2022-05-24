@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: containerapp
 namespace: Azure.ResourceManager.Applications.Containers
-require: https://github.com/Azure/azure-rest-api-specs/blob/228f16c8871629ffe1fcdebfca9a3e8b4d2ce4aa/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/988d42ee7d8ca3243df17bfbc134e0c1f21b481e/specification/app/resource-manager/readme.md
 tag: package-2022-03
 output-folder: Generated/
 clear-output-folder: true
