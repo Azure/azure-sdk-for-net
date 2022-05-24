@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
         /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, string tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData)
+        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, string> tags, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Specifies the location of the resource. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         public string PrimaryUserAssignedIdentity { get; set; }
         /// <summary> The tenant id associated with this workspace. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </summary>
         public bool? StorageHnsEnabled { get; }
         /// <summary> The URI associated with this workspace that machine learning flow must point at to set up tracking. </summary>

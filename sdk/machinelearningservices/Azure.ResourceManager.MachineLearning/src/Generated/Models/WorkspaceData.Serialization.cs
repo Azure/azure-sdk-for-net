@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning
         internal static WorkspaceData DeserializeWorkspaceData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<MachineLearningSku> sku = default;
             ResourceIdentifier id = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<NotebookResourceInfo> notebookInfo = default;
             Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
             Optional<string> primaryUserAssignedIdentity = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<bool> storageHnsEnabled = default;
             Optional<Uri> mlFlowTrackingUri = default;
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,12 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -422,7 +427,12 @@ namespace Azure.ResourceManager.MachineLearning
                         }
                         if (property0.NameEquals("tenantId"))
                         {
-                            tenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("storageHnsEnabled"))
@@ -449,7 +459,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new WorkspaceData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, tenantId.Value, Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
+            return new WorkspaceData(id, name, type, systemData, identity, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, workspaceId.Value, description.Value, friendlyName.Value, keyVault.Value, applicationInsights.Value, containerRegistry.Value, storageAccount.Value, discoveryUrl.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(hbiWorkspace), serviceProvisionedResourceGroup.Value, Optional.ToNullable(privateLinkCount), imageBuildCompute.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), notebookInfo.Value, serviceManagedResourcesSettings.Value, primaryUserAssignedIdentity.Value, Optional.ToNullable(tenantId), Optional.ToNullable(storageHnsEnabled), mlFlowTrackingUri.Value);
         }
     }
 }

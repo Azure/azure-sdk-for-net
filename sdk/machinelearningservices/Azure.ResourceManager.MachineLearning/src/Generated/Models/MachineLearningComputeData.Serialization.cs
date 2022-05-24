@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class ComputeResourceData : IUtf8JsonSerializable
+    public partial class MachineLearningComputeData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning
             writer.WriteEndObject();
         }
 
-        internal static ComputeResourceData DeserializeComputeResourceData(JsonElement element)
+        internal static MachineLearningComputeData DeserializeMachineLearningComputeData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new ComputeResourceData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
+            return new MachineLearningComputeData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
         }
     }
 }

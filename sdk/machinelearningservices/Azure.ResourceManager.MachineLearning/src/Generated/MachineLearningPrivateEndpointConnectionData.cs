@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, PrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal MachineLearningPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, string> tags, MachineLearningSku sku, PrivateEndpoint privateEndpoint, MachineLearningPrivateLinkServiceConnectionState connectionState, MachineLearningPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Specifies the location of the resource. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>

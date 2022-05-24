@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.MachineLearning
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ComputeResources in the Workspace. </summary>
-        /// <returns> An object representing collection of ComputeResources and their operations over a ComputeResource. </returns>
-        public virtual ComputeResourceCollection GetComputeResources()
+        /// <summary> Gets a collection of MachineLearningComputeResources in the Workspace. </summary>
+        /// <returns> An object representing collection of MachineLearningComputeResources and their operations over a MachineLearningComputeResource. </returns>
+        public virtual MachineLearningComputeCollection GetMachineLearningComputes()
         {
-            return GetCachedClient(Client => new ComputeResourceCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningComputeCollection(Client, Id));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComputeResource>> GetComputeResourceAsync(string computeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningComputeResource>> GetMachineLearningComputeAsync(string computeName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResources().GetAsync(computeName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningComputes().GetAsync(computeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ComputeResource> GetComputeResource(string computeName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningComputeResource> GetMachineLearningCompute(string computeName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResources().Get(computeName, cancellationToken);
+            return GetMachineLearningComputes().Get(computeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningPrivateEndpointConnectionResources in the Workspace. </summary>

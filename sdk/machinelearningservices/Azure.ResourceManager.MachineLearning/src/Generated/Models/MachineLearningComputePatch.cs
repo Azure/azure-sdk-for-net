@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> AmlCompute update parameters. </summary>
-    public partial class ComputeResourcePatch
+    public partial class MachineLearningComputePatch
     {
-        /// <summary> Initializes a new instance of ComputeResourcePatch. </summary>
-        public ComputeResourcePatch()
+        /// <summary> Initializes a new instance of MachineLearningComputePatch. </summary>
+        public MachineLearningComputePatch()
         {
         }
 

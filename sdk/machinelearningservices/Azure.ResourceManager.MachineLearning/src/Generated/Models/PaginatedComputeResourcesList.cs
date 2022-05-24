@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
         internal PaginatedComputeResourcesList()
         {
-            Value = new ChangeTrackingList<ComputeResourceData>();
+            Value = new ChangeTrackingList<MachineLearningComputeData>();
         }
 
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
         /// <param name="value"> An array of Machine Learning compute objects wrapped in ARM resource envelope. </param>
         /// <param name="nextLink"> A continuation link (absolute URI) to the next page of results in the list. </param>
-        internal PaginatedComputeResourcesList(IReadOnlyList<ComputeResourceData> value, string nextLink)
+        internal PaginatedComputeResourcesList(IReadOnlyList<MachineLearningComputeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of Machine Learning compute objects wrapped in ARM resource envelope. </summary>
-        public IReadOnlyList<ComputeResourceData> Value { get; }
+        public IReadOnlyList<MachineLearningComputeData> Value { get; }
         /// <summary> A continuation link (absolute URI) to the next page of results in the list. </summary>
         public string NextLink { get; }
     }

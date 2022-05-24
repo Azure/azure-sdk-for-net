@@ -272,20 +272,20 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region ComputeResource
+        #region MachineLearningComputeResource
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComputeResource.CreateResourceIdentifier" /> to create a <see cref="ComputeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MachineLearningComputeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineLearningComputeResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningComputeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComputeResource" /> object. </returns>
-        public static ComputeResource GetComputeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningComputeResource" /> object. </returns>
+        public static MachineLearningComputeResource GetMachineLearningComputeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ComputeResource.ValidateResourceId(id);
-                return new ComputeResource(client, id);
+                MachineLearningComputeResource.ValidateResourceId(id);
+                return new MachineLearningComputeResource(client, id);
             }
             );
         }

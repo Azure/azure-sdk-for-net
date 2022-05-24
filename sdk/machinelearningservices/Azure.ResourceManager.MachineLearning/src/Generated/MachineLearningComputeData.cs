@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> A class representing the ComputeResource data model. </summary>
-    public partial class ComputeResourceData : ResourceData
+    /// <summary> A class representing the MachineLearningCompute data model. </summary>
+    public partial class MachineLearningComputeData : ResourceData
     {
-        /// <summary> Initializes a new instance of ComputeResourceData. </summary>
-        public ComputeResourceData()
+        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        public MachineLearningComputeData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceData. </summary>
+        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="properties"> Compute properties. </param>
-        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
+        internal MachineLearningComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;

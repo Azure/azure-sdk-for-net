@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
         internal static MachineLearningPrivateEndpointConnectionData DeserializeMachineLearningPrivateEndpointConnectionData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<MachineLearningSku> sku = default;
             ResourceIdentifier id = default;
@@ -89,7 +89,12 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -180,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning
                     continue;
                 }
             }
-            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningPrivateEndpointConnectionData(id, name, type, systemData, identity, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }
