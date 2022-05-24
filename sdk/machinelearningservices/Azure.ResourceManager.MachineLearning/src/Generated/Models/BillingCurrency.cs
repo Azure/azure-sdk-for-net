@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string USDValue = "USD";
+        private const string UsdValue = "USD";
 
         /// <summary> USD. </summary>
-        public static BillingCurrency USD { get; } = new BillingCurrency(USDValue);
+        public static BillingCurrency Usd { get; } = new BillingCurrency(UsdValue);
         /// <summary> Determines if two <see cref="BillingCurrency"/> values are the same. </summary>
         public static bool operator ==(BillingCurrency left, BillingCurrency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BillingCurrency"/> values are not the same. </summary>

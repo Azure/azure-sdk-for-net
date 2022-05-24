@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class Kubernetes : IUtf8JsonSerializable
+    public partial class VirtualMachineCompute : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static Kubernetes DeserializeKubernetes(JsonElement element)
+        internal static VirtualMachineCompute DeserializeVirtualMachineCompute(JsonElement element)
         {
-            Optional<KubernetesProperties> properties = default;
+            Optional<VirtualMachineSchemaProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> description = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = KubernetesProperties.DeserializeKubernetesProperties(property.Value);
+                    properties = VirtualMachineSchemaProperties.DeserializeVirtualMachineSchemaProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeType"))
@@ -114,7 +114,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningErrors"))
@@ -153,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new Kubernetes(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), properties.Value);
+            return new VirtualMachineCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), properties.Value);
         }
     }
 }

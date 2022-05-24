@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
@@ -114,7 +114,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningErrors"))

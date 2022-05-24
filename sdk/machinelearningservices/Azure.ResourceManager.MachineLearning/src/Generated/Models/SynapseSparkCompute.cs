@@ -7,19 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A Machine Learning compute based on Azure Virtual Machines. </summary>
-    public partial class VirtualMachine : Compute
+    /// <summary> A SynapseSpark compute. </summary>
+    public partial class SynapseSparkCompute : Compute
     {
-        /// <summary> Initializes a new instance of VirtualMachine. </summary>
-        public VirtualMachine()
+        /// <summary> Initializes a new instance of SynapseSparkCompute. </summary>
+        public SynapseSparkCompute()
         {
-            ComputeType = ComputeType.VirtualMachine;
+            ComputeType = ComputeType.SynapseSpark;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachine. </summary>
+        /// <summary> Initializes a new instance of SynapseSparkCompute. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
@@ -31,13 +32,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
         /// <param name="properties"></param>
-        internal VirtualMachine(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, VirtualMachineSchemaProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
+        internal SynapseSparkCompute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, SynapseSparkProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
             Properties = properties;
             ComputeType = computeType;
         }
 
         /// <summary> Gets or sets the properties. </summary>
-        public VirtualMachineSchemaProperties Properties { get; set; }
+        public SynapseSparkProperties Properties { get; set; }
     }
 }

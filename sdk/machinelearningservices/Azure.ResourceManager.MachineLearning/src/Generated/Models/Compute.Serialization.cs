@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AKS": return AksCompute.DeserializeAksCompute(element);
                     case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element);
                     case "ComputeInstance": return ComputeInstance.DeserializeComputeInstance(element);
-                    case "DataFactory": return DataFactory.DeserializeDataFactory(element);
-                    case "DataLakeAnalytics": return DataLakeAnalytics.DeserializeDataLakeAnalytics(element);
-                    case "Databricks": return Databricks.DeserializeDatabricks(element);
-                    case "HDInsight": return HDInsight.DeserializeHDInsight(element);
-                    case "Kubernetes": return Kubernetes.DeserializeKubernetes(element);
-                    case "SynapseSpark": return SynapseSpark.DeserializeSynapseSpark(element);
-                    case "VirtualMachine": return VirtualMachine.DeserializeVirtualMachine(element);
+                    case "DataFactory": return DataFactoryCompute.DeserializeDataFactoryCompute(element);
+                    case "DataLakeAnalytics": return DataLakeAnalyticsCompute.DeserializeDataLakeAnalyticsCompute(element);
+                    case "Databricks": return DatabricksCompute.DeserializeDatabricksCompute(element);
+                    case "HDInsight": return HDInsightCompute.DeserializeHDInsightCompute(element);
+                    case "Kubernetes": return KubernetesCompute.DeserializeKubernetesCompute(element);
+                    case "SynapseSpark": return SynapseSparkCompute.DeserializeSynapseSparkCompute(element);
+                    case "VirtualMachine": return VirtualMachineCompute.DeserializeVirtualMachineCompute(element);
                 }
             }
             ComputeType computeType = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<IReadOnlyList<ErrorResponse>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
@@ -114,7 +114,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningErrors"))

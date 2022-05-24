@@ -7,19 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A DataFactory compute. </summary>
-    public partial class DataFactory : Compute
+    /// <summary> A Machine Learning compute based on Kubernetes Compute. </summary>
+    public partial class KubernetesCompute : Compute
     {
-        /// <summary> Initializes a new instance of DataFactory. </summary>
-        public DataFactory()
+        /// <summary> Initializes a new instance of KubernetesCompute. </summary>
+        public KubernetesCompute()
         {
-            ComputeType = ComputeType.DataFactory;
+            ComputeType = ComputeType.Kubernetes;
         }
 
-        /// <summary> Initializes a new instance of DataFactory. </summary>
+        /// <summary> Initializes a new instance of KubernetesCompute. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
@@ -30,9 +31,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningErrors"> Errors during provisioning. </param>
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        internal DataFactory(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
+        /// <param name="properties"> Properties of Kubernetes. </param>
+        internal KubernetesCompute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, KubernetesProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
+            Properties = properties;
             ComputeType = computeType;
         }
+
+        /// <summary> Properties of Kubernetes. </summary>
+        public KubernetesProperties Properties { get; set; }
     }
 }

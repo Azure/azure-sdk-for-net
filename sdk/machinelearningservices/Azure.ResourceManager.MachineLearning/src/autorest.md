@@ -9,8 +9,6 @@ csharp: true
 library-name: MachineLearning
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0bff4d0f259847b1fc97a4ca8f98b8c40d672ba5/specification/machinelearningservices/resource-manager/readme.md
 tag: package-2022-02-01-preview
-modelerfour:
-  lenient-model-deduplication: true
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 namespace: Azure.ResourceManager.MachineLearning
@@ -38,6 +36,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   AKS: Aks
+  USD: Usd
 
 no-property-type-replacement: 
 - ResourceId
@@ -106,12 +105,21 @@ directive:
       $.Workspace.properties.location["x-ms-format"] = "azure-location";
       $.WorkspaceProperties.properties.tenantId["format"] = "uuid";
       $.ComputeResource["x-ms-client-name"] = "MachineLearningCompute";
+      $.Compute.properties.resourceId["x-ms-format"] = "arm-id";
       $.AKS["x-ms-client-name"] = "AksCompute";
+      $.Kubernetes["x-ms-client-name"] = "KubernetesCompute";
+      $.VirtualMachine["x-ms-client-name"] = "VirtualMachineCompute";
+      $.HDInsight["x-ms-client-name"] = "HDInsightCompute";
+      $.DataFactory["x-ms-client-name"] = "DataFactoryCompute";
+      $.Databricks["x-ms-client-name"] = "DatabricksCompute";
+      $.DataLakeAnalytics["x-ms-client-name"] = "DataLakeAnalyticsCompute";
+      $.SynapseSpark["x-ms-client-name"] = "SynapseSparkCompute";
   - from: mfe.json
     where: $.definitions
     transform: >
       $.CodeContainerResource["x-ms-client-name"] = "CodeContainer";
       $.BatchDeploymentTrackedResource["x-ms-client-name"] = "BatchDeployment";
+      $.PartialBatchDeploymentPartialTrackedResource.properties.location["x-ms-format"] = "azure-location";
       $.BatchEndpointTrackedResource["x-ms-client-name"] = "BatchEndpoint";
       $.CodeVersionResource["x-ms-client-name"] = "CodeVersion";
       $.ComponentContainerResource["x-ms-client-name"] = "ComponentContainer";

@@ -7,19 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A DataLakeAnalytics compute. </summary>
-    public partial class DataLakeAnalytics : Compute
+    /// <summary> A Machine Learning compute based on Azure Virtual Machines. </summary>
+    public partial class VirtualMachineCompute : Compute
     {
-        /// <summary> Initializes a new instance of DataLakeAnalytics. </summary>
-        public DataLakeAnalytics()
+        /// <summary> Initializes a new instance of VirtualMachineCompute. </summary>
+        public VirtualMachineCompute()
         {
-            ComputeType = ComputeType.DataLakeAnalytics;
+            ComputeType = ComputeType.VirtualMachine;
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalytics. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineCompute. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
@@ -31,24 +32,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
         /// <param name="properties"></param>
-        internal DataLakeAnalytics(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, DataLakeAnalyticsSchemaProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
+        internal VirtualMachineCompute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, VirtualMachineSchemaProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
             Properties = properties;
             ComputeType = computeType;
         }
 
         /// <summary> Gets or sets the properties. </summary>
-        internal DataLakeAnalyticsSchemaProperties Properties { get; set; }
-        /// <summary> DataLake Store Account Name. </summary>
-        public string DataLakeStoreAccountName
-        {
-            get => Properties is null ? default : Properties.DataLakeStoreAccountName;
-            set
-            {
-                if (Properties is null)
-                    Properties = new DataLakeAnalyticsSchemaProperties();
-                Properties.DataLakeStoreAccountName = value;
-            }
-        }
+        public VirtualMachineSchemaProperties Properties { get; set; }
     }
 }

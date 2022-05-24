@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningErrors"> Errors during provisioning. </param>
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        internal Compute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth)
+        internal Compute(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth)
         {
             ComputeType = computeType;
             ComputeLocation = computeLocation;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The time at which the compute was last modified. </summary>
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> ARM resource id of the underlying compute. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Errors during provisioning. </summary>
         public IReadOnlyList<ErrorResponse> ProvisioningErrors { get; }
         /// <summary> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </summary>
