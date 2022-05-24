@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.WebKey\src\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
 
+  <!-- These packages are included as part net6.0; the external references are not needed. -->
   <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true' AND '$(TargetFramework)' != 'net6.0'">
     <PackageReference Include="System.Security.Cryptography.Algorithms" />
     <PackageReference Include="System.Security.Cryptography.Primitives" />

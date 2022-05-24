@@ -27,8 +27,12 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Condition="'$(TargetFramework)' != 'net6.0'" />
-    <PackageReference Include="System.Text.Json" Condition="'$(TargetFramework)' != 'net6.0'" />
+  </ItemGroup>
+
+  <!-- These packages are included as part net6.0; the external references are not needed. -->
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>
