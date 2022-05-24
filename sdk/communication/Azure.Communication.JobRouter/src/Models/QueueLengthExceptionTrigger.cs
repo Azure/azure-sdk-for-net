@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
     public partial class QueueLengthExceptionTrigger : JobExceptionTrigger

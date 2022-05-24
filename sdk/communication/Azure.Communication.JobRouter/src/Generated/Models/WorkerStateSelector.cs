@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> The WorkerStateSelector. </summary>
     public enum WorkerStateSelector

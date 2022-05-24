@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing a binding to an HTTP Triggered Azure Function. </summary>
     public partial class AzureFunctionRule : RouterRule
@@ -15,21 +15,17 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
-        /// <param name="functionAppUrl"> URL for custom azure function. </param>
-        /// <param name="functionName"> User-friendly name for function. </param>
+        /// <param name="functionUrl"> URL for Azure Function. </param>
         /// <param name="credential"> Credentials used to access Azure function rule. </param>
-        internal AzureFunctionRule(string kind, string functionAppUrl, string functionName, AzureFunctionRuleCredential credential) : base(kind)
+        internal AzureFunctionRule(string kind, string functionUrl, AzureFunctionRuleCredential credential) : base(kind)
         {
-            FunctionAppUrl = functionAppUrl;
-            FunctionName = functionName;
+            FunctionUrl = functionUrl;
             Credential = credential;
             Kind = kind ?? "azure-function-rule";
         }
 
-        /// <summary> URL for custom azure function. </summary>
-        public string FunctionAppUrl { get; set; }
-        /// <summary> User-friendly name for function. </summary>
-        public string FunctionName { get; set; }
+        /// <summary> URL for Azure Function. </summary>
+        public string FunctionUrl { get; set; }
         /// <summary> Credentials used to access Azure function rule. </summary>
         public AzureFunctionRuleCredential Credential { get; set; }
     }

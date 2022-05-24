@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> The state of the Job. </summary>
     public enum JobStatus
@@ -23,6 +23,8 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> cancelled. </summary>
         Cancelled,
         /// <summary> classificationFailed. </summary>
-        ClassificationFailed
+        ClassificationFailed,
+        /// <summary> created. </summary>
+        Created
     }
 }

@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class CancelExceptionAction : IUtf8JsonSerializable
     {
@@ -27,8 +27,6 @@ namespace Azure.Communication.JobRouter.Models
             }
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
@@ -37,7 +35,6 @@ namespace Azure.Communication.JobRouter.Models
             Optional<string> note = default;
             Optional<string> dispositionCode = default;
             string kind = default;
-            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("note"))
@@ -55,13 +52,8 @@ namespace Azure.Communication.JobRouter.Models
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new CancelExceptionAction(kind, id, note.Value, dispositionCode.Value);
+            return new CancelExceptionAction(kind, note.Value, dispositionCode.Value);
         }
     }
 }

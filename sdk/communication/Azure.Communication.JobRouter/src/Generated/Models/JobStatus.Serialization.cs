@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     internal static partial class JobStatusExtensions
     {
@@ -20,6 +20,7 @@ namespace Azure.Communication.JobRouter.Models
             JobStatus.Closed => "closed",
             JobStatus.Cancelled => "cancelled",
             JobStatus.ClassificationFailed => "classificationFailed",
+            JobStatus.Created => "created",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobStatus value.")
         };
 
@@ -32,6 +33,7 @@ namespace Azure.Communication.JobRouter.Models
             if (string.Equals(value, "closed", StringComparison.InvariantCultureIgnoreCase)) return JobStatus.Closed;
             if (string.Equals(value, "cancelled", StringComparison.InvariantCultureIgnoreCase)) return JobStatus.Cancelled;
             if (string.Equals(value, "classificationFailed", StringComparison.InvariantCultureIgnoreCase)) return JobStatus.ClassificationFailed;
+            if (string.Equals(value, "created", StringComparison.InvariantCultureIgnoreCase)) return JobStatus.Created;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown JobStatus value.");
         }
     }

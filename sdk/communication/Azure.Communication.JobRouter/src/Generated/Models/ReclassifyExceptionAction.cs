@@ -5,38 +5,29 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> An action that modifies labels on a job and then reclassifies it. </summary>
     public partial class ReclassifyExceptionAction : ExceptionAction
     {
         /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ReclassifyExceptionAction(string id) : base(id)
+        public ReclassifyExceptionAction()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             _labelsToUpsert = new ChangeTrackingDictionary<string, object>();
             Kind = "reclassify";
         }
 
         /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
         /// <param name="classificationPolicyId"> (optional) The new classification policy that will determine queue, priority and worker selectors. </param>
-        /// <param name="LabelsToUpsert"> (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. </param>
-        internal ReclassifyExceptionAction(string kind, string id, string classificationPolicyId, IDictionary<string, object> LabelsToUpsert) : base(kind, id)
+        /// <param name="labelsToUpsert"> (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. </param>
+        internal ReclassifyExceptionAction(string kind, string classificationPolicyId, IDictionary<string, object> labelsToUpsert) : base(kind)
         {
             ClassificationPolicyId = classificationPolicyId;
-            _labelsToUpsert = LabelsToUpsert;
+            _labelsToUpsert = labelsToUpsert;
             Kind = kind ?? "reclassify";
         }
 

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ManualReclassifyExceptionAction : IUtf8JsonSerializable
     {
@@ -23,47 +23,30 @@ namespace Azure.Communication.JobRouter.Models
             }
             if (Optional.IsDefined(Priority))
             {
-                if (Priority != null)
-                {
-                    writer.WritePropertyName("priority");
-                    writer.WriteNumberValue(Priority.Value);
-                }
-                else
-                {
-                    writer.WriteNull("priority");
-                }
+                writer.WritePropertyName("priority");
+                writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsCollectionDefined(WorkerSelectors))
             {
-                if (WorkerSelectors != null)
+                writer.WritePropertyName("workerSelectors");
+                writer.WriteStartArray();
+                foreach (var item in WorkerSelectors)
                 {
-                    writer.WritePropertyName("workerSelectors");
-                    writer.WriteStartArray();
-                    foreach (var item in WorkerSelectors)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("workerSelectors");
-                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
         internal static ManualReclassifyExceptionAction DeserializeManualReclassifyExceptionAction(JsonElement element)
         {
             Optional<string> queueId = default;
-            Optional<int?> priority = default;
-            Optional<IList<LabelSelector>> workerSelectors = default;
+            Optional<int> priority = default;
+            Optional<IList<WorkerSelector>> workerSelectors = default;
             string kind = default;
-            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"))
@@ -75,7 +58,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        priority = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetInt32();
@@ -85,13 +68,13 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        workerSelectors = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LabelSelector> array = new List<LabelSelector>();
+                    List<WorkerSelector> array = new List<WorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabelSelector.DeserializeLabelSelector(item));
+                        array.Add(WorkerSelector.DeserializeWorkerSelector(item));
                     }
                     workerSelectors = array;
                     continue;
@@ -101,13 +84,8 @@ namespace Azure.Communication.JobRouter.Models
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ManualReclassifyExceptionAction(kind, id, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
+            return new ManualReclassifyExceptionAction(kind, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
         }
     }
 }

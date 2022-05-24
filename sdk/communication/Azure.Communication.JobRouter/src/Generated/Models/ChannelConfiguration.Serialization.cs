@@ -8,15 +8,13 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ChannelConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("channelId");
-            writer.WriteStringValue(ChannelId);
             writer.WritePropertyName("capacityCostPerJob");
             writer.WriteNumberValue(CapacityCostPerJob);
             writer.WriteEndObject();
@@ -24,22 +22,16 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static ChannelConfiguration DeserializeChannelConfiguration(JsonElement element)
         {
-            string channelId = default;
             int capacityCostPerJob = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelId"))
-                {
-                    channelId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("capacityCostPerJob"))
                 {
                     capacityCostPerJob = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new ChannelConfiguration(channelId, capacityCostPerJob);
+            return new ChannelConfiguration(capacityCostPerJob);
         }
     }
 }

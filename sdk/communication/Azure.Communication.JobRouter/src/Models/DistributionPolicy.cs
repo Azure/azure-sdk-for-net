@@ -2,13 +2,20 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class DistributionPolicy
     {
-        /// <summary> The expiry time of any offers created under this policy will be governed by the offer time to live. </summary>
-        public TimeSpan OfferTTL { get; }
+        /// <summary> Initializes a new instance of DistributionPolicy. </summary>
+        /// <param name="offerTtlSeconds"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
+        /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
+        internal DistributionPolicy(double? offerTtlSeconds, DistributionMode mode)
+        {
+            OfferTtlSeconds = offerTtlSeconds;
+            Mode = mode;
+        }
     }
 }

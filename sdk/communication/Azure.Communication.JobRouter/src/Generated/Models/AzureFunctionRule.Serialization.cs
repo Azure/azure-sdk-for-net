@@ -8,17 +8,15 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class AzureFunctionRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("functionAppUrl");
-            writer.WriteStringValue(FunctionAppUrl);
-            writer.WritePropertyName("functionName");
-            writer.WriteStringValue(FunctionName);
+            writer.WritePropertyName("functionUrl");
+            writer.WriteStringValue(FunctionUrl);
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential");
@@ -31,20 +29,14 @@ namespace Azure.Communication.JobRouter.Models
 
         internal static AzureFunctionRule DeserializeAzureFunctionRule(JsonElement element)
         {
-            string functionAppUrl = default;
-            string functionName = default;
+            string functionUrl = default;
             Optional<AzureFunctionRuleCredential> credential = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("functionAppUrl"))
+                if (property.NameEquals("functionUrl"))
                 {
-                    functionAppUrl = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("functionName"))
-                {
-                    functionName = property.Value.GetString();
+                    functionUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("credential"))
@@ -63,7 +55,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new AzureFunctionRule(kind, functionAppUrl, functionName, credential.Value);
+            return new AzureFunctionRule(kind, functionUrl, credential.Value);
         }
     }
 }

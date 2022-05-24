@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : JobExceptionTrigger
@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
-        /// <param name="threshold"> Threshold for wait time for this trigger. </param>
+        /// <param name="threshold"> Threshold for wait time for this trigger. Requires input conforming to ISO8601 duration format. </param>
         internal WaitTimeExceptionTrigger(string kind, TimeSpan threshold) : base(kind)
         {
             Threshold = threshold;

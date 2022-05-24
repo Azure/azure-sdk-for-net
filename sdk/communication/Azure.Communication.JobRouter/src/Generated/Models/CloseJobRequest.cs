@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> Request payload for completing jobs. </summary>
+    /// <summary> Request payload for closing jobs. </summary>
     internal partial class CloseJobRequest
     {
         /// <summary> Initializes a new instance of CloseJobRequest. </summary>
@@ -30,12 +30,11 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Indicates the outcome of the job, populate this field with your own custom values. </summary>
         public string DispositionCode { get; set; }
         /// <summary>
-        /// If not provided, capacity will be released immediately.
-        /// 
-        /// If provided, the future time at which to release the capacity.
+        /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
         /// </summary>
-        public DateTimeOffset? ReleaseTime { get; set; }
-        /// <summary> (Optional) Customer supplied note. </summary>
+        public DateTimeOffset? CloseTime { get; set; }
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
         public string Note { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Credentials used to access Azure function rule. </summary>
     public partial class AzureFunctionRuleCredential
@@ -15,13 +15,11 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="functionKey"> (Optional) Access key scoped to a particular function. </param>
         /// <param name="appKey">
         /// (Optional) Access key scoped to a Azure Function app.
-        /// 
         /// This key grants access to all functions under the app.
         /// </param>
         /// <param name="clientId">
         /// (Optional) Client id, when AppKey is provided
-        /// 
-        /// In context of Azure function, this is usually the name of the key.
+        /// In context of Azure function, this is usually the name of the key
         /// </param>
         internal AzureFunctionRuleCredential(string functionKey, string appKey, string clientId)
         {
@@ -34,14 +32,12 @@ namespace Azure.Communication.JobRouter.Models
         public string FunctionKey { get; set; }
         /// <summary>
         /// (Optional) Access key scoped to a Azure Function app.
-        /// 
         /// This key grants access to all functions under the app.
         /// </summary>
         public string AppKey { get; set; }
         /// <summary>
         /// (Optional) Client id, when AppKey is provided
-        /// 
-        /// In context of Azure function, this is usually the name of the key.
+        /// In context of Azure function, this is usually the name of the key
         /// </summary>
         public string ClientId { get; set; }
     }

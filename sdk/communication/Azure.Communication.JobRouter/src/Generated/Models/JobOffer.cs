@@ -7,14 +7,14 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The JobOffer. </summary>
+    /// <summary> An offer of an assignment of work to a worker. </summary>
     public partial class JobOffer
     {
         /// <summary> Initializes a new instance of JobOffer. </summary>
         /// <param name="id"> The Id of the offer. </param>
-        /// <param name="jobId"> The Id of the job assigned. </param>
+        /// <param name="jobId"> The Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="jobId"/> is null. </exception>
         internal JobOffer(string id, string jobId, int capacityCost)
@@ -35,10 +35,10 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Initializes a new instance of JobOffer. </summary>
         /// <param name="id"> The Id of the offer. </param>
-        /// <param name="jobId"> The Id of the job assigned. </param>
+        /// <param name="jobId"> The Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <param name="offerTimeUtc"> The time the offer was created. </param>
-        /// <param name="expiryTimeUtc"> The time that indicates when the offer will expire. </param>
+        /// <param name="expiryTimeUtc"> The time that the offer will expire. </param>
         internal JobOffer(string id, string jobId, int capacityCost, DateTimeOffset? offerTimeUtc, DateTimeOffset? expiryTimeUtc)
         {
             Id = id;
@@ -50,13 +50,13 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The Id of the offer. </summary>
         public string Id { get; }
-        /// <summary> The Id of the job assigned. </summary>
+        /// <summary> The Id of the job. </summary>
         public string JobId { get; }
         /// <summary> The capacity cost consumed by the job offer. </summary>
         public int CapacityCost { get; }
         /// <summary> The time the offer was created. </summary>
         public DateTimeOffset? OfferTimeUtc { get; }
-        /// <summary> The time that indicates when the offer will expire. </summary>
+        /// <summary> The time that the offer will expire. </summary>
         public DateTimeOffset? ExpiryTimeUtc { get; }
     }
 }

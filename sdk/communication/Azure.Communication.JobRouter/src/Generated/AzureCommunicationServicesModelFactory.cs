@@ -7,302 +7,285 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.JobRouter.Models;
+using System.Linq;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AzureCommunicationServicesModelFactory
     {
-        /// <summary> Initializes new instance of UpsertChannelResponse class. </summary>
-        /// <param name="id"> Id of the channel created. </param>
-        /// <param name="name"> Friendly name of the channel created. </param>
-        /// <param name="acsManaged"> Indicates that the Channel was created and is maintained by ACS. </param>
-        /// <returns> A new <see cref="Models.UpsertChannelResponse"/> instance for mocking. </returns>
-        public static UpsertChannelResponse UpsertChannelResponse(string id = default, string name = default, bool acsManaged = default)
-        {
-            return new UpsertChannelResponse(id, name, acsManaged);
-        }
-
-        /// <summary> Initializes new instance of ChannelCollection class. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        /// <returns> A new <see cref="Models.ChannelCollection"/> instance for mocking. </returns>
-        public static ChannelCollection ChannelCollection(IReadOnlyList<RouterChannel> value = default, string nextLink = default)
-        {
-            value ??= new List<RouterChannel>();
-            return new ChannelCollection(value, nextLink);
-        }
-
-        /// <summary> Initializes new instance of RouterChannel class. </summary>
-        /// <param name="id"> The Id of the channel. </param>
-        /// <param name="name"> (Optional) The friendly name of the channel. </param>
-        /// <param name="acsManaged"> Indicates that the Channel was created and is maintained by ACS. </param>
-        /// <returns> A new <see cref="Models.RouterChannel"/> instance for mocking. </returns>
-        public static RouterChannel RouterChannel(string id = default, string name = default, bool acsManaged = default)
-        {
-            return new RouterChannel(id, name, acsManaged);
-        }
-
-        /// <summary> Initializes new instance of UpsertClassificationPolicyResponse class. </summary>
+        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
-        /// <param name="queueSelector"> The queue selector to select a queue for a given job. </param>
-        /// <param name="prioritizationRule"> The rule to determine a priority score for a given job. </param>
+        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
+        /// <param name="prioritizationRule">
+        /// A rule of one of the following types:
+        ///             
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// </param>
         /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
-        /// <returns> A new <see cref="Models.UpsertClassificationPolicyResponse"/> instance for mocking. </returns>
-        public static UpsertClassificationPolicyResponse UpsertClassificationPolicyResponse(string id = default, string name = default, string fallbackQueueId = default, QueueSelector queueSelector = default, RouterRule prioritizationRule = default, IReadOnlyList<LabelSelectorAttachment> workerSelectors = default)
+        /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
+        public static ClassificationPolicy ClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectors = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectors = null)
         {
-            workerSelectors ??= new List<LabelSelectorAttachment>();
-            return new UpsertClassificationPolicyResponse(id, name, fallbackQueueId, queueSelector, prioritizationRule, workerSelectors);
+            queueSelectors ??= new List<QueueSelectorAttachment>();
+            workerSelectors ??= new List<WorkerSelectorAttachment>();
+
+            return new ClassificationPolicy(id, name, fallbackQueueId, queueSelectors?.ToList(), prioritizationRule, workerSelectors?.ToList());
         }
 
-        /// <summary> Initializes new instance of ClassificationPolicyCollection class. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        /// <returns> A new <see cref="Models.ClassificationPolicyCollection"/> instance for mocking. </returns>
-        public static ClassificationPolicyCollection ClassificationPolicyCollection(IReadOnlyList<ClassificationPolicy> value = default, string nextLink = default)
+        /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        /// <returns> A new <see cref="JobRouter.ClassificationPolicyCollection"/> instance for mocking. </returns>
+        public static ClassificationPolicyCollection ClassificationPolicyCollection(IEnumerable<PagedClassificationPolicy> value = null, string nextLink = null)
         {
-            value ??= new List<ClassificationPolicy>();
-            return new ClassificationPolicyCollection(value, nextLink);
+            value ??= new List<PagedClassificationPolicy>();
+
+            return new ClassificationPolicyCollection(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes new instance of ClassificationPolicy class. </summary>
+        /// <summary> Initializes a new instance of PagedClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
-        /// <param name="queueSelector"> The queue selector to select a queue for a given job. </param>
-        /// <param name="prioritizationRule"> The rule to determine a priority score for a given job. </param>
+        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
+        /// <param name="prioritizationRule">
+        /// A rule of one of the following types:
+        ///             
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// </param>
         /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
-        /// <returns> A new <see cref="Models.ClassificationPolicy"/> instance for mocking. </returns>
-        public static ClassificationPolicy ClassificationPolicy(string id = default, string name = default, string fallbackQueueId = default, QueueSelector queueSelector = default, RouterRule prioritizationRule = default, IReadOnlyList<LabelSelectorAttachment> workerSelectors = default)
+        /// <returns> A new <see cref="JobRouter.PagedClassificationPolicy"/> instance for mocking. </returns>
+        public static PagedClassificationPolicy PagedClassificationPolicy(string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectors = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectors = null)
         {
-            workerSelectors ??= new List<LabelSelectorAttachment>();
-            return new ClassificationPolicy(id, name, fallbackQueueId, queueSelector, prioritizationRule, workerSelectors);
+            queueSelectors ??= new List<QueueSelectorAttachment>();
+            workerSelectors ??= new List<WorkerSelectorAttachment>();
+
+            return new PagedClassificationPolicy(id, name, fallbackQueueId, queueSelectors?.ToList(), prioritizationRule, workerSelectors?.ToList());
         }
 
-        /// <summary> Initializes new instance of UpsertDistributionPolicyResponse class. </summary>
-        /// <param name="id"> Unique identifier of this policy. </param>
-        /// <param name="name"> The human readable name of the policy. </param>
-        /// <param name="offerTTL"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
-        /// <param name="mode"> The policy governing the specific distribution method. </param>
-        /// <returns> A new <see cref="Models.UpsertDistributionPolicyResponse"/> instance for mocking. </returns>
-        public static UpsertDistributionPolicyResponse UpsertDistributionPolicyResponse(string id = default, string name = default, TimeSpan offerTTL = default, DistributionMode mode = default)
-        {
-            return new UpsertDistributionPolicyResponse(id, name, offerTTL, mode);
-        }
-
-        /// <summary> Initializes new instance of DistributionPolicyCollection class. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        /// <returns> A new <see cref="Models.DistributionPolicyCollection"/> instance for mocking. </returns>
-        public static DistributionPolicyCollection DistributionPolicyCollection(IReadOnlyList<DistributionPolicy> value = default, string nextLink = default)
-        {
-            value ??= new List<DistributionPolicy>();
-            return new DistributionPolicyCollection(value, nextLink);
-        }
-
-        /// <summary> Initializes new instance of DistributionPolicy class. </summary>
+        /// <summary> Initializes a new instance of DistributionPolicy. </summary>
         /// <param name="id"> The unique identifier of the policy. </param>
         /// <param name="name"> The human readable name of the policy. </param>
-        /// <param name="offerTTL"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
-        /// <param name="mode"> The policy governing the specific distribution method. </param>
-        /// <returns> A new <see cref="Models.DistributionPolicy"/> instance for mocking. </returns>
-        public static DistributionPolicy DistributionPolicy(string id = default, string name = default, TimeSpan offerTTL = default, DistributionMode mode = default)
+        /// <param name="offerTtlSeconds"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
+        /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
+        /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
+        public static DistributionPolicy DistributionPolicy(string id = null, string name = null, double? offerTtlSeconds = null, DistributionMode mode = null)
         {
-            return new DistributionPolicy(id, name, offerTTL, mode);
+            return new DistributionPolicy(id, name, offerTtlSeconds, mode);
         }
 
-        /// <summary> Initializes new instance of UpsertExceptionPolicyResponse class. </summary>
-        /// <param name="id"> Unique identifier of this policy. </param>
-        /// <param name="name"> The name of the exception policy created. </param>
-        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
-        /// <returns> A new <see cref="Models.UpsertExceptionPolicyResponse"/> instance for mocking. </returns>
-        public static UpsertExceptionPolicyResponse UpsertExceptionPolicyResponse(string id = default, string name = default, IReadOnlyList<ExceptionRule> exceptionRules = default)
+        /// <summary> Initializes a new instance of DistributionPolicyCollection. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        /// <returns> A new <see cref="JobRouter.DistributionPolicyCollection"/> instance for mocking. </returns>
+        public static DistributionPolicyCollection DistributionPolicyCollection(IEnumerable<PagedDistributionPolicy> value = null, string nextLink = null)
         {
-            exceptionRules ??= new List<ExceptionRule>();
-            return new UpsertExceptionPolicyResponse(id, name, exceptionRules);
+            value ??= new List<PagedDistributionPolicy>();
+
+            return new DistributionPolicyCollection(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes new instance of ExceptionPolicyCollection class. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        /// <returns> A new <see cref="Models.ExceptionPolicyCollection"/> instance for mocking. </returns>
-        public static ExceptionPolicyCollection ExceptionPolicyCollection(IReadOnlyList<ExceptionPolicy> value = default, string nextLink = default)
+        /// <summary> Initializes a new instance of PagedDistributionPolicy. </summary>
+        /// <param name="id"> The unique identifier of the policy. </param>
+        /// <param name="name"> The human readable name of the policy. </param>
+        /// <param name="offerTtlSeconds"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
+        /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
+        /// <returns> A new <see cref="JobRouter.PagedDistributionPolicy"/> instance for mocking. </returns>
+        public static PagedDistributionPolicy PagedDistributionPolicy(string id = null, string name = null, double? offerTtlSeconds = null, DistributionMode mode = null)
         {
-            value ??= new List<ExceptionPolicy>();
-            return new ExceptionPolicyCollection(value, nextLink);
+            return new PagedDistributionPolicy(id, name, offerTtlSeconds, mode);
         }
 
-        /// <summary> Initializes new instance of ExceptionPolicy class. </summary>
+        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
         /// <param name="id"> The Id of the exception policy. </param>
         /// <param name="name"> (Optional) The name of the exception policy. </param>
-        /// <param name="exceptionRules"> (Optional) A collection of exception rules on the exception policy. </param>
-        /// <returns> A new <see cref="Models.ExceptionPolicy"/> instance for mocking. </returns>
-        public static ExceptionPolicy ExceptionPolicy(string id = default, string name = default, IReadOnlyList<ExceptionRule> exceptionRules = default)
+        /// <param name="exceptionRules"> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
+        public static ExceptionPolicy ExceptionPolicy(string id = null, string name = null, IDictionary<string, ExceptionRule> exceptionRules = null)
         {
-            exceptionRules ??= new List<ExceptionRule>();
+            exceptionRules ??= new Dictionary<string, ExceptionRule>();
+
             return new ExceptionPolicy(id, name, exceptionRules);
         }
 
-        /// <summary> Initializes new instance of CreateJobResponse class. </summary>
-        /// <param name="id"> Id of the newly created job. </param>
-        /// <returns> A new <see cref="Models.CreateJobResponse"/> instance for mocking. </returns>
-        public static CreateJobResponse CreateJobResponse(string id = default)
+        /// <summary> Initializes a new instance of ExceptionPolicyCollection. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        /// <returns> A new <see cref="JobRouter.ExceptionPolicyCollection"/> instance for mocking. </returns>
+        public static ExceptionPolicyCollection ExceptionPolicyCollection(IEnumerable<PagedExceptionPolicy> value = null, string nextLink = null)
         {
-            return new CreateJobResponse(id);
+            value ??= new List<PagedExceptionPolicy>();
+
+            return new ExceptionPolicyCollection(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes new instance of JobCollection class. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        /// <returns> A new <see cref="Models.JobCollection"/> instance for mocking. </returns>
-        public static JobCollection JobCollection(IReadOnlyList<RouterJob> value = default, string nextLink = default)
+        /// <summary> Initializes a new instance of PagedExceptionPolicy. </summary>
+        /// <param name="id"> The Id of the exception policy. </param>
+        /// <param name="name"> (Optional) The name of the exception policy. </param>
+        /// <param name="exceptionRules"> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
+        /// <returns> A new <see cref="JobRouter.PagedExceptionPolicy"/> instance for mocking. </returns>
+        public static PagedExceptionPolicy PagedExceptionPolicy(string id = null, string name = null, IReadOnlyDictionary<string, ExceptionRule> exceptionRules = null)
         {
-            value ??= new List<RouterJob>();
-            return new JobCollection(value, nextLink);
+            exceptionRules ??= new Dictionary<string, ExceptionRule>();
+
+            return new PagedExceptionPolicy(id, name, exceptionRules);
         }
 
-        /// <summary> Initializes new instance of RouterJob class. </summary>
-        /// <param name="id"> The id of the Job. </param>
-        /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
-        /// <param name="jobStatus"> The state of the Job. </param>
-        /// <param name="enqueueTimeUtc"> The time a job was queued. </param>
-        /// <param name="channelId"> The channel or modality upon which this job will be executed. </param>
-        /// <param name="classificationPolicyId"> The Id of the Classification policy used for classifying a job. </param>
-        /// <param name="queueId"> The Id of the Queue that a job is queued to. </param>
-        /// <param name="priority"> The priority of this job. </param>
-        /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
-        /// <param name="workerSelectors"> A collection of label selectors a worker must satisfy in order to process this job. </param>
-        /// <param name="Labels"> A set of key/value pairs used by the classification process to determine queue, priority and attach label selectors. </param>
-        /// <param name="assignments">
-        /// A collection of the assignments of the job.
-        /// 
-        /// Key is AssignmentId.
-        /// </param>
-        /// <param name="notes"> Generic text notes attached to a job, sorted by timestamp. </param>
-        /// <returns> A new <see cref="Models.RouterJob"/> instance for mocking. </returns>
-        public static RouterJob RouterJob(string id = default, string channelReference = default, JobStatus jobStatus = default, DateTimeOffset? enqueueTimeUtc = default, string channelId = default, string classificationPolicyId = default, string queueId = default, int? priority = default, string dispositionCode = default, IReadOnlyList<LabelSelector> workerSelectors = default, IDictionary<string, object> Labels = default, IReadOnlyDictionary<string, JobAssignment> assignments = default, IReadOnlyDictionary<string, string> notes = default)
-        {
-            workerSelectors ??= new List<LabelSelector>();
-            Labels ??= new Dictionary<string, object>();
-            assignments ??= new Dictionary<string, JobAssignment>();
-            notes ??= new Dictionary<string, string>();
-            return new RouterJob(id, channelReference, jobStatus, enqueueTimeUtc, channelId, classificationPolicyId, queueId, priority, dispositionCode, workerSelectors, Labels, assignments, notes);
-        }
-
-        /// <summary> Initializes new instance of JobAssignment class. </summary>
+        /// <summary> Initializes a new instance of JobAssignment. </summary>
         /// <param name="id"> The Id of the job assignment. </param>
         /// <param name="workerId"> The Id of the Worker assigned to the job. </param>
-        /// <param name="assignTime"> The Assignment time of the job. </param>
+        /// <param name="assignTime"> The assignment time of the job. </param>
         /// <param name="completeTime"> The time the job was marked as completed after being assigned. </param>
         /// <param name="closeTime"> The time the job was marked as closed after being completed. </param>
-        /// <returns> A new <see cref="Models.JobAssignment"/> instance for mocking. </returns>
-        public static JobAssignment JobAssignment(string id = default, string workerId = default, DateTimeOffset assignTime = default, DateTimeOffset? completeTime = default, DateTimeOffset? closeTime = default)
+        /// <returns> A new <see cref="JobRouter.JobAssignment"/> instance for mocking. </returns>
+        public static JobAssignment JobAssignment(string id = null, string workerId = null, DateTimeOffset assignTime = default, DateTimeOffset? completeTime = null, DateTimeOffset? closeTime = null)
         {
             return new JobAssignment(id, workerId, assignTime, completeTime, closeTime);
         }
 
-        /// <summary> Initializes new instance of JobPositionDetails class. </summary>
+        /// <summary> Initializes a new instance of JobCollection. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        /// <returns> A new <see cref="JobRouter.JobCollection"/> instance for mocking. </returns>
+        public static JobCollection JobCollection(IEnumerable<PagedJob> value = null, string nextLink = null)
+        {
+            value ??= new List<PagedJob>();
+
+            return new JobCollection(value?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of PagedJob. </summary>
+        /// <param name="id"> The id of the job. </param>
+        /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
+        /// <param name="jobStatus"> The state of the Job. </param>
+        /// <param name="enqueueTimeUtc"> The time a job was queued. </param>
+        /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
+        /// <param name="classificationPolicyId"> The Id of the Classification policy used for classifying a job. </param>
+        /// <param name="queueId"> The Id of the Queue that this job is queued to. </param>
+        /// <param name="priority"> The priority of this job. </param>
+        /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
+        /// <param name="requestedWorkerSelectors"> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </param>
+        /// <param name="attachedWorkerSelectors"> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
+        /// <param name="assignments">
+        /// A collection of the assignments of the job.
+        /// Key is AssignmentId.
+        /// </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this job. </param>
+        /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
+        /// <returns> A new <see cref="JobRouter.PagedJob"/> instance for mocking. </returns>
+        public static PagedJob PagedJob(string id = null, string channelReference = null, JobStatus? jobStatus = null, DateTimeOffset? enqueueTimeUtc = null, string channelId = null, string classificationPolicyId = null, string queueId = null, int? priority = null, string dispositionCode = null, IEnumerable<WorkerSelector> requestedWorkerSelectors = null, IEnumerable<WorkerSelector> attachedWorkerSelectors = null, IReadOnlyDictionary<string, object> labels = null, IReadOnlyDictionary<string, JobAssignment> assignments = null, IReadOnlyDictionary<string, object> tags = null, IReadOnlyDictionary<string, string> notes = null)
+        {
+            requestedWorkerSelectors ??= new List<WorkerSelector>();
+            attachedWorkerSelectors ??= new List<WorkerSelector>();
+            labels ??= new Dictionary<string, object>();
+            assignments ??= new Dictionary<string, JobAssignment>();
+            tags ??= new Dictionary<string, object>();
+            notes ??= new Dictionary<string, string>();
+
+            return new PagedJob(id, channelReference, jobStatus, enqueueTimeUtc, channelId, classificationPolicyId, queueId, priority, dispositionCode, requestedWorkerSelectors?.ToList(), attachedWorkerSelectors?.ToList(), labels, assignments, tags, notes);
+        }
+
+        /// <summary> Initializes a new instance of JobPositionDetails. </summary>
         /// <param name="jobId"> Id of the job these details are about. </param>
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
-        /// <returns> A new <see cref="Models.JobPositionDetails"/> instance for mocking. </returns>
-        public static JobPositionDetails JobPositionDetails(string jobId = default, int position = default, string queueId = default, int queueLength = default)
+        /// <param name="estimatedWaitTimeMinutes"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <returns> A new <see cref="JobRouter.JobPositionDetails"/> instance for mocking. </returns>
+        public static JobPositionDetails JobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, double estimatedWaitTimeMinutes = default)
         {
-            return new JobPositionDetails(jobId, position, queueId, queueLength);
+            return new JobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
         }
 
-        /// <summary> Initializes new instance of AcceptJobOfferResponse class. </summary>
+        /// <summary> Initializes a new instance of AcceptJobOfferResponse. </summary>
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
-        /// <returns> A new <see cref="Models.AcceptJobOfferResponse"/> instance for mocking. </returns>
-        public static AcceptJobOfferResponse AcceptJobOfferResponse(string assignmentId = default, string jobId = default, string workerId = default)
+        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResponse"/> instance for mocking. </returns>
+        public static AcceptJobOfferResponse AcceptJobOfferResponse(string assignmentId = null, string jobId = null, string workerId = null)
         {
             return new AcceptJobOfferResponse(assignmentId, jobId, workerId);
         }
 
-        /// <summary> Initializes new instance of UpsertQueueResponse class. </summary>
-        /// <param name="id"> Unique identifier of this Queue. </param>
-        /// <param name="name"> The name of this queue. </param>
-        /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
-        /// <param name="Labels"> (Optional) A set of key/value pairs used by the classification process to determine queue to assign a job. </param>
-        /// <param name="exceptionPolicyId"> The ID of the exception policy that determines various job escalation rules. </param>
-        /// <returns> A new <see cref="Models.UpsertQueueResponse"/> instance for mocking. </returns>
-        public static UpsertQueueResponse UpsertQueueResponse(string id = default, string name = default, string distributionPolicyId = default, IDictionary<string, object> Labels = default, string exceptionPolicyId = default)
+        /// <summary> Initializes a new instance of QueueCollection. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        /// <returns> A new <see cref="JobRouter.QueueCollection"/> instance for mocking. </returns>
+        public static QueueCollection QueueCollection(IEnumerable<PagedQueue> value = null, string nextLink = null)
         {
-            Labels ??= new Dictionary<string, object>();
-            return new UpsertQueueResponse(id, name, distributionPolicyId, Labels, exceptionPolicyId);
+            value ??= new List<PagedQueue>();
+
+            return new QueueCollection(value?.ToList(), nextLink);
         }
 
-        /// <summary> Initializes new instance of QueueCollection class. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        /// <returns> A new <see cref="Models.QueueCollection"/> instance for mocking. </returns>
-        public static QueueCollection QueueCollection(IReadOnlyList<JobQueue> value = default, string nextLink = default)
+        /// <summary> Initializes a new instance of QueueStatistics. </summary>
+        /// <param name="queueId"> Id of the queue these details are about. </param>
+        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTimeMinutes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
+        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
+        /// <returns> A new <see cref="JobRouter.QueueStatistics"/> instance for mocking. </returns>
+        public static QueueStatistics QueueStatistics(string queueId = null, int length = default, IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = null)
         {
-            value ??= new List<JobQueue>();
-            return new QueueCollection(value, nextLink);
+            estimatedWaitTimeMinutes ??= new Dictionary<string, double>();
+
+            return new QueueStatistics(queueId, length, estimatedWaitTimeMinutes, longestJobWaitTimeMinutes);
         }
 
-        /// <summary> Initializes new instance of JobQueue class. </summary>
-        /// <param name="id"> The Id of this queue. </param>
-        /// <param name="name"> The name of this queue. </param>
-        /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
-        /// <param name="Labels"> (Optional) A set of key/value pairs used by the classification process to determine queue to assign a job. </param>
-        /// <param name="exceptionPolicyId"> (Optional) The ID of the exception policy that determines various job escalation rules. </param>
-        /// <returns> A new <see cref="Models.JobQueue"/> instance for mocking. </returns>
-        public static JobQueue JobQueue(string id = default, string name = default, string distributionPolicyId = default, IDictionary<string, object> Labels = default, string exceptionPolicyId = default)
-        {
-            Labels ??= new Dictionary<string, object>();
-            return new JobQueue(id, name, distributionPolicyId, Labels, exceptionPolicyId);
-        }
-
-        /// <summary> Initializes new instance of RouterWorker class. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="state"> . </param>
-        /// <param name="queueAssignments"> . </param>
-        /// <param name="totalCapacity"> . </param>
-        /// <param name="Labels"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="channelConfigurations"> . </param>
-        /// <param name="offers"> . </param>
-        /// <param name="assignedJobs"> . </param>
-        /// <param name="loadRatio"> . </param>
-        /// <returns> A new <see cref="Models.RouterWorker"/> instance for mocking. </returns>
-        public static RouterWorker RouterWorker(string id = default, WorkerState state = default, IReadOnlyList<QueueAssignment> queueAssignments = default, int totalCapacity = default, IDictionary<string, object> Labels = default, IReadOnlyList<ChannelConfiguration> channelConfigurations = default, IReadOnlyList<JobOffer> offers = default, IReadOnlyList<WorkerAssignment> assignedJobs = default, double loadRatio = default)
-        {
-            queueAssignments ??= new List<QueueAssignment>();
-            Labels ??= new Dictionary<string, object>();
-            channelConfigurations ??= new List<ChannelConfiguration>();
-            offers ??= new List<JobOffer>();
-            assignedJobs ??= new List<WorkerAssignment>();
-            return new RouterWorker(id, state, queueAssignments, totalCapacity, Labels, channelConfigurations, offers, assignedJobs, loadRatio);
-        }
-
-        /// <summary> Initializes new instance of JobOffer class. </summary>
+        /// <summary> Initializes a new instance of JobOffer. </summary>
         /// <param name="id"> The Id of the offer. </param>
-        /// <param name="jobId"> The Id of the job assigned. </param>
+        /// <param name="jobId"> The Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <param name="offerTimeUtc"> The time the offer was created. </param>
-        /// <param name="expiryTimeUtc"> The time that indicates when the offer will expire. </param>
-        /// <returns> A new <see cref="Models.JobOffer"/> instance for mocking. </returns>
-        public static JobOffer JobOffer(string id = default, string jobId = default, int capacityCost = default, DateTimeOffset? offerTimeUtc = default, DateTimeOffset? expiryTimeUtc = default)
+        /// <param name="expiryTimeUtc"> The time that the offer will expire. </param>
+        /// <returns> A new <see cref="JobRouter.JobOffer"/> instance for mocking. </returns>
+        public static JobOffer JobOffer(string id = null, string jobId = null, int capacityCost = default, DateTimeOffset? offerTimeUtc = null, DateTimeOffset? expiryTimeUtc = null)
         {
             return new JobOffer(id, jobId, capacityCost, offerTimeUtc, expiryTimeUtc);
         }
 
-        /// <summary> Initializes new instance of WorkerAssignment class. </summary>
+        /// <summary> Initializes a new instance of WorkerAssignment. </summary>
         /// <param name="id"> The Id of the assignment. </param>
         /// <param name="jobId"> The Id of the Job assigned. </param>
-        /// <param name="capacityCost"> The amount of capacity this assignment has consumed for a worker. </param>
-        /// <param name="assignTime"> The Assignment time of the job. </param>
-        /// <returns> A new <see cref="Models.WorkerAssignment"/> instance for mocking. </returns>
-        public static WorkerAssignment WorkerAssignment(string id = default, string jobId = default, int capacityCost = default, DateTimeOffset assignTime = default)
+        /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
+        /// <param name="assignTime"> The assignment time of the job. </param>
+        /// <returns> A new <see cref="JobRouter.WorkerAssignment"/> instance for mocking. </returns>
+        public static WorkerAssignment WorkerAssignment(string id = null, string jobId = null, int capacityCost = default, DateTimeOffset assignTime = default)
         {
             return new WorkerAssignment(id, jobId, capacityCost, assignTime);
+        }
+
+        /// <summary> Initializes a new instance of PagedWorker. </summary>
+        /// <param name="id"></param>
+        /// <param name="state"> The current state of the worker. </param>
+        /// <param name="queueAssignments"> The queue(s) that this worker can receive work from. </param>
+        /// <param name="totalCapacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this worker. </param>
+        /// <param name="channelConfigurations"> The channel(s) this worker can handle and their impact on the workers capacity. </param>
+        /// <param name="offers"> A list of active offers issued to this worker. </param>
+        /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
+        /// <param name="loadRatio"> A value indicating the workers capacity. A value of &apos;1&apos; means all capacity is consumed. A value of &apos;0&apos; means no capacity is currently consumed. </param>
+        /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
+        /// <returns> A new <see cref="JobRouter.PagedWorker"/> instance for mocking. </returns>
+        public static PagedWorker PagedWorker(string id = null, PagedWorkerState? state = null, IReadOnlyDictionary<string, object> queueAssignments = null, int? totalCapacity = null, IReadOnlyDictionary<string, object> labels = null, IReadOnlyDictionary<string, object> tags = null, IReadOnlyDictionary<string, ChannelConfiguration> channelConfigurations = null, IEnumerable<JobOffer> offers = null, IEnumerable<WorkerAssignment> assignedJobs = null, double? loadRatio = null, bool? availableForOffers = null)
+        {
+            queueAssignments ??= new Dictionary<string, object>();
+            labels ??= new Dictionary<string, object>();
+            tags ??= new Dictionary<string, object>();
+            channelConfigurations ??= new Dictionary<string, ChannelConfiguration>();
+            offers ??= new List<JobOffer>();
+            assignedJobs ??= new List<WorkerAssignment>();
+
+            return new PagedWorker(id, state, queueAssignments, totalCapacity, labels, tags, channelConfigurations, offers?.ToList(), assignedJobs?.ToList(), loadRatio, availableForOffers);
         }
     }
 }

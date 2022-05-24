@@ -5,52 +5,36 @@
 
 #nullable disable
 
-using System;
-
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
     public partial class DistributionPolicy
     {
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        /// <param name="id"> The unique identifier of the policy. </param>
-        /// <param name="offerTTL"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
-        /// <param name="mode"> The policy governing the specific distribution method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="mode"/> is null. </exception>
-        internal DistributionPolicy(string id, TimeSpan offerTTL, DistributionMode mode)
+        public DistributionPolicy()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (mode == null)
-            {
-                throw new ArgumentNullException(nameof(mode));
-            }
-
-            Id = id;
-            OfferTTL = offerTTL;
-            Mode = mode;
         }
 
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
         /// <param name="id"> The unique identifier of the policy. </param>
         /// <param name="name"> The human readable name of the policy. </param>
-        /// <param name="offerTTL"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
-        /// <param name="mode"> The policy governing the specific distribution method. </param>
-        internal DistributionPolicy(string id, string name, TimeSpan offerTTL, DistributionMode mode)
+        /// <param name="offerTtlSeconds"> The expiry time of any offers created under this policy will be governed by the offer time to live. </param>
+        /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
+        internal DistributionPolicy(string id, string name, double? offerTtlSeconds, DistributionMode mode)
         {
             Id = id;
             Name = name;
-            OfferTTL = offerTTL;
+            OfferTtlSeconds = offerTtlSeconds;
             Mode = mode;
         }
 
         /// <summary> The unique identifier of the policy. </summary>
         public string Id { get; }
         /// <summary> The human readable name of the policy. </summary>
-        public string Name { get; }
-        /// <summary> The policy governing the specific distribution method. </summary>
-        public DistributionMode Mode { get; }
+        public string Name { get; set; }
+        /// <summary> The expiry time of any offers created under this policy will be governed by the offer time to live. </summary>
+        public double? OfferTtlSeconds { get; set; }
+        /// <summary> Abstract base class for defining a distribution mode. </summary>
+        public DistributionMode Mode { get; set; }
     }
 }

@@ -9,15 +9,37 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    public partial class ExceptionPolicy
+    public partial class ExceptionPolicy : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(ExceptionRules))
+            {
+                writer.WritePropertyName("exceptionRules");
+                writer.WriteStartObject();
+                foreach (var item in ExceptionRules)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static ExceptionPolicy DeserializeExceptionPolicy(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<ExceptionRule>> exceptionRules = default;
+            Optional<IDictionary<string, ExceptionRule>> exceptionRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,19 +56,19 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        exceptionRules = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ExceptionRule> array = new List<ExceptionRule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, ExceptionRule> dictionary = new Dictionary<string, ExceptionRule>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(ExceptionRule.DeserializeExceptionRule(item));
+                        dictionary.Add(property0.Name, ExceptionRule.DeserializeExceptionRule(property0.Value));
                     }
-                    exceptionRules = array;
+                    exceptionRules = dictionary;
                     continue;
                 }
             }
-            return new ExceptionPolicy(id, name.Value, Optional.ToList(exceptionRules));
+            return new ExceptionPolicy(id.Value, name.Value, Optional.ToDictionary(exceptionRules));
         }
     }
 }

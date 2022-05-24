@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("JobQueue")]
     public partial class JobQueue
@@ -22,15 +22,9 @@ namespace Azure.Communication.JobRouter.Models
             }
         }
 
-        internal JobQueue(string id, string name, string distributionPolicyId, LabelCollection labels, string exceptionPolicyId)
-        {
-            Id = id;
-            Name = name;
-            DistributionPolicyId = distributionPolicyId;
-            Labels = labels;
-            ExceptionPolicyId = exceptionPolicyId;
-        }
-
+        /// <summary>
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// </summary>
         public LabelCollection Labels { get; set; }
     }
 }

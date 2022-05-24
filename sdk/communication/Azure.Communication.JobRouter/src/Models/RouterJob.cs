@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterJob")]
     public partial class RouterJob
@@ -24,23 +25,47 @@ namespace Azure.Communication.JobRouter.Models
             }
         }
 
-        internal RouterJob(string id, string channelReference, JobStatus jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IReadOnlyList<LabelSelector> workerSelectors, LabelCollection labels, IReadOnlyDictionary<string, JobAssignment> assignments, IReadOnlyDictionary<string, string> notes)
+        /// <summary>
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// </summary>
+        public LabelCollection Labels { get; set; }
+
+        [CodeGenMember("Tags")]
+        internal IDictionary<string, object> _tags
         {
-            Id = id;
-            ChannelReference = channelReference;
-            JobStatus = jobStatus;
-            EnqueueTimeUtc = enqueueTimeUtc;
-            ChannelId = channelId;
-            ClassificationPolicyId = classificationPolicyId;
-            QueueId = queueId;
-            Priority = priority;
-            DispositionCode = dispositionCode;
-            WorkerSelectors = workerSelectors;
-            Labels = labels;
-            Assignments = assignments;
-            Notes = notes;
+            get
+            {
+                return Tags?.ToDictionary(x => x.Key, x => x.Value);
+            }
+            set
+            {
+                Tags = LabelCollection.BuildFromRawValues(value);
+            }
         }
 
-        public LabelCollection Labels { get; set; }
+        /// <summary> A set of non-identifying attributes attached to this job. </summary>
+        public LabelCollection Tags { get; set; }
+
+        [CodeGenMember("Notes")]
+        internal IDictionary<string, string> _notes
+        {
+            get
+            {
+                return Notes?.ToDictionary(x => JsonSerializer.Serialize(x.Key), x => x.Value);
+            }
+            set
+            {
+                Notes = new SortedDictionary<DateTimeOffset, string>(
+                    value.ToDictionary(x => JsonSerializer.Deserialize<DateTimeOffset>(x.Key), x => x.Value));
+            }
+        }
+
+        /// <summary> Notes attached to a job, sorted by timestamp. </summary>
+#pragma warning disable CA2227 // Collection properties should be read only
+        public SortedDictionary<DateTimeOffset, string> Notes { get; set; }
+
+        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
+        public IList<WorkerSelector> RequestedWorkerSelectors { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
     }
 }

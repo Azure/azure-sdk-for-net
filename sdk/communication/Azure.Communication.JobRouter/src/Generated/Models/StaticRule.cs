@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing static rules that always return the same result, regardless of input. </summary>
     public partial class StaticRule : RouterRule

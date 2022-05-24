@@ -5,69 +5,65 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The RouterWorker. </summary>
+    /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
         /// <summary> Initializes a new instance of RouterWorker. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="state"> . </param>
-        /// <param name="totalCapacity"> . </param>
-        /// <param name="loadRatio"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal RouterWorker(string id, WorkerState state, int totalCapacity, double loadRatio)
+        public RouterWorker()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
-            State = state;
-            QueueAssignments = new ChangeTrackingList<QueueAssignment>();
-            TotalCapacity = totalCapacity;
+            _queueAssignments = new ChangeTrackingDictionary<string, object>();
             _labels = new ChangeTrackingDictionary<string, object>();
-            ChannelConfigurations = new ChangeTrackingList<ChannelConfiguration>();
+            _tags = new ChangeTrackingDictionary<string, object>();
+            ChannelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
             Offers = new ChangeTrackingList<JobOffer>();
             AssignedJobs = new ChangeTrackingList<WorkerAssignment>();
-            LoadRatio = loadRatio;
         }
 
         /// <summary> Initializes a new instance of RouterWorker. </summary>
-        /// <param name="id"> . </param>
-        /// <param name="state"> . </param>
-        /// <param name="queueAssignments"> . </param>
-        /// <param name="totalCapacity"> . </param>
-        /// <param name="Labels"> Dictionary of &lt;any&gt;. </param>
-        /// <param name="channelConfigurations"> . </param>
-        /// <param name="offers"> . </param>
-        /// <param name="assignedJobs"> . </param>
-        /// <param name="loadRatio"> . </param>
-        internal RouterWorker(string id, WorkerState state, IReadOnlyList<QueueAssignment> queueAssignments, int totalCapacity, IDictionary<string, object> Labels, IReadOnlyList<ChannelConfiguration> channelConfigurations, IReadOnlyList<JobOffer> offers, IReadOnlyList<WorkerAssignment> assignedJobs, double loadRatio)
+        /// <param name="id"></param>
+        /// <param name="state"> The current state of the worker. </param>
+        /// <param name="queueAssignments"> The queue(s) that this worker can receive work from. </param>
+        /// <param name="totalCapacity"> The total capacity score this worker has to manage multiple concurrent jobs. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
+        /// <param name="tags"> A set of non-identifying attributes attached to this worker. </param>
+        /// <param name="channelConfigurations"> The channel(s) this worker can handle and their impact on the workers capacity. </param>
+        /// <param name="offers"> A list of active offers issued to this worker. </param>
+        /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
+        /// <param name="loadRatio"> A value indicating the workers capacity. A value of &apos;1&apos; means all capacity is consumed. A value of &apos;0&apos; means no capacity is currently consumed. </param>
+        /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
+        internal RouterWorker(string id, RouterWorkerState? state, IDictionary<string, object> queueAssignments, int? totalCapacity, IDictionary<string, object> labels, IDictionary<string, object> tags, IDictionary<string, ChannelConfiguration> channelConfigurations, IReadOnlyList<JobOffer> offers, IReadOnlyList<WorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
         {
             Id = id;
             State = state;
-            QueueAssignments = queueAssignments;
+            _queueAssignments = queueAssignments;
             TotalCapacity = totalCapacity;
-            _labels = Labels;
+            _labels = labels;
+            _tags = tags;
             ChannelConfigurations = channelConfigurations;
             Offers = offers;
             AssignedJobs = assignedJobs;
             LoadRatio = loadRatio;
+            AvailableForOffers = availableForOffers;
         }
 
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
-        public WorkerState State { get; }
-        public IReadOnlyList<QueueAssignment> QueueAssignments { get; }
-        public int TotalCapacity { get; }
-        public IReadOnlyList<ChannelConfiguration> ChannelConfigurations { get; }
+        /// <summary> The current state of the worker. </summary>
+        public RouterWorkerState? State { get; }
+        /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
+        public int? TotalCapacity { get; set; }
+        /// <summary> A list of active offers issued to this worker. </summary>
         public IReadOnlyList<JobOffer> Offers { get; }
+        /// <summary> A list of assigned jobs attached to this worker. </summary>
         public IReadOnlyList<WorkerAssignment> AssignedJobs { get; }
-        public double LoadRatio { get; }
+        /// <summary> A value indicating the workers capacity. A value of &apos;1&apos; means all capacity is consumed. A value of &apos;0&apos; means no capacity is currently consumed. </summary>
+        public double? LoadRatio { get; }
+        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
+        public bool? AvailableForOffers { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class DistributionMode : IUtf8JsonSerializable
     {
@@ -24,15 +24,8 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteNumberValue(MaxConcurrentOffers);
             if (Optional.IsDefined(BypassSelectors))
             {
-                if (BypassSelectors != null)
-                {
-                    writer.WritePropertyName("bypassSelectors");
-                    writer.WriteBooleanValue(BypassSelectors.Value);
-                }
-                else
-                {
-                    writer.WriteNull("bypassSelectors");
-                }
+                writer.WritePropertyName("bypassSelectors");
+                writer.WriteBooleanValue(BypassSelectors.Value);
             }
             writer.WriteEndObject();
         }
@@ -48,7 +41,7 @@ namespace Azure.Communication.JobRouter.Models
                     case "round-robin": return RoundRobinMode.DeserializeRoundRobinMode(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.Models.DistributionMode' not supported.");
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.DistributionMode' not supported.");
         }
     }
 }

@@ -9,55 +9,42 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The RouterJob. </summary>
+    /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
         /// <summary> Initializes a new instance of RouterJob. </summary>
-        /// <param name="id"> The id of the Job. </param>
-        /// <param name="jobStatus"> The state of the Job. </param>
-        /// <param name="channelId"> The channel or modality upon which this job will be executed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="channelId"/> is null. </exception>
-        internal RouterJob(string id, JobStatus jobStatus, string channelId)
+        public RouterJob()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (channelId == null)
-            {
-                throw new ArgumentNullException(nameof(channelId));
-            }
-
-            Id = id;
-            JobStatus = jobStatus;
-            ChannelId = channelId;
-            WorkerSelectors = new ChangeTrackingList<LabelSelector>();
+            RequestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
             _labels = new ChangeTrackingDictionary<string, object>();
             Assignments = new ChangeTrackingDictionary<string, JobAssignment>();
-            Notes = new ChangeTrackingDictionary<string, string>();
+            _tags = new ChangeTrackingDictionary<string, object>();
+            _notes = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of RouterJob. </summary>
-        /// <param name="id"> The id of the Job. </param>
+        /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
         /// <param name="jobStatus"> The state of the Job. </param>
         /// <param name="enqueueTimeUtc"> The time a job was queued. </param>
-        /// <param name="channelId"> The channel or modality upon which this job will be executed. </param>
+        /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
         /// <param name="classificationPolicyId"> The Id of the Classification policy used for classifying a job. </param>
-        /// <param name="queueId"> The Id of the Queue that a job is queued to. </param>
+        /// <param name="queueId"> The Id of the Queue that this job is queued to. </param>
         /// <param name="priority"> The priority of this job. </param>
         /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
-        /// <param name="workerSelectors"> A collection of label selectors a worker must satisfy in order to process this job. </param>
-        /// <param name="Labels"> A set of key/value pairs used by the classification process to determine queue, priority and attach label selectors. </param>
+        /// <param name="requestedWorkerSelectors"> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </param>
+        /// <param name="attachedWorkerSelectors"> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
         /// <param name="assignments">
         /// A collection of the assignments of the job.
-        /// 
         /// Key is AssignmentId.
         /// </param>
-        /// <param name="notes"> Generic text notes attached to a job, sorted by timestamp. </param>
-        internal RouterJob(string id, string channelReference, JobStatus jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IReadOnlyList<LabelSelector> workerSelectors, IDictionary<string, object> Labels, IReadOnlyDictionary<string, JobAssignment> assignments, IReadOnlyDictionary<string, string> notes)
+        /// <param name="tags"> A set of non-identifying attributes attached to this job. </param>
+        /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
+        internal RouterJob(string id, string channelReference, JobStatus? jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<WorkerSelector> requestedWorkerSelectors, IReadOnlyList<WorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, JobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes)
         {
             Id = id;
             ChannelReference = channelReference;
@@ -68,39 +55,38 @@ namespace Azure.Communication.JobRouter.Models
             QueueId = queueId;
             Priority = priority;
             DispositionCode = dispositionCode;
-            WorkerSelectors = workerSelectors;
-            _labels = Labels;
+            RequestedWorkerSelectors = requestedWorkerSelectors;
+            AttachedWorkerSelectors = attachedWorkerSelectors;
+            _labels = labels;
             Assignments = assignments;
-            Notes = notes;
+            _tags = tags;
+            _notes = notes;
         }
 
-        /// <summary> The id of the Job. </summary>
+        /// <summary> The id of the job. </summary>
         public string Id { get; }
         /// <summary> Reference to an external parent context, eg. call ID. </summary>
-        public string ChannelReference { get; }
+        public string ChannelReference { get; set; }
         /// <summary> The state of the Job. </summary>
-        public JobStatus JobStatus { get; }
+        public JobStatus? JobStatus { get; }
         /// <summary> The time a job was queued. </summary>
         public DateTimeOffset? EnqueueTimeUtc { get; }
-        /// <summary> The channel or modality upon which this job will be executed. </summary>
-        public string ChannelId { get; }
+        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
+        public string ChannelId { get; set; }
         /// <summary> The Id of the Classification policy used for classifying a job. </summary>
-        public string ClassificationPolicyId { get; }
-        /// <summary> The Id of the Queue that a job is queued to. </summary>
-        public string QueueId { get; }
+        public string ClassificationPolicyId { get; set; }
+        /// <summary> The Id of the Queue that this job is queued to. </summary>
+        public string QueueId { get; set; }
         /// <summary> The priority of this job. </summary>
-        public int? Priority { get; }
+        public int? Priority { get; set; }
         /// <summary> Reason code for cancelled or closed jobs. </summary>
-        public string DispositionCode { get; }
-        /// <summary> A collection of label selectors a worker must satisfy in order to process this job. </summary>
-        public IReadOnlyList<LabelSelector> WorkerSelectors { get; }
+        public string DispositionCode { get; set; }
+        /// <summary> A collection of label selectors attached by a classification policy, which a worker must satisfy in order to process this job. </summary>
+        public IReadOnlyList<WorkerSelector> AttachedWorkerSelectors { get; }
         /// <summary>
         /// A collection of the assignments of the job.
-        /// 
         /// Key is AssignmentId.
         /// </summary>
         public IReadOnlyDictionary<string, JobAssignment> Assignments { get; }
-        /// <summary> Generic text notes attached to a job, sorted by timestamp. </summary>
-        public IReadOnlyDictionary<string, string> Notes { get; }
     }
 }

@@ -5,38 +5,24 @@
 
 #nullable disable
 
-using System;
-
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> The action to take when the exception is triggered. </summary>
     public partial class ExceptionAction
     {
         /// <summary> Initializes a new instance of ExceptionAction. </summary>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ExceptionAction(string id)
+        public ExceptionAction()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
         }
 
         /// <summary> Initializes a new instance of ExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
-        internal ExceptionAction(string kind, string id)
+        internal ExceptionAction(string kind)
         {
             Kind = kind;
-            Id = id;
         }
 
         /// <summary> The type discriminator describing a sub-type of ExceptionAction. </summary>
         internal string Kind { get; set; }
-        /// <summary> Unique Id of the action within the exception rule. </summary>
-        public string Id { get; set; }
     }
 }

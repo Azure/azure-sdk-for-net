@@ -7,24 +7,25 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The CommunicationErrorResponse. </summary>
+    /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
     {
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
-        /// <param name="communicationError"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationError"/> is null. </exception>
-        internal CommunicationErrorResponse(CommunicationError communicationError)
+        /// <param name="error"> The Communication Services error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
+        internal CommunicationErrorResponse(JobRouterError error)
         {
-            if (communicationError == null)
+            if (error == null)
             {
-                throw new ArgumentNullException(nameof(communicationError));
+                throw new ArgumentNullException(nameof(error));
             }
 
-            CommunicationError = communicationError;
+            Error = error;
         }
 
-        public CommunicationError CommunicationError { get; }
+        /// <summary> The Communication Services error. </summary>
+        public JobRouterError Error { get; }
     }
 }

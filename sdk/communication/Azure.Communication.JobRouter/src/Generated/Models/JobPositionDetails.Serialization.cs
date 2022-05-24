@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class JobPositionDetails
     {
@@ -18,6 +18,7 @@ namespace Azure.Communication.JobRouter.Models
             int position = default;
             string queueId = default;
             int queueLength = default;
+            double estimatedWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"))
@@ -40,8 +41,13 @@ namespace Azure.Communication.JobRouter.Models
                     queueLength = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("estimatedWaitTimeMinutes"))
+                {
+                    estimatedWaitTimeMinutes = property.Value.GetDouble();
+                    continue;
+                }
             }
-            return new JobPositionDetails(jobId, position, queueId, queueLength);
+            return new JobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
         }
     }
 }

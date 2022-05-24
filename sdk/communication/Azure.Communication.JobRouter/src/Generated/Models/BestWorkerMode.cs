@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
     public partial class BestWorkerMode : DistributionMode
@@ -17,25 +17,18 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
         /// <param name="bypassSelectors">
         /// (Optional)
-        /// 
         /// If set to true, then router will match workers to jobs even if they don&apos;t match label selectors.
-        /// 
         /// Warning: You may get workers that are not qualified for the job they are matched with if you set this
-        /// 
         /// variable to true. This flag is intended more for temporary usage.
-        /// 
         /// By default, set to false.
         /// </param>
         /// <param name="scoringRule">
-        /// (Optional)
-        /// 
-        /// Define a scoring rule to use, when calculating a score to determine the best worker.
-        /// 
-        /// If not set, will use a default scoring formula that uses the number of job labels that the worker
-        /// 
-        /// labels match, as well as the number of label selectors the worker labels match and/or exceed
-        /// 
-        /// using a logistic function (https://en.wikipedia.org/wiki/Logistic_function).
+        /// A rule of one of the following types:
+        ///             
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// </param>
         /// <param name="scoringRuleOptions"> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </param>
         internal BestWorkerMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, RouterRule scoringRule, ScoringRuleOptions scoringRuleOptions) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
@@ -46,15 +39,12 @@ namespace Azure.Communication.JobRouter.Models
         }
 
         /// <summary>
-        /// (Optional)
-        /// 
-        /// Define a scoring rule to use, when calculating a score to determine the best worker.
-        /// 
-        /// If not set, will use a default scoring formula that uses the number of job labels that the worker
-        /// 
-        /// labels match, as well as the number of label selectors the worker labels match and/or exceed
-        /// 
-        /// using a logistic function (https://en.wikipedia.org/wiki/Logistic_function).
+        /// A rule of one of the following types:
+        ///             
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
         /// </summary>
         public RouterRule ScoringRule { get; set; }
         /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>

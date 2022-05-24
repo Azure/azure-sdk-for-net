@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class RouterRule : IUtf8JsonSerializable
     {
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter.Models
                     case "static-rule": return StaticRule.DeserializeStaticRule(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.Models.RouterRule' not supported.");
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.RouterRule' not supported.");
         }
     }
 }

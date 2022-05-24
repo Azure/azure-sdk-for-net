@@ -7,16 +7,16 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The AcceptJobOfferResponse. </summary>
+    /// <summary> Response containing Id&apos;s for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResponse
     {
         /// <summary> Initializes a new instance of AcceptJobOfferResponse. </summary>
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/>, or <paramref name="workerId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
         internal AcceptJobOfferResponse(string assignmentId, string jobId, string workerId)
         {
             if (assignmentId == null)

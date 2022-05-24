@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for deleting a job. </summary>
     internal partial class CancelJobRequest
@@ -15,12 +15,11 @@ namespace Azure.Communication.JobRouter.Models
         {
         }
 
-        /// <summary> (Optional) Customer supplied note, e.g., cancellation reason. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
         public string Note { get; set; }
         /// <summary>
-        /// (Optional) Customer supplied disposition code for specifying any short label
-        /// 
-        /// If not provided, default value of &quot;CancelledByUser&quot; is set.
+        /// Indicates the outcome of the job, populate this field with your own custom values.
+        /// If not provided, default value of &quot;Cancelled&quot; is set.
         /// </summary>
         public string DispositionCode { get; set; }
     }

@@ -5,7 +5,7 @@ using Azure.Core;
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are directed to the worker who has been idle longest. </summary>
     [CodeGenSuppress("LongestIdleMode", typeof(int), typeof(int))]

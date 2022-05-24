@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     internal partial class CommunicationErrorResponse
     {
         internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
         {
-            CommunicationError communicationError = default;
+            JobRouterError error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("communicationError"))
+                if (property.NameEquals("error"))
                 {
-                    communicationError = CommunicationError.DeserializeCommunicationError(property.Value);
+                    error = JobRouterError.DeserializeJobRouterError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationErrorResponse(communicationError);
+            return new CommunicationErrorResponse(error);
         }
     }
 }

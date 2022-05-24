@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ReclassifyExceptionAction
     {
@@ -24,6 +24,9 @@ namespace Azure.Communication.JobRouter.Models
             }
         }
 
+        /// <summary>
+        /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs
+        /// </summary>
         public LabelCollection LabelsToUpsert { get; set; }
     }
 }

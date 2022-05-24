@@ -5,9 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes how the value of the label is compared to the value defined on the label selector. </summary>
+    /// <summary> Describes how the value of the label is compared to the value pass through. </summary>
     public enum LabelOperator
     {
         /// <summary> equal. </summary>

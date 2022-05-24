@@ -9,13 +9,42 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    public partial class JobQueue
+    public partial class JobQueue : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            writer.WritePropertyName("distributionPolicyId");
+            writer.WriteStringValue(DistributionPolicyId);
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels");
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ExceptionPolicyId))
+            {
+                writer.WritePropertyName("exceptionPolicyId");
+                writer.WriteStringValue(ExceptionPolicyId);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static JobQueue DeserializeJobQueue(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             Optional<string> name = default;
             string distributionPolicyId = default;
             Optional<IDictionary<string, object>> labels = default;
@@ -41,7 +70,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        labels = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -58,7 +87,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new JobQueue(id, name.Value, distributionPolicyId, Optional.ToDictionary(labels), exceptionPolicyId.Value);
+            return new JobQueue(id.Value, name.Value, distributionPolicyId, Optional.ToDictionary(labels), exceptionPolicyId.Value);
         }
     }
 }

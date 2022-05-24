@@ -9,15 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A paged collection of jobs. </summary>
     public partial class JobCollection
     {
         /// <summary> Initializes a new instance of JobCollection. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal JobCollection(IEnumerable<RouterJob> value)
+        internal JobCollection(IEnumerable<PagedJob> value)
         {
             if (value == null)
             {
@@ -28,15 +28,17 @@ namespace Azure.Communication.JobRouter.Models
         }
 
         /// <summary> Initializes a new instance of JobCollection. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        internal JobCollection(IReadOnlyList<RouterJob> value, string nextLink)
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        internal JobCollection(IReadOnlyList<PagedJob> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        public IReadOnlyList<RouterJob> Value { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<PagedJob> Value { get; }
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

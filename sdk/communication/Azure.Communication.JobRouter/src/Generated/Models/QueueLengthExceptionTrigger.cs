@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
     public partial class QueueLengthExceptionTrigger : JobExceptionTrigger
@@ -13,14 +13,14 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
-        /// <param name="threshold"> Threshold of number of jobs queued to for this trigger. </param>
+        /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
         internal QueueLengthExceptionTrigger(string kind, int threshold) : base(kind)
         {
             Threshold = threshold;
             Kind = kind ?? "queue-length";
         }
 
-        /// <summary> Threshold of number of jobs queued to for this trigger. </summary>
+        /// <summary> Threshold of number of jobs ahead in the queue to for this trigger to fire. </summary>
         public int Threshold { get; set; }
     }
 }

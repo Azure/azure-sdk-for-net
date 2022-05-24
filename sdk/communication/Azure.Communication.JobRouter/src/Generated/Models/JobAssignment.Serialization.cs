@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class JobAssignment
     {
@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Models
             string id = default;
             Optional<string> workerId = default;
             DateTimeOffset assignTime = default;
-            Optional<DateTimeOffset?> completeTime = default;
-            Optional<DateTimeOffset?> closeTime = default;
+            Optional<DateTimeOffset> completeTime = default;
+            Optional<DateTimeOffset> closeTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -41,7 +41,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        completeTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     completeTime = property.Value.GetDateTimeOffset("O");
@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        closeTime = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     closeTime = property.Value.GetDateTimeOffset("O");

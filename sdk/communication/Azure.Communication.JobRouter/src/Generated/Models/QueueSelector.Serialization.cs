@@ -5,34 +5,57 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class QueueSelector : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind);
+            writer.WritePropertyName("key");
+            writer.WriteStringValue(Key);
+            writer.WritePropertyName("labelOperator");
+            writer.WriteStringValue(LabelOperator.ToSerialString());
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteObjectValue(Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static QueueSelector DeserializeQueueSelector(JsonElement element)
         {
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            string key = default;
+            LabelOperator labelOperator = default;
+            Optional<object> value = default;
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("key"))
                 {
-                    case "nearest-queue-label": return NearestQueueLabelSelector.DeserializeNearestQueueLabelSelector(element);
-                    case "queue-id": return QueueIdSelector.DeserializeQueueIdSelector(element);
-                    case "queue-label": return QueueLabelSelector.DeserializeQueueLabelSelector(element);
+                    key = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("labelOperator"))
+                {
+                    labelOperator = property.Value.GetString().ToLabelOperator();
+                    continue;
+                }
+                if (property.NameEquals("value"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    value = property.Value.GetObject();
+                    continue;
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.Models.QueueSelector' not supported.");
+            return new QueueSelector(key, labelOperator, value.Value);
         }
     }
 }

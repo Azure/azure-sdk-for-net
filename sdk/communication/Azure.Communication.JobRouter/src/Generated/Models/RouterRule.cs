@@ -5,9 +5,16 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The RouterRule. </summary>
+    /// <summary>
+    /// A rule of one of the following types:
+    ///             
+    /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+    /// DirectMapRule:  A rule that return the same labels as the input labels.
+    /// ExpressionRule: A rule providing inline expression rules.
+    /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+    /// </summary>
     public partial class RouterRule
     {
         /// <summary> Initializes a new instance of RouterRule. </summary>
