@@ -19,8 +19,11 @@ namespace Azure.AI.TextAnalytics
     {
         internal SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, IReadOnlyList<SentenceOpinion> opinions)
         {
+            // We shipped TA 5.0.0 Text == string.Empty if the service returned a null value for Text.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
+            Text = text ?? string.Empty;
+
             Sentiment = sentiment;
-            Text = text;
             ConfidenceScores = new SentimentConfidenceScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;

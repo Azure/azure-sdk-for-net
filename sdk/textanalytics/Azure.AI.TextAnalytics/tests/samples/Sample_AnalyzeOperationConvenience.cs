@@ -11,7 +11,6 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        [Ignore("LRO not implemented")]
         public void AnalyzeOperationConvenience()
         {
             string endpoint = TestEnvironment.Endpoint;

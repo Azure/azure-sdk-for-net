@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal SqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, SqlPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal SqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, SqlPrivateLinkServiceConnectionStateProperty connectionState, PrivateEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Connection state of the private endpoint connection. </summary>
-        public SqlPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        public SqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> State of the private endpoint connection. </summary>
         public PrivateEndpointProvisioningState? ProvisioningState { get; }
     }

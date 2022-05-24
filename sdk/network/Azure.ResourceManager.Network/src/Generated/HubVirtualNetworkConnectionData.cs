@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the HubVirtualNetworkConnection data model. </summary>
-    public partial class HubVirtualNetworkConnectionData : Models.SubResource
+    public partial class HubVirtualNetworkConnectionData : NetworkSubResource
     {
         /// <summary> Initializes a new instance of HubVirtualNetworkConnectionData. </summary>
         public HubVirtualNetworkConnectionData()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        internal HubVirtualNetworkConnectionData(string id, string name, string etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, string etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         public RoutingConfiguration RoutingConfiguration { get; set; }
         /// <summary> The provisioning state of the hub virtual network connection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

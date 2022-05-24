@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         internal static ResourceUsage DeserializeResourceUsage(JsonElement element)
         {
             Optional<string> resourceType = default;
-            Optional<string> unit = default;
+            Optional<ResourceUsageUnit> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("unit"))
                 {
-                    unit = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    unit = new ResourceUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentValue"))
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ResourceUsage(resourceType.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit));
+            return new ResourceUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit));
         }
     }
 }

@@ -7,16 +7,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
-    [CodeGenClient("ResourceSetRulesClient")]
-    [CodeGenSuppress("PurviewResourceSetRule", typeof(Uri), typeof(TokenCredential), typeof(PurviewAccountClientOptions))]
+    [CodeGenClient("ResourceSetRulesClient", ParentClient = typeof(PurviewAccountClient))]
     public partial class PurviewResourceSetRule
     {
-        internal PurviewResourceSetRule(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, ClientDiagnostics clientDiagnostics)
-        {
-            _pipeline = pipeline;
-            _tokenCredential = tokenCredential;
-            _endpoint = endpoint;
-            ClientDiagnostics = clientDiagnostics;
-        }
     }
 }

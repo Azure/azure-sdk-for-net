@@ -25,22 +25,32 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RestorePointCollectionSourceProperties DeserializeRestorePointCollectionSourceProperties(JsonElement element)
         {
-            Optional<string> location = default;
-            Optional<string> id = default;
+            Optional<AzureLocation> location = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new RestorePointCollectionSourceProperties(location.Value, id.Value);
+            return new RestorePointCollectionSourceProperties(Optional.ToNullable(location), id.Value);
         }
     }
 }

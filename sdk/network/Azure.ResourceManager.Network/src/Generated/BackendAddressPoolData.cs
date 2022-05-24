@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the BackendAddressPool data model. </summary>
-    public partial class BackendAddressPoolData : Models.SubResource
+    public partial class BackendAddressPoolData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         public BackendAddressPoolData()
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="location"> The location of the backend address pool. </param>
         /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
         /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(string id, string name, string etag, string resourceType, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             Location = location;
             TunnelInterfaces = tunnelInterfaces;
             LoadBalancerBackendAddresses = loadBalancerBackendAddresses;
@@ -53,14 +51,10 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
         /// <summary> The location of the backend address pool. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> An array of gateway load balancer tunnel interfaces. </summary>
         public IList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces { get; }
         /// <summary> An array of backend addresses. </summary>
@@ -80,6 +74,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
         public IReadOnlyList<WritableSubResource> OutboundRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }
