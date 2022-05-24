@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             Optional<DateTimeOffset> timeCreated = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<OperatingSystemTypes> osType = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DiskPurchasePlan> purchasePlan = default;
             Optional<SupportedCapabilities> supportedCapabilities = default;
             Optional<string> familyId = default;
             Optional<string> sourceUniqueId = default;
-            Optional<Encryption> encryption = default;
+            Optional<DiskEncryption> encryption = default;
             Optional<bool> supportsHibernation = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
@@ -80,7 +80,12 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("sourceResourceId"))
                         {
-                            sourceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osType"))
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"))

@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
@@ -23,8 +19,10 @@ namespace Azure.AI.Translation.Document
         }
         /// <summary>
         /// Sort results ascendingly if true, or descendingly if false.
+        /// Default value is true.
         /// </summary>
-        internal bool Ascending { get; set; }
+        public bool Ascending { get; set; } = true;
+
         /// <summary>
         /// See <see cref="DocumentFilterProperty"/> for list of properties supported.
         /// </summary>

@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             var createListenerTask = binding.GetType().GetMethod("CreateListenerAsync");
             var listener = await (Task<IListener>)createListenerTask.Invoke(binding, parameters);
             var listenerOptions = (ServiceBusOptions)listener.GetType().GetField("_serviceBusOptions", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
-            var autoCompleteMessagesFlagSentToListener = (bool)listener.GetType().GetField("_autoCompleteMessagesOptionEvaluatedValue", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
+            var autoCompleteMessagesFlagSentToListener = (bool)listener.GetType().GetField("_autoCompleteMessages", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(listener);
 
             Assert.NotNull(listenerOptions);
             Assert.True(listenerOptions.AutoCompleteMessages);

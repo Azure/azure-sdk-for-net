@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// properties for the virtual machine scale set.</param>
         /// <param name="timeCreated">Specifies the time at which the Virtual
         /// Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2021-11-01.</param>
+        /// api-version: 2022-03-01.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones. NOTE:
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets specifies the time at which the Virtual Machine Scale Set
         /// resource was created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2021-11-01.
+        /// api-version: 2022-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }

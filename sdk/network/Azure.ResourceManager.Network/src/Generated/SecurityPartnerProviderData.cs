@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the SecurityPartnerProvider data model. </summary>
-    public partial class SecurityPartnerProviderData : NetworkResourceData
+    public partial class SecurityPartnerProviderData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of SecurityPartnerProviderData. </summary>
         public SecurityPartnerProviderData()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityProviderName"> The security provider name. </param>
         /// <param name="connectionStatus"> The connection status with the Security Partner Provider. </param>
         /// <param name="virtualHub"> The virtualHub to which the Security Partner Provider belongs. </param>
-        internal SecurityPartnerProviderData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
+        internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The provisioning state of the Security Partner Provider resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The security provider name. </summary>
         public SecurityProviderName? SecurityProviderName { get; set; }
         /// <summary> The connection status with the Security Partner Provider. </summary>

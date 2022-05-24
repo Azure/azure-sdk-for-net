@@ -1,22 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-04-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "11039",
+        "Accept": "application/json",
+        "Content-Length": "11072",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-12843e4a9bc78844804a5484810f8413-535b0b7d6f92e74b-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "2e73b90435cce70b2e4922f1ab54c953",
+        "traceparent": "00-1eb14d5153899948b035596e6be599eb-c8a2010e55e74f4e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "377584bd7eaf3e1c3dfbb741e97c6262",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -34,782 +28,700 @@
             }
           ]
         },
-        "tasks": {
-          "extractiveSummarizationTasks": [
-            {
-              "parameters": {
-                "loggingOptOut": true,
-                "stringIndexType": "Utf16CodeUnit"
-              },
-              "taskName": "ExtractSummaryWithDisabledServiceLogs"
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit",
+              "loggingOptOut": true
             },
-            {
-              "parameters": {
-                "stringIndexType": "Utf16CodeUnit"
-              },
-              "taskName": "ExtractSummary"
-            }
-          ]
-        }
+            "kind": "ExtractiveSummarization",
+            "taskName": "ExtractSummaryWithDisabledServiceLogs"
+          },
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "ExtractiveSummarization",
+            "taskName": "ExtractSummary"
+          }
+        ]
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "692fa813-349f-41ed-a59c-7ba84a2434b2",
-        "Date": "Mon, 25 Oct 2021 21:16:43 GMT",
-        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+        "apim-request-id": "42d15073-fc84-49b5-b8e7-7231aad39ed6",
+        "Content-Length": "0",
+        "Date": "Fri, 13 May 2022 19:18:47 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "1319"
+        "x-envoy-upstream-service-time": "265"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "4cd81395d120b81ebbcdb6ad5ac9adf7",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "89fd3baf3c24d5d206fda54528f0b95d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4c117f8b-29ba-49f5-ace5-0e431245232d",
+        "apim-request-id": "08737d5a-3c7e-4261-a0ae-5956a73bbf64",
+        "Content-Length": "282",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:43 GMT",
+        "Date": "Fri, 13 May 2022 19:18:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:43Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:47Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
+        "status": "notStarted",
         "errors": [],
         "tasks": {
           "completed": 0,
           "failed": 0,
           "inProgress": 2,
-          "total": 2
+          "total": 2,
+          "items": []
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "806a4f5736b1b5d26cf0ae80e569d85f",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "4537681877c016c1e5c3dec3209095db",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "f9dcd99d-e928-4aa0-9e38-d36b447f538e",
+        "apim-request-id": "b8cbe7fa-8811-4935-bcc7-062aeb8ab79b",
+        "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:44 GMT",
+        "Date": "Fri, 13 May 2022 19:18:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "10"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:43Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:48Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
           "completed": 0,
           "failed": 0,
           "inProgress": 2,
-          "total": 2
+          "total": 2,
+          "items": []
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "fce7960ffcea32129aba72fe7f5d8c65",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5442ff1f5c62808cb19f31b2d8d6164d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cf628801-21f0-4f28-b0d9-df6254fee180",
+        "apim-request-id": "008e13ce-8417-43df-8b8c-b1d677f36a2b",
+        "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:45 GMT",
+        "Date": "Fri, 13 May 2022 19:18:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:43Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "5c9a2a9b48e95fa14123df2f239dd352",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "17813f83-ef5d-4e29-a8f3-1520a03cc8db",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:46 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:43Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "c39e56f5b1e15a0d3d38e5f6c3d3350e",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "7d5e2e0f-b534-4066-81fb-3df7eeef9172",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:47 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:43Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:48Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
           "completed": 0,
           "failed": 0,
           "inProgress": 2,
-          "total": 2
+          "total": 2,
+          "items": []
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "bbe549647ccfc676f588bac71ce20efc",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "80285a411d4437a17ae7a3605e0fb476",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5bbafceb-8b79-4dfe-977b-bee95ca5690d",
+        "apim-request-id": "933e4295-5b74-4bc5-8d42-ce827ae01b1d",
+        "Content-Length": "279",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:49 GMT",
+        "Date": "Fri, 13 May 2022 19:18:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "290820e7c8bfea831d3f1eb162aa9c6d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "84a9df62-8199-48a5-a1d6-8702a69b6fdb",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:51 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "11"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "dacbd1ed17b87983e0d7ce58f6453d5b",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "e6b7a416-ae7a-4a25-bdbf-084e302e1ab8",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:52 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "a20fe9290ccb9c4fc5fa9e8f5dc4634a",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "144eb62f-8679-451c-9a07-39fd80e8733c",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:53 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "4bda4dec3317cf449d8f48e8f92bf3d7",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "e20be594-3fb7-427a-a6cd-271607d3c79a",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:54 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "28"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:48Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
           "completed": 0,
           "failed": 0,
           "inProgress": 2,
-          "total": 2
+          "total": 2,
+          "items": []
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "7988c202f99be0a2822f15bd79f31b1b",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "2826c96765aebbfbdbb79321450e3d0e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "447a0379-6ea5-49f8-a107-04c71239db24",
+        "apim-request-id": "822ae1b5-5b0d-4669-8483-486756215c2e",
+        "Content-Length": "1654",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:55 GMT",
+        "Date": "Fri, 13 May 2022 19:18:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "7"
+        "x-envoy-upstream-service-time": "42"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:51Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
-          "completed": 0,
+          "completed": 1,
           "failed": 0,
-          "inProgress": 2,
-          "total": 2
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "ExtractiveSummarizationLROResults",
+              "taskName": "ExtractSummary",
+              "lastUpdateDateTime": "2022-05-13T19:18:51.2082906Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentences": [
+                      {
+                        "text": "Windows 365 puts Microsoft\u2019s flagship operating system in the cloud.",
+                        "rankScore": 0.42,
+                        "offset": 1687,
+                        "length": 68
+                      },
+                      {
+                        "text": "Windows is already accessible in the cloud via Azure Virtual Desktop, which offers customers flexibility to create and run their own virtualization service.",
+                        "rankScore": 0.8,
+                        "offset": 2262,
+                        "length": 156
+                      },
+                      {
+                        "text": "Windows 365 is a new virtualization technology for Windows that is easy to set up and deploy for today\u2019s login-from-anywhere, mobile and elastic workforces.",
+                        "rankScore": 1.0,
+                        "offset": 2419,
+                        "length": 156
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentences": [
+                      {
+                        "text": "In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.",
+                        "rankScore": 0.9,
+                        "offset": 460,
+                        "length": 224
+                      },
+                      {
+                        "text": "It enables employees accustomed to working from home to continue working from home;",
+                        "rankScore": 1.0,
+                        "offset": 1300,
+                        "length": 83
+                      },
+                      {
+                        "text": "it enables companies to hire interns from halfway around the world;",
+                        "rankScore": 0.71,
+                        "offset": 1384,
+                        "length": 67
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-08-01"
+              }
+            }
+          ]
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "a96c8473f16bf544a43f053bc366a299",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "c68291ad156702975e0ada7ab92c21a2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "aaa65005-6408-4583-aea6-7d82df459553",
+        "apim-request-id": "e996c57a-3667-4bc3-b241-3295b99f7b5f",
+        "Content-Length": "1654",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:57 GMT",
+        "Date": "Fri, 13 May 2022 19:18:53 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "14"
+        "x-envoy-upstream-service-time": "85"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:51Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
-          "completed": 0,
+          "completed": 1,
           "failed": 0,
-          "inProgress": 2,
-          "total": 2
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "ExtractiveSummarizationLROResults",
+              "taskName": "ExtractSummary",
+              "lastUpdateDateTime": "2022-05-13T19:18:51.2082906Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentences": [
+                      {
+                        "text": "Windows 365 puts Microsoft\u2019s flagship operating system in the cloud.",
+                        "rankScore": 0.42,
+                        "offset": 1687,
+                        "length": 68
+                      },
+                      {
+                        "text": "Windows is already accessible in the cloud via Azure Virtual Desktop, which offers customers flexibility to create and run their own virtualization service.",
+                        "rankScore": 0.8,
+                        "offset": 2262,
+                        "length": 156
+                      },
+                      {
+                        "text": "Windows 365 is a new virtualization technology for Windows that is easy to set up and deploy for today\u2019s login-from-anywhere, mobile and elastic workforces.",
+                        "rankScore": 1.0,
+                        "offset": 2419,
+                        "length": 156
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentences": [
+                      {
+                        "text": "In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.",
+                        "rankScore": 0.9,
+                        "offset": 460,
+                        "length": 224
+                      },
+                      {
+                        "text": "It enables employees accustomed to working from home to continue working from home;",
+                        "rankScore": 1.0,
+                        "offset": 1300,
+                        "length": 83
+                      },
+                      {
+                        "text": "it enables companies to hire interns from halfway around the world;",
+                        "rankScore": 0.71,
+                        "offset": 1384,
+                        "length": 67
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-08-01"
+              }
+            }
+          ]
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "9b8cc606ea3cf3aeaaf9c9e81e8656a9",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "0f4bbbeaedb0db9e5e6da58d8a80f26b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4372021b-d20d-42df-80a0-23576d5e5a12",
+        "apim-request-id": "f21cf7cf-b318-4fc4-a4f0-c4c5f6fa8f6d",
+        "Content-Length": "1654",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:58 GMT",
+        "Date": "Fri, 13 May 2022 19:18:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "36"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:53Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
-          "completed": 0,
+          "completed": 1,
           "failed": 0,
-          "inProgress": 2,
-          "total": 2
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "ExtractiveSummarizationLROResults",
+              "taskName": "ExtractSummary",
+              "lastUpdateDateTime": "2022-05-13T19:18:51.2082906Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentences": [
+                      {
+                        "text": "Windows 365 puts Microsoft\u2019s flagship operating system in the cloud.",
+                        "rankScore": 0.42,
+                        "offset": 1687,
+                        "length": 68
+                      },
+                      {
+                        "text": "Windows is already accessible in the cloud via Azure Virtual Desktop, which offers customers flexibility to create and run their own virtualization service.",
+                        "rankScore": 0.8,
+                        "offset": 2262,
+                        "length": 156
+                      },
+                      {
+                        "text": "Windows 365 is a new virtualization technology for Windows that is easy to set up and deploy for today\u2019s login-from-anywhere, mobile and elastic workforces.",
+                        "rankScore": 1.0,
+                        "offset": 2419,
+                        "length": 156
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentences": [
+                      {
+                        "text": "In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.",
+                        "rankScore": 0.9,
+                        "offset": 460,
+                        "length": 224
+                      },
+                      {
+                        "text": "It enables employees accustomed to working from home to continue working from home;",
+                        "rankScore": 1.0,
+                        "offset": 1300,
+                        "length": 83
+                      },
+                      {
+                        "text": "it enables companies to hire interns from halfway around the world;",
+                        "rankScore": 0.71,
+                        "offset": 1384,
+                        "length": 67
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-08-01"
+              }
+            }
+          ]
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "75742d734abe116c7e92d45cf3661c1b",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "cdb394aaee8c510e3224caa38b8002af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ea012b7c-15ac-489d-822a-6fd72d7c50cf",
+        "apim-request-id": "72fa9376-2f3c-4926-95c7-2ac688521d33",
+        "Content-Length": "1654",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:16:59 GMT",
+        "Date": "Fri, 13 May 2022 19:18:55 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "42"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:53Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
-          "completed": 0,
+          "completed": 1,
           "failed": 0,
-          "inProgress": 2,
-          "total": 2
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "ExtractiveSummarizationLROResults",
+              "taskName": "ExtractSummary",
+              "lastUpdateDateTime": "2022-05-13T19:18:51.2082906Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentences": [
+                      {
+                        "text": "Windows 365 puts Microsoft\u2019s flagship operating system in the cloud.",
+                        "rankScore": 0.42,
+                        "offset": 1687,
+                        "length": 68
+                      },
+                      {
+                        "text": "Windows is already accessible in the cloud via Azure Virtual Desktop, which offers customers flexibility to create and run their own virtualization service.",
+                        "rankScore": 0.8,
+                        "offset": 2262,
+                        "length": 156
+                      },
+                      {
+                        "text": "Windows 365 is a new virtualization technology for Windows that is easy to set up and deploy for today\u2019s login-from-anywhere, mobile and elastic workforces.",
+                        "rankScore": 1.0,
+                        "offset": 2419,
+                        "length": 156
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentences": [
+                      {
+                        "text": "In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.",
+                        "rankScore": 0.9,
+                        "offset": 460,
+                        "length": 224
+                      },
+                      {
+                        "text": "It enables employees accustomed to working from home to continue working from home;",
+                        "rankScore": 1.0,
+                        "offset": 1300,
+                        "length": 83
+                      },
+                      {
+                        "text": "it enables companies to hire interns from halfway around the world;",
+                        "rankScore": 0.71,
+                        "offset": 1384,
+                        "length": 67
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-08-01"
+              }
+            }
+          ]
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "b3b77b8c806689ded579fe71275cd71e",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8a36f0952dc3bf5ef2a667fa6f0977dd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3ce2a3c1-36d3-4428-a50a-793c1279f98c",
+        "apim-request-id": "80ab4681-1c00-4a8b-b1f7-7c77d5d17532",
+        "Content-Length": "1654",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:17:00 GMT",
+        "Date": "Fri, 13 May 2022 19:18:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "41"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:53Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "running",
         "errors": [],
         "tasks": {
-          "completed": 0,
+          "completed": 1,
           "failed": 0,
-          "inProgress": 2,
-          "total": 2
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "ExtractiveSummarizationLROResults",
+              "taskName": "ExtractSummary",
+              "lastUpdateDateTime": "2022-05-13T19:18:51.2082906Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "1",
+                    "sentences": [
+                      {
+                        "text": "Windows 365 puts Microsoft\u2019s flagship operating system in the cloud.",
+                        "rankScore": 0.42,
+                        "offset": 1687,
+                        "length": 68
+                      },
+                      {
+                        "text": "Windows is already accessible in the cloud via Azure Virtual Desktop, which offers customers flexibility to create and run their own virtualization service.",
+                        "rankScore": 0.8,
+                        "offset": 2262,
+                        "length": 156
+                      },
+                      {
+                        "text": "Windows 365 is a new virtualization technology for Windows that is easy to set up and deploy for today\u2019s login-from-anywhere, mobile and elastic workforces.",
+                        "rankScore": 1.0,
+                        "offset": 2419,
+                        "length": 156
+                      }
+                    ],
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "sentences": [
+                      {
+                        "text": "In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account.",
+                        "rankScore": 0.9,
+                        "offset": 460,
+                        "length": 224
+                      },
+                      {
+                        "text": "It enables employees accustomed to working from home to continue working from home;",
+                        "rankScore": 1.0,
+                        "offset": 1300,
+                        "length": 83
+                      },
+                      {
+                        "text": "it enables companies to hire interns from halfway around the world;",
+                        "rankScore": 0.71,
+                        "offset": 1384,
+                        "length": 67
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2021-08-01"
+              }
+            }
+          ]
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/f3cb9288-1ac7-415e-9a9d-dd34d2b9f739?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "96c85be82cf2bcdb5a7b1ca91551ff43",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "24d06e185478fc15acf9dc8b22fa50de",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "0c766b4a-bc08-4192-8b17-22c81cc66ab8",
+        "apim-request-id": "334f0f3a-a7ff-45b1-a461-ba0e94c5e058",
+        "Content-Length": "3055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:17:02 GMT",
+        "Date": "Fri, 13 May 2022 19:18:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-envoy-upstream-service-time": "99"
       },
       "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "a25baedca2cff3424eeba0454bfae922",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "9dc9ed2c-6943-4379-b34a-c8d93ed800a5",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:17:03 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:16:49Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
-        "status": "running",
-        "errors": [],
-        "tasks": {
-          "completed": 0,
-          "failed": 0,
-          "inProgress": 2,
-          "total": 2
-        }
-      }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze/jobs/ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "9773b6bb869e6029a0fb58eb63357383",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "577fef0d-7b7b-46c6-b5e0-001ddfb79a99",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 21:17:04 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "167"
-      },
-      "ResponseBody": {
-        "jobId": "ab9cd2bb-dc51-4bb7-bc48-5c99576f26b5",
-        "lastUpdateDateTime": "2021-10-25T21:17:04Z",
-        "createdDateTime": "2021-10-25T21:16:41Z",
-        "expirationDateTime": "2021-10-26T21:16:41Z",
+        "jobId": "f3cb9288-1ac7-415e-9a9d-dd34d2b9f739",
+        "lastUpdateDateTime": "2022-05-13T19:18:57Z",
+        "createdDateTime": "2022-05-13T19:18:47Z",
+        "expirationDateTime": "2022-05-14T19:18:47Z",
         "status": "succeeded",
         "errors": [],
         "tasks": {
@@ -817,11 +729,12 @@
           "failed": 0,
           "inProgress": 0,
           "total": 2,
-          "extractiveSummarizationTasks": [
+          "items": [
             {
-              "lastUpdateDateTime": "2021-10-25T21:17:04.2490617Z",
+              "kind": "ExtractiveSummarizationLROResults",
               "taskName": "ExtractSummaryWithDisabledServiceLogs",
-              "state": "succeeded",
+              "lastUpdateDateTime": "2022-05-13T19:18:57.2894691Z",
+              "status": "succeeded",
               "results": {
                 "documents": [
                   {
@@ -878,9 +791,10 @@
               }
             },
             {
-              "lastUpdateDateTime": "2021-10-25T21:17:04.4173873Z",
+              "kind": "ExtractiveSummarizationLROResults",
               "taskName": "ExtractSummary",
-              "state": "succeeded",
+              "lastUpdateDateTime": "2022-05-13T19:18:51.2082906Z",
+              "status": "succeeded",
               "results": {
                 "documents": [
                   {
@@ -942,8 +856,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1114564498",
+    "RandomSeed": "1731949155",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

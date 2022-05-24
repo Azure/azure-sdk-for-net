@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
-                writer.WriteObjectValue(EncryptionSettingsCollection);
+                writer.WriteObjectValue(EncryptionSettingGroup);
             }
             if (Optional.IsDefined(Incremental))
             {
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Compute
             Optional<long> diskSizeBytes = default;
             Optional<DiskState> diskState = default;
             Optional<string> uniqueId = default;
-            Optional<EncryptionSettingsCollection> encryptionSettingsCollection = default;
+            Optional<EncryptionSettingGroup> encryptionSettingsCollection = default;
             Optional<string> provisioningState = default;
             Optional<bool> incremental = default;
-            Optional<Encryption> encryption = default;
+            Optional<DiskEncryption> encryption = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
             Optional<string> diskAccessId = default;
             Optional<DiskSecurityProfile> securityProfile = default;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryptionSettingsCollection = EncryptionSettingsCollection.DeserializeEncryptionSettingsCollection(property0.Value);
+                            encryptionSettingsCollection = EncryptionSettingGroup.DeserializeEncryptionSettingGroup(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"))

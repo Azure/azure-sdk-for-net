@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="id">Disk restore point Id.</param>
         /// <param name="replicationStatus">The disk restore point replication
         /// status information.</param>
-        public DiskRestorePointInstanceView(string id = default(string), object replicationStatus = default(object))
+        public DiskRestorePointInstanceView(string id = default(string), DiskRestorePointReplicationStatus replicationStatus = default(DiskRestorePointReplicationStatus))
         {
             Id = id;
             ReplicationStatus = replicationStatus;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the disk restore point replication status information.
         /// </summary>
         [JsonProperty(PropertyName = "replicationStatus")]
-        public object ReplicationStatus { get; set; }
+        public DiskRestorePointReplicationStatus ReplicationStatus { get; set; }
 
     }
 }
