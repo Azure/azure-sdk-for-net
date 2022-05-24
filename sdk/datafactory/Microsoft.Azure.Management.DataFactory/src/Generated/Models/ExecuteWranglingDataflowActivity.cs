@@ -62,12 +62,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// flow execution. Allows sinks with the same save order to be
         /// processed concurrently. Type: boolean (or Expression with
         /// resultType boolean)</param>
+        /// <param name="sourceStagingConcurrency">Specify number of parallel
+        /// staging for sources applicable to the sink. Type: integer (or
+        /// Expression with resultType integer)</param>
         /// <param name="sinks">(Deprecated. Please use Queries). List of Power
         /// Query activity sinks mapped to a queryName.</param>
         /// <param name="queries">List of mapping for Power Query mashup query
         /// to sink dataset(s).</param>
         /// <param name="policy">Activity policy.</param>
-        public ExecuteWranglingDataflowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object), IDictionary<string, PowerQuerySink> sinks = default(IDictionary<string, PowerQuerySink>), IList<PowerQuerySinkMapping> queries = default(IList<PowerQuerySinkMapping>), ActivityPolicy policy = default(ActivityPolicy))
+        public ExecuteWranglingDataflowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object), object sourceStagingConcurrency = default(object), IDictionary<string, PowerQuerySink> sinks = default(IDictionary<string, PowerQuerySink>), IList<PowerQuerySinkMapping> queries = default(IList<PowerQuerySinkMapping>), ActivityPolicy policy = default(ActivityPolicy))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             DataFlow = dataFlow;
@@ -77,6 +80,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             TraceLevel = traceLevel;
             ContinueOnError = continueOnError;
             RunConcurrently = runConcurrently;
+            SourceStagingConcurrency = sourceStagingConcurrency;
             Sinks = sinks;
             Queries = queries;
             Policy = policy;
@@ -135,6 +139,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.runConcurrently")]
         public object RunConcurrently { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify number of parallel staging for sources
+        /// applicable to the sink. Type: integer (or Expression with
+        /// resultType integer)
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sourceStagingConcurrency")]
+        public object SourceStagingConcurrency { get; set; }
 
         /// <summary>
         /// Gets or sets (Deprecated. Please use Queries). List of Power Query
