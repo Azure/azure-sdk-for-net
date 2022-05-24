@@ -10,8 +10,8 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.EventGrid" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
-    <PackageReference Include="System.Net.WebSockets.Client" Condition="'$(TargetFramework)' != 'net6.0'" />
-    <PackageReference Include="System.ValueTuple" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Net.WebSockets.Client" />
+    <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />

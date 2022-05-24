@@ -28,8 +28,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
   </ItemGroup>
 
-  <!-- These packages are included as part net6.0; the external references are not needed. -->
-  <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true' AND '$(TargetFramework)' != 'net6.0'">
+  <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true'">
     <PackageReference Include="System.Security.Cryptography.Primitives" />
     <PackageReference Include="System.Diagnostics.TraceSource" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" />

@@ -17,7 +17,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="System.Net.WebSockets.Client" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.ValueTuple" Condition="'$(TargetFramework)' != 'net6.0'" />
   </ItemGroup>

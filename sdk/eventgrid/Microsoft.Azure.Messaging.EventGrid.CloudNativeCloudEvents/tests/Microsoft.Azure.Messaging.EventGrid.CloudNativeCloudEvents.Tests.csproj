@@ -12,7 +12,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="System.Memory" Condition="'$(TargetFramework)' != 'net6.0'" />
+    <PackageReference Include="System.Memory" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\tests\Azure.Messaging.EventGrid.Tests.csproj" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
