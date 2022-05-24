@@ -97,7 +97,28 @@ public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackValuesAsync
 If the suggested rename does not apply to your scenario, you could pick the best name fitting your API.
 
 ## Implement the method
-You could call the protocol method inside your convenience method and map the returned raw response to model. See different scenarios and corresponding examples below. 
+You could call the protocol method inside your convenience method and map the returned raw response to model.
+
+In the implementation, you should only have one `DiagnosticScope` inside instead of creating `DiagnosticScope` for both protocol method and convenience method. Reasons are:
+- We want to reduce the telemetry costs.
+- Trace should correspond to logical operations and not implementations
+
+To achieve this, our guidance is:
+- Don't open a scope in the grow-up method if it is just a simple wrapper (i.e. if the only thing in the convenience API is serialization and deserialization and the protocol method and convenience API have the same name). Logging will help developers debug any exceptions thrown from the convenience method.
+- If the grow-up method diverges much from the protocol method (i.e. if they have different names or code in the convenience method could take much time), do open a scope in the convenience API and turn on suppression of inner scopes.
+- If you want to add attributes or otherwise modify scopes, do that in the convenience method.
+
+To turn on the suppression, pass `ture` to `ClientDiagnostics` in the client constructor.
+```C#
+public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
+{
+    ...
+    ClientDiagnostics = new ClientDiagnostics(options, true);
+    ...
+}
+```
+
+Below are different scenarios and corresponding examples how to implement the method. 
 
 ### Implement GET method
 
@@ -109,6 +130,7 @@ namespace Azure.AI.MetricsAdvisor
     {
         public virtual async Task<Response> GetMetricFeedbackAsync(Guid feedbackId, RequestContext context = null)
         {
+            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.GetMetricFeedback");
         }
     }
 }
@@ -122,6 +144,9 @@ namespace Azure.AI.MetricsAdvisor
         // Suggest appending value to method name
         public virtual async Task<Response<MetricFeedback>> GetMetricFeedbackValueAsync(Guid feedbackId, CancellationToken cancellationToken = default)
         {
+            // Open a new scope here and the inner scope will be suppressed
+            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.GetMetricFeedbackValue");
+            
             // Call protocol method
             Response response = await GetMetricFeedbackAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
 
@@ -144,6 +169,7 @@ namespace Azure.AI.MetricsAdvisor
     {
         public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null)
         {
+            using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.CreateMetricFeedback");
         }
     }
 }
@@ -157,6 +183,7 @@ namespace Azure.AI.MetricsAdvisor
         // Can use same method name here
         public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
+            // We don't open a new scope here because it is just a wrapper
             // Convert model to binary content
             RequestContent requestContent = MetricFeedback.ToRequestContent(feedback);
 
@@ -183,6 +210,7 @@ namespace Azure.AI.MetricsAdvisor
     {
         public virtual AsyncPageable<BinaryData> GetMetricFeedbacksAsync(Guid feedbackId, RequestContext context = null)
         {
+            return GetMetricFeedbacksImplementationAsync("MetricsAdvisorClient.GetMetricFeedbacks", feedbackId, context);
         }
     }
 }
@@ -196,8 +224,8 @@ namespace Azure.AI.MetricsAdvisor
         // Suggest appending values to a plural method name
         public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksValuesAsync(Guid feedbackId, CancellationToken cancellationToken = default)
         {
-            // Call protocol method
-            AsyncPageable<BinaryData> pageableBinaryData = GetMetricFeedbacksAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
+            // Call internal paging implementation by passing the new scope name, the inner scope will be suppressed
+            AsyncPageable<BinaryData> pageableBinaryData = GetMetricFeedbacksImplementationAsync("MetricsAdvisorClient.GetMetricFeedbacksValues", feedbackId, new RequestContext() { CancellationToken = cancellationToken });
 
             // Calling deserialization helper
             return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
