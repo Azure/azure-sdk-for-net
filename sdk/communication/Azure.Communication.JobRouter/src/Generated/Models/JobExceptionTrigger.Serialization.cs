@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class JobExceptionTrigger : IUtf8JsonSerializable
     {
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter.Models
                     case "wait-time": return WaitTimeExceptionTrigger.DeserializeWaitTimeExceptionTrigger(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.Models.JobExceptionTrigger' not supported.");
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.JobExceptionTrigger' not supported.");
         }
     }
 }

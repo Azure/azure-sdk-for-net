@@ -9,27 +9,21 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class JobQueue
     {
         /// <summary> Initializes a new instance of JobQueue. </summary>
-        /// <param name="id"> The Id of this queue. </param>
         /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="distributionPolicyId"/> is null. </exception>
-        internal JobQueue(string id, string distributionPolicyId)
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        public JobQueue(string distributionPolicyId)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
             if (distributionPolicyId == null)
             {
                 throw new ArgumentNullException(nameof(distributionPolicyId));
             }
 
-            Id = id;
             DistributionPolicyId = distributionPolicyId;
             _labels = new ChangeTrackingDictionary<string, object>();
         }
@@ -38,24 +32,24 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="id"> The Id of this queue. </param>
         /// <param name="name"> The name of this queue. </param>
         /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
-        /// <param name="Labels"> (Optional) A set of key/value pairs used by the classification process to determine queue to assign a job. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
         /// <param name="exceptionPolicyId"> (Optional) The ID of the exception policy that determines various job escalation rules. </param>
-        internal JobQueue(string id, string name, string distributionPolicyId, IDictionary<string, object> Labels, string exceptionPolicyId)
+        internal JobQueue(string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
         {
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
-            _labels = Labels;
+            _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
         }
 
         /// <summary> The Id of this queue. </summary>
         public string Id { get; }
         /// <summary> The name of this queue. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The ID of the distribution policy that will determine how a job is distributed to workers. </summary>
-        public string DistributionPolicyId { get; }
+        public string DistributionPolicyId { get; set; }
         /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
-        public string ExceptionPolicyId { get; }
+        public string ExceptionPolicyId { get; set; }
     }
 }

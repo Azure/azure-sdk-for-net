@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Dto for JobPositionDetails. </summary>
     public partial class JobPositionDetails
@@ -17,8 +17,9 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="position"> Position of the job in question within that queue. </param>
         /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
         /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTimeMinutes"> Estimated wait time of the job rounded up to the nearest minute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
-        internal JobPositionDetails(string jobId, int position, string queueId, int queueLength)
+        internal JobPositionDetails(string jobId, int position, string queueId, int queueLength, double estimatedWaitTimeMinutes)
         {
             if (jobId == null)
             {
@@ -33,6 +34,7 @@ namespace Azure.Communication.JobRouter.Models
             Position = position;
             QueueId = queueId;
             QueueLength = queueLength;
+            EstimatedWaitTimeMinutes = estimatedWaitTimeMinutes;
         }
 
         /// <summary> Id of the job these details are about. </summary>
@@ -43,5 +45,7 @@ namespace Azure.Communication.JobRouter.Models
         public string QueueId { get; }
         /// <summary> Length of the queue: total number of enqueued jobs. </summary>
         public int QueueLength { get; }
+        /// <summary> Estimated wait time of the job rounded up to the nearest minute. </summary>
+        public double EstimatedWaitTimeMinutes { get; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ExceptionAction : IUtf8JsonSerializable
     {
@@ -18,8 +18,6 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
@@ -34,7 +32,7 @@ namespace Azure.Communication.JobRouter.Models
                     case "reclassify": return ReclassifyExceptionAction.DeserializeReclassifyExceptionAction(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.Models.ExceptionAction' not supported.");
+            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.ExceptionAction' not supported.");
         }
     }
 }

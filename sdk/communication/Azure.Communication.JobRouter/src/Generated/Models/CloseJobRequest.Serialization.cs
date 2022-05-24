@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     internal partial class CloseJobRequest : IUtf8JsonSerializable
     {
@@ -22,17 +22,10 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("dispositionCode");
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsDefined(ReleaseTime))
+            if (Optional.IsDefined(CloseTime))
             {
-                if (ReleaseTime != null)
-                {
-                    writer.WritePropertyName("releaseTime");
-                    writer.WriteStringValue(ReleaseTime.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("releaseTime");
-                }
+                writer.WritePropertyName("closeTime");
+                writer.WriteStringValue(CloseTime.Value, "O");
             }
             if (Optional.IsDefined(Note))
             {

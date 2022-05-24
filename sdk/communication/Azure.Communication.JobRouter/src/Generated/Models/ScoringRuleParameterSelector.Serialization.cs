@@ -7,23 +7,21 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     internal static partial class ScoringRuleParameterSelectorExtensions
     {
         public static string ToSerialString(this ScoringRuleParameterSelector value) => value switch
         {
             ScoringRuleParameterSelector.JobLabels => "jobLabels",
-            ScoringRuleParameterSelector.LabelSelectors => "labelSelectors",
-            ScoringRuleParameterSelector.WorkerLabelsCollection => "workerLabelsCollection",
+            ScoringRuleParameterSelector.WorkerSelectors => "workerSelectors",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringRuleParameterSelector value.")
         };
 
         public static ScoringRuleParameterSelector ToScoringRuleParameterSelector(this string value)
         {
             if (string.Equals(value, "jobLabels", StringComparison.InvariantCultureIgnoreCase)) return ScoringRuleParameterSelector.JobLabels;
-            if (string.Equals(value, "labelSelectors", StringComparison.InvariantCultureIgnoreCase)) return ScoringRuleParameterSelector.LabelSelectors;
-            if (string.Equals(value, "workerLabelsCollection", StringComparison.InvariantCultureIgnoreCase)) return ScoringRuleParameterSelector.WorkerLabelsCollection;
+            if (string.Equals(value, "workerSelectors", StringComparison.InvariantCultureIgnoreCase)) return ScoringRuleParameterSelector.WorkerSelectors;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringRuleParameterSelector value.");
         }
     }

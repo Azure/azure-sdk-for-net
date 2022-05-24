@@ -9,22 +9,22 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ClassificationPolicyCollection
     {
         internal static ClassificationPolicyCollection DeserializeClassificationPolicyCollection(JsonElement element)
         {
-            IReadOnlyList<ClassificationPolicy> value = default;
+            IReadOnlyList<PagedClassificationPolicy> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ClassificationPolicy> array = new List<ClassificationPolicy>();
+                    List<PagedClassificationPolicy> array = new List<PagedClassificationPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClassificationPolicy.DeserializeClassificationPolicy(item));
+                        array.Add(PagedClassificationPolicy.DeserializePagedClassificationPolicy(item));
                     }
                     value = array;
                     continue;

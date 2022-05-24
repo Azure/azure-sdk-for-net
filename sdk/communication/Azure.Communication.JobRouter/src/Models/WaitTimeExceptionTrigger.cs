@@ -8,7 +8,7 @@ using System.Globalization;
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
     public partial class WaitTimeExceptionTrigger : JobExceptionTrigger

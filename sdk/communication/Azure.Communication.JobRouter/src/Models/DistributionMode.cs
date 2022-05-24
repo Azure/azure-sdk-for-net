@@ -4,7 +4,7 @@
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("DistributionMode")]
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<DistributionMode>))]

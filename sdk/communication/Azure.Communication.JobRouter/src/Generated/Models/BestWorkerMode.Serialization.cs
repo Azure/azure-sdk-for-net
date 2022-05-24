@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class BestWorkerMode : IUtf8JsonSerializable
     {
@@ -17,15 +17,8 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ScoringRule))
             {
-                if (ScoringRule != null)
-                {
-                    writer.WritePropertyName("scoringRule");
-                    writer.WriteObjectValue(ScoringRule);
-                }
-                else
-                {
-                    writer.WriteNull("scoringRule");
-                }
+                writer.WritePropertyName("scoringRule");
+                writer.WriteObjectValue(ScoringRule);
             }
             if (Optional.IsDefined(ScoringRuleOptions))
             {
@@ -40,15 +33,8 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteNumberValue(MaxConcurrentOffers);
             if (Optional.IsDefined(BypassSelectors))
             {
-                if (BypassSelectors != null)
-                {
-                    writer.WritePropertyName("bypassSelectors");
-                    writer.WriteBooleanValue(BypassSelectors.Value);
-                }
-                else
-                {
-                    writer.WriteNull("bypassSelectors");
-                }
+                writer.WritePropertyName("bypassSelectors");
+                writer.WriteBooleanValue(BypassSelectors.Value);
             }
             writer.WriteEndObject();
         }
@@ -60,14 +46,14 @@ namespace Azure.Communication.JobRouter.Models
             string kind = default;
             int minConcurrentOffers = default;
             int maxConcurrentOffers = default;
-            Optional<bool?> bypassSelectors = default;
+            Optional<bool> bypassSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scoringRule"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scoringRule = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoringRule = RouterRule.DeserializeRouterRule(property.Value);
@@ -102,7 +88,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        bypassSelectors = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bypassSelectors = property.Value.GetBoolean();

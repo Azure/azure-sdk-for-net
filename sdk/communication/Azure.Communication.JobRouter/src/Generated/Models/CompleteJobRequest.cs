@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for completing jobs. </summary>
     internal partial class CompleteJobRequest
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> The assignment within the job to complete. </summary>
         public string AssignmentId { get; }
-        /// <summary> (Optional) Customer supplied note. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
         public string Note { get; set; }
     }
 }

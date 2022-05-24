@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ReclassifyExceptionAction : IUtf8JsonSerializable
     {
@@ -23,26 +23,17 @@ namespace Azure.Communication.JobRouter.Models
             }
             if (Optional.IsCollectionDefined(_labelsToUpsert))
             {
-                if (_labelsToUpsert != null)
+                writer.WritePropertyName("labelsToUpsert");
+                writer.WriteStartObject();
+                foreach (var item in _labelsToUpsert)
                 {
-                    writer.WritePropertyName("labelsToUpsert");
-                    writer.WriteStartObject();
-                    foreach (var item in _labelsToUpsert)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
-                    }
-                    writer.WriteEndObject();
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("labelsToUpsert");
-                }
+                writer.WriteEndObject();
             }
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
             writer.WriteEndObject();
         }
 
@@ -51,7 +42,6 @@ namespace Azure.Communication.JobRouter.Models
             Optional<string> classificationPolicyId = default;
             Optional<IDictionary<string, object>> labelsToUpsert = default;
             string kind = default;
-            string id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"))
@@ -63,7 +53,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        labelsToUpsert = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
@@ -79,13 +69,8 @@ namespace Azure.Communication.JobRouter.Models
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ReclassifyExceptionAction(kind, id, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
+            return new ReclassifyExceptionAction(kind, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
         }
     }
 }

@@ -5,20 +5,40 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    public partial class DistributionPolicy
+    public partial class DistributionPolicy : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(OfferTtlSeconds))
+            {
+                writer.WritePropertyName("offerTtlSeconds");
+                writer.WriteNumberValue(OfferTtlSeconds.Value);
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode");
+                writer.WriteObjectValue(Mode);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static DistributionPolicy DeserializeDistributionPolicy(JsonElement element)
         {
-            string id = default;
+            Optional<string> id = default;
             Optional<string> name = default;
-            TimeSpan offerTTL = default;
-            DistributionMode mode = default;
+            Optional<double> offerTtlSeconds = default;
+            Optional<DistributionMode> mode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -31,18 +51,28 @@ namespace Azure.Communication.JobRouter.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerTTL"))
+                if (property.NameEquals("offerTtlSeconds"))
                 {
-                    offerTTL = property.Value.GetTimeSpan();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    offerTtlSeconds = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("mode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     mode = DistributionMode.DeserializeDistributionMode(property.Value);
                     continue;
                 }
             }
-            return new DistributionPolicy(id, name.Value, offerTTL, mode);
+            return new DistributionPolicy(id.Value, name.Value, Optional.ToNullable(offerTtlSeconds), mode.Value);
         }
     }
 }

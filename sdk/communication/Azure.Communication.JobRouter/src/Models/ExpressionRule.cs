@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("ExpressionRule")]
     public partial class ExpressionRule : RouterRule

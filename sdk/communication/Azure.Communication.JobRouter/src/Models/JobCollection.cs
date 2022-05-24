@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("JobCollection")]
     public partial class JobCollection

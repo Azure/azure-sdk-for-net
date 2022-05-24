@@ -5,16 +5,18 @@
 
 #nullable disable
 
-using System;
-
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The ChannelConfiguration. </summary>
+    /// <summary> Represents the capacity a job in this channel will consume from a worker. </summary>
     public partial class ChannelConfiguration
     {
+        /// <summary> Initializes a new instance of ChannelConfiguration. </summary>
+        /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
+        public ChannelConfiguration(int capacityCostPerJob)
+        {
+            CapacityCostPerJob = capacityCostPerJob;
+        }
 
-        /// <summary> Unique key of the Channel. </summary>
-        public string ChannelId { get; set; }
         /// <summary> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </summary>
         public int CapacityCostPerJob { get; set; }
     }

@@ -9,22 +9,22 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ExceptionPolicyCollection
     {
         internal static ExceptionPolicyCollection DeserializeExceptionPolicyCollection(JsonElement element)
         {
-            IReadOnlyList<ExceptionPolicy> value = default;
+            IReadOnlyList<PagedExceptionPolicy> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ExceptionPolicy> array = new List<ExceptionPolicy>();
+                    List<PagedExceptionPolicy> array = new List<PagedExceptionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionPolicy.DeserializeExceptionPolicy(item));
+                        array.Add(PagedExceptionPolicy.DeserializePagedExceptionPolicy(item));
                     }
                     value = array;
                     continue;

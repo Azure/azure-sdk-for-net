@@ -5,42 +5,41 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        /// <param name="id"> Unique identifier of this policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ClassificationPolicy(string id)
+        public ClassificationPolicy()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
-            WorkerSelectors = new ChangeTrackingList<LabelSelectorAttachment>();
+            QueueSelectors = new ChangeTrackingList<QueueSelectorAttachment>();
+            WorkerSelectors = new ChangeTrackingList<WorkerSelectorAttachment>();
         }
 
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
-        /// <param name="queueSelector"> The queue selector to select a queue for a given job. </param>
-        /// <param name="prioritizationRule"> The rule to determine a priority score for a given job. </param>
+        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
+        /// <param name="prioritizationRule">
+        /// A rule of one of the following types:
+        ///             
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// </param>
         /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
-        internal ClassificationPolicy(string id, string name, string fallbackQueueId, QueueSelector queueSelector, RouterRule prioritizationRule, IReadOnlyList<LabelSelectorAttachment> workerSelectors)
+        internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors)
         {
             Id = id;
             Name = name;
             FallbackQueueId = fallbackQueueId;
-            QueueSelector = queueSelector;
+            QueueSelectors = queueSelectors;
             PrioritizationRule = prioritizationRule;
             WorkerSelectors = workerSelectors;
         }
@@ -48,14 +47,17 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Unique identifier of this policy. </summary>
         public string Id { get; }
         /// <summary> Friendly name of this policy. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The fallback queue to select if the queue selector doesn&apos;t find a match. </summary>
-        public string FallbackQueueId { get; }
-        /// <summary> The queue selector to select a queue for a given job. </summary>
-        public QueueSelector QueueSelector { get; }
-        /// <summary> The rule to determine a priority score for a given job. </summary>
-        public RouterRule PrioritizationRule { get; }
-        /// <summary> The worker label selectors to attach to a given job. </summary>
-        public IReadOnlyList<LabelSelectorAttachment> WorkerSelectors { get; }
+        public string FallbackQueueId { get; set; }
+        /// <summary>
+        /// A rule of one of the following types:
+        ///             
+        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
+        /// DirectMapRule:  A rule that return the same labels as the input labels.
+        /// ExpressionRule: A rule providing inline expression rules.
+        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// </summary>
+        public RouterRule PrioritizationRule { get; set; }
     }
 }

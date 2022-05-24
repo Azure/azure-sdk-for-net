@@ -7,16 +7,16 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The WorkerAssignment. </summary>
+    /// <summary> The assignment for a worker to a job. </summary>
     public partial class WorkerAssignment
     {
         /// <summary> Initializes a new instance of WorkerAssignment. </summary>
         /// <param name="id"> The Id of the assignment. </param>
         /// <param name="jobId"> The Id of the Job assigned. </param>
-        /// <param name="capacityCost"> The amount of capacity this assignment has consumed for a worker. </param>
-        /// <param name="assignTime"> The Assignment time of the job. </param>
+        /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
+        /// <param name="assignTime"> The assignment time of the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="jobId"/> is null. </exception>
         internal WorkerAssignment(string id, string jobId, int capacityCost, DateTimeOffset assignTime)
         {
@@ -39,9 +39,9 @@ namespace Azure.Communication.JobRouter.Models
         public string Id { get; }
         /// <summary> The Id of the Job assigned. </summary>
         public string JobId { get; }
-        /// <summary> The amount of capacity this assignment has consumed for a worker. </summary>
+        /// <summary> The amount of capacity this assignment has consumed on the worker. </summary>
         public int CapacityCost { get; }
-        /// <summary> The Assignment time of the job. </summary>
+        /// <summary> The assignment time of the job. </summary>
         public DateTimeOffset AssignTime { get; }
     }
 }

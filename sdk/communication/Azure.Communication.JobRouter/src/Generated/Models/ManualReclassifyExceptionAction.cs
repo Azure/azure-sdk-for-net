@@ -5,23 +5,27 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> An action that manually reclassifies a job by providing the queue, priority and worker selectors. </summary>
     public partial class ManualReclassifyExceptionAction : ExceptionAction
     {
+        /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
+        public ManualReclassifyExceptionAction()
+        {
+            WorkerSelectors = new ChangeTrackingList<WorkerSelector>();
+            Kind = "manual-reclassify";
+        }
 
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
         /// <param name="queueId"> Updated QueueId. </param>
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        internal ManualReclassifyExceptionAction(string kind, string id, string queueId, int? priority, IList<LabelSelector> workerSelectors) : base(kind, id)
+        internal ManualReclassifyExceptionAction(string kind, string queueId, int? priority, IList<WorkerSelector> workerSelectors) : base(kind)
         {
             QueueId = queueId;
             Priority = priority;
@@ -34,6 +38,6 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Updated Priority. </summary>
         public int? Priority { get; set; }
         /// <summary> Updated WorkerSelectors. </summary>
-        public IList<LabelSelector> WorkerSelectors { get; set; }
+        public IList<WorkerSelector> WorkerSelectors { get; }
     }
 }

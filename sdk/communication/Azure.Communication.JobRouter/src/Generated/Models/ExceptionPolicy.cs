@@ -5,34 +5,25 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> A single exception policy. </summary>
+    /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
     public partial class ExceptionPolicy
     {
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        /// <param name="id"> The Id of the exception policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ExceptionPolicy(string id)
+        public ExceptionPolicy()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
-            ExceptionRules = new ChangeTrackingList<ExceptionRule>();
+            ExceptionRules = new ChangeTrackingDictionary<string, ExceptionRule>();
         }
 
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
         /// <param name="id"> The Id of the exception policy. </param>
         /// <param name="name"> (Optional) The name of the exception policy. </param>
-        /// <param name="exceptionRules"> (Optional) A collection of exception rules on the exception policy. </param>
-        internal ExceptionPolicy(string id, string name, IReadOnlyList<ExceptionRule> exceptionRules)
+        /// <param name="exceptionRules"> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
+        internal ExceptionPolicy(string id, string name, IDictionary<string, ExceptionRule> exceptionRules)
         {
             Id = id;
             Name = name;
@@ -42,8 +33,6 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> The Id of the exception policy. </summary>
         public string Id { get; }
         /// <summary> (Optional) The name of the exception policy. </summary>
-        public string Name { get; }
-        /// <summary> (Optional) A collection of exception rules on the exception policy. </summary>
-        public IReadOnlyList<ExceptionRule> ExceptionRules { get; }
+        public string Name { get; set; }
     }
 }

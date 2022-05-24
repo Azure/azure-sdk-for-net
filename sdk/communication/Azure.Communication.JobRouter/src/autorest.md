@@ -1,4 +1,4 @@
-﻿# Azure.Ccap.Communication.Router
+﻿# Azure.Communication.JobRouter
 
 When a new version of the swagger needs to be updated:
 1. Go to sdk\communication\Azure.Communication.JobRouter\src, and run `dotnet msbuild /t:GenerateCode` to generate code.
@@ -12,10 +12,16 @@ If any of the new objects needs to be overwritten, add the required changes to t
 ## Configuration
 
 ```yaml
-input-file: "./swagger/2021-04-07_ACSRouter.json"
+tag: package-jobrouter-2021-10-20-preview2
+model-namespace: false
+openapi-type: data-plane
+input-file:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/805e16a53f0a725471e0caa6007b48986c7722d9/specification/communication/data-plane/JobRouter/preview/2021-10-20-preview2/communicationservicejobrouter.json
 
-use-extension:
-  "@autorest/csharp": "3.0.0-beta.20210901.1"
+generation1-convenience-client: true
+
+title:
+  Azure Communication Services
 
 csharp:
   azure-arm: true
@@ -23,45 +29,60 @@ csharp:
   payload-flattening-threshold: 1
   clear-output-folder: true
   client-side-validation: false
-  namespace: Azure.Communication.JobRouter  
-
-openapi-type: data-plane
-tag: V2021_04_07_preview1
-
-title:
-  Azure Communication Services
-
-directive:
-  - from: swagger-document
-    where: "$.definitions"
-    transform: >
-      $.UpsertDistributionPolicyRequest.properties.mode["$ref"] = "#/definitions/DistributionMode";
-      $.UpsertDistributionPolicyResponse.properties.mode["$ref"] = "#/definitions/DistributionMode";
-      $.DistributionPolicy.properties.mode["$ref"] = "#/definitions/DistributionMode";
-
-      $.UpsertClassificationPolicyRequest.properties.queueSelector["$ref"] = "#/definitions/QueueSelector";
-      $.UpsertClassificationPolicyRequest.properties.prioritizationRule["$ref"] = "#/definitions/RouterRule";
-      $.UpsertClassificationPolicyRequest.properties.workerSelectors.items["$ref"] = "#/definitions/LabelSelectorAttachment";
-
-      $.UpsertClassificationPolicyResponse.properties.queueSelector["$ref"] = "#/definitions/QueueSelector";
-      $.UpsertClassificationPolicyResponse.properties.prioritizationRule["$ref"] = "#/definitions/RouterRule";
-      $.UpsertClassificationPolicyResponse.properties.workerSelectors.items["$ref"] = "#/definitions/LabelSelectorAttachment";
-
-      $.ClassificationPolicy.properties.queueSelector["$ref"] = "#/definitions/QueueSelector";
-      $.ClassificationPolicy.properties.prioritizationRule["$ref"] = "#/definitions/RouterRule";
-      $.ClassificationPolicy.properties.workerSelectors.items["$ref"] = "#/definitions/LabelSelectorAttachment";;
-
-      $.ExceptionRule.properties.trigger["$ref"] = "#/definitions/JobExceptionTrigger";
-      $.ExceptionRule.properties.actions.items["$ref"] = "#/definitions/ExceptionAction";
-
-      $.BestWorkerMode.properties.scoringRule["$ref"] = "#/definitions/RouterRule";
-
-      $.RuleLabelSelector.properties.rule["$ref"] = "#/definitions/RouterRule";
-      $.ConditionalLabelSelector.properties.condition["$ref"] = "#/definitions/RouterRule";
-            
-      $.QueueLabelSelector.properties.labelSelectors.items["$ref"] = "#/definitions/LabelSelectorAttachment";
-      $.QueueIdSelector.properties.rule["$ref"] = "#/definitions/RouterRule";
-      $.NearestQueueLabelSelector.properties.rule["$ref"] = "#/definitions/RouterRule";
-  
+  namespace: Azure.Communication.JobRouter
 ```
 
+### Set reference to WorkerSelectorAttachment in ClassificationPolicy
+```yaml
+directive:
+  - from: swagger-document
+    where: "$.definitions.ClassificationPolicy.properties.workerSelectors.items"
+    transform: >
+      $["$ref"] = "#/definitions/WorkerSelectorAttachment";
+```
+
+### Set reference to QueueSelectorAttachment in ClassificationPolicy
+```yaml
+directive:
+  - from: swagger-document
+    where: "$.definitions.ClassificationPolicy.properties.queueSelectors.items"
+    transform: >
+      $["$ref"] = "#/definitions/QueueSelectorAttachment";
+```
+
+### Set reference to WorkerSelectorAttachment in PagedClassificationPolicy
+```yaml
+directive:
+  - from: swagger-document
+    where: "$.definitions.PagedClassificationPolicy.properties.workerSelectors.items"
+    transform: >
+      $["$ref"] = "#/definitions/WorkerSelectorAttachment";
+```
+
+### Set reference to QueueSelectorAttachment in PagedClassificationPolicy
+```yaml
+directive:
+  - from: swagger-document
+    where: "$.definitions.PagedClassificationPolicy.properties.queueSelectors.items"
+    transform: >
+      $["$ref"] = "#/definitions/QueueSelectorAttachment";
+```
+
+### Set reference to ExceptionAction in ExceptionRule
+```yaml
+directive:
+  - from: swagger-document
+    where: "$.definitions.ExceptionRule.properties.actions"
+    transform: >
+      $.type = "object";
+      $.additionalProperties["$ref"] = "#/definitions/ExceptionAction";
+```
+
+### Rename CommunicationError to JobRouterError
+```yaml
+directive:
+  from: swagger-document
+  where: '$.definitions.CommunicationError'
+  transform: >
+    $["x-ms-client-name"] = "JobRouterError";
+```

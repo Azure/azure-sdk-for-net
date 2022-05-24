@@ -5,41 +5,31 @@
 
 #nullable disable
 
-using System;
-
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> An action that marks a job as cancelled. </summary>
     public partial class CancelExceptionAction : ExceptionAction
     {
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CancelExceptionAction(string id) : base(id)
+        public CancelExceptionAction()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Kind = "cancel";
         }
 
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        /// <param name="id"> Unique Id of the action within the exception rule. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., cancellation reason. </param>
-        /// <param name="dispositionCode"> (Optional) Customer supplied disposition code for specifying any short label. </param>
-        internal CancelExceptionAction(string kind, string id, string note, string dispositionCode) : base(kind, id)
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
+        /// <param name="dispositionCode"> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </param>
+        internal CancelExceptionAction(string kind, string note, string dispositionCode) : base(kind)
         {
             Note = note;
             DispositionCode = dispositionCode;
             Kind = kind ?? "cancel";
         }
 
-        /// <summary> (Optional) Customer supplied note, e.g., cancellation reason. </summary>
+        /// <summary> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </summary>
         public string Note { get; set; }
-        /// <summary> (Optional) Customer supplied disposition code for specifying any short label. </summary>
+        /// <summary> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </summary>
         public string DispositionCode { get; set; }
     }
 }

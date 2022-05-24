@@ -9,15 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A paged collection of classification policies. </summary>
     public partial class ClassificationPolicyCollection
     {
         /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
-        /// <param name="value"> . </param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ClassificationPolicyCollection(IEnumerable<ClassificationPolicy> value)
+        internal ClassificationPolicyCollection(IEnumerable<PagedClassificationPolicy> value)
         {
             if (value == null)
             {
@@ -28,15 +28,17 @@ namespace Azure.Communication.JobRouter.Models
         }
 
         /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
-        /// <param name="value"> . </param>
-        /// <param name="nextLink"> . </param>
-        internal ClassificationPolicyCollection(IReadOnlyList<ClassificationPolicy> value, string nextLink)
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
+        internal ClassificationPolicyCollection(IReadOnlyList<PagedClassificationPolicy> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        public IReadOnlyList<ClassificationPolicy> Value { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<PagedClassificationPolicy> Value { get; }
+        /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
 }

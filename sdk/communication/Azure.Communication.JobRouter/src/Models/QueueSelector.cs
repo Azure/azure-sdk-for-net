@@ -4,11 +4,21 @@
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("QueueSelector")]
-    [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<QueueSelector>))]
-    public abstract partial class QueueSelector
+    [CodeGenSuppress("QueueSelector", typeof(string), typeof(LabelOperator))]
+    public partial class QueueSelector
     {
+        /// <summary> Initializes a new instance of QueueSelector. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
+        /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
+        public QueueSelector(string key, LabelOperator labelOperator, object value)
+        {
+            Key = key;
+            LabelOperator = labelOperator;
+            Value = value;
+        }
     }
 }

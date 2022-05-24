@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenSuppress("AzureFunctionRule")]
     [CodeGenSuppress("AzureFunctionRule", typeof(string))]
@@ -14,11 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     {
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
         /// <param name="functionAppUrl"> URL for custom azure function. </param>
-        /// <param name="functionName"> (Optional) User-friendly name for function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="functionAppUrl"/> is empty. </exception>
-        public AzureFunctionRule(string functionAppUrl, string functionName = null)
-            : this(null, functionAppUrl, functionName, null)
+        public AzureFunctionRule(string functionAppUrl)
+            : this(null, functionAppUrl, null)
         {
             Argument.AssertNotNullOrWhiteSpace(functionAppUrl, nameof(functionAppUrl));
             ValidateUrl(functionAppUrl);
@@ -26,10 +26,9 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
         /// <param name="functionAppUrl"> URL for custom azure function. </param>
-        /// <param name="functionName"> (Optional) User-friendly name for function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
-        public AzureFunctionRule(Uri functionAppUrl, string functionName = null)
-            : this(null, functionAppUrl?.AbsoluteUri, functionName, null)
+        public AzureFunctionRule(Uri functionAppUrl)
+            : this(null, functionAppUrl?.AbsoluteUri, null)
         {
             if (functionAppUrl == null)
             {
@@ -40,11 +39,10 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
         /// <param name="functionAppUrl"> URL for custom azure function. </param>
         /// <param name="credential"> Access credentials to Azure function. </param>
-        /// <param name="functionName"> (Optional) User-friendly name for function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="functionAppUrl"/> is empty. </exception>
-        public AzureFunctionRule(string functionAppUrl, AzureFunctionRuleCredential credential, string functionName = null)
-            : this(null, functionAppUrl, functionName, credential)
+        public AzureFunctionRule(string functionAppUrl, AzureFunctionRuleCredential credential)
+            : this(null, functionAppUrl, credential)
         {
             Argument.AssertNotNullOrWhiteSpace(functionAppUrl, nameof(functionAppUrl));
             ValidateUrl(functionAppUrl);
@@ -53,10 +51,9 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
         /// <param name="functionAppUrl"> URL for custom azure function. </param>
         /// <param name="credential"> Access credentials to Azure function. </param>
-        /// <param name="functionName"> (Optional) User-friendly name for function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
-        public AzureFunctionRule(Uri functionAppUrl, AzureFunctionRuleCredential credential, string functionName = null)
-            : this(null, functionAppUrl?.AbsoluteUri, functionName, credential)
+        public AzureFunctionRule(Uri functionAppUrl, AzureFunctionRuleCredential credential)
+            : this(null, functionAppUrl?.AbsoluteUri, credential)
         {
             if (functionAppUrl == null)
             {

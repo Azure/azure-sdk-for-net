@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -20,467 +17,107 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class JobRouterRestClient
     {
-        private string endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of JobRouterRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public JobRouterRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-04-07-preview1")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public JobRouterRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2021-10-20-preview2")
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-
-            this.endpoint = endpoint;
-            this.apiVersion = apiVersion;
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCreateOrUpdateChannelRequest(UpsertChannelRequest body, string ifMatch)
+        internal HttpMessage CreateUpsertClassificationPolicyRequest(string id, ClassificationPolicy patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/channels", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/classificationPolicies/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("if-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Creates or updates a channel. </summary>
-        /// <param name="body"> Model of channel to be created or updated. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <summary> Upsert a classification policy. </summary>
+        /// <param name="id"> Id of the classification policy. </param>
+        /// <param name="patch"> Model of classification policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<UpsertChannelResponse>> CreateOrUpdateChannelAsync(UpsertChannelRequest body, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateChannelRequest(body, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertChannelResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpsertChannelResponse.DeserializeUpsertChannelResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates or updates a channel. </summary>
-        /// <param name="body"> Model of channel to be created or updated. </param>
-        /// <param name="ifMatch"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<UpsertChannelResponse> CreateOrUpdateChannel(UpsertChannelRequest body, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateChannelRequest(body, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertChannelResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpsertChannelResponse.DeserializeUpsertChannelResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListChannelsRequest(string type, int? maxPageSize, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/channels", false);
-            if (type != null)
-            {
-                uri.AppendQuery("type", type, true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves custom channels. </summary>
-        /// <param name="type"> Specifies Managed Channels or Custom Channels, left blank returns all channels. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ChannelCollection>> ListChannelsAsync(string type = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListChannelsRequest(type, maxPageSize, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ChannelCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChannelCollection.DeserializeChannelCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Retrieves custom channels. </summary>
-        /// <param name="type"> Specifies Managed Channels or Custom Channels, left blank returns all channels. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ChannelCollection> ListChannels(string type = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListChannelsRequest(type, maxPageSize, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ChannelCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChannelCollection.DeserializeChannelCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetChannelRequest(string id)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/channels/", false);
-            uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves an existing channel by Id. </summary>
-        /// <param name="id"> Id of the channel to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response<RouterChannel>> GetChannelAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public async Task<Response<ClassificationPolicy>> UpsertClassificationPolicyAsync(string id, ClassificationPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
-            using var message = CreateGetChannelRequest(id);
+            using var message = CreateUpsertClassificationPolicyRequest(id, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RouterChannel value = default;
+                        ClassificationPolicy value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RouterChannel.DeserializeRouterChannel(document.RootElement);
+                        value = ClassificationPolicy.DeserializeClassificationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Retrieves an existing channel by Id. </summary>
-        /// <param name="id"> Id of the channel to retrieve. </param>
+        /// <summary> Upsert a classification policy. </summary>
+        /// <param name="id"> Id of the classification policy. </param>
+        /// <param name="patch"> Model of classification policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response<RouterChannel> GetChannel(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public Response<ClassificationPolicy> UpsertClassificationPolicy(string id, ClassificationPolicy patch, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
-            using var message = CreateGetChannelRequest(id);
+            using var message = CreateUpsertClassificationPolicyRequest(id, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RouterChannel value = default;
+                        ClassificationPolicy value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RouterChannel.DeserializeRouterChannel(document.RootElement);
+                        value = ClassificationPolicy.DeserializeClassificationPolicy(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteChannelRequest(string id, string ifMatch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/channels/", false);
-            uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("if-Match", ifMatch);
-            }
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Deletes a channel by Id. </summary>
-        /// <param name="id"> Id of the channel to delete. </param>
-        /// <param name="ifMatch"> Concurrency token for CosmosDB. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteChannelAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateDeleteChannelRequest(id, ifMatch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Deletes a channel by Id. </summary>
-        /// <param name="id"> Id of the channel to delete. </param>
-        /// <param name="ifMatch"> Concurrency token for CosmosDB. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response DeleteChannel(string id, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            using var message = CreateDeleteChannelRequest(id, ifMatch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 204:
-                    return message.Response;
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateOrUpdateClassificationPolicyRequest(UpsertClassificationPolicyRequest body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/classificationpolicies", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates a new classification policy. </summary>
-        /// <param name="body"> The UpsertClassificationPolicyRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<UpsertClassificationPolicyResponse>> CreateOrUpdateClassificationPolicyAsync(UpsertClassificationPolicyRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateClassificationPolicyRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertClassificationPolicyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpsertClassificationPolicyResponse.DeserializeUpsertClassificationPolicyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates a new classification policy. </summary>
-        /// <param name="body"> The UpsertClassificationPolicyRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<UpsertClassificationPolicyResponse> CreateOrUpdateClassificationPolicy(UpsertClassificationPolicyRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateClassificationPolicyRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertClassificationPolicyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpsertClassificationPolicyResponse.DeserializeUpsertClassificationPolicyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListClassificationPoliciesRequest(int? maxPageSize, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/classificationpolicies", false);
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListClassificationPoliciesRequest(maxPageSize, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ClassificationPolicyCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClassificationPolicyCollection.DeserializeClassificationPolicyCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Retrieves existing classification policies. </summary>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListClassificationPoliciesRequest(maxPageSize, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ClassificationPolicyCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClassificationPolicyCollection.DeserializeClassificationPolicyCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -490,20 +127,17 @@ namespace Azure.Communication.JobRouter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/classificationpolicies/", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/classificationPolicies/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Retrieves an existing classification policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<ClassificationPolicy>> GetClassificationPolicyAsync(string id, CancellationToken cancellationToken = default)
@@ -525,12 +159,12 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves an existing classification policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<ClassificationPolicy> GetClassificationPolicy(string id, CancellationToken cancellationToken = default)
@@ -552,219 +186,209 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteClassificationPolicyRequest(string id, string ifMatch)
+        internal HttpMessage CreateDeleteClassificationPolicyRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/classificationpolicies/", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/classificationPolicies/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("if-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Delete a classification policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteClassificationPolicyAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteClassificationPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteClassificationPolicyRequest(id, ifMatch);
+            using var message = CreateDeleteClassificationPolicyRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Delete a classification policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <param name="id"> Id of the classification policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response DeleteClassificationPolicy(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response DeleteClassificationPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteClassificationPolicyRequest(id, ifMatch);
+            using var message = CreateDeleteClassificationPolicyRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateDistributionPolicyRequest(UpsertDistributionPolicyRequest body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/distributionpolicies", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates a new distribution policy. </summary>
-        /// <param name="body"> The UpsertDistributionPolicyRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<UpsertDistributionPolicyResponse>> CreateOrUpdateDistributionPolicyAsync(UpsertDistributionPolicyRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateDistributionPolicyRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertDistributionPolicyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpsertDistributionPolicyResponse.DeserializeUpsertDistributionPolicyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates a new distribution policy. </summary>
-        /// <param name="body"> The UpsertDistributionPolicyRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<UpsertDistributionPolicyResponse> CreateOrUpdateDistributionPolicy(UpsertDistributionPolicyRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateDistributionPolicyRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertDistributionPolicyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpsertDistributionPolicyResponse.DeserializeUpsertDistributionPolicyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListDistributionPoliciesRequest(int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListClassificationPoliciesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/distributionpolicies", false);
-            if (maxPageSize != null)
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/classificationPolicies", false);
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
+        /// <summary> Retrieves existing classification policies. </summary>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDistributionPoliciesRequest(maxPageSize, continuationToken);
+            using var message = CreateListClassificationPoliciesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DistributionPolicyCollection value = default;
+                        ClassificationPolicyCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DistributionPolicyCollection.DeserializeDistributionPolicyCollection(document.RootElement);
+                        value = ClassificationPolicyCollection.DeserializeClassificationPolicyCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Retrieves existing distribution policies. </summary>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
+        /// <summary> Retrieves existing classification policies. </summary>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<ClassificationPolicyCollection> ListClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListDistributionPoliciesRequest(maxPageSize, continuationToken);
+            using var message = CreateListClassificationPoliciesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DistributionPolicyCollection value = default;
+                        ClassificationPolicyCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DistributionPolicyCollection.DeserializeDistributionPolicyCollection(document.RootElement);
+                        value = ClassificationPolicyCollection.DeserializeClassificationPolicyCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertDistributionPolicyRequest(string id, DistributionPolicy patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/distributionPolicies/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Upsert a distribution policy. </summary>
+        /// <param name="id"> Id of the distribution policy. </param>
+        /// <param name="patch"> Model of distribution policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public async Task<Response<DistributionPolicy>> UpsertDistributionPolicyAsync(string id, DistributionPolicy patch, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
+
+            using var message = CreateUpsertDistributionPolicyRequest(id, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DistributionPolicy value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DistributionPolicy.DeserializeDistributionPolicy(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Upsert a distribution policy. </summary>
+        /// <param name="id"> Id of the distribution policy. </param>
+        /// <param name="patch"> Model of distribution policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public Response<DistributionPolicy> UpsertDistributionPolicy(string id, DistributionPolicy patch, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
+
+            using var message = CreateUpsertDistributionPolicyRequest(id, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DistributionPolicy value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DistributionPolicy.DeserializeDistributionPolicy(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -774,20 +398,17 @@ namespace Azure.Communication.JobRouter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/distributionpolicies/", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/distributionPolicies/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Retrieves an existing distribution policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public async Task<Response<DistributionPolicy>> GetDistributionPolicyAsync(string id, CancellationToken cancellationToken = default)
@@ -809,12 +430,12 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves an existing distribution policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
+        /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public Response<DistributionPolicy> GetDistributionPolicy(string id, CancellationToken cancellationToken = default)
@@ -836,219 +457,209 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteDistributionPolicyRequest(string id, string ifMatch)
+        internal HttpMessage CreateDeleteDistributionPolicyRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/distributionpolicies/", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/distributionPolicies/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("if-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Delete a distribution policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteDistributionPolicyAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteDistributionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteDistributionPolicyRequest(id, ifMatch);
+            using var message = CreateDeleteDistributionPolicyRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Delete a distribution policy by Id. </summary>
-        /// <param name="id"> The String to use. </param>
-        /// <param name="ifMatch"> The String to use. </param>
+        /// <param name="id"> Id of the distribution policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response DeleteDistributionPolicy(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response DeleteDistributionPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteDistributionPolicyRequest(id, ifMatch);
+            using var message = CreateDeleteDistributionPolicyRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateExceptionPolicyRequest(UpsertExceptionPolicyRequest body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/exceptionpolicies", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates a new exception policy. </summary>
-        /// <param name="body"> Model of Exception Policy to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<UpsertExceptionPolicyResponse>> CreateOrUpdateExceptionPolicyAsync(UpsertExceptionPolicyRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateExceptionPolicyRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertExceptionPolicyResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpsertExceptionPolicyResponse.DeserializeUpsertExceptionPolicyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates a new exception policy. </summary>
-        /// <param name="body"> Model of Exception Policy to be created. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<UpsertExceptionPolicyResponse> CreateOrUpdateExceptionPolicy(UpsertExceptionPolicyRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateOrUpdateExceptionPolicyRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UpsertExceptionPolicyResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpsertExceptionPolicyResponse.DeserializeUpsertExceptionPolicyResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListExceptionPoliciesRequest(int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListDistributionPoliciesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/exceptionpolicies", false);
-            if (maxPageSize != null)
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/distributionPolicies", false);
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing distribution policies. </summary>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListExceptionPoliciesRequest(maxPageSize, continuationToken);
+            using var message = CreateListDistributionPoliciesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExceptionPolicyCollection value = default;
+                        DistributionPolicyCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExceptionPolicyCollection.DeserializeExceptionPolicyCollection(document.RootElement);
+                        value = DistributionPolicyCollection.DeserializeDistributionPolicyCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Retrieves existing exception policies. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing distribution policies. </summary>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<DistributionPolicyCollection> ListDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListExceptionPoliciesRequest(maxPageSize, continuationToken);
+            using var message = CreateListDistributionPoliciesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExceptionPolicyCollection value = default;
+                        DistributionPolicyCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExceptionPolicyCollection.DeserializeExceptionPolicyCollection(document.RootElement);
+                        value = DistributionPolicyCollection.DeserializeDistributionPolicyCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertExceptionPolicyRequest(string id, ExceptionPolicy patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Upsert a exception policy. </summary>
+        /// <param name="id"> Id of the exception policy. </param>
+        /// <param name="patch"> Model of exception policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public async Task<Response<ExceptionPolicy>> UpsertExceptionPolicyAsync(string id, ExceptionPolicy patch, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
+
+            using var message = CreateUpsertExceptionPolicyRequest(id, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ExceptionPolicy value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = ExceptionPolicy.DeserializeExceptionPolicy(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Upsert a exception policy. </summary>
+        /// <param name="id"> Id of the exception policy. </param>
+        /// <param name="patch"> Model of exception policy properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public Response<ExceptionPolicy> UpsertExceptionPolicy(string id, ExceptionPolicy patch, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
+
+            using var message = CreateUpsertExceptionPolicyRequest(id, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ExceptionPolicy value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = ExceptionPolicy.DeserializeExceptionPolicy(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1058,13 +669,10 @@ namespace Azure.Communication.JobRouter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/exceptionpolicies/", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1093,7 +701,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1120,430 +728,165 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteExceptionPolicyRequest(string id, string ifMatch)
+        internal HttpMessage CreateDeleteExceptionPolicyRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/exceptionpolicies/", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("if-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes a exception policy by Id. </summary>
         /// <param name="id"> Id of the exception policy to delete. </param>
-        /// <param name="ifMatch"> Concurrency token for CosmosDB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteExceptionPolicyAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteExceptionPolicyAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteExceptionPolicyRequest(id, ifMatch);
+            using var message = CreateDeleteExceptionPolicyRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Deletes a exception policy by Id. </summary>
         /// <param name="id"> Id of the exception policy to delete. </param>
-        /// <param name="ifMatch"> Concurrency token for CosmosDB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response DeleteExceptionPolicy(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response DeleteExceptionPolicy(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteExceptionPolicyRequest(id, ifMatch);
+            using var message = CreateDeleteExceptionPolicyRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateJobRequest(CreateJobRequest body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/jobs", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Creates a new job to be routed. </summary>
-        /// <param name="body"> The CreateJobRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<CreateJobResponse>> CreateJobAsync(CreateJobRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateJobRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        CreateJobResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateJobResponse.DeserializeCreateJobResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Creates a new job to be routed. </summary>
-        /// <param name="body"> The CreateJobRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<CreateJobResponse> CreateJob(CreateJobRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateCreateJobRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        CreateJobResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateJobResponse.DeserializeCreateJobResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListExceptionPoliciesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/jobs", false);
-            if (status != null)
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/exceptionPolicies", false);
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("status", status.Value.ToSerialString(), true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves list of jobs based on filter parameters. </summary>
-        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListJobsRequest(status, maxPageSize, continuationToken);
+            using var message = CreateListExceptionPoliciesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobCollection value = default;
+                        ExceptionPolicyCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        value = ExceptionPolicyCollection.DeserializeExceptionPolicyCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Retrieves list of jobs based on filter parameters. </summary>
-        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<JobCollection> ListJobs(JobStateSelector? status = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<ExceptionPolicyCollection> ListExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListJobsRequest(status, maxPageSize, continuationToken);
+            using var message = CreateListExceptionPoliciesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        JobCollection value = default;
+                        ExceptionPolicyCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        value = ExceptionPolicyCollection.DeserializeExceptionPolicyCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetJobRequest(string jobId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves an existing job by Id. </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public async Task<Response<RouterJob>> GetJobAsync(string jobId, CancellationToken cancellationToken = default)
-        {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-
-            using var message = CreateGetJobRequest(jobId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RouterJob value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RouterJob.DeserializeRouterJob(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Retrieves an existing job by Id. </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public Response<RouterJob> GetJob(string jobId, CancellationToken cancellationToken = default)
-        {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-
-            using var message = CreateGetJobRequest(jobId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RouterJob value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RouterJob.DeserializeRouterJob(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListEnqueuedJobsRequest(string queueId, int? maxPageSize, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/queues/", false);
-            uri.AppendPath(queueId, true);
-            uri.AppendPath("/jobs", false);
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves existing jobs by queue. </summary>
-        /// <param name="queueId"> The String to use. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        public async Task<Response<JobCollection>> ListEnqueuedJobsAsync(string queueId, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-
-            using var message = CreateListEnqueuedJobsRequest(queueId, maxPageSize, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Retrieves existing jobs by queue. </summary>
-        /// <param name="queueId"> The String to use. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
-        public Response<JobCollection> ListEnqueuedJobs(string queueId, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-
-            using var message = CreateListEnqueuedJobsRequest(queueId, maxPageSize, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateJobLabelsRequest(string jobId, IDictionary<string, object> labels, string note)
+        internal HttpMessage CreateUpsertJobRequest(string id, RouterJob patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/updatelabels", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new UpdateJobLabelsRequest(labels)
-            {
-                Note = note
-            };
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Update or insert labels of a job by Id. </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="labels"> A set of key/value pairs used as metadata for a job. </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <summary> Upsert a job. </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="patch"> Model of job properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="labels"/> is null. </exception>
-        public async Task<Response<RouterJob>> UpdateJobLabelsAsync(string jobId, IDictionary<string, object> labels, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public async Task<Response<RouterJob>> UpsertJobAsync(string id, RouterJob patch, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
-            if (labels == null)
+            if (patch == null)
             {
-                throw new ArgumentNullException(nameof(labels));
+                throw new ArgumentNullException(nameof(patch));
             }
 
-            using var message = CreateUpdateJobLabelsRequest(jobId, labels, note);
+            using var message = CreateUpsertJobRequest(id, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1555,28 +898,27 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Update or insert labels of a job by Id. </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="labels"> A set of key/value pairs used as metadata for a job. </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <summary> Upsert a job. </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="patch"> Model of job properties to be created or patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="labels"/> is null. </exception>
-        public Response<RouterJob> UpdateJobLabels(string jobId, IDictionary<string, object> labels, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public Response<RouterJob> UpsertJob(string id, RouterJob patch, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
-            if (labels == null)
+            if (patch == null)
             {
-                throw new ArgumentNullException(nameof(labels));
+                throw new ArgumentNullException(nameof(patch));
             }
 
-            using var message = CreateUpdateJobLabelsRequest(jobId, labels, note);
+            using var message = CreateUpsertJobRequest(id, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1588,58 +930,37 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateReclassifyJobRequest(string jobId, ReclassifyJobRequest body)
+        internal HttpMessage CreateGetJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/reclassify", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
             return message;
         }
 
-        /// <summary>
-        /// Updates an existing job by Id and forcing it to be reclassified.
-        /// 
-        /// The following attributes can be updated:
-        /// 
-        /// 1. ClassificationPolicyId: (Optional) The classification policy that will determine queue, priority and required abilities.
-        /// 
-        /// 2. LabelsToUpsert: (Optional) Update or insert labels associated to a job.
-        /// </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="body"> The ReclassifyJobRequest to use. </param>
+        /// <summary> Retrieves an existing job by Id. </summary>
+        /// <param name="id"> Id of the job to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<RouterJob>> ReclassifyJobAsync(string jobId, ReclassifyJobRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<RouterJob>> GetJobAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateReclassifyJobRequest(jobId, body);
+            using var message = CreateGetJobRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1651,35 +972,22 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary>
-        /// Updates an existing job by Id and forcing it to be reclassified.
-        /// 
-        /// The following attributes can be updated:
-        /// 
-        /// 1. ClassificationPolicyId: (Optional) The classification policy that will determine queue, priority and required abilities.
-        /// 
-        /// 2. LabelsToUpsert: (Optional) Update or insert labels associated to a job.
-        /// </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="body"> The ReclassifyJobRequest to use. </param>
+        /// <summary> Retrieves an existing job by Id. </summary>
+        /// <param name="id"> Id of the job to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="body"/> is null. </exception>
-        public Response<RouterJob> ReclassifyJob(string jobId, ReclassifyJobRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<RouterJob> GetJob(string id, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateReclassifyJobRequest(jobId, body);
+            using var message = CreateGetJobRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1691,136 +999,159 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateJobClassificationRequest(string jobId, string queueId, int? priority, IEnumerable<LabelSelector> workerSelectors, string note)
+        internal HttpMessage CreateDeleteJobRequest(string id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/jobs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a job and all of its traces. </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response> DeleteJobAsync(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateDeleteJobRequest(id);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Deletes a job and all of its traces. </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response DeleteJob(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateDeleteJobRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateReclassifyJobActionRequest(string id, object reclassifyJobRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/updateclassification", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(id, true);
+            uri.AppendPath(":reclassify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new UpdateJobClassificationRequest()
+            if (reclassifyJobRequest != null)
             {
-                QueueId = queueId,
-                Priority = priority,
-                WorkerSelectors = workerSelectors?.ToList(),
-                Note = note
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(reclassifyJobRequest);
+                request.Content = content;
+            }
             return message;
         }
 
-        /// <summary>
-        /// Updates an existing job&apos;s queueId, priority, requiredAbilities and labels.
-        /// 
-        /// The following attributes can be updated:
-        /// 
-        /// 1. QueuedId: (Optional) Can be used to assign a job to particular queue.
-        /// 
-        /// 2. Priority: (Optional) Can be used to set job priority.
-        /// 
-        /// 3. RequiredAbilities: (Optional) Can be used to set required abilities on a job. Note, that all previous abilities will be overridden.
-        /// </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="queueId"> Updated QueueId. </param>
-        /// <param name="priority"> Updated Priority. </param>
-        /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <summary> Reclassify a job. </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="reclassifyJobRequest"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public async Task<Response<RouterJob>> UpdateJobClassificationAsync(string jobId, string queueId = null, int? priority = null, IEnumerable<LabelSelector> workerSelectors = null, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<object>> ReclassifyJobActionAsync(string id, object reclassifyJobRequest = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateUpdateJobClassificationRequest(jobId, queueId, priority, workerSelectors, note);
+            using var message = CreateReclassifyJobActionRequest(id, reclassifyJobRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RouterJob value = default;
+                        object value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RouterJob.DeserializeRouterJob(document.RootElement);
+                        value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary>
-        /// Updates an existing job&apos;s queueId, priority, requiredAbilities and labels.
-        /// 
-        /// The following attributes can be updated:
-        /// 
-        /// 1. QueuedId: (Optional) Can be used to assign a job to particular queue.
-        /// 
-        /// 2. Priority: (Optional) Can be used to set job priority.
-        /// 
-        /// 3. RequiredAbilities: (Optional) Can be used to set required abilities on a job. Note, that all previous abilities will be overridden.
-        /// </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="queueId"> Updated QueueId. </param>
-        /// <param name="priority"> Updated Priority. </param>
-        /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <summary> Reclassify a job. </summary>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="reclassifyJobRequest"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public Response<RouterJob> UpdateJobClassification(string jobId, string queueId = null, int? priority = null, IEnumerable<LabelSelector> workerSelectors = null, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<object> ReclassifyJobAction(string id, object reclassifyJobRequest = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateUpdateJobClassificationRequest(jobId, queueId, priority, workerSelectors, note);
+            using var message = CreateReclassifyJobActionRequest(id, reclassifyJobRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        RouterJob value = default;
+                        object value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RouterJob.DeserializeRouterJob(document.RootElement);
+                        value = document.RootElement.GetObject();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCancelJobRequest(string jobId, string note, string dispositionCode)
+        internal HttpMessage CreateCancelJobActionRequest(string id, string note, string dispositionCode)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/cancel", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(id, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1836,75 +1167,80 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., cancellation reason. </param>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
         /// <param name="dispositionCode">
-        /// (Optional) Customer supplied disposition code for specifying any short label
-        /// 
-        /// If not provided, default value of &quot;CancelledByUser&quot; is set.
+        /// Indicates the outcome of the job, populate this field with your own custom values.
+        /// If not provided, default value of &quot;Cancelled&quot; is set.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public async Task<Response> CancelJobAsync(string jobId, string note = null, string dispositionCode = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<object>> CancelJobActionAsync(string id, string note = null, string dispositionCode = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateCancelJobRequest(jobId, note, dispositionCode);
+            using var message = CreateCancelJobActionRequest(id, note, dispositionCode);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
-                    return message.Response;
+                case 200:
+                    {
+                        object value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
-        /// <param name="jobId"> The String to use. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., cancellation reason. </param>
+        /// <param name="id"> Id of the job. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
         /// <param name="dispositionCode">
-        /// (Optional) Customer supplied disposition code for specifying any short label
-        /// 
-        /// If not provided, default value of &quot;CancelledByUser&quot; is set.
+        /// Indicates the outcome of the job, populate this field with your own custom values.
+        /// If not provided, default value of &quot;Cancelled&quot; is set.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public Response CancelJob(string jobId, string note = null, string dispositionCode = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<object> CancelJobAction(string id, string note = null, string dispositionCode = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateCancelJobRequest(jobId, note, dispositionCode);
+            using var message = CreateCancelJobActionRequest(id, note, dispositionCode);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
-                    return message.Response;
+                case 200:
+                    {
+                        object value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCompleteJobRequest(string jobId, string assignmentId, string note)
+        internal HttpMessage CreateCompleteJobActionRequest(string id, string assignmentId, string note)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/complete", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(id, true);
+            uri.AppendPath(":complete", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -1919,82 +1255,89 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Completes an assigned job. </summary>
-        /// <param name="jobId"> The String to use. </param>
+        /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
-        public async Task<Response> CompleteJobAsync(string jobId, string assignmentId, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        public async Task<Response<object>> CompleteJobActionAsync(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
             if (assignmentId == null)
             {
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateCompleteJobRequest(jobId, assignmentId, note);
+            using var message = CreateCompleteJobActionRequest(id, assignmentId, note);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        object value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Completes an assigned job. </summary>
-        /// <param name="jobId"> The String to use. </param>
+        /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within the job to complete. </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
-        public Response CompleteJob(string jobId, string assignmentId, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        public Response<object> CompleteJobAction(string id, string assignmentId, string note = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
             if (assignmentId == null)
             {
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateCompleteJobRequest(jobId, assignmentId, note);
+            using var message = CreateCompleteJobActionRequest(id, assignmentId, note);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        object value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCloseJobRequest(string jobId, string assignmentId, string dispositionCode, DateTimeOffset? releaseTime, string note)
+        internal HttpMessage CreateCloseJobActionRequest(string id, string assignmentId, string dispositionCode, DateTimeOffset? closeTime, string note)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/close", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(id, true);
+            uri.AppendPath(":close", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var model = new CloseJobRequest(assignmentId)
             {
                 DispositionCode = dispositionCode,
-                ReleaseTime = releaseTime,
+                CloseTime = closeTime,
                 Note = note
             };
             var content = new Utf8JsonRequestContent();
@@ -2004,104 +1347,189 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Closes a completed job. </summary>
-        /// <param name="jobId"> The String to use. </param>
+        /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
         /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
-        /// <param name="releaseTime">
-        /// If not provided, capacity will be released immediately.
-        /// 
-        /// If provided, the future time at which to release the capacity.
+        /// <param name="closeTime">
+        /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
         /// </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
-        public async Task<Response> CloseJobAsync(string jobId, string assignmentId, string dispositionCode = null, DateTimeOffset? releaseTime = null, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        public async Task<Response<object>> CloseJobActionAsync(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeTime = null, string note = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
             if (assignmentId == null)
             {
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateCloseJobRequest(jobId, assignmentId, dispositionCode, releaseTime, note);
+            using var message = CreateCloseJobActionRequest(id, assignmentId, dispositionCode, closeTime, note);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                case 202:
+                    {
+                        object value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Closes a completed job. </summary>
-        /// <param name="jobId"> The String to use. </param>
+        /// <param name="id"> Id of the job. </param>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
         /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
-        /// <param name="releaseTime">
-        /// If not provided, capacity will be released immediately.
-        /// 
-        /// If provided, the future time at which to release the capacity.
+        /// <param name="closeTime">
+        /// If not provided, worker capacity is released immediately along with a JobClosedEvent notification.
+        /// If provided, worker capacity is released along with a JobClosedEvent notification at a future time.
         /// </param>
-        /// <param name="note"> (Optional) Customer supplied note. </param>
+        /// <param name="note"> (Optional) A note that will be appended to the jobs&apos; Notes collection with th current timestamp. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
-        public Response CloseJob(string jobId, string assignmentId, string dispositionCode = null, DateTimeOffset? releaseTime = null, string note = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
+        public Response<object> CloseJobAction(string id, string assignmentId, string dispositionCode = null, DateTimeOffset? closeTime = null, string note = null, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
             if (assignmentId == null)
             {
                 throw new ArgumentNullException(nameof(assignmentId));
             }
 
-            using var message = CreateCloseJobRequest(jobId, assignmentId, dispositionCode, releaseTime, note);
+            using var message = CreateCloseJobActionRequest(id, assignmentId, dispositionCode, closeTime, note);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                case 202:
+                    {
+                        object value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetInQueuePositionRequest(string jobId)
+        internal HttpMessage CreateListJobsRequest(JobStateSelector? status, string queueId, string channelId, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/jobs", false);
+            if (status != null)
+            {
+                uri.AppendQuery("status", status.Value.ToSerialString(), true);
+            }
+            if (queueId != null)
+            {
+                uri.AppendQuery("queueId", queueId, true);
+            }
+            if (channelId != null)
+            {
+                uri.AppendQuery("channelId", channelId, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Retrieves list of jobs based on filter parameters. </summary>
+        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
+        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<JobCollection>> ListJobsAsync(JobStateSelector? status = null, string queueId = null, string channelId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListJobsRequest(status, queueId, channelId, maxpagesize);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        JobCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Retrieves list of jobs based on filter parameters. </summary>
+        /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
+        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<JobCollection> ListJobs(JobStateSelector? status = null, string queueId = null, string channelId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListJobsRequest(status, queueId, channelId, maxpagesize);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        JobCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = JobCollection.DeserializeJobCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetInQueuePositionRequest(string id)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/jobs/", false);
-            uri.AppendPath(jobId, true);
+            uri.AppendPath(id, true);
             uri.AppendPath("/position", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Gets a job&apos;s position details. </summary>
-        /// <param name="jobId"> The String to use. </param>
+        /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public async Task<Response<JobPositionDetails>> GetInQueuePositionAsync(string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<JobPositionDetails>> GetInQueuePositionAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetInQueuePositionRequest(jobId);
+            using var message = CreateGetInQueuePositionRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2113,22 +1541,22 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Gets a job&apos;s position details. </summary>
-        /// <param name="jobId"> The String to use. </param>
+        /// <param name="id"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public Response<JobPositionDetails> GetInQueuePosition(string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<JobPositionDetails> GetInQueuePosition(string id, CancellationToken cancellationToken = default)
         {
-            if (jobId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(jobId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateGetInQueuePositionRequest(jobId);
+            using var message = CreateGetInQueuePositionRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2140,48 +1568,45 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateAcceptJobRequest(string offerId, string workerId)
+        internal HttpMessage CreateAcceptJobActionRequest(string workerId, string offerId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
-            uri.AppendPath("/accept", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(":accept", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </summary>
-        /// <param name="offerId"> The String to use. </param>
-        /// <param name="workerId"> The String to use. </param>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="workerId"/> is null. </exception>
-        public async Task<Response<AcceptJobOfferResponse>> AcceptJobAsync(string offerId, string workerId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        public async Task<Response<AcceptJobOfferResponse>> AcceptJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
 
-            using var message = CreateAcceptJobRequest(offerId, workerId);
+            using var message = CreateAcceptJobActionRequest(workerId, offerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2193,27 +1618,27 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </summary>
-        /// <param name="offerId"> The String to use. </param>
-        /// <param name="workerId"> The String to use. </param>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="workerId"/> is null. </exception>
-        public Response<AcceptJobOfferResponse> AcceptJob(string offerId, string workerId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        public Response<AcceptJobOfferResponse> AcceptJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
 
-            using var message = CreateAcceptJobRequest(offerId, workerId);
+            using var message = CreateAcceptJobActionRequest(workerId, offerId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2225,226 +1650,172 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeclineJobRequest(string offerId, string workerId)
+        internal HttpMessage CreateDeclineJobActionRequest(string workerId, string offerId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
             uri.AppendPath("/offers/", false);
             uri.AppendPath(offerId, true);
-            uri.AppendPath("/decline", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendPath(":decline", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="offerId"> The String to use. </param>
-        /// <param name="workerId"> The String to use. </param>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="workerId"/> is null. </exception>
-        public async Task<Response> DeclineJobAsync(string offerId, string workerId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        public async Task<Response<object>> DeclineJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
 
-            using var message = CreateDeclineJobRequest(offerId, workerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        object value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="offerId"> The String to use. </param>
-        /// <param name="workerId"> The String to use. </param>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="workerId"/> is null. </exception>
-        public Response DeclineJob(string offerId, string workerId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
+        public Response<object> DeclineJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
+            if (offerId == null)
+            {
+                throw new ArgumentNullException(nameof(offerId));
+            }
 
-            using var message = CreateDeclineJobRequest(offerId, workerId);
+            using var message = CreateDeclineJobActionRequest(workerId, offerId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        object value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = document.RootElement.GetObject();
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateQueueRequest(UpsertQueueRequest body)
+        internal HttpMessage CreateUpsertQueueRequest(string id, JobQueue patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/queues", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Creates or updates a queue. </summary>
-        /// <param name="body"> Model of queue to be created or Updated. </param>
+        /// <summary> Upsert a queue. </summary>
+        /// <param name="id"> Id of the queue. </param>
+        /// <param name="patch"> Model of queue properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<UpsertQueueResponse>> CreateOrUpdateQueueAsync(UpsertQueueRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public async Task<Response<JobQueue>> UpsertQueueAsync(string id, JobQueue patch, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
             }
 
-            using var message = CreateCreateOrUpdateQueueRequest(body);
+            using var message = CreateUpsertQueueRequest(id, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UpsertQueueResponse value = default;
+                        JobQueue value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpsertQueueResponse.DeserializeUpsertQueueResponse(document.RootElement);
+                        value = JobQueue.DeserializeJobQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Creates or updates a queue. </summary>
-        /// <param name="body"> Model of queue to be created or Updated. </param>
+        /// <summary> Upsert a queue. </summary>
+        /// <param name="id"> Id of the queue. </param>
+        /// <param name="patch"> Model of queue properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<UpsertQueueResponse> CreateOrUpdateQueue(UpsertQueueRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="patch"/> is null. </exception>
+        public Response<JobQueue> UpsertQueue(string id, JobQueue patch, CancellationToken cancellationToken = default)
         {
-            if (body == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(body));
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
             }
 
-            using var message = CreateCreateOrUpdateQueueRequest(body);
+            using var message = CreateUpsertQueueRequest(id, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        UpsertQueueResponse value = default;
+                        JobQueue value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpsertQueueResponse.DeserializeUpsertQueueResponse(document.RootElement);
+                        value = JobQueue.DeserializeJobQueue(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListQueuesRequest(int? maxPageSize, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/queues", false);
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<QueueCollection>> ListQueuesAsync(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListQueuesRequest(maxPageSize, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        QueueCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Retrieves existing queues. </summary>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<QueueCollection> ListQueues(int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListQueuesRequest(maxPageSize, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        QueueCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2454,13 +1825,10 @@ namespace Azure.Communication.JobRouter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/queues/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2489,7 +1857,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2516,313 +1884,279 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteQueueRequest(string id, string ifMatch)
+        internal HttpMessage CreateDeleteQueueRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/queues/", false);
             uri.AppendPath(id, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("if-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Deletes a queue by Id. </summary>
         /// <param name="id"> Id of the queue to delete. </param>
-        /// <param name="ifMatch"> Concurrency token for CosmosDB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async Task<Response> DeleteQueueAsync(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteQueueAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteQueueRequest(id, ifMatch);
+            using var message = CreateDeleteQueueRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Deletes a queue by Id. </summary>
         /// <param name="id"> Id of the queue to delete. </param>
-        /// <param name="ifMatch"> Concurrency token for CosmosDB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Response DeleteQueue(string id, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response DeleteQueue(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeleteQueueRequest(id, ifMatch);
+            using var message = CreateDeleteQueueRequest(id);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRegisterWorkerRequest(RegisterWorkerRequest body)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/workers", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Registers a worker to process jobs. </summary>
-        /// <param name="body"> The RegisterWorkerRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<RouterWorker>> RegisterWorkerAsync(RegisterWorkerRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateRegisterWorkerRequest(body);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RouterWorker value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RouterWorker.DeserializeRouterWorker(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Registers a worker to process jobs. </summary>
-        /// <param name="body"> The RegisterWorkerRequest to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<RouterWorker> RegisterWorker(RegisterWorkerRequest body, CancellationToken cancellationToken = default)
-        {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
-
-            using var message = CreateRegisterWorkerRequest(body);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RouterWorker value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RouterWorker.DeserializeRouterWorker(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListQueuesRequest(int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/workers", false);
-            if (status != null)
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/queues", false);
+            if (maxpagesize != null)
             {
-                uri.AppendQuery("status", status.Value.ToSerialString(), true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            if (channelId != null)
-            {
-                uri.AppendQuery("channelId", channelId, true);
-            }
-            if (queueId != null)
-            {
-                uri.AppendQuery("queueId", queueId, true);
-            }
-            if (hasCapacity != null)
-            {
-                uri.AppendQuery("hasCapacity", hasCapacity.Value, true);
-            }
-            if (maxPageSize != null)
-            {
-                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves existing workers. </summary>
-        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
-        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
-        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
-        /// <param name="hasCapacity">
-        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
-        /// 
-        ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
-        /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing queues. </summary>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueueCollection>> ListQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxPageSize, continuationToken);
+            using var message = CreateListQueuesRequest(maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkerCollection value = default;
+                        QueueCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
+                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Retrieves existing workers. </summary>
-        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
-        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
-        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
-        /// <param name="hasCapacity">
-        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
-        /// 
-        ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
-        /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing queues. </summary>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<QueueCollection> ListQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxPageSize, continuationToken);
+            using var message = CreateListQueuesRequest(maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        WorkerCollection value = default;
+                        QueueCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
+                        value = QueueCollection.DeserializeQueueCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeregisterWorkerRequest(string workerId)
+        internal HttpMessage CreateGetQueueStatisticsRequest(string id)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Delete;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/routing/workers/", false);
-            uri.AppendPath(workerId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/statistics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Deregisters a worker from processing jobs. </summary>
-        /// <param name="workerId"> The String to use. </param>
+        /// <summary> Retrieves a queue&apos;s statistics. </summary>
+        /// <param name="id"> Id of the queue to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
-        public async Task<Response> DeregisterWorkerAsync(string workerId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<QueueStatistics>> GetQueueStatisticsAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (workerId == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(workerId));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            using var message = CreateDeregisterWorkerRequest(workerId);
+            using var message = CreateGetQueueStatisticsRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        QueueStatistics value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = QueueStatistics.DeserializeQueueStatistics(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Deregisters a worker from processing jobs. </summary>
-        /// <param name="workerId"> The String to use. </param>
+        /// <summary> Retrieves a queue&apos;s statistics. </summary>
+        /// <param name="id"> Id of the queue to retrieve statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
-        public Response DeregisterWorker(string workerId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<QueueStatistics> GetQueueStatistics(string id, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetQueueStatisticsRequest(id);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        QueueStatistics value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = QueueStatistics.DeserializeQueueStatistics(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpsertWorkerRequest(string workerId, RouterWorker patch)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/workers/", false);
+            uri.AppendPath(workerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Upsert a worker. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="patch"> Model of worker properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="patch"/> is null. </exception>
+        public async Task<Response<RouterWorker>> UpsertWorkerAsync(string workerId, RouterWorker patch, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
-            using var message = CreateDeregisterWorkerRequest(workerId);
+            using var message = CreateUpsertWorkerRequest(workerId, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        RouterWorker value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = RouterWorker.DeserializeRouterWorker(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Upsert a worker. </summary>
+        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="patch"> Model of worker properties to be patched. See also: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="patch"/> is null. </exception>
+        public Response<RouterWorker> UpsertWorker(string workerId, RouterWorker patch, CancellationToken cancellationToken = default)
+        {
+            if (workerId == null)
+            {
+                throw new ArgumentNullException(nameof(workerId));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
+
+            using var message = CreateUpsertWorkerRequest(workerId, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 204:
-                    return message.Response;
+                case 200:
+                    {
+                        RouterWorker value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = RouterWorker.DeserializeRouterWorker(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2832,20 +2166,17 @@ namespace Azure.Communication.JobRouter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
         /// <summary> Retrieves an existing worker by Id. </summary>
-        /// <param name="workerId"> The String to use. </param>
+        /// <param name="workerId"> Id of the worker to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         public async Task<Response<RouterWorker>> GetWorkerAsync(string workerId, CancellationToken cancellationToken = default)
@@ -2867,12 +2198,12 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves an existing worker by Id. </summary>
-        /// <param name="workerId"> The String to use. </param>
+        /// <param name="workerId"> Id of the worker to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         public Response<RouterWorker> GetWorker(string workerId, CancellationToken cancellationToken = default)
@@ -2894,174 +2225,166 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateReleaseAssignmentRequest(string workerId, string assignmentId, ReleaseAssignmentRequest body)
+        internal HttpMessage CreateDeleteWorkerRequest(string workerId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/routing/workers/", false);
             uri.AppendPath(workerId, true);
-            uri.AppendPath("/assignments/", false);
-            uri.AppendPath(assignmentId, true);
-            uri.AppendPath("/release", false);
-            if (apiVersion != null)
-            {
-                uri.AppendQuery("api-version", apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (body != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
             return message;
         }
 
-        /// <summary> Releases capacity consumed by an assignment within a workers socket collection. </summary>
-        /// <param name="workerId"> The String to use. </param>
-        /// <param name="assignmentId"> The String to use. </param>
-        /// <param name="body"> The ReleaseAssignmentRequest to use. </param>
+        /// <summary> Deletes a worker and all of its traces. </summary>
+        /// <param name="workerId"> Id of the worker to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="assignmentId"/> is null. </exception>
-        public async Task<Response> ReleaseAssignmentAsync(string workerId, string assignmentId, ReleaseAssignmentRequest body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        public async Task<Response> DeleteWorkerAsync(string workerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
 
-            using var message = CreateReleaseAssignmentRequest(workerId, assignmentId, body);
+            using var message = CreateDeleteWorkerRequest(workerId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Releases capacity consumed by an assignment within a workers socket collection. </summary>
-        /// <param name="workerId"> The String to use. </param>
-        /// <param name="assignmentId"> The String to use. </param>
-        /// <param name="body"> The ReleaseAssignmentRequest to use. </param>
+        /// <summary> Deletes a worker and all of its traces. </summary>
+        /// <param name="workerId"> Id of the worker to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="assignmentId"/> is null. </exception>
-        public Response ReleaseAssignment(string workerId, string assignmentId, ReleaseAssignmentRequest body = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        public Response DeleteWorker(string workerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
                 throw new ArgumentNullException(nameof(workerId));
             }
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
 
-            using var message = CreateReleaseAssignmentRequest(workerId, assignmentId, body);
+            using var message = CreateDeleteWorkerRequest(workerId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListChannelsNextPageRequest(string nextLink, string type, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListWorkersRequest(WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/routing/workers", false);
+            if (status != null)
+            {
+                uri.AppendQuery("status", status.Value.ToSerialString(), true);
+            }
+            if (channelId != null)
+            {
+                uri.AppendQuery("channelId", channelId, true);
+            }
+            if (queueId != null)
+            {
+                uri.AppendQuery("queueId", queueId, true);
+            }
+            if (hasCapacity != null)
+            {
+                uri.AppendQuery("hasCapacity", hasCapacity.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Retrieves custom channels. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="type"> Specifies Managed Channels or Custom Channels, left blank returns all channels. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing workers. </summary>
+        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
+        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
+        /// <param name="hasCapacity">
+        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
+        ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
+        /// </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ChannelCollection>> ListChannelsNextPageAsync(string nextLink, string type = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkerCollection>> ListWorkersAsync(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListChannelsNextPageRequest(nextLink, type, maxPageSize, continuationToken);
+            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ChannelCollection value = default;
+                        WorkerCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ChannelCollection.DeserializeChannelCollection(document.RootElement);
+                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <summary> Retrieves custom channels. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="type"> Specifies Managed Channels or Custom Channels, left blank returns all channels. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <summary> Retrieves existing workers. </summary>
+        /// <param name="status"> (Optional) If specified, select workers by worker status. </param>
+        /// <param name="channelId"> (Optional) If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
+        /// <param name="hasCapacity">
+        /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
+        ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
+        /// </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ChannelCollection> ListChannelsNextPage(string nextLink, string type = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<WorkerCollection> ListWorkers(WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListChannelsNextPageRequest(nextLink, type, maxPageSize, continuationToken);
+            using var message = CreateListWorkersRequest(status, channelId, queueId, hasCapacity, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ChannelCollection value = default;
+                        WorkerCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ChannelCollection.DeserializeChannelCollection(document.RootElement);
+                        value = WorkerCollection.DeserializeWorkerCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListClassificationPoliciesNextPageRequest(string nextLink, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListClassificationPoliciesNextPageRequest(string nextLink, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3070,18 +2393,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ClassificationPolicyCollection>> ListClassificationPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3093,24 +2415,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<ClassificationPolicyCollection> ListClassificationPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListClassificationPoliciesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3122,17 +2443,17 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListDistributionPoliciesNextPageRequest(string nextLink, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListDistributionPoliciesNextPageRequest(string nextLink, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3141,18 +2462,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DistributionPolicyCollection>> ListDistributionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3164,24 +2484,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
+        /// <param name="maxpagesize"> Maximum page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<DistributionPolicyCollection> ListDistributionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListDistributionPoliciesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3193,17 +2512,17 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListExceptionPoliciesNextPageRequest(string nextLink, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListExceptionPoliciesNextPageRequest(string nextLink, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3212,18 +2531,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ExceptionPolicyCollection>> ListExceptionPoliciesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3235,24 +2553,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<ExceptionPolicyCollection> ListExceptionPoliciesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListExceptionPoliciesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3264,17 +2581,17 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListJobsNextPageRequest(string nextLink, JobStateSelector? status, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListJobsNextPageRequest(string nextLink, JobStateSelector? status, string queueId, string channelId, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3284,18 +2601,19 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<JobCollection>> ListJobsNextPageAsync(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListJobsNextPageRequest(nextLink, status, maxPageSize, continuationToken);
+            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3307,25 +2625,26 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="status"> (Optional) If specified, filter jobs by status. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="queueId"> (Optional) If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> (Optional) If specified, filter jobs by channel. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<JobCollection> ListJobsNextPage(string nextLink, JobStateSelector? status = null, string queueId = null, string channelId = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListJobsNextPageRequest(nextLink, status, maxPageSize, continuationToken);
+            using var message = CreateListJobsNextPageRequest(nextLink, status, queueId, channelId, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3337,98 +2656,17 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListEnqueuedJobsNextPageRequest(string nextLink, string queueId, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListQueuesNextPageRequest(string nextLink, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Retrieves existing jobs by queue. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="queueId"> The String to use. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="queueId"/> is null. </exception>
-        public async Task<Response<JobCollection>> ListEnqueuedJobsNextPageAsync(string nextLink, string queueId, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-
-            using var message = CreateListEnqueuedJobsNextPageRequest(nextLink, queueId, maxPageSize, continuationToken);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Retrieves existing jobs by queue. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="queueId"> The String to use. </param>
-        /// <param name="maxPageSize"> The Integer to use. </param>
-        /// <param name="continuationToken"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="queueId"/> is null. </exception>
-        public Response<JobCollection> ListEnqueuedJobsNextPage(string nextLink, string queueId, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
-
-            using var message = CreateListEnqueuedJobsNextPageRequest(nextLink, queueId, maxPageSize, continuationToken);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        JobCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobCollection.DeserializeJobCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListQueuesNextPageRequest(string nextLink, int? maxPageSize, string continuationToken)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3437,18 +2675,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<QueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueueCollection>> ListQueuesNextPageAsync(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListQueuesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListQueuesNextPageRequest(nextLink, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3460,24 +2697,23 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<QueueCollection> ListQueuesNextPage(string nextLink, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<QueueCollection> ListQueuesNextPage(string nextLink, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListQueuesNextPageRequest(nextLink, maxPageSize, continuationToken);
+            using var message = CreateListQueuesNextPageRequest(nextLink, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3489,17 +2725,17 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListWorkersNextPageRequest(string nextLink, WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxPageSize, string continuationToken)
+        internal HttpMessage CreateListWorkersNextPageRequest(string nextLink, WorkerStateSelector? status, string channelId, string queueId, bool? hasCapacity, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3513,21 +2749,19 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
         /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
-        /// 
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkerCollection>> ListWorkersNextPageAsync(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxPageSize, continuationToken);
+            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3539,7 +2773,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3550,21 +2784,19 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> (Optional) If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity">
         /// (Optional) If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel
-        /// 
         ///             if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.
         /// </param>
-        /// <param name="maxPageSize"> Number of objects to return per page. </param>
-        /// <param name="continuationToken"> Token for pagination. </param>
+        /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxPageSize = null, string continuationToken = null, CancellationToken cancellationToken = default)
+        public Response<WorkerCollection> ListWorkersNextPage(string nextLink, WorkerStateSelector? status = null, string channelId = null, string queueId = null, bool? hasCapacity = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxPageSize, continuationToken);
+            using var message = CreateListWorkersNextPageRequest(nextLink, status, channelId, queueId, hasCapacity, maxpagesize);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3576,7 +2808,7 @@ namespace Azure.Communication.JobRouter
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

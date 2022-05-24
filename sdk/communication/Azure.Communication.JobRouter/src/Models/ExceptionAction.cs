@@ -5,7 +5,7 @@ using System.Data;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("ExceptionAction")]
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<ExceptionAction>))]

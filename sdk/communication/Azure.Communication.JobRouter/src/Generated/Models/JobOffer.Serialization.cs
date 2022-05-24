@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class JobOffer
     {
@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Models
             string id = default;
             string jobId = default;
             int capacityCost = default;
-            Optional<DateTimeOffset?> offerTimeUtc = default;
-            Optional<DateTimeOffset?> expiryTimeUtc = default;
+            Optional<DateTimeOffset> offerTimeUtc = default;
+            Optional<DateTimeOffset> expiryTimeUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -41,7 +41,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        offerTimeUtc = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offerTimeUtc = property.Value.GetDateTimeOffset("O");
@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        expiryTimeUtc = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTimeUtc = property.Value.GetDateTimeOffset("O");

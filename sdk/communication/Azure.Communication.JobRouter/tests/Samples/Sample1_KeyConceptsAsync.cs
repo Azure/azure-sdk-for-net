@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
                 id: "distribution-policy-1",
                 name: "My Distribution Policy",
-                offerTTL: TimeSpan.FromDays(1),
+                offerTtlSeconds: 24 * 60 * 60,
                 mode: new LongestIdleMode()
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
@@ -45,19 +45,20 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
-            var job = await routerClient.CreateJobAsync(
+            var job = await routerClient.SetJobAsync(
+                id: "jobId-1",
                 channelId: "my-channel",
                 channelReference: "12345",
                 queueId: queue.Value.Id,
                 priority: 1,
-                workerSelectors: new List<LabelSelector>
+                workerSelectors: new List<WorkerSelector>
                 {
-                    new LabelSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+                    new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
                 });
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
-            var worker = await routerClient.RegisterWorkerAsync(
+            var worker = await routerClient.SetWorkerAsync(
                 id: "worker-1",
                 queueIds: new[] { queue.Value.Id },
                 totalCapacity: 1,
@@ -65,10 +66,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     ["Some-Skill"] = 11
                 },
-                channelConfigurations: new List<ChannelConfiguration>
+                channelConfigurations: new Dictionary<string, ChannelConfiguration>()
                 {
-                    new ChannelConfiguration("my-channel", 1)
-                }
+                    ["my-channel"] = new ChannelConfiguration(1)
+                },
+                availableForOffers: true
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 

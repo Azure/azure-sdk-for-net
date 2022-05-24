@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class ScoringRuleOptions : IUtf8JsonSerializable
     {
@@ -18,73 +18,45 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BatchSize))
             {
-                if (BatchSize != null)
-                {
-                    writer.WritePropertyName("batchSize");
-                    writer.WriteNumberValue(BatchSize.Value);
-                }
-                else
-                {
-                    writer.WriteNull("batchSize");
-                }
+                writer.WritePropertyName("batchSize");
+                writer.WriteNumberValue(BatchSize.Value);
             }
             if (Optional.IsCollectionDefined(ScoringParameters))
             {
-                if (ScoringParameters != null)
+                writer.WritePropertyName("scoringParameters");
+                writer.WriteStartArray();
+                foreach (var item in ScoringParameters)
                 {
-                    writer.WritePropertyName("scoringParameters");
-                    writer.WriteStartArray();
-                    foreach (var item in ScoringParameters)
-                    {
-                        writer.WriteStringValue(item.ToSerialString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToSerialString());
                 }
-                else
-                {
-                    writer.WriteNull("scoringParameters");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AllowScoringBatchOfWorkers))
             {
-                if (AllowScoringBatchOfWorkers != null)
-                {
-                    writer.WritePropertyName("allowScoringBatchOfWorkers");
-                    writer.WriteBooleanValue(AllowScoringBatchOfWorkers.Value);
-                }
-                else
-                {
-                    writer.WriteNull("allowScoringBatchOfWorkers");
-                }
+                writer.WritePropertyName("allowScoringBatchOfWorkers");
+                writer.WriteBooleanValue(AllowScoringBatchOfWorkers.Value);
             }
             if (Optional.IsDefined(DescendingOrder))
             {
-                if (DescendingOrder != null)
-                {
-                    writer.WritePropertyName("descendingOrder");
-                    writer.WriteBooleanValue(DescendingOrder.Value);
-                }
-                else
-                {
-                    writer.WriteNull("descendingOrder");
-                }
+                writer.WritePropertyName("descendingOrder");
+                writer.WriteBooleanValue(DescendingOrder.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ScoringRuleOptions DeserializeScoringRuleOptions(JsonElement element)
         {
-            Optional<int?> batchSize = default;
+            Optional<int> batchSize = default;
             Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
-            Optional<bool?> allowScoringBatchOfWorkers = default;
-            Optional<bool?> descendingOrder = default;
+            Optional<bool> allowScoringBatchOfWorkers = default;
+            Optional<bool> descendingOrder = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        batchSize = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     batchSize = property.Value.GetInt32();
@@ -94,7 +66,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scoringParameters = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScoringRuleParameterSelector> array = new List<ScoringRuleParameterSelector>();
@@ -109,7 +81,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        allowScoringBatchOfWorkers = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowScoringBatchOfWorkers = property.Value.GetBoolean();
@@ -119,7 +91,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        descendingOrder = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     descendingOrder = property.Value.GetBoolean();

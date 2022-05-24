@@ -5,16 +5,14 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Supported parameters for scoring workers. </summary>
     public enum ScoringRuleParameterSelector
     {
         /// <summary> jobLabels. </summary>
         JobLabels,
-        /// <summary> labelSelectors. </summary>
-        LabelSelectors,
-        /// <summary> workerLabelsCollection. </summary>
-        WorkerLabelsCollection
+        /// <summary> workerSelectors. </summary>
+        WorkerSelectors
     }
 }

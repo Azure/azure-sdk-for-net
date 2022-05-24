@@ -9,22 +9,22 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class JobCollection
     {
         internal static JobCollection DeserializeJobCollection(JsonElement element)
         {
-            IReadOnlyList<RouterJob> value = default;
+            IReadOnlyList<PagedJob> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<RouterJob> array = new List<RouterJob>();
+                    List<PagedJob> array = new List<PagedJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterJob.DeserializeRouterJob(item));
+                        array.Add(PagedJob.DeserializePagedJob(item));
                     }
                     value = array;
                     continue;

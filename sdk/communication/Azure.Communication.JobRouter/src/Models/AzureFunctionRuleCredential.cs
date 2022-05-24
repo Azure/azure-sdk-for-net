@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenSuppress("AzureFunctionRuleCredential")]
     public partial class AzureFunctionRuleCredential

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule that return the same labels as the input labels. </summary>
     public partial class DirectMapRule : RouterRule

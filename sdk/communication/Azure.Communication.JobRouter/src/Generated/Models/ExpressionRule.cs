@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> A rule providing inline expression rules. </summary>
     public partial class ExpressionRule : RouterRule

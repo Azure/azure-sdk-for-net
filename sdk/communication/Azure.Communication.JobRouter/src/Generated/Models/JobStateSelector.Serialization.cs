@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     internal static partial class JobStateSelectorExtensions
     {

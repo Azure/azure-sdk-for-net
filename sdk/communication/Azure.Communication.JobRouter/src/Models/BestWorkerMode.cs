@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
     [CodeGenSuppress("BestWorkerMode", typeof(int), typeof(int))]

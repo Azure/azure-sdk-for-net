@@ -5,23 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter.Models
+using System;
+
+namespace Azure.Communication.JobRouter
 {
-    /// <summary> The QueueSelector. </summary>
+    /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>
     public partial class QueueSelector
     {
-        /// <summary> Initializes a new instance of QueueSelector. </summary>
-        public QueueSelector()
-        {
-        }
 
-        /// <summary> Initializes a new instance of QueueSelector. </summary>
-        /// <param name="kind"> . </param>
-        internal QueueSelector(string kind)
-        {
-            Kind = kind;
-        }
-
-        internal string Kind { get; set; }
+        /// <summary> The label key to query against. </summary>
+        public string Key { get; set; }
+        /// <summary> Describes how the value of the label is compared to the value defined on the label selector. </summary>
+        public LabelOperator LabelOperator { get; set; }
+        /// <summary> The value to compare against the actual label value with the given operator. </summary>
+        public object Value { get; set; }
     }
 }

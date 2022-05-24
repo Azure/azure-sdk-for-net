@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     public partial class StaticRule : IUtf8JsonSerializable
     {
@@ -17,15 +17,8 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                if (Value != null)
-                {
-                    writer.WritePropertyName("value");
-                    writer.WriteObjectValue(Value);
-                }
-                else
-                {
-                    writer.WriteNull("value");
-                }
+                writer.WritePropertyName("value");
+                writer.WriteObjectValue(Value);
             }
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind);
@@ -42,7 +35,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetObject();
