@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="publicNetworkAccess">Whether or not public network
         /// access is allowed for the data factory. Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Factory(string id, string name, string type, string location, IDictionary<string, string> tags, string eTag, IDictionary<string, object> additionalProperties, FactoryIdentity identity, string provisioningState, System.DateTime? createTime, string version, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, string publicNetworkAccess)
-            : base(id, name, type, location, tags, eTag)
+        public Factory(string id, string name, string type, string location, IDictionary<string, string> tags, string eTag, IDictionary<string, object> additionalProperties, FactoryIdentity identity, string provisioningState, System.DateTime? createTime, string version, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters = default(IDictionary<string, GlobalParameterSpecification>), EncryptionConfiguration encryption = default(EncryptionConfiguration), string publicNetworkAccess = default(string))
+           : base(id, name, type, location, tags, eTag)
         {
             AdditionalProperties = additionalProperties;
             Identity = identity;
