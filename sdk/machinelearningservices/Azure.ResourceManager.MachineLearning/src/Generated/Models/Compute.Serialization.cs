@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AKS": return AKS.DeserializeAKS(element);
+                    case "AKS": return AksCompute.DeserializeAksCompute(element);
                     case "AmlCompute": return AmlCompute.DeserializeAmlCompute(element);
                     case "ComputeInstance": return ComputeInstance.DeserializeComputeInstance(element);
                     case "DataFactory": return DataFactory.DeserializeDataFactory(element);

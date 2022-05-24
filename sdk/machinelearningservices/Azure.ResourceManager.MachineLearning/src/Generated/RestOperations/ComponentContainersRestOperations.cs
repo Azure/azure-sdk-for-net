@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentContainerDataData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<ComponentContainerData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,13 +247,13 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        ComponentContainerDataData value = default;
+                        ComponentContainerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComponentContainerDataData.DeserializeComponentContainerDataData(document.RootElement);
+                        value = ComponentContainerData.DeserializeComponentContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ComponentContainerDataData)null, message.Response);
+                    return Response.FromValue((ComponentContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentContainerDataData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
+        public Response<ComponentContainerData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -280,19 +280,19 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        ComponentContainerDataData value = default;
+                        ComponentContainerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComponentContainerDataData.DeserializeComponentContainerDataData(document.RootElement);
+                        value = ComponentContainerData.DeserializeComponentContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ComponentContainerDataData)null, message.Response);
+                    return Response.FromValue((ComponentContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, ComponentContainerDataData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, ComponentContainerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComponentContainerDataData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, ComponentContainerDataData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ComponentContainerData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, ComponentContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                 case 201:
                     {
-                        ComponentContainerDataData value = default;
+                        ComponentContainerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComponentContainerDataData.DeserializeComponentContainerDataData(document.RootElement);
+                        value = ComponentContainerData.DeserializeComponentContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComponentContainerDataData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string name, ComponentContainerDataData data, CancellationToken cancellationToken = default)
+        public Response<ComponentContainerData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string name, ComponentContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                 case 201:
                     {
-                        ComponentContainerDataData value = default;
+                        ComponentContainerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComponentContainerDataData.DeserializeComponentContainerDataData(document.RootElement);
+                        value = ComponentContainerData.DeserializeComponentContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

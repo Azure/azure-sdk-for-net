@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AKSSchemaProperties : IUtf8JsonSerializable
+    public partial class AksSchemaProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static AKSSchemaProperties DeserializeAKSSchemaProperties(JsonElement element)
+        internal static AksSchemaProperties DeserializeAksSchemaProperties(JsonElement element)
         {
             Optional<string> clusterFqdn = default;
             Optional<IReadOnlyList<SystemService>> systemServices = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AKSSchemaProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value);
+            return new AksSchemaProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static BatchDeploymentTrackedResourceArmPaginatedResult DeserializeBatchDeploymentTrackedResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BatchDeploymentDataData>> value = default;
+            Optional<IReadOnlyList<BatchDeploymentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BatchDeploymentDataData> array = new List<BatchDeploymentDataData>();
+                    List<BatchDeploymentData> array = new List<BatchDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchDeploymentDataData.DeserializeBatchDeploymentDataData(item));
+                        array.Add(BatchDeploymentData.DeserializeBatchDeploymentData(item));
                     }
                     value = array;
                     continue;

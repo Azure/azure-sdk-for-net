@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static DatastoreResourceArmPaginatedResult DeserializeDatastoreResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DatastoreDataData>> value = default;
+            Optional<IReadOnlyList<DatastoreData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatastoreDataData> array = new List<DatastoreDataData>();
+                    List<DatastoreData> array = new List<DatastoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatastoreDataData.DeserializeDatastoreDataData(item));
+                        array.Add(DatastoreData.DeserializeDatastoreData(item));
                     }
                     value = array;
                     continue;

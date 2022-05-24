@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> MLTable data definition. </summary>
-    public partial class MLTableData : DataVersionBaseDetails
+    public partial class MLTableData : DataVersionBaseProperties
     {
         /// <summary> Initializes a new instance of MLTableData. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>

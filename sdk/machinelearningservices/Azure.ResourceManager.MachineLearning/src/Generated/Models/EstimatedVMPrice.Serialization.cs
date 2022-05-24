@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class EstimatedVMPrice
+    public partial class EstimatedVmPrice
     {
-        internal static EstimatedVMPrice DeserializeEstimatedVMPrice(JsonElement element)
+        internal static EstimatedVmPrice DeserializeEstimatedVmPrice(JsonElement element)
         {
             double retailPrice = default;
-            VMPriceOSType osType = default;
-            VMTier vmTier = default;
+            VmPriceOSType osType = default;
+            VmTier vmTier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retailPrice"))
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("osType"))
                 {
-                    osType = new VMPriceOSType(property.Value.GetString());
+                    osType = new VmPriceOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmTier"))
                 {
-                    vmTier = new VMTier(property.Value.GetString());
+                    vmTier = new VmTier(property.Value.GetString());
                     continue;
                 }
             }
-            return new EstimatedVMPrice(retailPrice, osType, vmTier);
+            return new EstimatedVmPrice(retailPrice, osType, vmTier);
         }
     }
 }

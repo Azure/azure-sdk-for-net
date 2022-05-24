@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string FailureValue = "Failure";
         private const string InvalidQuotaBelowClusterMinimumValue = "InvalidQuotaBelowClusterMinimum";
         private const string InvalidQuotaExceedsSubscriptionLimitValue = "InvalidQuotaExceedsSubscriptionLimit";
-        private const string InvalidVMFamilyNameValue = "InvalidVMFamilyName";
+        private const string InvalidVmFamilyNameValue = "InvalidVMFamilyName";
         private const string OperationNotSupportedForSkuValue = "OperationNotSupportedForSku";
         private const string OperationNotEnabledForRegionValue = "OperationNotEnabledForRegion";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> InvalidQuotaExceedsSubscriptionLimit. </summary>
         public static Status InvalidQuotaExceedsSubscriptionLimit { get; } = new Status(InvalidQuotaExceedsSubscriptionLimitValue);
         /// <summary> InvalidVMFamilyName. </summary>
-        public static Status InvalidVMFamilyName { get; } = new Status(InvalidVMFamilyNameValue);
+        public static Status InvalidVmFamilyName { get; } = new Status(InvalidVmFamilyNameValue);
         /// <summary> OperationNotSupportedForSku. </summary>
         public static Status OperationNotSupportedForSku { get; } = new Status(OperationNotSupportedForSkuValue);
         /// <summary> OperationNotEnabledForRegion. </summary>

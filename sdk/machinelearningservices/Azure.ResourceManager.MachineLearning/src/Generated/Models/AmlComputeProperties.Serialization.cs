@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("remoteLoginPortPublicAccess");
                 writer.WriteStringValue(RemoteLoginPortPublicAccess.Value.ToString());
             }
-            if (Optional.IsDefined(EnableNodePublicIp))
+            if (Optional.IsDefined(EnableNodePublicIP))
             {
                 writer.WritePropertyName("enableNodePublicIp");
-                writer.WriteBooleanValue(EnableNodePublicIp.Value);
+                writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
             if (Optional.IsCollectionDefined(PropertyBag))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element)
         {
-            Optional<OsType> osType = default;
+            Optional<OSType> osType = default;
             Optional<string> vmSize = default;
             Optional<VmPriority> vmPriority = default;
             Optional<VirtualMachineImage> virtualMachineImage = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OsType(property.Value.GetString());
+                    osType = new OSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vmSize"))

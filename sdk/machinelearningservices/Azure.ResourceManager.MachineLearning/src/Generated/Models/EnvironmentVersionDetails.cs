@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnvironmentType = environmentType;
             Image = image;
             InferenceConfig = inferenceConfig;
-            OsType = osType;
+            OSType = osType;
         }
 
         /// <summary> Configuration settings for Docker build context. </summary>
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Defines configuration specific to inference. </summary>
         public InferenceContainerProperties InferenceConfig { get; set; }
         /// <summary> The OS type of the environment. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public OperatingSystemType? OSType { get; set; }
     }
 }

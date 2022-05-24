@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<double> memoryGB = default;
             Optional<bool> lowPriorityCapable = default;
             Optional<bool> premiumIO = default;
-            Optional<EstimatedVMPrices> estimatedVMPrices = default;
+            Optional<EstimatedVmPrices> estimatedVMPrices = default;
             Optional<IReadOnlyList<string>> supportedComputeTypes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    estimatedVMPrices = EstimatedVMPrices.DeserializeEstimatedVMPrices(property.Value);
+                    estimatedVMPrices = EstimatedVmPrices.DeserializeEstimatedVmPrices(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedComputeTypes"))

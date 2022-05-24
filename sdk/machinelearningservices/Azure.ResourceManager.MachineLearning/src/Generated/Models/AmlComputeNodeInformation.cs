@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of AmlComputeNodeInformation. </summary>
         /// <param name="nodeId"> ID of the compute node. </param>
-        /// <param name="privateIpAddress"> Private IP address of the compute node. </param>
-        /// <param name="publicIpAddress"> Public IP address of the compute node. </param>
+        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
+        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
         /// <param name="port"> SSH port number of the node. </param>
         /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
         /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
-        internal AmlComputeNodeInformation(string nodeId, string privateIpAddress, string publicIpAddress, int? port, NodeState? nodeState, string runId)
+        internal AmlComputeNodeInformation(string nodeId, string privateIPAddress, string publicIPAddress, int? port, NodeState? nodeState, string runId)
         {
             NodeId = nodeId;
-            PrivateIpAddress = privateIpAddress;
-            PublicIpAddress = publicIpAddress;
+            PrivateIPAddress = privateIPAddress;
+            PublicIPAddress = publicIPAddress;
             Port = port;
             NodeState = nodeState;
             RunId = runId;
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> ID of the compute node. </summary>
         public string NodeId { get; }
         /// <summary> Private IP address of the compute node. </summary>
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
         /// <summary> Public IP address of the compute node. </summary>
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
         /// <summary> SSH port number of the node. </summary>
         public int? Port { get; }
         /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>

@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of SystemService. </summary>
         /// <param name="systemServiceType"> The type of this system service. </param>
-        /// <param name="publicIpAddress"> Public IP address. </param>
+        /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="version"> The version for this type. </param>
-        internal SystemService(string systemServiceType, string publicIpAddress, string version)
+        internal SystemService(string systemServiceType, string publicIPAddress, string version)
         {
             SystemServiceType = systemServiceType;
-            PublicIpAddress = publicIpAddress;
+            PublicIPAddress = publicIPAddress;
             Version = version;
         }
 
         /// <summary> The type of this system service. </summary>
         public string SystemServiceType { get; }
         /// <summary> Public IP address. </summary>
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
         /// <summary> The version for this type. </summary>
         public string Version { get; }
     }

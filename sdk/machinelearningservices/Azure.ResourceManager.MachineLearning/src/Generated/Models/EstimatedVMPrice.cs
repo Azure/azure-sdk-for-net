@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The estimated price info for using a VM of a particular OS type, tier, etc. </summary>
-    public partial class EstimatedVMPrice
+    public partial class EstimatedVmPrice
     {
-        /// <summary> Initializes a new instance of EstimatedVMPrice. </summary>
+        /// <summary> Initializes a new instance of EstimatedVmPrice. </summary>
         /// <param name="retailPrice"> The price charged for using the VM. </param>
         /// <param name="osType"> Operating system type used by the VM. </param>
         /// <param name="vmTier"> The type of the VM. </param>
-        internal EstimatedVMPrice(double retailPrice, VMPriceOSType osType, VMTier vmTier)
+        internal EstimatedVmPrice(double retailPrice, VmPriceOSType osType, VmTier vmTier)
         {
             RetailPrice = retailPrice;
-            OsType = osType;
+            OSType = osType;
             VmTier = vmTier;
         }
 
         /// <summary> The price charged for using the VM. </summary>
         public double RetailPrice { get; }
         /// <summary> Operating system type used by the VM. </summary>
-        public VMPriceOSType OsType { get; }
+        public VmPriceOSType OSType { get; }
         /// <summary> The type of the VM. </summary>
-        public VMTier VmTier { get; }
+        public VmTier VmTier { get; }
     }
 }

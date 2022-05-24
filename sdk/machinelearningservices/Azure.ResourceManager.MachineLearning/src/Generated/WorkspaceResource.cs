@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetWorkspaceConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchEndpointDataResources in the Workspace. </summary>
-        /// <returns> An object representing collection of BatchEndpointDataResources and their operations over a BatchEndpointDataResource. </returns>
-        public virtual BatchEndpointDataCollection GetAllBatchEndpointData()
+        /// <summary> Gets a collection of BatchEndpointResources in the Workspace. </summary>
+        /// <returns> An object representing collection of BatchEndpointResources and their operations over a BatchEndpointResource. </returns>
+        public virtual BatchEndpointCollection GetBatchEndpoints()
         {
-            return GetCachedClient(Client => new BatchEndpointDataCollection(Client, Id));
+            return GetCachedClient(Client => new BatchEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BatchEndpointDataResource>> GetBatchEndpointDataAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchEndpointResource>> GetBatchEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            return await GetAllBatchEndpointData().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetBatchEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -240,31 +240,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BatchEndpointDataResource> GetBatchEndpointData(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchEndpointResource> GetBatchEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetAllBatchEndpointData().Get(endpointName, cancellationToken);
+            return GetBatchEndpoints().Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CodeContainerDataResources in the Workspace. </summary>
-        /// <returns> An object representing collection of CodeContainerDataResources and their operations over a CodeContainerDataResource. </returns>
-        public virtual CodeContainerDataCollection GetAllCodeContainerData()
+        /// <summary> Gets a collection of CodeContainerResources in the Workspace. </summary>
+        /// <returns> An object representing collection of CodeContainerResources and their operations over a CodeContainerResource. </returns>
+        public virtual CodeContainerCollection GetCodeContainers()
         {
-            return GetCachedClient(Client => new CodeContainerDataCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}
-        /// Operation Id: CodeContainers_Get
-        /// </summary>
-        /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CodeContainerDataResource>> GetCodeContainerDataAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetAllCodeContainerData().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new CodeContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -277,16 +262,31 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CodeContainerDataResource> GetCodeContainerData(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CodeContainerResource>> GetCodeContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetAllCodeContainerData().Get(name, cancellationToken);
+            return await GetCodeContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ComponentContainerDataResources in the Workspace. </summary>
-        /// <returns> An object representing collection of ComponentContainerDataResources and their operations over a ComponentContainerDataResource. </returns>
-        public virtual ComponentContainerDataCollection GetAllComponentContainerData()
+        /// <summary>
+        /// Get container.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}
+        /// Operation Id: CodeContainers_Get
+        /// </summary>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CodeContainerResource> GetCodeContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ComponentContainerDataCollection(Client, Id));
+            return GetCodeContainers().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ComponentContainerResources in the Workspace. </summary>
+        /// <returns> An object representing collection of ComponentContainerResources and their operations over a ComponentContainerResource. </returns>
+        public virtual ComponentContainerCollection GetComponentContainers()
+        {
+            return GetCachedClient(Client => new ComponentContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -299,9 +299,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComponentContainerDataResource>> GetComponentContainerDataAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentContainerResource>> GetComponentContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetAllComponentContainerData().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetComponentContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -314,31 +314,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ComponentContainerDataResource> GetComponentContainerData(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentContainerResource> GetComponentContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetAllComponentContainerData().Get(name, cancellationToken);
+            return GetComponentContainers().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataContainerDataResources in the Workspace. </summary>
-        /// <returns> An object representing collection of DataContainerDataResources and their operations over a DataContainerDataResource. </returns>
-        public virtual DataContainerDataCollection GetAllDataContainerData()
+        /// <summary> Gets a collection of DataContainerResources in the Workspace. </summary>
+        /// <returns> An object representing collection of DataContainerResources and their operations over a DataContainerResource. </returns>
+        public virtual DataContainerCollection GetDataContainers()
         {
-            return GetCachedClient(Client => new DataContainerDataCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}
-        /// Operation Id: DataContainers_Get
-        /// </summary>
-        /// <param name="name"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataContainerDataResource>> GetDataContainerDataAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetAllDataContainerData().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DataContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -351,16 +336,31 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataContainerDataResource> GetDataContainerData(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataContainerResource>> GetDataContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetAllDataContainerData().Get(name, cancellationToken);
+            return await GetDataContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DatastoreDataResources in the Workspace. </summary>
-        /// <returns> An object representing collection of DatastoreDataResources and their operations over a DatastoreDataResource. </returns>
-        public virtual DatastoreDataCollection GetAllDatastoreData()
+        /// <summary>
+        /// Get container.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}
+        /// Operation Id: DataContainers_Get
+        /// </summary>
+        /// <param name="name"> Container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataContainerResource> GetDataContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DatastoreDataCollection(Client, Id));
+            return GetDataContainers().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DatastoreResources in the Workspace. </summary>
+        /// <returns> An object representing collection of DatastoreResources and their operations over a DatastoreResource. </returns>
+        public virtual DatastoreCollection GetDatastores()
+        {
+            return GetCachedClient(Client => new DatastoreCollection(Client, Id));
         }
 
         /// <summary>
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatastoreDataResource>> GetDatastoreDataAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatastoreResource>> GetDatastoreAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetAllDatastoreData().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetDatastores().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -388,9 +388,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatastoreDataResource> GetDatastoreData(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DatastoreResource> GetDatastore(string name, CancellationToken cancellationToken = default)
         {
-            return GetAllDatastoreData().Get(name, cancellationToken);
+            return GetDatastores().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of EnvironmentContainerDataResources in the Workspace. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AKSValue = "AKS";
+        private const string AksValue = "AKS";
         private const string KubernetesValue = "Kubernetes";
         private const string AmlComputeValue = "AmlCompute";
         private const string ComputeInstanceValue = "ComputeInstance";
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SynapseSparkValue = "SynapseSpark";
 
         /// <summary> AKS. </summary>
-        public static ComputeType AKS { get; } = new ComputeType(AKSValue);
+        public static ComputeType Aks { get; } = new ComputeType(AksValue);
         /// <summary> Kubernetes. </summary>
         public static ComputeType Kubernetes { get; } = new ComputeType(KubernetesValue);
         /// <summary> AmlCompute. </summary>

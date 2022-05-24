@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
         internal DatastoreResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DatastoreDataData>();
+            Value = new ChangeTrackingList<DatastoreData>();
         }
 
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
         /// <param name="nextLink"> The link to the next page of Datastore objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Datastore. </param>
-        internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<DatastoreDataData> value)
+        internal DatastoreResourceArmPaginatedResult(string nextLink, IReadOnlyList<DatastoreData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The link to the next page of Datastore objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
         /// <summary> An array of objects of type Datastore. </summary>
-        public IReadOnlyList<DatastoreDataData> Value { get; }
+        public IReadOnlyList<DatastoreData> Value { get; }
     }
 }

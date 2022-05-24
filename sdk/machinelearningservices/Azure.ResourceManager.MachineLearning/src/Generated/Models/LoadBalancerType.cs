@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PublicIpValue = "PublicIp";
+        private const string PublicIPValue = "PublicIp";
         private const string InternalLoadBalancerValue = "InternalLoadBalancer";
 
         /// <summary> PublicIp. </summary>
-        public static LoadBalancerType PublicIp { get; } = new LoadBalancerType(PublicIpValue);
+        public static LoadBalancerType PublicIP { get; } = new LoadBalancerType(PublicIPValue);
         /// <summary> InternalLoadBalancer. </summary>
         public static LoadBalancerType InternalLoadBalancer { get; } = new LoadBalancerType(InternalLoadBalancerValue);
         /// <summary> Determines if two <see cref="LoadBalancerType"/> values are the same. </summary>

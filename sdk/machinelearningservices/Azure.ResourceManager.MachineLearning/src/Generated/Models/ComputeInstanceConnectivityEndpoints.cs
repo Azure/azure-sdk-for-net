@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceConnectivityEndpoints. </summary>
-        /// <param name="publicIpAddress"> Public IP Address of this ComputeInstance. </param>
-        /// <param name="privateIpAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
-        internal ComputeInstanceConnectivityEndpoints(string publicIpAddress, string privateIpAddress)
+        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
+        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
+        internal ComputeInstanceConnectivityEndpoints(string publicIPAddress, string privateIPAddress)
         {
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> Public IP Address of this ComputeInstance. </summary>
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
         /// <summary> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </summary>
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
     }
 }

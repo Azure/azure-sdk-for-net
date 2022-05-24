@@ -7,22 +7,22 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The AKSSchema. </summary>
-    internal partial class AKSSchema
+    /// <summary> The AksSchema. </summary>
+    internal partial class AksSchema
     {
-        /// <summary> Initializes a new instance of AKSSchema. </summary>
-        public AKSSchema()
+        /// <summary> Initializes a new instance of AksSchema. </summary>
+        public AksSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of AKSSchema. </summary>
+        /// <summary> Initializes a new instance of AksSchema. </summary>
         /// <param name="properties"> AKS properties. </param>
-        internal AKSSchema(AKSSchemaProperties properties)
+        internal AksSchema(AksSchemaProperties properties)
         {
             Properties = properties;
         }
 
         /// <summary> AKS properties. </summary>
-        public AKSSchemaProperties Properties { get; set; }
+        public AksSchemaProperties Properties { get; set; }
     }
 }

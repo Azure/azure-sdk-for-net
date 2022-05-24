@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatastoreDataData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<DatastoreData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -278,13 +278,13 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        DatastoreDataData value = default;
+                        DatastoreData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatastoreDataData.DeserializeDatastoreDataData(document.RootElement);
+                        value = DatastoreData.DeserializeDatastoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatastoreDataData)null, message.Response);
+                    return Response.FromValue((DatastoreData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatastoreDataData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
+        public Response<DatastoreData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -311,19 +311,19 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        DatastoreDataData value = default;
+                        DatastoreData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatastoreDataData.DeserializeDatastoreDataData(document.RootElement);
+                        value = DatastoreData.DeserializeDatastoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatastoreDataData)null, message.Response);
+                    return Response.FromValue((DatastoreData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, DatastoreDataData data, bool? skipValidation)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, DatastoreData data, bool? skipValidation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatastoreDataData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, DatastoreDataData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DatastoreData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, DatastoreData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -378,9 +378,9 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                 case 201:
                     {
-                        DatastoreDataData value = default;
+                        DatastoreData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatastoreDataData.DeserializeDatastoreDataData(document.RootElement);
+                        value = DatastoreData.DeserializeDatastoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatastoreDataData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string name, DatastoreDataData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public Response<DatastoreData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string name, DatastoreData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -413,9 +413,9 @@ namespace Azure.ResourceManager.MachineLearning
                 case 200:
                 case 201:
                     {
-                        DatastoreDataData value = default;
+                        DatastoreData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatastoreDataData.DeserializeDatastoreDataData(document.RootElement);
+                        value = DatastoreData.DeserializeDatastoreData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

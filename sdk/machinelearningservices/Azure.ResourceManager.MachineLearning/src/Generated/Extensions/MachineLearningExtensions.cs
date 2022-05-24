@@ -329,172 +329,172 @@ namespace Azure.ResourceManager.MachineLearning
         }
         #endregion
 
-        #region BatchEndpointDataResource
+        #region BatchEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="BatchEndpointDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BatchEndpointDataResource.CreateResourceIdentifier" /> to create a <see cref="BatchEndpointDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BatchEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BatchEndpointResource.CreateResourceIdentifier" /> to create a <see cref="BatchEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchEndpointDataResource" /> object. </returns>
-        public static BatchEndpointDataResource GetBatchEndpointDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BatchEndpointResource" /> object. </returns>
+        public static BatchEndpointResource GetBatchEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BatchEndpointDataResource.ValidateResourceId(id);
-                return new BatchEndpointDataResource(client, id);
+                BatchEndpointResource.ValidateResourceId(id);
+                return new BatchEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BatchDeploymentDataResource
+        #region BatchDeploymentResource
         /// <summary>
-        /// Gets an object representing a <see cref="BatchDeploymentDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BatchDeploymentDataResource.CreateResourceIdentifier" /> to create a <see cref="BatchDeploymentDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BatchDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BatchDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="BatchDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchDeploymentDataResource" /> object. </returns>
-        public static BatchDeploymentDataResource GetBatchDeploymentDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BatchDeploymentResource" /> object. </returns>
+        public static BatchDeploymentResource GetBatchDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BatchDeploymentDataResource.ValidateResourceId(id);
-                return new BatchDeploymentDataResource(client, id);
+                BatchDeploymentResource.ValidateResourceId(id);
+                return new BatchDeploymentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CodeContainerDataResource
+        #region CodeContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="CodeContainerDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CodeContainerDataResource.CreateResourceIdentifier" /> to create a <see cref="CodeContainerDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CodeContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CodeContainerResource.CreateResourceIdentifier" /> to create a <see cref="CodeContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CodeContainerDataResource" /> object. </returns>
-        public static CodeContainerDataResource GetCodeContainerDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CodeContainerResource" /> object. </returns>
+        public static CodeContainerResource GetCodeContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CodeContainerDataResource.ValidateResourceId(id);
-                return new CodeContainerDataResource(client, id);
+                CodeContainerResource.ValidateResourceId(id);
+                return new CodeContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CodeVersionDataResource
+        #region CodeVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="CodeVersionDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CodeVersionDataResource.CreateResourceIdentifier" /> to create a <see cref="CodeVersionDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CodeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CodeVersionResource.CreateResourceIdentifier" /> to create a <see cref="CodeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CodeVersionDataResource" /> object. </returns>
-        public static CodeVersionDataResource GetCodeVersionDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CodeVersionResource" /> object. </returns>
+        public static CodeVersionResource GetCodeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CodeVersionDataResource.ValidateResourceId(id);
-                return new CodeVersionDataResource(client, id);
+                CodeVersionResource.ValidateResourceId(id);
+                return new CodeVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ComponentContainerDataResource
+        #region ComponentContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ComponentContainerDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentContainerDataResource.CreateResourceIdentifier" /> to create a <see cref="ComponentContainerDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ComponentContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComponentContainerResource.CreateResourceIdentifier" /> to create a <see cref="ComponentContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentContainerDataResource" /> object. </returns>
-        public static ComponentContainerDataResource GetComponentContainerDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComponentContainerResource" /> object. </returns>
+        public static ComponentContainerResource GetComponentContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ComponentContainerDataResource.ValidateResourceId(id);
-                return new ComponentContainerDataResource(client, id);
+                ComponentContainerResource.ValidateResourceId(id);
+                return new ComponentContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ComponentVersionDataResource
+        #region ComponentVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ComponentVersionDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentVersionDataResource.CreateResourceIdentifier" /> to create a <see cref="ComponentVersionDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ComponentVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComponentVersionResource.CreateResourceIdentifier" /> to create a <see cref="ComponentVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentVersionDataResource" /> object. </returns>
-        public static ComponentVersionDataResource GetComponentVersionDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComponentVersionResource" /> object. </returns>
+        public static ComponentVersionResource GetComponentVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ComponentVersionDataResource.ValidateResourceId(id);
-                return new ComponentVersionDataResource(client, id);
+                ComponentVersionResource.ValidateResourceId(id);
+                return new ComponentVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataContainerDataResource
+        #region DataContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataContainerDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataContainerDataResource.CreateResourceIdentifier" /> to create a <see cref="DataContainerDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataContainerDataResource" /> object. </returns>
-        public static DataContainerDataResource GetDataContainerDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataContainerResource" /> object. </returns>
+        public static DataContainerResource GetDataContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataContainerDataResource.ValidateResourceId(id);
-                return new DataContainerDataResource(client, id);
+                DataContainerResource.ValidateResourceId(id);
+                return new DataContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataVersionBaseDataResource
+        #region DataVersionBaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataVersionBaseDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataVersionBaseDataResource.CreateResourceIdentifier" /> to create a <see cref="DataVersionBaseDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataVersionBaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataVersionBaseResource.CreateResourceIdentifier" /> to create a <see cref="DataVersionBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataVersionBaseDataResource" /> object. </returns>
-        public static DataVersionBaseDataResource GetDataVersionBaseDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataVersionBaseResource" /> object. </returns>
+        public static DataVersionBaseResource GetDataVersionBaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataVersionBaseDataResource.ValidateResourceId(id);
-                return new DataVersionBaseDataResource(client, id);
+                DataVersionBaseResource.ValidateResourceId(id);
+                return new DataVersionBaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatastoreDataResource
+        #region DatastoreResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatastoreDataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatastoreDataResource.CreateResourceIdentifier" /> to create a <see cref="DatastoreDataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatastoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatastoreResource.CreateResourceIdentifier" /> to create a <see cref="DatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatastoreDataResource" /> object. </returns>
-        public static DatastoreDataResource GetDatastoreDataResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatastoreResource" /> object. </returns>
+        public static DatastoreResource GetDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatastoreDataResource.ValidateResourceId(id);
-                return new DatastoreDataResource(client, id);
+                DatastoreResource.ValidateResourceId(id);
+                return new DatastoreResource(client, id);
             }
             );
         }

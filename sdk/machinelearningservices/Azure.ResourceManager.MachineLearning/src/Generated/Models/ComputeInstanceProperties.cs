@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
         /// <param name="schedules"> The list of schedules to be applied on the computes. </param>
-        /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
+        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="containers"> Describes informations of containers on this ComputeInstance. </param>
         /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
-        internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIp, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
+        internal ComputeInstanceProperties(string vmSize, ResourceId subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIP, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SetupScriptsSettings = setupScriptsSettings;
             LastOperation = lastOperation;
             Schedules = schedules;
-            EnableNodePublicIp = enableNodePublicIp;
+            EnableNodePublicIP = enableNodePublicIP;
             Containers = containers;
             DataDisks = dataDisks;
             DataMounts = dataMounts;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
-        public bool? EnableNodePublicIp { get; set; }
+        public bool? EnableNodePublicIP { get; set; }
         /// <summary> Describes informations of containers on this ComputeInstance. </summary>
         public IReadOnlyList<ComputeInstanceContainer> Containers { get; }
         /// <summary> Describes informations of dataDisks on this ComputeInstance. </summary>

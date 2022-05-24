@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class EstimatedVMPrices
+    public partial class EstimatedVmPrices
     {
-        internal static EstimatedVMPrices DeserializeEstimatedVMPrices(JsonElement element)
+        internal static EstimatedVmPrices DeserializeEstimatedVmPrices(JsonElement element)
         {
             BillingCurrency billingCurrency = default;
             UnitOfMeasure unitOfMeasure = default;
-            IReadOnlyList<EstimatedVMPrice> values = default;
+            IReadOnlyList<EstimatedVmPrice> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingCurrency"))
@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("values"))
                 {
-                    List<EstimatedVMPrice> array = new List<EstimatedVMPrice>();
+                    List<EstimatedVmPrice> array = new List<EstimatedVmPrice>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EstimatedVMPrice.DeserializeEstimatedVMPrice(item));
+                        array.Add(EstimatedVmPrice.DeserializeEstimatedVmPrice(item));
                     }
                     values = array;
                     continue;
                 }
             }
-            return new EstimatedVMPrices(billingCurrency, unitOfMeasure, values);
+            return new EstimatedVmPrices(billingCurrency, unitOfMeasure, values);
         }
     }
 }

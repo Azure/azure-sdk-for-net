@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("inferenceConfig");
                 writer.WriteObjectValue(InferenceConfig);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(IsAnonymous))
             {

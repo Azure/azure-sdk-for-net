@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class AKSSchema : IUtf8JsonSerializable
+    internal partial class AksSchema : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static AKSSchema DeserializeAKSSchema(JsonElement element)
+        internal static AksSchema DeserializeAksSchema(JsonElement element)
         {
-            Optional<AKSSchemaProperties> properties = default;
+            Optional<AksSchemaProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = AKSSchemaProperties.DeserializeAKSSchemaProperties(property.Value);
+                    properties = AksSchemaProperties.DeserializeAksSchemaProperties(property.Value);
                     continue;
                 }
             }
-            return new AKSSchema(properties.Value);
+            return new AksSchema(properties.Value);
         }
     }
 }

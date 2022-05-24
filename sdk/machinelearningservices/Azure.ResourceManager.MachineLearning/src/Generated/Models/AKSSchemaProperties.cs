@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> AKS properties. </summary>
-    public partial class AKSSchemaProperties
+    public partial class AksSchemaProperties
     {
-        /// <summary> Initializes a new instance of AKSSchemaProperties. </summary>
-        public AKSSchemaProperties()
+        /// <summary> Initializes a new instance of AksSchemaProperties. </summary>
+        public AksSchemaProperties()
         {
             SystemServices = new ChangeTrackingList<SystemService>();
         }
 
-        /// <summary> Initializes a new instance of AKSSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of AksSchemaProperties. </summary>
         /// <param name="clusterFqdn"> Cluster full qualified domain name. </param>
         /// <param name="systemServices"> System services. </param>
         /// <param name="agentCount"> Number of agents. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="aksNetworkingConfiguration"> AKS networking configuration for vnet. </param>
         /// <param name="loadBalancerType"> Load Balancer Type. </param>
         /// <param name="loadBalancerSubnet"> Load Balancer Subnet. </param>
-        internal AKSSchemaProperties(string clusterFqdn, IReadOnlyList<SystemService> systemServices, int? agentCount, string agentVmSize, ClusterPurpose? clusterPurpose, SslConfiguration sslConfiguration, AksNetworkingConfiguration aksNetworkingConfiguration, LoadBalancerType? loadBalancerType, string loadBalancerSubnet)
+        internal AksSchemaProperties(string clusterFqdn, IReadOnlyList<SystemService> systemServices, int? agentCount, string agentVmSize, ClusterPurpose? clusterPurpose, SslConfiguration sslConfiguration, AksNetworkingConfiguration aksNetworkingConfiguration, LoadBalancerType? loadBalancerType, string loadBalancerSubnet)
         {
             ClusterFqdn = clusterFqdn;
             SystemServices = systemServices;

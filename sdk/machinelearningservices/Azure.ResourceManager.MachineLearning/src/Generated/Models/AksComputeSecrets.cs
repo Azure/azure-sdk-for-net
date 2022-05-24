@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of AksComputeSecrets. </summary>
         internal AksComputeSecrets()
         {
-            ComputeType = ComputeType.AKS;
+            ComputeType = ComputeType.Aks;
         }
 
         /// <summary> Initializes a new instance of AksComputeSecrets. </summary>

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string DatasetValue = "Dataset";
         private const string DatastoreValue = "Datastore";
-        private const string URIValue = "URI";
+        private const string UriValue = "URI";
 
         /// <summary> Dataset. </summary>
         public static SourceType Dataset { get; } = new SourceType(DatasetValue);
         /// <summary> Datastore. </summary>
         public static SourceType Datastore { get; } = new SourceType(DatastoreValue);
         /// <summary> URI. </summary>
-        public static SourceType URI { get; } = new SourceType(URIValue);
+        public static SourceType Uri { get; } = new SourceType(UriValue);
         /// <summary> Determines if two <see cref="SourceType"/> values are the same. </summary>
         public static bool operator ==(SourceType left, SourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceType"/> values are not the same. </summary>

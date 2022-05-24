@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The estimated price info for using a VM. </summary>
-    public partial class EstimatedVMPrices
+    public partial class EstimatedVmPrices
     {
-        /// <summary> Initializes a new instance of EstimatedVMPrices. </summary>
+        /// <summary> Initializes a new instance of EstimatedVmPrices. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
-        internal EstimatedVMPrices(BillingCurrency billingCurrency, UnitOfMeasure unitOfMeasure, IEnumerable<EstimatedVMPrice> values)
+        internal EstimatedVmPrices(BillingCurrency billingCurrency, UnitOfMeasure unitOfMeasure, IEnumerable<EstimatedVmPrice> values)
         {
             if (values == null)
             {
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of EstimatedVMPrices. </summary>
+        /// <summary> Initializes a new instance of EstimatedVmPrices. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
-        internal EstimatedVMPrices(BillingCurrency billingCurrency, UnitOfMeasure unitOfMeasure, IReadOnlyList<EstimatedVMPrice> values)
+        internal EstimatedVmPrices(BillingCurrency billingCurrency, UnitOfMeasure unitOfMeasure, IReadOnlyList<EstimatedVmPrice> values)
         {
             BillingCurrency = billingCurrency;
             UnitOfMeasure = unitOfMeasure;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The unit of time measurement for the specified VM price. Example: OneHour. </summary>
         public UnitOfMeasure UnitOfMeasure { get; }
         /// <summary> The list of estimated prices for using a VM of a particular OS type, tier, etc. </summary>
-        public IReadOnlyList<EstimatedVMPrice> Values { get; }
+        public IReadOnlyList<EstimatedVmPrice> Values { get; }
     }
 }

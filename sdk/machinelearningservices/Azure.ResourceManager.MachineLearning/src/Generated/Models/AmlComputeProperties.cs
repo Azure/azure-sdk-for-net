@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="currentNodeCount"> The number of compute nodes currently assigned to the compute. </param>
         /// <param name="targetNodeCount"> The target number of compute nodes for the compute. If the allocationState is resizing, this property denotes the target node count for the ongoing resize operation. If the allocationState is steady, this property denotes the target node count for the previous resize operation. </param>
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
-        /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
+        /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        internal AmlComputeProperties(OsType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIp, IDictionary<string, BinaryData> propertyBag)
+        internal AmlComputeProperties(OSType? osType, string vmSize, VmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, ScaleSettings scaleSettings, UserAccountCredentials userAccountCredentials, ResourceId subnet, RemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<ErrorResponse> errors, int? currentNodeCount, int? targetNodeCount, NodeStateCounts nodeStateCounts, bool? enableNodePublicIP, IDictionary<string, BinaryData> propertyBag)
         {
-            OsType = osType;
+            OSType = osType;
             VmSize = vmSize;
             VmPriority = vmPriority;
             VirtualMachineImage = virtualMachineImage;
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CurrentNodeCount = currentNodeCount;
             TargetNodeCount = targetNodeCount;
             NodeStateCounts = nodeStateCounts;
-            EnableNodePublicIp = enableNodePublicIp;
+            EnableNodePublicIP = enableNodePublicIP;
             PropertyBag = propertyBag;
         }
 
         /// <summary> Compute OS Type. </summary>
-        public OsType? OsType { get; set; }
+        public OSType? OSType { get; set; }
         /// <summary> Virtual Machine Size. </summary>
         public string VmSize { get; set; }
         /// <summary> Virtual Machine priority. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Counts of various node states on the compute. </summary>
         public NodeStateCounts NodeStateCounts { get; }
         /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
-        public bool? EnableNodePublicIp { get; set; }
+        public bool? EnableNodePublicIP { get; set; }
         /// <summary> A property bag containing additional properties. </summary>
         public IDictionary<string, BinaryData> PropertyBag { get; }
     }

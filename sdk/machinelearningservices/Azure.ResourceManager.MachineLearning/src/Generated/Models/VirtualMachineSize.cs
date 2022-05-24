@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
         /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
         /// <param name="premiumIO"> Specifies if the virtual machine size supports premium IO. </param>
-        /// <param name="estimatedVMPrices"> The estimated price information for using a VM. </param>
+        /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
         /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
-        internal VirtualMachineSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, EstimatedVMPrices estimatedVMPrices, IReadOnlyList<string> supportedComputeTypes)
+        internal VirtualMachineSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, EstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes)
         {
             Name = name;
             Family = family;
             VCPUs = vcpUs;
             Gpus = gpus;
-            OsVhdSizeMB = osVhdSizeMB;
+            OSVhdSizeMB = osVhdSizeMB;
             MaxResourceVolumeMB = maxResourceVolumeMB;
             MemoryGB = memoryGB;
             LowPriorityCapable = lowPriorityCapable;
             PremiumIO = premiumIO;
-            EstimatedVMPrices = estimatedVMPrices;
+            EstimatedVmPrices = estimatedVmPrices;
             SupportedComputeTypes = supportedComputeTypes;
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The number of gPUs supported by the virtual machine size. </summary>
         public int? Gpus { get; }
         /// <summary> The OS VHD disk size, in MB, allowed by the virtual machine size. </summary>
-        public int? OsVhdSizeMB { get; }
+        public int? OSVhdSizeMB { get; }
         /// <summary> The resource volume size, in MB, allowed by the virtual machine size. </summary>
         public int? MaxResourceVolumeMB { get; }
         /// <summary> The amount of memory, in GB, supported by the virtual machine size. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
         public bool? PremiumIO { get; }
         /// <summary> The estimated price information for using a VM. </summary>
-        public EstimatedVMPrices EstimatedVMPrices { get; }
+        public EstimatedVmPrices EstimatedVmPrices { get; }
         /// <summary> Specifies the compute types supported by the virtual machine size. </summary>
         public IReadOnlyList<string> SupportedComputeTypes { get; }
     }

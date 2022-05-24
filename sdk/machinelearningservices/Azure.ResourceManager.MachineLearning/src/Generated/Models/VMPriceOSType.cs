@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Operating system type used by the VM. </summary>
-    public readonly partial struct VMPriceOSType : IEquatable<VMPriceOSType>
+    public readonly partial struct VmPriceOSType : IEquatable<VmPriceOSType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="VMPriceOSType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmPriceOSType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VMPriceOSType(string value)
+        public VmPriceOSType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string WindowsValue = "Windows";
 
         /// <summary> Linux. </summary>
-        public static VMPriceOSType Linux { get; } = new VMPriceOSType(LinuxValue);
+        public static VmPriceOSType Linux { get; } = new VmPriceOSType(LinuxValue);
         /// <summary> Windows. </summary>
-        public static VMPriceOSType Windows { get; } = new VMPriceOSType(WindowsValue);
-        /// <summary> Determines if two <see cref="VMPriceOSType"/> values are the same. </summary>
-        public static bool operator ==(VMPriceOSType left, VMPriceOSType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VMPriceOSType"/> values are not the same. </summary>
-        public static bool operator !=(VMPriceOSType left, VMPriceOSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VMPriceOSType"/>. </summary>
-        public static implicit operator VMPriceOSType(string value) => new VMPriceOSType(value);
+        public static VmPriceOSType Windows { get; } = new VmPriceOSType(WindowsValue);
+        /// <summary> Determines if two <see cref="VmPriceOSType"/> values are the same. </summary>
+        public static bool operator ==(VmPriceOSType left, VmPriceOSType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="VmPriceOSType"/> values are not the same. </summary>
+        public static bool operator !=(VmPriceOSType left, VmPriceOSType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="VmPriceOSType"/>. </summary>
+        public static implicit operator VmPriceOSType(string value) => new VmPriceOSType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VMPriceOSType other && Equals(other);
+        public override bool Equals(object obj) => obj is VmPriceOSType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(VMPriceOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VmPriceOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

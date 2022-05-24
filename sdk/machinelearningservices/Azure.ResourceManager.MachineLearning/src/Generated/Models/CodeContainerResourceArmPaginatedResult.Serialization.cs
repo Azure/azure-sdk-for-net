@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static CodeContainerResourceArmPaginatedResult DeserializeCodeContainerResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CodeContainerDataData>> value = default;
+            Optional<IReadOnlyList<CodeContainerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CodeContainerDataData> array = new List<CodeContainerDataData>();
+                    List<CodeContainerData> array = new List<CodeContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodeContainerDataData.DeserializeCodeContainerDataData(item));
+                        array.Add(CodeContainerData.DeserializeCodeContainerData(item));
                     }
                     value = array;
                     continue;

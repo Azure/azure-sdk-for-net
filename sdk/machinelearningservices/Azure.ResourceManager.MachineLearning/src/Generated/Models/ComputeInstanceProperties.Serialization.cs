@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("setupScripts");
                 writer.WriteObjectValue(SetupScriptsSettings);
             }
-            if (Optional.IsDefined(EnableNodePublicIp))
+            if (Optional.IsDefined(EnableNodePublicIP))
             {
                 writer.WritePropertyName("enableNodePublicIp");
-                writer.WriteBooleanValue(EnableNodePublicIp.Value);
+                writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
             writer.WriteEndObject();
         }
