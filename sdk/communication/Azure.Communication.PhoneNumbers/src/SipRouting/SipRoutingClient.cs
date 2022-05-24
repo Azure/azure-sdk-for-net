@@ -388,10 +388,15 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SipRoutingClient)}.{nameof(SetTrunks)}");
             scope.Start();
-            try {
+            try
+            {
                 var currentConfig = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
-                var configToRemove = new SipConfiguration(currentConfig.Value.Trunks.Keys.ToDictionary(x => x, x => (SipTrunk)null));
-                await _restClient.PatchSipConfigurationAsync(configToRemove, cancellationToken).ConfigureAwait(false);
+
+                if (currentConfig.Value.Trunks.Count > 0)
+                {
+                    var configToRemove = new SipConfiguration(currentConfig.Value.Trunks.Keys.ToDictionary(x => x, x => (SipTrunk)null));
+                    await _restClient.PatchSipConfigurationAsync(configToRemove, cancellationToken).ConfigureAwait(false);
+                }
 
                 var newConfig = new SipConfiguration(trunks.ToDictionary(x => x.Fqdn, x => x));
                 var response = await _restClient.PatchSipConfigurationAsync(newConfig, cancellationToken).ConfigureAwait(false);

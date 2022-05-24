@@ -36,7 +36,7 @@ The `direct offer` numbers come in two types: Geographic and Toll-Free. Geograph
 They are managed using the `PhoneNumbersClient`
 
 The `direct routing` feature enables connecting your existing telephony infrastructure to ACS.
-The configuration is managed using the `SipRoutingClient`, which provides methods for setting up SIP trunks and Voice routing rules, in order to properly handle calls for your telephony subnet.
+The configuration is managed using the `SipRoutingClient`, which provides methods for setting up SIP trunks and voice routing rules, in order to properly handle calls for your telephony subnet.
 
 ### Authenticate the client
 
@@ -195,7 +195,6 @@ SIP trunks can be managed separately. User can retrieve, set or delete a single 
 #### Retrieve single trunk
 
 ```C# Snippet:RetrieveTrunkAsync
-// Get trunk object, based on it's FQDN.
 var fqdnToRetrieve = "<fqdn>";
 var trunkResponse = await client.GetTrunkAsync(fqdnToRetrieve);
 ```
@@ -211,7 +210,6 @@ await client.SetTrunkAsync(trunkToSet);
 #### Delete single trunk
 
 ```C# Snippet:DeleteTrunkAsync
-// Deletes trunk with supplied FQDN.
 var fqdnToDelete = "<fqdn>";
 await client.DeleteTrunkAsync(fqdnToDelete);
 ```
