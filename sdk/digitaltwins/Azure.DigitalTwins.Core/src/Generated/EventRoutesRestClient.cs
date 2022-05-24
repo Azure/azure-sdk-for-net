@@ -34,7 +34,7 @@ namespace Azure.DigitalTwins.Core
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            _endpoint = endpoint ?? new Uri("https://digitaltwins-hostname");
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
