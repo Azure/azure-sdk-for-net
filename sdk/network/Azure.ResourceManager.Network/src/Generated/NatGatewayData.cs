@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NatGateway data model. </summary>
-    public partial class NatGatewayData : NetworkResourceData
+    public partial class NatGatewayData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NatGatewayData. </summary>
         public NatGatewayData()
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> An array of references to the subnets using this nat gateway resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the NAT gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT gateway resource. </param>
-        internal NatGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, string etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPPrefixes, IReadOnlyList<WritableSubResource> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NatGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, NatGatewaySku sku, IList<string> zones, string etag, int? idleTimeoutInMinutes, IList<WritableSubResource> publicIPAddresses, IList<WritableSubResource> publicIPPrefixes, IReadOnlyList<WritableSubResource> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
             Zones = zones;
@@ -79,8 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> An array of references to the subnets using this nat gateway resource. </summary>
         public IReadOnlyList<WritableSubResource> Subnets { get; }
         /// <summary> The resource GUID property of the NAT gateway resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the NAT gateway resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

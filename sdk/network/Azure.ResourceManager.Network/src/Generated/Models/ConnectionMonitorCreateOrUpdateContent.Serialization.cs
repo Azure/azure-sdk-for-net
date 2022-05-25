@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Connection monitor location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Connection monitor tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Describes the source of connection monitor. </summary>

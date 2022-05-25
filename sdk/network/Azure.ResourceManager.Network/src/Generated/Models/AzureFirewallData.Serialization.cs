@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.Network
         {
             Optional<IList<string>> zones = default;
             Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<AzureFirewallApplicationRuleCollection>> applicationRuleCollections = default;
             Optional<IList<AzureFirewallNatRuleCollection>> natRuleCollections = default;
             Optional<IList<AzureFirewallNetworkRuleCollection>> networkRuleCollections = default;
             Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
             Optional<AzureFirewallIPConfiguration> managementIpConfiguration = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
             Optional<WritableSubResource> virtualHub = default;
             Optional<WritableSubResource> firewallPolicy = default;
@@ -182,7 +182,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -192,12 +197,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -301,7 +316,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("threatIntelMode"))
@@ -388,7 +403,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureFirewallData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToList(zones), etag.Value, Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIpConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), etag.Value, Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIpConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
         }
     }
 }

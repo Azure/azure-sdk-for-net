@@ -694,7 +694,7 @@ namespace Azure.Messaging.ServiceBus
         /// a <see cref="ServiceBusRuleManager"/> for.</param>
         ///
         /// <returns>A <see cref="ServiceBusRuleManager"/> scoped to the specified subscription and topic.</returns>
-        internal virtual ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
+        public virtual ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
         {
             ValidateEntityName(topicName);
 
