@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var billingPlan = "Monthly";
             var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Shared", billingPlan));
-            testCalculatePriceResponse(response, billingPlan);
+            TestCalculatePriceResponse(response, billingPlan);
         }
 
         [TestCase]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var billingPlan = "Upfront";
             var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Shared", billingPlan));
-            testCalculatePriceResponse(response, billingPlan);
+            TestCalculatePriceResponse(response, billingPlan);
         }
 
         [TestCase]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var billingPlan = "Monthly";
             var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Single", billingPlan));
-            testCalculatePriceResponse(response, billingPlan);
+            TestCalculatePriceResponse(response, billingPlan);
         }
 
         [TestCase]
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             var billingPlan = "Upfront";
             var response = await Tenant.CalculateReservationOrderAsync(CreatePurchaseRequestContent("Single", billingPlan));
-            testCalculatePriceResponse(response, billingPlan);
+            TestCalculatePriceResponse(response, billingPlan);
         }
 
-        private void testCalculatePriceResponse(Response<CalculatePriceResponse> response, string billingPlan)
+        private void TestCalculatePriceResponse(Response<CalculatePriceResponse> response, string billingPlan)
         {
             var price = response.Value;
 
