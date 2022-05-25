@@ -1,8 +1,12 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2022-05-01)
 
 ### Features Added
+
+- Enable write on ArcInstanceResourceGroup
+- Add patch for arcSettings
+- Created clusterIdentity and arcIdentity which is the identity created/used for cluster registration
 
 ### Breaking Changes
 
