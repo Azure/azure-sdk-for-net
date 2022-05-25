@@ -121,6 +121,10 @@ directive:
       $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
       $.ResourceSku.properties.locations.items["x-ms-format"] = "azure-location";
       $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
+      $.ResourceSkuLocationInfo["x-ms-client-name"] = "ComputeResourceSkuLocationInfo";
+      $.ResourceSkuLocationInfo.properties.location["x-ms-format"] = "azure-location";
+      $.ResourceSkuRestrictionInfo["x-ms-format"] = "ComputeResourceSkuRestrictionInfo";
+      $.ResourceSkuRestrictionInfo.properties.locations.items["x-ms-format"] = "azure-location";
   - from: compute.json
     where: $.definitions
     transform: >
@@ -136,27 +140,32 @@ directive:
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.SubResourceReadOnly["x-ms-client-name"] = "ComputeSubResourceData";
       $.SubResourceReadOnly.properties.id["x-ms-format"] = "arm-id";
+      $.RestorePointCollectionSourceProperties["x-ms-client-name"] = "RestorePointCollectionSource";
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
       $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
       $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
+      $.RestorePointSourceMetadata.properties.location["x-ms-format"] = "azure-location";
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.ImageReference.properties.sharedGalleryImageId["x-ms-client-name"] = "sharedGalleryImageUniqueId";
+      $.SshPublicKeyGenerateKeyPairResult.properties.id["x-ms-format"] = "arm-id";
   - from: disk.json
     where: $.definitions
     transform: >
       $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
       $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceId["x-ms-format"] = "arm-id";
       $.DiskProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.DiskUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.SnapshotProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
+      $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.SnapshotUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
+      $.SnapshotUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.Encryption["x-ms-client-name"] = "DiskEncryption";
       $.Encryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
-      $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.CreationData["x-ms-client-name"] = "DiskCreationData";
       $.CreationData.properties.storageAccountId["x-ms-format"] = "arm-id";
       $.CreationData.properties.sourceResourceId["x-ms-format"] = "arm-id";
@@ -173,6 +182,7 @@ directive:
       $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
       $.OSVersion.properties.location["x-ms-format"] = "azure-location";
       $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
+      $.UpdateDomain.properties.id["x-ms-format"] = "arm-id";
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.Extension.properties.properties["x-ms-client-flatten"] = true;
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";

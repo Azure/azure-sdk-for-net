@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointCollectionSourceProperties : IUtf8JsonSerializable
+    public partial class RestorePointCollectionSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static RestorePointCollectionSourceProperties DeserializeRestorePointCollectionSourceProperties(JsonElement element)
+        internal static RestorePointCollectionSource DeserializeRestorePointCollectionSource(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointCollectionSourceProperties(Optional.ToNullable(location), id.Value);
+            return new RestorePointCollectionSource(Optional.ToNullable(location), id.Value);
         }
     }
 }

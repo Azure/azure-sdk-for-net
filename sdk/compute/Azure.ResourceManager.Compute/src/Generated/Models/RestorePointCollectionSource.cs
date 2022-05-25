@@ -10,17 +10,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-    public partial class RestorePointCollectionSourceProperties
+    public partial class RestorePointCollectionSource
     {
-        /// <summary> Initializes a new instance of RestorePointCollectionSourceProperties. </summary>
-        public RestorePointCollectionSourceProperties()
+        /// <summary> Initializes a new instance of RestorePointCollectionSource. </summary>
+        public RestorePointCollectionSource()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointCollectionSourceProperties. </summary>
+        /// <summary> Initializes a new instance of RestorePointCollectionSource. </summary>
         /// <param name="location"> Location of the source resource used to create this restore point collection. </param>
         /// <param name="id"> Resource Id of the source resource used to create this restore point collection. </param>
-        internal RestorePointCollectionSourceProperties(AzureLocation? location, ResourceIdentifier id)
+        internal RestorePointCollectionSource(AzureLocation? location, ResourceIdentifier id)
         {
             Location = location;
             Id = id;

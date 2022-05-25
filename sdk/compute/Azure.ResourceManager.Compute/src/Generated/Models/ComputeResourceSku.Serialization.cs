@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> kind = default;
             Optional<ComputeResourceSkuCapacity> capacity = default;
             Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<ResourceSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<ComputeResourceSkuLocationInfo>> locationInfo = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
             Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuLocationInfo> array = new List<ResourceSkuLocationInfo>();
+                    List<ComputeResourceSkuLocationInfo> array = new List<ComputeResourceSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuLocationInfo.DeserializeResourceSkuLocationInfo(item));
+                        array.Add(ComputeResourceSkuLocationInfo.DeserializeComputeResourceSkuLocationInfo(item));
                     }
                     locationInfo = array;
                     continue;

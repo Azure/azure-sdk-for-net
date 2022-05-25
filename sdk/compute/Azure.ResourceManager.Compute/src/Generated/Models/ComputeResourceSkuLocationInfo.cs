@@ -11,23 +11,23 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available Compute SKU Location Information. </summary>
-    public partial class ResourceSkuLocationInfo
+    public partial class ComputeResourceSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
-        internal ResourceSkuLocationInfo()
+        /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
+        internal ComputeResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal ResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType)
+        internal ComputeResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType)
         {
             Location = location;
             Zones = zones;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Location of the SKU. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>

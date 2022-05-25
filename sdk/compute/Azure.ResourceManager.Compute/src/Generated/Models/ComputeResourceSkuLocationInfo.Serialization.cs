@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ResourceSkuLocationInfo
+    public partial class ComputeResourceSkuLocationInfo
     {
-        internal static ResourceSkuLocationInfo DeserializeResourceSkuLocationInfo(JsonElement element)
+        internal static ComputeResourceSkuLocationInfo DeserializeComputeResourceSkuLocationInfo(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
             Optional<IReadOnlyList<string>> extendedLocations = default;
@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuLocationInfo(location.Value, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
+            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
         }
     }
 }
