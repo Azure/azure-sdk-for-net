@@ -73,7 +73,7 @@ public static class EnvironmentVariables
     // Job Index Information
 
     /// <summary>
-    ///   The name of the environment variable that holds the index of the kubernetes pod. This variable should
+    ///   The name of the environment variable that holds the index of the Kubernetes pod. This variable should
     ///   only be set when deploying tests to the Kubernetes cluster, and it allows each test to run all of its roles
     ///   in separate pods. For more information see the Kubernetes documentation on indexed jobs.
     /// </summary>

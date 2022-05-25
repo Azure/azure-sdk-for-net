@@ -88,11 +88,21 @@ internal class RoleConfiguration
     ///   The set of roles to deploy for the event producer test scenario.
     /// </summary>
     ///
+    /// <remarks>
+    ///   Each element in the array corresponds to a role to run for the event producer test.
+    ///   In this case, the producer test will deploy two distinct <see cref="Publisher"/> roles.
+    /// </remarks>
+    ///
     private static string[] _eventProducerTestRoles = {Publisher, Publisher};
 
     /// <summary>
     ///   The set of roles to deploy for the buffered producer test scenario.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   Each element in the array corresponds to a role to run for the buffered producer test.
+    ///   In this case, the producer test will deploy two distinct <see cref="BufferedPublisher"/> roles.
+    /// </remarks>
     ///
     private static string[] _bufferedProducerTestRoles = {BufferedPublisher, BufferedPublisher};
 
@@ -100,11 +110,22 @@ internal class RoleConfiguration
     ///   The set of roles to deploy for the event processor test scenario.
     /// </summary>
     ///
+    /// <remarks>
+    ///   Each element in the array corresponds to a role to run for the processor test.
+    ///   In this case, the producer test will deploy two distinct roles, one <see cref="Publisher"/>
+    ///   and one <see cref="Processor"/>.
+    /// </remarks>
+    ///
     private static string[] _processorTestRoles = {Publisher, Processor};
 
     /// <summary>
     ///   The set of roles to deploy for the burst buffered producer test scenario.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   Each element in the array corresponds to a role to run for the burst buffered producer test.
+    ///   In this case, the producer test will deploy two distinct burst <see cref="BufferedPublisher"/> roles.
+    /// </remarks>
     ///
     private static string[] _burstBufferedProducerRoles = {BurstBufferedPublisher, BurstBufferedPublisher};
 

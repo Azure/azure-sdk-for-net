@@ -24,9 +24,6 @@ RUN dotnet build './sdk/eventhub/Azure.Messaging.EventHubs/stress/src/' --config
 FROM build-env as publish
 WORKDIR /app
 COPY --from=build-env /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0/ /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0/
-COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs.Shared/ /app/sdk/evethub/Azure.Messaging.EventHubs.Shared/
-COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs/stress/ /app/sdk/eventhub/Azure.Messaging.EventHubs/stress/
-COPY --from=build-env /app/sdk/eventhub/Azure.Messaging.EventHubs.Processor/ /app/sdk/eventhub/Azure.Messaging.EventHubs.Processor/
 
 WORKDIR /app/artifacts/bin/Azure.Messaging.EventHubs.Stress/Release/net6.0
 

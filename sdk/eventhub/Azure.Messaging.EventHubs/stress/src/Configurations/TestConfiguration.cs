@@ -18,25 +18,25 @@ internal class TestConfiguration
     ///   The Event Hubs Namespace connection string to use for a test run.
     /// </summary>
     ///
-    public string EventHubsConnectionString = String.Empty;
+    public string EventHubsConnectionString = string.Empty;
 
     /// <summary>
     ///   The name of the Event Hub to use for a test run.
     /// </summary>
     ///
-    public string EventHub = String.Empty;
+    public string EventHub = string.Empty;
 
     /// <summary>
     ///   The Storage account connection string to use for a test run.
     /// </summary>
     ///
-    public string StorageConnectionString = String.Empty;
+    public string StorageConnectionString = string.Empty;
 
     /// <summary>
     ///   The blob storage container to use for a test run.
     /// </summary>
     ///
-    public string BlobContainer = String.Empty;
+    public string BlobContainer = string.Empty;
 
     // Test Run Configurations
 

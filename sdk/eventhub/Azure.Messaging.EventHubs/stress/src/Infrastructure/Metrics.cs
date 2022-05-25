@@ -32,7 +32,7 @@ internal class Metrics
     ///   runs and local test runs.
     /// </summary>
     ///
-    public string EventProducerTest = "EventProducerTest";
+    public const string EventProducerTest = "EventProducerTest";
 
     /// <summary>
     ///   The name of the Buffered Producer test scenario, for use within metrics dimensions.
@@ -40,7 +40,7 @@ internal class Metrics
     ///   runs and local test runs.
     /// </summary>
     ///
-    public string BufferedProducerTest = "BufferedProducerTest";
+    public const string BufferedProducerTest = "BufferedProducerTest";
 
     /// <summary>
     ///   The name of the basic Processor test scenario, for use within metrics dimensions.
@@ -48,7 +48,7 @@ internal class Metrics
     ///   runs and local test runs.
     /// </summary>
     ///
-    public string BasicProcessorTest = "BasicProcessorTest";
+    public const string BasicProcessorTest = "BasicProcessorTest";
 
     /// <summary>
     ///   The name of the basic read test scenario, for use within metrics dimensions.
@@ -56,7 +56,7 @@ internal class Metrics
     ///   runs and local test runs.
     /// </summary>
     ///
-    public string BasicReadTest = "BasicReadTest";
+    public const string BasicReadTest = "BasicReadTest";
 
     // Environment statistics - Garbage Collection
 
@@ -65,21 +65,21 @@ internal class Metrics
     ///   garbage collection.
     /// </summary>
     ///
-    public string GenerationZeroCollections = "GenerationZeroCollections";
+    public const string GenerationZeroCollections = "GenerationZeroCollections";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on generation one
     ///   garbage collection.
     /// </summary>
     ///
-    public string GenerationOneCollections = "GenerationOneCollections";
+    public const string GenerationOneCollections = "GenerationOneCollections";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on generation two
     ///   garbage collection.
     /// </summary>
     ///
-    public string GenerationTwoCollections = "GenerationTwoCollections";
+    public const string GenerationTwoCollections = "GenerationTwoCollections";
 
     // Shared Producer statistics
 
@@ -88,14 +88,14 @@ internal class Metrics
     ///   are published by the Event Producer or Buffered Producer client.
     /// </summary>
     ///
-    public string BatchesPublished = "BatchesPublished";
+    public const string BatchesPublished = "BatchesPublished";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many times
     ///   the Event Producer or Buffered Producer client needs to restart.
     /// </summary>
     ///
-    public string ProducerRestarted = "ProducerRestarted";
+    public const string ProducerRestarted = "ProducerRestarted";
 
     // Buffered Producer statistics
 
@@ -104,21 +104,21 @@ internal class Metrics
     ///   are not sent after the Buffered Producer successfully enqueued them.
     /// </summary>
     ///
-    public string EventsNotSentAfterEnqueue = "EventsNotSentAfterEnqueue";
+    public const string EventsNotSentAfterEnqueue = "EventsNotSentAfterEnqueue";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many events
     ///   were successfully sent after the Buffered Producer successfully enqueued them.
     /// </summary>
     ///
-    public string SuccessfullySentFromQueue = "SuccessfullySentFromQueue";
+    public const string SuccessfullySentFromQueue = "SuccessfullySentFromQueue";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on how many events were successfully
     ///   added to the queue in the Buffered Producer.
     /// </summary>
     ///
-    public string EventsEnqueued = "EventsEnqueued";
+    public const string EventsEnqueued = "EventsEnqueued";
 
     // Event Producer statistics
 
@@ -127,21 +127,21 @@ internal class Metrics
     ///   published by the Event Producer client.
     /// </summary>
     ///
-    public string EventsPublished = "EventsPublished";
+    public const string EventsPublished = "EventsPublished";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of times the Event Producer client
     ///   tried to publish an event, regardless of if the event was successfully published or not.
     /// </summary>
     ///
-    public string PublishAttempts = "PublishAttempts";
+    public const string PublishAttempts = "PublishAttempts";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the total number of bytes that have been
     ///   published to the Event Hub over the course of the test run.
     /// </summary>
     ///
-    public string TotalPublishedSizeBytes = "TotalPublishedSizeBytes";
+    public const string TotalPublishedSizeBytes = "TotalPublishedSizeBytes";
 
     // Processor statistics
 
@@ -150,32 +150,32 @@ internal class Metrics
     ///   called when the processor is running.
     /// </summary>
     ///
-    public string EventHandlerCalls = "EventHandlerCalls";
+    public const string EventHandlerCalls = "EventHandlerCalls";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of times the process had to restart.
     /// </summary>
     ///
-    public string ProcessorRestarted = "ProcessorRestarted";
+    public const string ProcessorRestarted = "ProcessorRestarted";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of service operations done by the
     ///   processor.
     /// </summary>
     ///
-    public string TotalServiceOperations = "TotalServiceOperations";
+    public const string TotalServiceOperations = "TotalServiceOperations";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of events read by the processor.
     /// </summary>
     ///
-    public string EventsRead = "EventsRead";
+    public const string EventsRead = "EventsRead";
 
     /// <summary>
     ///   This is the metric name used to collect metrics on the number of events processed by the processor.
     /// </summary>
     ///
-    public string EventsProcessed = "EventsProcessed";
+    public const string EventsProcessed = "EventsProcessed";
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Metrics" /> class.
