@@ -22,7 +22,7 @@
           <AttributeName>System.Reflection.AssemblyFileVersion("1.0.0.0")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyInformationalVersion("1.0.0-alpha.20220525.1+d4ea9daea0f94cde5792cdab0ff6f7b6e7a52622")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyInformationalVersion("1.0.0-alpha.20220525.1+3aa97c3338ab77241eadefd7ea80488f0d3bfc92")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/Azure/azure-sdk-for-net")</AttributeName>

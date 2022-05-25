@@ -252,14 +252,234 @@ on the request on a per-call basis.
 </div>
 
 
-<div class="section_container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ <div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Examples</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="user2Section" class="section">	
+		This sample shows how to call CreateOrUpdate with required parameters 		<div class="codeSnippetContainer">		
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csNaTab csLastTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeCsharp">
+					<pre xml:space="preserve" class="brush: csharp">
+ var credential = new DefaultAzureCredential();
+ var endpoint = new Uri(&quot;https://my-account-name.scan.purview.azure.com&quot;);
+ var client = new PurviewScanClient(endpoint, &quot;dataSourceName&quot;, &quot;scanName&quot;, credential);
+ 
+ var data = new
+ {
+     kind = &quot;AmazonS3Credential&quot;,
+     properties = new
+     {
+         credential = new
+         {
+             referenceName = &quot;test-credential-s3&quot;,
+             credentialType = &quot;AmazonARN&quot;
+         }
+      }
+ };
+ Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+ JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+ Console.WriteLine(result.GetProperty(&quot;kind&quot;).GetString());
+ Console.WriteLine(result.GetProperty(&quot;properties&quot;).GetProperty(&quot;credential&quot;).GetProperty(&quot;referenceName&quot;).ToString());
+ Console.WriteLine(result.GetProperty(&quot;properties&quot;).GetProperty(&quot;credential&quot;).GetProperty(&quot;credentialType&quot;).ToString());
+ 					</pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+This sample shows how to call CreateOrUpdate with all the parameters 		<div class="codeSnippetContainer">		
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csNaTab csLastTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeCsharp">
+					<pre xml:space="preserve" class="brush: csharp">
+ var credential = new DefaultAzureCredential();
+ var endpoint = new Uri(&quot;https://my-account-name.scan.purview.azure.com&quot;);
+ var client = new PurviewScanClient(endpoint, &quot;dataSourceName&quot;, &quot;scanName&quot;, credential);
+ 
+ var data = new
+ {
+     id = &quot;test-id&quot;,
+     name = &quot;test-name&quot;,
+     kind = &quot;AmazonS3Credential&quot;,
+     scanResults = new[]
+     {
+             new
+             {
+                 parentId = &quot;test-scanResults-parentId&quot;,
+                 id = &quot;test-scanResults-Id&quot;,
+                 resourceId = &quot;test-scanResults-resourceId&quot;,
+                 status = &quot;test-scanResults-status&quot;,
+                 assetsDiscovered = 4513,
+                 assetsClassified = 5423,
+                 diagnostics = new
+                 {
+                     notifications = new[]
+                     {
+                         new
+                         {
+                             message = &quot;test-scanResults-diagnostics-message&quot;,
+                             code =  3423
+                         }
+                     },
+                     exceptionCountMap = new Dictionary&lt;string, int&gt;(){{ &quot;exceptionCountMapKey1&quot;, 4243}},
+                 },
+                 startTime = &quot;2022-05-10T13:57:31.2311892-04:00&quot;,
+                 queuedTime = &quot;2022-05-10T14:57:31.2311892-04:00&quot;,
+                 pipelineStartTime = &quot;2022-05-10T15:57:31.2311892-04:00&quot;,
+                 endTime = &quot;2022-05-10T16:57:31.2311892-04:00&quot;,
+                 scanRulesetVersion = 9284,
+                 scanRulesetType = &quot;Custom&quot;,
+                 scanLevelType = &quot;Full&quot;,
+                 errorMessage = &quot;test-scanResults-errorMessage&quot;,
+                 error = new
+                 {
+                     code = &quot;test-scanResults-error-code&quot;,
+                     message = &quot;test-scanResults-error-message&quot;,
+                     target = &quot;test-scanResults-error-target&quot;,
+                     details = new[]
+                     {
+                         new
+                         {
+                             code = &quot;test-scanResults-error-details-code&quot;,
+                             message = &quot;test-scanResults-error-details-message&quot;,
+                             target = &quot;test-scanResults-error-details-target&quot;,
+                             details = new[]
+                             {
+                                 new
+                                 {
+                                 }
+                             }
+                         }
+                     }
+                 },
+                 runType = &quot;test-scanResults-runType&quot;,
+                 dataSourceType = &quot;AzureSubscription&quot;
+             },
+         }
+     properties = new
+      {
+          scanRulesetName = &quot;properties-scanRulesetName&quot;,
+          scanRulesetType = &quot;Customquot&quot;,
+          collection = new
+          {
+              lastModifiedAt = &quot;2022-05-10T16:57:31.2311892-04:00&quot;,
+              referenceName = &quot;properties-referenceName&quot;,
+              type = &quot;properties-type&quot;
+          },
+          workers = 434,
+          createdAt = &quot;2022-05-10T16:57:31.2311892-04:00&quot;,
+          lastModifiedAt = &quot;2022-05-10T16:57:31.2311892-04:00&quot;
+          connectedVia = new
+          {
+              referenceName = &quot;properties-connectedVia-referenceName&quot;
+          },
+          credential = new
+          {
+              referenceName = &quot;properties-credential-referenceName&quot;,
+              credentialType = &quot;AmazonARN&quot;,
+          },
+          roleARN = &quot;roleRn&quot;
+      },
+ };
+ Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+ JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+ Console.WriteLine(result.GetProperty(&quot;id&quot;).GetString());
+ Console.WriteLine(result.GetProperty(&quot;name&quot;).GetString());
+ Console.WriteLine(result.GetProperty(&quot;kind&quot;).GetString());
+ ....
+ 
+ 					</pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+	</div>					
+</div>
+ 
+ 
+ <div class="section_container">
 	<div class="section_heading">
 		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Remarks</a></span>
 		<div>&nbsp;</div>
 	</div>
 
-	<div id="remarksSection" class="section">	
-			<p>
+	<div id="user3Section" class="section">	
+		<p>
 Below is the JSON schema for the request and response payloads.
 </p>
 <p>
@@ -616,223 +836,7 @@ We throw <a target="_top" href="RequestFailedException">RequestFailedException</
 </p>
 	</div>					
 </div>
-
-
-<div class="section_container">
-	<div class="section_heading">
-		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Example</a></span>
-		<div>&nbsp;</div>
-	</div>
-
-	<div id="codeExampleSection" class="section">	
-This sample shows how to call CreateOrUpdate with required parameters 		<div class="codeSnippetContainer">		
-			<div class="codeSnippetTabs">
-				<div class="codeSnippetTabLeftCorner">
-				</div>
-				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
-					<a>VB</a>
-				</div>
-				<div class="codeSnippetTab csActiveTab codeCsharp">
-					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
-				</div>
-				<div class="codeSnippetTab csNaTab codeFsharp">
-					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
-				</div>
-				<div class="codeSnippetTab csNaTab codeCpp">
-					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
-				</div>
-				<div class="codeSnippetTab csNaTab csLastTab codeJScript">
-					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
-				</div>
-				<div class="codeSnippetTabRightCorner">
-				</div>
-				<div style="clear:both;">
-				</div>
-			</div>
-	
-			<div class="codeSnippetCodeCollection">
-				<div class="codeSnippetToolbar">
-					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
-				</div>
-				
-				<div class="codeSnippetCode codeCsharp">
-					<pre xml:space="preserve" class="brush: csharp">
- var credential = new DefaultAzureCredential();
- var endpoint = new Uri(&quot;https://my-account-name.scan.purview.azure.com&quot;);
- var client = new PurviewScanClient(endpoint, &quot;dataSourceName&quot;, &quot;scanName&quot;, credential);
  
- var data = new
- {
-     kind = &quot;AmazonS3Credential&quot;,
-     properties = new
-     {
-         credential = new
-         {
-             referenceName = &quot;test-credential-s3&quot;,
-             credentialType = &quot;AmazonARN&quot;
-         }
-      }
- };
- Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
- JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
- Console.WriteLine(result.GetProperty(&quot;kind&quot;).GetString());
- Console.WriteLine(result.GetProperty(&quot;properties&quot;).GetProperty(&quot;credential&quot;).GetProperty(&quot;referenceName&quot;).ToString());
- Console.WriteLine(result.GetProperty(&quot;properties&quot;).GetProperty(&quot;credential&quot;).GetProperty(&quot;credentialType&quot;).ToString());
- 					</pre>			
-				</div>
-				<div class="codeSnippetCode codeNA">
-					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
-				</div>
-			</div>
-		</div>
-This sample shows how to call CreateOrUpdate with all the parameters 		<div class="codeSnippetContainer">		
-			<div class="codeSnippetTabs">
-				<div class="codeSnippetTabLeftCorner">
-				</div>
-				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
-					<a>VB</a>
-				</div>
-				<div class="codeSnippetTab csActiveTab codeCsharp">
-					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
-				</div>
-				<div class="codeSnippetTab csNaTab codeFsharp">
-					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
-				</div>
-				<div class="codeSnippetTab csNaTab codeCpp">
-					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
-				</div>
-				<div class="codeSnippetTab csNaTab csLastTab codeJScript">
-					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
-				</div>
-				<div class="codeSnippetTabRightCorner">
-				</div>
-				<div style="clear:both;">
-				</div>
-			</div>
-	
-			<div class="codeSnippetCodeCollection">
-				<div class="codeSnippetToolbar">
-					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
-				</div>
-				
-				<div class="codeSnippetCode codeCsharp">
-					<pre xml:space="preserve" class="brush: csharp">
- var credential = new DefaultAzureCredential();
- var endpoint = new Uri(&quot;https://my-account-name.scan.purview.azure.com&quot;);
- var client = new PurviewScanClient(endpoint, &quot;dataSourceName&quot;, &quot;scanName&quot;, credential);
- 
- var data = new
- {
-     id = &quot;test-id&quot;,
-     name = &quot;test-name&quot;,
-     kind = &quot;AmazonS3Credential&quot;,
-     scanResults = new[]
-     {
-             new
-             {
-                 parentId = &quot;test-scanResults-parentId&quot;,
-                 id = &quot;test-scanResults-Id&quot;,
-                 resourceId = &quot;test-scanResults-resourceId&quot;,
-                 status = &quot;test-scanResults-status&quot;,
-                 assetsDiscovered = 4513,
-                 assetsClassified = 5423,
-                 diagnostics = new
-                 {
-                     notifications = new[]
-                     {
-                         new
-                         {
-                             message = &quot;test-scanResults-diagnostics-message&quot;,
-                             code =  3423
-                         }
-                     },
-                     exceptionCountMap = new Dictionary&lt;string, int&gt;(){{ &quot;exceptionCountMapKey1&quot;, 4243}},
-                 },
-                 startTime = &quot;2022-05-10T13:57:31.2311892-04:00&quot;,
-                 queuedTime = &quot;2022-05-10T14:57:31.2311892-04:00&quot;,
-                 pipelineStartTime = &quot;2022-05-10T15:57:31.2311892-04:00&quot;,
-                 endTime = &quot;2022-05-10T16:57:31.2311892-04:00&quot;,
-                 scanRulesetVersion = 9284,
-                 scanRulesetType = &quot;Custom&quot;,
-                 scanLevelType = &quot;Full&quot;,
-                 errorMessage = &quot;test-scanResults-errorMessage&quot;,
-                 error = new
-                 {
-                     code = &quot;test-scanResults-error-code&quot;,
-                     message = &quot;test-scanResults-error-message&quot;,
-                     target = &quot;test-scanResults-error-target&quot;,
-                     details = new[]
-                     {
-                         new
-                         {
-                             code = &quot;test-scanResults-error-details-code&quot;,
-                             message = &quot;test-scanResults-error-details-message&quot;,
-                             target = &quot;test-scanResults-error-details-target&quot;,
-                             details = new[]
-                             {
-                                 new
-                                 {
-                                 }
-                             }
-                         }
-                     }
-                 },
-                 runType = &quot;test-scanResults-runType&quot;,
-                 dataSourceType = &quot;AzureSubscription&quot;
-             },
-         }
-     properties = new
-      {
-          scanRulesetName = &quot;properties-scanRulesetName&quot;,
-          scanRulesetType = &quot;Customquot&quot;,
-          collection = new
-          {
-              lastModifiedAt = &quot;2022-05-10T16:57:31.2311892-04:00&quot;,
-              referenceName = &quot;properties-referenceName&quot;,
-              type = &quot;properties-type&quot;
-          },
-          workers = 434,
-          createdAt = &quot;2022-05-10T16:57:31.2311892-04:00&quot;,
-          lastModifiedAt = &quot;2022-05-10T16:57:31.2311892-04:00&quot;
-          connectedVia = new
-          {
-              referenceName = &quot;properties-connectedVia-referenceName&quot;
-          },
-          credential = new
-          {
-              referenceName = &quot;properties-credential-referenceName&quot;,
-              credentialType = &quot;AmazonARN&quot;,
-          },
-          roleARN = &quot;roleRn&quot;
-      },
- };
- Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
- JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
- Console.WriteLine(result.GetProperty(&quot;id&quot;).GetString());
- Console.WriteLine(result.GetProperty(&quot;name&quot;).GetString());
- Console.WriteLine(result.GetProperty(&quot;kind&quot;).GetString());
- ....
- 
- 					</pre>			
-				</div>
-				<div class="codeSnippetCode codeNA">
-					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
-				</div>
-			</div>
-		</div>										
-	</div>					
-</div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

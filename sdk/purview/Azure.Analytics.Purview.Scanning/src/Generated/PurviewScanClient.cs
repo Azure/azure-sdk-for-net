@@ -752,7 +752,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Error Response: 
         /// <p>
-        /// We throw <see href="RequestFailedException" /> in case of error response. 
+        /// We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response. 
         /// </p>
         /// </remarks>
         /// 
