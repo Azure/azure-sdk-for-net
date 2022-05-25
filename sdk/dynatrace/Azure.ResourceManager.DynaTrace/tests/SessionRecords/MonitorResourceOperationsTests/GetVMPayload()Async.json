@@ -661,7 +661,7 @@
         "x-ms-routing-request-id": "WESTINDIA:20220525T200105Z:1610a248-9868-4231-a442-ac7fdae94cfc"
       },
       "ResponseBody": {
-        "ingestionKey": "dt0c01.P74FHDLI44DRS3F3XUPPN23E.YQTXSYGZZGIC4K4MTSNRH2QSB3LGZUDCXMJQADPYGLKTEWCM5EWQ2UGLXUBIFUNV",
+        "ingestionKey": "dummy token",
         "environmentId": "zxf64332"
       }
     }
