@@ -21,28 +21,28 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoleInstanceResource" /> and their operations.
-    /// Each <see cref="RoleInstanceResource" /> in the collection will belong to the same instance of <see cref="CloudServiceResource" />.
-    /// To get a <see cref="RoleInstanceCollection" /> instance call the GetRoleInstances method from an instance of <see cref="CloudServiceResource" />.
+    /// A class representing a collection of <see cref="CloudServiceRoleInstanceResource" /> and their operations.
+    /// Each <see cref="CloudServiceRoleInstanceResource" /> in the collection will belong to the same instance of <see cref="CloudServiceResource" />.
+    /// To get a <see cref="CloudServiceRoleInstanceCollection" /> instance call the GetCloudServiceRoleInstances method from an instance of <see cref="CloudServiceResource" />.
     /// </summary>
-    public partial class RoleInstanceCollection : ArmCollection, IEnumerable<RoleInstanceResource>, IAsyncEnumerable<RoleInstanceResource>
+    public partial class CloudServiceRoleInstanceCollection : ArmCollection, IEnumerable<CloudServiceRoleInstanceResource>, IAsyncEnumerable<CloudServiceRoleInstanceResource>
     {
-        private readonly ClientDiagnostics _roleInstanceCloudServiceRoleInstancesClientDiagnostics;
-        private readonly CloudServiceRoleInstancesRestOperations _roleInstanceCloudServiceRoleInstancesRestClient;
+        private readonly ClientDiagnostics _cloudServiceRoleInstanceClientDiagnostics;
+        private readonly CloudServiceRoleInstancesRestOperations _cloudServiceRoleInstanceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RoleInstanceCollection"/> class for mocking. </summary>
-        protected RoleInstanceCollection()
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRoleInstanceCollection"/> class for mocking. </summary>
+        protected CloudServiceRoleInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceRoleInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RoleInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CloudServiceRoleInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _roleInstanceCloudServiceRoleInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RoleInstanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RoleInstanceResource.ResourceType, out string roleInstanceCloudServiceRoleInstancesApiVersion);
-            _roleInstanceCloudServiceRoleInstancesRestClient = new CloudServiceRoleInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, roleInstanceCloudServiceRoleInstancesApiVersion);
+            _cloudServiceRoleInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceRoleInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CloudServiceRoleInstanceResource.ResourceType, out string cloudServiceRoleInstanceApiVersion);
+            _cloudServiceRoleInstanceRestClient = new CloudServiceRoleInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceRoleInstanceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
-        public virtual async Task<Response<RoleInstanceResource>> GetAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceRoleInstanceResource>> GetAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Get");
+            using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _roleInstanceCloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceRoleInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRoleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,18 +94,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
-        public virtual Response<RoleInstanceResource> Get(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceRoleInstanceResource> Get(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Get");
+            using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _roleInstanceCloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken);
+                var response = _cloudServiceRoleInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RoleInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRoleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleInstanceResource> GetAllAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CloudServiceRoleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CloudServiceRoleInstanceResource> GetAllAsync(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RoleInstanceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CloudServiceRoleInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _roleInstanceCloudServiceRoleInstancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _cloudServiceRoleInstanceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<RoleInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CloudServiceRoleInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _roleInstanceCloudServiceRoleInstancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _cloudServiceRoleInstanceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleInstanceResource> GetAll(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CloudServiceRoleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CloudServiceRoleInstanceResource> GetAll(InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            Page<RoleInstanceResource> FirstPageFunc(int? pageSizeHint)
+            Page<CloudServiceRoleInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _roleInstanceCloudServiceRoleInstancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _cloudServiceRoleInstanceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<RoleInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CloudServiceRoleInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.GetAll");
+                using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _roleInstanceCloudServiceRoleInstancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _cloudServiceRoleInstanceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
+            using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _roleInstanceCloudServiceRoleInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceRoleInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(roleInstanceName, nameof(roleInstanceName));
 
-            using var scope = _roleInstanceCloudServiceRoleInstancesClientDiagnostics.CreateScope("RoleInstanceCollection.Exists");
+            using var scope = _cloudServiceRoleInstanceClientDiagnostics.CreateScope("CloudServiceRoleInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _roleInstanceCloudServiceRoleInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken);
+                var response = _cloudServiceRoleInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleInstanceName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<RoleInstanceResource> IEnumerable<RoleInstanceResource>.GetEnumerator()
+        IEnumerator<CloudServiceRoleInstanceResource> IEnumerable<CloudServiceRoleInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RoleInstanceResource> IAsyncEnumerable<RoleInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CloudServiceRoleInstanceResource> IAsyncEnumerable<CloudServiceRoleInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

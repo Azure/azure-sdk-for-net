@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RoleInstanceResources in the CloudService. </summary>
-        /// <returns> An object representing collection of RoleInstanceResources and their operations over a RoleInstanceResource. </returns>
-        public virtual RoleInstanceCollection GetRoleInstances()
+        /// <summary> Gets a collection of CloudServiceRoleInstanceResources in the CloudService. </summary>
+        /// <returns> An object representing collection of CloudServiceRoleInstanceResources and their operations over a CloudServiceRoleInstanceResource. </returns>
+        public virtual CloudServiceRoleInstanceCollection GetCloudServiceRoleInstances()
         {
-            return GetCachedClient(Client => new RoleInstanceCollection(Client, Id));
+            return GetCachedClient(Client => new CloudServiceRoleInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RoleInstanceResource>> GetRoleInstanceAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceRoleInstanceResource>> GetCloudServiceRoleInstanceAsync(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetRoleInstances().GetAsync(roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetCloudServiceRoleInstances().GetAsync(roleInstanceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RoleInstanceResource> GetRoleInstance(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceRoleInstanceResource> GetCloudServiceRoleInstance(string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetRoleInstances().Get(roleInstanceName, expand, cancellationToken);
+            return GetCloudServiceRoleInstances().Get(roleInstanceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceRoleResources in the CloudService. </summary>

@@ -155,6 +155,9 @@ directive:
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
+      $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
+      $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
+      $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
   - from: cloudService.json
     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}"].get.parameters
     transform: >

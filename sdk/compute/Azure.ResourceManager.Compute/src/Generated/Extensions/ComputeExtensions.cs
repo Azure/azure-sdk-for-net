@@ -2803,20 +2803,20 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region RoleInstanceResource
+        #region CloudServiceRoleInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceRoleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceRoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleInstanceResource" /> object. </returns>
-        public static RoleInstanceResource GetRoleInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceRoleInstanceResource" /> object. </returns>
+        public static CloudServiceRoleInstanceResource GetCloudServiceRoleInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoleInstanceResource.ValidateResourceId(id);
-                return new RoleInstanceResource(client, id);
+                CloudServiceRoleInstanceResource.ValidateResourceId(id);
+                return new CloudServiceRoleInstanceResource(client, id);
             }
             );
         }

@@ -13,23 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class RoleInstanceData
+    public partial class CloudServiceRoleInstanceData
     {
-        internal static RoleInstanceData DeserializeRoleInstanceData(JsonElement element)
+        internal static CloudServiceRoleInstanceData DeserializeCloudServiceRoleInstanceData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<InstanceSku> sku = default;
-            Optional<RoleInstanceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Optional<RoleInstanceNetworkProfile> networkProfile = default;
+            Optional<RoleInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -57,16 +63,6 @@ namespace Azure.ResourceManager.Compute
                     sku = InstanceSku.DeserializeInstanceSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = RoleInstanceProperties.DeserializeRoleInstanceProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -87,8 +83,40 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("networkProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            networkProfile = RoleInstanceNetworkProfile.DeserializeRoleInstanceNetworkProfile(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("instanceView"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            instanceView = RoleInstanceView.DeserializeRoleInstanceView(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new RoleInstanceData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), sku.Value, properties.Value);
+            return new CloudServiceRoleInstanceData(id, name, type, systemData, Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, networkProfile.Value, instanceView.Value);
         }
     }
 }
