@@ -11,14 +11,19 @@ namespace Azure.Storage.Cryptography.Models
     internal class AuthenticationBlockInfo
     {
         /// <summary>
-        /// Length of the ciphertext block
+        /// Length of the ciphertext data in the region.
         /// </summary>
-        public long CiphertextLength { get; set; }
+        public int EncryptedRegionDataLength { get; set; }
 
         /// <summary>
-        /// Length of the nonce found in the content stream
+        /// Length of the nonce found in the content stream.
         /// </summary>
         public int NonceLength { get; set; }
+
+        /// <summary>
+        /// Length of the tag found in the content stream.
+        /// </summary>
+        public int TagLength { get; set; }
 
         public List<string> Order { get; set; }
     }

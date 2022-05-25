@@ -145,6 +145,7 @@ namespace Azure.Storage.Cryptography
             // transform is disposable but gets disposed by the stream
             var gcm = new GcmAuthenticatedCryptographicTransform(generatedKey, TransformMode.Encrypt);
 
+            // TODO this stream has 4MB buffer, openwrite stream has 4MB buffer, can we combine these?
             Stream writeStream = new AuthenticatedRegionCryptoStream(
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 // analyzer struggles to recognize async pattern with a Func instead of a proper method.
