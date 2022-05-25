@@ -27,5 +27,5 @@ extends:
     ServiceDirectory: machinelearningservices
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.MachineLearningServices
-      safeName: AzureResourceManagerMachineLearningServices
+    - name: Azure.ResourceManager.MachineLearning
+      safeName: AzureResourceManagerMachineLearning
