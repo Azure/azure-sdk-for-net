@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Applications.Containers
     public partial class ContainerAppReplicaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppReplicaResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a replica for a Container App Revision.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a replica for a Container App Revision.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
