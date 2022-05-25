@@ -49,9 +49,9 @@ internal class Processor
     /// <param name="partitionCount">The number of partitions in the Event Hub associated with this processor.</param>
     ///
     public Processor(TestConfiguration testConfiguration,
-                        ProcessorConfiguration processorConfiguration,
-                        Metrics metrics,
-                        int partitionCount)
+                     ProcessorConfiguration processorConfiguration,
+                     Metrics metrics,
+                     int partitionCount)
     {
         _testConfiguration = testConfiguration;
         _processorConfiguration = processorConfiguration;
