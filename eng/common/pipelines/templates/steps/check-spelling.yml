@@ -16,14 +16,14 @@ parameters:
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - task: NodeTool@0
-      condition: and(suceededOrFailed(), ne(variables['Skip.SpellCheck'],'true'))
+      condition: and(succeededOrFailed(), ne(variables['Skip.SpellCheck'],'true'))
       inputs:
         versionSpec: 16.x
       displayName: Use Node.js 16.x
 
     - task: PowerShell@2
       displayName: Check spelling (cspell)
-      condition: and(suceededOrFailed(), ne(variables['Skip.SpellCheck'],'true'))
+      condition: and(succeededOrFailed(), ne(variables['Skip.SpellCheck'],'true'))
       continueOnError: ${{ parameters.ContinueOnError }}
       inputs:
         targetType: filePath
