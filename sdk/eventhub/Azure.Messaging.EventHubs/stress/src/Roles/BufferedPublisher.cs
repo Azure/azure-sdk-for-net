@@ -180,10 +180,10 @@ internal class BufferedPublisher
                                       CancellationToken cancellationToken)
     {
         var events = EventGenerator.CreateEvents(_bufferedPublisherConfiguration.MaximumEventListSize,
-                                                    _bufferedPublisherConfiguration.EventEnqueueListSize,
-                                                    _bufferedPublisherConfiguration.LargeMessageRandomFactorPercent,
-                                                    _bufferedPublisherConfiguration.PublishingBodyMinBytes,
-                                                    _bufferedPublisherConfiguration.PublishingBodyRegularMaxBytes);
+                                                 _bufferedPublisherConfiguration.EventEnqueueListSize,
+                                                 _bufferedPublisherConfiguration.LargeMessageRandomFactorPercent,
+                                                 _bufferedPublisherConfiguration.PublishingBodyMinBytes,
+                                                 _bufferedPublisherConfiguration.PublishingBodyRegularMaxBytes);
 
         try
         {
