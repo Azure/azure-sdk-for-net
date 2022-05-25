@@ -1,5 +1,5 @@
 apiVersion: v2
-name: net-roles-testing
+name: eventhub-net-stress
 version: 0.1.2
 description: Stress tests for Event Hubs for .NET
 
