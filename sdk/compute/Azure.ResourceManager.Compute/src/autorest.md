@@ -44,6 +44,9 @@ rename-rules:
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}: VirtualMachineScaleSetVmRunCommand
+
 override-operation-name:
   VirtualMachines_Start: PowerOn
   VirtualMachineScaleSets_Start: PowerOn
@@ -128,6 +131,18 @@ directive:
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
       $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
       $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
+  - from: compute.json
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}"].get.parameters
+    transform: >
+      $[0]["x-ms-format"] = "azure-location";
+  - from: compute.json
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions"].get.parameters
+    transform: >
+      $[0]["x-ms-format"] = "azure-location";
+  - from: compute.json
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types"].get.parameters
+    transform: >
+      $[0]["x-ms-format"] = "azure-location";
   - from: disk.json
     where: $.definitions
     transform: >
