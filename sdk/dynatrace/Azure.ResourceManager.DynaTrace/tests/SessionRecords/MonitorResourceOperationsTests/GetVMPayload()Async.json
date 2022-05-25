@@ -1,0 +1,674 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-72abf466efc09a489a13200ab21b89b0-aaa0b20ad9786848-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f5663da1a203dcfc7468ed585e34c964",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "399",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f05cc51d-3115-4e5f-b56a-f5b4340e6a11",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "f05cc51d-3115-4e5f-b56a-f5b4340e6a11",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195910Z:f05cc51d-3115-4e5f-b56a-f5b4340e6a11"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "9e28142e-8a8c-4a93-a280-41a2df3e0215",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Liftr-Dynatrace-Dev",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourcegroups/SDKTestRG-1085?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "31",
+        "Content-Type": "application/json",
+        "traceparent": "00-6237b336428d5b4eb69caaa728ea5fb5-b09998144ca3214b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "66a0162553a67e6d48cede3af900510f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "235",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c647bdf0-8d08-4e4d-b2b6-22335f494760",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "c647bdf0-8d08-4e4d-b2b6-22335f494760",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195914Z:c647bdf0-8d08-4e4d-b2b6-22335f494760"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085",
+        "name": "SDKTestRG-1085",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281?api-version=2021-09-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "509",
+        "Content-Type": "application/json",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-d01d02b327d70149-00",
+        "User-Agent": "azsdk-net-ResourceManager.DynaTrace/1.0.0-alpha.20220526.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "06ba08e90421d0e88d0dc3fc8fcdf982",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "dynatraceEnvironmentProperties": {
+            "singleSignOnProperties": {
+              "singleSignOnState": "Disable",
+              "singleSignOnUrl": "http://www.contoso.com/",
+              "aadDomains": [
+                "SDKTest"
+              ]
+            }
+          },
+          "userInfo": {
+            "firstName": "Divyansh",
+            "lastName": "Agarwal",
+            "emailAddress": "agarwald@microsoft.com",
+            "phoneNumber": "1234567890",
+            "country": "US"
+          },
+          "planData": {
+            "usageType": "COMMITTED",
+            "billingCycle": "Monthly",
+            "planDetails": "azureportalintegration_privatepreview",
+            "effectiveDate": "2022-05-25T19:59:16.7228074Z"
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1148",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:23 GMT",
+        "ETag": "\u00222000262b-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+        "mise-correlation-id": "0e433184-d4c2-4543-8692-0ef78a78f939",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:fab059ea-d726-424a-9451-6beb3dc74944",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "54798764-cf45-48a1-ac47-75c7c620738b",
+        "x-ms-correlation-request-id": "5456a19b-7a37-46e6-bc05-ebab67cf27a4",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "1f66eb43-ae29-4f37-babe-edaa55596414",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195923Z:5456a19b-7a37-46e6-bc05-ebab67cf27a4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "name": "testDT-2281",
+        "type": "dynatrace.observability/monitors",
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "a796cb8d-d398-4da1-9dd3-665d69b3173b",
+          "createdByType": "Application",
+          "createdAt": "2022-05-25T19:59:17.5083011Z",
+          "lastModifiedBy": "a796cb8d-d398-4da1-9dd3-665d69b3173b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-25T19:59:17.5083011Z"
+        },
+        "properties": {
+          "monitoringStatus": "Enabled",
+          "marketplaceSubscriptionStatus": "Active",
+          "dynatraceEnvironmentProperties": {
+            "userId": null,
+            "accountInfo": null,
+            "environmentInfo": null,
+            "singleSignOnProperties": {
+              "singleSignOnState": "Disable",
+              "enterpriseAppId": null,
+              "singleSignOnUrl": "http://www.contoso.com/",
+              "aadDomains": [
+                "SDKTest"
+              ],
+              "provisioningState": "Accepted"
+            }
+          },
+          "userInfo": null,
+          "planData": {
+            "usageType": "COMMITTED",
+            "billingCycle": "Monthly",
+            "planDetails": "azureportalintegration_privatepreview",
+            "effectiveDate": "2022-05-25T19:59:16.7228074Z"
+          },
+          "liftrResourceCategory": "MonitorLogs",
+          "liftrResourcePreference": 0,
+          "provisioningState": "Accepted"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-b9f6d09f77476049-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c14b4f069caa20142ecfd9998f70ef7b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:24 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7ccd2d1b-d6e8-47b2-b0e2-a77ac43eb113",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "3c3c5dd0-65b6-4f84-b1a1-04bc7d0bc5ea",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195924Z:7ccd2d1b-d6e8-47b2-b0e2-a77ac43eb113"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-c332964f01afe446-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8ee85cd4b653ae2f71a67e9caab9d354",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:25 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b9ee6c7f-60a7-4726-a733-316d88d70f64",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "b041d7df-259f-42a6-a49a-7a01d0435e72",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195925Z:b9ee6c7f-60a7-4726-a733-316d88d70f64"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-56282f2d8aee174f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "3ff6d69e3782b5d8558c6c0f61fc8417",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:26 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ece9cea0-1a33-4faf-b87b-c33ecd855302",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "b4499f68-ebe1-4a70-aab0-58116fc2041c",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195926Z:ece9cea0-1a33-4faf-b87b-c33ecd855302"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-3d469f265dc3bd44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a159de95e050509a1f9c4f031d787674",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:27 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2b017088-841a-477d-849f-948c26b836fd",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "1cf51fad-11ca-43ee-8fcc-3bcfca6b3b5e",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195928Z:2b017088-841a-477d-849f-948c26b836fd"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-30ac6dc18d539543-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b8fb84fcaf7a9cf8833238c649204d74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:30 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2e065d99-bc18-4b5b-85ec-fc301e9a05e6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "f5f23a05-99a5-41f9-8f53-2679bd669583",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195930Z:2e065d99-bc18-4b5b-85ec-fc301e9a05e6"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-118e03aa97b76146-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "cb0666223260bd033ca61fe5e8d597dd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:34 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0ab106d9-c5d1-4cca-8e6d-9db2b9610460",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "67c294b5-57a4-4b43-b039-b4071d0acb17",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195934Z:0ab106d9-c5d1-4cca-8e6d-9db2b9610460"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-87a81deb0a434d45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "dd12f716cb01e69de5bc1d1ea7d306ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:42 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "67b8bc8d-c942-4468-88df-f1f6ce362a7c",
+        "x-ms-ratelimit-remaining-tenant-reads": "11993",
+        "x-ms-request-id": "74f18ecc-db4c-4054-ae3f-923720079592",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195942Z:67b8bc8d-c942-4468-88df-f1f6ce362a7c"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-8363496390d0b948-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b7e0db4faa71ca14813d7cd48f13b4ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 19:59:58 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "fab261d9-67fe-4c50-984c-d1f6f78f76d6",
+        "x-ms-ratelimit-remaining-tenant-reads": "11992",
+        "x-ms-request-id": "d562cdcf-f611-43a7-a96d-e5f6530c0652",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T195958Z:fab261d9-67fe-4c50-984c-d1f6f78f76d6"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-df1002254270d540-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "52af5b9a700e5773c920e5a314e51668",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "506",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 20:00:30 GMT",
+        "ETag": "\u00220f0337ef-0000-0100-0000-628e8a9a0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a215993d-daf8-4881-befc-1c05cdbd5341",
+        "x-ms-ratelimit-remaining-tenant-reads": "11991",
+        "x-ms-request-id": "ce6d5ac5-e48b-4c9d-84ed-489f3523c112",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T200031Z:a215993d-daf8-4881-befc-1c05cdbd5341"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Accepted",
+        "startTime": "2022-05-25T19:59:22.4301331Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-b4cded9591124b46-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "0c96209fe0f46b6be3485bc44fc957d2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "577",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 20:01:03 GMT",
+        "ETag": "\u00220f030ff8-0000-0100-0000-628e8af40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a3cb8fae-d288-4ada-8360-a55ff067e2b1",
+        "x-ms-ratelimit-remaining-tenant-reads": "11990",
+        "x-ms-request-id": "0c2d20d8-dfb1-452c-935b-5f315fc4cc04",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T200103Z:a3cb8fae-d288-4ada-8360-a55ff067e2b1"
+      },
+      "ResponseBody": {
+        "id": "/providers/Dynatrace.Observability/locations/EASTUS/operationStatuses/1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "name": "1f66eb43-ae29-4f37-babe-edaa55596414*A85A0EF258DB9084E2D9F33266967EFC2DB724C953AF96A230682D23F1529E6C",
+        "resourceId": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "status": "Succeeded",
+        "startTime": "2022-05-25T19:59:22.4301331Z",
+        "endTime": "2022-05-25T20:00:52.9967519Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-a4c6e05d8d648740849563b698da8acb-9c70ee9e2489b741-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "4c836e08b423dff06888ee51c470b59c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1504",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 20:01:03 GMT",
+        "ETag": "\u002220003c2b-0000-0100-0000-628e8af50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a881e6c1-c5d2-4bfd-aa9b-e357655047b5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "3bd49110-c2d0-49b1-8715-3f2b4fef57cc",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T200103Z:a881e6c1-c5d2-4bfd-aa9b-e357655047b5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281",
+        "name": "testDT-2281",
+        "type": "dynatrace.observability/monitors",
+        "location": "eastus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "a796cb8d-d398-4da1-9dd3-665d69b3173b",
+          "createdByType": "Application",
+          "createdAt": "2022-05-25T19:59:17.5083011Z",
+          "lastModifiedBy": "a796cb8d-d398-4da1-9dd3-665d69b3173b",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-25T19:59:17.5083011Z"
+        },
+        "properties": {
+          "monitoringStatus": "Enabled",
+          "marketplaceSubscriptionStatus": "Active",
+          "dynatraceEnvironmentProperties": {
+            "userId": "74ec5037-fb3c-49a4-bdc6-d9492ffbcd42",
+            "accountInfo": {
+              "accountId": "21b39353-ce93-42d6-85af-6f01d75cb20f",
+              "regionId": "eastus"
+            },
+            "environmentInfo": {
+              "environmentId": "zxf64332",
+              "logsIngestionEndpoint": "https://zxf64332.live.dynatrace.com/api/v2/logs/ingest",
+              "landingURL": "https://zxf64332.live.dynatrace.com/"
+            },
+            "singleSignOnProperties": {
+              "singleSignOnState": "Disable",
+              "singleSignOnUrl": "http://www.contoso.com/",
+              "aadDomains": [
+                "SDKTest"
+              ],
+              "provisioningState": "Accepted"
+            }
+          },
+          "userInfo": {
+            "firstName": "Divyansh",
+            "lastName": "Agarwal",
+            "emailAddress": "agarwald@microsoft.com",
+            "phoneNumber": "1234567890",
+            "country": "US"
+          },
+          "planData": {
+            "usageType": "COMMITTED",
+            "billingCycle": "Monthly",
+            "planDetails": "azureportalintegration_privatepreview",
+            "effectiveDate": "2022-05-25T19:59:16.722Z"
+          },
+          "liftrResourceCategory": "MonitorLogs",
+          "liftrResourcePreference": 0,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/9e28142e-8a8c-4a93-a280-41a2df3e0215/resourceGroups/SDKTestRG-1085/providers/Dynatrace.Observability/monitors/testDT-2281/getVMHostPayload?api-version=2021-09-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-0936596d8b34a149a96874b312fcbbe8-b1156d8f20484741-00",
+        "User-Agent": "azsdk-net-ResourceManager.DynaTrace/1.0.0-alpha.20220526.1 (.NET Core 3.1.25; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6e341327a77cbabaef446ec614ae08ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "142",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 May 2022 20:01:05 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "bfe688e0-c97c-4f85-ae5f-2fa788da5968",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:fab059ea-d726-424a-9451-6beb3dc74944",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1610a248-9868-4231-a442-ac7fdae94cfc",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "27e0854f-5c1b-46e8-91e4-440801737dc1",
+        "x-ms-routing-request-id": "WESTINDIA:20220525T200105Z:1610a248-9868-4231-a442-ac7fdae94cfc"
+      },
+      "ResponseBody": {
+        "ingestionKey": "dt0c01.P74FHDLI44DRS3F3XUPPN23E.YQTXSYGZZGIC4K4MTSNRH2QSB3LGZUDCXMJQADPYGLKTEWCM5EWQ2UGLXUBIFUNV",
+        "environmentId": "zxf64332"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "730618769",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "9e28142e-8a8c-4a93-a280-41a2df3e0215"
+  }
+}
