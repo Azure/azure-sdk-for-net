@@ -18,15 +18,18 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Initializes a new instance of TargetIntentResult. </summary>
-        /// <param name="targetKind"> This discriminator property specifies the type of the target project that returns the response. </param>
+        /// <param name="targetProjectKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal TargetIntentResult(TargetKind targetKind, string apiVersion, double confidence)
+        internal TargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence)
         {
-            TargetKind = targetKind;
+            TargetProjectKind = targetProjectKind;
             ApiVersion = apiVersion;
             Confidence = confidence;
         }
+
+        /// <summary> This discriminator property specifies the type of the target project that returns the response. </summary>
+        internal TargetProjectKind TargetProjectKind { get; set; }
         /// <summary> The API version used to call a target service. </summary>
         public string ApiVersion { get; }
         /// <summary> The prediction score and it ranges from 0.0 to 1.0. </summary>

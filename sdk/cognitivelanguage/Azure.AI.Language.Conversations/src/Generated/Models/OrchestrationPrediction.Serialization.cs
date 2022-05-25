@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class OrchestratorPrediction
+    public partial class OrchestrationPrediction
     {
-        internal static OrchestratorPrediction DeserializeOrchestratorPrediction(JsonElement element)
+        internal static OrchestrationPrediction DeserializeOrchestrationPrediction(JsonElement element)
         {
             IReadOnlyDictionary<string, TargetIntentResult> intents = default;
             ProjectKind projectKind = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new OrchestratorPrediction(projectKind, topIntent.Value, intents);
+            return new OrchestrationPrediction(projectKind, topIntent.Value, intents);
         }
     }
 }

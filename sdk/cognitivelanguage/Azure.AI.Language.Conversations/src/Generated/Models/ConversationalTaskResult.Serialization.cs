@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class CustomConversationalTaskResult
+    public partial class ConversationalTaskResult
     {
-        internal static CustomConversationalTaskResult DeserializeCustomConversationalTaskResult(JsonElement element)
+        internal static ConversationalTaskResult DeserializeConversationalTaskResult(JsonElement element)
         {
-            AnalyzeConversationResult results = default;
+            AnalyzeConversationResult result = default;
             AnalyzeConversationTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("result"))
                 {
-                    results = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(property.Value);
+                    result = AnalyzeConversationResult.DeserializeAnalyzeConversationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -29,7 +29,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new CustomConversationalTaskResult(kind, results);
+            return new ConversationalTaskResult(kind, result);
         }
     }
 }

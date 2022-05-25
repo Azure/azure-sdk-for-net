@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -25,16 +23,9 @@ namespace Azure.AI.Language.Conversations
             }
 
             ConversationItem = conversationItem;
-            Parameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
         }
 
         /// <summary> The abstract base for a user input formatted conversation (e.g., Text, Transcript). </summary>
         public ConversationItemBase ConversationItem { get; }
-        /// <summary> The name of the target project this request is sending to directly. </summary>
-        public string DirectTarget { get; set; }
-        /// <summary> If true, the query will be kept by the service for customers to further review. </summary>
-        public bool? IsLoggingEnabled { get; set; }
-        /// <summary> A dictionary representing the input for each target project. </summary>
-        public IDictionary<string, AnalysisParameters> Parameters { get; }
     }
 }

@@ -41,10 +41,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 options);
 #endif
 
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+            Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
@@ -114,10 +114,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 options);
 #endif
 
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+            Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");

@@ -22,10 +22,10 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CustomConversationValue = "CustomConversation";
+        private const string ConversationValue = "Conversation";
 
-        /// <summary> CustomConversation. </summary>
-        public static AnalyzeConversationTaskKind CustomConversation { get; } = new AnalyzeConversationTaskKind(CustomConversationValue);
+        /// <summary> Conversation. </summary>
+        public static AnalyzeConversationTaskKind Conversation { get; } = new AnalyzeConversationTaskKind(ConversationValue);
         /// <summary> Determines if two <see cref="AnalyzeConversationTaskKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeConversationTaskKind left, AnalyzeConversationTaskKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeConversationTaskKind"/> values are not the same. </summary>

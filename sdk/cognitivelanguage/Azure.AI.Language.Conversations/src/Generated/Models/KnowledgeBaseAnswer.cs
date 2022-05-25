@@ -24,29 +24,31 @@ namespace Azure.AI.Language.Conversations
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
-        /// <param name="id"> ID of the QnA result. </param>
+        /// <param name="qnaId"> ID of the QnA result. </param>
         /// <param name="source"> Source of QnA result. </param>
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
-        /// <param name="answerSpan"> Answer span object of QnA with respect to user&apos;s question. </param>
-        internal KnowledgeBaseAnswer(IReadOnlyList<string> questions, string answer, double? confidence, int? id, string source, IReadOnlyDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan answerSpan)
+        /// <param name="shortAnswer"> Answer span object of QnA with respect to user&apos;s question. </param>
+        internal KnowledgeBaseAnswer(IReadOnlyList<string> questions, string answer, double? confidence, int? qnaId, string source, IReadOnlyDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan shortAnswer)
         {
             Questions = questions;
             Answer = answer;
             Confidence = confidence;
-            Id = id;
+            QnaId = qnaId;
             Source = source;
             Metadata = metadata;
             Dialog = dialog;
-            AnswerSpan = answerSpan;
+            ShortAnswer = shortAnswer;
         }
 
         /// <summary> List of questions associated with the answer. </summary>
         public IReadOnlyList<string> Questions { get; }
         /// <summary> Answer text. </summary>
         public string Answer { get; }
+        /// <summary> Answer confidence score, value ranges from 0 to 1. </summary>
+        public double? Confidence { get; }
         /// <summary> ID of the QnA result. </summary>
-        public int? Id { get; }
+        public int? QnaId { get; }
         /// <summary> Source of QnA result. </summary>
         public string Source { get; }
         /// <summary> Metadata associated with the answer, useful to categorize or filter question answers. </summary>
@@ -54,6 +56,6 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Dialog associated with Answer. </summary>
         public KnowledgeBaseAnswerDialog Dialog { get; }
         /// <summary> Answer span object of QnA with respect to user&apos;s question. </summary>
-        public AnswerSpan AnswerSpan { get; }
+        public AnswerSpan ShortAnswer { get; }
     }
 }

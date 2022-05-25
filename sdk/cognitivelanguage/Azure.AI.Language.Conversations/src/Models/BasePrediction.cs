@@ -8,7 +8,6 @@ namespace Azure.AI.Language.Conversations
     public partial class BasePrediction
     {
         /// <summary> The type of the project. </summary>
-        [CodeGenMember("ProjectKind")]
         public ProjectKind ProjectKind { get; set; }
     }
 }

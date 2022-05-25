@@ -20,8 +20,8 @@ ConversationsProject orchestrationProject = new ConversationsProject("DomainOrch
 Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
     "How are you?",
     orchestrationProject);
-CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 ## Asynchronous
@@ -31,8 +31,8 @@ ConversationsProject orchestrationProject = new ConversationsProject("DomainOrch
 Response<AnalyzeConversationResult> response =  await client.AnalyzeConversationAsync(
     "How are you?",
     orchestrationProject);
-CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 ## Accessing project specific results
@@ -42,16 +42,16 @@ Depending on the project chosen by your orchestration model, you may get results
 ### Question Answering
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-string respondingProjectName = orchestratorPrediction.TopIntent;
-TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
 {
     Console.WriteLine($"Top intent: {respondingProjectName}");
 
     QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
 
-    KnowledgeBaseAnswers qnaAnswers = qnaTargetIntentResult.Result;
+    AnswersResult qnaAnswers = qnaTargetIntentResult.Result;
 
     Console.WriteLine("Answers: \n");
     foreach (KnowledgeBaseAnswer answer in qnaAnswers.Answers)
@@ -67,10 +67,10 @@ if (targetIntentResult.TargetKind == TargetKind.QuestionAnswering)
 ### Conversation
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
-string respondingProjectName = orchestratorPrediction.TopIntent;
-TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.Conversation)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
 {
     ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
 
@@ -113,10 +113,10 @@ if (targetIntentResult.TargetKind == TargetKind.Conversation)
 ### LUIS
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
-string respondingProjectName = orchestratorPrediction.TopIntent;
-TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
 
-if (targetIntentResult.TargetKind == TargetKind.Luis)
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
 {
     LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
     BinaryData luisResponse = luisTargetIntentResult.Result;

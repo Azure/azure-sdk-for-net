@@ -15,8 +15,8 @@ namespace Azure.AI.Language.Conversations
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetKind");
-            writer.WriteStringValue(TargetKind.ToString());
+            writer.WritePropertyName("targetProjectKind");
+            writer.WriteStringValue(TargetProjectKind.ToString());
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion");

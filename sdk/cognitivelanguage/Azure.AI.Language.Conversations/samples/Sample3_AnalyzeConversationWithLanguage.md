@@ -32,10 +32,10 @@ Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
     conversationsProject,
     options);
 
-CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
@@ -88,10 +88,10 @@ Response<AnalyzeConversationTaskResult> response = await client.AnalyzeConversat
     conversationsProject,
     options);
 
-CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
 Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");

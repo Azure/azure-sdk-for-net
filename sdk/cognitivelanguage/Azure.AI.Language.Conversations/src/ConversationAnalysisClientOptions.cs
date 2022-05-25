@@ -11,7 +11,7 @@ namespace Azure.AI.Language.Conversations
     /// </summary>
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_03_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_01;
 
         /// <summary>
         /// The version of the service to use.
@@ -20,13 +20,9 @@ namespace Azure.AI.Language.Conversations
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Service version "2021-11-01-preview".
+            /// Service version "2022-05-01".
             /// </summary>
-            V2021_11_01_Preview = 1,
-            /// <summary>
-            /// Service version "2022-03-01-preview".
-            /// </summary>
-            V2022_03_01_Preview = 2,
+            V2022_05_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -39,12 +35,16 @@ namespace Azure.AI.Language.Conversations
         {
             Version = version switch
             {
-                ServiceVersion.V2021_11_01_Preview => "2021-11-01-preview",
-                ServiceVersion.V2022_03_01_Preview => "2022-03-01-preview",
+                ServiceVersion.V2022_05_01 => "2022-05-01",
                 _ => throw new NotSupportedException()
             };
 
             this.ConfigureLogging();
         }
+
+        /// <summary>
+        /// Gets the method used to interpret string offsets, which is always <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
+        /// </summary>
+        internal static StringIndexType DefaultStringIndexType { get; } = StringIndexType.Utf16CodeUnit;
     }
 }

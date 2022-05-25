@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Conversations
             {
                 switch (discriminator.GetString())
                 {
-                    case "CustomConversationResult": return CustomConversationalTaskResult.DeserializeCustomConversationalTaskResult(element);
+                    case "ConversationResult": return ConversationalTaskResult.DeserializeConversationalTaskResult(element);
                 }
             }
             AnalyzeConversationTaskResultsKind kind = default;

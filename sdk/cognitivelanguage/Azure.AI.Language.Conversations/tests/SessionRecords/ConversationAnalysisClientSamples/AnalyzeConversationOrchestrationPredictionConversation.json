@@ -1,59 +1,62 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "259",
+        "Content-Length": "269",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220417.1 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "359c042e250b45dedd0131701a9af744",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c1bcf089fef948176a588f2f388b22d3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
             "text": "Send an email to Carol about the tomorrow\u0027s demo",
-            "participantId": "1",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
           "projectName": "OrchScriptDeployed1",
-          "deploymentName": "production"
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2443c096-d636-4034-a0cb-34caeed752f6",
+        "apim-request-id": "f816b360-c840-4c4c-889e-7d9f3db09be9",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 17 Apr 2022 13:27:41 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
+        "Date": "Wed, 25 May 2022 20:44:27 GMT",
         "Pragma": "no-cache",
-        "request-id": "2443c096-d636-4034-a0cb-34caeed752f6",
+        "request-id": "f816b360-c840-4c4c-889e-7d9f3db09be9",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "128"
+        "x-envoy-upstream-service-time": "144"
       },
       "ResponseBody": {
-        "kind": "CustomConversationResult",
-        "results": {
+        "kind": "ConversationResult",
+        "result": {
           "query": "Send an email to Carol about the tomorrow\u0027s demo",
           "prediction": {
             "topIntent": "EmailIntent",
-            "projectKind": "workflow",
+            "projectKind": "Orchestration",
             "intents": {
               "EmailIntent": {
-                "confidenceScore": 0.78807205,
-                "targetKind": "conversation",
+                "confidenceScore": 0.7871714,
+                "targetProjectKind": "Conversation",
                 "result": {
                   "query": "Send an email to Carol about the tomorrow\u0027s demo",
                   "prediction": {
+                    "topIntent": "Setup",
+                    "projectKind": "Conversation",
                     "intents": [
                       {
                         "category": "Setup",
@@ -99,7 +102,6 @@
                         "offset": 17,
                         "length": 5,
                         "confidenceScore": 1,
-                        "resolutions": [],
                         "extraInformation": [
                           {
                             "extraInformationKind": "EntitySubtype",
@@ -117,8 +119,8 @@
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-04-18",
-                            "value": "2022-04-18"
+                            "timex": "2022-05-26",
+                            "value": "2022-05-26"
                           }
                         ],
                         "extraInformation": [
@@ -128,23 +130,21 @@
                           }
                         ]
                       }
-                    ],
-                    "topIntent": "Setup",
-                    "projectKind": "conversation"
+                    ]
                   }
                 }
               },
               "RestaurantIntent": {
-                "confidenceScore": 0.63531023,
-                "targetKind": "luis"
+                "confidenceScore": 0.6350032,
+                "targetProjectKind": "Luis"
               },
               "ChitChat-QnA": {
-                "confidenceScore": 0.5959919,
-                "targetKind": "question_answering"
+                "confidenceScore": 0.6044451,
+                "targetProjectKind": "QuestionAnswering"
               },
               "None": {
-                "confidenceScore": 0.15094617,
-                "targetKind": "non_linked"
+                "confidenceScore": 0.15003002,
+                "targetProjectKind": "NonLinked"
               }
             }
           }
@@ -153,10 +153,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
-    "RandomSeed": "819752152"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
+    "RandomSeed": "767275008"
   }
 }

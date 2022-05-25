@@ -6,17 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Input parameters necessary for a CustomConversation task. </summary>
-    public partial class CustomConversationTaskParameters
+    /// <summary> Input parameters necessary for a Conversation task. </summary>
+    public partial class ConversationTaskParameters
     {
-        /// <summary> Initializes a new instance of CustomConversationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of ConversationTaskParameters. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomConversationTaskParameters(string projectName, string deploymentName)
+        public ConversationTaskParameters(string projectName, string deploymentName)
         {
             if (projectName == null)
             {
@@ -29,6 +31,7 @@ namespace Azure.AI.Language.Conversations
 
             ProjectName = projectName;
             DeploymentName = deploymentName;
+            TargetProjectParameters = new ChangeTrackingDictionary<string, AnalysisParameters>();
         }
 
         /// <summary> The name of the project to use. </summary>
@@ -37,5 +40,11 @@ namespace Azure.AI.Language.Conversations
         public string DeploymentName { get; }
         /// <summary> If true, the service will return more detailed information in the response. </summary>
         public bool? Verbose { get; set; }
+        /// <summary> If true, the service will keep the query for further review. </summary>
+        public bool? IsLoggingEnabled { get; set; }
+        /// <summary> The name of a target project to forward the request to. </summary>
+        public string DirectTarget { get; set; }
+        /// <summary> A dictionary representing the parameters for each target project. </summary>
+        public IDictionary<string, AnalysisParameters> TargetProjectParameters { get; }
     }
 }

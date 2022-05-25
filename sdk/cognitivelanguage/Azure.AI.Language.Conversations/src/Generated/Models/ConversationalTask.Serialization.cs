@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class CustomConversationalTask : IUtf8JsonSerializable
+    public partial class ConversationalTask : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

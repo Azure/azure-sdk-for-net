@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    public partial class KnowledgeBaseAnswers
+    public partial class AnswersResult
     {
-        internal static KnowledgeBaseAnswers DeserializeKnowledgeBaseAnswers(JsonElement element)
+        internal static AnswersResult DeserializeAnswersResult(JsonElement element)
         {
             Optional<IReadOnlyList<KnowledgeBaseAnswer>> answers = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswers(Optional.ToList(answers));
+            return new AnswersResult(Optional.ToList(answers));
         }
     }
 }

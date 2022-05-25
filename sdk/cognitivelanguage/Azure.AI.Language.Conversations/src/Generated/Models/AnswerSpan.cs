@@ -30,6 +30,8 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Predicted text of answer span. </summary>
         public string Text { get; }
+        /// <summary> Predicted score of answer span, value ranges from 0 to 1. </summary>
+        public double? Confidence { get; }
         /// <summary> The answer span offset from the start of answer. </summary>
         public int? Offset { get; }
         /// <summary> The length of the answer span. </summary>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Language.Conversations

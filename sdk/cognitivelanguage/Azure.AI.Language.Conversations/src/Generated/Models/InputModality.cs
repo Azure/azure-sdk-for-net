@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> The modality (format) of ConversationItem (e.g., Text, Transcript). </summary>
+    /// <summary> Enumeration of supported conversational modalities. </summary>
     public readonly partial struct InputModality : IEquatable<InputModality>
     {
         private readonly string _value;
@@ -22,8 +22,11 @@ namespace Azure.AI.Language.Conversations
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string TranscriptValue = "transcript";
         private const string TextValue = "text";
 
+        /// <summary> transcript. </summary>
+        public static InputModality Transcript { get; } = new InputModality(TranscriptValue);
         /// <summary> text. </summary>
         public static InputModality Text { get; } = new InputModality(TextValue);
         /// <summary> Determines if two <see cref="InputModality"/> values are the same. </summary>

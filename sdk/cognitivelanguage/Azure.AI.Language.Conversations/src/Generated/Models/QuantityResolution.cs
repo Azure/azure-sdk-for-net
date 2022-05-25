@@ -7,7 +7,7 @@
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> represents resolutions for quantities. </summary>
+    /// <summary> Represents resolutions for quantities. </summary>
     public partial class QuantityResolution
     {
         /// <summary> Initializes a new instance of QuantityResolution. </summary>

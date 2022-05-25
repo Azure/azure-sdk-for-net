@@ -86,15 +86,16 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
 
-            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName)
+            ConversationTaskParameters conversationTaskParameters = new ConversationTaskParameters(project.ProjectName, project.DeploymentName)
             {
+                IsLoggingEnabled = options?.IsLoggingEnabled,
                 Verbose = options?.Verbose,
             };
 
             TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
 
             options ??= new AnalyzeConversationOptions(textConversationItem);
-            CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
+            ConversationalTask customConversationalTask = new ConversationalTask(options, conversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute("projectName", project.ProjectName);
@@ -125,15 +126,16 @@ namespace Azure.AI.Language.Conversations
             Argument.AssertNotNullOrEmpty(utterance, nameof(utterance));
             Argument.AssertNotNull(project, nameof(project));
 
-            CustomConversationTaskParameters customConversationTaskParameters = new CustomConversationTaskParameters(project.ProjectName, project.DeploymentName)
+            ConversationTaskParameters conversationTaskParameters = new ConversationTaskParameters(project.ProjectName, project.DeploymentName)
             {
+                IsLoggingEnabled = options?.IsLoggingEnabled,
                 Verbose = options?.Verbose,
             };
 
             TextConversationItem textConversationItem = new TextConversationItem("1", "1", utterance);
 
             options ??= new AnalyzeConversationOptions(textConversationItem);
-            CustomConversationalTask customConversationalTask = new CustomConversationalTask(options, customConversationTaskParameters);
+            ConversationalTask customConversationalTask = new ConversationalTask(options, conversationTaskParameters);
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
             scope.AddAttribute("projectName", project.ProjectName);

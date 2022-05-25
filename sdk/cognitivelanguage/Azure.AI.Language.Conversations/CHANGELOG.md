@@ -4,7 +4,16 @@
 
 ### Features Added
 
+* Only supported service version now 2022-05-01.
+
 ### Breaking Changes
+
+* Removed support for service versions 2021-11-01-preview and 2022-03-01-preview.
+* Renamed "CustomConversation" to just "Conversation", including `AnalyzeConversationTaskKind.Conversation`, `ConversationResult`, `ConversationTaskParameters`, etc.
+* Renamed `KnowledgeBaseAnswers` to `AnswersResult`.
+* Renamed "Orchestrator" to "Orchestration" including `OrchestrationPrediction`, etc.
+* Renamed `TargetKind` to `TargetProjectKind`.
+* Renamed "Workflow" to "Orchestration" including `ProjectKind.Workflow`, etc.
 
 ### Bugs Fixed
 

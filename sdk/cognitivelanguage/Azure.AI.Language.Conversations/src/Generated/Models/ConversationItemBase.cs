@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
@@ -13,31 +15,34 @@ namespace Azure.AI.Language.Conversations
     public partial class ConversationItemBase
     {
         /// <summary> Initializes a new instance of ConversationItemBase. </summary>
-        /// <param name="participantId"> The participant Id of a ConversationItem. </param>
-        /// <param name="id"> The Id of a ConversationItem. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantId"/> or <paramref name="id"/> is null. </exception>
-        public ConversationItemBase(string participantId, string id)
+        /// <param name="id"> The ID of a conversation item. </param>
+        /// <param name="participantId"> The participant ID of a conversation item. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="participantId"/> is null. </exception>
+        public ConversationItemBase(string id, string participantId)
         {
-            if (participantId == null)
-            {
-                throw new ArgumentNullException(nameof(participantId));
-            }
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
+            if (participantId == null)
+            {
+                throw new ArgumentNullException(nameof(participantId));
+            }
 
-            ParticipantId = participantId;
             Id = id;
+            ParticipantId = participantId;
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> The participant Id of a ConversationItem. </summary>
-        public string ParticipantId { get; }
-        /// <summary> The Id of a ConversationItem. </summary>
+        /// <summary> The ID of a conversation item. </summary>
         public string Id { get; }
-        /// <summary> The input language of a ConversationItem in BCP 47 language representation. </summary>
+        /// <summary> The participant ID of a conversation item. </summary>
+        public string ParticipantId { get; }
+        /// <summary> The override language of a conversation item in BCP 47 language representation. </summary>
         public string Language { get; set; }
-        /// <summary> The modality (format) of ConversationItem (e.g., Text, Transcript). </summary>
-        internal InputModality Modality { get; set; }
+        /// <summary> Enumeration of supported conversational modalities. </summary>
+        public InputModality? Modality { get; set; }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

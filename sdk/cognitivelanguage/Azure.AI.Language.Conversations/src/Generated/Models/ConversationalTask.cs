@@ -10,13 +10,13 @@ using System;
 namespace Azure.AI.Language.Conversations
 {
     /// <summary> The input for a custom conversation task. </summary>
-    public partial class CustomConversationalTask : AnalyzeConversationTask
+    public partial class ConversationalTask : AnalyzeConversationTask
     {
-        /// <summary> Initializes a new instance of CustomConversationalTask. </summary>
+        /// <summary> Initializes a new instance of ConversationalTask. </summary>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
-        /// <param name="parameters"> Input parameters necessary for a CustomConversation task. </param>
+        /// <param name="parameters"> Input parameters necessary for a Conversation task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public CustomConversationalTask(AnalyzeConversationOptions analysisInput, CustomConversationTaskParameters parameters)
+        public ConversationalTask(AnalyzeConversationOptions analysisInput, ConversationTaskParameters parameters)
         {
             if (analysisInput == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.AI.Language.Conversations
 
             AnalysisInput = analysisInput;
             Parameters = parameters;
-            Kind = AnalyzeConversationTaskKind.CustomConversation;
+            Kind = AnalyzeConversationTaskKind.Conversation;
         }
 
         /// <summary> The input ConversationItem and its optional parameters. </summary>
         public AnalyzeConversationOptions AnalysisInput { get; }
-        /// <summary> Input parameters necessary for a CustomConversation task. </summary>
-        public CustomConversationTaskParameters Parameters { get; }
+        /// <summary> Input parameters necessary for a Conversation task. </summary>
+        public ConversationTaskParameters Parameters { get; }
     }
 }

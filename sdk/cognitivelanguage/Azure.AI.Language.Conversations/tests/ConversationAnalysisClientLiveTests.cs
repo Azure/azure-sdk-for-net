@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -25,17 +23,17 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Conversation, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Setup", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("Setup", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            var conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
             Assert.IsNotNull(conversationPrediction);
 
             // assert - not empty
@@ -52,28 +50,28 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("EmailIntent", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("EmailIntent", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as ConversationTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as ConversationTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetKind.Conversation, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.Conversation, topIntent.TargetProjectKind);
 
             // assert entities and intents
             Assert.IsNotEmpty(topIntent.Result.Prediction.Entities);
@@ -89,28 +87,28 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("RestaurantIntent", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("RestaurantIntent", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as LuisTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as LuisTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetKind.Luis, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.Luis, topIntent.TargetProjectKind);
         }
 
         [RecordedTest]
@@ -122,28 +120,28 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Workflow, customConversationalTaskResult.Results.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("ChitChat-QnA", customConversationalTaskResult.Results.Prediction.TopIntent);
+            Assert.AreEqual("ChitChat-QnA", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Results.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
-            Assert.AreEqual(TargetKind.QuestionAnswering, topIntent.TargetKind);
+            Assert.AreEqual(TargetProjectKind.QuestionAnswering, topIntent.TargetProjectKind);
 
             // assert - top intent answers
             Assert.IsNotEmpty(topIntent.Result.Answers);

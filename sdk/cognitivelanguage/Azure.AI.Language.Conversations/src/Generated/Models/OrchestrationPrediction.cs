@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> This represents the prediction result of an Orchestrator project. </summary>
-    public partial class OrchestratorPrediction : BasePrediction
+    /// <summary> This represents the prediction result of an Orchestration project. </summary>
+    public partial class OrchestrationPrediction : BasePrediction
     {
-        /// <summary> Initializes a new instance of OrchestratorPrediction. </summary>
+        /// <summary> Initializes a new instance of OrchestrationPrediction. </summary>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="intents"/> is null. </exception>
-        internal OrchestratorPrediction(IReadOnlyDictionary<string, TargetIntentResult> intents)
+        internal OrchestrationPrediction(IReadOnlyDictionary<string, TargetIntentResult> intents)
         {
             if (intents == null)
             {
@@ -24,14 +24,14 @@ namespace Azure.AI.Language.Conversations
             }
 
             Intents = intents;
-            ProjectKind = Conversations.ProjectKind.Workflow;
+            ProjectKind = Conversations.ProjectKind.Orchestration;
         }
 
-        /// <summary> Initializes a new instance of OrchestratorPrediction. </summary>
+        /// <summary> Initializes a new instance of OrchestrationPrediction. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent&apos;s value also contains the actual response from the target project. </param>
-        internal OrchestratorPrediction(ProjectKind projectKind, string topIntent, IReadOnlyDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent)
+        internal OrchestrationPrediction(ProjectKind projectKind, string topIntent, IReadOnlyDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent)
         {
             Intents = intents;
             ProjectKind = projectKind;

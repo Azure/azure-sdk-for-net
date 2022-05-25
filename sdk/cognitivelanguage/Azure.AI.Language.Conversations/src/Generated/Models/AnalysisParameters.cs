@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> The type of a target service. </summary>
-        internal TargetKind TargetKind { get; set; }
+        internal TargetProjectKind TargetProjectKind { get; set; }
         /// <summary> The API version to use when call a specific target service. </summary>
         public string ApiVersion { get; set; }
     }

@@ -1,56 +1,57 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "254",
+        "Content-Length": "264",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220417.1 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "b3f2e9d24b17f0a7436a26d8201b1a6c",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2b1fcc757ac52d3538dde08a6cb7f96e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
             "text": "Reserve a table for 2 at the Italian restaurant.",
-            "participantId": "1",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
           "projectName": "OrchScriptDeployed1",
-          "deploymentName": "production"
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "91cfe628-49ad-44f8-b50c-04225c3c72a6",
+        "apim-request-id": "ea8adc8e-c9b6-4c94-ae3b-41c043b0f7bb",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 17 Apr 2022 13:27:41 GMT",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
+        "Date": "Wed, 25 May 2022 20:44:28 GMT",
         "Pragma": "no-cache",
-        "request-id": "91cfe628-49ad-44f8-b50c-04225c3c72a6",
+        "request-id": "ea8adc8e-c9b6-4c94-ae3b-41c043b0f7bb",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "63"
+        "x-envoy-upstream-service-time": "170"
       },
       "ResponseBody": {
-        "kind": "CustomConversationResult",
-        "results": {
+        "kind": "ConversationResult",
+        "result": {
           "query": "Reserve a table for 2 at the Italian restaurant.",
           "prediction": {
             "topIntent": "RestaurantIntent",
-            "projectKind": "workflow",
+            "projectKind": "Orchestration",
             "intents": {
               "RestaurantIntent": {
-                "confidenceScore": 0.9421582,
-                "targetKind": "luis",
+                "confidenceScore": 0.94185126,
+                "targetProjectKind": "Luis",
                 "result": {
                   "query": "Reserve a table for 2 at the Italian restaurant.",
                   "prediction": {
@@ -126,16 +127,16 @@
                 }
               },
               "ChitChat-QnA": {
-                "confidenceScore": 0.62275743,
-                "targetKind": "question_answering"
+                "confidenceScore": 0.6312106,
+                "targetProjectKind": "QuestionAnswering"
               },
               "EmailIntent": {
-                "confidenceScore": 0.2884571,
-                "targetKind": "conversation"
+                "confidenceScore": 0.2875565,
+                "targetProjectKind": "Conversation"
               },
               "None": {
-                "confidenceScore": 0.20781139,
-                "targetKind": "non_linked"
+                "confidenceScore": 0.20689525,
+                "targetProjectKind": "NonLinked"
               }
             }
           }
@@ -144,10 +145,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
-    "RandomSeed": "465851090"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
+    "RandomSeed": "1150164599"
   }
 }

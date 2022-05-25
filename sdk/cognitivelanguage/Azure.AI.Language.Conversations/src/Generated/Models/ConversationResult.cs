@@ -14,21 +14,15 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary> Initializes a new instance of ConversationResult. </summary>
         /// <param name="query"> The same query given in request. </param>
-        /// <param name="prediction"> The predicted result for the query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="prediction"/> is null. </exception>
-        internal ConversationResult(string query, ConversationPrediction prediction)
+        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
+        internal ConversationResult(string query)
         {
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(query));
             }
-            if (prediction == null)
-            {
-                throw new ArgumentNullException(nameof(prediction));
-            }
 
             Query = query;
-            Prediction = prediction;
         }
 
         /// <summary> Initializes a new instance of ConversationResult. </summary>

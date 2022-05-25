@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations
         internal static LuisTargetIntentResult DeserializeLuisTargetIntentResult(JsonElement element)
         {
             Optional<object> result = default;
-            TargetKind targetKind = default;
+            TargetProjectKind targetProjectKind = default;
             Optional<string> apiVersion = default;
             double confidenceScore = default;
             foreach (var property in element.EnumerateObject())
@@ -30,9 +30,9 @@ namespace Azure.AI.Language.Conversations
                     result = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("targetKind"))
+                if (property.NameEquals("targetProjectKind"))
                 {
-                    targetKind = new TargetKind(property.Value.GetString());
+                    targetProjectKind = new TargetProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations
                     continue;
                 }
             }
-            return new LuisTargetIntentResult(targetKind, apiVersion.Value, confidenceScore, result.Value);
+            return new LuisTargetIntentResult(targetProjectKind, apiVersion.Value, confidenceScore, result.Value);
         }
     }
 }
