@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.Compute
             return new OSVersionCollection(Client, Id, location);
         }
 
-        /// <summary> Gets a collection of OSFamilyResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <returns> An object representing collection of OSFamilyResources and their operations over a OSFamilyResource. </returns>
-        public virtual OSFamilyCollection GetOSFamilies(string location)
+        /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
+        public virtual CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(AzureLocation location)
         {
-            return new OSFamilyCollection(Client, Id, location);
+            return new CloudServiceOSFamilyCollection(Client, Id, location);
         }
 
         /// <summary>

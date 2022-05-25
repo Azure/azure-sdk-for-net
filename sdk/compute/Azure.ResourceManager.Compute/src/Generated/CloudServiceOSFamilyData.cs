@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the OSFamily data model. </summary>
-    public partial class OSFamilyData : ResourceData
+    /// <summary> A class representing the CloudServiceOSFamily data model. </summary>
+    public partial class CloudServiceOSFamilyData : ResourceData
     {
-        /// <summary> Initializes a new instance of OSFamilyData. </summary>
-        internal OSFamilyData()
+        /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
+        internal CloudServiceOSFamilyData()
         {
         }
 
-        /// <summary> Initializes a new instance of OSFamilyData. </summary>
+        /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS family properties. </param>
-        internal OSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, OSFamilyProperties properties) : base(id, name, resourceType, systemData)
+        internal CloudServiceOSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, OSFamilyProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> OS family properties. </summary>
         public OSFamilyProperties Properties { get; }
     }

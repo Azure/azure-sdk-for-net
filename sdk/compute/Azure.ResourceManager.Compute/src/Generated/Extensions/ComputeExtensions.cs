@@ -175,17 +175,13 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetOSVersions(location).Get(osVersionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OSFamilyResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An object representing collection of OSFamilyResources and their operations over a OSFamilyResource. </returns>
-        public static OSFamilyCollection GetOSFamilies(this SubscriptionResource subscriptionResource, string location)
+        /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
+        public static CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(subscriptionResource).GetOSFamilies(location);
+            return GetExtensionClient(subscriptionResource).GetCloudServiceOSFamilies(location);
         }
 
         /// <summary>
@@ -197,12 +193,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OSFamilyResource>> GetOSFamilyAsync(this SubscriptionResource subscriptionResource, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetCloudServiceOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,12 +210,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<OSFamilyResource> GetOSFamily(this SubscriptionResource subscriptionResource, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(this SubscriptionResource subscriptionResource, AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetOSFamilies(location).Get(osFamilyName, cancellationToken);
+            return subscriptionResource.GetCloudServiceOSFamilies(location).Get(osFamilyName, cancellationToken);
         }
 
         /// <summary>
@@ -2887,20 +2883,20 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region OSFamilyResource
+        #region CloudServiceOSFamilyResource
         /// <summary>
-        /// Gets an object representing an <see cref="OSFamilyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OSFamilyResource.CreateResourceIdentifier" /> to create an <see cref="OSFamilyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceOSFamilyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceOSFamilyResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSFamilyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSFamilyResource" /> object. </returns>
-        public static OSFamilyResource GetOSFamilyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceOSFamilyResource" /> object. </returns>
+        public static CloudServiceOSFamilyResource GetCloudServiceOSFamilyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OSFamilyResource.ValidateResourceId(id);
-                return new OSFamilyResource(client, id);
+                CloudServiceOSFamilyResource.ValidateResourceId(id);
+                return new CloudServiceOSFamilyResource(client, id);
             }
             );
         }

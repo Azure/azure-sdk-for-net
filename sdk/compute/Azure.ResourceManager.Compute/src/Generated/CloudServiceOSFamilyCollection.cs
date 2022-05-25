@@ -21,33 +21,31 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OSFamilyResource" /> and their operations.
-    /// Each <see cref="OSFamilyResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="OSFamilyCollection" /> instance call the GetOSFamilies method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="CloudServiceOSFamilyResource" /> and their operations.
+    /// Each <see cref="CloudServiceOSFamilyResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="CloudServiceOSFamilyCollection" /> instance call the GetCloudServiceOSFamilies method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class OSFamilyCollection : ArmCollection, IEnumerable<OSFamilyResource>, IAsyncEnumerable<OSFamilyResource>
+    public partial class CloudServiceOSFamilyCollection : ArmCollection, IEnumerable<CloudServiceOSFamilyResource>, IAsyncEnumerable<CloudServiceOSFamilyResource>
     {
-        private readonly ClientDiagnostics _osFamilyCloudServiceOperatingSystemsClientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _osFamilyCloudServiceOperatingSystemsRestClient;
-        private readonly string _location;
+        private readonly ClientDiagnostics _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient;
+        private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="OSFamilyCollection"/> class for mocking. </summary>
-        protected OSFamilyCollection()
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceOSFamilyCollection"/> class for mocking. </summary>
+        protected CloudServiceOSFamilyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OSFamilyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceOSFamilyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        internal OSFamilyCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
+        internal CloudServiceOSFamilyCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
-            _osFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSFamilyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OSFamilyResource.ResourceType, out string osFamilyCloudServiceOperatingSystemsApiVersion);
-            _osFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, osFamilyCloudServiceOperatingSystemsApiVersion);
+            _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceOSFamilyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CloudServiceOSFamilyResource.ResourceType, out string cloudServiceOSFamilyCloudServiceOperatingSystemsApiVersion);
+            _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceOSFamilyCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,18 +66,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public virtual async Task<Response<OSFamilyResource>> GetAsync(string osFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceOSFamilyResource>> GetAsync(string osFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Get");
+            using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, new AzureLocation(_location), osFamilyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -97,18 +95,18 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
-        public virtual Response<OSFamilyResource> Get(string osFamilyName, CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceOSFamilyResource> Get(string osFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Get");
+            using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.Get");
             scope.Start();
             try
             {
-                var response = _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken);
+                var response = _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, new AzureLocation(_location), osFamilyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,17 +121,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_ListOSFamilies
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OSFamilyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OSFamilyResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CloudServiceOSFamilyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CloudServiceOSFamilyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OSFamilyResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CloudServiceOSFamilyResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _osFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -141,14 +139,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<OSFamilyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CloudServiceOSFamilyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _osFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -165,17 +163,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_ListOSFamilies
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OSFamilyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OSFamilyResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CloudServiceOSFamilyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CloudServiceOSFamilyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<OSFamilyResource> FirstPageFunc(int? pageSizeHint)
+            Page<CloudServiceOSFamilyResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _osFamilyCloudServiceOperatingSystemsRestClient.ListOSFamilies(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamilies(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -183,14 +181,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<OSFamilyResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CloudServiceOSFamilyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.GetAll");
+                using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _osFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.ListOSFamiliesNextPage(nextLink, Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceOSFamilyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,11 +212,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Exists");
+            using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, new AzureLocation(_location), osFamilyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,11 +239,11 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNullOrEmpty(osFamilyName, nameof(osFamilyName));
 
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyCollection.Exists");
+            using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, _location, osFamilyName, cancellationToken: cancellationToken);
+                var response = _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, new AzureLocation(_location), osFamilyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,7 +253,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<OSFamilyResource> IEnumerable<OSFamilyResource>.GetEnumerator()
+        IEnumerator<CloudServiceOSFamilyResource> IEnumerable<CloudServiceOSFamilyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -265,7 +263,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<OSFamilyResource> IAsyncEnumerable<OSFamilyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CloudServiceOSFamilyResource> IAsyncEnumerable<CloudServiceOSFamilyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

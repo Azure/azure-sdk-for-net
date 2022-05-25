@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A Class representing an OSFamily along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OSFamilyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOSFamilyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetOSFamily method.
+    /// A Class representing a CloudServiceOSFamily along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudServiceOSFamilyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceOSFamilyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCloudServiceOSFamily method.
     /// </summary>
-    public partial class OSFamilyResource : ArmResource
+    public partial class CloudServiceOSFamilyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OSFamilyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSFamilyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osFamilyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _osFamilyCloudServiceOperatingSystemsClientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _osFamilyCloudServiceOperatingSystemsRestClient;
-        private readonly OSFamilyData _data;
+        private readonly ClientDiagnostics _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient;
+        private readonly CloudServiceOSFamilyData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="OSFamilyResource"/> class for mocking. </summary>
-        protected OSFamilyResource()
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceOSFamilyResource"/> class for mocking. </summary>
+        protected CloudServiceOSFamilyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OSFamilyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CloudServiceOSFamilyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OSFamilyResource(ArmClient client, OSFamilyData data) : this(client, data.Id)
+        internal CloudServiceOSFamilyResource(ArmClient client, CloudServiceOSFamilyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OSFamilyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceOSFamilyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSFamilyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CloudServiceOSFamilyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _osFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string osFamilyCloudServiceOperatingSystemsApiVersion);
-            _osFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, osFamilyCloudServiceOperatingSystemsApiVersion);
+            _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cloudServiceOSFamilyCloudServiceOperatingSystemsApiVersion);
+            _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceOSFamilyCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual OSFamilyData Data
+        public virtual CloudServiceOSFamilyData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_GetOSFamily
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OSFamilyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceOSFamilyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyResource.Get");
+            using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyResource.Get");
             scope.Start();
             try
             {
-                var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_GetOSFamily
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OSFamilyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceOSFamilyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamilyResource.Get");
+            using var scope = _cloudServiceOSFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSFamilyResource.Get");
             scope.Start();
             try
             {
-                var response = _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cloudServiceOSFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
