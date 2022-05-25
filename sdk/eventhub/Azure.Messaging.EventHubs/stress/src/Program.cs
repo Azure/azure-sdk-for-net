@@ -251,7 +251,7 @@ public class Program
     /// <param name="jobIndex">If this is a single-role run, this is the value used to determine which role should be run.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
-    private static async Task _runRole(string role, TestConfiguration testConfiguration, RoleConfiguration roleConfiguration, Metrics metrics, CancellationToken cancellationToken)
+    private static async Task RunRole(string role, TestConfiguration testConfiguration, RoleConfiguration roleConfiguration, Metrics metrics, CancellationToken cancellationToken)
     {
         if (role == RoleConfiguration.Publisher)
         {
