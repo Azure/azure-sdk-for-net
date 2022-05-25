@@ -294,7 +294,7 @@ public class Program
     ///
     /// <param name="metrics">The <see cref="Metrics" /> instance to use to send metrics to Application Insights.</param>
     ///
-    private static void _updateEnvironmentStatistics(Metrics metrics)
+    private static void UpdateEnvironmentStatistics(Metrics metrics)
     {
         metrics.Client.GetMetric(metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
         metrics.Client.GetMetric(metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
