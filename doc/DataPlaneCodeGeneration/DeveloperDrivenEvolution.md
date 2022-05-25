@@ -61,6 +61,8 @@ public virtual async Task<Response> CreateMetricFeedbackAsync(MetricFeedback fee
 ```
 ### Replace output value
 - Replace the return value `Response` with `Response<T>` (`T` is your wanted output type, e.g., `MetricFeedback`).
+- Replace the return value `Operation<BinaryData>` with `Operation<T>` (`T` is your wanted output type, e.g., `MetricFeedback`).
+- Keep the return value `Operation` without any change (This means there is no return value from the response).
 
 After these steps, your convenience method signature will be like:
 ```C#
@@ -210,4 +212,74 @@ namespace Azure.AI.MetricsAdvisor
 ```
 
 ### Implement LRO method
-**Generated code before (Generated/MetricsAdvisorClient.cs):**
+#### Case: With RequestContent but no return value
+**Generated code before (Generated/DeviceManagementClient.cs):**
+```C#
+namespace Azure.IoT.DeviceUpdate
+{
+    public partial class DeviceManagementClient
+    {
+        public virtual Operation ImportDevices(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.ImportDevices");
+        }
+    }
+}
+```
+**Improve the LRO method ({Other manual folder}/DeviceManagementClient.cs):**
+```C#
+namespace Azure.IoT.DeviceUpdate
+{
+    public partial class DeviceManagementClient
+    {
+        // The return type is still Operation because no response value
+        public virtual Operation ImportDevices(WaitUntil waitUntil, string action, ImportType type, CancellationToken cancellationToken = default)
+        {
+            // We don't open a new scope here because it is just a wrapper
+            // Convert model to binary content
+            RequestContent requestContent = ImportType.ToRequestContent(type);
+
+            // Call protocol method and return the operation
+            return await ImportDevices(waitUntil, action, requestContent, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+        }
+    }
+}
+```
+#### Case: Without RequestContent and return value
+There is no model returned and no model as an input. Therefore, don't add a convenience method as a wrapper.
+#### Case: With a return value
+**Generated code before (Generated/DeviceManagementClient.cs):**
+```C#
+namespace Azure.IoT.DeviceUpdate
+{
+    public partial class DeviceManagementClient
+    {
+        public virtual Operation<Response> ImportDevices(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.ImportDevices");
+        }
+    }
+}
+```
+**Improve the LRO method ({Other manual folder}/DeviceManagementClient.cs):**
+```C#
+namespace Azure.IoT.DeviceUpdate
+{
+    public partial class DeviceManagementClient
+    {
+        // Can use same method name here
+        public virtual Operation<OutputType> ImportDevices(WaitUntil waitUntil, string action, ImportType type, CancellationToken cancellationToken = default)
+        {
+            // We don't open a new scope here because it is just a wrapper
+            // Convert model to binary content
+            RequestContent requestContent = ImportType.ToRequestContent(type);
+
+            // Call protocol method
+            var lro = await ImportDevices(waitUntil, action, requestContent, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+
+            // Convert Operation<BinaryData> to Operation<OutputType>
+            return ProtocolOperationHelpers.Convert(lro, r => (OutputType)r, ClientDiagnostics, "DeviceManagementClient.ImportDevices");
+        }
+    }
+}
+```
