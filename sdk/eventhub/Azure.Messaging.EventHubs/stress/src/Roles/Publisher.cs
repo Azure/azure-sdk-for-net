@@ -42,8 +42,8 @@ internal class Publisher
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
     public Publisher(PublisherConfiguration publisherConfiguration,
-                        TestConfiguration testConfiguration,
-                        Metrics metrics)
+                     TestConfiguration testConfiguration,
+                     Metrics metrics)
     {
         _testConfiguration = testConfiguration;
         _publisherconfiguration = publisherConfiguration;
