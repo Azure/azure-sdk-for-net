@@ -309,7 +309,7 @@ public class Program
     /// <param name="testName">Which test(s) for which the resource is needed.</param>
     /// <param name="currentValue">The current value of the resource.</param>
     ///
-    private static string _promptForResources(string resourceName, string testName, string currentValue, bool interactive)
+    private static string PromptForResources(string resourceName, string testName, string currentValue, bool interactive)
     {
         // If the resource hasn't been provided already, wait for it to be provided through the CLI
         if (interactive)
