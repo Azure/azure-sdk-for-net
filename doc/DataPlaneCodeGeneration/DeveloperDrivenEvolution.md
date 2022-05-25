@@ -4,6 +4,7 @@ Convenience API is an additive layer on top of protocol method so it could produ
 To add a convenience API that takes and returns strongly-typed input and output models instead of raw JSON, steps are:
 1. [Create the models](#create-the-models)
 2. [Create the convenience method with new signature](#create-the-convenience-method-with-new-signature)
+- [Check if convenience method needs](#check-if-convenience-method-needs)
 - [Replace input parameters](#replace-input-parameters)
 - [Replace output value](#replace-output-value)
 - [Rename method if needed](#rename-method-if-needed)
@@ -48,6 +49,8 @@ Below is how you could create the convenience signature from protocol method. He
 public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null);
 ```
 You should do the following steps to create the convenience method signature:
+### Check if convenience method needs
+You don't need to add a convenience method if there is no model returned and no model as an input. Under this condition, you could skip the following steps.
 ### Replace input parameters
 - Replace the parameter `RequestContext` with an optional `CancellationToken` with default value.
 - If there is an input parameter `RequestContent`, replace it with a wanted input type (e.g., `MetricFeedback`).
@@ -205,3 +208,6 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
+
+### Implement LRO method
+**Generated code before (Generated/MetricsAdvisorClient.cs):**
