@@ -255,22 +255,35 @@
         <Parameter Name="context" Type="Azure.RequestContext" />
       </Parameters>
       <Docs>
-        <param name="content"> The content to send as the body of the request. The details of the content are below in the remarks.</param>
-        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        <summary> Creates an instance of a scan. </summary>
+        <param name="content">The content to send as the body of the request. The
+             details of the content are below in the remarks.</param>
+        <param name="context">The request context, which can override default behaviors
+             on the request on a per-call basis.</param>
+        <summary>
+             Creates an instance of a scan.
+             </summary>
         <returns> The details of the response are below in the remarks.</returns>
         <remarks>
-             Below is the JSON schema for the request and response payloads, as well as samples showing how to format these payloads in .NET.<br />
-             Additional information can be found in the Purview service REST API documentation: <a href="https://docs.microsoft.com/en-us/rest/api/purview/">https://docs.microsoft.com/en-us/rest/api/purview/</a><br /><br />
-             This method takes one of the scan types below as a payload. Please select a scan type to view the schema for this type.<br /><a href="AzureSubscriptionCredential">AzureSubscriptionCredential</a><br /><a href="AzureSubscriptionMsi">AzureSubscriptionMsi</a><br /><a href="AzureResourceGroupCredential">AzureResourceGroupCredential</a><br /><a href="AzureResourceGroupMsi">AzureResourceGroupMsi</a><br /><a href="AzureSynapseWorkspaceCredential">AzureSynapseWorkspaceCredential</a><br /><a href="AmazonS3Credential">AmazonS3Credential</a><br /><a href="See More...">See More...</a># ~50+ types<br /><br />
+          <para>
+             Below is the JSON schema for the request and response payloads.
+             </para>
+          <para>
+             Additional information can be found in the Purview service REST API
+             documentation: <see href="https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/scans/create-or-update" /></para>
+          <para>
+             This method takes one of the scan JSON object below as a payload. Please
+             select a scan JSON object to view the schema for this.
+             </para>
             
-             Schema for AzureSubscriptionCredential <c>Request Body</c>:
-             <code>
+             Request Body:
+             <details><summary>AzureSubscriptionCredential</summary>
+             Schema for AzureSubscriptionCredential <c>Request Body</c>: 
+             <code><![CDATA[
              {
              # Base type properties
                id: string, # Optional. <Description>Scan id.</Description>
                name: string, # Optional.
-               kind: # Required. "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+               kind: # Required. "AzureSubscriptionCredential"
                scanResults: [
                  {
                    parentId: string, # Optional.
@@ -286,7 +299,7 @@
                          code: number # Optional.
                        }
                      ],
-                     exceptionCountMap: # Optional. Dictionary&lt;string, number&gt;
+                     exceptionCountMap: # Optional. Dictionary<string, number>
                    },
                    startTime: string (ISO 8601 Format), # Optional.
                    queuedTime: string (ISO 8601 Format), # Optional.
@@ -334,16 +347,14 @@
                      credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
                    }
                },
-             }
-             </code><br />
-            
-             Schema for AmazonS3Credential <c>Request Body</c>:
-             <code>
+             }]]></code></details><details><summary>AmazonS3Credential</summary>
+             Schema for AmazonS3Credential <c>Request Body</c>: 
+             <code><![CDATA[
              {
              # Base type properties
                id: string, # Optional. <Description>Scan id.</Description>
                name: string, # Optional.
-               kind: # Required. "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+               kind: # Required. "AmazonS3Credential"
                scanResults: [
                  {
                    parentId: string, # Optional.
@@ -359,7 +370,7 @@
                          code: number # Optional.
                        }
                      ],
-                     exceptionCountMap: # Optional. Dictionary&lt;string, number&gt;
+                     exceptionCountMap: # Optional. Dictionary<string, number>
                    },
                    startTime: string (ISO 8601 Format), # Optional.
                    queuedTime: string (ISO 8601 Format), # Optional.
@@ -407,19 +418,18 @@
                    }
                  roleARN: string # Optional.
                },
-             }
-             </code>
-             ...<br />
-             ...<br />
-             ...<br />
-             ...<br />
-             Schema for AmazonS3Credential <c>Response Body</c>:
-             <code>
+             }]]></code></details>
+             ~+50 more JSON objects<br /><br />
+             
+             Response Body: 
+             <details><summary>AmazonS3Credential</summary>
+             Schema for AmazonS3Credential <c>Response Body</c>: 
+             <code><![CDATA[
              {
              # Base type properties
                id: string, # Optional. <Description>Scan id.</Description>
                name: string, # Optional.
-               kind: # Required. "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+               kind: # Required. "AmazonS3Credential" 
                scanResults: [
                  {
                    parentId: string, # Optional.
@@ -435,7 +445,7 @@
                          code: number # Optional.
                        }
                      ],
-                     exceptionCountMap: # Optional. Dictionary&lt;string, number&gt;
+                     exceptionCountMap: # Optional. Dictionary<string, number>
                    },
                    startTime: string (ISO 8601 Format), # Optional.
                    queuedTime: string (ISO 8601 Format), # Optional.
@@ -483,25 +493,93 @@
                    }
                  roleARN: string # Optional.
                },
-             }
-             </code>
-             ...<br />
-             ...<br />
-             ...<br />
-             ...<br /><c>Error Response</c>:
-             <para>
-             We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response.
-             </para></remarks>
+             }]]></code></details><details><summary>AzureSubscriptionCredential</summary>
+             Schema for AzureSubscriptionCredential <c>Response Body</c>: 
+             <code><![CDATA[
+             {
+             # Base type properties
+               id: string, # Optional. <Description>Scan id.</Description>
+               name: string, # Optional.
+               kind: # Required. "AzureSubscriptionCredential"
+               scanResults: [
+                 {
+                   parentId: string, # Optional.
+                   id: string, # Optional.
+                   resourceId: string, # Optional.
+                   status: string, # Optional.
+                   assetsDiscovered: number, # Optional.
+                   assetsClassified: number, # Optional.
+                   diagnostics: {
+                     notifications: [
+                       {
+                         message: string, # Optional.
+                         code: number # Optional.
+                       }
+                     ],
+                     exceptionCountMap: # Optional. Dictionary<string, number>
+                   },
+                   startTime: string (ISO 8601 Format), # Optional.
+                   queuedTime: string (ISO 8601 Format), # Optional.
+                   pipelineStartTime: string (ISO 8601 Format), # Optional.
+                   endTime: string (ISO 8601 Format), # Optional.
+                   scanRulesetVersion: number, # Optional.
+                   scanRulesetType: # Optional. "Custom" | "System",
+                   scanLevelType: # Optional. "Full" | "Incremental",
+                   errorMessage: string, # Optional.
+                   error: {
+                     code: string, # Optional.
+                     message: string, # Optional.
+                     target: string, # Optional.
+                     details: [
+                       {
+                         code: string, # Optional.
+                         message: string, # Optional.
+                         target: string, # Optional.
+                         details: [ErrorModel] # Optional.
+                       }
+                     ]
+                   },
+                   runType: string, # Optional.
+                   dataSourceType: # Optional. "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                   }
+               ]
+             # Derived type properties
+               properties: {
+                 scanRulesetName: string, # Optional.
+                 scanRulesetType: # Optional. "Custom" | "System",
+                 collection: {
+                     lastModifiedAt: string (ISO 8601 Format), # Optional.
+                     referenceName: string, # Optional.
+                     type: string, # Optional.
+                   }
+                 workers: number # Optional.
+                 createdAt: string (ISO 8601 Format), # Optional.
+                 lastModifiedAt: string (ISO 8601 Format), # Optional.
+                 connectedVia: {
+                     referenceName: string, # Optional.
+                   }
+                 resourceTypes: string # Optional.
+                 credential: { # Required.
+                     referenceName: string, # Required.
+                     credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
+                   }
+               },
+             }]]></code></details>
+             ~+50 more JSON objects<br /><br />
+             
+             Error Response: 
+             <p>
+             We throw <see href="RequestFailedException" /> in case of error response. 
+             </p></remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="content" /> is null. </exception>
-        <exception cref="T:Azure.RequestFailedException"> Thrown in case of error response.</exception>
+          <paramref name="content" /> is null.</exception>
+        <exception cref="T:Azure.RequestFailedException">Thrown in case of error response.</exception>
         <example>
-             This sample shows how to call CreateOrUpdate with required parameters
-             <code>
+             This sample shows how to call CreateOrUpdate with required parameters <code lang="C#"><![CDATA[
              var credential = new DefaultAzureCredential();
              var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
              var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
-             
+              
              var data = new
              {
                  kind = "AmazonS3Credential",
@@ -515,18 +593,15 @@
                   }
              };
              Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-             JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-             Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
-             Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
-             Console.WriteLine(jsonResponse.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());
-             </code>
-             
-             This sample shows how to call CreateOrUpdate with all the parameters
-             <code>
+             JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+             Console.WriteLine(result.GetProperty("kind").GetString());
+             Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
+             Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());]]></code>
+             This sample shows how to call CreateOrUpdate with all the parameters <code lang="C#"><![CDATA[
              var credential = new DefaultAzureCredential();
              var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
              var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
-             
+              
              var data = new
              {
                  id = "test-id",
@@ -552,7 +627,7 @@
                                          code =  3423
                                      }
                                  },
-                                 exceptionCountMap = new Dictionary&lt;string, int&gt;(){{ "exceptionCountMapKey1", 4243}},
+                                 exceptionCountMap = new Dictionary<string, int>(){{ "exceptionCountMapKey1", 4243}},
                              },
                              startTime = "2022-05-10T13:57:31.2311892-04:00",
                              queuedTime = "2022-05-10T14:57:31.2311892-04:00",
@@ -613,12 +688,12 @@
                   },
              };
              Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-             JsonElement jsonResponse = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-             Console.WriteLine(jsonResponse.GetProperty("id").GetString());
-             Console.WriteLine(jsonResponse.GetProperty("name").GetString());
-             Console.WriteLine(jsonResponse.GetProperty("kind").GetString());
+             JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+             Console.WriteLine(result.GetProperty("id").GetString());
+             Console.WriteLine(result.GetProperty("name").GetString());
+             Console.WriteLine(result.GetProperty("kind").GetString());
              ....
-             </code></example>
+             ]]></code></example>
       </Docs>
     </Member>
     <Member MemberName="CreateOrUpdateAsync">
@@ -645,13 +720,15 @@
         <Parameter Name="context" Type="Azure.RequestContext" />
       </Parameters>
       <Docs>
-        <param name="content"> The content to send as the body of the request. </param>
-        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        <summary> Creates an instance of a scan. </summary>
+        <param name="content">The content to send as the body of the request.</param>
+        <param name="context">The request context, which can override default behaviors
+            on the request on a per-call basis.</param>
+        <summary>
+            Creates an instance of a scan.
+            </summary>
         <returns>To be added.</returns>
         <remarks>
-            Schema for <c>Request Body</c>:
-            <code>{
+            Schema for <c>Request Body</c>: <code><![CDATA[{
               id: string,
               name: string,
               kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi" (required),
@@ -670,7 +747,7 @@
                         code: number
                       }
                     ],
-                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                    exceptionCountMap: Dictionary<string, number>
                   },
                   startTime: string (ISO 8601 Format),
                   queuedTime: string (ISO 8601 Format),
@@ -697,10 +774,8 @@
                   dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
                 }
               ]
-            }
-            </code>
-            Schema for <c>Response Body</c>:
-            <code>{
+            }]]></code>
+             Schema for <c>Response Body</c>: <code><![CDATA[{
               id: string,
               name: string,
               kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
@@ -719,7 +794,7 @@
                         code: number
                       }
                     ],
-                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                    exceptionCountMap: Dictionary<string, number>
                   },
                   startTime: string (ISO 8601 Format),
                   queuedTime: string (ISO 8601 Format),
@@ -746,10 +821,8 @@
                   dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
                 }
               ]
-            }
-            </code>
-            Schema for <c>Response Error</c>:
-            <code>{
+            }]]></code>
+             Schema for <c>Response Error</c>: <code><![CDATA[{
               error: {
                 code: string,
                 message: string,
@@ -763,10 +836,10 @@
                   }
                 ]
               }
-            }
-            </code></remarks>
+            }]]></code></remarks>
         <exception cref="T:System.ArgumentNullException">
-          <paramref name="content" /> is null. </exception>
+          <paramref name="content" /> is
+            null.</exception>
       </Docs>
     </Member>
     <Member MemberName="CreateOrUpdateFilter">

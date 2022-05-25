@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <!--   VSdocman config file for current project/solution.-->
+  <activeProfile>default</activeProfile>
+  <appSettings>
+    <add key="VBdocman_comNonCommented"><![CDATA[-1]]></add>
+    <add key="VBdocman_regexFilters"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<filters />]]></add>
+    <add key="VBdocman_customVar1"><![CDATA[]]></add>
+    <add key="VBdocman_comInterface"><![CDATA[-1]]></add>
+    <add key="VBdocman_outputPath"><![CDATA[$(ProjectDir)VSdoc]]></add>
+    <add key="VBdocman_useConditionalCompilation"><![CDATA[0]]></add>
+    <add key="VBdocman_customVar2"><![CDATA[]]></add>
+    <add key="VBdocman_SupportedXamarinIos"><![CDATA[]]></add>
+    <add key="VBdocman_generateJscriptSyntax"><![CDATA[0]]></add>
+    <add key="VBdocman_enumSorting"><![CDATA[1]]></add>
+    <add key="VBdocman_comPrivateProtected"><![CDATA[0]]></add>
+    <add key="VBdocman_comStdModule"><![CDATA[-1]]></add>
+    <add key="VBdocman_ListNamespacesWithShortNames"><![CDATA[0]]></add>
+    <add key="VBdocman_comPublic"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedPlatforms"><![CDATA[]]></add>
+    <add key="VBdocman_comVariable"><![CDATA[-1]]></add>
+    <add key="VBdocman_comProtected"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedNetFrameworkClientProfile"><![CDATA[]]></add>
+    <add key="VBdocman_comPrivate"><![CDATA[0]]></add>
+    <add key="VBdocman_comWriteDescription"><![CDATA[0]]></add>
+    <add key="VBdocman_comProtectedFriend"><![CDATA[-1]]></add>
+    <add key="VBdocman_comObject"><![CDATA[-1]]></add>
+    <add key="VBdocman_comDelegate"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedXnaFramework"><![CDATA[]]></add>
+    <add key="VBdocman_emptyOutputFolder"><![CDATA[0]]></add>
+    <add key="VBdocman_rootNamespaceCommentStyle"><![CDATA[2]]></add>
+    <add key="VBdocman_comEnumeration"><![CDATA[-1]]></add>
+    <add key="VBdocman_comMethod"><![CDATA[-1]]></add>
+    <add key="VBdocman_comProperty"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedNetCompactFramework"><![CDATA[]]></add>
+    <add key="VBdocman_removeAttributes"><![CDATA[0]]></add>
+    <add key="VBdocman_externalFilesFolder"><![CDATA[]]></add>
+    <add key="VBdocman_showFormsSeparate"><![CDATA[0]]></add>
+    <add key="VBdocman_generateCsharpSyntax"><![CDATA[-1]]></add>
+    <add key="VBdocman_allowMacrosInComments"><![CDATA[0]]></add>
+    <add key="VBdocman_linkForExternalNotInFramework"><![CDATA[0]]></add>
+    <add key="VBdocman_showInherited"><![CDATA[-1]]></add>
+    <add key="VBdocman_templateLocale"><![CDATA[en-US]]></add>
+    <add key="VBdocman_SupportedNetCore"><![CDATA[]]></add>
+    <add key="VBdocman_customVar3"><![CDATA[]]></add>
+    <add key="VBdocman_unbreakSourceLines"><![CDATA[0]]></add>
+    <add key="VBdocman_supportedNetFramework"><![CDATA[4.5, 4.5.1, 4.5.2, 4.6, 4.6.1, 4.6.2, 4.7, 4.7.1, 4.7.2, 4.8]]></add>
+    <add key="VBdocman_pageFooterText"><![CDATA[Generated with <see href="http://www.helixoft.com/vsdocman/overview.html">VSdocman</see>]]></add>
+    <add key="VBdocman_comConstant"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedOthers"><![CDATA[]]></add>
+    <add key="VBdocman_comForm"><![CDATA[-1]]></add>
+    <add key="VBdocman_comStructure"><![CDATA[-1]]></add>
+    <add key="VBdocman_dontSortSeeAlsoList"><![CDATA[0]]></add>
+    <add key="VBdocman_templateFolder"><![CDATA[$(VSdocmanDir)Templates]]></add>
+    <add key="VBdocman_ConstantValueDisplay"><![CDATA[1]]></add>
+    <add key="VBdocman_helpTitle"><![CDATA[Azure.Analytics.Purview.Scanning Reference]]></add>
+    <add key="VBdocman_insertSourceGlobal"><![CDATA[0]]></add>
+    <add key="VBdocman_SupportedNetStandard"><![CDATA[]]></add>
+    <add key="VBdocman_SupportedXamarinMac"><![CDATA[]]></add>
+    <add key="VBdocman_comFriend"><![CDATA[0]]></add>
+    <add key="VBdocman_templatePath"><![CDATA[html_msdn2019.vbdt]]></add>
+    <add key="VBdocman_comDeclare"><![CDATA[-1]]></add>
+    <add key="VBdocman_conditionalConstants"><![CDATA[]]></add>
+    <add key="VBdocman_SupportedXamarinAndroid"><![CDATA[]]></add>
+    <add key="VBdocman_supportedNetForWindowsStoreApps"><![CDATA[]]></add>
+    <add key="VBdocman_ShowExtensionMethods"><![CDATA[-1]]></add>
+    <add key="VBdocman_supportedPortableClassLibrary"><![CDATA[]]></add>
+    <add key="VBdocman_generateCppSyntax"><![CDATA[0]]></add>
+    <add key="VBdocman_customTopics"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<topics>
+  <topic>
+    <type>normal</type>
+    <is-default>yes</is-default>
+    <name>Azure.Analytics.Purview.Scanning Reference</name>
+    <id>azureanalyticspurviewscanning_reference</id>
+    <comment><![CDATA[<summary></summary>vsdocman_escaped_]_]_></comment>
+    <namespaces />
+    <topics>
+      <topic>
+        <type>placeholder</type>
+        <is-default>no</is-default>
+        <name />
+        <id>a64933f5871a4163b61c95f5992d4362</id>
+        <comment><![CDATA[vsdocman_escaped_]_]_></comment>
+        <namespaces />
+        <topics />
+      </topic>
+    </topics>
+  </topic>
+</topics>]]></add>
+    <add key="VBdocman_generateVbSyntax"><![CDATA[0]]></add>
+    <add key="VBdocman_generateFsharpSyntax"><![CDATA[0]]></add>
+    <add key="VBdocman_comEventDecl"><![CDATA[-1]]></add>
+    <add key="VBdocman_GenerateReportFile"><![CDATA[0]]></add>
+    <add key="VBdocman_comEvent"><![CDATA[-1]]></add>
+    <add key="VBdocman_rootNamespaceText"><![CDATA[]]></add>
+    <add key="VBdocman_comModulesSaveExcluded"><![CDATA[-1]]></add>
+    <add key="VBdocman_fileNamingConvention"><![CDATA[1]]></add>
+  </appSettings>
+</configuration>

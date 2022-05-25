@@ -338,8 +338,7 @@ namespace Azure.Analytics.Purview.Scanning
         ///       dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
         ///     }
         ///   ]
-        /// }]]>
-        /// </code>
+        /// }]]></code>
         ///  Schema for <c>Response Body</c>: <code><![CDATA[{
         ///   id: string,
         ///   name: string,
@@ -431,20 +430,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// </summary>
         /// 
         /// <remarks>
-        /// <para>
-        /// Below is the JSON schema for the request and response payloads.
-        /// </para>
-        /// <para>
+        /// Below is the JSON schema for the request and response payloads, as well as
+        /// samples showing how to format these payloads in .NET.<br />
+        /// <br />
         /// Additional information can be found in the Purview service REST API
-        /// documentation: <see href="https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/scans/create-or-update" />
-        /// </para>
-        /// <para>
-        /// This method takes one of the scan JSON object below as a payload. Please
-        /// select a scan JSON object to view the schema for this.
-        /// </para>
-        ///
-        /// Request Body:
-        /// <details><summary>AzureSubscriptionCredential</summary>
+        /// documentation: <see href="https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/scans/create-or-update" /><br />
+        /// <br />
+        /// This method takes one of the scan JSON objects below as a payload. Please
+        /// select a scan JSON object to view the schema for this.<br />
+        /// 
+        /// <c>Request Body</c>:
+        /// <details>
+        /// &lt;summary&gt;AzureSubscriptionCredential&lt;/summary&gt;
+        /// Testing
+        /// </details>
+        /// <details>
+        /// <summary>AzureSubscriptionCredential</summary><br />
         /// Schema for AzureSubscriptionCredential <c>Request Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -519,7 +520,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// </details>
         /// 
-        /// <details><summary>AmazonS3Credential</summary>
+        /// <details><summary>AmazonS3Credential</summary><br />
         /// Schema for AmazonS3Credential <c>Request Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -595,9 +596,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// </details>
         /// ~+50 more JSON objects<br />
         /// <br />
-        /// 
-        /// Response Body: 
-        /// <details><summary>AmazonS3Credential</summary>
+        /// <c>Response Body</c>: 
+        /// <details><summary>AmazonS3Credential</summary><br />
         /// Schema for AmazonS3Credential <c>Response Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -673,7 +673,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </details>
         /// 
         /// <details>
-        /// <summary>AzureSubscriptionCredential</summary>
+        /// <summary>AzureSubscriptionCredential</summary><br />
         /// Schema for AzureSubscriptionCredential <c>Response Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -749,11 +749,10 @@ namespace Azure.Analytics.Purview.Scanning
         /// </details>
         /// ~+50 more JSON objects<br />
         /// <br />
-        /// 
-        /// Error Response: 
-        /// <p>
+        /// <c>Error Response</c>: 
+        /// <para>
         /// We throw <see href="RequestFailedException" /> in case of error response. 
-        /// </p>
+        /// </para>
         /// </remarks>
         /// 
         /// <param name="content">The content to send as the body of the request. The
@@ -763,7 +762,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// <returns cref="Response"> The details of the response are below in the remarks.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="content" /> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown in case of error response.</exception>
-        /// 
         /// <example>
         /// This sample shows how to call CreateOrUpdate with required parameters <code lang="C#"><![CDATA[
         /// var credential = new DefaultAzureCredential();
@@ -786,9 +784,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("kind").GetString());
         /// Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());]]>
-        /// </code>
-        /// This sample shows how to call CreateOrUpdate with all the parameters <code lang="C#"><![CDATA[
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());]]></code>
+        ///  This sample shows how to call CreateOrUpdate with all the parameters <code lang="C#"><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
         /// var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
@@ -887,6 +884,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// ]]>
         /// </code>
         /// </example>
+
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
