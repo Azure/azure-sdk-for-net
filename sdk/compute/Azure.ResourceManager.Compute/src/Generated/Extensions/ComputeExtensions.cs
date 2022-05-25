@@ -128,17 +128,13 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OSVersionResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An object representing collection of OSVersionResources and their operations over a OSVersionResource. </returns>
-        public static OSVersionCollection GetOSVersions(this SubscriptionResource subscriptionResource, string location)
+        /// <returns> An object representing collection of CloudServiceOSVersionResources and their operations over a CloudServiceOSVersionResource. </returns>
+        public static CloudServiceOSVersionCollection GetCloudServiceOSVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(subscriptionResource).GetOSVersions(location);
+            return GetExtensionClient(subscriptionResource).GetCloudServiceOSVersions(location);
         }
 
         /// <summary>
@@ -150,12 +146,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OSVersionResource>> GetOSVersionAsync(this SubscriptionResource subscriptionResource, string location, string osVersionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetCloudServiceOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -167,12 +163,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<OSVersionResource> GetOSVersion(this SubscriptionResource subscriptionResource, string location, string osVersionName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetOSVersions(location).Get(osVersionName, cancellationToken);
+            return subscriptionResource.GetCloudServiceOSVersions(location).Get(osVersionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
@@ -2864,20 +2860,20 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region OSVersionResource
+        #region CloudServiceOSVersionResource
         /// <summary>
-        /// Gets an object representing an <see cref="OSVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OSVersionResource.CreateResourceIdentifier" /> to create an <see cref="OSVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceOSVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceOSVersionResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSVersionResource" /> object. </returns>
-        public static OSVersionResource GetOSVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceOSVersionResource" /> object. </returns>
+        public static CloudServiceOSVersionResource GetCloudServiceOSVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OSVersionResource.ValidateResourceId(id);
-                return new OSVersionResource(client, id);
+                CloudServiceOSVersionResource.ValidateResourceId(id);
+                return new CloudServiceOSVersionResource(client, id);
             }
             );
         }

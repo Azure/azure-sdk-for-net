@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A Class representing an OSVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OSVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOSVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetOSVersion method.
+    /// A Class representing a CloudServiceOSVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudServiceOSVersionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCloudServiceOSVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCloudServiceOSVersion method.
     /// </summary>
-    public partial class OSVersionResource : ArmResource
+    public partial class CloudServiceOSVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="OSVersionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CloudServiceOSVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string osVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _osVersionCloudServiceOperatingSystemsClientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _osVersionCloudServiceOperatingSystemsRestClient;
-        private readonly OSVersionData _data;
+        private readonly ClientDiagnostics _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient;
+        private readonly CloudServiceOSVersionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="OSVersionResource"/> class for mocking. </summary>
-        protected OSVersionResource()
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceOSVersionResource"/> class for mocking. </summary>
+        protected CloudServiceOSVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OSVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CloudServiceOSVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal OSVersionResource(ArmClient client, OSVersionData data) : this(client, data.Id)
+        internal CloudServiceOSVersionResource(ArmClient client, CloudServiceOSVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OSVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudServiceOSVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OSVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CloudServiceOSVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string osVersionCloudServiceOperatingSystemsApiVersion);
-            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, osVersionCloudServiceOperatingSystemsApiVersion);
+            _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cloudServiceOSVersionCloudServiceOperatingSystemsApiVersion);
+            _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceOSVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual OSVersionData Data
+        public virtual CloudServiceOSVersionData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OSVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceOSVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionResource.Get");
+            using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OSVersionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CloudServiceOSVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionResource.Get");
+            using var scope = _cloudServiceOSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("CloudServiceOSVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cloudServiceOSVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CloudServiceOSVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -146,19 +146,29 @@ directive:
     where: $.definitions
     transform: >
       $.OSFamily["x-ms-client-name"] = "CloudServiceOSFamily";
+      $.OSFamily.properties.location["x-ms-format"] = "azure-location";
+      $.OSVersion["x-ms-client-name"] = "CloudServiceOSVersion";
+      $.OSVersion.properties.location["x-ms-format"] = "azure-location";
       $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
       $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
-      $.OSFamily.properties.location["x-ms-format"] = "azure-location";
   - from: cloudService.json
     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}"].get.parameters
     transform: >
       $[0]["x-ms-format"] = "azure-location";
   - from: cloudService.json
     where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies"].get.parameters
+    transform: >
+      $[0]["x-ms-format"] = "azure-location";
+  - from: cloudService.json
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}"].get.parameters
+    transform: >
+      $[0]["x-ms-format"] = "azure-location";
+  - from: cloudService.json
+    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions"].get.parameters
     transform: >
       $[0]["x-ms-format"] = "azure-location";
   - from: sharedGallery.json

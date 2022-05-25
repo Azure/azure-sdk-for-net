@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.Compute
             return new SharedGalleryCollection(Client, Id, location);
         }
 
-        /// <summary> Gets a collection of OSVersionResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <returns> An object representing collection of OSVersionResources and their operations over a OSVersionResource. </returns>
-        public virtual OSVersionCollection GetOSVersions(string location)
+        /// <returns> An object representing collection of CloudServiceOSVersionResources and their operations over a CloudServiceOSVersionResource. </returns>
+        public virtual CloudServiceOSVersionCollection GetCloudServiceOSVersions(AzureLocation location)
         {
-            return new OSVersionCollection(Client, Id, location);
+            return new CloudServiceOSVersionCollection(Client, Id, location);
         }
 
         /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>

@@ -12,11 +12,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class OSVersionData
+    public partial class CloudServiceOSVersionData
     {
-        internal static OSVersionData DeserializeOSVersionData(JsonElement element)
+        internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<OSVersionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -26,7 +26,12 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -60,7 +65,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new OSVersionData(id, name, type, systemData, location.Value, properties.Value);
+            return new CloudServiceOSVersionData(id, name, type, systemData, Optional.ToNullable(location), properties.Value);
         }
     }
 }

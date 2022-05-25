@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the OSVersion data model. </summary>
-    public partial class OSVersionData : ResourceData
+    /// <summary> A class representing the CloudServiceOSVersion data model. </summary>
+    public partial class CloudServiceOSVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of OSVersionData. </summary>
-        internal OSVersionData()
+        /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>
+        internal CloudServiceOSVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionData. </summary>
+        /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="properties"> OS version properties. </param>
-        internal OSVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, OSVersionProperties properties) : base(id, name, resourceType, systemData)
+        internal CloudServiceOSVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, OSVersionProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> OS version properties. </summary>
         public OSVersionProperties Properties { get; }
     }
