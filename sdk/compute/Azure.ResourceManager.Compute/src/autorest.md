@@ -180,6 +180,10 @@ directive:
       $.PirResource["x-ms-client-name"] = "PirResourceData";
       $.PirResource.properties.location["x-ms-format"] = "azure-location";
       $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
+  - from: sharedGallery.json
+    where: $.parameters
+    transform: >
+      $.LocationNameParameter["x-ms-format"] = "azure-location";
   - from: communityGallery.json
     where: $.definitions
     transform: >
