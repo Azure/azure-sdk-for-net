@@ -21,6 +21,7 @@ pr:
     include:
     - sdk/appconfiguration/
     - sdk/resourcemanager/
+    - sdk/network/
 
 # These comments should stay.
 

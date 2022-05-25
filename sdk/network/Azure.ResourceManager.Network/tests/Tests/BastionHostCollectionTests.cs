@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Tests
             BastionHostResource bastionHost = await CreateBastionHost(_bastionName);
             Assert.IsNotNull(bastionHost.Data);
             Assert.AreEqual(_bastionName, bastionHost.Data.Name);
-            Assert.AreEqual(AzureLocation.WestUS2.ToString(), bastionHost.Data.Location);
+            Assert.AreEqual(AzureLocation.WestUS2, bastionHost.Data.Location);
             Assert.AreEqual(0, bastionHost.Data.Tags.Count);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Tests
             var bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
             Assert.IsNotNull(bastion.Value.Data);
             Assert.AreEqual(_bastionName, bastion.Value.Data.Name);
-            Assert.AreEqual(AzureLocation.WestUS2.ToString(), bastion.Value.Data.Location);
+            Assert.AreEqual(AzureLocation.WestUS2, bastion.Value.Data.Location);
             Assert.AreEqual(0, bastion.Value.Data.Tags.Count);
         }
 

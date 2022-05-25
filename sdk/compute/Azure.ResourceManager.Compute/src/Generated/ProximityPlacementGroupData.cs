@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public ProximityPlacementGroupData(AzureLocation location) : base(location)
         {
-            VirtualMachines = new ChangeTrackingList<SubResourceWithColocationStatus>();
-            VirtualMachineScaleSets = new ChangeTrackingList<SubResourceWithColocationStatus>();
-            AvailabilitySets = new ChangeTrackingList<SubResourceWithColocationStatus>();
+            VirtualMachines = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            VirtualMachineScaleSets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            AvailabilitySets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="virtualMachineScaleSets"> A list of references to all virtual machine scale sets in the proximity placement group. </param>
         /// <param name="availabilitySets"> A list of references to all availability sets in the proximity placement group. </param>
         /// <param name="colocationStatus"> Describes colocation status of the Proximity Placement Group. </param>
-        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<SubResourceWithColocationStatus> virtualMachines, IReadOnlyList<SubResourceWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<SubResourceWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus) : base(id, name, resourceType, systemData, tags, location)
+        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus) : base(id, name, resourceType, systemData, tags, location)
         {
             ProximityPlacementGroupType = proximityPlacementGroupType;
             VirtualMachines = virtualMachines;
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </summary>
         public ProximityPlacementGroupType? ProximityPlacementGroupType { get; set; }
         /// <summary> A list of references to all virtual machines in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachines { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachines { get; }
         /// <summary> A list of references to all virtual machine scale sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachineScaleSets { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachineScaleSets { get; }
         /// <summary> A list of references to all availability sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> AvailabilitySets { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> AvailabilitySets { get; }
         /// <summary> Describes colocation status of the Proximity Placement Group. </summary>
         public InstanceViewStatus ColocationStatus { get; set; }
     }

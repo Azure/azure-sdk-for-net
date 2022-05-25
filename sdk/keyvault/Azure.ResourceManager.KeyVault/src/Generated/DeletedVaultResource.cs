@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _deletedVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedVaultVaultsRestClient.GetDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedVaultResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _deletedVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deletedVaultVaultsRestClient.GetDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedVaultResource(Client, response.Value), response.GetRawResponse());
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = await _deletedVaultVaultsRestClient.PurgeDeletedAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new KeyVaultArmOperation(_deletedVaultVaultsClientDiagnostics, Pipeline, _deletedVaultVaultsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _deletedVaultVaultsRestClient.PurgeDeletedAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new KeyVaultArmOperation(_deletedVaultVaultsClientDiagnostics, Pipeline, _deletedVaultVaultsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                var response = _deletedVaultVaultsRestClient.PurgeDeleted(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new KeyVaultArmOperation(_deletedVaultVaultsClientDiagnostics, Pipeline, _deletedVaultVaultsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _deletedVaultVaultsRestClient.PurgeDeleted(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var operation = new KeyVaultArmOperation(_deletedVaultVaultsClientDiagnostics, Pipeline, _deletedVaultVaultsRestClient.CreatePurgeDeletedRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

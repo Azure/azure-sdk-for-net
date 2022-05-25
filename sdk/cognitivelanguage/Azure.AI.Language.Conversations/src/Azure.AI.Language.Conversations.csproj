@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the client library for the Conversations service, a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning, and pull out relevant, detailed information.</Description>
     <AssemblyTitle>Microsoft Azure.AI.Language.Conversations client library</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.1.0-beta.1</Version>
     <PackageTags>Azure AI Language Conversations LUIS</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
