@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> incremental = default;
             Optional<DiskEncryption> encryption = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<string> diskAccessId = default;
+            Optional<ResourceIdentifier> diskAccessId = default;
             Optional<DiskSecurityProfile> securityProfile = default;
             Optional<bool> supportsHibernation = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
@@ -364,7 +364,12 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("diskAccessId"))
                         {
-                            diskAccessId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diskAccessId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"))
