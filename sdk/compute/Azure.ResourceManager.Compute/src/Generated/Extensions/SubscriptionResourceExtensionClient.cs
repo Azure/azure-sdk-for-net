@@ -578,10 +578,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImages");
                 scope.Start();
@@ -612,10 +612,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImages");
                 scope.Start();
@@ -641,12 +641,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOffersVirtualMachineImages");
+                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageOffers");
                 scope.Start();
                 try
                 {
@@ -670,12 +670,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImages(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOffersVirtualMachineImages");
+                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageOffers");
                 scope.Start();
                 try
                 {
@@ -698,10 +698,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers");
                 scope.Start();
@@ -726,10 +726,10 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers");
                 scope.Start();
@@ -756,10 +756,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageSkus");
                 scope.Start();
@@ -786,10 +786,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageSkus");
                 scope.Start();
@@ -877,10 +877,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -912,10 +912,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -942,10 +942,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOffersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -972,10 +972,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOffersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1001,10 +1001,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1030,10 +1030,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImagesEdgeZones");
                 scope.Start();
@@ -1061,10 +1061,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineImageBase>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageEdgeZoneSkus");
                 scope.Start();
@@ -1092,10 +1092,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineImageBase> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImageEdgeZoneSkus");
                 scope.Start();

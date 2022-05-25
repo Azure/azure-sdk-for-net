@@ -379,8 +379,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -426,12 +426,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            return GetExtensionClient(subscriptionResource).GetOffersVirtualMachineImagesAsync(location, publisherName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImageOffersAsync(location, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -445,12 +445,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            return GetExtensionClient(subscriptionResource).GetOffersVirtualMachineImages(location, publisherName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImageOffers(location, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -461,8 +461,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagePublishersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetVirtualMachineImagePublishersAsync(location, cancellationToken);
         }
@@ -475,8 +475,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImagePublishers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetVirtualMachineImagePublishers(location, cancellationToken);
         }
@@ -493,8 +493,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -514,8 +514,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImageSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -592,8 +592,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -620,8 +620,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -643,8 +643,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -664,8 +664,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -684,8 +684,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
@@ -703,8 +703,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
@@ -724,8 +724,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -747,8 +747,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));

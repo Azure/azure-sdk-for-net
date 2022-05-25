@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetExtensionPatch(ResourceIdentifier id, string name, string resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures) : base(id)
+        internal VirtualMachineScaleSetExtensionPatch(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IList<string> provisionAfterExtensions, bool? suppressFailures) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the extension. </summary>
         public string Name { get; }
         /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>

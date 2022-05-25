@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> List(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageBase>> List(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListOffersAsync(string subscriptionId, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListOffersAsync(string subscriptionId, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -288,12 +288,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> ListOffers(string subscriptionId, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageBase>> ListOffers(string subscriptionId, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListPublishersAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListPublishersAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -371,12 +371,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> ListPublishers(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageBase>> ListPublishers(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -402,12 +402,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImageResource>>> ListSkusAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImageBase>>> ListSkusAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -460,12 +460,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VirtualMachineImageResource>> ListSkus(string subscriptionId, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImageBase>> ListSkus(string subscriptionId, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
@@ -495,12 +495,12 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        IReadOnlyList<VirtualMachineImageResource> value = default;
+                        IReadOnlyList<VirtualMachineImageBase> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<VirtualMachineImageResource> array = new List<VirtualMachineImageResource>();
+                        List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageResource.DeserializeVirtualMachineImageResource(item));
+                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

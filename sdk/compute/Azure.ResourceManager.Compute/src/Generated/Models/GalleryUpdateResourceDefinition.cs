@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class UpdateResourceDefinition : ResourceData
+    public partial class GalleryUpdateResourceDefinition : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateResourceDefinition. </summary>
-        public UpdateResourceDefinition()
+        /// <summary> Initializes a new instance of GalleryUpdateResourceDefinition. </summary>
+        public GalleryUpdateResourceDefinition()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

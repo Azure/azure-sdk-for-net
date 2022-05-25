@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineImageResource : IUtf8JsonSerializable
+    public partial class VirtualMachineImageBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineImageResource DeserializeVirtualMachineImageResource(JsonElement element)
+        internal static VirtualMachineImageBase DeserializeVirtualMachineImageBase(JsonElement element)
         {
             string name = default;
-            string location = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ResourceIdentifier> id = default;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineImageResource(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation.Value);
+            return new VirtualMachineImageBase(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation.Value);
         }
     }
 }

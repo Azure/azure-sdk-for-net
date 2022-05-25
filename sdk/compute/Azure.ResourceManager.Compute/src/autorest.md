@@ -58,6 +58,7 @@ override-operation-name:
   GallerySharingProfile_Update: UpdateSharingProfile
   VirtualMachineImages_ListPublishers: GetVirtualMachineImagePublishers
   VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
+  VirtualMachineImages_ListOffers: GetVirtualMachineImageOffers
   VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
@@ -134,6 +135,8 @@ directive:
       $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
       $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
@@ -148,6 +151,9 @@ directive:
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.ImageReference.properties.sharedGalleryImageId["x-ms-client-name"] = "sharedGalleryImageUniqueId";
       $.SshPublicKeyGenerateKeyPairResult.properties.id["x-ms-format"] = "arm-id";
+      $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
+      $.VirtualMachineImageResource["x-ms-client-name"] = "VirtualMachineImageBase";
+      $.VirtualMachineImageResource.properties.location["x-ms-format"] = "azure-location";
   - from: disk.json
     where: $.definitions
     transform: >
@@ -200,6 +206,7 @@ directive:
     transform: >
       $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
+      $.UpdateResourceDefinition["x-ms-client-name"] = "GalleryUpdateResourceDefinition";
   - from: sharedGallery.json
     where: $.definitions
     transform: >
