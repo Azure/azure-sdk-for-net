@@ -571,7 +571,7 @@ namespace Azure.Storage.Blobs.Test
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
         [RecordedTest]
-        [RetryOnException(5, typeof(FormatException))]
+        [PlaybackOnly(".NET autorest generator bug - https://github.com/Azure/azure-sdk-for-net/issues/28979")]
         public async Task GetStatisticsAsync()
         {
             // Arrange
