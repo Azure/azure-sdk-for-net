@@ -140,6 +140,8 @@ directive:
       $.SnapshotProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.SnapshotUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.Encryption["x-ms-client-name"] = "DiskEncryption";
+      $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
   - from: cloudService.json
     where: $.definitions
     transform: >
