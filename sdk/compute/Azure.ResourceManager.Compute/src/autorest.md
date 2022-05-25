@@ -86,12 +86,6 @@ directive:
   - rename-model:
       from: EncryptionSettingsCollection
       to: EncryptionSettingGroup
-#   - rename-model:
-#       from: SubResourceReadOnly
-#       to: ComputeSubResource
-#   - rename-model:
-#       from: SubResource
-#       to: ComputeWriteableSubResource
   - rename-model:
       from: UpdateResource
       to: ComputeUpdateResourceData
@@ -153,6 +147,8 @@ directive:
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
+      $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
+      $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
   - from: sharedGallery.json
     where: $.definitions
     transform: >
