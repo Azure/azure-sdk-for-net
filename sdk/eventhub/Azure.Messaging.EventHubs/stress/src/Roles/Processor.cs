@@ -195,7 +195,7 @@ internal class Processor
     ///
     /// <param name="args">The <see cref="ProcessErrorEventArgs" /> used to pass information to the errpr handler.</param>
     ///
-    private Task _processErrorHandler(ProcessErrorEventArgs args)
+    private Task ProcessErrorHandler(ProcessErrorEventArgs args)
     {
         _metrics.Client.TrackException(args.Exception);
         return Task.CompletedTask;
