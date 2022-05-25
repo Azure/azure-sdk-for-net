@@ -144,7 +144,7 @@ internal class Processor
     ///
     /// <param name="args">The <see cref="ProcessEventArgs" /> used to pass information to the event handler.</param>
     ///
-    private Task _processEventHandler(ProcessEventArgs args)
+    private Task ProcessEventHandler(ProcessEventArgs args)
     {
         var partitionIndex = int.Parse(args.Partition.PartitionId);
 
