@@ -298,6 +298,7 @@ namespace Microsoft.Azure.Management.Network
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+
             try
             {
                 _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<NetworkManagerCommitsPostHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
