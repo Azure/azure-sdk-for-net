@@ -185,7 +185,7 @@ public class Program
     /// <param name="jobIndex">If this is a single-role run, this is the value used to determine which role should be run.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
     ///
-    private static async Task _runScenario(List<string> roleList,
+    private static async Task RunScenario(List<string> roleList,
                                            TestConfiguration testConfiguration,
                                            RoleConfiguration roleConfiguration,
                                            Metrics metrics,
