@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetResourceId"> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </param>
         /// <param name="profiles"> List of network configuration diagnostic profiles. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="profiles"/> is null. </exception>
-        public NetworkConfigurationDiagnosticContent(string targetResourceId, IEnumerable<NetworkConfigurationDiagnosticProfile> profiles)
+        public NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId, IEnumerable<NetworkConfigurationDiagnosticProfile> profiles)
         {
             if (targetResourceId == null)
             {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the target resource to perform network configuration diagnostic. Valid options are VM, NetworkInterface, VMSS/NetworkInterface and Application Gateway. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Verbosity level. </summary>
         public VerbosityLevel? VerbosityLevel { get; set; }
         /// <summary> List of network configuration diagnostic profiles. </summary>

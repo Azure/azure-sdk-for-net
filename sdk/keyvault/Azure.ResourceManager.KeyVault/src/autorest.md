@@ -7,7 +7,7 @@ azure-arm: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
 tag: package-2021-10
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -62,6 +62,10 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedHsmSku.properties.family
     transform: delete $['x-ms-client-default']
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === 'location')]
+    transform: >
+      $['x-ms-format'] = 'azure-location';
   - from: managedHsm.json
     where: '$.definitions'
     transform: >

@@ -3,6 +3,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentFilterOrder
     {
         public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool ascending = true) { }
+        public bool Ascending { get { throw null; } set { } }
         public Azure.AI.Translation.Document.DocumentFilterProperty Property { get { throw null; } set { } }
     }
     public enum DocumentFilterProperty
@@ -69,7 +70,7 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslationInput(Azure.AI.Translation.Document.TranslationSource source, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.TranslationTarget> targets) { }
         public DocumentTranslationInput(System.Uri sourceUri, System.Uri targetUri, string targetLanguageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
         public Azure.AI.Translation.Document.TranslationSource Source { get { throw null; } }
-        public Azure.AI.Translation.Document.StorageInputType? StorageType { get { throw null; } set { } }
+        public Azure.AI.Translation.Document.StorageInputUriKind? StorageUriKind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
         public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null, string categoryId = null) { }
     }
@@ -153,14 +154,15 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationFilterOrder> OrderBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
     }
-    public enum StorageInputType
+    public enum StorageInputUriKind
     {
         File = 0,
         Folder = 1,
     }
     public partial class TranslationFilterOrder
     {
-        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool asc = true) { }
+        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool ascending = true) { }
+        public bool Ascending { get { throw null; } set { } }
         public Azure.AI.Translation.Document.TranslationFilterProperty Property { get { throw null; } set { } }
     }
     public enum TranslationFilterProperty

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //wait for completion, this may take several minutes in live and record mode
             disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             int i = 0;
-            while (disasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
+            while (disasterRecovery.Data.ProvisioningState != DisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             await disasterRecovery.BreakPairingAsync();
             disasterRecovery = await serviceBusNamespace1.GetDisasterRecoveries().GetAsync(disasterRecoveryName);
             i = 0;
-            while (disasterRecovery.Data.ProvisioningState != ProvisioningStateDisasterRecovery.Succeeded && i < 100)
+            while (disasterRecovery.Data.ProvisioningState != DisasterRecoveryProvisioningState.Succeeded && i < 100)
             {
                 if (Mode != RecordedTestMode.Playback)
                 {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        internal PacketCaptureData(string name, string id, string etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, ProvisioningState? provisioningState)
+        internal PacketCaptureData(string name, string id, string etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
         {
             Name = name;
             Id = id;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> A list of packet capture filters. </summary>
         public IReadOnlyList<PacketCaptureFilter> Filters { get; }
         /// <summary> The provisioning state of the packet capture session. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

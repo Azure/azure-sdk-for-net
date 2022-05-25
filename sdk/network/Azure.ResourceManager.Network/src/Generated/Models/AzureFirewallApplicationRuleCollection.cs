@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application rule collection resource. </summary>
-    public partial class AzureFirewallApplicationRuleCollection : SubResource
+    public partial class AzureFirewallApplicationRuleCollection : NetworkSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollection. </summary>
         public AzureFirewallApplicationRuleCollection()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="action"> The action type of a rule collection. </param>
         /// <param name="rules"> Collection of rules used by a application rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureFirewallApplicationRuleCollection(string id, string name, string etag, int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, ProvisioningState? provisioningState) : base(id)
+        internal AzureFirewallApplicationRuleCollection(ResourceIdentifier id, string name, string etag, int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Collection of rules used by a application rule collection. </summary>
         public IList<AzureFirewallApplicationRule> Rules { get; }
         /// <summary> The provisioning state of the application rule collection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }
