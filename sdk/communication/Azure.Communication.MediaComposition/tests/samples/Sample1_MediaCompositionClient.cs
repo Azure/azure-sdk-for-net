@@ -20,8 +20,8 @@ namespace Azure.Communication.MediaComposition.Tests.samples
 
             var layout = new MediaCompositionLayout()
             {
-                Resolution = new LayoutResolution(1920, 1080),
-                Grid = new GridLayoutOptions(
+                Resolution = new(1920, 1080),
+                Grid = new(
                     rows: 2,
                     columns: 2,
                     new List<List<string>>
@@ -39,56 +39,45 @@ namespace Azure.Communication.MediaComposition.Tests.samples
 
             var inputs = new Dictionary<string, MediaInput>()
             {
+                ["jill"] = new()
                 {
-                    "jill",
-                    new MediaInput() {
-                        Participant = new ParticipantInput(
-                        id: new CommunicationIdentifierModel() { MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
+                    Participant = new(
+                        id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7") },
                         call: "teamsMeeting")
-                        {
-                            PlaceholderImageUri = "https://imageendpoint"
-                        }
-                    }
-                },
-                {
-                    "jack",
-                    new MediaInput() {
-                        Participant = new ParticipantInput(
-                        id: new CommunicationIdentifierModel() { MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
-                        call: "teamsMeeting")
-                        {
-                            PlaceholderImageUri = "https://imageendpoint"
-                        }
-                    }
-                },
-                 {
-                    "jane",
-                    new MediaInput() {
-                        Participant = new ParticipantInput(
-                        id: new CommunicationIdentifierModel() { MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
-                        call: "teamsMeeting")
-                        {
-                            PlaceholderImageUri = "https://imageendpoint"
-                        }
-                    }
-                },
-                {
-                    "jerry",
-                    new MediaInput() {
-                        Participant = new ParticipantInput(
-                        id: new CommunicationIdentifierModel() { MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
-                        call: "teamsMeeting")
-                        {
-                            PlaceholderImageUri = "https://imageendpoint"
-                        }
-                    }
-                },
-                {
-                    "teamsMeeting",
-                    new MediaInput()
                     {
-                        TeamsMeeting = new TeamsMeeting("https://teamsJoinUrl")
+                        PlaceholderImageUri = "https://imageendpoint"
                     }
+                },
+                ["jack"] = new()
+                {
+                    Participant = new(
+                        id: new() { MicrosoftTeamsUser = new("fa4337b5-f13a-41c5-a34f-f2aa46699b61") },
+                        call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                },
+                ["jane"] = new()
+                {
+                    Participant = new(
+                        id: new() { MicrosoftTeamsUser = new("2dd69470-dc25-49cf-b5c3-f562f08bf3b2") },
+                        call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                },
+                ["jerry"] = new()
+                {
+                    Participant = new(
+                        id: new() { MicrosoftTeamsUser = new("30e29fde-ac1c-448f-bb34-0f3448d5a677") },
+                        call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                },
+                ["teamsMeeting"] = new()
+                {
+                    TeamsMeeting = new("https://teamsJoinUrl")
                 }
             };
 
@@ -96,9 +85,9 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             {
                 {
                     "acsGroupCall",
-                    new MediaOutput()
+                    new()
                     {
-                        GroupCall = new GroupCall("d12d2277-ffec-4e22-9979-8c0d8c13d191")
+                        GroupCall = new("d12d2277-ffec-4e22-9979-8c0d8c13d191")
                     }
                 }
             };
@@ -116,11 +105,11 @@ namespace Azure.Communication.MediaComposition.Tests.samples
             var mediaCompositionClient = CreateMediaCompositionClient();
             var layout = new MediaCompositionLayout()
             {
-                Resolution = new LayoutResolution(720, 480),
-                Presenter = new PresenterLayoutOptions("jill", "jack")
+                Resolution = new(720, 480),
+                Presenter = new("jill", "jack")
                 {
                     SupportPosition = SupportPosition.BottomRight,
-                    SupportAspectRatio = 3/2
+                    SupportAspectRatio = 3 / 2
                 }
             };
             await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
