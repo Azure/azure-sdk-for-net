@@ -111,12 +111,10 @@ directive:
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
   - from: swagger-document
     where: $.paths..parameters[?(@.name === 'location')]
-    transform: >
-      $['x-ms-format'] = 'azure-location';
+    transform: $['x-ms-format'] = 'azure-location';
   - from: swagger-document
     where: $..parameters[?(@.name === 'location')]
-    transform: >
-      $['x-ms-format'] = 'azure-location';
+    transform: $['x-ms-format'] = 'azure-location'
   - from: skus.json
     where: $.definitions
     transform: >
@@ -167,12 +165,16 @@ directive:
   - from: cloudService.json
     where: $.definitions
     transform: >
+      $.CloudService.properties.properties["x-ms-client-flatten"] = true;
       $.OSFamily["x-ms-client-name"] = "CloudServiceOSFamily";
       $.OSFamily.properties.location["x-ms-format"] = "azure-location";
+      $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
       $.OSVersion["x-ms-client-name"] = "CloudServiceOSVersion";
+      $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
       $.OSVersion.properties.location["x-ms-format"] = "azure-location";
       $.UpdateDomain["x-ms-client-name"] = "UpdateDomainIdentifier";
       $.Extension["x-ms-client-name"] = "CloudServiceExtension";
+      $.Extension.properties.properties["x-ms-client-flatten"] = true;
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
       $.SubResource.properties.id["x-ms-format"] = "arm-id";
       $.CloudServiceRole.properties.location["x-ms-format"] = "azure-location";
@@ -180,6 +182,9 @@ directive:
       $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
       $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerConfiguration.properties.id["x-ms-format"] = "arm-id";
+      $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerFrontendIPConfiguration.properties.properties["x-ms-client-flatten"] = true;
   - from: gallery.json
     where: $.definitions
     transform: >

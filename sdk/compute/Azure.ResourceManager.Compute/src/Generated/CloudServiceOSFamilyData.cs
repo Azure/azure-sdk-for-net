@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
         internal CloudServiceOSFamilyData()
         {
+            Versions = new ChangeTrackingList<OSVersionPropertiesBase>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
@@ -25,16 +27,24 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="properties"> OS family properties. </param>
-        internal CloudServiceOSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, OSFamilyProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="namePropertiesName"> The OS family name. </param>
+        /// <param name="label"> The OS family label. </param>
+        /// <param name="versions"> List of OS versions belonging to this family. </param>
+        internal CloudServiceOSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string namePropertiesName, string label, IReadOnlyList<OSVersionPropertiesBase> versions) : base(id, name, resourceType, systemData)
         {
             Location = location;
-            Properties = properties;
+            NamePropertiesName = namePropertiesName;
+            Label = label;
+            Versions = versions;
         }
 
         /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> OS family properties. </summary>
-        public OSFamilyProperties Properties { get; }
+        /// <summary> The OS family name. </summary>
+        public string NamePropertiesName { get; }
+        /// <summary> The OS family label. </summary>
+        public string Label { get; }
+        /// <summary> List of OS versions belonging to this family. </summary>
+        public IReadOnlyList<OSVersionPropertiesBase> Versions { get; }
     }
 }

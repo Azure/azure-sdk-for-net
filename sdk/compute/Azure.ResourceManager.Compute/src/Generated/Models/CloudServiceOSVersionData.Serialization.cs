@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -17,11 +16,16 @@ namespace Azure.ResourceManager.Compute
         internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
-            Optional<OSVersionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Optional<string> family = default;
+            Optional<string> familyLabel = default;
+            Optional<string> version = default;
+            Optional<string> label = default;
+            Optional<bool> isDefault = default;
+            Optional<bool> isActive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -32,16 +36,6 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = OSVersionProperties.DeserializeOSVersionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -64,8 +58,60 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("family"))
+                        {
+                            family = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("familyLabel"))
+                        {
+                            familyLabel = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"))
+                        {
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("label"))
+                        {
+                            label = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isDefault"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isDefault = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isActive"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            isActive = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new CloudServiceOSVersionData(id, name, type, systemData, Optional.ToNullable(location), properties.Value);
+            return new CloudServiceOSVersionData(id, name, type, systemData, Optional.ToNullable(location), family.Value, familyLabel.Value, version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive));
         }
     }
 }

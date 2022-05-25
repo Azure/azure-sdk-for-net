@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -17,11 +18,13 @@ namespace Azure.ResourceManager.Compute
         internal static CloudServiceOSFamilyData DeserializeCloudServiceOSFamilyData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
-            Optional<OSFamilyProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Optional<string> name0 = default;
+            Optional<string> label = default;
+            Optional<IReadOnlyList<OSVersionPropertiesBase>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -32,16 +35,6 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = OSFamilyProperties.DeserializeOSFamilyProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -64,8 +57,45 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("name"))
+                        {
+                            name0 = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("label"))
+                        {
+                            label = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("versions"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<OSVersionPropertiesBase> array = new List<OSVersionPropertiesBase>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(OSVersionPropertiesBase.DeserializeOSVersionPropertiesBase(item));
+                            }
+                            versions = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new CloudServiceOSFamilyData(id, name, type, systemData, Optional.ToNullable(location), properties.Value);
+            return new CloudServiceOSFamilyData(id, name, type, systemData, Optional.ToNullable(location), name0.Value, label.Value, Optional.ToList(versions));
         }
     }
 }
