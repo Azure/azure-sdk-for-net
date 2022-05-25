@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/1f8f99a422d0e52f9d699fead247a3841dab845d/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/236c7ce93e9bcb875e1fbe1db8602a3a159ee2ae/specification/cdn/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
@@ -15,6 +15,10 @@ operation-id-mappings:
   CdnEndpoint:
       profileName: Microsoft.Cdn/operationresults/profileresults
       endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
+  CdnCustomDomain:
+      profileName: Microsoft.Cdn/operationresults/profileresults
+      endpointName: Microsoft.Cdn/operationresults/profileresults/endpointresults
+      customDomainName: Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
