@@ -1,0 +1,583 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-858f548adbca2e4091a8acc319fabee4-b4eacde0fbfde54d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "f20ddd6f7084e3448fded363b0e1446c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "410",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:52:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b8a866eb-1eb8-423a-aa7e-fa9b5869aba7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "b8a866eb-1eb8-423a-aa7e-fa9b5869aba7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045245Z:b8a866eb-1eb8-423a-aa7e-fa9b5869aba7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+        "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+        "displayName": "Visual Studio Enterprise Subscription",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "MSDN_2014-09-01",
+          "spendingLimit": "On"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourcegroups/sdktestrg-kv-3471?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "38",
+        "Content-Type": "application/json",
+        "traceparent": "00-0baa169c34a0994a9fdcdf4ef7896cc3-500cb3e951069440-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "a8f963abf54e47c27a7c9c7f8302c414",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "canadacentral"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "248",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:52:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6353a9d3-df32-4120-a460-9cd257b2bff4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "6353a9d3-df32-4120-a460-9cd257b2bff4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045250Z:6353a9d3-df32-4120-a460-9cd257b2bff4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471",
+        "name": "sdktestrg-kv-3471",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "canadacentral",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "152",
+        "Content-Type": "application/json",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-5760f04fbdd3af43-00",
+        "User-Agent": "azsdk-net-ResourceManager.KeyVault/1.0.0-alpha.20220523.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "29dc19421427ccb7602c153727a7c8f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "canadacentral",
+        "properties": {
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "accessPolicies": []
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "820",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "29dc19421427ccb7602c153727a7c8f9",
+        "x-ms-correlation-request-id": "1d0f24f6-22eb-4326-b163-2aa638f07475",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "6254f2d1-1fc3-43ea-ab08-418ff605757c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045302Z:1d0f24f6-22eb-4326-b163-2aa638f07475"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-4700665375015a47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "52024f6b8259e43cf1829596324254f5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "52024f6b8259e43cf1829596324254f5",
+        "x-ms-correlation-request-id": "6510d325-b534-475e-93ae-a0346213f6c8",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "0e7318c9-8cb4-4ab7-b2e1-798d4eda18a9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045303Z:6510d325-b534-475e-93ae-a0346213f6c8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-29a6f2c8c1e9c84d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "aeab8ab757145a71cf311f336c54c084",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "aeab8ab757145a71cf311f336c54c084",
+        "x-ms-correlation-request-id": "032e34e2-cabc-495d-9d09-058dd5309523",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "02017630-fe6e-45e2-aceb-d08b1ed26721",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045304Z:032e34e2-cabc-495d-9d09-058dd5309523"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-f7d589c6dfae804a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "d8ccc61d75a4d49fd91bfd9d52b378c6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d8ccc61d75a4d49fd91bfd9d52b378c6",
+        "x-ms-correlation-request-id": "727e6f0f-e2fa-4f08-8c40-6883abb0d828",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "5cc586b2-bee5-44ba-95e9-3da601d254e1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045305Z:727e6f0f-e2fa-4f08-8c40-6883abb0d828"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-729f6c2a02a4654c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "81acb29e6031143adea883286208789c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "81acb29e6031143adea883286208789c",
+        "x-ms-correlation-request-id": "cf825a6c-42cc-43ee-b4f5-d9f0ef9e6c7a",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "fdaf1956-9e4f-48df-8512-0fc459228ae9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045307Z:cf825a6c-42cc-43ee-b4f5-d9f0ef9e6c7a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-602d3c8cfe3e6844-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "6b7911c27c764150ead6d5f959d4071b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6b7911c27c764150ead6d5f959d4071b",
+        "x-ms-correlation-request-id": "7bd70623-6db7-4314-9e11-1caee7512b20",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "ef079139-d81f-425c-a260-0684d99ff2ae",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045309Z:7bd70623-6db7-4314-9e11-1caee7512b20"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-670bec20a7f2c44c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "ba9459b83ea8bc538cb7f9fcf17771d0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "821",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ba9459b83ea8bc538cb7f9fcf17771d0",
+        "x-ms-correlation-request-id": "71a7a31c-4698-49f2-944b-400a3b1c5e7e",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "cc6b9a4b-7b89-4ec5-8a65-ff24d6982e7a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045313Z:71a7a31c-4698-49f2-944b-400a3b1c5e7e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "RegisteringDns",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c27a1a2609129d46b938c094d566218d-a1b2763558abe243-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "41da60a30c3a2150626a975a8b41ba0a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "816",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 23 May 2022 04:53:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "41da60a30c3a2150626a975a8b41ba0a",
+        "x-ms-correlation-request-id": "86ad323b-f48c-4b4a-89bb-1cfeab804232",
+        "x-ms-keyvault-service-version": "1.5.372.0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "33ecf979-58ce-4710-a821-6f2c3d7d598e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220523T045322Z:86ad323b-f48c-4b4a-89bb-1cfeab804232"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/sdktestrg-kv-3471/providers/Microsoft.KeyVault/vaults/sdktest-vault-2146",
+        "name": "sdktest-vault-2146",
+        "type": "Microsoft.KeyVault/vaults",
+        "location": "canadacentral",
+        "tags": {},
+        "systemData": {
+          "createdBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "createdByType": "Application",
+          "createdAt": "2022-05-23T04:52:58.452Z",
+          "lastModifiedBy": "f03720c1-6b28-4033-b949-e30e027685c6",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-05-23T04:52:58.452Z"
+        },
+        "properties": {
+          "sku": {
+            "family": "A",
+            "name": "standard"
+          },
+          "tenantId": "75743128-1c62-4904-9be1-c23c1edb9a9f",
+          "accessPolicies": [],
+          "enabledForDeployment": false,
+          "enableSoftDelete": true,
+          "vaultUri": "https://sdktest-vault-2146.vault.azure.net/",
+          "provisioningState": "Succeeded",
+          "publicNetworkAccess": "Enabled"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CLIENT_ID": "f03720c1-6b28-4033-b949-e30e027685c6",
+    "ObjectId": "a7f6524f-c945-44eb-8671-431626ab4768",
+    "RandomSeed": "579968034",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f3d94233-a9aa-4241-ac82-2dfb63ce637a",
+    "TENANT_ID": "75743128-1c62-4904-9be1-c23c1edb9a9f"
+  }
+}

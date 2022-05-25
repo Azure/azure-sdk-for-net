@@ -30,6 +30,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [Test]
+        public async Task KeyVaultManagementVaultCreateWithoutAccessPolicies()
+        {
+            VaultProperties vaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultCreateOrUpdateContent content = new VaultCreateOrUpdateContent(Location, vaultProperties);
+            ArmOperation<VaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
+            VaultData createdVault = rawVault.Value.Data;
+            Assert.IsNotNull(createdVault);
+            Assert.AreEqual(VaultName, createdVault.Name);
+        }
+
+        [Test]
         public async Task KeyVaultManagementVaultCreateUpdateDelete()
         {
             VaultProperties.EnableSoftDelete = null;

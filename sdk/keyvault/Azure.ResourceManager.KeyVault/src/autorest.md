@@ -7,7 +7,7 @@ azure-arm: true
 library-name: KeyVault
 namespace: Azure.ResourceManager.KeyVault
 tag: package-2021-10
-output-folder: Generated/
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
