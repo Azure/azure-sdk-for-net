@@ -77,6 +77,49 @@ setx KEYVAULT_SKU ${env:KEYVAULT_SKU}
 setx AZURE_KEYVAULT_URL ${env:AZURE_KEYVAULT_URL}
 ```
 
+### Pre- and Post- Scripts
+
+Sometimes creating test resources requires either some work to be done prior to or after the main test-resources.json script is executed.
+For these scenarios a `test-resources-pre.ps1` or `test-resources-post.ps1`, respectively, can be created in the same folder as the `test-resources.json` file.
+
+For example, it may be necessary to create artifacts prior to provisioning the actual resource, such as a certificate.
+Typically the created artifact will need to be passed to `test-resources.json` to be used in the ARM template or as output (or both).
+
+Below is an example of how `$templateFileParameters` can be used to pass data from the `pre-` script to `test-resources.json`.
+
+**Snippet from `test-resources-pre.ps1`**
+```powershell
+$cert = New-X509Certificate2 -SubjectName 'E=opensource@microsoft.com, CN=Azure SDK, OU=Azure SDK, O=Microsoft, L=Frisco, S=TX, C=US' -ValidDays 3652
+# Create new entries in $templateFileParameters
+$templateFileParameters['ConfidentialLedgerPrincipalPEM'] = Format-X509Certificate2 -Certificate $cert
+$templateFileParameters['ConfidentialLedgerPrincipalPEMPK'] = Format-X509Certificate2 -Type Pkcs8 -Certificate $cert
+```
+
+**Snippet from the corresponding `test-resources.json`.**
+
+Note that the values present in `$templateFileParameters` will map to parameters of the same name.
+```json
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "_comment": "Other required parameters would go here... (this is not part of the actual test-resources.json)",
+    "ConfidentialLedgerPrincipalPEM": {
+      "type": "string",
+      "metadata": {
+        "description": "The certificate to configure as a certBasedSecurityPrincipal."
+      }
+    },
+    "ConfidentialLedgerPrincipalPEMPK": {
+      "type": "string",
+      "metadata": {
+        "description": "The certificate to configure as a certBasedSecurityPrincipal."
+      }
+    }
+  },
+}
+```
+
 ### Cleaning up Resources
 
 By default, resource groups are tagged with a `DeleteAfter` value and date according to the default or specified

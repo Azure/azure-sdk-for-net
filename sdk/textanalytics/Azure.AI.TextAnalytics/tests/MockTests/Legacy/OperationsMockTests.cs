@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Legacy.Tests
 {
-    [Ignore("Not yet implemented")]
     public class OperationsMockTests : ClientTestBase
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";

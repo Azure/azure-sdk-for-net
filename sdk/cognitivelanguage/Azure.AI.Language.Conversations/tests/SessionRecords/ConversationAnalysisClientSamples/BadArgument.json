@@ -1,60 +1,58 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-03-01-preview",
+      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "255",
+        "Connection": "keep-alive",
+        "Content-Length": "231",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220417.1 (.NET Core 3.1.24; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "73ce9974422e067ea8779e7f1c7549c3",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1680870108ec4d0cef8447445277c4e2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
             "text": "Send an email to Carol about the tomorrow\u0027s demo",
-            "participantId": "1",
             "id": "1",
-            "modality": "text"
+            "participantId": "1"
           }
         },
         "parameters": {
           "projectName": "invalid-project",
           "deploymentName": "production"
         },
-        "kind": "CustomConversation"
+        "kind": "Conversation"
       },
-      "StatusCode": 401,
+      "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "a06a0756-d322-4ad9-938b-c30fa8b05e66",
+        "apim-request-id": "8daf5085-5049-4d0b-b152-38dfdcfdb512",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Sun, 17 Apr 2022 13:27:42 GMT",
+        "Date": "Thu, 19 May 2022 14:56:12 GMT",
         "Pragma": "no-cache",
-        "request-id": "a06a0756-d322-4ad9-938b-c30fa8b05e66",
+        "Request-Id": "8daf5085-5049-4d0b-b152-38dfdcfdb512",
+        "Server": "istio-envoy",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-envoy-upstream-service-time": "226",
+        "x-http2-stream-id": "3"
       },
       "ResponseBody": {
         "error": {
-          "code": "Unauthorized",
-          "message": "One or more authorization parameter is invalid or missing.",
-          "innerError": {
-            "code": "Forbidden",
-            "message": "The provided authorization parameters cannot access the requested resource."
-          }
+          "code": "NotFound",
+          "message": "The specified deployment cannot be found within the provided subscription."
         }
       }
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
+    "AZURE_CONVERSATIONS_ENDPOINT": "https://clubuildppe.ppe.cognitiveservices.azure.com/",
     "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1434244197"
+    "RandomSeed": "1559919920"
   }
 }
