@@ -4,48 +4,532 @@
 
 ### Basic REST Calls
 
-#### Takes RequestContent and returns Response
+We add a set of convenience APIs to DPG code. Those methods are convenient to users, e.g. it can accept model as input value or return value, and also it keeps consistent with released APIs.
 
-**MetricsAdvisorAdministrationClient.CreateDataFeed**
+#### Overview
 
-<table>
-<tr>
-<td> Protocol Method </td>
-</tr>
-<tr>
-<td>
+| API  | Method | Parameter |  Return Type        | API View | Code Reference |
+|------|--------|----------|----------------|--------------|-------------------|
+|ConfidentialLedger.GetConstitution|GET| no required parameters| Single Object | [API](https://apiview.dev/Assemblies/Review/6c11d7337755493bbe6942126b633be1) L24|[Code](https://github.com/archerzz/azure-sdk-for-net/blob/278ee0568bcbcb71f3cd1a9c3b6a1d585060fa9f/sdk/confidentialledger/Azure.Security.ConfidentialLedger/src/Customizations/ConfidentialLedgerClient.cs#L69)|
+|ConfidentialLedger.GetReceipt| GET| one required parameter| Single Object | [API](https://apiview.dev/Assemblies/Review/6c11d7337755493bbe6942126b633be1) L36 | [Code](https://github.com/archerzz/azure-sdk-for-net/blob/278ee0568bcbcb71f3cd1a9c3b6a1d585060fa9f/sdk/confidentialledger/Azure.Security.ConfidentialLedger/src/Customizations/ConfidentialLedgerClient.cs#L83)
+|MetricsAdvisorAdministrationClient.CreateDataFeed| POST| only request body parameter| Single Object | [API](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b) L205, 207| [code](https://github.com/ShivangiReja/azure-sdk-for-net/blob/812720991ec401f51f8bdb958781d48d6edd24e4/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs#L356)|
+|MetricsAdvisorAdministrationClient.CreateDataFeed| POST | addition of manually-written models | Single Object | [API](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b#Azure.AI.MetricsAdvisor.Models.DataFeed) L205, 207 | [Code](https://github.com/ShivangiReja/azure-sdk-for-net/blob/812720991ec401f51f8bdb958781d48d6edd24e4/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs#L356)|
+|MetricsAdvisorAdministrationClient.UpdateDataFeed | PATCH| request body parameter and one required parameter | Single Object | [API](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b#Azure.AI.MetricsAdvisor.Models.DataFeed) L259, 261 | [Code](https://github.com/ShivangiReja/azure-sdk-for-net/blob/812720991ec401f51f8bdb958781d48d6edd24e4/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs#L433)|
+|MetricsAdvisorClient.GetFeedback| GET | one required parameter | Single Object | [API](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b#Azure.AI.MetricsAdvisor.Models.DataFeed) L26, 27 | [Code](https://github.com/ShivangiReja/azure-sdk-for-net/blob/812720991ec401f51f8bdb958781d48d6edd24e4/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs#L314)|
+|MetricsAdvisorClient.AddFeedback| POST | one required parameter | Single Object | [API](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b#Azure.AI.MetricsAdvisor.Models.DataFeed) L12, 13| [Code](https://github.com/ShivangiReja/azure-sdk-for-net/blob/812720991ec401f51f8bdb958781d48d6edd24e4/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorClient.cs#L220)|
+|MetricsAdvisorAdministrationClient.GetDataFeed| GET | one required paramter | Single Object | [API](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b#Azure.AI.MetricsAdvisor.Models.DataFeed) L231, 232 | [Code](https://github.com/ShivangiReja/azure-sdk-for-net/blob/812720991ec401f51f8bdb958781d48d6edd24e4/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src/MetricsAdvisorAdministrationClient.cs#L78)|
+|DeviceUpdateClient.GetOperation| GET | ETag parameter | Single Object | [API](https://apiview.dev/Assemblies/Review/4d7d53c6581245759f465e12c8d9e5c5) L86, 88| [Code](https://github.com/chunyu3/azure-sdk-for-net/blob/10765f008e541992e1f20fc72d46a5165bc59a3a/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src/DeviceUpdateClient.cs#L69)|
 
-```csharp
+#### Scenario: no required parameters
+
+If your convenience method has the same parameter list as that of the protocol method, the initial version of convenience method could have ambiguity with the protocol method. To resolve that issue we will append suffix (such as `Value` or `Values`) to the initial method name as the convenience method name.
+
+- Protocol Method
+
+```c#
+public virtual Response GetConstitution(RequestContext context = null)
+{
+    using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+    scope.Start();
+    try
+    {
+        using HttpMessage message = CreateGetConstitutionRequest(context);
+        return _pipeline.ProcessMessage(message, context);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
+{
+    using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
+    scope.Start();
+    try
+    {
+        using HttpMessage message = CreateGetConstitutionRequest(context);
+        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<LedgerConstitution> GetConstitutionValue(CancellationToken cancellationToken = default)
+{
+    Response response = GetConstitution(new RequestContext { CancellationToken = cancellationToken });
+
+    LedgerConstitution constitution = LedgerConstitution.FromResponse(response);
+
+    return Response.FromValue(constitution, response);
+}
+
+public virtual async Task<Response<LedgerConstitution>> GetConstitutionValueAsync(CancellationToken cancellationToken = default)
+{
+    Response response = await GetConstitutionAsync(new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+
+    LedgerConstitution constitution = LedgerConstitution.FromResponse(response);
+
+    return Response.FromValue(constitution, response);
+}
+
+```
+
+#### Scenario: one required parameter
+
+If your convenience method has the same parameter list as that of the protocol method, the initial version of convenience method could have ambiguity with the protocol method. To resolve that issue we will append suffix (such as `Value` or `Values`) to the initial method name as the convenience method name.
+
+- Protocol Method
+
+```c#
+public virtual Response GetReceipt(string transactionId, RequestContext context = null);
+public virtual Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+
+public virtual Response<TransactionReceipt> GetReceiptValue(string transactionId, CancellationToken cancellationToken = default)
+{
+    Response response = GetReceipt(transactionId, new RequestContext { CancellationToken = cancellationToken });
+
+    TransactionReceipt value = TransactionReceipt.FromResponse(response);
+
+    return Response.FromValue(value, response);
+}
+public virtual async Task<Response<TransactionReceipt>> GetReceiptValueAsync(string transactionId, CancellationToken cancellationToken = default)
+{
+    Response response = await GetReceiptAsync(transactionId, new RequestContext { CancellationToken = cancellationToken }).ConfigureAwait(false);
+
+    TransactionReceipt value = TransactionReceipt.FromResponse(response);
+
+    return Response.FromValue(value, response);
+}
+```
+
+#### Scenario: takes only request body parameter
+
+- Protocol Method
+
+```c#
 public virtual Response CreateDataFeed(RequestContent content, RequestContext context = null);
+public virtual Task<Response> CreateDataFeedAsync(RequestContent content, RequestContext context = null);
 ```
-</td>
-</tr>
-<tr>
-<td> Convenience Method </td>
-</tr>
-<td>
 
-```csharp
+- Convenience Method
+
+```c#
+
 public virtual Response<DataFeed> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
+{
+    ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
+
+    DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+    RequestContent content = DataFeedDetail.ToRequestContent(dataFeedDetail);
+    RequestContext context = new RequestContext()
+    {
+        CancellationToken = cancellationToken,
+    };
+    Response response = CreateDataFeed(content, context);
+
+    var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+    string dataFeedId = ClientCommon.GetDataFeedId(location);
+
+    try
+    {
+        var createdDataFeed = GetDataFeed(dataFeedId, cancellationToken);
+
+        return Response.FromValue(createdDataFeed, response);
+    }
+    catch (Exception ex)
+    {
+        throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
+    }
+}
+
+public virtual async Task<Response<DataFeed>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
+{
+    ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
+
+    DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
+    RequestContent content = DataFeedDetail.ToRequestContent(dataFeedDetail);
+    RequestContext context = new RequestContext()
+    {
+        CancellationToken = cancellationToken,
+    };
+
+    Response response = await CreateDataFeedAsync(content, context).ConfigureAwait(false);
+
+    var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+    string dataFeedId = ClientCommon.GetDataFeedId(location);
+
+    try
+    {
+        var createdDataFeed = await GetDataFeedAsync(dataFeedId, cancellationToken).ConfigureAwait(false);
+
+        return Response.FromValue(createdDataFeed, response);
+    }
+    catch (Exception ex)
+    {
+        throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
+    }
+}
 ```
-</td>
-</tr>
-</table>
 
-[APIView](https://apiview.dev/Assemblies/Review/a9812a1691e54ab4bf52540c4e54d433?diffRevisionId=9260bdbf10e346b9ba8dac7399ea885b&doc=False&diffOnly=False&revisionId=66cd7343ae6c47988e3f8b3caf52617b#Azure.AI.MetricsAdvisor.Administration.MetricsAdvisorAdministrationClient), Lines 205-208.
+#### Scenario: addition of manually-written models
 
-##### Customer UX: Calling CreateDataFeed
+You can define your own models for your convenience method. In swagger, the model schema is `DataFeedDetail`, users define a new model `DataFeed` for their convenience method.
 
-<table>
-<tr>
-<td> Protocol Method </td>
-</tr>
-<tr>
-<td>
+- Protocol Method
+
+```c#
+public virtual Response CreateDataFeed(RequestContent content, RequestContext context = null);
+public virtual Task<Response> CreateDataFeedAsync(RequestContent content, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<DataFeed> CreateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default);
+public virtual Task<Response<DataFeed>> CreateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default);
+```
+
+#### Scenario: takes request body parameter and one required parameter
+
+Users define a new model `DataFeed` to merge the request body parameter together with the required parameter.
+
+- Protocol Method
+
+```c#
+public virtual Response UpdateDataFeed(string dataFeedId, RequestContent content, RequestContext context = null);
+public virtual Task<Response> UpdateDataFeedAsync(string dataFeedId, RequestContent content, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<DataFeed> UpdateDataFeed(DataFeed dataFeed, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+
+    if (dataFeed.Id == null)
+    {
+        throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeed)} and update the returned model before calling this method.");
+    }
+
+    DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
+    RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
+    RequestContext context = new RequestContext()
+    {
+        CancellationToken = cancellationToken,
+    };
+    Response response = UpdateDataFeed(dataFeed.Id, content, context);
+    DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
+    return Response.FromValue(new DataFeed(dataFeedDetail), response);
+}
+public virtual async Task<Response<DataFeed>> UpdateDataFeedAsync(DataFeed dataFeed, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNull(dataFeed, nameof(dataFeed));
+
+    if (dataFeed.Id == null)
+    {
+        throw new ArgumentNullException(nameof(dataFeed), $"{nameof(dataFeed)}.Id not available. Call {nameof(GetDataFeedAsync)} and update the returned model before calling this method.");
+    }
+
+    DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
+    RequestContent content = DataFeedDetailPatch.ToRequestContent(patchModel);
+    RequestContext context = new RequestContext()
+    {
+        CancellationToken = cancellationToken,
+    };
+    Response response = await UpdateDataFeedAsync(dataFeed.Id, content, context).ConfigureAwait(false);
+    DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
+    return Response.FromValue(new DataFeed(dataFeedDetail), response);
+}
+```
+
+#### Scenario: ETag parameter
+
+In protocol method, the request condition head parameter is `ETag`, but in Generation1-convience-Client, it will use type `AccessCondition`, user can write convenience method to consistent the API.
+
+- Protocol Method
+
+```c#
+public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null);
+public virtual Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<UpdateOperation> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+{
+    var requestContext = new RequestContext { CancellationToken = cancellationToken };
+    var ifNoneMatch = new ETag(accessCondition.IfNoneMatch);
+    using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationAsync");
+    scope.Start();
+    try
+    {
+        var response = GetOperation(operationId, ifNoneMatch, requestContext);
+        UpdateOperation value = UpdateOperation.FromResponse(response);
+        return Response.FromValue(value, response);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+public virtual async Task<Response<UpdateOperation>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+{
+    var requestContext = new RequestContext { CancellationToken = cancellationToken };
+    var ifNoneMatch = new ETag(accessCondition.IfNoneMatch);
+    using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationAsync");
+    scope.Start();
+    try
+    {
+        var response = await GetOperationAsync(operationId, ifNoneMatch, requestContext).ConfigureAwait(false);;
+        UpdateOperation value = UpdateOperation.FromResponse(response);
+        return Response.FromValue(value, response);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+```
+
+#### Scenario: name changes in Convenience API
+
+Modify the convenience method name to keep API consistent with previous released package.
+
+##### GetFeedback
+
+- Protocol Method
+
+```c#
+public virtual Response GetMetricFeedback(string feedbackId, RequestContext context = null);
+public virtual Task<Response> GetMetricFeedbackAsync(string feedbackId, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<MetricFeedback> GetFeedback(string feedbackId, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
+
+    using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetFeedback)}");
+    scope.Start();
+
+    try
+    {
+        RequestContext context = new RequestContext()
+        {
+            CancellationToken = cancellationToken,
+        };
+        Response response = GetMetricFeedback(feedbackId, context);
+        MetricFeedback value = MetricFeedback.FromResponse(response);
+        return Response.FromValue(value, response);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+
+public virtual async Task<Response<MetricFeedback>> GetFeedbackAsync(string feedbackId, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNullOrEmpty(feedbackId, nameof(feedbackId));
+
+    using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(GetFeedback)}");
+    scope.Start();
+
+    try
+    {
+        RequestContext context = new RequestContext()
+        {
+            CancellationToken = cancellationToken,
+        };
+        Response response = await GetMetricFeedbackAsync(feedbackId, context).ConfigureAwait(false);
+        MetricFeedback value = MetricFeedback.FromResponse(response);
+        return Response.FromValue(value, response);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+```
+
+##### GetDataFeed
+
+- Protocol Method
+
+```c#
+public virtual Response GetDataFeedById(string dataFeedId, RequestContext context = null);
+public virtual Task<Response> GetDataFeedByIdAsync(string dataFeedId, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<DataFeed> GetDataFeed(string dataFeedId, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+
+    using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeed)}");
+    scope.Start();
+
+    try
+    {
+        RequestContext context = new RequestContext()
+        {
+            CancellationToken = cancellationToken,
+        };
+        Response response = GetDataFeedById(dataFeedId, context);
+        DataFeedDetail value = DataFeedDetail.FromResponse(response);
+        return Response.FromValue(new DataFeed(value), response);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+
+public virtual async Task<Response<DataFeed>> GetDataFeedAsync(string dataFeedId, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNullOrEmpty(dataFeedId, nameof(dataFeedId));
+
+    using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeed)}");
+    scope.Start();
+
+    try
+    {
+        RequestContext context = new RequestContext()
+        {
+            CancellationToken = cancellationToken,
+        };
+        Response response = await GetDataFeedByIdAsync(dataFeedId, context).ConfigureAwait(false);
+        DataFeedDetail value = DataFeedDetail.FromResponse(response);
+        return Response.FromValue(new DataFeed(value), response);
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+```
+
+##### AddFeedback
+
+- Protocol Method
+
+```c#
+public virtual Response CreateMetricFeedback(RequestContent content, RequestContext context = null);
+public virtual Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null);
+```
+
+- Convenience Method
+
+```c#
+public virtual Response<MetricFeedback> AddFeedback(MetricFeedback feedback, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNull(feedback, nameof(feedback));
+
+    using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(AddFeedback)}");
+    scope.Start();
+
+    try
+    {
+        RequestContent content = MetricFeedback.ToRequestContent(feedback);
+        RequestContext context = new RequestContext()
+        {
+            CancellationToken = cancellationToken,
+        };
+        Response response = CreateMetricFeedback(content, context);
+
+        var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+        string feedbackId = ClientCommon.GetFeedbackId(location);
+
+        try
+        {
+            var addedFeedback = GetFeedback(feedbackId, cancellationToken);
+
+            return Response.FromValue(addedFeedback, response);
+        }
+        catch (Exception ex)
+        {
+            throw new RequestFailedException($"The feedback has been added successfully, but the client failed to fetch its data. Feedback ID: {feedbackId}", ex);
+        }
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+
+public virtual async Task<Response<MetricFeedback>> AddFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
+{
+    Argument.AssertNotNull(feedback, nameof(feedback));
+
+    using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorClient)}.{nameof(AddFeedback)}");
+    scope.Start();
+
+    try
+    {
+        RequestContent content = MetricFeedback.ToRequestContent(feedback);
+        RequestContext context = new RequestContext()
+        {
+            CancellationToken = cancellationToken,
+        };
+        Response response = await CreateMetricFeedbackAsync(content, context).ConfigureAwait(false);
+
+        var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+        string feedbackId = ClientCommon.GetFeedbackId(location);
+
+        try
+        {
+            var addedFeedback = await GetFeedbackAsync(feedbackId, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(addedFeedback, response);
+        }
+        catch (Exception ex)
+        {
+            throw new RequestFailedException($"The feedback has been added successfully, but the client failed to fetch its data. Feedback ID: {feedbackId}", ex);
+        }
+    }
+    catch (Exception e)
+    {
+        scope.Failed(e);
+        throw;
+    }
+}
+```
+
+### Comparison between calling Protocol method and Convenience method
+
+#### createDataFeed
+
+- Protocol Method
   
 ```c#
 MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
-  
 var body = new
 {
     dataFeedName = "dataFeedName",
@@ -60,12 +544,8 @@ JsonElement createBodyJson = JsonDocument.Parse(response.Content).RootElement;
 var name = createBodyJson.GetProperty("dataFeedName").GetString();
 
 ```
-</td>
-</tr>
-<tr>
-<td> Convenience Method </td>
-</tr>
-<td>
+
+- Convenience Method
   
 ```c#
 MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient();
@@ -83,104 +563,8 @@ using var cancellationSource = new CancellationTokenSource();
 cancellationSource.Cancel();
 DataFeed dataFeed = await adminClient.CreateDataFeedAsync(dataFeed, cancellationSource.Token);
 var name = dataFeed.Name;
+
 ```
-</td>
-</tr>
-</table>
-
-#### Other variants
-
-##### Ambiguous method site: Protocol API fixed
-
-**ConfidentialLedger.GetConstitution**
-
-Note: add suffix to grow-up method name to disambiguate methods.
-
-<table>
-<tr>
-<td> Protocol Method </td>
-</tr>
-<tr>
-<td>
-
-```csharp
-public virtual Response GetConstitution(RequestContext context = null)
-```
-</td>
-</tr>
-<tr>
-<td> Convenience Method </td>
-</tr>
-<td>
-
-```csharp
-public virtual Response<LedgerConstitution> GetConstitutionValue(CancellationToken cancellationToken = default)
-```
-</td>
-</tr>
-</table>
-
-##### Ambiguous method site: Convenience API fixed
-
-**MetricsAdvisorAdministrationClient.GetDataFeed**
-
-Note: make RequestContext required to disambiguate methods.
-
-<table>
-<tr>
-<td> Protocol Method </td>
-</tr>
-<tr>
-<td>
-
-```csharp
-public virtual Response GetDataFeed(string dataFeedId, RequestContext context)
-```
-</td>
-</tr>
-<tr>
-<td> Convenience Method </td>
-</tr>
-<td>
-
-```csharp
-public virtual Response<DataFeed> GetDataFeed(string dataFeedId, CancellationToken cancellationToken = default)
-```
-</td>
-</tr>
-</table>
-
-
-
-##### ETag parameter
-
-**DeviceUpdateClient.GetOperation**
-
-Note: `ETag` type is used in protocol method.
-
-<table>
-<tr>
-<td> Protocol Method </td>
-</tr>
-<tr>
-<td>
-
-```csharp
-public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null);
-```
-</td>
-</tr>
-<tr>
-<td> Convenience Method </td>
-</tr>
-<td>
-
-```csharp
-public virtual Response<UpdateOperation> GetOperationValue(string operationId, ETag? ifNoneMatch = null, CancellationToken cancellationToken = default)
-```
-</td>
-</tr>
-</table>
 
 ### Paging Calls
 
