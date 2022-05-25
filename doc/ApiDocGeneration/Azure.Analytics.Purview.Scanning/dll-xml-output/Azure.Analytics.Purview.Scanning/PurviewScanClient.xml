@@ -276,7 +276,7 @@
              </para>
             
              Request Body:
-             <details><summary>AzureSubscriptionCredential</summary>
+             <details><Summary>AzureSubscriptionCredential</Summary>
              Schema for AzureSubscriptionCredential <c>Request Body</c>: 
              <code><![CDATA[
              {
@@ -347,7 +347,7 @@
                      credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
                    }
                },
-             }]]></code></details><details><summary>AmazonS3Credential</summary>
+             }]]></code></details><details><Summary>AmazonS3Credential</Summary>
              Schema for AmazonS3Credential <c>Request Body</c>: 
              <code><![CDATA[
              {
@@ -422,7 +422,7 @@
              ~+50 more JSON objects<br /><br />
              
              Response Body: 
-             <details><summary>AmazonS3Credential</summary>
+             <details><Summary>AmazonS3Credential</Summary>
              Schema for AmazonS3Credential <c>Response Body</c>: 
              <code><![CDATA[
              {
@@ -493,7 +493,7 @@
                    }
                  roleARN: string # Optional.
                },
-             }]]></code></details><details><summary>AzureSubscriptionCredential</summary>
+             }]]></code></details><details><Summary>AzureSubscriptionCredential</Summary>
              Schema for AzureSubscriptionCredential <c>Response Body</c>: 
              <code><![CDATA[
              {

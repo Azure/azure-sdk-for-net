@@ -430,7 +430,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// Creates an instance of a scan.
         /// </summary>
         /// 
-        /// <remarks>
+        /// <methodremarks>
         /// <para>
         /// Below is the JSON schema for the request and response payloads.
         /// </para>
@@ -444,7 +444,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </para>
         ///
         /// Request Body:
-        /// <details><summary>AzureSubscriptionCredential</summary>
+        /// <details><Summary>AzureSubscriptionCredential</Summary>
         /// Schema for AzureSubscriptionCredential <c>Request Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -519,7 +519,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// </details>
         /// 
-        /// <details><summary>AmazonS3Credential</summary>
+        /// <details><Summary>AmazonS3Credential</Summary>
         /// Schema for AmazonS3Credential <c>Request Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -597,7 +597,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <br />
         /// 
         /// Response Body: 
-        /// <details><summary>AmazonS3Credential</summary>
+        /// <details><Summary>AmazonS3Credential</Summary>
         /// Schema for AmazonS3Credential <c>Response Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -672,8 +672,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </code>
         /// </details>
         /// 
-        /// <details>
-        /// <summary>AzureSubscriptionCredential</summary>
+        /// <details><Summary>AzureSubscriptionCredential</Summary>
         /// Schema for AzureSubscriptionCredential <c>Response Body</c>: 
         /// <code><![CDATA[
         /// {
@@ -754,7 +753,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <p>
         /// We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response. 
         /// </p>
-        /// </remarks>
+        /// </methodremarks>
         /// 
         /// <param name="content">The content to send as the body of the request. The
         /// details of the content are below in the remarks.</param>
@@ -764,7 +763,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"><paramref name="content" /> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown in case of error response.</exception>
         /// 
-        /// <example>
+        /// <examples>
         /// This sample shows how to call CreateOrUpdate with required parameters <code lang="C#"><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
@@ -886,7 +885,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// ....
         /// ]]>
         /// </code>
-        /// </example>
+        /// </examples>
         public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));

@@ -1519,7 +1519,7 @@
              </para>
             
              Request Body:
-             <details><summary>AzureSubscriptionCredential</summary>
+             <details><Summary>AzureSubscriptionCredential</Summary>
              Schema for AzureSubscriptionCredential <c>Request Body</c>: 
              <code><![CDATA[
              {
@@ -1594,7 +1594,7 @@
              </code>
              </details>
              
-             <details><summary>AmazonS3Credential</summary>
+             <details><Summary>AmazonS3Credential</Summary>
              Schema for AmazonS3Credential <c>Request Body</c>: 
              <code><![CDATA[
              {
@@ -1672,7 +1672,7 @@
              <br />
              
              Response Body: 
-             <details><summary>AmazonS3Credential</summary>
+             <details><Summary>AmazonS3Credential</Summary>
              Schema for AmazonS3Credential <c>Response Body</c>: 
              <code><![CDATA[
              {
@@ -1747,8 +1747,7 @@
              </code>
              </details>
              
-             <details>
-             <summary>AzureSubscriptionCredential</summary>
+             <details><Summary>AzureSubscriptionCredential</Summary>
              Schema for AzureSubscriptionCredential <c>Response Body</c>: 
              <code><![CDATA[
              {
