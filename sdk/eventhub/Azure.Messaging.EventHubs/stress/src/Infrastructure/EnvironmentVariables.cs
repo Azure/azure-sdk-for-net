@@ -75,7 +75,8 @@ public static class EnvironmentVariables
     /// <summary>
     ///   The name of the environment variable that holds the index of the Kubernetes pod. This variable should
     ///   only be set when deploying tests to the Kubernetes cluster, and it allows each test to run all of its roles
-    ///   in separate pods. For more information see the Kubernetes documentation on indexed jobs.
+    ///   in separate pods. For more information see
+    ///   <see href="https://kubernetes.io/docs/tasks/job/indexed-parallel-processing-static/">Kubernetes Documentation on Indexed Jobs</see>
     /// </summary>
     ///
     public const string JobCompletionIndex = "JOB_COMPLETION_INDEX";
