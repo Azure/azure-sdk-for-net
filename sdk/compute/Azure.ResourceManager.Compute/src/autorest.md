@@ -108,6 +108,14 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
+  - from: swagger-document
+    where: $.paths..parameters[?(@.name === 'location')]
+    transform: >
+      $['x-ms-format'] = 'azure-location';
+  - from: swagger-document
+    where: $..parameters[?(@.name === 'location')]
+    transform: >
+      $['x-ms-format'] = 'azure-location';
   - from: skus.json
     where: $.definitions
     transform: >
@@ -131,18 +139,7 @@ directive:
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
       $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
       $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
-  - from: compute.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
-  - from: compute.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
-  - from: compute.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
+      $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
   - from: disk.json
     where: $.definitions
     transform: >
@@ -174,32 +171,12 @@ directive:
       $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
       $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
-  - from: cloudService.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies/{osFamilyName}"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
-  - from: cloudService.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsFamilies"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
-  - from: cloudService.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
-  - from: cloudService.json
-    where: $.paths["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions"].get.parameters
-    transform: >
-      $[0]["x-ms-format"] = "azure-location";
   - from: sharedGallery.json
     where: $.definitions
     transform: >
       $.PirResource["x-ms-client-name"] = "PirResourceData";
       $.PirResource.properties.location["x-ms-format"] = "azure-location";
       $.PirSharedGalleryResource["x-ms-client-name"] = "PirSharedGalleryResourceData";
-  - from: sharedGallery.json
-    where: $.parameters
-    transform: >
-      $.LocationNameParameter["x-ms-format"] = "azure-location";
   - from: communityGallery.json
     where: $.definitions
     transform: >

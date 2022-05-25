@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImage");
             scope.Start();
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineImage> GetVirtualMachineImage(string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImage(AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImage");
             scope.Start();
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesAsync(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesAsync(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImages(string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImages(AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesAsync(string location, string publisherName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesAsync(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImages(string location, string publisherName, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImages(AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageSkusAsync(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageSkusAsync(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImageSkus(string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImageSkus(AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineImagesEdgeZoneClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagesEdgeZone");
             scope.Start();
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZonesAsync(string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZones(string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZonesAsync(string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZones(string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZonesAsync(string location, string edgeZone, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZonesAsync(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZones(string location, string edgeZone, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZones(AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkusAsync(string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkusAsync(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkus(string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkus(AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ComputeUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<ComputeUsage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeUsage> GetUsages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ComputeUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<ComputeUsage> FirstPageFunc(int? pageSizeHint)
             {
@@ -1207,7 +1207,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineScaleSetResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineScaleSetResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1549,7 +1549,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineSize>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1577,7 +1577,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineSize> GetVirtualMachineSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineSize> FirstPageFunc(int? pageSizeHint)
             {
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
@@ -1888,7 +1888,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsRequestRateByInterval");
             scope.Start();
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsThrottledRequests");
             scope.Start();
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LogAnalyticsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExportLogAnalyticsThrottledRequests");
             scope.Start();
@@ -1971,7 +1971,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<RunCommandDocumentBase>> FirstPageFunc(int? pageSizeHint)
             {
@@ -2014,7 +2014,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<RunCommandDocumentBase> FirstPageFunc(int? pageSizeHint)
             {
@@ -2057,7 +2057,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(string location, string commandId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
@@ -2081,7 +2081,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RunCommandDocument> GetVirtualMachineRunCommand(string location, string commandId, CancellationToken cancellationToken = default)
+        public virtual Response<RunCommandDocument> GetVirtualMachineRunCommand(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
             using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
@@ -2613,7 +2613,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunityGallery>> GetCommunityGalleryAsync(string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGallery>> GetCommunityGalleryAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunityGallery");
             scope.Start();
@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunityGallery> GetCommunityGallery(string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGallery> GetCommunityGallery(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleriesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunityGallery");
             scope.Start();
@@ -2662,7 +2662,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleryImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunityGalleryImage");
             scope.Start();
@@ -2687,7 +2687,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunityGalleryImage> GetCommunityGalleryImage(string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGalleryImage> GetCommunityGalleryImage(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleryImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunityGalleryImage");
             scope.Start();
@@ -2713,7 +2713,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleryImageVersionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunityGalleryImageVersion");
             scope.Start();
@@ -2739,7 +2739,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CommunityGalleryImageVersion> GetCommunityGalleryImageVersion(string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGalleryImageVersion> GetCommunityGalleryImageVersion(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             using var scope = CommunityGalleryImageVersionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunityGalleryImageVersion");
             scope.Start();
