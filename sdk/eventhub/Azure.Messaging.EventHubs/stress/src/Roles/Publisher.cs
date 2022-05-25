@@ -166,10 +166,10 @@ internal class Publisher
         using var batch = await producer.CreateBatchAsync().ConfigureAwait(false);
 
         var events = EventGenerator.CreateEvents(batch.MaximumSizeInBytes,
-                                                    _publisherconfiguration.PublishBatchSize,
-                                                    _publisherconfiguration.LargeMessageRandomFactorPercent,
-                                                    _publisherconfiguration.PublishingBodyMinBytes,
-                                                    _publisherconfiguration.PublishingBodyRegularMaxBytes);
+                                                 _publisherconfiguration.PublishBatchSize,
+                                                 _publisherconfiguration.LargeMessageRandomFactorPercent,
+                                                 _publisherconfiguration.PublishingBodyMinBytes,
+                                                 _publisherconfiguration.PublishingBodyRegularMaxBytes);
 
         foreach (var currentEvent in events)
         {
