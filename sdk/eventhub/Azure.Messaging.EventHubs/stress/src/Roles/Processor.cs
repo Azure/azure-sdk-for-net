@@ -170,7 +170,7 @@ internal class Processor
             {
                 _metrics.Client.GetMetric(_metrics.EventsRead).TrackValue(1);
 
-                // TODO: any processing here? Maybe just do sequence number things
+                // TODO: event body and sequence validation
 
                 _metrics.Client.GetMetric(_metrics.EventsProcessed).TrackValue(1);
             }

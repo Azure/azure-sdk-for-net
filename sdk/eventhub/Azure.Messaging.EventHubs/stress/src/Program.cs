@@ -74,7 +74,7 @@ public class Program
 
         var metrics = new Metrics(appInsightsKey);
 
-        using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Error);
+        using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Warning);
 
         if (opts.Test == "EventProd" || opts.Test == "EventProducerTest" || opts.All)
         {
