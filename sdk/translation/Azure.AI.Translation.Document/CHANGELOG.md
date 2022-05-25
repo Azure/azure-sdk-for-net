@@ -4,6 +4,8 @@
 
 ### Features Added
 - Added optional parameter `categoryId` to the `DocumentTranslationInput.AddTarget`.
+- Added property `Ascending` to type `DocumentFilterOrder` and `TranslationFilterOrder`.
+- Renamed parameter `asc` to `ascending` in `TranslationFilterOrder` constructor.
 
 ### Breaking Changes
 - Renamed type `StorageInputType` to `StorageInputUriKind`.

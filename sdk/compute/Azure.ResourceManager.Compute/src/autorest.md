@@ -166,4 +166,12 @@ directive:
       $.PirCommunityGalleryResource.properties.type["x-ms-client-name"] = "ResourceType";
       $.PirCommunityGalleryResource.properties.location["x-ms-format"] = "azure-location";
       $.PirCommunityGalleryResource.properties.type["x-ms-format"] = "resource-type";
+  - from: cloudService.json
+    where: $.definitions.LoadBalancerConfigurationProperties
+    transform: >
+      $.properties.frontendIpConfigurations = $.properties.frontendIPConfigurations;
+      $.properties.frontendIpConfigurations["x-ms-client-name"] = "frontendIPConfigurations";
+      $.required = ["frontendIpConfigurations"];
+      $.properties.frontendIPConfigurations = undefined;
+    reason: Service returns response with property name as frontendIpConfigurations.
 ```
