@@ -699,11 +699,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagePublishersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             async Task<Page<VirtualMachineImageResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImages");
+                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers");
                 scope.Start();
                 try
                 {
@@ -727,11 +727,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImages(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineImageResource> GetVirtualMachineImagePublishers(AzureLocation location, CancellationToken cancellationToken = default)
         {
             Page<VirtualMachineImageResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPublishersVirtualMachineImages");
+                using var scope = VirtualMachineImagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineImagePublishers");
                 scope.Start();
                 try
                 {

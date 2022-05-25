@@ -56,6 +56,7 @@ override-operation-name:
   CloudServicesUpdateDomain_ListUpdateDomains: GetUpdateDomains
   CloudServicesUpdateDomain_WalkUpdateDomain: WalkUpdateDomain
   GallerySharingProfile_Update: UpdateSharingProfile
+  VirtualMachineImages_ListPublishers: GetVirtualMachineImagePublishers
   VirtualMachineImages_ListSkus: GetVirtualMachineImageSkus
   VirtualMachineImagesEdgeZone_ListSkus: GetVirtualMachineImageEdgeZoneSkus
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
@@ -120,6 +121,7 @@ directive:
     where: $.definitions
     transform: >
       $.ResourceSku["x-ms-client-name"] = "ComputeResourceSku";
+      $.ResourceSku.properties.locations.items["x-ms-format"] = "azure-location";
       $.ResourceSkuCapacity["x-ms-client-name"] = "ComputeResourceSkuCapacity";
   - from: compute.json
     where: $.definitions
@@ -140,6 +142,7 @@ directive:
       $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
       $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
       $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
+      $.ImageReference.properties.sharedGalleryImageId["x-ms-client-name"] = "sharedGalleryImageUniqueId";
   - from: disk.json
     where: $.definitions
     transform: >
@@ -152,9 +155,15 @@ directive:
       $.SnapshotProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.SnapshotUpdateProperties.properties.encryptionSettingsCollection["x-ms-client-name"] = "encryptionSettingGroup";
       $.Encryption["x-ms-client-name"] = "DiskEncryption";
+      $.Encryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskRestorePointProperties.properties.sourceResourceLocation["x-ms-format"] = "azure-location";
       $.SnapshotProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
+      $.CreationData["x-ms-client-name"] = "DiskCreationData";
+      $.CreationData.properties.storageAccountId["x-ms-format"] = "arm-id";
+      $.CreationData.properties.sourceResourceId["x-ms-format"] = "arm-id";
+      $.DiskSecurityProfile.properties.secureVMDiskEncryptionSetId["x-ms-format"] = "arm-id";
+      $.ImageDiskReference.properties.id["x-ms-format"] = "arm-id";
   - from: cloudService.json
     where: $.definitions
     transform: >
@@ -171,6 +180,11 @@ directive:
       $.RoleInstance["x-ms-client-name"] = "CloudServiceRoleInstance";
       $.RoleInstance.properties.location["x-ms-format"] = "azure-location";
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
+  - from: gallery.json
+    where: $.definitions
+    transform: >
+      $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
+      $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
   - from: sharedGallery.json
     where: $.definitions
     transform: >

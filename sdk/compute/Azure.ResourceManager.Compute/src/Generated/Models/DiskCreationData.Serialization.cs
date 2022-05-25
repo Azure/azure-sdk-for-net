@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CreationData : IUtf8JsonSerializable
+    public partial class DiskCreationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static CreationData DeserializeCreationData(JsonElement element)
+        internal static DiskCreationData DeserializeDiskCreationData(JsonElement element)
         {
             DiskCreateOption createOption = default;
-            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ImageDiskReference> imageReference = default;
             Optional<ImageDiskReference> galleryImageReference = default;
             Optional<Uri> sourceUri = default;
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<string> sourceUniqueId = default;
             Optional<long> uploadSizeBytes = default;
             Optional<int> logicalSectorSize = default;
@@ -82,7 +82,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("storageAccountId"))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("imageReference"))
@@ -117,7 +122,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceUniqueId"))
@@ -156,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value);
+            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value);
         }
     }
 }

@@ -6,20 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Data used when creating a disk. </summary>
-    public partial class CreationData
+    public partial class DiskCreationData
     {
-        /// <summary> Initializes a new instance of CreationData. </summary>
+        /// <summary> Initializes a new instance of DiskCreationData. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
-        public CreationData(DiskCreateOption createOption)
+        public DiskCreationData(DiskCreateOption createOption)
         {
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of CreationData. </summary>
+        /// <summary> Initializes a new instance of DiskCreationData. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
         /// <param name="imageReference"> Disk source information. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
         /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
-        internal CreationData(DiskCreateOption createOption, string storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, string sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri)
+        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This enumerates the possible sources of a disk&apos;s creation. </summary>
         public DiskCreateOption CreateOption { get; set; }
         /// <summary> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
         /// <summary> Disk source information. </summary>
         public ImageDiskReference ImageReference { get; set; }
         /// <summary> Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </summary>
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </summary>
         public Uri SourceUri { get; set; }
         /// <summary> If createOption is Copy, this is the ARM id of the source snapshot or disk. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> If this field is set, this is the unique id identifying the source of this resource. </summary>
         public string SourceUniqueId { get; }
         /// <summary> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </summary>
