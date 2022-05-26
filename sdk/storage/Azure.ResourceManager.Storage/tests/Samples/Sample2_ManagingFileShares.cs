@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_FileShares_ListFileShares
             FileShareCollection fileShareCollection = fileService.GetFileShares();
-            AsyncPageable<FileShareResource> response = fileShareCollection.GetAllAsync();
+            AsyncPageable<FileShareResource> response = fileShareCollection.GetAllAsync(null);
             await foreach (FileShareResource fileShare in response)
             {
                 Console.WriteLine(fileShare.Id.Name);

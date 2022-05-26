@@ -66,14 +66,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
         /// Operation Id: GetCatalog
         /// </summary>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(AzureReservationAPIGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationCatalog>> FirstPageFunc(int? pageSizeHint)
             {
@@ -81,7 +77,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.GetCatalogAsync(Id.SubscriptionId, reservedResourceType, location, publisherId, offerId, planId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.GetCatalogAsync(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -98,14 +94,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
         /// Operation Id: GetCatalog
         /// </summary>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, string location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationCatalog> GetCatalog(AzureReservationAPIGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             Page<ReservationCatalog> FirstPageFunc(int? pageSizeHint)
             {
@@ -113,7 +105,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.GetCatalog(Id.SubscriptionId, reservedResourceType, location, publisherId, offerId, planId, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.GetCatalog(Id.SubscriptionId, options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

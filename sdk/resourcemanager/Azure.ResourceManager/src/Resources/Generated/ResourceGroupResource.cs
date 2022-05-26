@@ -249,6 +249,96 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
+        /// Get all the resources for a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
+        /// Operation Id: Resources_ListByResourceGroup
+        /// </summary>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(ResourceListByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ResourceListByResourceGroupOptions();
+
+            async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceGroupResourcesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceGroupResourcesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get all the resources for a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
+        /// Operation Id: Resources_ListByResourceGroup
+        /// </summary>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GenericResource> GetGenericResources(ResourceListByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ResourceListByResourceGroupOptions();
+
+            Page<GenericResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupResourcesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = _resourceGroupResourcesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Captures the specified resource group as a template.
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/exportTemplate
         /// Operation Id: ResourceGroups_ExportTemplate

@@ -303,6 +303,96 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
+        /// Get all the resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resources
+        /// Operation Id: Resources_List
+        /// </summary>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(ResourceGetAllOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ResourceGetAllOptions();
+
+            async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionResourcesRestClient.ListAsync(Id.SubscriptionId, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = await _subscriptionResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get all the resources in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/resources
+        /// Operation Id: Resources_List
+        /// </summary>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GenericResource> GetGenericResources(ResourceGetAllOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ResourceGetAllOptions();
+
+            Page<GenericResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = _subscriptionResourcesRestClient.List(Id.SubscriptionId, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
+                scope.Start();
+                try
+                {
+                    var response = _subscriptionResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, options.Filter, options.Expand, options.Top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// This operation allows deleting a value from the list of predefined values for an existing predefined tag name. The value being deleted must not be in use as a tag value for the given tag name for any resource.
         /// Request Path: /subscriptions/{subscriptionId}/tagNames/{tagName}/tagValues/{tagValue}
         /// Operation Id: Tags_DeleteValue

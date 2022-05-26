@@ -218,20 +218,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableSqlContainers
         /// Operation Id: RestorableSqlContainers_List
         /// </summary>
-        /// <param name="restorableSqlDatabaseRid"> The resource ID of the SQL database. </param>
-        /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
-        /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(RestorableSqlContainerGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new RestorableSqlContainerGetAllOptions();
+
             async Task<Page<RestorableSqlContainer>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableSqlContainersClientDiagnostics.CreateScope("RestorableDatabaseAccountResource.GetRestorableSqlContainers");
                 scope.Start();
                 try
                 {
-                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, options.RestorableSqlDatabaseRid, options.StartTime, options.EndTime, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -248,20 +248,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableSqlContainers
         /// Operation Id: RestorableSqlContainers_List
         /// </summary>
-        /// <param name="restorableSqlDatabaseRid"> The resource ID of the SQL database. </param>
-        /// <param name="startTime"> The snapshot create timestamp after which snapshots need to be listed. </param>
-        /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(RestorableSqlContainerGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new RestorableSqlContainerGetAllOptions();
+
             Page<RestorableSqlContainer> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableSqlContainersClientDiagnostics.CreateScope("RestorableDatabaseAccountResource.GetRestorableSqlContainers");
                 scope.Start();
                 try
                 {
-                    var response = _restorableSqlContainersRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken);
+                    var response = _restorableSqlContainersRestClient.List(Id.SubscriptionId, Id.Parent.Name, Id.Name, options.RestorableSqlDatabaseRid, options.StartTime, options.EndTime, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

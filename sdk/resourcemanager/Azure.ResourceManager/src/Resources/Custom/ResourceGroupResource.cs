@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources.Models;
 
 [assembly:CodeGenSuppressType("ResourceGroupUpdateOperation")]
 namespace Azure.ResourceManager.Resources
@@ -28,37 +29,13 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
+            ResourceListByResourceGroupOptions options = new ResourceListByResourceGroupOptions
             {
-                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGroupResourcesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGroupResourcesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                Filter = filter,
+                Expand = expand,
+                Top = top
+            };
+            return GetGenericResourcesAsync(options, cancellationToken);
         }
 
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
@@ -72,37 +49,13 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetGenericResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<GenericResource> FirstPageFunc(int? pageSizeHint)
+            ResourceListByResourceGroupOptions options = new ResourceListByResourceGroupOptions
             {
-                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGroupResourcesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGroupResourcesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GenericResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                Filter = filter,
+                Expand = expand,
+                Top = top
+            };
+            return GetGenericResources(options, cancellationToken);
         }
     }
 }

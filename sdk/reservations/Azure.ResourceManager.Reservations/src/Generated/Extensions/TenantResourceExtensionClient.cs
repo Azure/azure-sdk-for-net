@@ -72,15 +72,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(ReservationListAllOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationResponseResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -88,7 +83,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await ReservationResponseReservationRestClient.ListAllAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ReservationResponseReservationRestClient.ListAllAsync(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -103,7 +98,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = await ReservationResponseReservationRestClient.ListAllNextPageAsync(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ReservationResponseReservationRestClient.ListAllNextPageAsync(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -120,15 +115,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationResponseResource> GetReservationResponses(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationResponseResource> GetReservationResponses(ReservationListAllOptions options, CancellationToken cancellationToken = default)
         {
             Page<ReservationResponseResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -136,7 +126,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = ReservationResponseReservationRestClient.ListAll(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
+                    var response = ReservationResponseReservationRestClient.ListAll(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -151,7 +141,7 @@ namespace Azure.ResourceManager.Reservations
                 scope.Start();
                 try
                 {
-                    var response = ReservationResponseReservationRestClient.ListAllNextPage(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
+                    var response = ReservationResponseReservationRestClient.ListAllNextPage(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

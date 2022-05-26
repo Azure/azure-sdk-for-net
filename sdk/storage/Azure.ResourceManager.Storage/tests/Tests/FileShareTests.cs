@@ -114,14 +114,16 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(shareSnapshot.Data.SnapshotOn, shareSnapshot1.Data.SnapshotOn);
 
             //list share with snapshot
-            List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(expand: "snapshots").ToEnumerableAsync();
+            FileShareGetAllOptions options = new FileShareGetAllOptions { Expand = "snapshots" };
+            List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(options).ToEnumerableAsync();
             Assert.AreEqual(3, fileShares.Count);
 
             //delete share snapshot
             await shareSnapshot.DeleteAsync(WaitUntil.Completed);
 
             // List share with deleted
-            fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
+            options.Expand = "deleted";
+            fileShares = await _fileShareCollection.GetAllAsync(options).ToEnumerableAsync();
             Assert.AreEqual(2, fileShares.Count);
         }
 
@@ -139,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareResource share3 = null;
             FileShareResource share4 = null;
             int count = 0;
-            await foreach (FileShareResource share in _fileShareCollection.GetAllAsync())
+            await foreach (FileShareResource share in _fileShareCollection.GetAllAsync(null))
             {
                 count++;
                 if (share.Id.Name == fileShareName1)
@@ -223,7 +225,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //get the deleted share version
             string deletedShareVersion = null;
-            List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(expand: "deleted").ToEnumerableAsync();
+            FileShareGetAllOptions options = new FileShareGetAllOptions { Expand = "deleted" };
+            List<FileShareResource> fileShares = await _fileShareCollection.GetAllAsync(options).ToEnumerableAsync();
             deletedShareVersion = fileShares[0].Data.Version;
 
             //restore file share
@@ -236,7 +239,7 @@ namespace Azure.ResourceManager.Storage.Tests
             await share1.RestoreAsync(deletedShare);
 
             //validate
-            fileShares = await _fileShareCollection.GetAllAsync().ToEnumerableAsync();
+            fileShares = await _fileShareCollection.GetAllAsync(null).ToEnumerableAsync();
             Assert.AreEqual(fileShares.Count, 1);
         }
 

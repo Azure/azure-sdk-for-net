@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource container3 = null;
             BlobContainerResource container4 = null;
             int count = 0;
-            await foreach (BlobContainerResource container in _blobContainerCollection.GetAllAsync())
+            await foreach (BlobContainerResource container in _blobContainerCollection.GetAllAsync(null))
             {
                 count++;
                 if (container.Id.Name == containerName1)
@@ -614,7 +614,8 @@ namespace Azure.ResourceManager.Storage.Tests
             await container2.DeleteAsync(WaitUntil.Completed);
 
             //list delete included
-            List<BlobContainerResource> blobContainers = await _blobContainerCollection.GetAllAsync(include: ListContainersInclude.Deleted).ToEnumerableAsync();
+            BlobContainerGetAllOptions options = new BlobContainerGetAllOptions { Include = ListContainersInclude.Deleted };
+            List<BlobContainerResource> blobContainers = await _blobContainerCollection.GetAllAsync(options).ToEnumerableAsync();
             Assert.AreEqual(2, blobContainers.Count);
             foreach (BlobContainerResource con in blobContainers)
             {
@@ -629,7 +630,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             }
             //list without delete included
-            blobContainers = await _blobContainerCollection.GetAllAsync().ToEnumerableAsync();
+            blobContainers = await _blobContainerCollection.GetAllAsync(null).ToEnumerableAsync();
             Assert.AreEqual(1, blobContainers.Count);
 
             //disable container softdelete

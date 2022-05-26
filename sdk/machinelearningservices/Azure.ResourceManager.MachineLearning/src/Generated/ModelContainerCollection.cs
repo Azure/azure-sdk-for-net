@@ -183,20 +183,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models
         /// Operation Id: ModelContainers_List
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
-        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ModelContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ModelContainerResource> GetAllAsync(string skip = null, int? count = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ModelContainerResource> GetAllAsync(ModelContainerGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ModelContainerGetAllOptions();
+
             async Task<Page<ModelContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _modelContainerClientDiagnostics.CreateScope("ModelContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _modelContainerRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _modelContainerRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.ListViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _modelContainerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _modelContainerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.ListViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models
         /// Operation Id: ModelContainers_List
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
-        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ModelContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ModelContainerResource> GetAll(string skip = null, int? count = null, ListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ModelContainerResource> GetAll(ModelContainerGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new ModelContainerGetAllOptions();
+
             Page<ModelContainerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _modelContainerClientDiagnostics.CreateScope("ModelContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _modelContainerRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType, cancellationToken: cancellationToken);
+                    var response = _modelContainerRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.ListViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _modelContainerRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType, cancellationToken: cancellationToken);
+                    var response = _modelContainerRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.ListViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ModelContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +324,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<ModelContainerResource> IEnumerable<ModelContainerResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(null).GetEnumerator();
         }
 
         IAsyncEnumerator<ModelContainerResource> IAsyncEnumerable<ModelContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

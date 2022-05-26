@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_BlobContainers_ListBlobContainers
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync();
+            AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync(null);
             await foreach (BlobContainerResource blobContainer in response)
             {
                 Console.WriteLine(blobContainer.Id.Name);

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -184,24 +185,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores
         /// Operation Id: Datastores_List
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
-        /// <param name="isDefault"> Filter down to the workspace default datastore. </param>
-        /// <param name="names"> Names of datastores to return. </param>
-        /// <param name="searchText"> Text to search for in the datastore names. </param>
-        /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
-        /// <param name="orderByAsc"> Order by property in ascending order. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DatastoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatastoreResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatastoreResource> GetAllAsync(DatastoreGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DatastoreGetAllOptions();
+
             async Task<Page<DatastoreResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _datastoreRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _datastoreRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -216,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _datastoreRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _datastoreRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -233,24 +230,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores
         /// Operation Id: Datastores_List
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
-        /// <param name="isDefault"> Filter down to the workspace default datastore. </param>
-        /// <param name="names"> Names of datastores to return. </param>
-        /// <param name="searchText"> Text to search for in the datastore names. </param>
-        /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
-        /// <param name="orderByAsc"> Order by property in ascending order. </param>
+        /// <param name="options"> A class representing the optional parameters in this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatastoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatastoreResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatastoreResource> GetAll(DatastoreGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DatastoreGetAllOptions();
+
             Page<DatastoreResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _datastoreClientDiagnostics.CreateScope("DatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _datastoreRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
+                    var response = _datastoreRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -265,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _datastoreRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
+                    var response = _datastoreRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -333,17 +326,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<DatastoreResource> IEnumerable<DatastoreResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(null).GetEnumerator();
         }
 
         IAsyncEnumerator<DatastoreResource> IAsyncEnumerable<DatastoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
