@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Encryption at rest settings for disk or snapshot. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskEncryption. </summary>
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
         /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
-        internal DiskEncryption(string diskEncryptionSetId, EncryptionType? encryptionType)
+        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, EncryptionType? encryptionType)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
             EncryptionType = encryptionType;
         }
 
         /// <summary> ResourceId of the disk encryption set to use for enabling encryption at rest. </summary>
-        public string DiskEncryptionSetId { get; set; }
+        public ResourceIdentifier DiskEncryptionSetId { get; set; }
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
         public EncryptionType? EncryptionType { get; set; }
     }

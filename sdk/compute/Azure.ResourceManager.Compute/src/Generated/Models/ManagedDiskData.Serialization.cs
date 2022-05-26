@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DiskPurchasePlan> purchasePlan = default;
             Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<CreationData> creationData = default;
+            Optional<DiskCreationData> creationData = default;
             Optional<int> diskSizeGB = default;
             Optional<long> diskSizeBytes = default;
             Optional<string> uniqueId = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            creationData = CreationData.DeserializeCreationData(property0.Value);
+                            creationData = DiskCreationData.DeserializeDiskCreationData(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diskSizeGB"))

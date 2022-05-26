@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Application Version that you want to update. </summary>
-    public partial class GalleryApplicationVersionPatch : UpdateResourceDefinition
+    public partial class GalleryApplicationVersionPatch : GalleryUpdateResourceDefinition
     {
         /// <summary> Initializes a new instance of GalleryApplicationVersionPatch. </summary>
         public GalleryApplicationVersionPatch()

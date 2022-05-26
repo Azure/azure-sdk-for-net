@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains the security related information for the resource. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskSecurityProfile. </summary>
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
         /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
-        internal DiskSecurityProfile(DiskSecurityTypes? securityType, string secureVmDiskEncryptionSetId)
+        internal DiskSecurityProfile(DiskSecurityTypes? securityType, ResourceIdentifier secureVmDiskEncryptionSetId)
         {
             SecurityType = securityType;
             SecureVmDiskEncryptionSetId = secureVmDiskEncryptionSetId;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the SecurityType of the VM. Applicable for OS disks only. </summary>
         public DiskSecurityTypes? SecurityType { get; set; }
         /// <summary> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </summary>
-        public string SecureVmDiskEncryptionSetId { get; set; }
+        public ResourceIdentifier SecureVmDiskEncryptionSetId { get; set; }
     }
 }

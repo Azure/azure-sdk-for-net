@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
         /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, string diskAccessId, float? completionPercent, string replicationState, string sourceResourceLocation) : base(id, name, resourceType, systemData)
+        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, PublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation) : base(id, name, resourceType, systemData)
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Policy for controlling export on the disk. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; }
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId { get; }
+        public ResourceIdentifier DiskAccessId { get; }
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>
         public float? CompletionPercent { get; }
         /// <summary> Replication state of disk restore point when source resource is from a different region. </summary>
         public string ReplicationState { get; }
         /// <summary> Location of source disk or source disk restore point when source resource is from a different region. </summary>
-        public string SourceResourceLocation { get; }
+        public AzureLocation? SourceResourceLocation { get; }
     }
 }

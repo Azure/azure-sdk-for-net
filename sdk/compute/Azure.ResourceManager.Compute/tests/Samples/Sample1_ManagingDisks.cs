@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 {
                     Name = DiskStorageAccountTypes.StandardLRS
                 },
-                CreationData = new CreationData(DiskCreateOption.Empty),
+                CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
             ArmOperation<ManagedDiskResource> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,18 +21,75 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+                writer.WritePropertyName("publisher");
+                writer.WriteStringValue(Publisher);
             }
+            if (Optional.IsDefined(CloudServiceExtensionPropertiesType))
+            {
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(CloudServiceExtensionPropertiesType);
+            }
+            if (Optional.IsDefined(TypeHandlerVersion))
+            {
+                writer.WritePropertyName("typeHandlerVersion");
+                writer.WriteStringValue(TypeHandlerVersion);
+            }
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            {
+                writer.WritePropertyName("autoUpgradeMinorVersion");
+                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+            }
+            if (Optional.IsDefined(Settings))
+            {
+                writer.WritePropertyName("settings");
+                writer.WriteStringValue(Settings);
+            }
+            if (Optional.IsDefined(ProtectedSettings))
+            {
+                writer.WritePropertyName("protectedSettings");
+                writer.WriteStringValue(ProtectedSettings);
+            }
+            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            {
+                writer.WritePropertyName("protectedSettingsFromKeyVault");
+                writer.WriteObjectValue(ProtectedSettingsFromKeyVault);
+            }
+            if (Optional.IsDefined(ForceUpdateTag))
+            {
+                writer.WritePropertyName("forceUpdateTag");
+                writer.WriteStringValue(ForceUpdateTag);
+            }
+            if (Optional.IsCollectionDefined(RolesAppliedTo))
+            {
+                writer.WritePropertyName("rolesAppliedTo");
+                writer.WriteStartArray();
+                foreach (var item in RolesAppliedTo)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static CloudServiceExtension DeserializeCloudServiceExtension(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<CloudServiceExtensionProperties> properties = default;
+            Optional<string> publisher = default;
+            Optional<string> type = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<string> settings = default;
+            Optional<string> protectedSettings = default;
+            Optional<CloudServiceVaultAndSecretReference> protectedSettingsFromKeyVault = default;
+            Optional<string> forceUpdateTag = default;
+            Optional<string> provisioningState = default;
+            Optional<IList<string>> rolesAppliedTo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,11 +104,83 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = CloudServiceExtensionProperties.DeserializeCloudServiceExtensionProperties(property.Value);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("publisher"))
+                        {
+                            publisher = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"))
+                        {
+                            type = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("typeHandlerVersion"))
+                        {
+                            typeHandlerVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("autoUpgradeMinorVersion"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoUpgradeMinorVersion = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("settings"))
+                        {
+                            settings = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("protectedSettings"))
+                        {
+                            protectedSettings = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("protectedSettingsFromKeyVault"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            protectedSettingsFromKeyVault = CloudServiceVaultAndSecretReference.DeserializeCloudServiceVaultAndSecretReference(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("forceUpdateTag"))
+                        {
+                            forceUpdateTag = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("rolesAppliedTo"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            rolesAppliedTo = array;
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new CloudServiceExtension(name.Value, properties.Value);
+            return new CloudServiceExtension(name.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, protectedSettingsFromKeyVault.Value, forceUpdateTag.Value, provisioningState.Value, Optional.ToList(rolesAppliedTo));
         }
     }
 }

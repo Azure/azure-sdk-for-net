@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the Shared Image Gallery that you want to update. </summary>
-    public partial class GalleryPatch : UpdateResourceDefinition
+    public partial class GalleryPatch : GalleryUpdateResourceDefinition
     {
         /// <summary> Initializes a new instance of GalleryPatch. </summary>
         public GalleryPatch()

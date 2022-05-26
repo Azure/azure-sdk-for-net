@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-        public RestorePointCollectionSourceProperties Source { get; set; }
+        public RestorePointCollectionSource Source { get; set; }
         /// <summary> The provisioning state of the restore point collection. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique id of the restore point collection. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RoleInstanceListResult(IEnumerable<RoleInstanceData> value)
+        internal RoleInstanceListResult(IEnumerable<CloudServiceRoleInstanceData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal RoleInstanceListResult(IReadOnlyList<RoleInstanceData> value, string nextLink)
+        internal RoleInstanceListResult(IReadOnlyList<CloudServiceRoleInstanceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<RoleInstanceData> Value { get; }
+        public IReadOnlyList<CloudServiceRoleInstanceData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

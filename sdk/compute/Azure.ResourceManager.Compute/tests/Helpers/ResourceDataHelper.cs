@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
                 {
                     Name = DiskStorageAccountTypes.StandardLRS
                 },
-                CreationData = new CreationData(DiskCreateOption.Empty),
+                CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
         }
