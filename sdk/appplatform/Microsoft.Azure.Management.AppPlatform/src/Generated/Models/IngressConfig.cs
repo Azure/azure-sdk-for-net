@@ -11,30 +11,29 @@
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Desired outbound IP resources for Azure Spring Apps resource.
+    /// Ingress configuration payload for Azure Spring Apps resource.
     /// </summary>
-    public partial class NetworkProfileOutboundIPs
+    public partial class IngressConfig
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkProfileOutboundIPs class.
+        /// Initializes a new instance of the IngressConfig class.
         /// </summary>
-        public NetworkProfileOutboundIPs()
+        public IngressConfig()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkProfileOutboundIPs class.
+        /// Initializes a new instance of the IngressConfig class.
         /// </summary>
-        /// <param name="publicIPs">A list of public IP addresses.</param>
-        public NetworkProfileOutboundIPs(IList<string> publicIPs = default(IList<string>))
+        /// <param name="readTimeoutInSeconds">Ingress read time out in
+        /// seconds.</param>
+        public IngressConfig(int? readTimeoutInSeconds = default(int?))
         {
-            PublicIPs = publicIPs;
+            ReadTimeoutInSeconds = readTimeoutInSeconds;
             CustomInit();
         }
 
@@ -44,10 +43,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a list of public IP addresses.
+        /// Gets or sets ingress read time out in seconds.
         /// </summary>
-        [JsonProperty(PropertyName = "publicIPs")]
-        public IList<string> PublicIPs { get; private set; }
+        [JsonProperty(PropertyName = "readTimeoutInSeconds")]
+        public int? ReadTimeoutInSeconds { get; set; }
 
     }
 }

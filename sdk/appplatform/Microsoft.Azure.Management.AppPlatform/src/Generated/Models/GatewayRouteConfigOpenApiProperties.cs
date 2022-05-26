@@ -11,30 +11,30 @@
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Desired outbound IP resources for Azure Spring Apps resource.
+    /// OpenAPI properties of Spring Cloud Gateway route config.
     /// </summary>
-    public partial class NetworkProfileOutboundIPs
+    public partial class GatewayRouteConfigOpenApiProperties
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkProfileOutboundIPs class.
+        /// Initializes a new instance of the
+        /// GatewayRouteConfigOpenApiProperties class.
         /// </summary>
-        public NetworkProfileOutboundIPs()
+        public GatewayRouteConfigOpenApiProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkProfileOutboundIPs class.
+        /// Initializes a new instance of the
+        /// GatewayRouteConfigOpenApiProperties class.
         /// </summary>
-        /// <param name="publicIPs">A list of public IP addresses.</param>
-        public NetworkProfileOutboundIPs(IList<string> publicIPs = default(IList<string>))
+        /// <param name="uri">The URI of OpenAPI specification.</param>
+        public GatewayRouteConfigOpenApiProperties(string uri = default(string))
         {
-            PublicIPs = publicIPs;
+            Uri = uri;
             CustomInit();
         }
 
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a list of public IP addresses.
+        /// Gets or sets the URI of OpenAPI specification.
         /// </summary>
-        [JsonProperty(PropertyName = "publicIPs")]
-        public IList<string> PublicIPs { get; private set; }
+        [JsonProperty(PropertyName = "uri")]
+        public string Uri { get; set; }
 
     }
 }
