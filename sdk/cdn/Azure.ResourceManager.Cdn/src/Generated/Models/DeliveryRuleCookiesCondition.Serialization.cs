@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleCookiesCondition DeserializeDeliveryRuleCookiesCondition(JsonElement element)
         {
-            CookiesMatchConditionDefinition parameters = default;
+            CookiesMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = CookiesMatchConditionDefinition.DeserializeCookiesMatchConditionDefinition(property.Value);
+                    parameters = CookiesMatchCondition.DeserializeCookiesMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

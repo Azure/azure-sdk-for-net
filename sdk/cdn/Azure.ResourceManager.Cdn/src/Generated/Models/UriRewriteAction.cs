@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UriRewriteAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public UriRewriteAction(UriRewriteActionDefinition parameters)
+        public UriRewriteAction(UriRewriteActionProperties parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UriRewriteAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal UriRewriteAction(DeliveryRuleActionType name, UriRewriteActionDefinition parameters) : base(name)
+        internal UriRewriteAction(DeliveryRuleActionType name, UriRewriteActionProperties parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public UriRewriteActionDefinition Parameters { get; set; }
+        public UriRewriteActionProperties Parameters { get; set; }
     }
 }

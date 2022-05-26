@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleHostNameCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleHostNameCondition(HostNameMatchConditionDefinition parameters)
+        public DeliveryRuleHostNameCondition(HostNameMatchCondition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleHostNameCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleHostNameCondition(MatchVariable name, HostNameMatchConditionDefinition parameters) : base(name)
+        internal DeliveryRuleHostNameCondition(MatchVariable name, HostNameMatchCondition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public HostNameMatchConditionDefinition Parameters { get; set; }
+        public HostNameMatchCondition Parameters { get; set; }
     }
 }

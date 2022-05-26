@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UriRedirectAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public UriRedirectAction(UriRedirectActionDefinition parameters)
+        public UriRedirectAction(UriRedirectActionProperties parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UriRedirectAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal UriRedirectAction(DeliveryRuleActionType name, UriRedirectActionDefinition parameters) : base(name)
+        internal UriRedirectAction(DeliveryRuleActionType name, UriRedirectActionProperties parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public UriRedirectActionDefinition Parameters { get; set; }
+        public UriRedirectActionProperties Parameters { get; set; }
     }
 }

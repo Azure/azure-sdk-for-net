@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 Id = endpoint.Id
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
-            ((SecurityPolicyWebApplicationFirewallDefinition)input.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
+            ((SecurityPolicyWebApplicationFirewall)input.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
             var lro = await profile.GetAfdSecurityPolicies().CreateOrUpdateAsync(WaitUntil.Completed, securityPolicyName, input);
             return lro.Value;
         }

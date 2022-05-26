@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRulePostArgsCondition DeserializeDeliveryRulePostArgsCondition(JsonElement element)
         {
-            PostArgsMatchConditionDefinition parameters = default;
+            PostArgsMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = PostArgsMatchConditionDefinition.DeserializePostArgsMatchConditionDefinition(property.Value);
+                    parameters = PostArgsMatchCondition.DeserializePostArgsMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

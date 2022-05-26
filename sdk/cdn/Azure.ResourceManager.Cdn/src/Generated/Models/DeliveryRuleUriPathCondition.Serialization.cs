@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleUriPathCondition DeserializeDeliveryRuleUriPathCondition(JsonElement element)
         {
-            UriPathMatchConditionDefinition parameters = default;
+            UriPathMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = UriPathMatchConditionDefinition.DeserializeUriPathMatchConditionDefinition(property.Value);
+                    parameters = UriPathMatchCondition.DeserializeUriPathMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

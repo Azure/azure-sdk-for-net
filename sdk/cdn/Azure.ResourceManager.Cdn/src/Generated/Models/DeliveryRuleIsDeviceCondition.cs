@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleIsDeviceCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleIsDeviceCondition(IsDeviceMatchConditionDefinition parameters)
+        public DeliveryRuleIsDeviceCondition(IsDeviceMatchCondition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleIsDeviceCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleIsDeviceCondition(MatchVariable name, IsDeviceMatchConditionDefinition parameters) : base(name)
+        internal DeliveryRuleIsDeviceCondition(MatchVariable name, IsDeviceMatchCondition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public IsDeviceMatchConditionDefinition Parameters { get; set; }
+        public IsDeviceMatchCondition Parameters { get; set; }
     }
 }

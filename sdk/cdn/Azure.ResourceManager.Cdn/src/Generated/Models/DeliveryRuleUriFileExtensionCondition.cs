@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleUriFileExtensionCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleUriFileExtensionCondition(UriFileExtensionMatchConditionDefinition parameters)
+        public DeliveryRuleUriFileExtensionCondition(UriFileExtensionMatchCondition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleUriFileExtensionCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleUriFileExtensionCondition(MatchVariable name, UriFileExtensionMatchConditionDefinition parameters) : base(name)
+        internal DeliveryRuleUriFileExtensionCondition(MatchVariable name, UriFileExtensionMatchCondition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public UriFileExtensionMatchConditionDefinition Parameters { get; set; }
+        public UriFileExtensionMatchCondition Parameters { get; set; }
     }
 }

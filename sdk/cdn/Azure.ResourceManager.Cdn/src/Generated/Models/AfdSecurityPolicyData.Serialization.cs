@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<AfdDeploymentStatus> deploymentStatus = default;
             Optional<string> profileName = default;
-            Optional<SecurityPolicyPropertiesDefinition> parameters = default;
+            Optional<SecurityPolicyProperties> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecurityPolicyPropertiesDefinition.DeserializeSecurityPolicyPropertiesDefinition(property0.Value);
+                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value);
                             continue;
                         }
                     }

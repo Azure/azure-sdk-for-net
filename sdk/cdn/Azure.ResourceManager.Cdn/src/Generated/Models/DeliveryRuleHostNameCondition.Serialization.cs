@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleHostNameCondition DeserializeDeliveryRuleHostNameCondition(JsonElement element)
         {
-            HostNameMatchConditionDefinition parameters = default;
+            HostNameMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = HostNameMatchConditionDefinition.DeserializeHostNameMatchConditionDefinition(property.Value);
+                    parameters = HostNameMatchCondition.DeserializeHostNameMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

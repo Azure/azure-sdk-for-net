@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleIsDeviceCondition DeserializeDeliveryRuleIsDeviceCondition(JsonElement element)
         {
-            IsDeviceMatchConditionDefinition parameters = default;
+            IsDeviceMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = IsDeviceMatchConditionDefinition.DeserializeIsDeviceMatchConditionDefinition(property.Value);
+                    parameters = IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

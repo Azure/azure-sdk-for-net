@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleServerPortCondition. </summary>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleServerPortCondition(ServerPortMatchConditionDefinition parameters)
+        public DeliveryRuleServerPortCondition(ServerPortMatchCondition parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleServerPortCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleServerPortCondition(MatchVariable name, ServerPortMatchConditionDefinition parameters) : base(name)
+        internal DeliveryRuleServerPortCondition(MatchVariable name, ServerPortMatchCondition parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public ServerPortMatchConditionDefinition Parameters { get; set; }
+        public ServerPortMatchCondition Parameters { get; set; }
     }
 }

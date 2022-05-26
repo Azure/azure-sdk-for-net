@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleCacheExpirationAction DeserializeDeliveryRuleCacheExpirationAction(JsonElement element)
         {
-            CacheExpirationActionDefinition parameters = default;
+            CacheExpirationActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = CacheExpirationActionDefinition.DeserializeCacheExpirationActionDefinition(property.Value);
+                    parameters = CacheExpirationActionProperties.DeserializeCacheExpirationActionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

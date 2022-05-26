@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
         /// <param name="parameters"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleResponseHeaderAction(HeaderActionDefinition parameters)
+        public DeliveryRuleResponseHeaderAction(HeaderActionProperties parameters)
         {
             if (parameters == null)
             {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, HeaderActionDefinition parameters) : base(name)
+        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, HeaderActionProperties parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public HeaderActionDefinition Parameters { get; set; }
+        public HeaderActionProperties Parameters { get; set; }
     }
 }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleCacheKeyQueryStringAction DeserializeDeliveryRuleCacheKeyQueryStringAction(JsonElement element)
         {
-            CacheKeyQueryStringActionDefinition parameters = default;
+            CacheKeyQueryStringActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = CacheKeyQueryStringActionDefinition.DeserializeCacheKeyQueryStringActionDefinition(property.Value);
+                    parameters = CacheKeyQueryStringActionProperties.DeserializeCacheKeyQueryStringActionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

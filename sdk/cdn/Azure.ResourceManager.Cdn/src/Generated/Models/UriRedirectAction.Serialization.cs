@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriRedirectAction DeserializeUriRedirectAction(JsonElement element)
         {
-            UriRedirectActionDefinition parameters = default;
+            UriRedirectActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = UriRedirectActionDefinition.DeserializeUriRedirectActionDefinition(property.Value);
+                    parameters = UriRedirectActionProperties.DeserializeUriRedirectActionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
