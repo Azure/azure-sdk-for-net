@@ -561,12 +561,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.CompleteMessageException(Identifier, exception.ToString());
+                Logger.CompleteMessageException(Identifier, exception.ToString(), lockToken);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.CompleteMessageComplete(Identifier);
+            Logger.CompleteMessageComplete(Identifier, lockToken);
         }
 
         /// <summary>
@@ -655,12 +655,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.AbandonMessageException(Identifier, exception.ToString());
+                Logger.AbandonMessageException(Identifier, exception.ToString(), lockToken);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.AbandonMessageComplete(Identifier);
+            Logger.AbandonMessageComplete(Identifier, lockToken);
         }
 
         /// <summary>
@@ -855,12 +855,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.DeadLetterMessageException(Identifier, exception.ToString());
+                Logger.DeadLetterMessageException(Identifier, exception.ToString(), lockToken);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.DeadLetterMessageComplete(Identifier);
+            Logger.DeadLetterMessageComplete(Identifier, lockToken);
         }
 
         /// <summary> Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -951,12 +951,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.DeferMessageException(Identifier, exception.ToString());
+                Logger.DeferMessageException(Identifier, exception.ToString(), lockToken);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.DeferMessageComplete(Identifier);
+            Logger.DeferMessageComplete(Identifier, lockToken);
         }
 
         /// <summary>
@@ -1132,12 +1132,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                Logger.RenewMessageLockException(Identifier, exception.ToString());
+                Logger.RenewMessageLockException(Identifier, exception.ToString(), lockToken);
                 scope.Failed(exception);
                 throw;
             }
 
-            Logger.RenewMessageLockComplete(Identifier);
+            Logger.RenewMessageLockComplete(Identifier, lockToken);
             return lockedUntil;
         }
 

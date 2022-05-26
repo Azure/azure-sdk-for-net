@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,20 +24,33 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties");
-            writer.WriteObjectValue(Properties);
+            writer.WriteStartObject();
+            writer.WritePropertyName("frontendIpConfigurations");
+            writer.WriteStartArray();
+            foreach (var item in FrontendIPConfigurations)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerConfiguration DeserializeLoadBalancerConfiguration(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             string name = default;
-            LoadBalancerConfigurationProperties properties = default;
+            IList<LoadBalancerFrontendIPConfiguration> frontendIpConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -46,11 +60,28 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = LoadBalancerConfigurationProperties.DeserializeLoadBalancerConfigurationProperties(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("frontendIpConfigurations"))
+                        {
+                            List<LoadBalancerFrontendIPConfiguration> array = new List<LoadBalancerFrontendIPConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item));
+                            }
+                            frontendIpConfigurations = array;
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new LoadBalancerConfiguration(id.Value, name, properties);
+            return new LoadBalancerConfiguration(id.Value, name, frontendIpConfigurations);
         }
     }
 }

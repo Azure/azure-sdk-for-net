@@ -27,8 +27,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the ExtendedStatusInfo class.
         /// </summary>
         /// <param name="statusCode">Possible values include: 'None',
-        /// 'Pending', 'Active', 'PurchaseError', 'PaymentInstrumentError',
-        /// 'Split', 'Merged', 'Expired', 'Succeeded'</param>
+        /// 'Pending', 'Processing', 'Active', 'PurchaseError',
+        /// 'PaymentInstrumentError', 'Split', 'Merged', 'Expired',
+        /// 'Succeeded'</param>
         /// <param name="message">The message giving detailed information about
         /// the status code.</param>
         public ExtendedStatusInfo(string statusCode = default(string), string message = default(string))
@@ -44,9 +45,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'None', 'Pending', 'Active',
-        /// 'PurchaseError', 'PaymentInstrumentError', 'Split', 'Merged',
-        /// 'Expired', 'Succeeded'
+        /// Gets or sets possible values include: 'None', 'Pending',
+        /// 'Processing', 'Active', 'PurchaseError', 'PaymentInstrumentError',
+        /// 'Split', 'Merged', 'Expired', 'Succeeded'
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
         public string StatusCode { get; set; }

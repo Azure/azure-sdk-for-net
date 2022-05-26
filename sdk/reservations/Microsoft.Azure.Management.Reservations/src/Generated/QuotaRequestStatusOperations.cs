@@ -270,10 +270,9 @@ namespace Microsoft.Azure.Management.Reservations
         /// Azure region.
         /// </param>
         /// <param name='filter'>
-        /// | Field                    | Supported operators
-        /// |---------------------|------------------------
-        ///
-        /// |requestSubmitTime | ge, le, eq, gt, lt
+        /// | Field | Supported operators |
+        /// |---------------------|------------------------|
+        /// |requestSubmitTime | ge, le, eq, gt, lt |
         /// </param>
         /// <param name='top'>
         /// Number of records to return.

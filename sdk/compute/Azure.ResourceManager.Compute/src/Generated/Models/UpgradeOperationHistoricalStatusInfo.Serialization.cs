@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<UpgradeOperationHistoricalStatusInfoProperties> properties = default;
             Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -36,11 +36,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new UpgradeOperationHistoricalStatusInfo(properties.Value, type.Value, location.Value);
+            return new UpgradeOperationHistoricalStatusInfo(properties.Value, type.Value, Optional.ToNullable(location));
         }
     }
 }

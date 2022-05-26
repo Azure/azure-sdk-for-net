@@ -38,11 +38,15 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'RedHat', 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa',
         /// 'Databricks', 'AppService', 'ManagedDisk', 'BlockBlob',
         /// 'RedisCache', 'AzureDataExplorer', 'MySql', 'MariaDb',
-        /// 'PostgreSql', 'DedicatedHost', 'SapHana',
-        /// 'SqlAzureHybridBenefit'</param>
-        /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
+        /// 'PostgreSql', 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit',
+        /// 'AVS', 'DataFactory', 'NetAppStorage', 'AzureFiles', 'SqlEdge',
+        /// 'VirtualMachineSoftware'</param>
+        /// <param name="term">Possible values include: 'P1Y', 'P3Y',
+        /// 'P5Y'</param>
         /// <param name="billingPlan">Possible values include: 'Upfront',
         /// 'Monthly'</param>
+        /// <param name="quantity">Quantity of the SKUs that are part of the
+        /// Reservation.</param>
         /// <param name="displayName">Friendly name of the Reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
         /// 'Shared'</param>
@@ -88,7 +92,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks',
         /// 'AppService', 'ManagedDisk', 'BlockBlob', 'RedisCache',
         /// 'AzureDataExplorer', 'MySql', 'MariaDb', 'PostgreSql',
-        /// 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit'
+        /// 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit', 'AVS',
+        /// 'DataFactory', 'NetAppStorage', 'AzureFiles', 'SqlEdge',
+        /// 'VirtualMachineSoftware'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservedResourceType")]
         public string ReservedResourceType { get; set; }
@@ -99,7 +105,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string BillingScopeId { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'P1Y', 'P3Y'
+        /// Gets or sets possible values include: 'P1Y', 'P3Y', 'P5Y'
         /// </summary>
         [JsonProperty(PropertyName = "properties.term")]
         public string Term { get; set; }
@@ -111,6 +117,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string BillingPlan { get; set; }
 
         /// <summary>
+        /// Gets or sets quantity of the SKUs that are part of the Reservation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.quantity")]
         public int? Quantity { get; set; }

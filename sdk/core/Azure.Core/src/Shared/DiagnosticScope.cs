@@ -293,7 +293,7 @@ namespace Azure.Core.Pipeline
 
                     if (_startTime != default)
                     {
-                        _currentActivity.SetStartTime(_startTime.DateTime);
+                        _currentActivity.SetStartTime(_startTime.UtcDateTime);
                     }
 
                     if (_tagCollection != null)

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual Machine Scale Set OS Upgrade History operation response. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="properties"> Information about the properties of the upgrade operation. </param>
         /// <param name="upgradeOperationHistoricalStatusInfoType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
-        internal UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties, string upgradeOperationHistoricalStatusInfoType, string location)
+        internal UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties, string upgradeOperationHistoricalStatusInfoType, AzureLocation? location)
         {
             Properties = properties;
             UpgradeOperationHistoricalStatusInfoType = upgradeOperationHistoricalStatusInfoType;
@@ -31,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Resource type. </summary>
         public string UpgradeOperationHistoricalStatusInfoType { get; }
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

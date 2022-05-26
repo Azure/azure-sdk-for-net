@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Extension. </summary>
-    public partial class VirtualMachineExtensionPatch : UpdateResource
+    public partial class VirtualMachineExtensionPatch : ComputeUpdateResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionPatch. </summary>
         public VirtualMachineExtensionPatch()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the extension handler publisher. </summary>
         public string Publisher { get; set; }
         /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
-        public string VirtualMachineExtensionType { get; set; }
+        public string ExtensionType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
