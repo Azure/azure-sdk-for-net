@@ -11,30 +11,30 @@
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Desired outbound IP resources for Azure Spring Apps resource.
+    /// Additional Service settings in vnet injection instance
     /// </summary>
-    public partial class NetworkProfileOutboundIPs
+    public partial class ServiceVNetAddons
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkProfileOutboundIPs class.
+        /// Initializes a new instance of the ServiceVNetAddons class.
         /// </summary>
-        public NetworkProfileOutboundIPs()
+        public ServiceVNetAddons()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkProfileOutboundIPs class.
+        /// Initializes a new instance of the ServiceVNetAddons class.
         /// </summary>
-        /// <param name="publicIPs">A list of public IP addresses.</param>
-        public NetworkProfileOutboundIPs(IList<string> publicIPs = default(IList<string>))
+        /// <param name="logStreamPublicEndpoint">Indicates whether the log
+        /// stream in vnet injection instance could be accessed from
+        /// internet.</param>
+        public ServiceVNetAddons(bool? logStreamPublicEndpoint = default(bool?))
         {
-            PublicIPs = publicIPs;
+            LogStreamPublicEndpoint = logStreamPublicEndpoint;
             CustomInit();
         }
 
@@ -44,10 +44,11 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets a list of public IP addresses.
+        /// Gets or sets indicates whether the log stream in vnet injection
+        /// instance could be accessed from internet.
         /// </summary>
-        [JsonProperty(PropertyName = "publicIPs")]
-        public IList<string> PublicIPs { get; private set; }
+        [JsonProperty(PropertyName = "logStreamPublicEndpoint")]
+        public bool? LogStreamPublicEndpoint { get; set; }
 
     }
 }

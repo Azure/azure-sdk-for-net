@@ -12,20 +12,14 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for CertificateResourceProvisioningState.
     /// </summary>
-    public static class ProvisioningState
+    public static class CertificateResourceProvisioningState
     {
         public const string Creating = "Creating";
         public const string Updating = "Updating";
-        public const string Starting = "Starting";
-        public const string Stopping = "Stopping";
-        public const string Deleting = "Deleting";
-        public const string Deleted = "Deleted";
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
-        public const string Moving = "Moving";
-        public const string Moved = "Moved";
-        public const string MoveFailed = "MoveFailed";
+        public const string Deleting = "Deleting";
     }
 }
