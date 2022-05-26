@@ -1202,9 +1202,9 @@
         "location": "canadacentral",
         "properties": {
           "subnet": {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-1340/providers/Microsoft.Network/virtualNetworks/vnet-9448/subnets/default",
             "name": "default",
             "type": "Microsoft.Network/virtualNetworks/subnets",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-1340/providers/Microsoft.Network/virtualNetworks/vnet-9448/subnets/default",
             "properties": {
               "addressPrefix": "10.0.1.0/24",
               "delegations": [],
@@ -1627,9 +1627,9 @@
         },
         "properties": {
           "subnet": {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-1340/providers/Microsoft.Network/virtualNetworks/vnet-9448/subnets/default",
             "name": "default",
             "type": "Microsoft.Network/virtualNetworks/subnets",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdktestrg-kv-1340/providers/Microsoft.Network/virtualNetworks/vnet-9448/subnets/default",
             "properties": {
               "addressPrefix": "10.0.1.0/24",
               "delegations": [],

@@ -21,6 +21,7 @@ pr:
     include:
     - sdk/keyvault/
     - sdk/resourcemanager/
+    - sdk/network/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

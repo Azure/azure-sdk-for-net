@@ -11,6 +11,7 @@ using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
@@ -128,6 +129,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
             ManagedHsmProperties.TenantId = TenantIdGuid;
+        }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
         }
     }
 }
