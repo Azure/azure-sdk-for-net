@@ -6,7 +6,7 @@ using Azure.Storage.Test;
 
 namespace Azure.Storage.Tests
 {
-    internal static class TestUtils
+    internal static class AesGcmTestHelpers
     {
         internal static byte[] HexToByteArray(this string hexString)
         {

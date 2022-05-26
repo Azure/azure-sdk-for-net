@@ -37,12 +37,12 @@ namespace Azure.Storage.Tests
         [TestCase(50, 5)]
         public void EncryptTamperAADDecrypt(int dataLength, int additionalDataLength)
         {
-            byte[] additionalData = TestUtils.GetRandomBuffer(additionalDataLength);
+            byte[] additionalData = AesGcmTestHelpers.GetRandomBuffer(additionalDataLength);
 
             byte[] plaintext = Enumerable.Range(1, dataLength).Select((x) => (byte)x).ToArray();
             byte[] ciphertext = new byte[dataLength];
-            byte[] key = TestUtils.GetRandomBuffer(16);
-            byte[] nonce = TestUtils.GetRandomBuffer(AesGcmWindows.NonceByteSizes.MinSize);
+            byte[] key = AesGcmTestHelpers.GetRandomBuffer(16);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(AesGcmWindows.NonceByteSizes.MinSize);
             byte[] tag = new byte[AesGcmWindows.TagByteSizes.MinSize];
 
             using (var aesGcm = new AesGcmWindows(key))
@@ -93,8 +93,8 @@ namespace Azure.Storage.Tests
             int dataLength = 30;
             byte[] plaintext = Enumerable.Range(1, dataLength).Select((x) => (byte)x).ToArray();
             byte[] ciphertext = new byte[dataLength];
-            byte[] key = TestUtils.GetRandomBuffer(16);
-            byte[] nonce = TestUtils.GetRandomBuffer(nonceSize);
+            byte[] key = AesGcmTestHelpers.GetRandomBuffer(16);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(nonceSize);
             byte[] tag = new byte[AesGcmWindows.TagByteSizes.MinSize];
 
             using (var aesGcm = new AesGcmWindows(key))
@@ -110,8 +110,8 @@ namespace Azure.Storage.Tests
             const int dataLength = 35;
             byte[] plaintext = Enumerable.Range(1, dataLength).Select((x) => (byte)x).ToArray();
             byte[] ciphertext = new byte[dataLength];
-            byte[] key = TestUtils.GetRandomBuffer(16);
-            byte[] nonce = TestUtils.GetRandomBuffer(nonceSize);
+            byte[] key = AesGcmTestHelpers.GetRandomBuffer(16);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(nonceSize);
             byte[] tag = new byte[AesGcmWindows.TagByteSizes.MinSize];
 
             using (var aesGcm = new AesGcmWindows(key))
@@ -143,8 +143,8 @@ namespace Azure.Storage.Tests
             int dataLength = 30;
             byte[] plaintext = Enumerable.Range(1, dataLength).Select((x) => (byte)x).ToArray();
             byte[] ciphertext = new byte[dataLength];
-            byte[] key = TestUtils.GetRandomBuffer(16);
-            byte[] nonce = TestUtils.GetRandomBuffer(12);
+            byte[] key = AesGcmTestHelpers.GetRandomBuffer(16);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(12);
             byte[] tag = new byte[tagSize];
 
             using (var aesGcm = new AesGcmWindows(key))
@@ -164,8 +164,8 @@ namespace Azure.Storage.Tests
             const int dataLength = 35;
             byte[] plaintext = Enumerable.Range(1, dataLength).Select((x) => (byte)x).ToArray();
             byte[] ciphertext = new byte[dataLength];
-            byte[] key = TestUtils.GetRandomBuffer(16);
-            byte[] nonce = TestUtils.GetRandomBuffer(12);
+            byte[] key = AesGcmTestHelpers.GetRandomBuffer(16);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(12);
             byte[] tag = new byte[tagSize];
 
             using (var aesGcm = new AesGcmWindows(key))
@@ -313,10 +313,10 @@ namespace Azure.Storage.Tests
         [Test]public static void InplaceEncryptDecrypt()
         {
             byte[] key = "d5a194ed90cfe08abecd4691997ceb2c".HexToByteArray();
-            byte[] nonce = TestUtils.GetRandomBuffer(12);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(12);
             byte[] originalPlaintext = new byte[] { 1, 2, 8, 12, 16, 99, 0 };
             byte[] data = (byte[])originalPlaintext.Clone();
-            byte[] tag = TestUtils.GetRandomBuffer(16);
+            byte[] tag = AesGcmTestHelpers.GetRandomBuffer(16);
 
             using (var aesGcm = new AesGcmWindows(key))
             {
@@ -332,7 +332,7 @@ namespace Azure.Storage.Tests
         public static void InplaceEncryptTamperTagDecrypt()
         {
             byte[] key = "d5a194ed90cfe08abecd4691997ceb2c".HexToByteArray();
-            byte[] nonce = TestUtils.GetRandomBuffer(12);
+            byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(12);
             byte[] originalPlaintext = new byte[] { 1, 2, 8, 12, 16, 99, 0 };
             byte[] data = (byte[])originalPlaintext.Clone();
             byte[] tag = new byte[16];
@@ -405,7 +405,7 @@ namespace Azure.Storage.Tests
 
                         tag[0] ^= 1;
 
-                        byte[] plaintext = TestUtils.GetRandomBuffer(test.Plaintext.Length);
+                        byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
                         Assert.Throws<CryptographicException>(
                             () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
                         Assert.Equals(new byte[plaintext.Length], plaintext);
@@ -428,7 +428,7 @@ namespace Azure.Storage.Tests
 
                     tag[0] ^= 1;
 
-                    byte[] plaintext = TestUtils.GetRandomBuffer(test.Plaintext.Length);
+                    byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
                     Assert.Throws<CryptographicException>(
                         () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
                     Assert.Equals(new byte[plaintext.Length], plaintext);
@@ -451,7 +451,7 @@ namespace Azure.Storage.Tests
 
                     ciphertext[0] ^= 1;
 
-                    byte[] plaintext = TestUtils.GetRandomBuffer(test.Plaintext.Length);
+                    byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
                     Assert.Throws<CryptographicException>(
                         () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
                     Assert.Equals(new byte[plaintext.Length], plaintext);
@@ -474,7 +474,7 @@ namespace Azure.Storage.Tests
 
                     ciphertext[0] ^= 1;
 
-                    byte[] plaintext = TestUtils.GetRandomBuffer(test.Plaintext.Length);
+                    byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
                     Assert.Throws<CryptographicException>(
                         () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
                     Assert.Equals(new byte[plaintext.Length], plaintext);

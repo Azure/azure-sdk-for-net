@@ -82,5 +82,41 @@ namespace Azure.Storage
                 throw new CryptographicException("SR.Cryptography_InvalidKeySize");
             }
         }
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L202
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="CryptographicException"></exception>
+        public static CryptographicException CryptographyAuthTagMismatch()
+            => throw new CryptographicException("The computed authentication tag did not match the input authentication tag.");
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L514
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ArgumentException CryptographyPlaintextCiphertextLengthMismatch()
+            => throw new ArgumentException("Plaintext and ciphertext must have the same length.");
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L400
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ArgumentException CryptographyInvalidNonceLength()
+            => throw new ArgumentException("The specified nonce is not a valid size for this algorithm.");
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L418
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ArgumentException CryptographyInvalidTagLength()
+            => throw new ArgumentException("The specified tag is not a valid size for this algorithm.");
     }
 }

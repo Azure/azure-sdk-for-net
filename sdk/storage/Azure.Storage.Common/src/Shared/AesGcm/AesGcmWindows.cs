@@ -87,13 +87,13 @@ namespace Azure.Storage
             ReadOnlySpan<byte> tag)
         {
             if (plaintext.Length != ciphertext.Length)
-                throw new ArgumentException("SR.Cryptography_PlaintextCiphertextLengthMismatch");
+                Errors.CryptographyPlaintextCiphertextLengthMismatch();
 
             if (!nonce.Length.IsLegalSize(NonceByteSizes))
-                throw new ArgumentException("SR.Cryptography_InvalidNonceLength", nameof(nonce));
+                Errors.CryptographyInvalidNonceLength();
 
             if (!tag.Length.IsLegalSize(TagByteSizes))
-                throw new ArgumentException("SR.Cryptography_InvalidTagLength", nameof(tag));
+                Errors.CryptographyInvalidTagLength();
         }
 
         private static void ThrowIfNotSupported()

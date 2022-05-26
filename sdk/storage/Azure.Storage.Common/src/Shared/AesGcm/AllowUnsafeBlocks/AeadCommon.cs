@@ -108,8 +108,8 @@ namespace Azure.Storage
                             plaintext.Clear();
                             //CryptographicOperations.ZeroMemory(plaintext);
                         }
-
-                        throw new CryptographicException("SR.Cryptography_AuthTagMismatch");
+                        Errors.CryptographyAuthTagMismatch();
+                        return;
                     default:
                         //throw CreateCryptographicException(ntStatus);
                         throw new CryptographicException($"Error: 0x{(int)ntStatus:X8}");
