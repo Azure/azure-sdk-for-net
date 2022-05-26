@@ -176,8 +176,6 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                // TODO: remove the CompositionStreamState from updateAsync params?
-                var id = new Guid().ToString();
                 return await RestClient.UpdateAsync(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -198,8 +196,6 @@ namespace Azure.Communication.MediaComposition
             scope.Start();
             try
             {
-                // TODO: remove the CompositionStreamState from updateAsync params?
-                var id = new Guid().ToString();
                 return RestClient.Update(mediaCompositionId, mediaCompositionId, layout, inputs, outputs, null, cancellationToken);
             }
             catch (Exception e)
