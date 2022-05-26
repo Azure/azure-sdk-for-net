@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class SendThreadlessMessageResult
+    public partial class SendExternalMessageResult
     {
-        internal static SendThreadlessMessageResult DeserializeSendThreadlessMessageResult(JsonElement element)
+        internal static SendExternalMessageResult DeserializeSendExternalMessageResult(JsonElement element)
         {
             string id = default;
-            string status = default;
+            ExternalMessageStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -25,11 +25,11 @@ namespace Azure.Communication.Chat
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString();
+                    status = new ExternalMessageStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new SendThreadlessMessageResult(id, status);
+            return new SendExternalMessageResult(id, status);
         }
     }
 }

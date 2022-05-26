@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ChatRestClient _chatRestClient;
-        private readonly ThreadlessMessagingRestClient _ThreadlessMessagingRestClient;
+        private readonly ExternalMessagingRestClient _ExternalMessagingRestClient;
         private readonly Uri _endpointUrl;
         private readonly CommunicationTokenCredential _communicationTokenCredential;
         private readonly ChatClientOptions _chatClientOptions;
@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _clientDiagnostics = new ClientDiagnostics(_chatClientOptions);
             HttpPipeline pipeline = CreatePipelineFromOptions(_chatClientOptions, communicationTokenCredential);
             _chatRestClient = new ChatRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, _chatClientOptions.ApiVersion);
-            _ThreadlessMessagingRestClient = new ThreadlessMessagingRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
+            _ExternalMessagingRestClient = new ExternalMessagingRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatClient"/> for mocking.</summary>
@@ -46,7 +46,7 @@ namespace Azure.Communication.Chat
         {
             _clientDiagnostics = null!;
             _chatRestClient = null!;
-            _ThreadlessMessagingRestClient = null;
+            _ExternalMessagingRestClient = null;
             _endpointUrl = null!;
             _communicationTokenCredential = null!;
             _chatClientOptions = null!;
@@ -57,13 +57,13 @@ namespace Azure.Communication.Chat
         /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<SendThreadlessMessageResult>> SendThreadlessMessageAsync(SendThreadlessMessageOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendExternalMessageResult>> SendExternalMessageAsync(SendExternalMessageOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessMessagingClient)}.{nameof(SendThreadlessMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(SendExternalMessage)}");
             scope.Start();
             try
             {
-                return await _ThreadlessMessagingRestClient.SendMessageAsync(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken).ConfigureAwait(false);
+                return await _ExternalMessagingRestClient.SendMessageAsync(options.To, options.MessageType, options.Content, options.Media, options.Template, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -76,13 +76,13 @@ namespace Azure.Communication.Chat
         /// <param name="options"> Options for the message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<SendThreadlessMessageResult> SendThreadlessMessage(SendThreadlessMessageOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SendExternalMessageResult> SendExternalMessage(SendExternalMessageOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ThreadlessMessagingClient)}.{nameof(SendThreadlessMessage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(SendExternalMessage)}");
             scope.Start();
             try
             {
-                return _ThreadlessMessagingRestClient.SendMessage(options.From, options.To, options.Type, options.Content, options.Media, options.Template, cancellationToken);
+                return _ExternalMessagingRestClient.SendMessage(options.To, options.MessageType, options.Content, options.Media, options.Template, cancellationToken);
             }
             catch (Exception ex)
             {

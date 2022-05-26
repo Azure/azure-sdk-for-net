@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Communication.Chat
 {
     /// <summary> The template object used to create templates. </summary>
-    public partial class MessageTemplate
+    public partial class ExternalMessageTemplate
     {
-        /// <summary> Initializes a new instance of MessageTemplate. </summary>
-        public MessageTemplate()
+        /// <summary> Initializes a new instance of ExternalMessageTemplate. </summary>
+        public ExternalMessageTemplate()
         {
             Parameters = new ChangeTrackingList<string>();
         }

@@ -10,16 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class SendThreadlessMessageRequest : IUtf8JsonSerializable
+    internal partial class SendExternalMessageRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(From))
-            {
-                writer.WritePropertyName("from");
-                writer.WriteStringValue(From);
-            }
             if (Optional.IsDefined(To))
             {
                 writer.WritePropertyName("to");
