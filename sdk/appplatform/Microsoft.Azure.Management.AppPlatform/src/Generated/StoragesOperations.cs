@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         }
 
         /// <summary>
-        /// List all the storages of one Azure Spring Cloud instance.
+        /// List all the storages of one Azure Spring Apps resource.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -978,7 +978,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         }
 
         /// <summary>
-        /// List all the storages of one Azure Spring Cloud instance.
+        /// List all the storages of one Azure Spring Apps resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

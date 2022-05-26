@@ -55,24 +55,24 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Create or Update a Certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="data"> Certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<ArmOperation<ContainerAppCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerAppCertificateCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppCertificateCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ContainersArmOperation<ContainerAppCertificateResource>(Response.FromValue(new ContainerAppCertificateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -87,24 +87,24 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Create or Update a Certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="data"> Certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string name, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual ArmOperation<ContainerAppCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, ContainerAppCertificateData data = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerAppCertificateCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var response = _containerAppCertificateCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
                 var operation = new ContainersArmOperation<ContainerAppCertificateResource>(Response.FromValue(new ContainerAppCertificateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -119,22 +119,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the specified Certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<ContainerAppCertificateResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<Response<ContainerAppCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerAppCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the specified Certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ContainerAppCertificateResource> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual Response<ContainerAppCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerAppCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _containerAppCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerAppCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the Certificates in a given managed environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates
         /// Operation Id: Certificates_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the Certificates in a given managed environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates
         /// Operation Id: Certificates_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,22 +261,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerAppCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -288,22 +288,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _containerAppCertificateCertificatesClientDiagnostics.CreateScope("ContainerAppCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerAppCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _containerAppCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> supportsHibernation = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<string> diskAccessId = default;
+            Optional<ResourceIdentifier> diskAccessId = default;
             Optional<float> completionPercent = default;
             Optional<string> replicationState = default;
-            Optional<string> sourceResourceLocation = default;
+            Optional<AzureLocation> sourceResourceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -180,7 +180,12 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("diskAccessId"))
                         {
-                            diskAccessId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diskAccessId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("completionPercent"))
@@ -200,14 +205,19 @@ namespace Azure.ResourceManager.Compute
                         }
                         if (property0.NameEquals("sourceResourceLocation"))
                         {
-                            sourceResourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceResourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DiskRestorePointData(id, name, type, systemData, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, sourceResourceLocation.Value);
+            return new DiskRestorePointData(id, name, type, systemData, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation));
         }
     }
 }
