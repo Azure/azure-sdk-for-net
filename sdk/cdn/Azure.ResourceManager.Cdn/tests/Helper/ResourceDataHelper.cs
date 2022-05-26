@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             HostName = hostName,
             TlsSettings = new AfdCustomDomainHttpsContent(AfdCertificateType.ManagedCertificate)
             {
-                MinimumTlsVersion = AfdMinimumTlsVersion.Tls12
+                MinimumTlsVersion = AfdMinimumTlsVersion.Tls1_2
             },
             DnsZone = new WritableSubResource
             {

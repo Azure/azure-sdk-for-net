@@ -46,11 +46,6 @@ rename-rules:
   AFD: Afd
   GET: Get
   PUT: Put
-  TLSv1: Tls10
-  TLSv11: Tls11
-  TLSv12: Tls12
-  TLS10: Tls10
-  TLS12: Tls12
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
 
@@ -234,8 +229,8 @@ directive:
       $.CompressionSettings['x-ms-client-name'] = 'RouteCacheCompressionSettings';
       $.UsageName['x-ms-client-name'] = 'CdnUsageResourceName';
       $.SecretProperties['x-ms-client-name'] = 'SecretDetails';
-      $.SecretParameters['x-ms-client-name'] = 'SecretProperties';
       $.SecurityPolicyProperties['x-ms-client-name'] = 'SecurityPolicyDetails';
+      $.SecretParameters['x-ms-client-name'] = 'SecretProperties';
       $.SecurityPolicyPropertiesParameters['x-ms-client-name'] = 'SecurityPolicyProperties';
       $.AzureFirstPartyManagedCertificateParameters['x-ms-client-name'] = 'AzureFirstPartyManagedCertificateProperties';
       $.CustomerCertificateParameters['x-ms-client-name'] = 'CustomerCertificateProperties';
