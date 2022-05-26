@@ -287,7 +287,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int elapsedTimeMills = 0;
                 while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
                 {
-                    await Task.Delay(elapsedTimeMills += 500, cancellationToken);
+                    try
+                    {
+                        await Task.Delay(elapsedTimeMills += 500, cancellationToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
                 }
             }
         }
