@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(1, result[0].Data.Reservations.Count);
             Assert.AreEqual("/providers/microsoft.capacity/reservationOrders/c848cae0-7ade-43c8-a42c-52cc53413a72/reservations/34a9427a-0966-4186-86dd-bbcf720913c0", result[0].Data.Reservations[0].Id.ToString());
             Assert.AreEqual(1, result[0].Data.OriginalQuantity);
-            Assert.AreEqual(ReservationBillingPlan.Upfront, result[0].Data.BillingPlan);
+            Assert.AreEqual(ReservationBillingPlan.Monthly, result[0].Data.BillingPlan);
         }
     }
 }
