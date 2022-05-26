@@ -31,9 +31,6 @@ namespace Azure.AI.Translation.Document
         {
             Version = version;
             AddLoggedHeadersAndQueryParameters();
-
-            //Default Audience to Azure Public Cloud
-            Audience ??= DocumentTranslationAudience.AzurePublicCloud;
         }
 
         internal string GetVersionString()
