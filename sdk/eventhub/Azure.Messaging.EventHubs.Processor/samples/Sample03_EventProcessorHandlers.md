@@ -212,14 +212,6 @@ async Task processErrorHandler(ProcessErrorEventArgs args)
             return;
         }
 
-        // If out of memory, signal for cancellation.
-
-        if (args.Exception is OutOfMemoryException)
-        {
-            cancellationSource.Cancel();
-            return;
-        }
-
         // Allow the application to handle the exception according to
         // its business logic.
 

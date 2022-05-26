@@ -398,7 +398,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             using var cancellationSource = new CancellationTokenSource();
 #if !SNIPPET
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(10));
 #endif
 
             Task processEventHandler(ProcessEventArgs args)
@@ -438,14 +438,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     if (args.CancellationToken.IsCancellationRequested)
                     {
-                        return;
-                    }
-
-                    // If out of memory, signal for cancellation.
-
-                    if (args.Exception is OutOfMemoryException)
-                    {
-                        cancellationSource.Cancel();
                         return;
                     }
 
