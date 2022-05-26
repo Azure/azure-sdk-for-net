@@ -108,6 +108,12 @@ if ($allPackageProperties)
         }
         $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
         Write-Host "Output path of json file: $outputPath"
+        $outDir = Split-Path $outputPath -parent
+        if (-not (Test-Path -path outDir))
+        {
+          Write-Host "Creating directory $($outDir) for json property file"
+          New-Item -ItemType Directory -Path $outDir
+        }
         SetOutput $outputPath $pkg
     }
 
