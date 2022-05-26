@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateSendMessageRequest(string to, ExternalMessageType? type, string content, ExternalMessageMedia media, ExternalMessageTemplate template)
+        internal HttpMessage CreateSendMessageRequest(string to, ExternalMessageType? type, string content, string mediaUri, ExternalMessageTemplate template)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -55,7 +55,7 @@ namespace Azure.Communication.Chat
                 To = to,
                 Type = type,
                 Content = content,
-                Media = media,
+                MediaUri = mediaUri,
                 Template = template
             };
             var content0 = new Utf8JsonRequestContent();
@@ -68,12 +68,12 @@ namespace Azure.Communication.Chat
         /// <param name="to"> The channel user identifiers of the recipient. </param>
         /// <param name="type"> The cross-platform threadless external message type. </param>
         /// <param name="content"> External message content. </param>
-        /// <param name="media"> The media Object. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is media. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SendExternalMessageResult>> SendMessageAsync(string to = null, ExternalMessageType? type = null, string content = null, ExternalMessageMedia media = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendExternalMessageResult>> SendMessageAsync(string to = null, ExternalMessageType? type = null, string content = null, string mediaUri = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendMessageRequest(to, type, content, media, template);
+            using var message = CreateSendMessageRequest(to, type, content, mediaUri, template);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -93,12 +93,12 @@ namespace Azure.Communication.Chat
         /// <param name="to"> The channel user identifiers of the recipient. </param>
         /// <param name="type"> The cross-platform threadless external message type. </param>
         /// <param name="content"> External message content. </param>
-        /// <param name="media"> The media Object. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is media. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SendExternalMessageResult> SendMessage(string to = null, ExternalMessageType? type = null, string content = null, ExternalMessageMedia media = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
+        public Response<SendExternalMessageResult> SendMessage(string to = null, ExternalMessageType? type = null, string content = null, string mediaUri = null, ExternalMessageTemplate template = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSendMessageRequest(to, type, content, media, template);
+            using var message = CreateSendMessageRequest(to, type, content, mediaUri, template);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

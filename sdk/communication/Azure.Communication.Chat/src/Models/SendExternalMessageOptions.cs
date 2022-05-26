@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
             To = to;
-            Media = new ExternalMessageMedia(mediaUri.AbsoluteUri);
+            MediaUri = mediaUri;
             Content = content;
             MessageType = ExternalMessageType.Media;
         }
@@ -61,7 +61,7 @@ namespace Azure.Communication.Chat
         /// <summary> Threadless message content. </summary>
         public string Content { get; }
         /// <summary> The media Object. </summary>
-        public ExternalMessageMedia Media { get; }
+        public Uri MediaUri { get; }
         /// <summary> The template object used to create message templates. </summary>
         public ExternalMessageTemplate Template { get; }
     }

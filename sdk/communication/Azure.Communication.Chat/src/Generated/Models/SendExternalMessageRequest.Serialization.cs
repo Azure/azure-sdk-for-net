@@ -30,10 +30,10 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("content");
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Media))
+            if (Optional.IsDefined(MediaUri))
             {
-                writer.WritePropertyName("media");
-                writer.WriteObjectValue(Media);
+                writer.WritePropertyName("mediaUri");
+                writer.WriteStringValue(MediaUri);
             }
             if (Optional.IsDefined(Template))
             {

@@ -21,8 +21,8 @@ namespace Azure.Communication.Chat
         public ExternalMessageType? Type { get; set; }
         /// <summary> External message content. </summary>
         public string Content { get; set; }
-        /// <summary> The media Object. </summary>
-        public ExternalMessageMedia Media { get; set; }
+        /// <summary> A media url for the file. Required if the type is media. </summary>
+        public string MediaUri { get; set; }
         /// <summary> The template object used to create templates. </summary>
         public ExternalMessageTemplate Template { get; set; }
     }
