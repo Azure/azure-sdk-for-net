@@ -16,7 +16,6 @@
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
     </Description>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>Azure.Storage</RootNamespace>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -31,6 +30,7 @@
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
+    <Compile Remove="Shared\AesGcm\*.cs;Shared\AesGcm\AllowUnsafeBlocks\*.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
