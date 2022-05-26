@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, string resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures) : base(id)
+        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the extension. </summary>
         public string Name { get; }
         /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
