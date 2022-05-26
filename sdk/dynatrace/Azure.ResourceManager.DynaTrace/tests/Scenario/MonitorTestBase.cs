@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DynaTrace.Tests
                     UsageType = "COMMITTED",
                     BillingCycle = "Monthly",
                     PlanDetails = "azureportalintegration_privatepreview",
-                    EffectiveOn = System.DateTimeOffset.Now
+                    EffectiveOn = new System.DateTimeOffset(2022, 5, 26, 8, 12, 30, new System.TimeSpan(1,0,0))
                 },
                 DynatraceEnvironmentProperties = new DynatraceEnvironmentProperties
                 {

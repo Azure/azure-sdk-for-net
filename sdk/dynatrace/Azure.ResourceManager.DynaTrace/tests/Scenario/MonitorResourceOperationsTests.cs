@@ -36,25 +36,6 @@ namespace Azure.ResourceManager.DynaTrace.Tests
             Assert.AreEqual(monitorResource1.Data.Tags, monitorResource2.Data.Tags);
         }
 
-        //[TestCase]
-        //[RecordedTest]
-        //public async Task Update()
-        //{
-        //    string monitorName = Recording.GenerateAssetName("testDT-");
-        //    MonitorResource monitorResource = await CreateMonitorResourceAsync(monitorName);
-
-        //    var update = new MonitorResourcePatch()
-        //    {
-        //        MonitoringStatus = MonitoringStatus.Enabled
-        //    };
-
-        //    var lro = await monitorResource.UpdateAsync(update);
-
-        //    MonitorResource updatedMonitorResource = lro.Value;
-
-        //    Assert.AreEqual(MonitoringStatus.Enabled, updatedMonitorResource.Data.MonitoringStatus);
-        //}
-
         [TestCase]
         [RecordedTest]
         public async Task GetVMPayload()
