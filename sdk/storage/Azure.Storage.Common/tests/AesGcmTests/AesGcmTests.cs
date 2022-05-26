@@ -120,7 +120,7 @@ namespace Azure.Storage.Tests
 
                 byte[] decrypted = new byte[dataLength];
                 aesGcm.Decrypt(nonce, ciphertext, tag, decrypted);
-                Assert.Equals(plaintext, decrypted);
+                Assert.AreEqual(plaintext, decrypted);
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.Storage.Tests
 
                 byte[] decrypted = new byte[dataLength];
                 aesGcm.Decrypt(nonce, ciphertext, tag, decrypted);
-                Assert.Equals(plaintext, decrypted);
+                Assert.AreEqual(plaintext, decrypted);
             }
         }
 
@@ -203,22 +203,22 @@ namespace Azure.Storage.Tests
                 byte[] ciphertext1 = new byte[originalData1.Length];
                 byte[] tag1 = new byte[expectedTag1.Length];
                 aesGcm.Encrypt(nonce1, originalData1, ciphertext1, tag1);
-                Assert.Equals(expectedCiphertext1, ciphertext1);
-                Assert.Equals(expectedTag1, tag1);
+                Assert.AreEqual(expectedCiphertext1, ciphertext1);
+                Assert.AreEqual(expectedTag1, tag1);
 
                 byte[] ciphertext2 = new byte[originalData2.Length];
                 byte[] tag2 = new byte[expectedTag2.Length];
                 aesGcm.Encrypt(nonce2, originalData2, ciphertext2, tag2, associatedData2);
-                Assert.Equals(expectedCiphertext2, ciphertext2);
-                Assert.Equals(expectedTag2, tag2);
+                Assert.AreEqual(expectedCiphertext2, ciphertext2);
+                Assert.AreEqual(expectedTag2, tag2);
 
                 byte[] plaintext1 = new byte[originalData1.Length];
                 aesGcm.Decrypt(nonce1, ciphertext1, tag1, plaintext1);
-                Assert.Equals(originalData1, plaintext1);
+                Assert.AreEqual(originalData1, plaintext1);
 
                 byte[] plaintext2 = new byte[originalData2.Length];
                 aesGcm.Decrypt(nonce2, ciphertext2, tag2, plaintext2, associatedData2);
-                Assert.Equals(originalData2, plaintext2);
+                Assert.AreEqual(originalData2, plaintext2);
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.Storage.Tests
                 Assert.AreNotEqual(originalPlaintext, data);
 
                 aesGcm.Decrypt(nonce, data, tag, data);
-                Assert.Equals(originalPlaintext, data);
+                Assert.AreEqual(originalPlaintext, data);
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.Storage.Tests
 
                 Assert.Throws<CryptographicException>(
                     () => aesGcm.Decrypt(nonce, data, tag, data));
-                Assert.Equals(new byte[data.Length], data);
+                Assert.AreEqual(new byte[data.Length], data);
             }
         }
 
@@ -360,12 +360,12 @@ namespace Azure.Storage.Tests
                     byte[] ciphertext = new byte[test.Plaintext.Length];
                     byte[] tag = new byte[test.Tag.Length];
                     aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                    Assert.Equals(test.Ciphertext, ciphertext);
-                    Assert.Equals(test.Tag, tag);
+                    Assert.AreEqual(test.Ciphertext, ciphertext);
+                    Assert.AreEqual(test.Tag, tag);
 
                     byte[] plaintext = new byte[test.Plaintext.Length];
                     aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData);
-                    Assert.Equals(test.Plaintext, plaintext);
+                    Assert.AreEqual(test.Plaintext, plaintext);
                 }
             }
         }
@@ -380,12 +380,12 @@ namespace Azure.Storage.Tests
                     byte[] ciphertext = new byte[test.Plaintext.Length];
                     byte[] tag = new byte[test.Tag.Length];
                     aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                    Assert.Equals(test.Ciphertext, ciphertext);
-                    Assert.Equals(test.Tag, tag);
+                    Assert.AreEqual(test.Ciphertext, ciphertext);
+                    Assert.AreEqual(test.Tag, tag);
 
                     byte[] plaintext = new byte[test.Plaintext.Length];
                     aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData);
-                    Assert.Equals(test.Plaintext, plaintext);
+                    Assert.AreEqual(test.Plaintext, plaintext);
                 }
             }
         }
@@ -400,15 +400,15 @@ namespace Azure.Storage.Tests
                     byte[] ciphertext = new byte[test.Plaintext.Length];
                     byte[] tag = new byte[test.Tag.Length];
                     aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                    Assert.Equals(test.Ciphertext, ciphertext);
-                    Assert.Equals(test.Tag, tag);
+                    Assert.AreEqual(test.Ciphertext, ciphertext);
+                    Assert.AreEqual(test.Tag, tag);
 
                     tag[0] ^= 1;
 
                     byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
                     Assert.Throws<CryptographicException>(
                         () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
-                    Assert.Equals(new byte[plaintext.Length], plaintext);
+                    Assert.AreEqual(new byte[plaintext.Length], plaintext);
                 }
             }
         }
@@ -423,15 +423,15 @@ namespace Azure.Storage.Tests
                     byte[] ciphertext = new byte[test.Plaintext.Length];
                     byte[] tag = new byte[test.Tag.Length];
                     aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                    Assert.Equals(test.Ciphertext, ciphertext);
-                    Assert.Equals(test.Tag, tag);
+                    Assert.AreEqual(test.Ciphertext, ciphertext);
+                    Assert.AreEqual(test.Tag, tag);
 
                     tag[0] ^= 1;
 
                     byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
                     Assert.Throws<CryptographicException>(
                         () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
-                    Assert.Equals(new byte[plaintext.Length], plaintext);
+                    Assert.AreEqual(new byte[plaintext.Length], plaintext);
                 }
             }
         }
@@ -441,20 +441,23 @@ namespace Azure.Storage.Tests
         {
             foreach (AeadTest test in s_nistGcmSpecTestCases)
             {
-                using (var aesGcm = new AesGcmWindows(test.Key))
+                if (test.Plaintext.Length > 0)
                 {
-                    byte[] ciphertext = new byte[test.Plaintext.Length];
-                    byte[] tag = new byte[test.Tag.Length];
-                    aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                    Assert.Equals(test.Ciphertext, ciphertext);
-                    Assert.Equals(test.Tag, tag);
+                    using (var aesGcm = new AesGcmWindows(test.Key))
+                    {
+                        byte[] ciphertext = new byte[test.Plaintext.Length];
+                        byte[] tag = new byte[test.Tag.Length];
+                        aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
+                        Assert.AreEqual(test.Ciphertext, ciphertext);
+                        Assert.AreEqual(test.Tag, tag);
 
-                    ciphertext[0] ^= 1;
+                        ciphertext[0] ^= 1;
 
-                    byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
-                    Assert.Throws<CryptographicException>(
-                        () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
-                    Assert.Equals(new byte[plaintext.Length], plaintext);
+                        byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
+                        Assert.Throws<CryptographicException>(
+                            () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
+                        Assert.AreEqual(new byte[plaintext.Length], plaintext);
+                    }
                 }
             }
         }
@@ -464,20 +467,23 @@ namespace Azure.Storage.Tests
         {
             foreach (AeadTest test in s_nistGcmTestVectorsSelectedCases)
             {
-                using (var aesGcm = new AesGcmWindows(test.Key))
+                if (test.Plaintext.Length > 0)
                 {
-                    byte[] ciphertext = new byte[test.Plaintext.Length];
-                    byte[] tag = new byte[test.Tag.Length];
-                    aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                    Assert.Equals(test.Ciphertext, ciphertext);
-                    Assert.Equals(test.Tag, tag);
+                    using (var aesGcm = new AesGcmWindows(test.Key))
+                    {
+                        byte[] ciphertext = new byte[test.Plaintext.Length];
+                        byte[] tag = new byte[test.Tag.Length];
+                        aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
+                        Assert.AreEqual(test.Ciphertext, ciphertext);
+                        Assert.AreEqual(test.Tag, tag);
 
-                    ciphertext[0] ^= 1;
+                        ciphertext[0] ^= 1;
 
-                    byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
-                    Assert.Throws<CryptographicException>(
-                        () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
-                    Assert.Equals(new byte[plaintext.Length], plaintext);
+                        byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
+                        Assert.Throws<CryptographicException>(
+                            () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
+                        Assert.AreEqual(new byte[plaintext.Length], plaintext);
+                    }
                 }
             }
         }

@@ -29,8 +29,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->
-  <Target Name="TouchTestConfigurationsFile" BeforeTargets="PreBuildEvent">
-    <Touch Files="$(MSBuildThisFileDirectory)Shared\TestConfigurations.xml" AlwaysCreate="True" ContinueOnError="WarnAndContinue" />
-  </Target>
 </Project>
