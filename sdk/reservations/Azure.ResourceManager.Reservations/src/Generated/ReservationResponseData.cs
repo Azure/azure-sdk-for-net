@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
@@ -27,14 +26,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The Azure Region where the reserved resource lives. </param>
-        /// <param name="etag"></param>
+        /// <param name="version"></param>
         /// <param name="sku"> The sku information associated to this reservation. </param>
         /// <param name="properties"> The properties associated to this reservation. </param>
         /// <param name="kind"> Resource Provider type to be reserved. </param>
-        internal ReservationResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ETag? etag, ReservationsSkuName sku, ReservationsProperties properties, string kind) : base(id, name, resourceType, systemData)
+        internal ReservationResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, int? version, ReservationsSkuName sku, ReservationsProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
-            Etag = etag;
+            Version = version;
             Sku = sku;
             Properties = properties;
             Kind = kind;
@@ -42,8 +41,8 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> The Azure Region where the reserved resource lives. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Gets the etag. </summary>
-        public ETag? Etag { get; }
+        /// <summary> Gets the version. </summary>
+        public int? Version { get; }
         /// <summary> The sku information associated to this reservation. </summary>
         internal ReservationsSkuName Sku { get; }
         /// <summary> Gets or sets the sku name. </summary>
