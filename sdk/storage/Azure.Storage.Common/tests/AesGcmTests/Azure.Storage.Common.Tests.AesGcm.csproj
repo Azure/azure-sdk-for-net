@@ -19,8 +19,7 @@
     <Compile Include="$(AzureStorageSharedTestSources)TestHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)AesGcm\*.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)AesGcm\AllowUnsafeBlocks\*.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NUnit" />

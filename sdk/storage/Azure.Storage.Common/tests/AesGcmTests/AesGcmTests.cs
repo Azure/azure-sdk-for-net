@@ -393,24 +393,24 @@ namespace Azure.Storage.Tests
         [Test]
         public static void AesGcmNistTestsTamperTag()
         {
-                foreach (AeadTest test in s_nistGcmSpecTestCases)
+            foreach (AeadTest test in s_nistGcmSpecTestCases)
+            {
+                using (var aesGcm = new AesGcmWindows(test.Key))
                 {
-                    using (var aesGcm = new AesGcmWindows(test.Key))
-                    {
-                        byte[] ciphertext = new byte[test.Plaintext.Length];
-                        byte[] tag = new byte[test.Tag.Length];
-                        aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
-                        Assert.Equals(test.Ciphertext, ciphertext);
-                        Assert.Equals(test.Tag, tag);
+                    byte[] ciphertext = new byte[test.Plaintext.Length];
+                    byte[] tag = new byte[test.Tag.Length];
+                    aesGcm.Encrypt(test.Nonce, test.Plaintext, ciphertext, tag, test.AssociatedData);
+                    Assert.Equals(test.Ciphertext, ciphertext);
+                    Assert.Equals(test.Tag, tag);
 
-                        tag[0] ^= 1;
+                    tag[0] ^= 1;
 
-                        byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
-                        Assert.Throws<CryptographicException>(
-                            () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
-                        Assert.Equals(new byte[plaintext.Length], plaintext);
-                    }
+                    byte[] plaintext = AesGcmTestHelpers.GetRandomBuffer(test.Plaintext.Length);
+                    Assert.Throws<CryptographicException>(
+                        () => aesGcm.Decrypt(test.Nonce, ciphertext, tag, plaintext, test.AssociatedData));
+                    Assert.Equals(new byte[plaintext.Length], plaintext);
                 }
+            }
         }
 
         [Test]
