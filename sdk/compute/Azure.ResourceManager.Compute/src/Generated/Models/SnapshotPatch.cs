@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId { get; set; }
+        public ResourceIdentifier DiskAccessId { get; set; }
         /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
         public bool? SupportsHibernation { get; set; }
         /// <summary> Policy for controlling export on the disk. </summary>
