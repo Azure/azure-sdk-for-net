@@ -1,17 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/someNonExistantTwin?api-version=2021-06-30-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/digitaltwins/someNonExistantTwin?api-version=2022-05-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-01262186374e1c428acfc583024e4da3-7213cf6ee6a0594b-00",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
-          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
-        ],
-        "x-ms-client-request-id": "555551c6b09db5e0e11d20262016e69c",
+        "traceparent": "00-28fbe5a3f77ed3778c9d4c02c320c319-d34304e6894747f5-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "689d4ef53dc3c76bec8a2b20ca273b68",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,9 +16,9 @@
       "ResponseHeaders": {
         "Content-Length": "273",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jan 2022 06:11:46 GMT",
+        "Date": "Thu, 26 May 2022 01:31:03 GMT",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-01262186374e1c428acfc583024e4da3-9193cd7d4dab9c40-01"
+        "traceresponse": "00-28fbe5a3f77ed3778c9d4c02c320c319-d52c84f8c4e68f44-01"
       },
       "ResponseBody": {
         "error": {
@@ -33,6 +30,6 @@
   ],
   "Variables": {
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1496566014"
+    "RandomSeed": "1893817465"
   }
 }

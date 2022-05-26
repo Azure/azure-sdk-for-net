@@ -1,11 +1,15 @@
 # Release History
 
-## 1.4.0 (2022-06-02)
+## 2.0.0 (2022-06-02)
 
 ### New Features
 
 - Added support for `SourceTime` to `DigitalTwinPropertyMetadata`.
-- Added support for `LastUpdatedTime` for digital twins and components to `DigitalTwinMetadata`.
+- Added support for `LastUpdatedTime` for digital twins and components to `DigitalTwinMetadata` and `DigitalTwinComponentMetadata`.
+
+### Breaking changes
+
+- Changed return type of `Metadata` in `BasicDigitalTwinComponent` from `Dictionary<string, DigitalTwinPropertyMetadata>` to `DigitalTwinComponentMetadata`.
 
 ## 1.2.2 (2021-04-12)
 

@@ -5,8 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -14,9 +15,16 @@ namespace Azure.DigitalTwins.Core
     internal partial class QueryResult
     {
         /// <summary> Initializes a new instance of QueryResult. </summary>
-        internal QueryResult()
+        /// <param name="value"> The query results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal QueryResult(IEnumerable<object> value)
         {
-            Value = new ChangeTrackingList<object>();
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>

@@ -100,8 +100,8 @@ namespace Azure.DigitalTwins.Core.Samples
                 $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
                 $"Prop1: {basicDt.Contents["Prop1"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
                 $"Prop2: {basicDt.Contents["Prop2"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn}\n\t" +
-                $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
-                $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn}");
+                $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata.PropertyMetadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+                $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata.PropertyMetadata["ComponentProp2"].LastUpdatedOn}");
 
             #endregion Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 

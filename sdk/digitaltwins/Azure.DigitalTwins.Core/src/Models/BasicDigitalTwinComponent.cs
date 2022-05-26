@@ -23,7 +23,7 @@ namespace Azure.DigitalTwins.Core
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
 #pragma warning disable CA2227 // Collection properties should be readonly
-        public IDictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new Dictionary<string, DigitalTwinPropertyMetadata>();
+        public DigitalTwinComponentMetadata Metadata { get; set; } = new DigitalTwinComponentMetadata();
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>

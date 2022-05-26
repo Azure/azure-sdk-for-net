@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-532352335?api-version=2021-06-30-preview",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/eventroutes/someEventRouteId-778338477?api-version=2022-05-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "84",
         "Content-Type": "application/json",
-        "traceparent": "00-1b0a7c95161d424284b9eb2b065375bb-ace556438a87354d-00",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.3.0-alpha.20220118.1",
-          "(.NET Core 3.1.22; Microsoft Windows 10.0.19044)"
-        ],
-        "x-ms-client-request-id": "c2450140ce917ff39a4eeceae5f9c22f",
+        "traceparent": "00-b692b11ca05cf109e658caefaf03eb33-a9fd66690090df21-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "164d6735d2e4c00df2dce1ef7d6350eb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,9 +21,10 @@
       "ResponseHeaders": {
         "Content-Length": "249",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 20 Jan 2022 06:11:32 GMT",
+        "Date": "Thu, 26 May 2022 01:30:59 GMT",
+        "mise-correlation-id": "d83958a1-cebe-4c86-aa5e-011a27e6cc70",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-1b0a7c95161d424284b9eb2b065375bb-bd9600610e667a49-01"
+        "traceresponse": "00-b692b11ca05cf109e658caefaf03eb33-a674a3d977790042-01"
       },
       "ResponseBody": {
         "error": {
@@ -38,6 +36,6 @@
   ],
   "Variables": {
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1419465955"
+    "RandomSeed": "1463279839"
   }
 }

@@ -9,12 +9,12 @@ using System.Text.Json.Serialization;
 namespace Azure.DigitalTwins.Core
 {
     /// <summary>
-    /// JSON converter to make it easier to deserialize a <see cref="BasicDigitalTwin"/>.
+    /// JSON converter to make it easier to deserialize a <see cref="BasicDigitalTwinComponent"/>.
     /// </summary>
-    internal class DigitalTwinMetadataJsonConverter : JsonConverter<DigitalTwinMetadata>
+    internal class DigitalTwinComponentMetadataJsonConverter : JsonConverter<DigitalTwinComponentMetadata>
     {
         /// <inheritdoc/>
-        public override DigitalTwinMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override DigitalTwinComponentMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null)
             {
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
             }
 
             reader.Read(); // Advance into our object.
-            var metadata = new DigitalTwinMetadata();
+            var metadata = new DigitalTwinComponentMetadata();
 
             // Until we reach the end of the object we began reading
             while (reader.TokenType != JsonTokenType.EndObject)
@@ -36,11 +36,7 @@ namespace Azure.DigitalTwins.Core
 
                 reader.Read(); // advance to the next token
 
-                if (propertyName == DigitalTwinsJsonPropertyNames.MetadataModel)
-                {
-                    metadata.ModelId = JsonSerializer.Deserialize<string>(ref reader, options);
-                }
-                else if (propertyName == DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)
+                if (propertyName == DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)
                 {
                     metadata.LastUpdatedOn = JsonSerializer.Deserialize<string>(ref reader, options);
                 }
@@ -61,10 +57,9 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, DigitalTwinMetadata value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, DigitalTwinComponentMetadata value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataModel, value.ModelId);
             writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime, value.LastUpdatedOn);
             foreach (KeyValuePair<string, DigitalTwinPropertyMetadata> p in value.PropertyMetadata)
             {
