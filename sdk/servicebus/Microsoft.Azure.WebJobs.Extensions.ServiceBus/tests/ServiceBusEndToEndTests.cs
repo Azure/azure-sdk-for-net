@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             do
             {
-                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
                 if (message != null)
                 {
                     count++;
@@ -1612,21 +1612,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] string message)
             {
                 ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
-            }
-        }
-
-        public class DrainModeHelper
-        {
-            public static async Task WaitForCancellationAsync(CancellationToken cancellationToken)
-            {
-                // Wait until the drain operation begins, signalled by the cancellation token
-                int elapsedTimeMills = 0;
-                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
-                {
-                    await Task.Delay(elapsedTimeMills += 500);
-                }
-                // Allow some time for the Service Bus SDK to start draining before returning
-                await Task.Delay(DrainSleepMills);
             }
         }
 
