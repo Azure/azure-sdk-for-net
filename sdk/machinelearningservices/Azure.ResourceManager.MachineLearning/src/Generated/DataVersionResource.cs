@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A Class representing a DataVersionBase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataVersionBaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataVersionBaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataContainerResource" /> using the GetDataVersionBase method.
+    /// A Class representing a DataVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataVersionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataContainerResource" /> using the GetDataVersion method.
     /// </summary>
-    public partial class DataVersionBaseResource : ArmResource
+    public partial class DataVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataVersionBaseResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataVersionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataVersionBaseDataVersionsClientDiagnostics;
-        private readonly DataVersionsRestOperations _dataVersionBaseDataVersionsRestClient;
-        private readonly DataVersionBaseData _data;
+        private readonly ClientDiagnostics _dataVersionClientDiagnostics;
+        private readonly DataVersionsRestOperations _dataVersionRestClient;
+        private readonly DataVersionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataVersionBaseResource"/> class for mocking. </summary>
-        protected DataVersionBaseResource()
+        /// <summary> Initializes a new instance of the <see cref="DataVersionResource"/> class for mocking. </summary>
+        protected DataVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataVersionBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataVersionBaseResource(ArmClient client, DataVersionBaseData data) : this(client, data.Id)
+        internal DataVersionResource(ArmClient client, DataVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataVersionBaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataVersionBaseResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataVersionBaseDataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataVersionBaseDataVersionsApiVersion);
-            _dataVersionBaseDataVersionsRestClient = new DataVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataVersionBaseDataVersionsApiVersion);
+            _dataVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataVersionApiVersion);
+            _dataVersionRestClient = new DataVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataVersionBaseData Data
+        public virtual DataVersionData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: DataVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataVersionBaseResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataVersionBaseDataVersionsClientDiagnostics.CreateScope("DataVersionBaseResource.Get");
+            using var scope = _dataVersionClientDiagnostics.CreateScope("DataVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataVersionBaseDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataVersionBaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: DataVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataVersionBaseResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataVersionBaseDataVersionsClientDiagnostics.CreateScope("DataVersionBaseResource.Get");
+            using var scope = _dataVersionClientDiagnostics.CreateScope("DataVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _dataVersionBaseDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataVersionBaseResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataVersionBaseDataVersionsClientDiagnostics.CreateScope("DataVersionBaseResource.Delete");
+            using var scope = _dataVersionClientDiagnostics.CreateScope("DataVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataVersionBaseDataVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataVersionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataVersionBaseDataVersionsClientDiagnostics.CreateScope("DataVersionBaseResource.Delete");
+            using var scope = _dataVersionClientDiagnostics.CreateScope("DataVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataVersionBaseDataVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataVersionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new MachineLearningArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataVersionBaseResource>> UpdateAsync(WaitUntil waitUntil, DataVersionBaseData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataVersionResource>> UpdateAsync(WaitUntil waitUntil, DataVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataVersionBaseDataVersionsClientDiagnostics.CreateScope("DataVersionBaseResource.Update");
+            using var scope = _dataVersionClientDiagnostics.CreateScope("DataVersionResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataVersionBaseDataVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<DataVersionBaseResource>(Response.FromValue(new DataVersionBaseResource(Client, response), response.GetRawResponse()));
+                var response = await _dataVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MachineLearningArmOperation<DataVersionResource>(Response.FromValue(new DataVersionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataVersionBaseResource> Update(WaitUntil waitUntil, DataVersionBaseData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataVersionResource> Update(WaitUntil waitUntil, DataVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataVersionBaseDataVersionsClientDiagnostics.CreateScope("DataVersionBaseResource.Update");
+            using var scope = _dataVersionClientDiagnostics.CreateScope("DataVersionResource.Update");
             scope.Start();
             try
             {
-                var response = _dataVersionBaseDataVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<DataVersionBaseResource>(Response.FromValue(new DataVersionBaseResource(Client, response), response.GetRawResponse()));
+                var response = _dataVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new MachineLearningArmOperation<DataVersionResource>(Response.FromValue(new DataVersionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

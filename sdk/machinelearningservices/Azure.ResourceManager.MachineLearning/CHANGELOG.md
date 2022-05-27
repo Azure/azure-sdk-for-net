@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Resource/Collection/Data `DataVersionBaseResource` `DataVersionBaseCollection` and `DataVersionBaseData` renamed to `DataVersionResource` `DataVersionCollection` and `DataVersionData`.
+
 ### Bugs Fixed
 
 ### Other Changes
