@@ -588,13 +588,14 @@ namespace Azure.Storage.Files.DataLake
                 return null;
             }
 
-            long fileTimeLong = long.Parse(fileTimeString, CultureInfo.InvariantCulture);
+            // fileTimeString can come back as either in ticks or in a proper readable format
+            long.TryParse(fileTimeString, NumberStyles.None, CultureInfo.InvariantCulture, out long fileTimeLong);
 
             if (fileTimeLong == 0)
             {
-                return null;
+                DateTimeOffset.TryParse(fileTimeString, default, DateTimeStyles.None, out DateTimeOffset parsedTime);
+                return parsedTime;
             }
-
             return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
         }
 
