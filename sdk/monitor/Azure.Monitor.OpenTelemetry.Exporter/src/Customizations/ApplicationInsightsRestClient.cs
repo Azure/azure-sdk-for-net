@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 content.WriteNewLine();
             }
             request.Content = RequestContent.Create(content.ToBytes());
-            TelemetryDebugWriter.WriteTelemetry(content);
+            TelemetryDebugWriter.Writer.WriteTelemetry(content);
             return message;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             request.Headers.Add("Accept", "application/json");
             using var content = new NDJsonWriter();
             request.Content = RequestContent.Create(body);
-            TelemetryDebugWriter.WriteTelemetry(content);
+            TelemetryDebugWriter.Writer.WriteTelemetry(content);
             return message;
         }
     }

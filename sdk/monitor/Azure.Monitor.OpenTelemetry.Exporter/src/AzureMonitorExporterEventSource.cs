@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             protected override void OnEventWritten(EventWrittenEventArgs eventData)
             {
                 string message = EventSourceEventFormatting.Format(eventData);
-                TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+                TelemetryDebugWriter.Writer.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
             }
         }
     }
