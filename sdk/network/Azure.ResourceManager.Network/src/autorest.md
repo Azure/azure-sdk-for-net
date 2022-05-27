@@ -199,6 +199,10 @@ directive:
     where: $.paths..parameters[?(@.name === "location")]
     transform: >
       $["x-ms-format"] = 'azure-location';
+  - from: azureFirewall.json
+    where: $.definitions.AzureFirewallIpGroups.properties.id
+    transform: >
+      $['x-ms-format'] = 'arm-id';
   - from: networkWatcher.json
     where: $.definitions
     transform: >
