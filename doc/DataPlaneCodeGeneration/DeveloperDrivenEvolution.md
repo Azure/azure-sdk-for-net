@@ -108,7 +108,7 @@ To achieve this, our guidance is:
 - If the grow-up method diverges much from the protocol method (i.e. if they have different names or code in the convenience method could take much time), do open a scope in the convenience API and turn on suppression of inner scopes.
 - If you want to add attributes or otherwise modify scopes, do that in the convenience method.
 
-To turn on the suppression, pass `ture` to `ClientDiagnostics` in the client constructor.
+To turn on the suppression, the generated client will pass `true` to `ClientDiagnostics` in the client constructor.
 ```C#
 public MetricsAdvisorClient(Uri endpoint, MetricsAdvisorKeyCredential credential, MetricsAdvisorClientsOptions options)
 {
@@ -130,7 +130,9 @@ namespace Azure.AI.MetricsAdvisor
     {
         public virtual async Task<Response> GetMetricFeedbackAsync(Guid feedbackId, RequestContext context = null)
         {
+            ...
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.GetMetricFeedback");
+            ...
         }
     }
 }
@@ -169,7 +171,9 @@ namespace Azure.AI.MetricsAdvisor
     {
         public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null)
         {
+            ...
             using var scope = ClientDiagnostics.CreateScope("MetricsAdvisorClient.CreateMetricFeedback");
+            ...
         }
     }
 }
