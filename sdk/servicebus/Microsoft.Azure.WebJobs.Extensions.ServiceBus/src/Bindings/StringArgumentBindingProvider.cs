@@ -4,6 +4,7 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
@@ -16,12 +17,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             {
                 return null;
             }
-
-            return new StringArgumentBinding();
+            var attribute = TypeUtility.GetResolvedAttribute<ServiceBusAttribute>(parameter);
+            return new StringArgumentBinding(attribute.IncludeMetadata);
         }
 
         private class StringArgumentBinding : IArgumentBinding<ServiceBusEntity>
         {
+            private readonly bool _includeMessageMetadata;
+
+            public StringArgumentBinding(bool includeMessageMetadata)
+            {
+                _includeMessageMetadata = includeMessageMetadata;
+            }
             public Type ValueType
             {
                 get { return typeof(string); }
@@ -55,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 }
 
                 IValueProvider provider = new NonNullConverterValueBinder<string>(value,
-                    new StringToMessageConverter(), context.FunctionInstanceId);
+                    new StringToMessageConverter(_includeMessageMetadata), context.FunctionInstanceId);
 
                 return Task.FromResult(provider);
             }

@@ -448,6 +448,60 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        /// <summary>
+        /// The intent of this test to exercise the behavior that out of process bindings use. The IncludeMetadata property is internal,
+        /// so it wouldn't be used for in process functions.
+        /// </summary>
+        [Test]
+        public async Task TestSingle_OutputString_IncludeMetadata()
+        {
+            var host = BuildHost<ServiceBusOutputStringIncludeMetadataTest>();
+            using (host)
+            {
+                var jobHost = host.GetJobHost();
+                await jobHost.CallAsync(nameof(ServiceBusOutputStringIncludeMetadataTest.OutputStringIncludeMetadata));
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        /// <summary>
+        /// The intent of this test to exercise the behavior that out of process bindings use. The IncludeMetadata property is internal,
+        /// so it wouldn't be used for in process functions.
+        /// </summary>
+        [Test]
+        public async Task TestMultiple_OutputString_IncludeMetadata()
+        {
+            var host = BuildHost<ServiceBusOutputBatchStringIncludeMetadataTest>();
+            using (host)
+            {
+                var jobHost = host.GetJobHost();
+                await jobHost.CallAsync(nameof(ServiceBusOutputBatchStringIncludeMetadataTest.OutputStringIncludeMetadata));
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        /// <summary>
+        /// The intent of this test to exercise the behavior that out of process bindings use. The IncludeMetadata property is internal,
+        /// so it wouldn't be used for in process functions.
+        /// </summary>
+        [Test]
+        public async Task TestMultiple_OutputString_IncludeMetadata_Sync()
+        {
+            var host = BuildHost<ServiceBusOutputBatchStringIncludeMetadataTest>();
+            using (host)
+            {
+                var jobHost = host.GetJobHost();
+                await jobHost.CallAsync(nameof(ServiceBusOutputBatchStringIncludeMetadataTest.OutputStringIncludeMetadata_Sync));
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
         [Test]
         public async Task TestSingle_OutputBinaryData()
         {
@@ -1015,6 +1069,139 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value", received.Value);
                 Assert.AreEqual("name", received.Name);
                 _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusOutputStringIncludeMetadataTest
+        {
+            public static void OutputStringIncludeMetadata(
+                [ServiceBus(FirstQueueNameKey, includeMetadata: true)] out string output)
+            {
+                output = new BinaryData(new
+                {
+                    ContentType = "application/json",
+                    CorrelationId = "correlationId",
+                    Body = "body",
+                    ApplicationProperties = new Dictionary<string, object>
+                    {
+                        {"string", "value"},
+                        {"int", 1},
+                        {"long", long.MaxValue},
+                        {"double", double.MaxValue},
+                        {"true", true},
+                        {"false", false},
+                        {"null", null}
+                    },
+                    To = "to",
+                    ReplyTo = "replyTo",
+                    TimeToLive = TimeSpan.FromHours(1),
+                    MessageId = "messageId"
+                }).ToString();
+            }
+
+            public static void TriggerIncludeMetadata(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message)
+            {
+                Assert.AreEqual("application/json", message.ContentType);
+                Assert.AreEqual("correlationId", message.CorrelationId);
+                Assert.AreEqual("body", message.Body.ToString());
+                Assert.AreEqual("to", message.To);
+                Assert.AreEqual("replyTo", message.ReplyTo);
+                Assert.AreEqual(TimeSpan.FromHours(1), message.TimeToLive);
+                Assert.AreEqual("messageId", message.MessageId);
+
+                Assert.AreEqual("value", message.ApplicationProperties["string"]);
+                Assert.AreEqual(1, message.ApplicationProperties["int"]);
+                Assert.AreEqual(long.MaxValue, message.ApplicationProperties["long"]);
+                Assert.AreEqual(double.MaxValue, message.ApplicationProperties["double"]);
+                Assert.IsTrue((bool)message.ApplicationProperties["true"]);
+                Assert.IsFalse((bool)message.ApplicationProperties["false"]);
+                Assert.IsNull(message.ApplicationProperties["null"]);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusOutputBatchStringIncludeMetadataTest
+        {
+            private static volatile bool firstReceived = false;
+            private static volatile bool secondReceived = false;
+            public static async Task OutputStringIncludeMetadata(
+                [ServiceBus(FirstQueueNameKey, includeMetadata: true)] IAsyncCollector<string> output)
+            {
+                await output.AddAsync(CreateMessage("message1"));
+                await output.AddAsync(CreateMessage("message2"));
+            }
+
+            public static void OutputStringIncludeMetadata_Sync(
+                [ServiceBus(FirstQueueNameKey, includeMetadata: true)] ICollector<string> output)
+            {
+                output.Add(CreateMessage("message1"));
+                output.Add(CreateMessage("message2"));
+            }
+
+            public static void TriggerIncludeMetadata(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage[] messages)
+            {
+                foreach (ServiceBusReceivedMessage message in messages)
+                {
+                    switch (message.Body.ToString())
+                    {
+                        case "message1":
+                            firstReceived = true;
+                            AssertMessageProperties(message);
+                            break;
+                        case "message2":
+                            secondReceived = true;
+                            AssertMessageProperties(message);
+                            break;
+                    }
+                }
+                if (firstReceived && secondReceived)
+                {
+                    // reset for the next test
+                    firstReceived = false;
+                    secondReceived = false;
+                    _waitHandle1.Set();
+                }
+            }
+
+            private static string CreateMessage(string body)
+                => new BinaryData(new
+                {
+                    ContentType = "application/json",
+                    CorrelationId = "correlationId",
+                    Body = body,
+                    ApplicationProperties = new Dictionary<string, object>
+                    {
+                        {"string", "value"},
+                        {"int", 1},
+                        {"long", long.MaxValue},
+                        {"double", double.MaxValue},
+                        {"true", true},
+                        {"false", false},
+                        {"null", null}
+                    },
+                    To = "to",
+                    ReplyTo = "replyTo",
+                    TimeToLive = TimeSpan.FromHours(1),
+                    MessageId = "messageId"
+                }).ToString();
+
+            private static void AssertMessageProperties(ServiceBusReceivedMessage message)
+            {
+                Assert.AreEqual("application/json", message.ContentType);
+                Assert.AreEqual("correlationId", message.CorrelationId);
+                Assert.AreEqual("to", message.To);
+                Assert.AreEqual("replyTo", message.ReplyTo);
+                Assert.AreEqual(TimeSpan.FromHours(1), message.TimeToLive);
+                Assert.AreEqual("messageId", message.MessageId);
+                Assert.AreEqual("value", message.ApplicationProperties["string"]);
+                Assert.AreEqual(1, message.ApplicationProperties["int"]);
+                Assert.AreEqual(long.MaxValue, message.ApplicationProperties["long"]);
+                Assert.AreEqual(double.MaxValue, message.ApplicationProperties["double"]);
+                Assert.IsTrue((bool)message.ApplicationProperties["true"]);
+                Assert.IsFalse((bool)message.ApplicationProperties["false"]);
+                Assert.IsNull(message.ApplicationProperties["null"]);
             }
         }
 

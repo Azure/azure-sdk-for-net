@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.ServiceBus;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs
 {
@@ -41,6 +43,14 @@ namespace Microsoft.Azure.WebJobs
             EntityType = entityType;
         }
 
+        // for testing of the internal IncludeMetadata property. Internal properties cannot be set on attributes outside of the constructor.
+        internal ServiceBusAttribute(string queueOrTopicName, bool includeMetadata, ServiceBusEntityType entityType = ServiceBusEntityType.Queue)
+        {
+            QueueOrTopicName = queueOrTopicName;
+            EntityType = entityType;
+            IncludeMetadata = includeMetadata;
+        }
+
         /// <summary>
         /// Gets the name of the queue or topic to bind to.
         /// </summary>
@@ -55,5 +65,13 @@ namespace Microsoft.Azure.WebJobs
         /// Value indicating the type of the entity to bind to.
         /// </summary>
         public ServiceBusEntityType EntityType { get; set; }
+
+        /// <summary>
+        /// This property indicates whether the string being sent from out of process functions
+        /// includes the message metadata. By default this is false, meaning the string represents
+        /// only the message body.
+        /// </summary>
+        [JsonProperty]
+        internal bool IncludeMetadata { get; set; }
     }
 }

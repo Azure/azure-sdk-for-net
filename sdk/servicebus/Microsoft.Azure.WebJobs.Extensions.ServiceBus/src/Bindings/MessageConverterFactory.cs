@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal static class MessageConverterFactory
     {
-        internal static IConverter<TInput, ServiceBusMessage> Create<TInput>(JsonSerializerSettings jsonSerializerSettings)
+        internal static IConverter<TInput, ServiceBusMessage> Create<TInput>(JsonSerializerSettings jsonSerializerSettings, bool includeMetadata)
         {
             if (typeof(TInput) == typeof(ServiceBusMessage))
             {
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
             else if (typeof(TInput) == typeof(string))
             {
-                return (IConverter<TInput, ServiceBusMessage>)new StringToMessageConverter();
+                return (IConverter<TInput, ServiceBusMessage>)new StringToMessageConverter(includeMetadata);
             }
             else if (typeof(TInput) == typeof(byte[]))
             {

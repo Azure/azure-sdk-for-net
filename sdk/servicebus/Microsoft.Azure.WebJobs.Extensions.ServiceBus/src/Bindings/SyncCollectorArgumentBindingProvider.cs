@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Newtonsoft.Json;
 
@@ -29,6 +30,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 return null;
             }
 
+            var attribute = TypeUtility.GetResolvedAttribute<ServiceBusAttribute>(parameter);
+
             Type genericTypeDefinition = parameterType.GetGenericTypeDefinition();
 
             if (genericTypeDefinition != typeof(ICollector<>))
@@ -37,25 +40,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
 
             Type itemType = parameterType.GetGenericArguments()[0];
-            return CreateBinding(itemType);
+            return CreateBinding(itemType, attribute.IncludeMetadata);
         }
 
-        private IArgumentBinding<ServiceBusEntity> CreateBinding(Type itemType)
+        private IArgumentBinding<ServiceBusEntity> CreateBinding(Type itemType, bool includeMetadata)
         {
             MethodInfo method = typeof(SyncCollectorArgumentBindingProvider).GetMethod("CreateBindingGeneric",
                 BindingFlags.NonPublic | BindingFlags.Instance);
             Debug.Assert(method != null);
             MethodInfo genericMethod = method.MakeGenericMethod(itemType);
             Debug.Assert(genericMethod != null);
-            Func<IArgumentBinding<ServiceBusEntity>> lambda =
-                (Func<IArgumentBinding<ServiceBusEntity>>)Delegate.CreateDelegate(
-                typeof(Func<IArgumentBinding<ServiceBusEntity>>), this, genericMethod);
-            return lambda.Invoke();
+            Func<bool, IArgumentBinding<ServiceBusEntity>> lambda =
+                (Func<bool, IArgumentBinding<ServiceBusEntity>>)Delegate.CreateDelegate(
+                typeof(Func<bool, IArgumentBinding<ServiceBusEntity>>), this, genericMethod);
+            return lambda.Invoke(includeMetadata);
         }
 
-        private IArgumentBinding<ServiceBusEntity> CreateBindingGeneric<TItem>()
+        private IArgumentBinding<ServiceBusEntity> CreateBindingGeneric<TItem>(bool includeMetadata)
         {
-            return new CollectorArgumentBinding<TItem>(MessageConverterFactory.Create<TItem>(_jsonSerializerSettings));
+            return new CollectorArgumentBinding<TItem>(MessageConverterFactory.Create<TItem>(_jsonSerializerSettings, includeMetadata));
         }
 
         private class CollectorArgumentBinding<TItem> : IArgumentBinding<ServiceBusEntity>
