@@ -24,8 +24,8 @@
 <h4 id="{{id}}" data-uid="{{uid}}"><a href="#collapsible-{{id}}" class="expander" data-toggle="collapse">{{name.0.value}}</a></h4>
 
 <div id="collapsible-{{id}}" class="collapse in">
-<div class="markdown level1 summary">{{{summary}}}</div>
-<div class="markdown level1 conceptual">{{{conceptual}}}</div>
+<div class="markdown level0 summary">{{{summary}}}</div>
+<div class="markdown level0 conceptual">{{{conceptual}}}</div>
 <h5 class="decalaration">{{__global.declaration}}</h5>
 
 {{#syntax}}
@@ -141,7 +141,7 @@
 
 {{#remarks}}
 <h5 id="{{id}}_remarks">{{__global.remarks}}</h5>
-<div class="markdown level1 remarks">{{{remarks}}}</div>
+<div class="markdown level0 remarks">{{{remarks}}}</div>
 {{/remarks}}
 
 {{#exceptions.0}}
