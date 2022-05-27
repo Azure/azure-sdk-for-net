@@ -41,13 +41,16 @@ Task processEventHandler(ProcessEventArgs args)
             return Task.CompletedTask;
         }
 
-        // Process the event.
+        // TODO:
+        //   Process the event according to application needs.
     }
     catch
     {
-        // Take action to handle the exception.
-        // It is important that all exceptions are
-        // handled and none are permitted to bubble up.
+        // TODO:
+        //   Take action to handle the exception.
+        //
+        //   It is important that all exceptions are
+        //   handled and none are permitted to bubble up.
     }
 
     return Task.CompletedTask;
@@ -69,6 +72,8 @@ finally
 ## Process Error
 
 The processor will invoke the `ProcessErrorAsync` handler when an exception has been observed during operation of the processor, occurring as part of its infrastructure.  It is not invoked for exceptions observed in developer-provided code, such as that of the event handlers or other extension points. The `EventProcessorClient` will make every effort to recover from exceptions and continue processing.  Should an exception that cannot be recovered from be encountered, the processor will attempt to forfeit ownership of all partitions that it was processing so that work may be redistributed.  This handler may be invoked concurrently.
+
+It is important to note that the error handler is **_NOT_** invoked for failures that occur in the event processing handler.  It is the application's responsibility to expect and handle exceptions that occur in developer-provided code for the handlers; exceptions should not be allowed to bubble from any handler.
 
 ### Inspecting error details
 
@@ -109,9 +114,11 @@ Task processErrorHandler(ProcessErrorEventArgs args)
     }
     catch
     {
-        // Take action to handle the exception.
-        // It is important that all exceptions are
-        // handled and none are permitted to bubble up.
+        // TODO:
+        //   Take action to handle the exception.
+        //
+        //   It is important that all exceptions are
+        //   handled and none are permitted to bubble up.
     }
 
     return Task.CompletedTask;
@@ -132,9 +139,13 @@ finally
 
 ### Reacting to processor errors
 
-The exceptions surfaced to this method may be fatal or non-fatal; because the processor may not be able to accurately predict whether an exception was fatal, such as a non-transient network failure or when the application's state has been corrupted, this handler has responsibility for making the determination as to whether processing should be terminated or restarted.  The handler may safely call `StopProcessingAsync` on the processor instance inline, as the handler is not awaited by the processor when invoked.
+The exceptions surfaced to your error handler represent a failure within the infrastructure of the processor.  The processor is highly resilient; there is generally no action needed by your application to react to occasional errors. 
 
-In production scenarios, it is recommended that the decision for how an error should be handled be made by considering observations made by this error handler in collaboration with the handlers for other available processor events.  Many applications will also wish to consider data from their monitoring platforms in this decision as well.
+The processor lacks insight into your application, host environment, and error patterns observed over time. If you're seeing frequent exceptions in your handler or consistent patterns - those often indicate a problem that needs to be addressed. While the processor is likely to recover from that specific instance of the error but, in aggregate, there may need to consider a wider problem.
+
+This most often manifests in things like authorization permissions being revoked, the network on the host being in a bad state causing operations to consistently fail, and other heuristics.  It is recommended that the decision for how an error should be handled be made by considering patterns observed by not only the error handler, but also the other event handlers for the processor.  Applications may also wish to consider data from their monitoring platforms in this decision as well.
+
+The error handler (but no other event handler) may safely call `StopProcessingAsync` on the processor instance inline, as the handler is not awaited by the processor when invoked.  While this is supported, it is not not often the best pattern since no individual exception is fatal to the event processor.
 
 This example demonstrates signaling the application to stop processing if the application is out of memory and restarting the processor if it indicates that it has stopped running.
 
@@ -165,11 +176,16 @@ Task processEventHandler(ProcessEventArgs args)
 {
     try
     {
-        // Process the event.
+        // TODO:
+        //   Process the event according to application needs.
     }
     catch
     {
-        // Handle the exception.
+        // TODO:
+        //   Take action to handle the exception.
+        //
+        //   It is important that all exceptions are
+        //   handled and none are permitted to bubble up.
     }
 
     return Task.CompletedTask;
@@ -196,27 +212,10 @@ async Task processErrorHandler(ProcessErrorEventArgs args)
             return;
         }
 
-        // If out of memory, signal for cancellation.
+        // Allow the application to handle the exception according to
+        // its business logic.
 
-        if (args.Exception is OutOfMemoryException)
-        {
-            cancellationSource.Cancel();
-            return;
-        }
-
-        // If processing stopped and this handler determined
-        // the error to be non-fatal, restart processing.
-
-        if ((!processor.IsRunning)
-            && (!cancellationSource.IsCancellationRequested))
-        {
-            // To be safe, request that processing stop before
-            // requesting the start; this will ensure that any
-            // processor state is fully reset.
-
-            await processor.StopProcessingAsync();
-            await processor.StartProcessingAsync(cancellationSource.Token);
-        }
+        await HandleExceptionAsync(args.Exception, args.CancellationToken);
     }
     catch
     {
@@ -432,13 +431,16 @@ Task processEventHandler(ProcessEventArgs args)
 {
     try
     {
-        // Process the event.
+        // TODO:
+        //   Process the event according to application needs.
     }
     catch
     {
-        // Take action to handle the exception.
-        // It is important that all exceptions are
-        // handled and none are permitted to bubble up.
+        // TODO:
+        //   Take action to handle the exception.
+        //
+        //   It is important that all exceptions are
+        //   handled and none are permitted to bubble up.
     }
 
     return Task.CompletedTask;
@@ -493,12 +495,16 @@ Task processEventHandler(ProcessEventArgs args)
             return Task.CompletedTask;
         }
 
-        // Process the event.
+        // TODO:
+        //   Process the event according to application needs.
     }
     catch
     {
-        // Handle the exception.  If fatal,
-        // signal for cancellation.
+        // TODO:
+        //   Take action to handle the exception.
+        //
+        //   It is important that all exceptions are
+        //   handled and none are permitted to bubble up.
 
         cancellationSource.Cancel();
     }
@@ -506,12 +512,12 @@ Task processEventHandler(ProcessEventArgs args)
     return Task.CompletedTask;
 }
 
-Task processErrorHandler(ProcessErrorEventArgs args)
+async Task processErrorHandler(ProcessErrorEventArgs args)
 {
-    // Process the error, as appropriate for the
-    // application.
+    // Allow the application to handle the exception according to
+    // its business logic.
 
-    return Task.CompletedTask;
+    await HandleExceptionAsync(args.Exception, args.CancellationToken);
 }
 
 try

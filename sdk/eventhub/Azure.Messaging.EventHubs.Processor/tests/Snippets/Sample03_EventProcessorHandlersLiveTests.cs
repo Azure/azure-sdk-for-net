@@ -61,13 +61,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 try
                 {
-                    // Process the event.
+                    // TODO:
+                    //   Process the event according to application needs.
                 }
                 catch
                 {
-                    // Take action to handle the exception.
-                    // It is important that all exceptions are
-                    // handled and none are permitted to bubble up.
+                    // TODO:
+                    //   Take action to handle the exception.
+                    //
+                    //   It is important that all exceptions are
+                    //   handled and none are permitted to bubble up.
                 }
 
                 return Task.CompletedTask;
@@ -131,13 +134,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         return Task.CompletedTask;
                     }
 
-                    // Process the event.
+                    // TODO:
+                    //   Process the event according to application needs.
                 }
                 catch
                 {
-                    // Take action to handle the exception.
-                    // It is important that all exceptions are
-                    // handled and none are permitted to bubble up.
+                    // TODO:
+                    //   Take action to handle the exception.
+                    //
+                    //   It is important that all exceptions are
+                    //   handled and none are permitted to bubble up.
                 }
 
                 return Task.CompletedTask;
@@ -212,12 +218,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         return Task.CompletedTask;
                     }
 
-                    // Process the event.
+                    // TODO:
+                    //   Process the event according to application needs.
                 }
                 catch
                 {
-                    // Handle the exception.  If fatal,
-                    // signal for cancellation.
+                    // TODO:
+                    //   Take action to handle the exception.
+                    //
+                    //   It is important that all exceptions are
+                    //   handled and none are permitted to bubble up.
 
                     cancellationSource.Cancel();
                 }
@@ -225,12 +235,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 return Task.CompletedTask;
             }
 
-            Task processErrorHandler(ProcessErrorEventArgs args)
+            async Task processErrorHandler(ProcessErrorEventArgs args)
             {
-                // Process the error, as appropriate for the
-                // application.
+                // Allow the application to handle the exception according to
+                // its business logic.
 
-                return Task.CompletedTask;
+                await HandleExceptionAsync(args.Exception, args.CancellationToken);
             }
 
             try
@@ -321,9 +331,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 }
                 catch
                 {
-                    // Take action to handle the exception.
-                    // It is important that all exceptions are
-                    // handled and none are permitted to bubble up.
+                    // TODO:
+                    //   Take action to handle the exception.
+                    //
+                    //   It is important that all exceptions are
+                    //   handled and none are permitted to bubble up.
                 }
 
                 return Task.CompletedTask;
@@ -386,18 +398,23 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             using var cancellationSource = new CancellationTokenSource();
 #if !SNIPPET
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(10));
 #endif
 
             Task processEventHandler(ProcessEventArgs args)
             {
                 try
                 {
-                    // Process the event.
+                    // TODO:
+                    //   Process the event according to application needs.
                 }
                 catch
                 {
-                    // Handle the exception.
+                    // TODO:
+                    //   Take action to handle the exception.
+                    //
+                    //   It is important that all exceptions are
+                    //   handled and none are permitted to bubble up.
                 }
 
                 return Task.CompletedTask;
@@ -424,27 +441,10 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         return;
                     }
 
-                    // If out of memory, signal for cancellation.
+                    // Allow the application to handle the exception according to
+                    // its business logic.
 
-                    if (args.Exception is OutOfMemoryException)
-                    {
-                        cancellationSource.Cancel();
-                        return;
-                    }
-
-                    // If processing stopped and this handler determined
-                    // the error to be non-fatal, restart processing.
-
-                    if ((!processor.IsRunning)
-                        && (!cancellationSource.IsCancellationRequested))
-                    {
-                        // To be safe, request that processing stop before
-                        // requesting the start; this will ensure that any
-                        // processor state is fully reset.
-
-                        await processor.StopProcessingAsync();
-                        await processor.StartProcessingAsync(cancellationSource.Token);
-                    }
+                    await HandleExceptionAsync(args.Exception, args.CancellationToken);
                 }
                 catch
                 {
@@ -649,5 +649,15 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #endregion
         }
+
+        /// <summary>
+        ///   Serves as a demonstrative shim to illustrate an application
+        ///   handling an exception.
+        /// </summary>
+        ///
+        /// <param name="ex">The exception to be handled.</param>
+        ///
+        private Task HandleExceptionAsync(Exception ex,
+                                          CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineImage DeserializeVirtualMachineImage(JsonElement element)
         {
             string name = default;
-            string location = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ResourceIdentifier> id = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))

@@ -83,7 +83,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
             var snapshotCreateOperation = await _resourceGroup.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, name,
                 new SnapshotData(_config.Location)
                 {
-                    CreationData = new CreationData(DiskCreateOption.Copy)
+                    CreationData = new DiskCreationData(DiskCreateOption.Copy)
                     {
                         SourceResourceId = disk.Id
                     },

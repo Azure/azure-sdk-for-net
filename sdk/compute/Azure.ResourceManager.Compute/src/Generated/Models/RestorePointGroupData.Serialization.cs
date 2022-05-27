@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<RestorePointCollectionSourceProperties> source = default;
+            Optional<RestorePointCollectionSource> source = default;
             Optional<string> provisioningState = default;
             Optional<string> restorePointCollectionId = default;
             Optional<IReadOnlyList<RestorePointData>> restorePoints = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            source = RestorePointCollectionSourceProperties.DeserializeRestorePointCollectionSourceProperties(property0.Value);
+                            source = RestorePointCollectionSource.DeserializeRestorePointCollectionSource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
