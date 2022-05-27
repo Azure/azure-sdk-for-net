@@ -11,10 +11,10 @@ namespace Azure.DigitalTwins.Core
     /// <summary>
     /// JSON converter to make it easier to deserialize a <see cref="BasicDigitalTwinComponent"/>.
     /// </summary>
-    internal class DigitalTwinComponentMetadataJsonConverter : JsonConverter<DigitalTwinComponentMetadata>
+    internal class BasicDigitalTwinComponentJsonConverter : JsonConverter<BasicDigitalTwinComponent>
     {
         /// <inheritdoc/>
-        public override DigitalTwinComponentMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override BasicDigitalTwinComponent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.Null)
             {
@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
             }
 
             reader.Read(); // Advance into our object.
-            var metadata = new DigitalTwinComponentMetadata();
+            var component = new BasicDigitalTwinComponent();
 
             // Until we reach the end of the object we began reading
             while (reader.TokenType != JsonTokenType.EndObject)
@@ -36,40 +36,31 @@ namespace Azure.DigitalTwins.Core
 
                 reader.Read(); // advance to the next token
 
-                if (propertyName == DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)
+                if (propertyName == DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)
                 {
-                    metadata.LastUpdatedOn = JsonSerializer.Deserialize<string>(ref reader, options);
-                }
-                else if (reader.TokenType == JsonTokenType.StartObject)
-                {
-                    metadata.PropertyMetadata[propertyName] = JsonSerializer.Deserialize<DigitalTwinPropertyMetadata>(ref reader, options);
+                    component.Metadata = JsonSerializer.Deserialize<DigitalTwinComponentMetadata>(ref reader, options);
                 }
                 else
                 {
-                    // Unexpected
-                    throw new JsonException();
+                    component.Contents[propertyName] = JsonSerializer.Deserialize<JsonElement>(ref reader, options);
                 }
 
                 reader.Read(); // Finished consuming the token
             }
 
-            return metadata;
+            return component;
         }
 
         /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, DigitalTwinComponentMetadata value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, BasicDigitalTwinComponent value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-
-            if (value.LastUpdatedOn != null)
-            {
-                writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime, value.LastUpdatedOn);
-            }
-
-            foreach (KeyValuePair<string, DigitalTwinPropertyMetadata> p in value.PropertyMetadata)
+            writer.WritePropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata);
+            JsonSerializer.Serialize<DigitalTwinComponentMetadata>(writer, value.Metadata as DigitalTwinComponentMetadata, options);
+            foreach (KeyValuePair<string, object> p in value.Contents)
             {
                 writer.WritePropertyName(p.Key);
-                JsonSerializer.Serialize<DigitalTwinPropertyMetadata>(writer, p.Value, options);
+                JsonSerializer.Serialize(writer, p.Value, options);
             }
             writer.WriteEndObject();
         }

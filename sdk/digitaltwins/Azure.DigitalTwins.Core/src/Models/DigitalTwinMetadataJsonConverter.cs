@@ -65,7 +65,12 @@ namespace Azure.DigitalTwins.Core
         {
             writer.WriteStartObject();
             writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataModel, value.ModelId);
-            writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime, value.LastUpdatedOn);
+
+            if (value.LastUpdatedOn != null)
+            {
+                writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime, value.LastUpdatedOn);
+            }
+
             foreach (KeyValuePair<string, DigitalTwinPropertyMetadata> p in value.PropertyMetadata)
             {
                 writer.WritePropertyName(p.Key);

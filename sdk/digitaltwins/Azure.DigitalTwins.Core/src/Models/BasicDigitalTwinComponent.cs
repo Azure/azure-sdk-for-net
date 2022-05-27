@@ -16,15 +16,21 @@ namespace Azure.DigitalTwins.Core
     /// </para>
     /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
     /// </remarks>
+    [JsonConverter(typeof(BasicDigitalTwinComponentJsonConverter))]
     public class BasicDigitalTwinComponent
     {
         /// <summary>
-        /// The metadata property, required on a component to identify as one.
+        /// The component property metadata.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
 #pragma warning disable CA2227 // Collection properties should be readonly
-        public DigitalTwinComponentMetadata Metadata { get; set; } = new DigitalTwinComponentMetadata();
+        public IDictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new DigitalTwinComponentMetadata();
 #pragma warning restore CA2227 // Collection properties should be readonly
+
+        /// <summary>
+        /// The component metadata.
+        /// </summary>
+        public DigitalTwinComponentMetadata ComponentMetadata => Metadata as DigitalTwinComponentMetadata;
 
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
