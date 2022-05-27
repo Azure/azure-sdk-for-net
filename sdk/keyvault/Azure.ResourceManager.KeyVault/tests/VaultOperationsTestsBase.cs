@@ -11,6 +11,7 @@ using Azure.Graph.Rbac;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.KeyVault.Tests
 {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            AccessPermissions permissions = new AccessPermissions
+            IdentityAccessPermissions permissions = new IdentityAccessPermissions
             {
                 Keys = { new KeyPermission("all") },
                 Secrets = { new SecretPermission("all") },
@@ -121,13 +122,21 @@ namespace Azure.ResourceManager.KeyVault.Tests
             ManagedHsmProperties.EnableSoftDelete = true;
             ManagedHsmProperties.SoftDeleteRetentionInDays = DefSoftDeleteRetentionInDays;
             ManagedHsmProperties.EnablePurgeProtection = false;
-            ManagedHsmProperties.NetworkAcls = new MhsmNetworkRuleSet()
+            ManagedHsmProperties.NetworkRuleSet = new ManagedHsmNetworkRuleSet()
             {
                 Bypass = "AzureServices",
                 DefaultAction = "Deny" //Property properties.networkAcls.ipRules is not supported currently and must be set to null.
             };
             ManagedHsmProperties.PublicNetworkAccess = PublicNetworkAccess.Disabled;
             ManagedHsmProperties.TenantId = TenantIdGuid;
+        }
+
+        public void IgnoreTestInLiveMode()
+        {
+            if (Mode == RecordedTestMode.Live)
+            {
+                Assert.Ignore();
+            }
         }
     }
 }

@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Sql.Tests
                         {
                             new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
-                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
-                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
+                        RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id },
+                        NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id },
                     }
                 },
             };
@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.Sql.Tests
                 MaintenanceConfigurationId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
                 ProxyOverride = new ManagedInstanceProxyOverride("Proxy") { },
                 TimezoneId = "UTC",
-                StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
             var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);

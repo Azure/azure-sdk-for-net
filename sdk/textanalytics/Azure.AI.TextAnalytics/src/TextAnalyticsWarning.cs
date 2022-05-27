@@ -11,9 +11,19 @@ namespace Azure.AI.TextAnalytics
     public readonly struct TextAnalyticsWarning
     {
         internal TextAnalyticsWarning(TextAnalyticsWarningInternal warning)
+            : this(warning.Code, warning.Message)
         {
-            WarningCode = warning.Code;
-            Message = warning.Message;
+        }
+
+        internal TextAnalyticsWarning(DocumentWarning warning)
+            : this(warning.Code.ToString(), warning.Message)
+        {
+        }
+
+        internal TextAnalyticsWarning(string warningCode, string message)
+        {
+            WarningCode = warningCode;
+            Message = message;
         }
 
         /// <summary>

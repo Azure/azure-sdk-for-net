@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Sql
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
         /// 
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
         /// 
@@ -107,6 +111,7 @@ namespace Azure.ResourceManager.Sql
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </param>
+        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
         /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
@@ -118,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        internal ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, resourceType, systemData)
+        internal ExtendedDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, resourceType, systemData)
         {
             PredicateExpression = predicateExpression;
             RetentionDays = retentionDays;
@@ -126,6 +131,7 @@ namespace Azure.ResourceManager.Sql
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
             QueueDelayMs = queueDelayMs;
+            IsManagedIdentityInUse = isManagedIdentityInUse;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -169,6 +175,10 @@ namespace Azure.ResourceManager.Sql
         /// USER_CHANGE_PASSWORD_GROUP
         /// BATCH_STARTED_GROUP
         /// BATCH_COMPLETED_GROUP
+        /// DBCC_GROUP
+        /// DATABASE_OWNERSHIP_CHANGE_GROUP
+        /// DATABASE_CHANGE_GROUP
+        /// LEDGER_OPERATION_GROUP
         /// 
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
         /// 
@@ -218,6 +228,8 @@ namespace Azure.ResourceManager.Sql
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </summary>
         public int? QueueDelayMs { get; set; }
+        /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
+        public bool? IsManagedIdentityInUse { get; set; }
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         public BlobAuditingPolicyState? State { get; set; }
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>

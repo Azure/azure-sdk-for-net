@@ -46,43 +46,20 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("aadTenantId");
                 writer.WriteStringValue(AadTenantId.Value);
             }
+            if (Optional.IsDefined(AadApplicationObjectId))
+            {
+                writer.WritePropertyName("aadApplicationObjectId");
+                writer.WriteStringValue(AadApplicationObjectId.Value);
+            }
+            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("aadServicePrincipalObjectId");
+                writer.WriteStringValue(AadServicePrincipalObjectId.Value);
+            }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties");
                 writer.WriteObjectValue(DesiredProperties);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("systemData");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
-            {
-                writer.WritePropertyName("createdBy");
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (Optional.IsDefined(CreatedByType))
-            {
-                writer.WritePropertyName("createdByType");
-                writer.WriteStringValue(CreatedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy");
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (Optional.IsDefined(LastModifiedByType))
-            {
-                writer.WritePropertyName("lastModifiedByType");
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(LastModifiedOn))
-            {
-                writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -102,6 +79,8 @@ namespace Azure.ResourceManager.Hci
             Optional<string> cloudManagementEndpoint = default;
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
+            Optional<Guid> aadApplicationObjectId = default;
+            Optional<Guid> aadServicePrincipalObjectId = default;
             Optional<ClusterDesiredProperties> desiredProperties = default;
             Optional<ClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
@@ -109,12 +88,7 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> registrationTimestamp = default;
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastBillingTimestamp = default;
-            Optional<string> createdBy = default;
-            Optional<Models.CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<Models.CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            Optional<string> serviceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -129,7 +103,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -144,7 +118,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -216,6 +190,26 @@ namespace Azure.ResourceManager.Hci
                             aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("aadApplicationObjectId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadApplicationObjectId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("aadServicePrincipalObjectId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadServicePrincipalObjectId = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("desiredProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -281,73 +275,16 @@ namespace Azure.ResourceManager.Hci
                             lastBillingTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                    }
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("serviceEndpoint"))
                         {
-                            createdBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdByType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdByType = new Models.CreatedByType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("createdAt"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedBy"))
-                        {
-                            lastModifiedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedByType"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedByType = new Models.CreatedByType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedAt"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastModifiedAt = property0.Value.GetDateTimeOffset("O");
+                            serviceEndpoint = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value);
         }
     }
 }

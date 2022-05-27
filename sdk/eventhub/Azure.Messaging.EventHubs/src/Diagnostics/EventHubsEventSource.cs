@@ -2501,6 +2501,107 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventHubBufferedProducerClient" /> instance has encountered persistent service
+        ///   throttling during attempts to publish a batch and is backing off.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the buffered producer.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition that the handler was invoked for.</param>
+        /// <param name="operationId">An artificial identifier for the publishing operation.</param>
+        /// <param name="backoffSeconds">The number of seconds that the back-off will delay.</param>
+        /// <param name="backoffCount">The message for the exception that occurred.</param>
+        ///
+        [Event(122, Level = EventLevel.Warning, Message = "The Event Hubs service is throttling the buffered producer instance with identifier '{0}' for Event Hub: {1}, Partition Id: '{2}', Operation Id: '{3}'.  To avoid overloading the service, publishing of this batch will delay for {4} seconds.  This batch has attempted a delay to avoid throttling {5} times.  This is non-fatal and publishing will continue to retry.")]
+        public virtual void BufferedProducerThrottleDelay(string identifier,
+                                                          string eventHubName,
+                                                          string partitionId,
+                                                          string operationId,
+                                                          double backoffSeconds,
+                                                          int backoffCount)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(122, identifier ?? string.Empty, eventHubName ?? string.Empty, partitionId ?? string.Empty, operationId ?? string.Empty, backoffSeconds, backoffCount);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has dispatched a batch of events to the processing handler.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the event batch.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the handler invocation.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
+        ///
+        [Event(123, Level = EventLevel.Verbose, Message = "Started dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.  Event Count: '{5}'")]
+        public virtual void EventProcessorProcessingHandlerStart(string partitionId,
+                                                                 string identifier,
+                                                                 string eventHubName,
+                                                                 string consumerGroup,
+                                                                 string operationId,
+                                                                 int eventCount)
+        {
+            if (IsEnabled())
+            {
+                EventProcessorProcessingHandlerStartCore(123, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, eventCount);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the event processing handler has completed a batch of events dispatched by an <see cref="EventProcessor{TPartition}" />.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the event batch.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the handler invocation.</param>
+        /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        ///
+        [Event(124, Level = EventLevel.Verbose, Message = "Completed dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.   Duration: '{5:0.00}' seconds.")]
+        public virtual void EventProcessorProcessingHandlerComplete(string partitionId,
+                                                                    string identifier,
+                                                                    string eventHubName,
+                                                                    string consumerGroup,
+                                                                    string operationId,
+                                                                    double durationSeconds)
+        {
+            if (IsEnabled())
+            {
+                EventProcessorProcessingHandlerCompleteCore(124, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, operationId ?? string.Empty, durationSeconds);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception dispatching a batch.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the event batch.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the handler invocation.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(125, Level = EventLevel.Error, Message = "An exception occurred while dispatching events to the processing handler for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2}, Consumer Group: {3}, and Operation Id: '{4}'.  This will cause the task processing the partition to fault and restart from the latest checkpoint; it is strongly recommended that the processing handler prevent errors from bubbling.  Error Message: '{5}'")]
+        public virtual void EventProcessorProcessingHandlerError(string partitionId,
+                                                                 string identifier,
+                                                                 string eventHubName,
+                                                                 string consumerGroup,
+                                                                 string operationId,
+                                                                 string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(125, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that the publishing of events has completed, writing into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
@@ -2821,6 +2922,112 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
                 eventPayload[5].Size = Unsafe.SizeOf<double>();
                 eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref totalBufferedEventCount);
+
+                WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///    Indicates that an <see cref="EventProcessor{TPartition}" /> instance has dispatched a batch of events to the processing handler, writing into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the event batch.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the handler invocation.</param>
+        /// <param name="eventCount">The number of events in the batch that was passed to the processing handler.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorProcessingHandlerStartCore(int eventId,
+                                                                     string partitionId,
+                                                                     string identifier,
+                                                                     string eventHubName,
+                                                                     string consumerGroup,
+                                                                     string operationId,
+                                                                     int eventCount)
+        {
+            fixed (char* partitionIdPtr = partitionId)
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* consumerGroupPtr = consumerGroup)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (partitionId.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)partitionIdPtr;
+
+                eventPayload[1].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[2].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[3].Size = (consumerGroup.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)consumerGroupPtr;
+
+                eventPayload[4].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[5].Size = Unsafe.SizeOf<int>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref eventCount);
+
+                WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///    Indicates that an <see cref="EventProcessor{TPartition}" /> instance has completed dispatching a batch of events to the processing handler,
+        ///    writing into a stack allocated <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition associated with the event batch.</param>
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="operationId">An artificial identifier for the handler invocation.</param>
+        /// <param name="durationSeconds">The total duration that the cycle took to complete, in seconds.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void EventProcessorProcessingHandlerCompleteCore(int eventId,
+                                                                        string partitionId,
+                                                                        string identifier,
+                                                                        string eventHubName,
+                                                                        string consumerGroup,
+                                                                        string operationId,
+                                                                        double durationSeconds)
+        {
+            fixed (char* partitionIdPtr = partitionId)
+            fixed (char* identifierPtr = identifier)
+            fixed (char* eventHubNamePtr = eventHubName)
+            fixed (char* consumerGroupPtr = consumerGroup)
+            fixed (char* operationIdPtr = operationId)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (partitionId.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)partitionIdPtr;
+
+                eventPayload[1].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)identifierPtr;
+
+                eventPayload[2].Size = (eventHubName.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)eventHubNamePtr;
+
+                eventPayload[3].Size = (consumerGroup.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)consumerGroupPtr;
+
+                eventPayload[4].Size = (operationId.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)operationIdPtr;
+
+                eventPayload[5].Size = Unsafe.SizeOf<double>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref durationSeconds);
 
                 WriteEventCore(eventId, 6, eventPayload);
             }

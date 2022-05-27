@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/profiles/ruleSets";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/ruleSets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -277,17 +277,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/usages
         /// Operation Id: AfdRuleSets_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsage");
+                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsage");
+                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -319,17 +319,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/usages
         /// Operation Id: AfdRuleSets_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsage");
+                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsage");
+                using var scope = _afdRuleSetClientDiagnostics.CreateScope("AfdRuleSetResource.GetResourceUsages");
                 scope.Start();
                 try
                 {

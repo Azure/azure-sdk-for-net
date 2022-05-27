@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
+        /// <param name="connectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState privateLinkServiceConnectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, tags)
+        internal KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, tags)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Approval state of the private link connection. </summary>
-        public KeyVaultPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public KeyVaultPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
         public KeyVaultPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
     }

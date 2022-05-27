@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
         /// To get updated metrics, this method should be called again.
         /// In order to use this property, <see cref="ServiceBusClientOptions.EnableTransportMetrics"/> must be set to <value>true</value>.
         /// </summary>
-        public virtual ServiceBusTransportMetrics GetTransportMetrics()
+        internal virtual ServiceBusTransportMetrics GetTransportMetrics()
             => Connection.InnerClient.TransportMetrics?.Clone() ??
                throw new InvalidOperationException("Transport metrics are not enabled. To enable transport metrics, set the EnableTransportMetrics property on the ServiceBusClientOptions.");
 
