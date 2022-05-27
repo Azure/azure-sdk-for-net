@@ -28,47 +28,110 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The date time when the translation operation was created.
         /// </summary>
-        public virtual DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _createdOn;
+            }
+        }
 
         /// <summary>
         /// The date time when the translation operation's status was last updated.
         /// </summary>
-        public virtual DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _lastModified;
+            }
+        }
 
         /// <summary>
         /// The current status of the translation operation.
         /// </summary>
-        public virtual DocumentTranslationStatus Status => _status;
+        public virtual DocumentTranslationStatus Status
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _status;
+            }
+        }
 
         /// <summary>
         /// Total number of expected translated documents.
         /// </summary>
-        public virtual int DocumentsTotal => _documentsTotal;
+        public virtual int DocumentsTotal
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _documentsTotal;
+            }
+        }
 
         /// <summary>
         /// Number of documents failed to translate.
         /// </summary>
-        public virtual int DocumentsFailed => _documentsFailed;
+        public virtual int DocumentsFailed
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _documentsFailed;
+            }
+        }
 
         /// <summary>
         /// Number of documents translated successfully.
         /// </summary>
-        public virtual int DocumentsSucceeded => _documentsSucceeded;
+        public virtual int DocumentsSucceeded
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _documentsSucceeded;
+            }
+        }
 
         /// <summary>
         /// Number of documents in progress.
         /// </summary>
-        public virtual int DocumentsInProgress => _documentsInProgress;
+        public virtual int DocumentsInProgress
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _documentsInProgress;
+            }
+        }
 
         /// <summary>
         /// Number of documents in queue for translation.
         /// </summary>
-        public virtual int DocumentsNotStarted => _documentsNotStarted;
+        public virtual int DocumentsNotStarted
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _documentsNotStarted;
+            }
+        }
 
         /// <summary>
         /// Number of documents canceled.
         /// </summary>
-        public virtual int DocumentsCanceled => _documentsCanceled;
+        public virtual int DocumentsCanceled
+        {
+            get
+            {
+                ValidateOperationStatus();
+                return _documentsCanceled;
+            }
+        }
 
         private int _documentsTotal;
         private int _documentsFailed;
