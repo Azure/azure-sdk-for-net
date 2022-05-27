@@ -18,6 +18,82 @@ namespace Monitor.Tests.BasicTests
     {
         [Fact]
         [Trait("Category", "Mock")]
+        public void CreateTestNotificationAtActionGroupLevelTest()
+        {
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@""),
+            };
+
+            expectedResponse.Headers.Location = new Uri("https://test.test");
+
+            var handler = new RecordedDelegatingHandler(expectedResponse) { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
+            var insightsClient = GetMonitorManagementClient(handler);
+
+            NotificationRequestBody request = GetNotificationRequestBody();
+            var result = insightsClient.ActionGroups.CreateNotificationsAtActionGroupResourceLevel("Test-Rg", "test-Ag", request);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void CreateTestNotificationAtResourceGroupLevelTest()
+        {
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@""),
+            };
+
+            expectedResponse.Headers.Location = new Uri("https://test.test");
+
+            var handler = new RecordedDelegatingHandler(expectedResponse) { SubsequentStatusCodeToReturn = HttpStatusCode.OK };
+            var insightsClient = GetMonitorManagementClient(handler);
+
+            NotificationRequestBody request = GetNotificationRequestBody();
+            var result = insightsClient.ActionGroups.CreateNotificationsAtResourceGroupLevel("Test-Rg", request);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
+        public void GetTestNotificationStatusAtActionGroupLevelTest()
+        {
+            TestNotificationDetailsResponse expectedActionGroup = GetTestNotificationStatusResponseBody();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedActionGroup, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            TestNotificationDetailsResponse statusResponse = insightsClient.ActionGroups.GetTestNotificationsAtActionGroupResourceLevel("Rg-Test", "Ag-Test", "11000340935222");
+
+            Assert.Equal(statusResponse.Context.ContextType, expectedActionGroup.Context.ContextType);
+            Assert.Equal(statusResponse.Context.NotificationSource, expectedActionGroup.Context.NotificationSource);
+            Assert.Equal(statusResponse.CreatedTime, expectedActionGroup.CreatedTime);
+            Assert.Equal(statusResponse.CompletedTime, expectedActionGroup.CompletedTime);
+            Assert.Equal(statusResponse.State, expectedActionGroup.State);
+
+            for (int i = 0; i < statusResponse.ActionDetails.Count; i++)
+            {
+                Assert.Equal(statusResponse.ActionDetails[i].MechanismType, expectedActionGroup.ActionDetails[i].MechanismType);
+                Assert.Equal(statusResponse.ActionDetails[i].Name, expectedActionGroup.ActionDetails[i].Name);
+                Assert.Equal(statusResponse.ActionDetails[i].SendTime, expectedActionGroup.ActionDetails[i].SendTime);
+                Assert.Equal(statusResponse.ActionDetails[i].Status, expectedActionGroup.ActionDetails[i].Status);
+                Assert.Equal(statusResponse.ActionDetails[i].SubState, expectedActionGroup.ActionDetails[i].SubState);
+                Assert.Equal(statusResponse.ActionDetails[i].Detail, expectedActionGroup.ActionDetails[i].Detail);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
         public void GetTestNotificationStatusTest()
         {
             TestNotificationDetailsResponse expectedActionGroup = GetTestNotificationStatusResponseBody();
