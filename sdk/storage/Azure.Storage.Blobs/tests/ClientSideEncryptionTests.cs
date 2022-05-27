@@ -30,14 +30,22 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         /// <summary>
-        /// Provides encryption functionality clone of client logic, letting us validate the client got it right end-to-end.
+        /// Provides encryption v2 functionality clone of client logic, letting us validate the client got it right end-to-end.
         /// </summary>
-        private byte[] EncryptData(byte[] data, byte[] key, byte[] iv)
+        private byte[] EncryptDataV2_0(byte[] data, byte[] key, byte[] iv)
+        {
+            throw new NotImplementedException(); // TODO merge in GCM port
+        }
+
+        /// <summary>
+        /// Provides encryption v1 functionality clone of client logic, letting us validate the client got it right end-to-end.
+        /// </summary>
+        private byte[] EncryptDataV1_0(byte[] data, byte[] key, byte[] iv)
         {
             using var aesProvider = Aes.Create();
             aesProvider.Key = key;
@@ -193,14 +201,30 @@ namespace Azure.Storage.Blobs.Test
             {
                 Assert.Fail("No encryption metadata present.");
             }
+
             EncryptionData encryptionMetadata = EncryptionDataSerializer.Deserialize(serialEncryptionData);
+            switch (encryptionMetadata.EncryptionAgent.EncryptionVersion)
+            {
+                case ClientSideEncryptionVersion.V1_0:
+                    return await ReplicateEncryptionV1_0(plaintext, encryptionMetadata, keyEncryptionKey);
+                case ClientSideEncryptionVersion.V2_0:
+                    break;
+                default:
+                    throw new ArgumentException("Bad version in EncryptionData");
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private async Task<byte[]> ReplicateEncryptionV1_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
+        {
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
 
             var explicitlyUnwrappedKey = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
                 : keyEncryptionKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
 
-            return EncryptData(
+            return EncryptDataV1_0(
                 plaintext,
                 explicitlyUnwrappedKey,
                 encryptionMetadata.ContentEncryptionIV);

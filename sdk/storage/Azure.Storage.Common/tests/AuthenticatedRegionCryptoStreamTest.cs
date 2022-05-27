@@ -68,6 +68,10 @@ namespace Azure.Storage.Test
 
                 return NonceLength + input.Length + TagLength;
             }
+
+            public void Dispose()
+            {
+            }
         }
 
         /// <summary>
@@ -91,6 +95,10 @@ namespace Azure.Storage.Test
                 int bytesToCopy = input.Length - NonceLength - TagLength;
                 input.Slice(NonceLength, bytesToCopy).CopyTo(output);
                 return bytesToCopy;
+            }
+
+            public void Dispose()
+            {
             }
         }
 
