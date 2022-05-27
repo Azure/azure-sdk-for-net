@@ -42,6 +42,7 @@ var client = new MediaCompositionClient(endpoint, tokenCredential);
 `MediaCompositionCompoennt` provides the functionalities to create media compositions by defining inputs, layout, and outputs. The created media composition can then be updated, started, stopped, and deleted.
 
 ### Thread safety
+> TODO
 
 ## Examples
 ### Creating the media composition
