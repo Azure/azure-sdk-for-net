@@ -8,11 +8,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
+    [IgnoreServiceError(200, "3014", Message = "Generic error during training.", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28913")]
     public partial class FormRecognizerSamples
     {
         [Test]
