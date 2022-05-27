@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             public void WriteTelemetry(NDJsonWriter content)
             {
-                throw new NotImplementedException();
+                // no-op
             }
         }
     }
