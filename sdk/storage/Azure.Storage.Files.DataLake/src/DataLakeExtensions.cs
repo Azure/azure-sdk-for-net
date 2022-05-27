@@ -583,7 +583,7 @@ namespace Azure.Storage.Files.DataLake
 
         internal static DateTimeOffset? ParseFileTimeString(string fileTimeString)
         {
-            if (fileTimeString == null)
+            if (fileTimeString == null || string.Equals(Constants.DefaultTicksString, fileTimeString))
             {
                 return null;
             }

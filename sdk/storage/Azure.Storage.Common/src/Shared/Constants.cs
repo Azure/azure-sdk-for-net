@@ -109,6 +109,8 @@ namespace Azure.Storage
 
         public const string DefaultScope = "/.default";
 
+        public const string DefaultTicksString = "0";
+
         /// <summary>
         /// Storage Connection String constant values.
         /// </summary>
