@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the endpoint service. </param>
         /// <param name="resourceType"> Type of the endpoint service. </param>
-        internal EndpointServiceResult(ResourceIdentifier id, string name, string resourceType) : base(id)
+        internal EndpointServiceResult(ResourceIdentifier id, string name, ResourceType? resourceType) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Name of the endpoint service. </summary>
         public string Name { get; }
         /// <summary> Type of the endpoint service. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static EndpointServiceResult DeserializeEndpointServiceResult(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +37,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EndpointServiceResult(id.Value, name.Value, type.Value);
+            return new EndpointServiceResult(id.Value, name.Value, Optional.ToNullable(type));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<ETag> etag = default;
             Optional<string> target = default;
             Optional<long> bytesToCapturePerPacket = default;
@@ -36,7 +36,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))

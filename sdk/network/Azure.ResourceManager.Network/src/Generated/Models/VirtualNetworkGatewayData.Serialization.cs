@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> enableDnsForwarding = default;
             Optional<string> inboundDnsForwardingEndpoint = default;
-            Optional<string> vNetExtendedLocationResourceId = default;
+            Optional<ResourceIdentifier> vNetExtendedLocationResourceId = default;
             Optional<IList<VirtualNetworkGatewayNatRuleData>> natRules = default;
             Optional<bool> enableBgpRouteTranslationForNat = default;
             foreach (var property in element.EnumerateObject())
@@ -413,7 +413,12 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("vNetExtendedLocationResourceId"))
                         {
-                            vNetExtendedLocationResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            vNetExtendedLocationResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("natRules"))

@@ -86,6 +86,7 @@ directive:
       $.BgpPeerStatus.properties.connectedDuration["x-ms-format"] = "duration-constant";
       $.IPConfigurationBgpPeeringAddress.properties.ipconfigurationId['x-ms-client-name'] = 'IPConfigurationId';
       $.VirtualNetworkGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+      $.VirtualNetworkGatewayPropertiesFormat.properties.vNetExtendedLocationResourceId['x-ms-format'] = 'arm-id';
   - from: network.json
     where: $.definitions
     transform: >
@@ -165,6 +166,7 @@ directive:
     transform: >
       $.VirtualWanProperties.properties.type['x-ms-client-name'] = 'VirtualWanType';
       $.VpnGatewayNatRuleProperties.properties.type['x-ms-client-name'] = 'VpnNatRuleType';
+      $.VirtualWanVpnProfileParameters.properties.vpnServerConfigurationResourceId['x-ms-format'] = 'arm-id';
   - from: virtualWan.json
     where: $.definitions.VpnServerConfigurationProperties.properties.name
     transform: 'return undefined'
@@ -179,6 +181,10 @@ directive:
       $['format'] = 'uuid';
   - from: swagger-document
     where: $.definitions..targetResourceId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..resourceId
     transform: >
       $['x-ms-format'] = 'arm-id';
   - from: swagger-document
@@ -204,6 +210,13 @@ directive:
       $.AvailableProvidersListParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
       $.AzureReachabilityReportParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
       $.AzureReachabilityReportItem.properties.azureLocation['x-ms-format'] = 'azure-location';
+      $.PacketCapture.properties.id['x-ms-format'] = 'arm-id';
+      $.ConnectionMonitorWorkspaceSettings.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
+      $.TrafficAnalyticsConfigurationProperties.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
+      $.EvaluatedNetworkSecurityGroup.properties.networkSecurityGroupId['x-ms-format'] = 'arm-id';
+      $.VerificationIPFlowParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
+      $.NextHopParameters.properties.targetNicResourceId['x-ms-format'] = 'arm-id';
+      $.NextHopResult.properties.routeTableId['x-ms-format'] = 'arm-id';
   - from: virtualNetwork.json
     where: $.definitions
     transform: >
@@ -213,6 +226,10 @@ directive:
     where: $.definitions.Usage.properties.id
     transform: >
       $['x-ms-format'] = 'arm-id';
+  - from: endpointService.json
+    where: $.definitions
+    transform: >
+      $.EndpointServiceResult.properties.type['x-ms-format'] = 'resource-type';
 # shorten "privateLinkServiceConnectionState" property name
   - from: applicationGateway.json
     where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties
