@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
         /// <param name="port"> Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only. </param>
-        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, ApplicationGatewayProtocol? protocol, string host, string path, int? interval, int? timeout, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType)
+        internal ApplicationGatewayProbe(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayProtocol? protocol, string host, string path, int? interval, int? timeout, int? unhealthyThreshold, bool? pickHostNameFromBackendHttpSettings, int? minServers, ApplicationGatewayProbeHealthResponseMatch match, NetworkProvisioningState? provisioningState, int? port) : base(id, name, resourceType)
         {
             Etag = etag;
             Protocol = protocol;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The protocol used for the probe. </summary>
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Host name to send the probe to. </summary>

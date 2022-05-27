@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>
         /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
-        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, string etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id)
+        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, ETag? etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The provisioning state of the private dns zone group resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A collection of private dns zone configurations of the private dns zone group. </summary>

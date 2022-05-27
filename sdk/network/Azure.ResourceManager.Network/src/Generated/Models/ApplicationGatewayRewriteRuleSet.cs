@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="rewriteRules"> Rewrite rules in the rewrite rule set. </param>
         /// <param name="provisioningState"> The provisioning state of the rewrite rule set resource. </param>
-        internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, string etag, IList<ApplicationGatewayRewriteRule> rewriteRules, NetworkProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayRewriteRuleSet(ResourceIdentifier id, string name, ETag? etag, IList<ApplicationGatewayRewriteRule> rewriteRules, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Name of the rewrite rule set that is unique within an Application Gateway. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Rewrite rules in the rewrite rule set. </summary>
         public IList<ApplicationGatewayRewriteRule> RewriteRules { get; }
         /// <summary> The provisioning state of the rewrite rule set resource. </summary>

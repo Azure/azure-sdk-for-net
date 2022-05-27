@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="action"> The action type of a rule collection. </param>
         /// <param name="rules"> Collection of rules used by a application rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureFirewallApplicationRuleCollection(ResourceIdentifier id, string name, string etag, int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, NetworkProvisioningState? provisioningState) : base(id)
+        internal AzureFirewallApplicationRuleCollection(ResourceIdentifier id, string name, ETag? etag, int? priority, AzureFirewallRCAction action, IList<AzureFirewallApplicationRule> rules, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is unique within the Azure firewall. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Priority of the application rule collection resource. </summary>
         public int? Priority { get; set; }
         /// <summary> The action type of a rule collection. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VirtualNetworkGatewayIPConfiguration DeserializeVirtualNetworkGatewayIPConfiguration(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<IPAllocationMethod> privateIPAllocationMethod = default;
             Optional<WritableSubResource> subnet = default;
@@ -66,7 +67,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -137,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayIPConfiguration(id.Value, name.Value, etag.Value, Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateIPAddress.Value, Optional.ToNullable(provisioningState));
+            return new VirtualNetworkGatewayIPConfiguration(id.Value, name.Value, Optional.ToNullable(etag), Optional.ToNullable(privateIPAllocationMethod), subnet, publicIPAddress, privateIPAddress.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

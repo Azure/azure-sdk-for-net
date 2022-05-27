@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="service"> Service endpoint name. </param>
         /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
-        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, string etag, string description, string service, IList<string> serviceResources, NetworkProvisioningState? provisioningState) : base(id)
+        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ETag? etag, string description, string service, IList<string> serviceResources, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         public string Description { get; set; }
         /// <summary> Service endpoint name. </summary>

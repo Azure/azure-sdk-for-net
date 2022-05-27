@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routes"> List of all routes. </param>
         /// <param name="attachedConnections"> List of all connections attached to this route table v2. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual hub route table v2 resource. </param>
-        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, string etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id)
+        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, ETag? etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> List of all routes. </summary>
         public IList<VirtualHubRouteV2> Routes { get; }
         /// <summary> List of all connections attached to this route table v2. </summary>

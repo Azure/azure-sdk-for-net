@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Network
         internal static HubVirtualNetworkConnectionData DeserializeHubVirtualNetworkConnectionData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<WritableSubResource> remoteVirtualNetwork = default;
             Optional<bool> allowHubToRemoteVnetTransit = default;
@@ -78,7 +79,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new HubVirtualNetworkConnectionData(id.Value, name.Value, etag.Value, remoteVirtualNetwork, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
+            return new HubVirtualNetworkConnectionData(id.Value, name.Value, Optional.ToNullable(etag), remoteVirtualNetwork, Optional.ToNullable(allowHubToRemoteVnetTransit), Optional.ToNullable(allowRemoteVnetToUseHubVnetGateways), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

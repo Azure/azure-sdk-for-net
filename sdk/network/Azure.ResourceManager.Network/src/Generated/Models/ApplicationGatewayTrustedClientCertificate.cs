@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="validatedCertData"> Validated certificate data. </param>
         /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string data, string validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string data, string validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Data = data;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Certificate public data. </summary>
         public string Data { get; set; }
         /// <summary> Validated certificate data. </summary>

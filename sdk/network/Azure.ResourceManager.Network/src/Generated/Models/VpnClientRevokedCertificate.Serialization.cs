@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         internal static VpnClientRevokedCertificate DeserializeVpnClientRevokedCertificate(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> thumbprint = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -52,7 +53,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientRevokedCertificate(id.Value, name.Value, etag.Value, thumbprint.Value, Optional.ToNullable(provisioningState));
+            return new VpnClientRevokedCertificate(id.Value, name.Value, Optional.ToNullable(etag), thumbprint.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

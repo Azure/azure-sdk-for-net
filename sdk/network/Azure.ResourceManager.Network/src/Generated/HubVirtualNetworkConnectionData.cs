@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, string etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id)
+        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ETag? etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Reference to the remote virtual network. </summary>
         internal WritableSubResource RemoteVirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client revoked certificate resource. </param>
-        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, string etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id)
+        internal VpnClientRevokedCertificate(ResourceIdentifier id, string name, ETag? etag, string thumbprint, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The revoked VPN client certificate thumbprint. </summary>
         public string Thumbprint { get; set; }
         /// <summary> The provisioning state of the VPN client revoked certificate resource. </summary>

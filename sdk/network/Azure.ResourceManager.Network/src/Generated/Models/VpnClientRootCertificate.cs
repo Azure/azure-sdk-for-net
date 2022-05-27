@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN client root certificate resource. </param>
-        internal VpnClientRootCertificate(ResourceIdentifier id, string name, string etag, string publicCertData, NetworkProvisioningState? provisioningState) : base(id)
+        internal VpnClientRootCertificate(ResourceIdentifier id, string name, ETag? etag, string publicCertData, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The certificate public data. </summary>
         public string PublicCertData { get; set; }
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(ResourceIdentifier id, string name, string etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id)
+        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Name of child port resource that is unique among child port resources of the parent. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Name of Azure router associated with physical port. </summary>
         public string RouterName { get; }
         /// <summary> Name of Azure router interface. </summary>

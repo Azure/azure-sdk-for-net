@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
         /// <param name="communities"> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
-        internal RouteFilterRuleData(ResourceIdentifier id, string name, AzureLocation? location, string etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id)
+        internal RouteFilterRuleData(ResourceIdentifier id, string name, AzureLocation? location, ETag? etag, Access? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Location = location;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The access type of the rule. </summary>
         public Access? Access { get; set; }
         /// <summary> The rule type of the rule. </summary>
