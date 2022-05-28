@@ -23,11 +23,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         private class StringArgumentBinding : IArgumentBinding<ServiceBusEntity>
         {
-            private readonly bool _includeMessageMetadata;
+            private readonly bool _includeMetadata;
 
-            public StringArgumentBinding(bool includeMessageMetadata)
+            public StringArgumentBinding(bool includeMetadata)
             {
-                _includeMessageMetadata = includeMessageMetadata;
+                _includeMetadata = includeMetadata;
             }
             public Type ValueType
             {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 }
 
                 IValueProvider provider = new NonNullConverterValueBinder<string>(value,
-                    new StringToMessageConverter(_includeMessageMetadata), context.FunctionInstanceId);
+                    new StringToMessageConverter(_includeMetadata), context.FunctionInstanceId);
 
                 return Task.FromResult(provider);
             }

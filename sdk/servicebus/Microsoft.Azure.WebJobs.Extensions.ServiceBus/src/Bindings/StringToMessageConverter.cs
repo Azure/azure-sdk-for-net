@@ -9,11 +9,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal class StringToMessageConverter : IConverter<string, ServiceBusMessage>
     {
-        private readonly bool _includeMessageMetadata;
+        private readonly bool _includeMetadata;
 
-        public StringToMessageConverter(bool includeMessageMetadata)
+        public StringToMessageConverter(bool includeMetadata)
         {
-            _includeMessageMetadata = includeMessageMetadata;
+            _includeMetadata = includeMetadata;
         }
         public ServiceBusMessage Convert(string input)
         {
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 throw new InvalidOperationException("A brokered message cannot contain a null string instance.");
             }
 
-            if (_includeMessageMetadata)
+            if (_includeMetadata)
             {
                 return JsonSerializer.Deserialize<ServiceBusMessage>(input, new JsonSerializerOptions { Converters = { new ServiceBusMessageConverter()}});
             }
