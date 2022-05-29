@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> A class representing the optional parameters in this method. </summary>
-    public partial class ResourceListByResourceGroupOptions
+    /// <summary> A class representing the optional parameters in GetGenericResources method. </summary>
+    public partial class ResourceGroupGetGenericResourcesOptions
     {
-        /// <summary> Initializes a new instance of ResourceListByResourceGroupOptions. </summary>
-        public ResourceListByResourceGroupOptions()
+        /// <summary> Initializes a new instance of ResourceGroupGetGenericResourcesOptions. </summary>
+        public ResourceGroupGetGenericResourcesOptions()
         {
         }
 

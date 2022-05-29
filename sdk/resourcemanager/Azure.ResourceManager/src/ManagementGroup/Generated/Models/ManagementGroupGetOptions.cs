@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    /// <summary> A class representing the optional parameters in this method. </summary>
+    /// <summary> A class representing the optional parameters in Get method. </summary>
     public partial class ManagementGroupGetOptions
     {
         /// <summary> Initializes a new instance of ManagementGroupGetOptions. </summary>

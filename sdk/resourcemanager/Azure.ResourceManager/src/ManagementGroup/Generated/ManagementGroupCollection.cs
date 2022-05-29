@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Operation Id: ManagementGroups_Get
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>

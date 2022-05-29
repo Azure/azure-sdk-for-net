@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            ResourceGetAllOptions options = new ResourceGetAllOptions
+            SubscriptionGetGenericResourcesOptions options = new SubscriptionGetGenericResourcesOptions
             {
                 Filter = filter,
                 Expand = expand,
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GenericResource> GetGenericResources(string filter = null, string expand = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            ResourceGetAllOptions options = new ResourceGetAllOptions
+            SubscriptionGetGenericResourcesOptions options = new SubscriptionGetGenericResourcesOptions
             {
                 Filter = filter,
                 Expand = expand,

@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// Operation Id: Resources_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetGenericResources method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(ResourceListByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(ResourceGroupGetGenericResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ResourceListByResourceGroupOptions();
+            options ??= new ResourceGroupGetGenericResourcesOptions();
 
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// Operation Id: Resources_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetGenericResources method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetGenericResources(ResourceListByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetGenericResources(ResourceGroupGetGenericResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ResourceListByResourceGroupOptions();
+            options ??= new ResourceGroupGetGenericResourcesOptions();
 
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
