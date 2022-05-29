@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
         /// Operation Id: JobExecutions_ListByJob
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecutionResource> GetAllAsync(JobExecutionListByJobOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerJobAgentJobExecutionResource> GetAllAsync(ServerJobAgentJobExecutionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobExecutionListByJobOptions();
+            options ??= new ServerJobAgentJobExecutionGetAllOptions();
 
             async Task<Page<ServerJobAgentJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions
         /// Operation Id: JobExecutions_ListByJob
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerJobAgentJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecutionResource> GetAll(JobExecutionListByJobOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerJobAgentJobExecutionResource> GetAll(ServerJobAgentJobExecutionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobExecutionListByJobOptions();
+            options ??= new ServerJobAgentJobExecutionGetAllOptions();
 
             Page<ServerJobAgentJobExecutionResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -259,12 +259,12 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobTargetExecutions_ListByJobExecution
         /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetJobTargetExecutions method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, JobTargetExecutionListByJobExecutionOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobTargetExecutionListByJobExecutionOptions();
+            options ??= new ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions();
 
             async Task<Page<ServerJobAgentJobExecutionStepTargetResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobTargetExecutions_ListByJobExecution
         /// </summary>
         /// <param name="jobExecutionId"> The id of the job execution. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetJobTargetExecutions method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, JobTargetExecutionListByJobExecutionOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobTargetExecutionListByJobExecutionOptions();
+            options ??= new ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions();
 
             Page<ServerJobAgentJobExecutionStepTargetResource> FirstPageFunc(int? pageSizeHint)
             {

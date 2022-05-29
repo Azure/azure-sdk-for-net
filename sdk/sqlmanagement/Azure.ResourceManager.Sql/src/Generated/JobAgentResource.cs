@@ -370,12 +370,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/executions
         /// Operation Id: JobExecutions_ListByAgent
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetJobExecutionsByAgent method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecutionResource> GetJobExecutionsByAgentAsync(JobExecutionListByAgentOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerJobAgentJobExecutionResource> GetJobExecutionsByAgentAsync(ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobExecutionListByAgentOptions();
+            options ??= new ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions();
 
             async Task<Page<ServerJobAgentJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -415,12 +415,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/executions
         /// Operation Id: JobExecutions_ListByAgent
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetJobExecutionsByAgent method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerJobAgentJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecutionResource> GetJobExecutionsByAgent(JobExecutionListByAgentOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerJobAgentJobExecutionResource> GetJobExecutionsByAgent(ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobExecutionListByAgentOptions();
+            options ??= new ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions();
 
             Page<ServerJobAgentJobExecutionResource> FirstPageFunc(int? pageSizeHint)
             {

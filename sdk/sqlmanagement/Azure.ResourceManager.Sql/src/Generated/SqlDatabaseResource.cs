@@ -985,12 +985,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
         /// Operation Id: DatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetDatabaseColumns method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnResource> GetDatabaseColumnsAsync(DatabaseColumnListByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnResource> GetDatabaseColumnsAsync(ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DatabaseColumnListByDatabaseOptions();
+            options ??= new ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions();
 
             async Task<Page<ServerDatabaseSchemaTableColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1030,12 +1030,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
         /// Operation Id: DatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetDatabaseColumns method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumnResource> GetDatabaseColumns(DatabaseColumnListByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerDatabaseSchemaTableColumnResource> GetDatabaseColumns(ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DatabaseColumnListByDatabaseOptions();
+            options ??= new ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions();
 
             Page<ServerDatabaseSchemaTableColumnResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1881,12 +1881,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: SensitivityLabels_ListCurrentByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCurrentSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(SensitivityLabelListCurrentByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SensitivityLabelListCurrentByDatabaseOptions();
+            options ??= new ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions();
 
             async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1926,12 +1926,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: SensitivityLabels_ListCurrentByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCurrentSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabels(SensitivityLabelListCurrentByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabels(ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SensitivityLabelListCurrentByDatabaseOptions();
+            options ??= new ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions();
 
             Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -2023,12 +2023,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetRecommendedSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(SensitivityLabelListRecommendedByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SensitivityLabelListRecommendedByDatabaseOptions();
+            options ??= new ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions();
 
             async Task<Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -2068,12 +2068,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetRecommendedSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabels(SensitivityLabelListRecommendedByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabels(ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SensitivityLabelListRecommendedByDatabaseOptions();
+            options ??= new ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions();
 
             Page<ServerDatabaseSchemaTableColumnSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {

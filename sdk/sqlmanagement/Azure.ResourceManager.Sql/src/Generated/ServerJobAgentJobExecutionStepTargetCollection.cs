@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets
         /// Operation Id: JobTargetExecutions_ListByStep
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetAllAsync(JobTargetExecutionListByStepOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetAllAsync(ServerJobAgentJobExecutionStepTargetGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobTargetExecutionListByStepOptions();
+            options ??= new ServerJobAgentJobExecutionStepTargetGetAllOptions();
 
             async Task<Page<ServerJobAgentJobExecutionStepTargetResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets
         /// Operation Id: JobTargetExecutions_ListByStep
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetAll(JobTargetExecutionListByStepOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetAll(ServerJobAgentJobExecutionStepTargetGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobTargetExecutionListByStepOptions();
+            options ??= new ServerJobAgentJobExecutionStepTargetGetAllOptions();
 
             Page<ServerJobAgentJobExecutionStepTargetResource> FirstPageFunc(int? pageSizeHint)
             {

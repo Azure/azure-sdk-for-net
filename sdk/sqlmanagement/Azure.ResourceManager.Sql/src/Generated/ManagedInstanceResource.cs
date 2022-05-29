@@ -1037,12 +1037,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
         /// Operation Id: ManagedInstances_ListByManagedInstance
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetTopQueries method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceListByManagedInstanceOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedInstanceListByManagedInstanceOptions();
+            options ??= new ManagedInstanceGetTopQueriesOptions();
 
             async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1082,12 +1082,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
         /// Operation Id: ManagedInstances_ListByManagedInstance
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetTopQueries method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceListByManagedInstanceOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedInstanceListByManagedInstanceOptions();
+            options ??= new ManagedInstanceGetTopQueriesOptions();
 
             Page<TopQueries> FirstPageFunc(int? pageSizeHint)
             {

@@ -507,12 +507,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns
         /// Operation Id: ManagedDatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetManagedDatabaseColumnsByDatabase method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(ManagedDatabaseColumnListByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseColumnListByDatabaseOptions();
+            options ??= new ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions();
 
             async Task<Page<ManagedInstanceDatabaseSchemaTableColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -552,12 +552,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns
         /// Operation Id: ManagedDatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetManagedDatabaseColumnsByDatabase method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabase(ManagedDatabaseColumnListByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabase(ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseColumnListByDatabaseOptions();
+            options ??= new ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions();
 
             Page<ManagedInstanceDatabaseSchemaTableColumnResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -652,15 +652,15 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseQueries_ListByQuery
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetQueryStatistics method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         /// <returns> An async collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, ManagedDatabaseQueryListByQueryOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, SqlGetQueryStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
-            options ??= new ManagedDatabaseQueryListByQueryOptions();
+            options ??= new SqlGetQueryStatisticsOptions();
 
             async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
             {
@@ -701,15 +701,15 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseQueries_ListByQuery
         /// </summary>
         /// <param name="queryId"> The String to use. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetQueryStatistics method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
         /// <returns> A collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, ManagedDatabaseQueryListByQueryOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, SqlGetQueryStatisticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
-            options ??= new ManagedDatabaseQueryListByQueryOptions();
+            options ??= new SqlGetQueryStatisticsOptions();
 
             Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
             {
@@ -809,12 +809,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents
         /// Operation Id: ManagedDatabaseSecurityEvents_ListByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetManagedDatabaseSecurityEventsByDatabase method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(ManagedDatabaseSecurityEventListByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(SqlGetManagedDatabaseSecurityEventsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseSecurityEventListByDatabaseOptions();
+            options ??= new SqlGetManagedDatabaseSecurityEventsByDatabaseOptions();
 
             async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
             {
@@ -854,12 +854,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents
         /// Operation Id: ManagedDatabaseSecurityEvents_ListByDatabase
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetManagedDatabaseSecurityEventsByDatabase method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(ManagedDatabaseSecurityEventListByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(SqlGetManagedDatabaseSecurityEventsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseSecurityEventListByDatabaseOptions();
+            options ??= new SqlGetManagedDatabaseSecurityEventsByDatabaseOptions();
 
             Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
             {
@@ -899,12 +899,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListCurrent
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCurrentManagedDatabaseSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(ManagedDatabaseSensitivityLabelListCurrentOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseSensitivityLabelListCurrentOptions();
+            options ??= new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions();
 
             async Task<Page<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -944,12 +944,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListCurrent
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCurrentManagedDatabaseSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(ManagedDatabaseSensitivityLabelListCurrentOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseSensitivityLabelListCurrentOptions();
+            options ??= new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions();
 
             Page<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1041,12 +1041,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListRecommended
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetRecommendedManagedDatabaseSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(ManagedDatabaseSensitivityLabelListRecommendedOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseSensitivityLabelListRecommendedOptions();
+            options ??= new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions();
 
             async Task<Page<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1086,12 +1086,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListRecommended
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetRecommendedManagedDatabaseSensitivityLabels method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(ManagedDatabaseSensitivityLabelListRecommendedOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseSensitivityLabelListRecommendedOptions();
+            options ??= new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions();
 
             Page<ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
