@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.EventHub
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/eventhub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\SwaggerNetSdk\\5\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "228f16c8871629ffe1fcdebfca9a3e8b4d2ce4aa";
+      public static readonly String GithubCommidId = "805e16a53f0a725471e0caa6007b48986c7722d9";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

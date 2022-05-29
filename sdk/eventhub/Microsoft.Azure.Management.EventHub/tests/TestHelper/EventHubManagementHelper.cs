@@ -26,7 +26,7 @@ namespace EventHub.Tests.TestHelper
         internal const string IdentityPrefix = "Default-Identity-";
         internal const string ApplicationGroupPrefix = "Dfault-ApplicationGroup-";
         internal const string SASKeyPrefix = "Dfault-SASKey-";
-        internal const string NamespacePrefix = "sdk-NS-";
+        internal const string NamespacePrefix = "sdk-NS1-";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         internal const string EventHubPrefix = "sdk-EventHub-";

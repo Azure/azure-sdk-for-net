@@ -108,6 +108,15 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal("approved", privateEndpointForNamespace.PrivateLinkServiceConnectionState.Status.ToLower());
                     Assert.Equal(requiredName, privateEndpointForNamespace.Name);
 
+                    for (int i=0; i<100; i++)
+                    {
+                        privateEndpointForNamespace = EventHubManagementClient.PrivateEndpointConnections.Get(resourceGroup, namespaceName, requiredName);
+                        if (privateEndpointForNamespace.ProvisioningState == "Succeeded")
+                            break;
+
+                        TestUtilities.Wait(10000);
+                    }
+
                     privateEndpointForNamespace.PrivateLinkServiceConnectionState.Status = "Rejected";
 
                     privateEndpointForNamespace = EventHubManagementClient.PrivateEndpointConnections.CreateOrUpdate(resourceGroup, namespaceName, requiredName,
@@ -116,10 +125,23 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal("rejected", privateEndpointForNamespace.PrivateLinkServiceConnectionState.Status.ToLower());
                     Assert.Equal(requiredName, privateEndpointForNamespace.Name);
 
+                    for (int i = 0; i < 100; i++)
+                    {
+                        privateEndpointForNamespace = EventHubManagementClient.PrivateEndpointConnections.Get(resourceGroup, namespaceName, requiredName);
+                        if (privateEndpointForNamespace.ProvisioningState == "Succeeded")
+                            break;
+
+                        TestUtilities.Wait(10000);
+                    }
+
                     privateEndpointForNamespace.PrivateLinkServiceConnectionState.Status = "Disconnected";
 
                     Assert.Throws<ErrorResponseException>(() => EventHubManagementClient.PrivateEndpointConnections.CreateOrUpdate(resourceGroup, namespaceName, requiredName,
                         privateEndpointForNamespace));
+
+                    EventHubManagementClient.PrivateEndpointConnections.Delete(resourceGroup, namespaceName, requiredName);
+
+                    TestUtilities.Wait(60000);
 
                     Assert.Throws<ErrorResponseException>(() => EventHubManagementClient.PrivateEndpointConnections.Get(resourceGroup, namespaceName, requiredName));
 
