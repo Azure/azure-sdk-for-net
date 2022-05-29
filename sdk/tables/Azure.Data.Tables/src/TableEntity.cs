@@ -247,7 +247,7 @@ namespace Azure.Data.Tables
                 }
                 if (type == typeof(BinaryData) && valueType == typeof(byte[]))
                 {
-                     return new BinaryData(value);
+                     return new BinaryData((byte[])value);
                 }
                 EnforceType(type, valueType);
             }
