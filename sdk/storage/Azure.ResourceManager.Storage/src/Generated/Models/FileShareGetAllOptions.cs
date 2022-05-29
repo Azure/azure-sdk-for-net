@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> A class representing the optional parameters in this method. </summary>
+    /// <summary> A class representing the optional parameters in GetAll method. </summary>
     public partial class FileShareGetAllOptions
     {
         /// <summary> Initializes a new instance of FileShareGetAllOptions. </summary>

@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetReservationResponses method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(this TenantResource tenantResource, ReservationListAllOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(this TenantResource tenantResource, ReservationResponseGetReservationResponsesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ReservationListAllOptions();
+            options ??= new ReservationResponseGetReservationResponsesOptions();
 
             return GetExtensionClient(tenantResource).GetReservationResponsesAsync(options, cancellationToken);
         }
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetReservationResponses method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationResponseResource> GetReservationResponses(this TenantResource tenantResource, ReservationListAllOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<ReservationResponseResource> GetReservationResponses(this TenantResource tenantResource, ReservationResponseGetReservationResponsesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ReservationListAllOptions();
+            options ??= new ReservationResponseGetReservationResponsesOptions();
 
             return GetExtensionClient(tenantResource).GetReservationResponses(options, cancellationToken);
         }
@@ -349,12 +349,12 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: GetCatalog
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCatalog method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, AzureReservationAPIGetCatalogOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, ReservationsGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AzureReservationAPIGetCatalogOptions();
+            options ??= new ReservationsGetCatalogOptions();
 
             return GetExtensionClient(subscriptionResource).GetCatalogAsync(options, cancellationToken);
         }
@@ -365,12 +365,12 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: GetCatalog
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCatalog method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, AzureReservationAPIGetCatalogOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, ReservationsGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AzureReservationAPIGetCatalogOptions();
+            options ??= new ReservationsGetCatalogOptions();
 
             return GetExtensionClient(subscriptionResource).GetCatalog(options, cancellationToken);
         }

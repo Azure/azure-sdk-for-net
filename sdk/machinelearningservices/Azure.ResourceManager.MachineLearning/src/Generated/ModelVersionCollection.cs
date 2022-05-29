@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions
         /// Operation Id: ModelVersions_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ModelVersionResource> GetAllAsync(ModelVersionGetAllOptions options, CancellationToken cancellationToken = default)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions
         /// Operation Id: ModelVersions_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ModelVersionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ModelVersionResource> GetAll(ModelVersionGetAllOptions options, CancellationToken cancellationToken = default)

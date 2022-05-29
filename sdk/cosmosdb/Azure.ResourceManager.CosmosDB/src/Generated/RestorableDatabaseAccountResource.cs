@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableSqlContainers
         /// Operation Id: RestorableSqlContainers_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetRestorableSqlContainers method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(RestorableSqlContainerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(CosmosDBGetRestorableSqlContainersOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new RestorableSqlContainerGetAllOptions();
+            options ??= new CosmosDBGetRestorableSqlContainersOptions();
 
             async Task<Page<RestorableSqlContainer>> FirstPageFunc(int? pageSizeHint)
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableSqlContainers
         /// Operation Id: RestorableSqlContainers_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetRestorableSqlContainers method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(RestorableSqlContainerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(CosmosDBGetRestorableSqlContainersOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new RestorableSqlContainerGetAllOptions();
+            options ??= new CosmosDBGetRestorableSqlContainersOptions();
 
             Page<RestorableSqlContainer> FirstPageFunc(int? pageSizeHint)
             {

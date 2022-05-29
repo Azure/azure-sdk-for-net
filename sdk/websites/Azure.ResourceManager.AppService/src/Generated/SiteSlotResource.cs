@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteSlotDetectorResource>> GetSiteSlotDetectorAsync(string detectorName, DiagnosticGetSiteDetectorResponseSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDetectorResource>> GetSiteSlotDetectorAsync(string detectorName, SiteSlotDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             return await GetSiteSlotDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
         }
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteSlotDetectorResource> GetSiteSlotDetector(string detectorName, DiagnosticGetSiteDetectorResponseSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDetectorResource> GetSiteSlotDetector(string detectorName, SiteSlotDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             return GetSiteSlotDetectors().Get(detectorName, options, cancellationToken);
         }
@@ -2997,11 +2997,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/start
         /// Operation Id: WebApps_StartWebSiteNetworkTraceSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in StartWebSiteNetworkTraceSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> StartWebSiteNetworkTraceSlotAsync(WebAppStartWebSiteNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> StartWebSiteNetworkTraceSlotAsync(AppServiceStartWebSiteNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebAppStartWebSiteNetworkTraceSlotOptions();
+            options ??= new AppServiceStartWebSiteNetworkTraceSlotOptions();
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.StartWebSiteNetworkTraceSlot");
             scope.Start();
@@ -3022,11 +3022,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/start
         /// Operation Id: WebApps_StartWebSiteNetworkTraceSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in StartWebSiteNetworkTraceSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> StartWebSiteNetworkTraceSlot(WebAppStartWebSiteNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<string> StartWebSiteNetworkTraceSlot(AppServiceStartWebSiteNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebAppStartWebSiteNetworkTraceSlotOptions();
+            options ??= new AppServiceStartWebSiteNetworkTraceSlotOptions();
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.StartWebSiteNetworkTraceSlot");
             scope.Start();
@@ -3048,11 +3048,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperationSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in StartWebSiteNetworkTraceOperationSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil waitUntil, WebAppStartWebSiteNetworkTraceOperationSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartWebSiteNetworkTraceOperationSlotAsync(WaitUntil waitUntil, AppServiceStartWebSiteNetworkTraceOperationSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebAppStartWebSiteNetworkTraceOperationSlotOptions();
+            options ??= new AppServiceStartWebSiteNetworkTraceOperationSlotOptions();
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.StartWebSiteNetworkTraceOperationSlot");
             scope.Start();
@@ -3077,11 +3077,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperationSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in StartWebSiteNetworkTraceOperationSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<NetworkTrace>> StartWebSiteNetworkTraceOperationSlot(WaitUntil waitUntil, WebAppStartWebSiteNetworkTraceOperationSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<NetworkTrace>> StartWebSiteNetworkTraceOperationSlot(WaitUntil waitUntil, AppServiceStartWebSiteNetworkTraceOperationSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebAppStartWebSiteNetworkTraceOperationSlotOptions();
+            options ??= new AppServiceStartWebSiteNetworkTraceOperationSlotOptions();
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.StartWebSiteNetworkTraceOperationSlot");
             scope.Start();
@@ -4302,11 +4302,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartNetworkTraceSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in StartNetworkTraceSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartNetworkTraceSlotAsync(WaitUntil waitUntil, WebAppStartNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartNetworkTraceSlotAsync(WaitUntil waitUntil, SiteSlotStartNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebAppStartNetworkTraceSlotOptions();
+            options ??= new SiteSlotStartNetworkTraceSlotOptions();
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.StartNetworkTraceSlot");
             scope.Start();
@@ -4331,11 +4331,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartNetworkTraceSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in StartNetworkTraceSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<NetworkTrace>> StartNetworkTraceSlot(WaitUntil waitUntil, WebAppStartNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<NetworkTrace>> StartNetworkTraceSlot(WaitUntil waitUntil, SiteSlotStartNetworkTraceSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebAppStartNetworkTraceSlotOptions();
+            options ??= new SiteSlotStartNetworkTraceSlotOptions();
 
             using var scope = _siteSlotWebAppsClientDiagnostics.CreateScope("SiteSlotResource.StartNetworkTraceSlot");
             scope.Start();

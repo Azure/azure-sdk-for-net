@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A class representing the optional parameters in this method. </summary>
+    /// <summary> A class representing the optional parameters in GetAll method. </summary>
     public partial class OnlineDeploymentGetAllOptions
     {
         /// <summary> Initializes a new instance of OnlineDeploymentGetAllOptions. </summary>

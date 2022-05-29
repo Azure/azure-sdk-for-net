@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             return await GetHostingEnvironmentDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
         }
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             return GetHostingEnvironmentDetectors().Get(detectorName, options, cancellationToken);
         }

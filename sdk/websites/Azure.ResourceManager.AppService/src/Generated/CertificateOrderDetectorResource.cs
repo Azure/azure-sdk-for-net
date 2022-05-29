@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions();
+            options ??= new CertificateOrderDetectorGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorResource.Get");
             scope.Start();
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CertificateOrderDetectorResource> Get(CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateOrderDetectorResource> Get(CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions();
+            options ??= new CertificateOrderDetectorGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorResource.Get");
             scope.Start();

@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs
         /// Operation Id: Jobs_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(JobGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(MachineLearningJobGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobGetAllOptions();
+            options ??= new MachineLearningJobGetAllOptions();
 
             async Task<Page<MachineLearningJobResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs
         /// Operation Id: Jobs_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningJobResource> GetAll(JobGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningJobResource> GetAll(MachineLearningJobGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new JobGetAllOptions();
+            options ??= new MachineLearningJobGetAllOptions();
 
             Page<MachineLearningJobResource> FirstPageFunc(int? pageSizeHint)
             {

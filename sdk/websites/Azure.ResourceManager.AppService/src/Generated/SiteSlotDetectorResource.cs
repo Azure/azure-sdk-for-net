@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteSlotDetectorResource>> GetAsync(DiagnosticGetSiteDetectorResponseSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDetectorResource>> GetAsync(SiteSlotDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticGetSiteDetectorResponseSlotOptions();
+            options ??= new SiteSlotDetectorGetOptions();
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorResource.Get");
             scope.Start();
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponseSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotDetectorResource> Get(DiagnosticGetSiteDetectorResponseSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDetectorResource> Get(SiteSlotDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticGetSiteDetectorResponseSlotOptions();
+            options ??= new SiteSlotDetectorGetOptions();
 
             using var scope = _siteSlotDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDetectorResource.Get");
             scope.Start();

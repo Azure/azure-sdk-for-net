@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A class representing the optional parameters in this method. </summary>
+    /// <summary> A class representing the optional parameters in GetAll method. </summary>
     public partial class DatastoreGetAllOptions
     {
         /// <summary> Initializes a new instance of DatastoreGetAllOptions. </summary>

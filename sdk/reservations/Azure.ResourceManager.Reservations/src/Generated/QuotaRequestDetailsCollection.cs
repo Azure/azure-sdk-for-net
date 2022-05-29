@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests
         /// Operation Id: QuotaRequestStatus_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="QuotaRequestDetailsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaRequestDetailsResource> GetAllAsync(QuotaRequestStatuGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuotaRequestDetailsResource> GetAllAsync(QuotaRequestDetailsGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new QuotaRequestStatuGetAllOptions();
+            options ??= new QuotaRequestDetailsGetAllOptions();
 
             async Task<Page<QuotaRequestDetailsResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests
         /// Operation Id: QuotaRequestStatus_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaRequestDetailsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaRequestDetailsResource> GetAll(QuotaRequestStatuGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<QuotaRequestDetailsResource> GetAll(QuotaRequestDetailsGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new QuotaRequestStatuGetAllOptions();
+            options ??= new QuotaRequestDetailsGetAllOptions();
 
             Page<QuotaRequestDetailsResource> FirstPageFunc(int? pageSizeHint)
             {

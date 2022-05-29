@@ -514,12 +514,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetWebApps method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteResource> GetWebAppsAsync(AppServicePlanListWebAppsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebSiteResource> GetWebAppsAsync(AppServicePlanGetWebAppsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AppServicePlanListWebAppsOptions();
+            options ??= new AppServicePlanGetWebAppsOptions();
 
             async Task<Page<WebSiteResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -559,12 +559,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetWebApps method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteResource> GetWebApps(AppServicePlanListWebAppsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebSiteResource> GetWebApps(AppServicePlanGetWebAppsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AppServicePlanListWebAppsOptions();
+            options ??= new AppServicePlanGetWebAppsOptions();
 
             Page<WebSiteResource> FirstPageFunc(int? pageSizeHint)
             {

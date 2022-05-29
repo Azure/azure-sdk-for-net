@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(string detectorName, DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetHostingEnvironmentDetectorResponseOptions();
+            options ??= new HostingEnvironmentDetectorGetOptions();
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<HostingEnvironmentDetectorResource> Get(string detectorName, DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentDetectorResource> Get(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetHostingEnvironmentDetectorResponseOptions();
+            options ??= new HostingEnvironmentDetectorGetOptions();
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Get");
             scope.Start();
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetHostingEnvironmentDetectorResponseOptions();
+            options ??= new HostingEnvironmentDetectorGetOptions();
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();
@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<bool> Exists(string detectorName, DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetHostingEnvironmentDetectorResponseOptions();
+            options ??= new HostingEnvironmentDetectorGetOptions();
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorCollection.Exists");
             scope.Start();

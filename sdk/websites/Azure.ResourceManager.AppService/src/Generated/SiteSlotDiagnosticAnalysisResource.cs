@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteAnalysisSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in ExecuteSiteAnalysisSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiagnosticAnalysis>> ExecuteSiteAnalysisSlotAsync(DiagnosticExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticAnalysis>> ExecuteSiteAnalysisSlotAsync(SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticExecuteSiteAnalysisSlotOptions();
+            options ??= new SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions();
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisResource.ExecuteSiteAnalysisSlot");
             scope.Start();
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteAnalysisSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in ExecuteSiteAnalysisSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiagnosticAnalysis> ExecuteSiteAnalysisSlot(DiagnosticExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticAnalysis> ExecuteSiteAnalysisSlot(SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticExecuteSiteAnalysisSlotOptions();
+            options ??= new SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions();
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisResource.ExecuteSiteAnalysisSlot");
             scope.Start();

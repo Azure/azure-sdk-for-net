@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetAsync(HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticGetHostingEnvironmentDetectorResponseOptions();
+            options ??= new HostingEnvironmentDetectorGetOptions();
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorResource.Get");
             scope.Start();
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HostingEnvironmentDetectorResource> Get(DiagnosticGetHostingEnvironmentDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentDetectorResource> Get(HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticGetHostingEnvironmentDetectorResponseOptions();
+            options ??= new HostingEnvironmentDetectorGetOptions();
 
             using var scope = _hostingEnvironmentDetectorDiagnosticsClientDiagnostics.CreateScope("HostingEnvironmentDetectorResource.Get");
             scope.Start();

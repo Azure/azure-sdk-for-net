@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions
         /// Operation Id: DataVersions_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataVersionBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataVersionBaseResource> GetAllAsync(DataVersionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataVersionBaseResource> GetAllAsync(DataVersionBaseGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataVersionGetAllOptions();
+            options ??= new DataVersionBaseGetAllOptions();
 
             async Task<Page<DataVersionBaseResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions
         /// Operation Id: DataVersions_List
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataVersionBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataVersionBaseResource> GetAll(DataVersionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataVersionBaseResource> GetAll(DataVersionBaseGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataVersionGetAllOptions();
+            options ??= new DataVersionBaseGetAllOptions();
 
             Page<DataVersionBaseResource> FirstPageFunc(int? pageSizeHint)
             {

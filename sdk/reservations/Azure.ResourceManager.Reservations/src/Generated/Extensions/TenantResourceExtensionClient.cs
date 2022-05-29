@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetReservationResponses method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(ReservationListAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(ReservationResponseGetReservationResponsesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationResponseResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetReservationResponses method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationResponseResource> GetReservationResponses(ReservationListAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationResponseResource> GetReservationResponses(ReservationResponseGetReservationResponsesOptions options, CancellationToken cancellationToken = default)
         {
             Page<ReservationResponseResource> FirstPageFunc(int? pageSizeHint)
             {

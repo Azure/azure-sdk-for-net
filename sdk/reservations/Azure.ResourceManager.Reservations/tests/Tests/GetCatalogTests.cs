@@ -28,7 +28,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForVirtualMachines()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VirtualMachines", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "VirtualMachines",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "virtualMachines", null, true, "eastus", "East US");
         }
@@ -37,7 +42,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForSqlDatabases()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SqlDatabases", "westus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "SqlDatabases",
+                Location = "westus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "SQLManagedInstances", "SQLDatabases", true, "westus", "West US");
         }
@@ -46,7 +56,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForSuseLinux()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SuseLinux");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "SuseLinux"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "SuseLinux");
         }
@@ -55,7 +69,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForSqlDataWarehouse()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SqlDataWarehouse", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "SqlDataWarehouse",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "SqlDataWarehouse", null, true, "eastus", "East US");
         }
@@ -64,7 +83,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForVMwareCloudSimple()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VMwareCloudSimple", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "VMwareCloudSimple",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "VMwareCloudSimple", null, true, "eastus", "East US");
         }
@@ -73,7 +97,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForCosmosDb()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("CosmosDb");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "CosmosDb"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "CosmosDb");
         }
@@ -82,7 +110,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForRedHat()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("RedHat");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "RedHat"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "RedHat");
         }
@@ -91,7 +123,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForRedHatOsa()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("RedHatOsa");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "RedHatOsa"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "RedHatOsa");
         }
@@ -100,7 +136,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForDatabricks()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("Databricks");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "Databricks"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "Databricks");
         }
@@ -109,7 +149,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForAppService()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AppService", "westus2");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "AppService",
+                Location = "westus2"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "AppService", null, true, "westus2", "West US 2");
         }
@@ -118,7 +163,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForBlockBlob()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("BlockBlob", "westus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "BlockBlob",
+                Location = "westus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "BlockBlob", null, true, "westus", "West US");
         }
@@ -127,7 +177,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForManagedDisk()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("ManagedDisk", "westeurope");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "ManagedDisk",
+                Location = "westeurope"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "ManagedDisk", null, true, "westeurope", "West Europe");
         }
@@ -136,7 +191,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForRedisCache()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("RedisCache", "westus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "RedisCache",
+                Location = "westus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "RedisCache", null, true, "westus", "West US");
         }
@@ -145,7 +205,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForAzureDataExplorer()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AzureDataExplorer");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "AzureDataExplorer"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "AzureDataExplorer");
         }
@@ -154,7 +218,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForMySql()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("MySql", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "MySql",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "MySql", null, true, "eastus", "East US");
         }
@@ -163,7 +232,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForMariaDb()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("MariaDb", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "MariaDb",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "MariaDb", null, true, "eastus", "East US");
         }
@@ -172,7 +246,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForPostgreSql()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("PostgreSql", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "PostgreSql",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "PostgreSql", null, true, "eastus", "East US");
         }
@@ -181,7 +260,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForDedicatedHost()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("DedicatedHost", "westeurope");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "DedicatedHost",
+                Location = "westeurope"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "DedicatedHost", null, true, "westeurope", "West Europe");
         }
@@ -190,7 +274,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForSapHana()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SapHana", "westus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "SapHana",
+                Location = "westus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "SapHana", null, true, "westus", "West US");
         }
@@ -199,7 +288,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForAVS()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AVS", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "AVS",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "AVS", null, true, "eastus", "East US");
         }
@@ -208,7 +302,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForDataFactory()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("DataFactory", "eastus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "DataFactory",
+                Location = "eastus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "DataFactory", null, true, "eastus", "East US");
         }
@@ -217,7 +316,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForNetAppStorage()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("NetAppStorage", "westus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "NetAppStorage",
+                Location = "westus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
 
             Assert.NotNull(catalogResult);
@@ -229,7 +333,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForAzureFiles()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("AzureFiles", "westus");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "AzureFiles",
+                Location = "westus"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "AzureFiles", null, true, "westus", "West US");
         }
@@ -238,7 +347,11 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForSqlEdge()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("SqlEdge");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "SqlEdge"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "SqlEdge");
         }
@@ -247,7 +360,14 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetCatalogForVirtualMachineSoftware()
         {
-            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync("VirtualMachineSoftware", publisherId: "test_test_pmc2pc1", offerId: "mnk_vmri_test_001", planId: "testplan001");
+            ReservationsGetCatalogOptions options = new ReservationsGetCatalogOptions
+            {
+                ReservedResourceType = "VirtualMachineSoftware",
+                PublisherId = "test_test_pmc2pc1",
+                OfferId = "mnk_vmri_test_001",
+                PlanId = "testplan001"
+            };
+            AsyncPageable<ReservationCatalog> catalogResponse = Subscription.GetCatalogAsync(options);
             List<ReservationCatalog> catalogResult = await catalogResponse.ToEnumerableAsync();
             TestGetCatalogResponse(catalogResult, "VirtualMachineSoftware");
         }

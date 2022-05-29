@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteDetectorResource>> GetAsync(DiagnosticGetSiteDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDetectorResource>> GetAsync(SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticGetSiteDetectorResponseOptions();
+            options ??= new SiteDetectorGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorResource.Get");
             scope.Start();
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteDetectorResource> Get(DiagnosticGetSiteDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDetectorResource> Get(SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticGetSiteDetectorResponseOptions();
+            options ??= new SiteDetectorGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorResource.Get");
             scope.Start();

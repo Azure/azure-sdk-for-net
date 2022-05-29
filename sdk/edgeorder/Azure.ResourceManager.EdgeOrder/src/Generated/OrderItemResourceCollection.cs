@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtResourceGroupLevel
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrderItemResource> GetAllAsync(EdgeOrderManagementListOrderItemsAtResourceGroupLevelOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OrderItemResource> GetAllAsync(OrderItemGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderManagementListOrderItemsAtResourceGroupLevelOptions();
+            options ??= new OrderItemGetAllOptions();
 
             async Task<Page<OrderItemResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtResourceGroupLevel
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetAll method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrderItemResource> GetAll(EdgeOrderManagementListOrderItemsAtResourceGroupLevelOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<OrderItemResource> GetAll(OrderItemGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderManagementListOrderItemsAtResourceGroupLevelOptions();
+            options ??= new OrderItemGetAllOptions();
 
             Page<OrderItemResource> FirstPageFunc(int? pageSizeHint)
             {

@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<SiteDetectorResource>> GetAsync(string detectorName, DiagnosticGetSiteDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDetectorResource>> GetAsync(string detectorName, SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetSiteDetectorResponseOptions();
+            options ??= new SiteDetectorGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.Get");
             scope.Start();
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteDetectorResource> Get(string detectorName, DiagnosticGetSiteDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDetectorResource> Get(string detectorName, SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetSiteDetectorResponseOptions();
+            options ??= new SiteDetectorGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.Get");
             scope.Start();
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DiagnosticGetSiteDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetSiteDetectorResponseOptions();
+            options ??= new SiteDetectorGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.Exists");
             scope.Start();
@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<bool> Exists(string detectorName, DiagnosticGetSiteDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string detectorName, SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new DiagnosticGetSiteDetectorResponseOptions();
+            options ??= new SiteDetectorGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.Exists");
             scope.Start();

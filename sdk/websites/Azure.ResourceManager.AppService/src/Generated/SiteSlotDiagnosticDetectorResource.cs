@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteDetectorSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in ExecuteSiteDetectorSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiagnosticDetectorResponse>> ExecuteSiteDetectorSlotAsync(DiagnosticExecuteSiteDetectorSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticDetectorResponse>> ExecuteSiteDetectorSlotAsync(SiteSlotDiagnosticDetectorExecuteSiteDetectorSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticExecuteSiteDetectorSlotOptions();
+            options ??= new SiteSlotDiagnosticDetectorExecuteSiteDetectorSlotOptions();
 
             using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorResource.ExecuteSiteDetectorSlot");
             scope.Start();
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteDetectorSlot
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in ExecuteSiteDetectorSlot method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiagnosticDetectorResponse> ExecuteSiteDetectorSlot(DiagnosticExecuteSiteDetectorSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticDetectorResponse> ExecuteSiteDetectorSlot(SiteSlotDiagnosticDetectorExecuteSiteDetectorSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DiagnosticExecuteSiteDetectorSlotOptions();
+            options ??= new SiteSlotDiagnosticDetectorExecuteSiteDetectorSlotOptions();
 
             using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorResource.ExecuteSiteDetectorSlot");
             scope.Start();

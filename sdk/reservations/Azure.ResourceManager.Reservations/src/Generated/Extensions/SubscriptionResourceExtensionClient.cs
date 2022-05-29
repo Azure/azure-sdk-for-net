@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
         /// Operation Id: GetCatalog
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCatalog method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(AzureReservationAPIGetCatalogOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(ReservationsGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<ReservationCatalog>> FirstPageFunc(int? pageSizeHint)
             {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
         /// Operation Id: GetCatalog
         /// </summary>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetCatalog method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationCatalog> GetCatalog(AzureReservationAPIGetCatalogOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationCatalog> GetCatalog(ReservationsGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             Page<ReservationCatalog> FirstPageFunc(int? pageSizeHint)
             {

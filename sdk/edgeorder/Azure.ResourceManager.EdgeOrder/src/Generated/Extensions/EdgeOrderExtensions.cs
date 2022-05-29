@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetOrderItemResources method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(this SubscriptionResource subscriptionResource, EdgeOrderManagementListOrderItemsAtSubscriptionLevelOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(this SubscriptionResource subscriptionResource, OrderItemGetOrderItemResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderManagementListOrderItemsAtSubscriptionLevelOptions();
+            options ??= new OrderItemGetOrderItemResourcesOptions();
 
             return GetExtensionClient(subscriptionResource).GetOrderItemResourcesAsync(options, cancellationToken);
         }
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetOrderItemResources method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrderItemResource> GetOrderItemResources(this SubscriptionResource subscriptionResource, EdgeOrderManagementListOrderItemsAtSubscriptionLevelOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<OrderItemResource> GetOrderItemResources(this SubscriptionResource subscriptionResource, OrderItemGetOrderItemResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderManagementListOrderItemsAtSubscriptionLevelOptions();
+            options ??= new OrderItemGetOrderItemResourcesOptions();
 
             return GetExtensionClient(subscriptionResource).GetOrderItemResources(options, cancellationToken);
         }

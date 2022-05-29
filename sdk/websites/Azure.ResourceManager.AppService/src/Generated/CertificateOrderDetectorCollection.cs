@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(string detectorName, CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(string detectorName, CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions();
+            options ??= new CertificateOrderDetectorGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
             scope.Start();
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<CertificateOrderDetectorResource> Get(string detectorName, CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateOrderDetectorResource> Get(string detectorName, CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions();
+            options ??= new CertificateOrderDetectorGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Get");
             scope.Start();
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions();
+            options ??= new CertificateOrderDetectorGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
             scope.Start();
@@ -235,14 +235,14 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in Get method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<bool> Exists(string detectorName, CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string detectorName, CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
-            options ??= new CertificateOrdersDiagnosticGetAppServiceCertificateOrderDetectorResponseOptions();
+            options ??= new CertificateOrderDetectorGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorCollection.Exists");
             scope.Start();

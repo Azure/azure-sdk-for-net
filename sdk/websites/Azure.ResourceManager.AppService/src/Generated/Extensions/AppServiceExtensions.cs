@@ -1041,12 +1041,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListGeoRegions
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetGeoRegions method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, WebSiteManagementListGeoRegionsOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<GeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceGetGeoRegionsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteManagementListGeoRegionsOptions();
+            options ??= new AppServiceGetGeoRegionsOptions();
 
             return GetExtensionClient(subscriptionResource).GetGeoRegionsAsync(options, cancellationToken);
         }
@@ -1057,12 +1057,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ListGeoRegions
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A class representing the optional parameters in this method. </param>
+        /// <param name="options"> A class representing the optional parameters in GetGeoRegions method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, WebSiteManagementListGeoRegionsOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<GeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceGetGeoRegionsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteManagementListGeoRegionsOptions();
+            options ??= new AppServiceGetGeoRegionsOptions();
 
             return GetExtensionClient(subscriptionResource).GetGeoRegions(options, cancellationToken);
         }
