@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -72,6 +72,10 @@ override-operation-name:
   AfdOriginGroups_ListResourceUsage: GetResourceUsages
   AfdRuleSets_ListResourceUsage: GetResourceUsages
 directive:
+  - from: swagger-document
+    where: $.definitions..parameters
+    transform: >
+      $['x-ms-client-name'] = 'properties';
   - from: cdn.json
     where: $.definitions
     transform: >
