@@ -5,11 +5,12 @@
 ### Features Added
 - Added optional parameter `categoryId` to the `DocumentTranslationInput.AddTarget`.
 - Added property `Ascending` to type `DocumentFilterOrder` and `TranslationFilterOrder`.
-- Renamed parameter `asc` to `ascending` in `TranslationFilterOrder` constructor.
+- `DocumentTranslationAudience` has been added to allow the user to select the Azure cloud where the resource is located.
 
 ### Breaking Changes
 - Renamed type `StorageInputType` to `StorageInputUriKind`.
 - Renamed property `StorageType` to `StorageUriKind` in `DocumentTranslationInput`.
+- Renamed parameter `asc` to `ascending` in `TranslationFilterOrder` constructor.
 
 ### Bugs Fixed
 
