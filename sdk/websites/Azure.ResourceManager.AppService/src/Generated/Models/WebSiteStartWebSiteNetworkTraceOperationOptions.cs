@@ -7,11 +7,11 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A class representing the optional parameters in StartWebSiteNetworkTraceSlot method. </summary>
-    public partial class AppServiceStartWebSiteNetworkTraceSlotOptions
+    /// <summary> A class representing the optional parameters in StartWebSiteNetworkTraceOperation method. </summary>
+    public partial class WebSiteStartWebSiteNetworkTraceOperationOptions
     {
-        /// <summary> Initializes a new instance of AppServiceStartWebSiteNetworkTraceSlotOptions. </summary>
-        public AppServiceStartWebSiteNetworkTraceSlotOptions()
+        /// <summary> Initializes a new instance of WebSiteStartWebSiteNetworkTraceOperationOptions. </summary>
+        public WebSiteStartWebSiteNetworkTraceOperationOptions()
         {
         }
 

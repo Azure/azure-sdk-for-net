@@ -666,12 +666,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> A class representing the optional parameters in GetLogAnalyticsMetrics method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, CdnGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, ProfileGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
             Argument.AssertNotNull(customDomains, nameof(customDomains));
             Argument.AssertNotNull(protocols, nameof(protocols));
-            options ??= new CdnGetLogAnalyticsMetricsOptions();
+            options ??= new ProfileGetLogAnalyticsMetricsOptions();
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
             scope.Start();
@@ -701,12 +701,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> A class representing the optional parameters in GetLogAnalyticsMetrics method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, CdnGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, ProfileGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
             Argument.AssertNotNull(customDomains, nameof(customDomains));
             Argument.AssertNotNull(protocols, nameof(protocols));
-            options ??= new CdnGetLogAnalyticsMetricsOptions();
+            options ??= new ProfileGetLogAnalyticsMetricsOptions();
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
             scope.Start();
@@ -886,10 +886,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> A class representing the optional parameters in GetWafLogAnalyticsMetrics method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, CdnGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, ProfileGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
-            options ??= new CdnGetWafLogAnalyticsMetricsOptions();
+            options ??= new ProfileGetWafLogAnalyticsMetricsOptions();
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
             scope.Start();
@@ -917,10 +917,10 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> A class representing the optional parameters in GetWafLogAnalyticsMetrics method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, CdnGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, ProfileGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
-            options ??= new CdnGetWafLogAnalyticsMetricsOptions();
+            options ??= new ProfileGetWafLogAnalyticsMetricsOptions();
 
             using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
             scope.Start();

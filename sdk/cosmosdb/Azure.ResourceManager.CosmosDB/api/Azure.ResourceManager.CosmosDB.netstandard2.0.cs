@@ -928,8 +928,8 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableMongodbDatabase> GetRestorableMongodbDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResource> GetRestorableMongodbResources(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResource> GetRestorableMongodbResourcesAsync(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainers(Azure.ResourceManager.CosmosDB.Models.CosmosDBGetRestorableSqlContainersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainersAsync(Azure.ResourceManager.CosmosDB.Models.CosmosDBGetRestorableSqlContainersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainers(Azure.ResourceManager.CosmosDB.Models.RestorableDatabaseAccountGetRestorableSqlContainersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlContainer> GetRestorableSqlContainersAsync(Azure.ResourceManager.CosmosDB.Models.RestorableDatabaseAccountGetRestorableSqlContainersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase> GetRestorableSqlDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.Models.RestorableSqlDatabase> GetRestorableSqlDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.Models.DatabaseRestoreResource> GetRestorableSqlResources(string restoreLocation = null, string restoreTimestampInUtc = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1668,13 +1668,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string ExposedHeaders { get { throw null; } set { } }
         public long? MaxAgeInSeconds { get { throw null; } set { } }
     }
-    public partial class CosmosDBGetRestorableSqlContainersOptions
-    {
-        public CosmosDBGetRestorableSqlContainersOptions() { }
-        public string EndTime { get { throw null; } set { } }
-        public string RestorableSqlDatabaseRid { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
-    }
     public partial class CosmosDBPrivateLinkServiceConnectionStateProperty
     {
         public CosmosDBPrivateLinkServiceConnectionStateProperty() { }
@@ -2345,6 +2338,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         public RegionForOnlineOffline(string region) { }
         public string Region { get { throw null; } }
+    }
+    public partial class RestorableDatabaseAccountGetRestorableSqlContainersOptions
+    {
+        public RestorableDatabaseAccountGetRestorableSqlContainersOptions() { }
+        public string EndTime { get { throw null; } set { } }
+        public string RestorableSqlDatabaseRid { get { throw null; } set { } }
+        public string StartTime { get { throw null; } set { } }
     }
     public partial class RestorableLocationResource
     {

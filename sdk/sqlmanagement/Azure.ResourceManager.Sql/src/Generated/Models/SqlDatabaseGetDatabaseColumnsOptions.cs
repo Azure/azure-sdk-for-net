@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A class representing the optional parameters in GetManagedDatabaseColumnsByDatabase method. </summary>
-    public partial class ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions
+    /// <summary> A class representing the optional parameters in GetDatabaseColumns method. </summary>
+    public partial class SqlDatabaseGetDatabaseColumnsOptions
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions. </summary>
-        public ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions()
+        /// <summary> Initializes a new instance of SqlDatabaseGetDatabaseColumnsOptions. </summary>
+        public SqlDatabaseGetDatabaseColumnsOptions()
         {
             Schema = new ChangeTrackingList<string>();
             Table = new ChangeTrackingList<string>();

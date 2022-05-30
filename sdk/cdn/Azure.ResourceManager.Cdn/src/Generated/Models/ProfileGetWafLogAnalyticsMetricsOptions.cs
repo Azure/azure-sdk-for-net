@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> A class representing the optional parameters in GetWafLogAnalyticsMetrics method. </summary>
-    public partial class CdnGetWafLogAnalyticsMetricsOptions
+    public partial class ProfileGetWafLogAnalyticsMetricsOptions
     {
-        /// <summary> Initializes a new instance of CdnGetWafLogAnalyticsMetricsOptions. </summary>
-        public CdnGetWafLogAnalyticsMetricsOptions()
+        /// <summary> Initializes a new instance of ProfileGetWafLogAnalyticsMetricsOptions. </summary>
+        public ProfileGetWafLogAnalyticsMetricsOptions()
         {
             Actions = new ChangeTrackingList<WafAction>();
             GroupBy = new ChangeTrackingList<WafRankingGroupBy>();

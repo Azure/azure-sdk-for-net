@@ -262,9 +262,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="options"> A class representing the optional parameters in GetJobTargetExecutions method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, ServerJobAgentJobExecutionGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions();
+            options ??= new ServerJobAgentJobExecutionGetJobTargetExecutionsOptions();
 
             async Task<Page<ServerJobAgentJobExecutionStepTargetResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -308,9 +308,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="options"> A class representing the optional parameters in GetJobTargetExecutions method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServerJobAgentJobExecutionStepTargetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(Guid jobExecutionId, ServerJobAgentJobExecutionGetJobTargetExecutionsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions();
+            options ??= new ServerJobAgentJobExecutionGetJobTargetExecutionsOptions();
 
             Page<ServerJobAgentJobExecutionStepTargetResource> FirstPageFunc(int? pageSizeHint)
             {

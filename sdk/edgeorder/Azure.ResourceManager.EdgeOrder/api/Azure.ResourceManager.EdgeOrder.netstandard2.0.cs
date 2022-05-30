@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.EdgeOrder
         public static Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> GetOrderItemResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource>> GetOrderItemResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.OrderItemResourceCollection GetOrderItemResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.EdgeOrder.OrderItemResource> GetOrderItemResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EdgeOrder.Models.OrderItemGetOrderItemResourcesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.EdgeOrder.OrderItemResource> GetOrderItemResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EdgeOrder.Models.OrderItemGetOrderItemResourcesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.EdgeOrder.OrderItemResource> GetOrderItemResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderGetOrderItemResourcesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.EdgeOrder.OrderItemResource> GetOrderItemResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EdgeOrder.Models.EdgeOrderGetOrderItemResourcesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.OrderResource GetOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource> GetOrderResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource>> GetOrderResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -394,6 +394,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus left, Azure.ResourceManager.EdgeOrder.Models.DoubleEncryptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class EdgeOrderGetOrderItemResourcesOptions
+    {
+        public EdgeOrderGetOrderItemResourcesOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+    }
     public partial class EdgeOrderProduct
     {
         internal EdgeOrderProduct() { }
@@ -584,13 +591,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public partial class OrderItemGetAllOptions
     {
         public OrderItemGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
-    public partial class OrderItemGetOrderItemResourcesOptions
-    {
-        public OrderItemGetOrderItemResourcesOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }

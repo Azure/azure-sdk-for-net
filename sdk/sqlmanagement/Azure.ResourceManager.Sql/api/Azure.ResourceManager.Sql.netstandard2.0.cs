@@ -809,8 +809,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource> GetJobCredential(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobCredentialResource>> GetJobCredentialAsync(string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.JobCredentialCollection GetJobCredentials() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetJobExecutionsByAgent(Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetJobExecutionsByAgentAsync(Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetJobExecutionsByAgent(Azure.ResourceManager.Sql.Models.JobAgentGetJobExecutionsByAgentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetJobExecutionsByAgentAsync(Azure.ResourceManager.Sql.Models.JobAgentGetJobExecutionsByAgentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource> GetJobTargetGroup(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.JobTargetGroupResource>> GetJobTargetGroupAsync(string targetGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.JobTargetGroupCollection GetJobTargetGroups() { throw null; }
@@ -1158,10 +1158,10 @@ namespace Azure.ResourceManager.Sql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabase(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabase(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.Models.ManagedInstanceQuery> GetManagedDatabaseQuery(string queryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.ManagedInstanceQuery>> GetManagedDatabaseQueryAsync(string queryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseRestoreDetailsResultResource> GetManagedDatabaseRestoreDetailsResult(Azure.ResourceManager.Sql.Models.RestoreDetailsName restoreDetailsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1170,8 +1170,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(Azure.ResourceManager.Sql.Models.SecurityAlertPolicyName securityAlertPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(Azure.ResourceManager.Sql.Models.SqlGetManagedDatabaseSecurityEventsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(Azure.ResourceManager.Sql.Models.SqlGetManagedDatabaseSecurityEventsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource> GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource>> GetManagedInstanceDatabaseBackupShortTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.ManagedShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1187,10 +1187,10 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionResource> GetManagedTransparentDataEncryption(Azure.ResourceManager.Sql.Models.TransparentDataEncryptionName tdeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionResource>> GetManagedTransparentDataEncryptionAsync(Azure.ResourceManager.Sql.Models.TransparentDataEncryptionName tdeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.QueryStatistics> GetQueryStatistics(string queryId, Azure.ResourceManager.Sql.Models.SqlGetQueryStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.QueryStatistics> GetQueryStatisticsAsync(string queryId, Azure.ResourceManager.Sql.Models.SqlGetQueryStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.QueryStatistics> GetQueryStatistics(string queryId, Azure.ResourceManager.Sql.Models.ManagedDatabaseGetQueryStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.QueryStatistics> GetQueryStatisticsAsync(string queryId, Azure.ResourceManager.Sql.Models.ManagedDatabaseGetQueryStatisticsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ManagedDatabaseResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2963,8 +2963,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetAll(Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> GetAllAsync(Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>> GetAsync(System.Guid jobExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(System.Guid jobExecutionId, Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(System.Guid jobExecutionId, Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutions(System.Guid jobExecutionId, Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionGetJobTargetExecutionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionStepTargetResource> GetJobTargetExecutionsAsync(System.Guid jobExecutionId, Azure.ResourceManager.Sql.Models.ServerJobAgentJobExecutionGetJobTargetExecutionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ServerJobAgentJobExecutionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -3412,14 +3412,14 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyCollection GetBackupShortTermRetentionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource> GetBackupShortTermRetentionPolicy(Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource>> GetBackupShortTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.ShortTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabels(Azure.ResourceManager.Sql.Models.ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabels(Azure.ResourceManager.Sql.Models.SqlDatabaseGetCurrentSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.SqlDatabaseGetCurrentSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.DatabaseAutomaticTuningResource GetDatabaseAutomaticTuning() { throw null; }
         public virtual Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyCollection GetDatabaseBlobAuditingPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource> GetDatabaseBlobAuditingPolicy(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.DatabaseBlobAuditingPolicyResource>> GetDatabaseBlobAuditingPolicyAsync(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName blobAuditingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetDatabaseColumns(Azure.ResourceManager.Sql.Models.ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetDatabaseColumnsAsync(Azure.ResourceManager.Sql.Models.ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetDatabaseColumns(Azure.ResourceManager.Sql.Models.SqlDatabaseGetDatabaseColumnsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnResource> GetDatabaseColumnsAsync(Azure.ResourceManager.Sql.Models.SqlDatabaseGetDatabaseColumnsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult> GetDatabaseExtensions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.ImportExportExtensionsOperationResult> GetDatabaseExtensionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.DatabaseOperation> GetDatabaseOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3454,8 +3454,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.MetricDefinition> GetMetricDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetrics(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetricsAsync(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabels(Azure.ResourceManager.Sql.Models.ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabels(Azure.ResourceManager.Sql.Models.SqlDatabaseGetRecommendedSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.ServerDatabaseSchemaTableColumnSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(Azure.ResourceManager.Sql.Models.SqlDatabaseGetRecommendedSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.ReplicationLinkResource> GetReplicationLink(string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.ReplicationLinkResource>> GetReplicationLinkAsync(string linkId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.ReplicationLinkCollection GetReplicationLinks() { throw null; }
@@ -5417,6 +5417,17 @@ namespace Azure.ResourceManager.Sql.Models
         Yes = 0,
         No = 1,
     }
+    public partial class JobAgentGetJobExecutionsByAgentOptions
+    {
+        public JobAgentGetJobExecutionsByAgentOptions() { }
+        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
+        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
+        public bool? IsActive { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class JobAgentPatch
     {
         public JobAgentPatch() { }
@@ -5735,6 +5746,44 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode left, Azure.ResourceManager.Sql.Models.ManagedDatabaseCreateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions
+    {
+        public ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions() { }
+        public bool? Count { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+    }
+    public partial class ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions
+    {
+        public ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions() { }
+        public System.Collections.Generic.IList<string> Column { get { throw null; } }
+        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
+        public System.Collections.Generic.IList<string> Schema { get { throw null; } }
+        public string Skiptoken { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Table { get { throw null; } }
+    }
+    public partial class ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions
+    {
+        public ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public string Skiptoken { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
+    public partial class ManagedDatabaseGetQueryStatisticsOptions
+    {
+        public ManagedDatabaseGetQueryStatisticsOptions() { }
+        public string EndTime { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.QueryTimeGrainType? Interval { get { throw null; } set { } }
+        public string StartTime { get { throw null; } set { } }
+    }
+    public partial class ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions
+    {
+        public ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public bool? IncludeDisabledRecommendations { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+    }
     public partial class ManagedDatabasePatch
     {
         public ManagedDatabasePatch() { }
@@ -5796,29 +5845,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType left, Azure.ResourceManager.Sql.Models.ManagedInstanceAdministratorType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions
-    {
-        public ManagedInstanceDatabaseSchemaTableColumnGetManagedDatabaseColumnsByDatabaseOptions() { }
-        public System.Collections.Generic.IList<string> Column { get { throw null; } }
-        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public System.Collections.Generic.IList<string> Schema { get { throw null; } }
-        public string Skiptoken { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Table { get { throw null; } }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions
-    {
-        public ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions() { }
-        public bool? Count { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
-    public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions
-    {
-        public ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetRecommendedManagedDatabaseSensitivityLabelsOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public bool? IncludeDisabledRecommendations { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
     }
     public partial class ManagedInstanceEditionCapability
     {
@@ -6900,29 +6926,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.ServerConnectionType left, Azure.ResourceManager.Sql.Models.ServerConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions
-    {
-        public ServerDatabaseSchemaTableColumnGetDatabaseColumnsOptions() { }
-        public System.Collections.Generic.IList<string> Column { get { throw null; } }
-        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
-        public System.Collections.Generic.IList<string> Schema { get { throw null; } }
-        public string Skiptoken { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Table { get { throw null; } }
-    }
-    public partial class ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions
-    {
-        public ServerDatabaseSchemaTableColumnSensitivityLabelGetCurrentSensitivityLabelsOptions() { }
-        public bool? Count { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
-    public partial class ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions
-    {
-        public ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public bool? IncludeDisabledRecommendations { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
     public partial class ServerDnsAliasAcquisition
     {
         public ServerDnsAliasAcquisition(string oldServerDnsAliasId) { }
@@ -6954,9 +6957,9 @@ namespace Azure.ResourceManager.Sql.Models
         public int? Skip { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
-    public partial class ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions
+    public partial class ServerJobAgentJobExecutionGetJobTargetExecutionsOptions
     {
-        public ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions() { }
+        public ServerJobAgentJobExecutionGetJobTargetExecutionsOptions() { }
         public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
         public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
@@ -6979,17 +6982,6 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class ServerJobAgentJobExecutionStepTargetGetAllOptions
     {
         public ServerJobAgentJobExecutionStepTargetGetAllOptions() { }
-        public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
-        public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
-        public System.DateTimeOffset? EndTimeMin { get { throw null; } set { } }
-        public bool? IsActive { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
-    public partial class ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions
-    {
-        public ServerJobAgentJobExecutionStepTargetGetJobTargetExecutionsOptions() { }
         public System.DateTimeOffset? CreateTimeMax { get { throw null; } set { } }
         public System.DateTimeOffset? CreateTimeMin { get { throw null; } set { } }
         public System.DateTimeOffset? EndTimeMax { get { throw null; } set { } }
@@ -7192,6 +7184,29 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlAgentConfigurationPropertiesState left, Azure.ResourceManager.Sql.Models.SqlAgentConfigurationPropertiesState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SqlDatabaseGetCurrentSensitivityLabelsOptions
+    {
+        public SqlDatabaseGetCurrentSensitivityLabelsOptions() { }
+        public bool? Count { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+    }
+    public partial class SqlDatabaseGetDatabaseColumnsOptions
+    {
+        public SqlDatabaseGetDatabaseColumnsOptions() { }
+        public System.Collections.Generic.IList<string> Column { get { throw null; } }
+        public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
+        public System.Collections.Generic.IList<string> Schema { get { throw null; } }
+        public string Skiptoken { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Table { get { throw null; } }
+    }
+    public partial class SqlDatabaseGetRecommendedSensitivityLabelsOptions
+    {
+        public SqlDatabaseGetRecommendedSensitivityLabelsOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public bool? IncludeDisabledRecommendations { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+    }
     public partial class SqlDatabasePatch
     {
         public SqlDatabasePatch() { }
@@ -7259,21 +7274,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static implicit operator Azure.ResourceManager.Sql.Models.SqlDayOfWeek (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlDayOfWeek left, Azure.ResourceManager.Sql.Models.SqlDayOfWeek right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SqlGetManagedDatabaseSecurityEventsByDatabaseOptions
-    {
-        public SqlGetManagedDatabaseSecurityEventsByDatabaseOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public int? Skip { get { throw null; } set { } }
-        public string Skiptoken { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
-    public partial class SqlGetQueryStatisticsOptions
-    {
-        public SqlGetQueryStatisticsOptions() { }
-        public string EndTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.QueryTimeGrainType? Interval { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
     }
     public partial class SqlMetric
     {

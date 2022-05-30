@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A class representing the optional parameters in StartWebSiteNetworkTrace method. </summary>
-    public partial class AppServiceStartWebSiteNetworkTraceOptions
+    public partial class WebSiteStartWebSiteNetworkTraceOptions
     {
-        /// <summary> Initializes a new instance of AppServiceStartWebSiteNetworkTraceOptions. </summary>
-        public AppServiceStartWebSiteNetworkTraceOptions()
+        /// <summary> Initializes a new instance of WebSiteStartWebSiteNetworkTraceOptions. </summary>
+        public WebSiteStartWebSiteNetworkTraceOptions()
         {
         }
 

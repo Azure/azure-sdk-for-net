@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A class representing the optional parameters in GetRestorableSqlContainers method. </summary>
-    public partial class CosmosDBGetRestorableSqlContainersOptions
+    public partial class RestorableDatabaseAccountGetRestorableSqlContainersOptions
     {
-        /// <summary> Initializes a new instance of CosmosDBGetRestorableSqlContainersOptions. </summary>
-        public CosmosDBGetRestorableSqlContainersOptions()
+        /// <summary> Initializes a new instance of RestorableDatabaseAccountGetRestorableSqlContainersOptions. </summary>
+        public RestorableDatabaseAccountGetRestorableSqlContainersOptions()
         {
         }
 

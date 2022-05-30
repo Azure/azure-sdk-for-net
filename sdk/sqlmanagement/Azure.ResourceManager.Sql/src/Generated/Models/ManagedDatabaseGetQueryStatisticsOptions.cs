@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A class representing the optional parameters in GetQueryStatistics method. </summary>
-    public partial class SqlGetQueryStatisticsOptions
+    public partial class ManagedDatabaseGetQueryStatisticsOptions
     {
-        /// <summary> Initializes a new instance of SqlGetQueryStatisticsOptions. </summary>
-        public SqlGetQueryStatisticsOptions()
+        /// <summary> Initializes a new instance of ManagedDatabaseGetQueryStatisticsOptions. </summary>
+        public ManagedDatabaseGetQueryStatisticsOptions()
         {
         }
 

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> A class representing the optional parameters in GetLogAnalyticsMetrics method. </summary>
-    public partial class CdnGetLogAnalyticsMetricsOptions
+    public partial class ProfileGetLogAnalyticsMetricsOptions
     {
-        /// <summary> Initializes a new instance of CdnGetLogAnalyticsMetricsOptions. </summary>
-        public CdnGetLogAnalyticsMetricsOptions()
+        /// <summary> Initializes a new instance of ProfileGetLogAnalyticsMetricsOptions. </summary>
+        public ProfileGetLogAnalyticsMetricsOptions()
         {
             GroupBy = new ChangeTrackingList<LogMetricsGroupBy>();
             Continents = new ChangeTrackingList<string>();

@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A class representing the optional parameters in GetCurrentManagedDatabaseSensitivityLabels method. </summary>
-    public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions
+    public partial class ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions. </summary>
-        public ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelGetCurrentManagedDatabaseSensitivityLabelsOptions()
+        /// <summary> Initializes a new instance of ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions. </summary>
+        public ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions()
         {
         }
 

@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> A class representing the optional parameters in GetOrderItemResources method. </summary>
-    public partial class OrderItemGetOrderItemResourcesOptions
+    public partial class EdgeOrderGetOrderItemResourcesOptions
     {
-        /// <summary> Initializes a new instance of OrderItemGetOrderItemResourcesOptions. </summary>
-        public OrderItemGetOrderItemResourcesOptions()
+        /// <summary> Initializes a new instance of EdgeOrderGetOrderItemResourcesOptions. </summary>
+        public EdgeOrderGetOrderItemResourcesOptions()
         {
         }
 

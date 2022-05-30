@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="options"> A class representing the optional parameters in GetRestorableSqlContainers method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(CosmosDBGetRestorableSqlContainersOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(RestorableDatabaseAccountGetRestorableSqlContainersOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new CosmosDBGetRestorableSqlContainersOptions();
+            options ??= new RestorableDatabaseAccountGetRestorableSqlContainersOptions();
 
             async Task<Page<RestorableSqlContainer>> FirstPageFunc(int? pageSizeHint)
             {
@@ -251,9 +251,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="options"> A class representing the optional parameters in GetRestorableSqlContainers method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(CosmosDBGetRestorableSqlContainersOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(RestorableDatabaseAccountGetRestorableSqlContainersOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new CosmosDBGetRestorableSqlContainersOptions();
+            options ??= new RestorableDatabaseAccountGetRestorableSqlContainersOptions();
 
             Page<RestorableSqlContainer> FirstPageFunc(int? pageSizeHint)
             {

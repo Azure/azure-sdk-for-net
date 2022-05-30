@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.Reservations
         public static Azure.ResourceManager.Reservations.ReservationOrderResponseResource GetReservationOrderResponseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Reservations.ReservationOrderResponseCollection GetReservationOrderResponses(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.ResourceManager.Reservations.ReservationResponseResource GetReservationResponseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Reservations.ReservationResponseResource> GetReservationResponses(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.ReservationResponseGetReservationResponsesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Reservations.ReservationResponseResource> GetReservationResponsesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.ReservationResponseGetReservationResponsesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Reservations.ReservationResponseResource> GetReservationResponses(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.ReservationsGetReservationResponsesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Reservations.ReservationResponseResource> GetReservationResponsesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Reservations.Models.ReservationsGetReservationResponsesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultResponse> PostCalculateExchange(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.CalculateExchangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultResponse>> PostCalculateExchangeAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.CalculateExchangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.ExchangeOperationResultResponse> PostExchange(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ExchangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -645,16 +645,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.PaymentDetail> Transactions { get { throw null; } }
     }
-    public partial class ReservationResponseGetReservationResponsesOptions
-    {
-        public ReservationResponseGetReservationResponsesOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public string RefreshSummary { get { throw null; } set { } }
-        public string SelectedState { get { throw null; } set { } }
-        public float? Skiptoken { get { throw null; } set { } }
-        public float? Take { get { throw null; } set { } }
-    }
     public partial class ReservationResponsePatch
     {
         public ReservationResponsePatch() { }
@@ -673,6 +663,16 @@ namespace Azure.ResourceManager.Reservations.Models
         public string PlanId { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
         public string ReservedResourceType { get { throw null; } set { } }
+    }
+    public partial class ReservationsGetReservationResponsesOptions
+    {
+        public ReservationsGetReservationResponsesOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string RefreshSummary { get { throw null; } set { } }
+        public string SelectedState { get { throw null; } set { } }
+        public float? Skiptoken { get { throw null; } set { } }
+        public float? Take { get { throw null; } set { } }
     }
     public partial class ReservationSplitProperties
     {

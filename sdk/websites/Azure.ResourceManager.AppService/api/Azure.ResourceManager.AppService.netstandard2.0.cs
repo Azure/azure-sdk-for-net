@@ -3159,10 +3159,10 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>>> StartNetworkTraceSlotAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.SiteSlotStartNetworkTraceSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StartSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StartSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>> StartWebSiteNetworkTraceOperationSlot(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceOperationSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>>> StartWebSiteNetworkTraceOperationSlotAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceOperationSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<string> StartWebSiteNetworkTraceSlot(Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<string>> StartWebSiteNetworkTraceSlotAsync(Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>> StartWebSiteNetworkTraceOperationSlot(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.SiteSlotStartWebSiteNetworkTraceOperationSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>>> StartWebSiteNetworkTraceOperationSlotAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.SiteSlotStartWebSiteNetworkTraceOperationSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<string> StartWebSiteNetworkTraceSlot(Azure.ResourceManager.AppService.Models.SiteSlotStartWebSiteNetworkTraceSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<string>> StartWebSiteNetworkTraceSlotAsync(Azure.ResourceManager.AppService.Models.SiteSlotStartWebSiteNetworkTraceSlotOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopNetworkTraceSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopNetworkTraceSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4278,10 +4278,10 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response> StartAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>> StartNetworkTrace(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.WebSiteStartNetworkTraceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>>> StartNetworkTraceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.WebSiteStartNetworkTraceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<string> StartWebSiteNetworkTrace(Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<string>> StartWebSiteNetworkTraceAsync(Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>> StartWebSiteNetworkTraceOperation(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceOperationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.AppServiceStartWebSiteNetworkTraceOperationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<string> StartWebSiteNetworkTrace(Azure.ResourceManager.AppService.Models.WebSiteStartWebSiteNetworkTraceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<string>> StartWebSiteNetworkTraceAsync(Azure.ResourceManager.AppService.Models.WebSiteStartWebSiteNetworkTraceOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>> StartWebSiteNetworkTraceOperation(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.WebSiteStartWebSiteNetworkTraceOperationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.WebSiteStartWebSiteNetworkTraceOperationOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Stop(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StopNetworkTrace(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4708,34 +4708,6 @@ namespace Azure.ResourceManager.AppService.Models
         public static implicit operator Azure.ResourceManager.AppService.Models.AppServiceSkuName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceSkuName left, Azure.ResourceManager.AppService.Models.AppServiceSkuName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AppServiceStartWebSiteNetworkTraceOperationOptions
-    {
-        public AppServiceStartWebSiteNetworkTraceOperationOptions() { }
-        public int? DurationInSeconds { get { throw null; } set { } }
-        public int? MaxFrameLength { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
-    }
-    public partial class AppServiceStartWebSiteNetworkTraceOperationSlotOptions
-    {
-        public AppServiceStartWebSiteNetworkTraceOperationSlotOptions() { }
-        public int? DurationInSeconds { get { throw null; } set { } }
-        public int? MaxFrameLength { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
-    }
-    public partial class AppServiceStartWebSiteNetworkTraceOptions
-    {
-        public AppServiceStartWebSiteNetworkTraceOptions() { }
-        public int? DurationInSeconds { get { throw null; } set { } }
-        public int? MaxFrameLength { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
-    }
-    public partial class AppServiceStartWebSiteNetworkTraceSlotOptions
-    {
-        public AppServiceStartWebSiteNetworkTraceSlotOptions() { }
-        public int? DurationInSeconds { get { throw null; } set { } }
-        public int? MaxFrameLength { get { throw null; } set { } }
-        public string SasUrl { get { throw null; } set { } }
     }
     public partial class AppServiceUsage : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -7052,6 +7024,20 @@ namespace Azure.ResourceManager.AppService.Models
         public int? MaxFrameLength { get { throw null; } set { } }
         public string SasUrl { get { throw null; } set { } }
     }
+    public partial class SiteSlotStartWebSiteNetworkTraceOperationSlotOptions
+    {
+        public SiteSlotStartWebSiteNetworkTraceOperationSlotOptions() { }
+        public int? DurationInSeconds { get { throw null; } set { } }
+        public int? MaxFrameLength { get { throw null; } set { } }
+        public string SasUrl { get { throw null; } set { } }
+    }
+    public partial class SiteSlotStartWebSiteNetworkTraceSlotOptions
+    {
+        public SiteSlotStartWebSiteNetworkTraceSlotOptions() { }
+        public int? DurationInSeconds { get { throw null; } set { } }
+        public int? MaxFrameLength { get { throw null; } set { } }
+        public string SasUrl { get { throw null; } set { } }
+    }
     public partial class SkuCapacity
     {
         public SkuCapacity() { }
@@ -7654,6 +7640,20 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class WebSiteStartNetworkTraceOptions
     {
         public WebSiteStartNetworkTraceOptions() { }
+        public int? DurationInSeconds { get { throw null; } set { } }
+        public int? MaxFrameLength { get { throw null; } set { } }
+        public string SasUrl { get { throw null; } set { } }
+    }
+    public partial class WebSiteStartWebSiteNetworkTraceOperationOptions
+    {
+        public WebSiteStartWebSiteNetworkTraceOperationOptions() { }
+        public int? DurationInSeconds { get { throw null; } set { } }
+        public int? MaxFrameLength { get { throw null; } set { } }
+        public string SasUrl { get { throw null; } set { } }
+    }
+    public partial class WebSiteStartWebSiteNetworkTraceOptions
+    {
+        public WebSiteStartWebSiteNetworkTraceOptions() { }
         public int? DurationInSeconds { get { throw null; } set { } }
         public int? MaxFrameLength { get { throw null; } set { } }
         public string SasUrl { get { throw null; } set { } }

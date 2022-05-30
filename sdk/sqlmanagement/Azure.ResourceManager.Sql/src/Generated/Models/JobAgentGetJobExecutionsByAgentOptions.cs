@@ -10,10 +10,10 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A class representing the optional parameters in GetJobExecutionsByAgent method. </summary>
-    public partial class ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions
+    public partial class JobAgentGetJobExecutionsByAgentOptions
     {
-        /// <summary> Initializes a new instance of ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions. </summary>
-        public ServerJobAgentJobExecutionGetJobExecutionsByAgentOptions()
+        /// <summary> Initializes a new instance of JobAgentGetJobExecutionsByAgentOptions. </summary>
+        public JobAgentGetJobExecutionsByAgentOptions()
         {
         }
 

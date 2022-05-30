@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> A class representing the optional parameters in GetOrderItemResources method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(OrderItemGetOrderItemResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OrderItemResource> GetOrderItemResourcesAsync(EdgeOrderGetOrderItemResourcesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<OrderItemResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="options"> A class representing the optional parameters in GetOrderItemResources method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrderItemResource> GetOrderItemResources(OrderItemGetOrderItemResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<OrderItemResource> GetOrderItemResources(EdgeOrderGetOrderItemResourcesOptions options, CancellationToken cancellationToken = default)
         {
             Page<OrderItemResource> FirstPageFunc(int? pageSizeHint)
             {

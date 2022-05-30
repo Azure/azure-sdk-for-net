@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A class representing the optional parameters in GetRecommendedSensitivityLabels method. </summary>
-    public partial class ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions
+    public partial class SqlDatabaseGetRecommendedSensitivityLabelsOptions
     {
-        /// <summary> Initializes a new instance of ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions. </summary>
-        public ServerDatabaseSchemaTableColumnSensitivityLabelGetRecommendedSensitivityLabelsOptions()
+        /// <summary> Initializes a new instance of SqlDatabaseGetRecommendedSensitivityLabelsOptions. </summary>
+        public SqlDatabaseGetRecommendedSensitivityLabelsOptions()
         {
         }
 

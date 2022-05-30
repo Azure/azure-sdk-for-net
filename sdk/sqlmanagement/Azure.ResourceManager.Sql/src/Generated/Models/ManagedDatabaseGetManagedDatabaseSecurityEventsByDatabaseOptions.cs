@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A class representing the optional parameters in GetManagedDatabaseSecurityEventsByDatabase method. </summary>
-    public partial class SqlGetManagedDatabaseSecurityEventsByDatabaseOptions
+    public partial class ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions
     {
-        /// <summary> Initializes a new instance of SqlGetManagedDatabaseSecurityEventsByDatabaseOptions. </summary>
-        public SqlGetManagedDatabaseSecurityEventsByDatabaseOptions()
+        /// <summary> Initializes a new instance of ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions. </summary>
+        public ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions()
         {
         }
 

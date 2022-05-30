@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> A class representing the optional parameters in GetReservationResponses method. </summary>
-    public partial class ReservationResponseGetReservationResponsesOptions
+    public partial class ReservationsGetReservationResponsesOptions
     {
-        /// <summary> Initializes a new instance of ReservationResponseGetReservationResponsesOptions. </summary>
-        public ReservationResponseGetReservationResponsesOptions()
+        /// <summary> Initializes a new instance of ReservationsGetReservationResponsesOptions. </summary>
+        public ReservationsGetReservationResponsesOptions()
         {
         }
 
