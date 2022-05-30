@@ -260,7 +260,7 @@ namespace Azure.Core
                 return GetResponseFromState(asyncLock.Value);
             }
 
-            using var scope = CreateScope();
+            using var scope = CreateScope(true);
             try
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);

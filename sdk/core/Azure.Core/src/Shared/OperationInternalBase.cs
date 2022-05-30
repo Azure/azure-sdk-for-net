@@ -16,6 +16,7 @@ namespace Azure.Core
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _updateStatusScopeName;
+        private readonly string _waitForCompletionScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
         private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
@@ -24,6 +25,7 @@ namespace Azure.Core
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
             _updateStatusScopeName = string.Empty;
+            _waitForCompletionScopeName = string.Empty;
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
@@ -33,6 +35,7 @@ namespace Azure.Core
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
+            _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
@@ -188,20 +191,29 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            var poller = new OperationPoller(_fallbackStrategy);
-            var response = async
-                ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
-                : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
+            using var scope = CreateScope(false);
+            try
+            {
+                var poller = new OperationPoller(_fallbackStrategy);
+                var response = async
+                    ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
+                    : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
 
-            lockOrValue.SetValue(response);
-            return response;
+                lockOrValue.SetValue(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         protected abstract ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken);
 
-        protected DiagnosticScope CreateScope()
+        protected DiagnosticScope CreateScope(bool isUpdateStatus)
         {
-            DiagnosticScope scope = _diagnostics.CreateScope(_updateStatusScopeName);
+            DiagnosticScope scope = _diagnostics.CreateScope(isUpdateStatus ? _updateStatusScopeName : _waitForCompletionScopeName);
 
             if (_scopeAttributes != null)
             {
