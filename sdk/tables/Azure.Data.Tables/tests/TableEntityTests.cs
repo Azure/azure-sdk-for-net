@@ -43,17 +43,6 @@ namespace Azure.Data.Tables.Tests
             Assert.That(fullEntity.GetString("string"), Is.InstanceOf(typeof(string)));
         }
 
-
-        /// <summary>
-        /// Validates that the typed getter for Binary Data can also retrieve data set as a byte array.
-        /// </summary>
-        [Test]
-        public void ValidateDictionaryEntityByteArrayAsBinaryData()
-        {
-            Assert.That(fullEntity.GetBinaryData("binary"), Is.InstanceOf(typeof(BinaryData)));
-            CollectionAssert.AreEqual(fullEntity.GetBinaryData("binary").ToArray(), fullEntity.GetBinary("binary"));
-        }
-
         /// <summary>
         /// Validates the typed getters throws InvalidOperationException when the retrieved value doesn't match the type.
         /// </summary>
@@ -258,7 +247,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity["Foo3"] is DateTime);
         }
 
-         [Test]
+        [Test]
         public void TypeCoercionForDateTimeTypes()
         {
             var entity = new TableEntity("partition", "row");
