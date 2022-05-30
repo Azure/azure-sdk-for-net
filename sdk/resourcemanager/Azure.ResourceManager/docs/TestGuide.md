@@ -8,14 +8,14 @@ We use [NUnit 3][nunit] as our testing framework.
 
 ## Testing project structure
 
-With the help of [Azure.ResourceManager.Template][mgmt_template], the basic testing project and file structure(see following for details) will be generated under `sdk\<service name>\<package name>\tests` directory.
+With the help of [Azure.ResourceManager.Template][mgmt_template], the basic testing project and file structure(see following for details) will be generated under `sdk\<service name>\Azure.ResourceManager.<service>\tests` directory.
 
 ```text
-sdk\<service name>\<package name>\tests\Azure.ResourceManager.<service>.Tests.csproj
-sdk\<service name>\<package name>\tests\<service>ManagementTestBase.cs
-sdk\<service name>\<package name>\tests\<service>ManagementTestEnvironment.cs
-sdk\<service name>\<package name>\tests\Scenario
-sdk\<service name>\<package name>\tests\SessionRecords
+sdk\<service name>\Azure.ResourceManager.<service>\tests\Azure.ResourceManager.<service>.Tests.csproj
+sdk\<service name>\Azure.ResourceManager.<service>\tests\<service>ManagementTestBase.cs
+sdk\<service name>\Azure.ResourceManager.<service>\tests\<service>ManagementTestEnvironment.cs
+sdk\<service name>\Azure.ResourceManager.<service>\tests\Scenario
+sdk\<service name>\Azure.ResourceManager.<service>\tests\SessionRecords
 ```
 
 **Note**: Considering that in Git directories exist implicitly, so you might need to create the `Scenario` and `SessionRecords` directories by yourself after cloning the repo.
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Service.Tests
 }
 ```
 
-We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, we automatically convert our async API calls into their sync equivalents at runtime. Simply write your tests using only async APIs and the `Azure.Core.TestFramework` will wrap the client with a proxy that forwards everything to the sync overloads automatically. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
+We expose all of our APIs with both sync and async variants. To avoid writing each of our tests twice, the test framework automatically converts async API calls into their sync equivalents at runtime. Simply write your tests using only async APIs and the `Azure.Core.TestFramework` will wrap the client with a proxy that forwards everything to the sync overloads automatically. Visual Studio's test runner will show `*TestClass(True)` for the async variants and `*TestClass(False)` for the sync variants.
 
 ## Running tests
 
