@@ -260,7 +260,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             try
             {
                 using Stream stream = new MemoryStream();
+#if NET6_0_OR_GREATER
+                await manifestStream.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+#else
                 await manifestStream.CopyToAsync(stream).ConfigureAwait(false);
+#endif
                 manifestStream.Position = 0;
                 stream.Position = 0;
 

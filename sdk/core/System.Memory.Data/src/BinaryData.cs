@@ -3,7 +3,6 @@
 
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -35,10 +34,14 @@ namespace System
         /// <param name="data">The array to wrap.</param>
         public BinaryData(byte[] data)
         {
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(data, nameof(data));
+#else
             if (data == null)
             {
                 throw new ArgumentNullException(nameof(data));
             }
+#endif
 
             _bytes = data;
         }
@@ -77,10 +80,14 @@ namespace System
         /// <param name="data">The string data.</param>
         public BinaryData(string data)
         {
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(data, nameof(data));
+#else
             if (data == null)
             {
                 throw new ArgumentNullException(nameof(data));
             }
+#endif
 
             _bytes = Encoding.UTF8.GetBytes(data);
         }
@@ -120,10 +127,14 @@ namespace System
         /// <returns>A value representing all of the data remaining in <paramref name="stream"/>.</returns>
         public static BinaryData FromStream(Stream stream)
         {
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(stream, nameof(stream));
+#else
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
+#endif
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             return FromStreamAsync(stream, false).GetAwaiter().GetResult();
@@ -141,10 +152,14 @@ namespace System
             Stream stream,
             CancellationToken cancellationToken = default)
         {
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(stream, nameof(stream));
+#else
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
+#endif
 
             return FromStreamAsync(stream, true, cancellationToken);
         }
@@ -212,12 +227,6 @@ namespace System
         /// </returns>
         public override string ToString()
         {
-            if (MemoryMarshal.TryGetArray(
-                _bytes,
-                out ArraySegment<byte> data))
-            {
-                return Encoding.UTF8.GetString(data.Array, data.Offset, data.Count);
-            }
             return Encoding.UTF8.GetString(_bytes.ToArray());
         }
 
@@ -254,7 +263,7 @@ namespace System
         public T ToObjectFromJson<T>(JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (T)JsonSerializer.Deserialize(_bytes.Span, typeof(T), options);
+            return (T)JsonSerializer.Deserialize(_bytes.Span, typeof(T), options)!;
         }
 
         /// <summary>

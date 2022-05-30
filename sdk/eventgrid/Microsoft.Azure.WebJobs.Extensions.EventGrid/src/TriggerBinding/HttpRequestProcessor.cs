@@ -70,7 +70,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                     };
                 }
                 string validationCode;
+#if NET6_0_OR_GREATER
+                string json = await req.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+#else
                 string json = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                 JToken events = JToken.Parse(json);
 
                 switch (events.Type)
@@ -103,7 +107,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
             // Regular event processing
             if (string.Equals(eventTypeHeader, NotificationEvent, StringComparison.OrdinalIgnoreCase))
             {
+#if NET6_0_OR_GREATER
+                string requestContent = await req.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+#else
                 string requestContent = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                 JToken token = JToken.Parse(requestContent);
                 JArray events = token.Type switch
                 {

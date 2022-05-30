@@ -45,7 +45,11 @@ namespace Azure.Security.Attestation
             {
                 throw new ArgumentException($"Certificate provided {certificate.ToString()} does not have a private key.");
             }
+#if NET6_0_OR_GREATER
+            Signer = (AsymmetricAlgorithm)certificate.GetRSAPrivateKey() ?? certificate.GetECDsaPrivateKey();
+#else
             Signer = certificate.PrivateKey;
+#endif
             Certificate = certificate;
             VerifySignerMatchesCertificate(Signer, Certificate);
         }
@@ -62,9 +66,9 @@ namespace Azure.Security.Attestation
 
         private static void VerifySignerMatchesCertificate(AsymmetricAlgorithm signer, X509Certificate2 certificate)
         {
-            if (!signer.KeyExchangeAlgorithm.StartsWith(certificate.PublicKey.Key.KeyExchangeAlgorithm, System.StringComparison.Ordinal))
+            if (!signer.KeyExchangeAlgorithm.StartsWith(((AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey()).KeyExchangeAlgorithm, System.StringComparison.Ordinal))
             {
-                throw new ArgumentException($"Signer key algorithm {signer.SignatureAlgorithm} does not match certificate key algorithm {certificate.PublicKey.Key.SignatureAlgorithm}");
+                throw new ArgumentException($"Signer key algorithm {signer.SignatureAlgorithm} does not match certificate key algorithm {((AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey()).SignatureAlgorithm}");
             }
 
             // Try to match the public key in the certificate and the signer. If the platform
@@ -72,7 +76,7 @@ namespace Azure.Security.Attestation
             try
             {
                 string signerKey = signer.ToXmlString(false);
-                string certificateKey = certificate.PublicKey.Key.ToXmlString(false);
+                string certificateKey = ((AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey()).ToXmlString(false);
                 if (signerKey != certificateKey)
                 {
                     throw new ArgumentException($"Signer key {signerKey} does not match certificate key {certificateKey}");
@@ -98,7 +102,7 @@ namespace Azure.Security.Attestation
                     throw new ArgumentException("Signing Key must be either RSA or ECDsa. Unknown signing key found");
                 }
 
-                AsymmetricAlgorithm verifyingAlgorithm = certificate.PublicKey.Key;
+                AsymmetricAlgorithm verifyingAlgorithm = (AsymmetricAlgorithm)certificate.GetRSAPublicKey() ?? certificate.GetECDsaPublicKey();
                 if (verifyingAlgorithm is RSA verifyingRsa)
                 {
                     if (!verifyingRsa.VerifyData(

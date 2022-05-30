@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace Azure.Identity
 {
@@ -64,7 +65,11 @@ namespace Azure.Identity
             {
                 byte[] protectedBytes = new byte[file.Length];
 
-                await file.ReadAsync(protectedBytes, 0, protectedBytes.Length).ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+                await file.ReadAsync(protectedBytes.AsMemory(), CancellationToken.None).ConfigureAwait(false);
+#else
+                await file.ReadAsync(protectedBytes, 0, protectedBytes.Length, CancellationToken.None).ConfigureAwait(false);
+#endif
 
                 return ProtectedData.Unprotect(protectedBytes, optionalEntropy: null, scope: DataProtectionScope.CurrentUser);
             }

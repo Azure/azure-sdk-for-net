@@ -9,8 +9,8 @@
       <MissingTargetFrameworks Include="@(RequiredTargetFrameworks)" Exclude="@(ConfiguredTargetFrameworks)" />
     </ItemGroup>
 
-    <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
-    <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
+    <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty so something must have messed up the property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
+    <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks to project '$(MSBuildProjectName)'." />
   </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->

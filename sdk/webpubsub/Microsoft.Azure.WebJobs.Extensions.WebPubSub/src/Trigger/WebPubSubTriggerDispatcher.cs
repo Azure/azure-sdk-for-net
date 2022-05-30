@@ -82,14 +82,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     case RequestType.Connect:
                         {
+#if NET6_0_OR_GREATER
+                            var content = await req.Content.ReadAsStringAsync(token).ConfigureAwait(false);
+#else
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                             var request = JsonSerializer.Deserialize<ConnectEventRequest>(content);
                             eventRequest = new ConnectEventRequest(context, request.Claims, request.Query, request.Subprotocols, request.ClientCertificates);
                             break;
                         }
                     case RequestType.Disconnected:
                         {
+#if NET6_0_OR_GREATER
+                            var content = await req.Content.ReadAsStringAsync(token).ConfigureAwait(false);
+#else
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                             var request = JsonSerializer.Deserialize<DisconnectedEventRequest>(content);
                             eventRequest = new DisconnectedEventRequest(context, request.Reason);
                             break;

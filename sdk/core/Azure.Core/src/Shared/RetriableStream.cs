@@ -95,7 +95,11 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
+#if NET6_0_OR_GREATER
+                        var result = await _currentStream.ReadAsync(buffer.AsMemory(offset, count), cancellationToken).ConfigureAwait(false);
+#else
                         var result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+#endif
                         _position += result;
                         return result;
                     }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -38,13 +39,21 @@ namespace Azure.Messaging.EventGrid
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             EnsureSerialized();
+#if NETSTANDARD2_1 || NETCOREAPP2_1_OR_GREATER
+            stream.Write(_data.AsSpan());
+#else
             stream.Write(_data, 0, _data.Length);
+#endif
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             EnsureSerialized();
+#if NETSTANDARD2_1 || NETCOREAPP2_1_OR_GREATER
+            await stream.WriteAsync(_data.AsMemory(), cancellationToken).ConfigureAwait(false);
+#else
             await stream.WriteAsync(_data, 0, _data.Length, cancellationToken).ConfigureAwait(false);
+#endif
         }
 
         private void EnsureSerialized()

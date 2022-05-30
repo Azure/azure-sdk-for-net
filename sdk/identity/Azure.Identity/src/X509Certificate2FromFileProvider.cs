@@ -71,7 +71,11 @@ namespace Azure.Identity
                     {
                         while (true)
                         {
+#if NET6_0_OR_GREATER
+                            int read = await s.ReadAsync(buf.AsMemory(offset), cancellationToken).ConfigureAwait(false);
+#else
                             int read = await s.ReadAsync(buf, offset, buf.Length, cancellationToken).ConfigureAwait(false);
+#endif
                             for (int i = 0; i < read; i++)
                             {
                                 certContents.Add(buf[i]);
