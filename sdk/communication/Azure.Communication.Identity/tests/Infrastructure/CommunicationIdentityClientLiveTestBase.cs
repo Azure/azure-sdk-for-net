@@ -8,7 +8,6 @@ using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
 using Azure.Core.TestFramework.Models;
-using Azure.Communication.Identity.Models;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -79,9 +78,7 @@ namespace Azure.Communication.Identity.Tests
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
                     communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-                options.TeamsUserAadToken = result.AccessToken;
-                options.ClientId = TestEnvironment.CommunicationM365AppId;
-                options.UserObjectId = result.UniqueId;
+                options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
             return options;
         }

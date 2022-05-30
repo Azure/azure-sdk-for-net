@@ -15,8 +15,8 @@ namespace Azure.Communication.Identity
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Core.AccessToken> GetToken(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Identity.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Core.AccessToken>> GetTokenAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Collections.Generic.IEnumerable<Azure.Communication.Identity.CommunicationTokenScope> scopes, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Core.AccessToken> GetTokenForTeamsUser(Azure.Communication.Identity.Models.GetTokenForTeamsUserOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Core.AccessToken>> GetTokenForTeamsUserAsync(Azure.Communication.Identity.Models.GetTokenForTeamsUserOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Core.AccessToken> GetTokenForTeamsUser(Azure.Communication.Identity.GetTokenForTeamsUserOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Core.AccessToken>> GetTokenForTeamsUserAsync(Azure.Communication.Identity.GetTokenForTeamsUserOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RevokeTokens(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeTokensAsync(Azure.Communication.CommunicationUserIdentifier communicationUser, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -55,18 +55,18 @@ namespace Azure.Communication.Identity
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Deconstruct(out Azure.Communication.CommunicationUserIdentifier user, out Azure.Core.AccessToken accessToken) { throw null; }
     }
+    public partial class GetTokenForTeamsUserOptions
+    {
+        public GetTokenForTeamsUserOptions(string teamsUserAadToken, string clientId, string userObjectId) { }
+        public string ClientId { get { throw null; } }
+        public string TeamsUserAadToken { get { throw null; } }
+        public string UserObjectId { get { throw null; } }
+    }
 }
 namespace Azure.Communication.Identity.Models
 {
     public static partial class CommunicationIdentityModelFactory
     {
         public static Azure.Communication.Identity.CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(Azure.Communication.CommunicationUserIdentifier user, Azure.Core.AccessToken accessToken) { throw null; }
-    }
-    public partial class GetTokenForTeamsUserOptions
-    {
-        public GetTokenForTeamsUserOptions(string teamsUserAadToken, string clientId, string userObjectId) { }
-        public string ClientId { get { throw null; } set { } }
-        public string TeamsUserAadToken { get { throw null; } set { } }
-        public string UserObjectId { get { throw null; } set { } }
     }
 }
