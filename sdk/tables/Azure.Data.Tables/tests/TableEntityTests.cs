@@ -43,6 +43,17 @@ namespace Azure.Data.Tables.Tests
             Assert.That(fullEntity.GetString("string"), Is.InstanceOf(typeof(string)));
         }
 
+
+        /// <summary>
+        /// Validates that the typed getter for Binary Data can also retrieve data set as a byte array.
+        /// </summary>
+        [Test]
+        public void ValidateDictionaryEntityByteArrayAsBinaryData()
+        {
+            Assert.That(fullEntity.GetBinaryData("binary"), Is.InstanceOf(typeof(BinaryData)));
+            CollectionAssert.AreEqual(fullEntity.GetBinaryData("binary").ToArray(), fullEntity.GetBinary("binary"));
+        }
+
         /// <summary>
         /// Validates the typed getters throws InvalidOperationException when the retrieved value doesn't match the type.
         /// </summary>
@@ -249,6 +260,30 @@ namespace Azure.Data.Tables.Tests
 
          [Test]
         public void TypeCoercionForDateTimeTypes()
+        {
+            var entity = new TableEntity("partition", "row");
+            var offsetNow = DateTimeOffset.UtcNow;
+            var dateNow = offsetNow.UtcDateTime;
+
+            // Initialize a property to an DateTimeOffset value
+            entity["DTOffset"] = offsetNow;
+            Assert.That(entity["DTOffset"] is DateTimeOffset);
+            Assert.That(entity["DTOffset"], Is.EqualTo(offsetNow));
+            Assert.That(entity.GetDateTimeOffset("DTOffset"), Is.EqualTo(offsetNow));
+            Assert.That(entity.GetDateTime("DTOffset"), Is.EqualTo(dateNow));
+
+            // Initialize a property to an DateTime value
+            entity["DT"] = dateNow;
+            Assert.AreEqual(typeof(DateTime), entity["DT"].GetType());
+            DateTimeOffset dtoffset = (DateTime)entity["DT"];
+            Assert.That(entity["DT"], Is.EqualTo(dateNow));
+            Assert.That(entity.GetDateTime("DT"), Is.EqualTo(dateNow));
+            Assert.That(entity.GetDateTimeOffset("DT"), Is.EqualTo(offsetNow));
+        }
+
+
+        [Test]
+        public void TypeCoercionForBinaryData()
         {
             var entity = new TableEntity("partition", "row");
             var offsetNow = DateTimeOffset.UtcNow;
