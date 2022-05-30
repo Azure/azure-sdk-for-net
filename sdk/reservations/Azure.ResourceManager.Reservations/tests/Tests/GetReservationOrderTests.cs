@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     public class GetReservationOrderTests : ReservationsManagementClientBase
     {
         private TenantResource Tenant { get; set; }
-        private ReservationOrderResponseCollection collection { get; set; }
+        private ReservationOrderResponseCollection Collection { get; set; }
 
         public GetReservationOrderTests(bool isAsync) : base(isAsync)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
                 Tenant = tenantResources.ToArray()[0];
-                collection = Tenant.GetReservationOrderResponses();
+                Collection = Tenant.GetReservationOrderResponses();
             }
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetSingleReservationOrder()
         {
-            var response = await collection.GetAsync("838f3bcf-5af0-4606-ae23-cdea328acd51");
+            var response = await Collection.GetAsync("838f3bcf-5af0-4606-ae23-cdea328acd51");
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Data);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetReservationOrders()
         {
-            AsyncPageable<ReservationOrderResponseResource> response = collection.GetAllAsync();
+            AsyncPageable<ReservationOrderResponseResource> response = Collection.GetAllAsync();
             List<ReservationOrderResponseResource> result = await response.ToEnumerableAsync();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);

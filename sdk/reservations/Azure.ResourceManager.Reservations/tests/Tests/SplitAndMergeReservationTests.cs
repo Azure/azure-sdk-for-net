@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     public class SplitAndMergeReservationTests : ReservationsManagementClientBase
     {
         private TenantResource Tenant { get; set; }
-        private ReservationOrderResponseCollection collection { get; set; }
+        private ReservationOrderResponseCollection Collection { get; set; }
         private const string ReservationOrderId = "55940ea5-f1ab-4dc6-804e-44ffe25c6769";
         public SplitAndMergeReservationTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-            await InitializeClients();
+                await InitializeClients();
 
-            AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
-            List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-            Tenant = tenantResources.ToArray()[0];
-            collection = Tenant.GetReservationOrderResponses();
+                AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
+                List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
+                Tenant = tenantResources.ToArray()[0];
+                Collection = Tenant.GetReservationOrderResponses();
             }
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestSplitReservationOrder()
         {
-            var response = await collection.GetAsync(ReservationOrderId);
+            var response = await Collection.GetAsync(ReservationOrderId);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestMergeReservationOrder()
         {
-            var response = await collection.GetAsync(ReservationOrderId);
+            var response = await Collection.GetAsync(ReservationOrderId);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);

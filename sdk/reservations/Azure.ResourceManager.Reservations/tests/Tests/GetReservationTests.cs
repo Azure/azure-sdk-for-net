@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Tests
     public class GetReservationTests : ReservationsManagementClientBase
     {
         private TenantResource Tenant { get; set; }
-        private ReservationOrderResponseCollection collection { get; set; }
+        private ReservationOrderResponseCollection Collection { get; set; }
 
         public GetReservationTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
                 Tenant = tenantResources.ToArray()[0];
-                collection = Tenant.GetReservationOrderResponses();
+                Collection = Tenant.GetReservationOrderResponses();
             }
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetSingleReservation()
         {
-            var response = await collection.GetAsync("545d132c-6066-47ad-9f39-e67e542caef2");
+            var response = await Collection.GetAsync("545d132c-6066-47ad-9f39-e67e542caef2");
             TestReservationOrderReponse(response);
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestListReservations()
         {
-            var response = await collection.GetAsync("545d132c-6066-47ad-9f39-e67e542caef2");
+            var response = await Collection.GetAsync("545d132c-6066-47ad-9f39-e67e542caef2");
             TestReservationOrderReponse(response);
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
