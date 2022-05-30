@@ -48,4 +48,4 @@ For additional insight and context, the development, release, and issue history 
 [sdk_design_guidelines_dotnet]: https://azure.github.io/azure-sdk/dotnet_introduction.html
 [sdk_dotnet_code_readme]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md
 [email_opencode]: mailto:opencode@microsoft.com
-[test_guide]: ./TestGuide.md
+[test_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/TestGuide.md

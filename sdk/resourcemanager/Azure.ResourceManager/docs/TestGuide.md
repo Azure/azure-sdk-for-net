@@ -94,4 +94,4 @@ Our samples are structured as unit tests so we can easily verify they're up to d
 [core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core.TestFramework
 [mgmt_template]: https://github.com/Azure/azure-sdk-for-net/tree/main/eng/templates/Azure.ResourceManager.Template
 [test_sanitizer]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#sanitizing
-[authenticate]: ./AuthUsingEnvironmentVariables.md
+[authenticate]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md
