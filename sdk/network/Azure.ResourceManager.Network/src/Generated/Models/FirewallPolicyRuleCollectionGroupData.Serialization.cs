@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<int> priority = default;
-            Optional<IList<FirewallPolicyRuleCollection>> ruleCollections = default;
+            Optional<IList<FirewallPolicyRuleCollectionInfo>> ruleCollections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FirewallPolicyRuleCollection> array = new List<FirewallPolicyRuleCollection>();
+                            List<FirewallPolicyRuleCollectionInfo> array = new List<FirewallPolicyRuleCollectionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallPolicyRuleCollection.DeserializeFirewallPolicyRuleCollection(item));
+                                array.Add(FirewallPolicyRuleCollectionInfo.DeserializeFirewallPolicyRuleCollectionInfo(item));
                             }
                             ruleCollections = array;
                             continue;

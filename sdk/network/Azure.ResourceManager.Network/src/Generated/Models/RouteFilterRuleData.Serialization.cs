@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
@@ -32,6 +27,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -61,21 +61,17 @@ namespace Azure.ResourceManager.Network
 
         internal static RouteFilterRuleData DeserializeRouteFilterRuleData(JsonElement element)
         {
-            Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<Access> access = default;
             Optional<RouteFilterRuleType> routeFilterRuleType = default;
             Optional<IList<string>> communities = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,6 +100,21 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -164,7 +175,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AzureFirewallApplicationRuleCollection>> applicationRuleCollections = default;
-            Optional<IList<AzureFirewallNatRuleCollection>> natRuleCollections = default;
-            Optional<IList<AzureFirewallNetworkRuleCollection>> networkRuleCollections = default;
+            Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
+            Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
+            Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
             Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
             Optional<AzureFirewallIPConfiguration> managementIpConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -252,10 +252,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallApplicationRuleCollection> array = new List<AzureFirewallApplicationRuleCollection>();
+                            List<AzureFirewallApplicationRuleCollectionData> array = new List<AzureFirewallApplicationRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallApplicationRuleCollection.DeserializeAzureFirewallApplicationRuleCollection(item));
+                                array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item));
                             }
                             applicationRuleCollections = array;
                             continue;
@@ -267,10 +267,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallNatRuleCollection> array = new List<AzureFirewallNatRuleCollection>();
+                            List<AzureFirewallNatRuleCollectionData> array = new List<AzureFirewallNatRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRuleCollection.DeserializeAzureFirewallNatRuleCollection(item));
+                                array.Add(AzureFirewallNatRuleCollectionData.DeserializeAzureFirewallNatRuleCollectionData(item));
                             }
                             natRuleCollections = array;
                             continue;
@@ -282,10 +282,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallNetworkRuleCollection> array = new List<AzureFirewallNetworkRuleCollection>();
+                            List<AzureFirewallNetworkRuleCollectionData> array = new List<AzureFirewallNetworkRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNetworkRuleCollection.DeserializeAzureFirewallNetworkRuleCollection(item));
+                                array.Add(AzureFirewallNetworkRuleCollectionData.DeserializeAzureFirewallNetworkRuleCollectionData(item));
                             }
                             networkRuleCollections = array;
                             continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()
         {
-            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollection>();
+            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Priority = priority;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         public int? Priority { get; set; }
         /// <summary> Group of Firewall Policy rule collections. </summary>
-        public IList<FirewallPolicyRuleCollection> RuleCollections { get; }
+        public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
         /// <summary> The provisioning state of the firewall policy rule collection group resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

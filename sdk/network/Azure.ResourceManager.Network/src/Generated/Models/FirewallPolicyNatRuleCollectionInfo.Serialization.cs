@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyNatRuleCollection : IUtf8JsonSerializable
+    public partial class FirewallPolicyNatRuleCollectionInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyNatRuleCollection DeserializeFirewallPolicyNatRuleCollection(JsonElement element)
+        internal static FirewallPolicyNatRuleCollectionInfo DeserializeFirewallPolicyNatRuleCollectionInfo(JsonElement element)
         {
             Optional<FirewallPolicyNatRuleCollectionAction> action = default;
             Optional<IList<FirewallPolicyRule>> rules = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyNatRuleCollection(ruleCollectionType, name.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules));
+            return new FirewallPolicyNatRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules));
         }
     }
 }

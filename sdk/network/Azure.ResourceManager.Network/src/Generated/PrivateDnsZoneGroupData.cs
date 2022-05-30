@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PrivateDnsZoneGroup data model. </summary>
-    public partial class PrivateDnsZoneGroupData : NetworkSubResource
+    public partial class PrivateDnsZoneGroupData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
         public PrivateDnsZoneGroupData()
@@ -23,20 +23,18 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>
         /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
-        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, ETag? etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id)
+        internal PrivateDnsZoneGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, NetworkProvisioningState? provisioningState, IList<PrivateDnsZoneConfig> privateDnsZoneConfigs) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
             ProvisioningState = provisioningState;
             PrivateDnsZoneConfigs = privateDnsZoneConfigs;
         }
 
-        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? Etag { get; }
         /// <summary> The provisioning state of the private dns zone group resource. </summary>

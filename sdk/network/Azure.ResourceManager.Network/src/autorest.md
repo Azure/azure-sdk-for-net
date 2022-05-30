@@ -145,6 +145,18 @@ directive:
       }
     reason: Add network versions of Resource (id, name are not read-only). The original (Network)Resource definition is actually a TrackedResource.
   - from: swagger-document
+    where: $.definitions[?(@.allOf && @.properties.name && !@.properties.type)]
+    transform: >
+      if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
+      {
+        $.properties.type = {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource type."
+        };
+      }
+    reason: Add missing type property in swagger definition which exists in service response.
+  - from: swagger-document
     where: $.definitions[?(@.allOf && @.properties.name && !@.properties.name.readOnly && @.properties.type)]
     transform: >
       if ($.allOf[0]['$ref'].includes('network.json#/definitions/SubResource'))
@@ -234,6 +246,26 @@ directive:
     where: $.definitions
     transform: >
       $.EndpointServiceResult.properties.type['x-ms-format'] = 'resource-type';
+      delete $.EndpointServiceResult.allOf;
+      $.EndpointServiceResult.properties.id = {
+          "readOnly": true,
+          "type": "string",
+          "description": "Resource ID.",
+          "x-ms-format": "arm-id"
+      };
+    reason: id should be read-only.
+  - from: azureFirewall.json
+    where: $.definitions
+    transform: >
+      $.AzureFirewallApplicationRuleCollection['x-ms-client-name'] = 'AzureFirewallApplicationRuleCollectionData';
+      $.AzureFirewallNatRuleCollection['x-ms-client-name'] = 'AzureFirewallNatRuleCollectionData';
+      $.AzureFirewallNetworkRuleCollection['x-ms-client-name'] = 'AzureFirewallNetworkRuleCollectionData';
+  - from: firewallPolicy.json
+    where: $.definitions
+    transform: >
+      $.FirewallPolicyRuleCollection['x-ms-client-name'] = 'FirewallPolicyRuleCollectionInfo';
+      $.FirewallPolicyNatRuleCollection['x-ms-client-name'] = 'FirewallPolicyNatRuleCollectionInfo';
+      $.FirewallPolicyFilterRuleCollection['x-ms-client-name'] = 'FirewallPolicyFilterRuleCollectionInfo';
 # shorten "privateLinkServiceConnectionState" property name
   - from: applicationGateway.json
     where: $.definitions.ApplicationGatewayPrivateEndpointConnectionProperties

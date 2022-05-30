@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -45,9 +45,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteLinkData DeserializeExpressRouteLinkData(JsonElement element)
         {
-            Optional<string> name = default;
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<string> routerName = default;
             Optional<string> interfaceName = default;
             Optional<string> patchPanelId = default;
@@ -58,11 +59,6 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRouteLinkMacSecConfig> macSecConfig = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -81,6 +77,21 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -156,7 +167,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
         }
     }
 }
