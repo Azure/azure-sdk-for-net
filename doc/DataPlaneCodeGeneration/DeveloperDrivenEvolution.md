@@ -211,7 +211,8 @@ namespace Azure.AI.MetricsAdvisor
             RequestContent requestContent = MetricFeedback.ToRequestContent(feedback);
 
             // Call protocol method
-            Response response = await CreateMetricFeedbackAsync(requestContent, new RequestContext() { CancellationToken = cancellationToken });
+            RequestContext context = (cancellationToken == CancellationToken.None) ? null : new { CancellationToken = cancellationToken };
+            Response response = await CreateMetricFeedbackAsync(requestContent, context);
 
             // Calling deserialization helper
             MetricFeedback value = MetricFeedback.FromResponse(response);
@@ -248,7 +249,8 @@ namespace Azure.AI.MetricsAdvisor
         public virtual AsyncPageable<MetricFeedback> GetMetricFeedbacksValuesAsync(Guid feedbackId, CancellationToken cancellationToken = default)
         {
             // Call internal paging implementation by passing the new scope name because it has a different name from the protocol method, and the inner scope will be suppressed
-            AsyncPageable<BinaryData> pageableBinaryData = GetMetricFeedbacksImplementationAsync("MetricsAdvisorClient.GetMetricFeedbacksValues", feedbackId, new RequestContext() { CancellationToken = cancellationToken });
+            RequestContext context = (cancellationToken == CancellationToken.None) ? null : new { CancellationToken = cancellationToken };
+            AsyncPageable<BinaryData> pageableBinaryData = GetMetricFeedbacksImplementationAsync("MetricsAdvisorClient.GetMetricFeedbacksValues", feedbackId, context);
 
             // Calling deserialization helper
             return PageableHelpers.Select(pageableBinaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
