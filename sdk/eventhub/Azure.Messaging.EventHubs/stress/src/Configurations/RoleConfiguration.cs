@@ -59,16 +59,34 @@ internal class RoleConfiguration
     public static string EventProducerTest = "EventProducerTest";
 
     /// <summary>
+    ///   The short name of the event producer test scenario.
+    /// </summary>
+    ///
+    public static string EventProducerTestShort = "EventProd";
+
+    /// <summary>
     ///   The name of the buffered producer test scenario.
     /// </summary>
     ///
     public static string BufferedProducerTest = "BufferedProducerTest";
 
     /// <summary>
+    ///   The short name of the buffered producer test scenario.
+    /// </summary>
+    ///
+    public static string BufferedProducerTestShort = "BuffProd";
+
+    /// <summary>
     ///   The name of the basic processor test scenario.
     /// </summary>
     ///
-    public static string BasicProcessorTest = "BasicProcessorTest";
+    public static string EventProcessorTest = "EventProcessorTest";
+
+    /// <summary>
+    ///   The short name of the basic processor test scenario.
+    /// </summary>
+    ///
+    public static string EventProcessorTestShort = "Processor";
 
     /// <summary>
     ///   The name of the basic read test scenario.
@@ -81,6 +99,12 @@ internal class RoleConfiguration
     /// </summary>
     ///
     public static string BurstBufferedProducerTest = "BurstBufferedProducerTest";
+
+    /// <summary>
+    ///   The short name of the burst buffered producer test scenario.
+    /// </summary>
+    ///
+    public static string BurstBufferedProducerTestShort = "BurstBuffProd";
 
     // Roles needed for each scenario
 
@@ -139,7 +163,7 @@ internal class RoleConfiguration
 
         TestScenarioRoles[EventProducerTest] = new List<string>(_eventProducerTestRoles);
         TestScenarioRoles[BufferedProducerTest] = new List<string>(_bufferedProducerTestRoles);
-        TestScenarioRoles[BasicProcessorTest] = new List<string>(_processorTestRoles);
+        TestScenarioRoles[EventProcessorTest] = new List<string>(_processorTestRoles);
         TestScenarioRoles[BurstBufferedProducerTest] = new List<string>(_burstBufferedProducerRoles);
     }
 }

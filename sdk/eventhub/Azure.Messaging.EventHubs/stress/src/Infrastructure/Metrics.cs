@@ -81,6 +81,28 @@ internal class Metrics
     ///
     public const string GenerationTwoCollections = "GenerationTwoCollections";
 
+    // Dimension names
+
+    /// <summary>
+    ///   This is the dimension name to hold which test is collecting metrics.
+    /// </summary>
+    ///
+    public const string TestName = "TestName";
+
+    /// <summary>
+    ///   This is the dimension name used to hold which partition an event send or read
+    ///   is associated with.
+    /// </summary>
+    ///
+    public const string PartitionId = "PartitionId";
+
+    /// <summary>
+    ///   This is the dimension name used to hold which identifier is associated with a
+    ///   given processor.
+    /// </summary>
+    ///
+    public const string Identifier = "Identifier";
+
     // Shared Producer statistics
 
     /// <summary>

@@ -33,6 +33,9 @@ internal class Publisher
     /// <summary>The <see cref="PublisherConfiguration" /> used to configure the instance of this role.</summary>
     private readonly PublisherConfiguration _publisherconfiguration;
 
+    /// <summary>The name of the test being run for metrics collection.</summary>
+    private readonly string _testName;
+
     /// <summary>
     ///   Initializes a new <see cref="Publisher" \> instance.
     /// </summary>
@@ -40,14 +43,17 @@ internal class Publisher
     /// <param name="testConfiguration">The <see cref="TestConfiguration" /> used to configure the processor test scenario run.</param>
     /// <param name="publisherConfiguration">The <see cref="PublisherConfiguration" /> instance used to configure this instance of <see cref="Publisher" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
+    /// <param name="testName">The name of the test being run in order to organize metrics being collected.</param>
     ///
     public Publisher(PublisherConfiguration publisherConfiguration,
                      TestConfiguration testConfiguration,
-                     Metrics metrics)
+                     Metrics metrics,
+                     string testName)
     {
         _testConfiguration = testConfiguration;
         _publisherconfiguration = publisherConfiguration;
         _metrics = metrics;
+        _testName = testName;
     }
 
     /// <summary>
@@ -138,8 +144,11 @@ internal class Publisher
                 backgroundCancellationSource.Cancel();
                 await Task.WhenAll(sendTasks).ConfigureAwait(false);
 
-                _metrics.Client.GetMetric(_metrics.ProducerRestarted).TrackValue(1);
-                _metrics.Client.TrackException(ex);
+                _metrics.Client.GetMetric(Metrics.ProducerRestarted, Metrics.TestName).TrackValue(1, _testName);
+
+                var exceptionProperties = new Dictionary<string, string>();
+                exceptionProperties.Add(Metrics.TestName, _testName);
+                _metrics.Client.TrackException(ex, exceptionProperties);
             }
             finally
             {
@@ -185,24 +194,25 @@ internal class Publisher
         {
             if (batch.Count > 0)
             {
-                _metrics.Client.GetMetric(_metrics.PublishAttempts).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.PublishAttempts, Metrics.TestName).TrackValue(1, _testName);
                 await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
             }
 
-            _metrics.Client.GetMetric(_metrics.EventsPublished).TrackValue(batch.Count);
-            _metrics.Client.GetMetric(_metrics.BatchesPublished).TrackValue(1);
-            _metrics.Client.GetMetric(_metrics.TotalPublishedSizeBytes).TrackValue(batch.SizeInBytes);
+            _metrics.Client.GetMetric(Metrics.EventsPublished, Metrics.TestName).TrackValue(batch.Count, _testName);
+            _metrics.Client.GetMetric(Metrics.BatchesPublished, Metrics.TestName).TrackValue(1, _testName);
+            _metrics.Client.GetMetric(Metrics.TotalPublishedSizeBytes, Metrics.TestName).TrackValue(batch.SizeInBytes, _testName);
         }
         catch (TaskCanceledException)
         {
-            _metrics.Client.GetMetric(_metrics.PublishAttempts).TrackValue(-1);
+            _metrics.Client.GetMetric(Metrics.PublishAttempts, Metrics.TestName).TrackValue(-1, _testName);
         }
         catch (Exception ex)
         {
-            var eventProperties = new Dictionary<String, String>();
-            eventProperties.Add("Process", "Send");
+            var exceptionProperties = new Dictionary<String, String>();
+            exceptionProperties.Add("Process", "Send");
+            exceptionProperties.Add(Metrics.TestName, _testName);
 
-            _metrics.Client.TrackException(ex, eventProperties);
+            _metrics.Client.TrackException(ex, exceptionProperties);
         }
     }
 }

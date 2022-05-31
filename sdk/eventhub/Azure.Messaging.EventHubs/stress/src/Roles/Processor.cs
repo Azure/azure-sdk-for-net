@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,6 +40,9 @@ internal class Processor
     /// <summary>The <see cref="ProcessorConfiguration" /> used to configure the instance of this role.</summary>
     private ProcessorConfiguration _processorConfiguration { get; }
 
+    /// <summary>The name of the test being run for metrics collection.</summary>
+    private readonly string _testName;
+
     /// <summary>
     ///   Initializes a new <see cref="Processor" \> instance.
     /// </summary>
@@ -47,16 +51,19 @@ internal class Processor
     /// <param name="processorConfiguration">The <see cref="ProcessorConfiguration" /> instance used to configure this instance of <see cref="Processor" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     /// <param name="partitionCount">The number of partitions in the Event Hub associated with this processor.</param>
+    /// <param name="testName">The name of the test being run in order to organize metrics being collected.</param>
     ///
     public Processor(TestConfiguration testConfiguration,
                      ProcessorConfiguration processorConfiguration,
                      Metrics metrics,
-                     int partitionCount)
+                     int partitionCount,
+                     string testName)
     {
         _testConfiguration = testConfiguration;
         _processorConfiguration = processorConfiguration;
         _metrics = metrics;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
+        _testName = testName;
     }
 
     /// <summary>
@@ -89,8 +96,8 @@ internal class Processor
                 var storageClient = new BlobContainerClient(_testConfiguration.StorageConnectionString, _testConfiguration.BlobContainer);
                 processor = new EventProcessorClient(storageClient, EventHubConsumerClient.DefaultConsumerGroupName, _testConfiguration.EventHubsConnectionString, _testConfiguration.EventHub, options);
 
-                processor.ProcessEventAsync += _processEventHandler;
-                processor.ProcessErrorAsync += _processErrorHandler;
+                processor.ProcessEventAsync += ProcessEventHandler;
+                processor.ProcessErrorAsync += ProcessErrorHandler;
 
                 await processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
                 await Task.Delay(Timeout.Infinite, cancellationToken).ConfigureAwait(false);
@@ -108,8 +115,11 @@ internal class Processor
             }
             catch (Exception ex)
             {
-                _metrics.Client.GetMetric(_metrics.ProcessorRestarted).TrackValue(1);
-                _metrics.Client.TrackException(ex);
+                _metrics.Client.GetMetric(Metrics.ProcessorRestarted, Metrics.TestName).TrackValue(1, _testName);
+
+                var exceptionProperties = new Dictionary<string, string>();
+                exceptionProperties.Add(Metrics.TestName, _testName);
+                _metrics.Client.TrackException(ex, exceptionProperties);
             }
             finally
             {
@@ -127,12 +137,15 @@ internal class Processor
                 }
                 catch (Exception ex)
                 {
-                    _metrics.Client.GetMetric(_metrics.ProcessorRestarted).TrackValue(1);
-                    _metrics.Client.TrackException(ex);
+                    _metrics.Client.GetMetric(Metrics.ProcessorRestarted, Metrics.TestName).TrackValue(1, _testName);
+
+                    var exceptionProperties = new Dictionary<string, string>();
+                    exceptionProperties.Add(Metrics.TestName, _testName);
+                    _metrics.Client.TrackException(ex, exceptionProperties);
                 }
 
-                processor.ProcessEventAsync -= _processEventHandler;
-                processor.ProcessErrorAsync -= _processErrorHandler;
+                processor.ProcessEventAsync -= ProcessEventHandler;
+                processor.ProcessErrorAsync -= ProcessErrorHandler;
             }
         }
     }
@@ -162,26 +175,30 @@ internal class Processor
                     duplicateId = "(unknown)";
                 }
 
-                _metrics.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"));
+                var exceptionProperties = new Dictionary<string, string>();
+                exceptionProperties.Add(Metrics.TestName, _testName);
+                _metrics.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"), exceptionProperties);
             }
 
             // increment total service operations metric
             if (args.HasEvent)
             {
-                _metrics.Client.GetMetric(_metrics.EventsRead).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.EventsRead, Metrics.TestName).TrackValue(1, _testName);
 
                 // TODO: event body and sequence validation
 
-                _metrics.Client.GetMetric(_metrics.EventsProcessed).TrackValue(1);
+                _metrics.Client.GetMetric(Metrics.EventsProcessed, Metrics.TestName).TrackValue(1, _testName);
             }
         }
         catch (Exception ex)
         {
-            _metrics.Client.TrackException(ex);
+            var exceptionProperties = new Dictionary<string, string>();
+            exceptionProperties.Add(Metrics.TestName, _testName);
+            _metrics.Client.TrackException(ex, exceptionProperties);
         }
         finally
         {
-            _metrics.Client.GetMetric(_metrics.EventHandlerCalls, "Identifier").TrackValue(1, _identifier);
+            _metrics.Client.GetMetric(Metrics.EventHandlerCalls, Metrics.Identifier, Metrics.TestName).TrackValue(1, _identifier, _testName);
             Interlocked.Decrement(ref _partitionHandlerCalls[partitionIndex]);
         }
 
@@ -197,7 +214,9 @@ internal class Processor
     ///
     private Task ProcessErrorHandler(ProcessErrorEventArgs args)
     {
-        _metrics.Client.TrackException(args.Exception);
+        var exceptionProperties = new Dictionary<string, string>();
+        exceptionProperties.Add(Metrics.TestName, _testName);
+        _metrics.Client.TrackException(args.Exception, exceptionProperties);
         return Task.CompletedTask;
     }
 }
