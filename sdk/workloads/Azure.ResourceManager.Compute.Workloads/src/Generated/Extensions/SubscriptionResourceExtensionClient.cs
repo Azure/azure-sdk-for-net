@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP sizing recommendations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SapSizingRecommendations
+        /// Operation Id: SAPSizingRecommendations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP sizing recommendations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SapSizingRecommendations
+        /// Operation Id: SAPSizingRecommendations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP supported SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SapSupportedSku
+        /// Operation Id: SAPSupportedSku
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP supported SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SapSupportedSku
+        /// Operation Id: SAPSupportedSku
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Disk Configurations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SapDiskConfigurations
+        /// Operation Id: SAPDiskConfigurations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Disk Configurations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SapDiskConfigurations
+        /// Operation Id: SAPDiskConfigurations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Availability Zone Details.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SapAvailabilityZoneDetails
+        /// Operation Id: SAPAvailabilityZoneDetails
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Availability Zone Details.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SapAvailabilityZoneDetails
+        /// Operation Id: SAPAvailabilityZoneDetails
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
