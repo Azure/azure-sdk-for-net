@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
+    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
     {
         [Test]
