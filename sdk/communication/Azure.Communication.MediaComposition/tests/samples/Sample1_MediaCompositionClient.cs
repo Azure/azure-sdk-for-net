@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core;
+using Azure.Identity;
 
 namespace Azure.Communication.MediaComposition.Tests.samples
 {
@@ -14,10 +17,32 @@ namespace Azure.Communication.MediaComposition.Tests.samples
     {
         // TODO: Update the samples to tests when the E2E flow is working
         private const string mediaCompositionId = "2x2Grid";
+
+        public void AuthenticateMediaCompositionClient()
+        {
+            #region Snippet:CreateMediaCompositionClient
+            var connectionString = "<connection_string>";
+            var client = new MediaCompositionClient(connectionString);
+            #endregion Snippet:CreateMediaCompositionClient
+
+            #region Snippet:CreateMediaCompositionClientFromAccessKey
+            var endpoint = new Uri("https://my-resource.communication.azure.com");
+            //@@var accessKey = "<access_key>";
+            //@@var client= new MediaCompositionClient(endpoint, new AzureKeyCredential(accessKey));
+            #endregion Snippet:CreateMediaCompositionClientFromAccessKey
+
+            #region Snippet:CreateMediaCompositionClientFromToken
+            var resourceEndpoint = new Uri("https://my-resource.communication.azure.com");
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            //@@var client = new MediaCompositionClient(endpoint, tokenCredential);
+            #endregion Snippet:CreateMediaCompositionClientFromToken
+        }
+
         public async Task CreateMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateMediaCompositionClient();
 
+            #region Snippet:CreateMediaComposition
             var layout = new MediaCompositionLayout()
             {
                 Resolution = new(1920, 1080),
@@ -92,17 +117,22 @@ namespace Azure.Communication.MediaComposition.Tests.samples
                 }
             };
             await mediaCompositionClient.CreateAsync(mediaCompositionId, layout, inputs, outputs);
+            #endregion Snippet:CreateMediaComposition
+
         }
 
         public async Task GetMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateMediaCompositionClient();
+            #region Snippet:GetMediaComposition
             var gridMediaComposition = await mediaCompositionClient.GetAsync(mediaCompositionId);
+            #endregion Snippet:GetMediaComposition
         }
 
         public async Task UpdateLayoutMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateMediaCompositionClient();
+            #region Snippet:UpdateMediaComposition
             var layout = new MediaCompositionLayout()
             {
                 Resolution = new(720, 480),
@@ -113,24 +143,33 @@ namespace Azure.Communication.MediaComposition.Tests.samples
                 }
             };
             await mediaCompositionClient.UpdateAsync(mediaCompositionId, layout);
+            #endregion Snippet:UpdateMediaComposition
         }
 
         public async Task StartMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateMediaCompositionClient();
+            #region Snippet:StartMediaComposition
             var compositionSteamState = await mediaCompositionClient.StartAsync(mediaCompositionId);
+            #endregion Snippet:StartMediaComposition
+
         }
 
         public async Task StopMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateMediaCompositionClient();
+            #region Snippet:StopMediaComposition
             var compositionSteamState = await mediaCompositionClient.StopAsync(mediaCompositionId);
+            #endregion Snippet:StopMediaComposition
         }
 
         public async Task DeleteMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateMediaCompositionClient();
+            #region Snippet:DeleteMediaComposition
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+            #endregion Snippet:DeleteMediaComposition
+
         }
 
         /// <summary>
