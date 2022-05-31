@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         private TenantResource Tenant { get; set; }
         private ReservationOrderResponseCollection Collection { get; set; }
 
-        public GetReservationTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public GetReservationTests(bool isAsync) : base(isAsync)
         {
         }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         private TenantResource Tenant { get; set; }
         private ReservationOrderResponseCollection Collection { get; set; }
         private const string ReservationOrderId = "55940ea5-f1ab-4dc6-804e-44ffe25c6769";
-        public SplitAndMergeReservationTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public SplitAndMergeReservationTests(bool isAsync) : base(isAsync)
         {
         }
 
