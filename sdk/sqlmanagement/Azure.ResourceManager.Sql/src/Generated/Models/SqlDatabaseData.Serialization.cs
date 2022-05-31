@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
+            }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
             foreach (var item in Tags)
@@ -66,15 +71,15 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sourceDatabaseId");
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionDate))
+            if (Optional.IsDefined(SourceDatabaseDeletionOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeletionDate.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
@@ -151,15 +156,26 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("isLedgerOn");
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId.Value);
+            }
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                writer.WritePropertyName("sourceResourceId");
+                writer.WriteStringValue(SourceResourceId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
+            Optional<DatabaseIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -193,16 +209,18 @@ namespace Azure.ResourceManager.Sql
             Optional<DatabaseReadScale> readScale = default;
             Optional<int> highAvailabilityReplicaCount = default;
             Optional<SecondaryType> secondaryType = default;
-            Optional<Models.Sku> currentSku = default;
+            Optional<SqlSku> currentSku = default;
             Optional<int> autoPauseDelay = default;
-            Optional<CurrentBackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<RequestedBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
             Optional<string> maintenanceConfigurationId = default;
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
+            Optional<Guid> federatedClientId = default;
+            Optional<string> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -212,7 +230,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -223,6 +241,16 @@ namespace Azure.ResourceManager.Sql
                 if (property.NameEquals("managedBy"))
                 {
                     managedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -237,7 +265,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -252,7 +280,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -491,7 +519,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentSku = Models.Sku.DeserializeSku(property0.Value);
+                            currentSku = SqlSku.DeserializeSqlSku(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("autoPauseDelay"))
@@ -511,7 +539,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new CurrentBackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -521,7 +549,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new RequestedBackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minCapacity"))
@@ -579,11 +607,26 @@ namespace Azure.ResourceManager.Sql
                             isInfraEncryptionEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("federatedClientId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            federatedClientId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceResourceId"))
+                        {
+                            sourceResourceId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, systemData, tags, location, sku.Value, kind.Value, managedBy.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, defaultSecondaryLocation.Value, failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled));
+            return new SqlDatabaseData(id, name, type, systemData, tags, location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, defaultSecondaryLocation.Value, failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), sourceResourceId.Value);
         }
     }
 }

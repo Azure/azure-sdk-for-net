@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("collation");
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (Optional.IsDefined(RestorePointInOn))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInTime.Value, "O");
+                writer.WriteStringValue(RestorePointInOn.Value, "O");
             }
             if (Optional.IsDefined(CatalogCollation))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                storageContainerUri = null;
                                 continue;
                             }
                             storageContainerUri = new Uri(property0.Value.GetString());

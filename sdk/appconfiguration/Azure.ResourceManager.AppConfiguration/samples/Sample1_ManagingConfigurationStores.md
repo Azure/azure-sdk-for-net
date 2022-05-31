@@ -20,7 +20,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = armClient.GetDefaultSubscriptionAsync().Result;
+SubscriptionResource subscription = armClient.GetDefaultSubscriptionAsync().Result;
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via Collection objects. Or you can access individual children by ID.
@@ -30,7 +30,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the Collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = (await rgCollection.CreateOrUpdateAsync(true ,rgName, new ResourceGroupData(location))).Value;
+ResourceGroupResource resourceGroup = (await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location))).Value;
 ```
 
 Now that we have the resource group created, we can manage the ConfigurationStore inside this resource group.
@@ -39,19 +39,19 @@ Now that we have the resource group created, we can manage the ConfigurationStor
 
 ```C# Snippet:Managing_ConfigurationStores_CreateAConfigurationStore
 string configurationStoreName = ("myApp");
-ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new Models.Sku("Standard"))
+ConfigurationStoreData configurationStoreData = new ConfigurationStoreData("westus", new AppConfigurationSku("Standard"))
 {
     PublicNetworkAccess = PublicNetworkAccess.Disabled
 };
-ConfigurationStore configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
+ConfigurationStoreResource configurationStore = (await resourceGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 ```
 
 ***List all configurationStores***
 
 ```C# Snippet:Managing_ConfigurationStores_ListAllConfigurationStores
-AsyncPageable<ConfigurationStore> configurationStores = resourceGroup.GetConfigurationStores().GetAllAsync();
+AsyncPageable<ConfigurationStoreResource> configurationStores = resourceGroup.GetConfigurationStores().GetAllAsync();
 
-await foreach (ConfigurationStore item in configurationStores)
+await foreach (ConfigurationStoreResource item in configurationStores)
 {
     Console.WriteLine(item.Data.Name);
 }
@@ -60,25 +60,8 @@ await foreach (ConfigurationStore item in configurationStores)
 ***Get a configurationStore***
 
 ```C# Snippet:Managing_ConfigurationStores_GetAConfigurationStore
-ConfigurationStore configurationStore = await resourceGroup.GetConfigurationStores().GetAsync("myApp");
+ConfigurationStoreResource configurationStore = await resourceGroup.GetConfigurationStores().GetAsync("myApp");
 Console.WriteLine(configurationStore.Data.Name);
-```
-
-***Try to get a configurationStore if it exists***
-
-```C# Snippet:Managing_ConfigurationStores_GetAConfigurationStoreIfExists
-ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
-
-ConfigurationStore configurationStore = await configurationStoreCollection.GetIfExistsAsync("foo");
-if (configurationStore != null)
-{
-    Console.WriteLine(configurationStore.Data.Name);
-}
-
-if (await configurationStoreCollection.ExistsAsync("myApp"))
-{
-    Console.WriteLine("ConfigurationStore 'myApp' exists.");
-}
 ```
 
 ***Delete a configurationStore***
@@ -86,6 +69,6 @@ if (await configurationStoreCollection.ExistsAsync("myApp"))
 ```C# Snippet:Managing_ConfigurationStores_DeleteAConfigurationStore
 ConfigurationStoreCollection configurationStoreCollection = resourceGroup.GetConfigurationStores();
 
-ConfigurationStore configStore = await configurationStoreCollection.GetAsync("myApp");
-await configStore.DeleteAsync(true);
+ConfigurationStoreResource configStore = await configurationStoreCollection.GetAsync("myApp");
+await configStore.DeleteAsync(WaitUntil.Completed);
 ```

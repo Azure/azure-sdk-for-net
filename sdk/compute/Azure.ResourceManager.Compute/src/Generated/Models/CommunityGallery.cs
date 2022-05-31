@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the Community Gallery that you want to create or update. </summary>
-    public partial class CommunityGallery : PirCommunityGalleryResource
+    public partial class CommunityGallery : PirCommunityGalleryResourceData
     {
         /// <summary> Initializes a new instance of CommunityGallery. </summary>
         internal CommunityGallery()
@@ -18,9 +20,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CommunityGallery. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        internal CommunityGallery(string name, string location, string type, string uniqueId) : base(name, location, type, uniqueId)
+        internal CommunityGallery(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId) : base(name, location, resourceType, uniqueId)
         {
         }
     }

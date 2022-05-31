@@ -187,7 +187,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -226,7 +226,7 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Broadcast content inside request body to all the connected client connections. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -420,7 +420,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -461,7 +461,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific connection. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -658,7 +658,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
@@ -700,7 +700,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to a group of connections. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
@@ -1058,7 +1058,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1099,7 +1099,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Send content inside request body to the specific user. </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1461,7 +1461,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateGenerateClientTokenImplRequest(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1487,13 +1487,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCloseAllConnectionsRequest(IEnumerable<string> excluded, string reason, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1515,13 +1514,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateSendToAllRequest(RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1541,39 +1539,12 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
-            return message;
-        }
-
-        internal HttpMessage CreateSendToAllRequest(RequestContent content, IEnumerable<string> excluded, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(_hub, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                foreach (var param in excluded)
-                {
-                    uri.AppendQuery("excluded", param, true);
-                }
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateConnectionExistsImplRequest(string connectionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -1585,13 +1556,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
         internal HttpMessage CreateCloseConnectionRequest(string connectionId, string reason, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1607,13 +1577,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, ContentType contentType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1628,34 +1597,12 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
-            return message;
-        }
-
-        internal HttpMessage CreateSendToConnectionRequest(string connectionId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(_hub, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionId, true);
-            uri.AppendPath("/:send", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGroupExistsImplRequest(string group, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -1667,13 +1614,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
         internal HttpMessage CreateCloseGroupConnectionsRequest(string group, IEnumerable<string> excluded, string reason, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1697,13 +1643,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateSendToGroupRequest(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1725,41 +1670,12 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
-            return message;
-        }
-
-        internal HttpMessage CreateSendToGroupRequest(string group, RequestContent content, IEnumerable<string> excluded, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(_hub, true);
-            uri.AppendPath("/groups/", false);
-            uri.AppendPath(group, true);
-            uri.AppendPath("/:send", false);
-            if (excluded != null)
-            {
-                foreach (var param in excluded)
-                {
-                    uri.AppendQuery("excluded", param, true);
-                }
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateAddConnectionToGroupRequest(string group, string connectionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1773,13 +1689,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
         internal HttpMessage CreateRemoveConnectionFromGroupRequest(string group, string connectionId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1793,13 +1708,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateUserExistsImplRequest(string userId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -1811,13 +1725,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
         internal HttpMessage CreateCloseUserConnectionsRequest(string userId, IEnumerable<string> excluded, string reason, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1841,13 +1754,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateSendToUserRequest(string userId, RequestContent content, ContentType contentType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -1862,34 +1774,12 @@ namespace Azure.Messaging.WebPubSub
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
-            return message;
-        }
-
-        internal HttpMessage CreateSendToUserRequest(string userId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/api/hubs/", false);
-            uri.AppendPath(_hub, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
-            uri.AppendPath("/:send", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "text/plain");
-            request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateAddUserToGroupRequest(string userId, string group, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1903,13 +1793,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
         internal HttpMessage CreateRemoveUserFromGroupRequest(string userId, string group, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1923,13 +1812,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateRemoveUserFromAllGroupsRequest(string userId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1942,13 +1830,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGrantPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1966,13 +1853,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateRevokePermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1990,13 +1876,12 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateCheckPermissionRequest(string permission, string connectionId, string targetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -2014,62 +1899,16 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200404.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200404 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200404();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    404 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier _responseClassifier200404;
+        private static ResponseClassifier ResponseClassifier200404 => _responseClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
     }
 }

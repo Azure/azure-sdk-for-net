@@ -33,6 +33,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="billingCurrencyTotal">Currency and amount that
         /// customer will be charged in customer's local currency. Tax is not
         /// included.</param>
+        /// <param name="netTotal">Net total amount in pricing
+        /// currency.</param>
+        /// <param name="taxTotal">Tax amount in pricing currency.</param>
+        /// <param name="grandTotal">Total amount in pricing currency.</param>
+        /// <param name="isTaxIncluded">Whether or not tax is included in grand
+        /// total</param>
         /// <param name="isBillingPartnerManaged">True if billing is managed by
         /// Microsoft Partner. Used only for CSP accounts.</param>
         /// <param name="reservationOrderId">GUID that represents reservation
@@ -44,9 +50,13 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="pricingCurrencyTotal">Amount that Microsoft uses for
         /// record. Used during refund for calculating refund limit. Tax is not
         /// included.</param>
-        public CalculatePriceResponseProperties(CalculatePriceResponsePropertiesBillingCurrencyTotal billingCurrencyTotal = default(CalculatePriceResponsePropertiesBillingCurrencyTotal), bool? isBillingPartnerManaged = default(bool?), string reservationOrderId = default(string), string skuTitle = default(string), string skuDescription = default(string), CalculatePriceResponsePropertiesPricingCurrencyTotal pricingCurrencyTotal = default(CalculatePriceResponsePropertiesPricingCurrencyTotal), IList<PaymentDetail> paymentSchedule = default(IList<PaymentDetail>))
+        public CalculatePriceResponseProperties(CalculatePriceResponsePropertiesBillingCurrencyTotal billingCurrencyTotal = default(CalculatePriceResponsePropertiesBillingCurrencyTotal), double? netTotal = default(double?), double? taxTotal = default(double?), double? grandTotal = default(double?), bool? isTaxIncluded = default(bool?), bool? isBillingPartnerManaged = default(bool?), string reservationOrderId = default(string), string skuTitle = default(string), string skuDescription = default(string), CalculatePriceResponsePropertiesPricingCurrencyTotal pricingCurrencyTotal = default(CalculatePriceResponsePropertiesPricingCurrencyTotal), IList<PaymentDetail> paymentSchedule = default(IList<PaymentDetail>))
         {
             BillingCurrencyTotal = billingCurrencyTotal;
+            NetTotal = netTotal;
+            TaxTotal = taxTotal;
+            GrandTotal = grandTotal;
+            IsTaxIncluded = isTaxIncluded;
             IsBillingPartnerManaged = isBillingPartnerManaged;
             ReservationOrderId = reservationOrderId;
             SkuTitle = skuTitle;
@@ -67,6 +77,30 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "billingCurrencyTotal")]
         public CalculatePriceResponsePropertiesBillingCurrencyTotal BillingCurrencyTotal { get; set; }
+
+        /// <summary>
+        /// Gets or sets net total amount in pricing currency.
+        /// </summary>
+        [JsonProperty(PropertyName = "netTotal")]
+        public double? NetTotal { get; set; }
+
+        /// <summary>
+        /// Gets or sets tax amount in pricing currency.
+        /// </summary>
+        [JsonProperty(PropertyName = "taxTotal")]
+        public double? TaxTotal { get; set; }
+
+        /// <summary>
+        /// Gets or sets total amount in pricing currency.
+        /// </summary>
+        [JsonProperty(PropertyName = "grandTotal")]
+        public double? GrandTotal { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not tax is included in grand total
+        /// </summary>
+        [JsonProperty(PropertyName = "isTaxIncluded")]
+        public bool? IsTaxIncluded { get; set; }
 
         /// <summary>
         /// Gets or sets true if billing is managed by Microsoft Partner. Used

@@ -6,14 +6,36 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 namespace: Azure.ResourceManager.DeviceUpdate
-require: https://github.com/Azure/azure-rest-api-specs/blob/34018925632ef75ef5416e3add65324e0a12489f/specification/deviceupdate/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/32143b0f5f230ee2601e3c5d1990188666a5058d/specification/deviceupdate/resource-manager/readme.md
+tag: package-2020-03-01-preview
 clear-output-folder: true
 skip-csproj: true
 output-folder: Generated/
 override-operation-name:
   CheckNameAvailability: CheckDeviceUpdateNameAvailability
-mgmt-debug:
-  show-request-path: true
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - from: swagger-document
     where: $.definitions.GroupInformation

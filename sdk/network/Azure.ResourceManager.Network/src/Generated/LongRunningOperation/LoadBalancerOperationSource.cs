@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class LoadBalancerOperationSource : IOperationSource<LoadBalancer>
+    internal class LoadBalancerOperationSource : IOperationSource<LoadBalancerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        LoadBalancer IOperationSource<LoadBalancer>.CreateResult(Response response, CancellationToken cancellationToken)
+        LoadBalancerResource IOperationSource<LoadBalancerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
-            return new LoadBalancer(_client, data);
+            return new LoadBalancerResource(_client, data);
         }
 
-        async ValueTask<LoadBalancer> IOperationSource<LoadBalancer>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LoadBalancerResource> IOperationSource<LoadBalancerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LoadBalancerData.DeserializeLoadBalancerData(document.RootElement);
-            return new LoadBalancer(_client, data);
+            return new LoadBalancerResource(_client, data);
         }
     }
 }

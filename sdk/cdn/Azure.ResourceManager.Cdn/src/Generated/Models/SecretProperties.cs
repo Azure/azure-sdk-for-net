@@ -7,26 +7,22 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
-    public partial class SecretProperties : AfdStateProperties
+    /// <summary> The json object containing secret parameters. </summary>
+    public partial class SecretProperties
     {
         /// <summary> Initializes a new instance of SecretProperties. </summary>
         public SecretProperties()
         {
         }
 
-        /// <summary> object which contains secret parameters. </summary>
-        internal SecretParameters Parameters { get; set; }
-        /// <summary> The type of the Secret to create. </summary>
-        internal SecretType ParametersType
+        /// <summary> Initializes a new instance of SecretProperties. </summary>
+        /// <param name="secretType"> The type of the secret resource. </param>
+        internal SecretProperties(SecretType secretType)
         {
-            get => Parameters is null ? default : Parameters.Type;
-            set
-            {
-                if (Parameters is null)
-                    Parameters = new SecretParameters();
-                Parameters.Type = value;
-            }
+            SecretType = secretType;
         }
+
+        /// <summary> The type of the secret resource. </summary>
+        internal SecretType SecretType { get; set; }
     }
 }

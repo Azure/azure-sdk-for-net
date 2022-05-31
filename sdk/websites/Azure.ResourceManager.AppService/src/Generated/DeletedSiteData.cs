@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of DeletedSiteData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Slot of the deleted site. </param>
         /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
         /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
-        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName) : base(id, name, type, systemData, kind)
+        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName) : base(id, name, resourceType, systemData, kind)
         {
             DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;

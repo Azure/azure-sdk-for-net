@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineScaleSetVmExtensionOperationSource : IOperationSource<VirtualMachineScaleSetVmExtension>
+    internal class VirtualMachineScaleSetVmExtensionOperationSource : IOperationSource<VirtualMachineScaleSetVmExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        VirtualMachineScaleSetVmExtension IOperationSource<VirtualMachineScaleSetVmExtension>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineScaleSetVmExtensionResource IOperationSource<VirtualMachineScaleSetVmExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement);
-            return new VirtualMachineScaleSetVmExtension(_client, data);
+            return new VirtualMachineScaleSetVmExtensionResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineScaleSetVmExtension> IOperationSource<VirtualMachineScaleSetVmExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineScaleSetVmExtensionResource> IOperationSource<VirtualMachineScaleSetVmExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement);
-            return new VirtualMachineScaleSetVmExtension(_client, data);
+            return new VirtualMachineScaleSetVmExtensionResource(_client, data);
         }
     }
 }

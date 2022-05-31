@@ -33,14 +33,21 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Initializes a new instance of HealthApiClient. </summary>
         /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public HealthApiClient(string endpoint) : this(endpoint, new WebPubSubServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of HealthApiClient. </summary>
+        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options = null)
+        public HealthApiClient(string endpoint, WebPubSubServiceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new WebPubSubServiceClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -84,7 +91,7 @@ namespace Azure.Messaging.WebPubSub
 
         internal HttpMessage CreateGetServiceStatusRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Head;
             var uri = new RawRequestUriBuilder();
@@ -92,22 +99,10 @@ namespace Azure.Messaging.WebPubSub
             uri.AppendPath("/api/health", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

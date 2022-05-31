@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Network.Models
         internal static ServiceEndpointPropertiesFormat DeserializeServiceEndpointPropertiesFormat(JsonElement element)
         {
             Optional<string> service = default;
-            Optional<IList<string>> locations = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<AzureLocation>> locations = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("service"))
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NetworkProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

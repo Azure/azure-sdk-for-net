@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
                 scope = assignedScope
             };
 
-            Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails));
+            Response addedRoleAssignmentResponse = roleAssignmentsClient.CreateRoleAssignment(assignmentId, RequestContent.Create(roleAssignmentDetails), ContentType.ApplicationJson);
             BinaryData addedRoleAssignmentContent = addedRoleAssignmentResponse.Content;
             JsonDocument addedRoleAssignmentJson = JsonDocument.Parse(addedRoleAssignmentContent.ToMemory());
             string addedRoleAssignmentId = addedRoleAssignmentJson.RootElement.GetProperty("id").ToString();

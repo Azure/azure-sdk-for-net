@@ -59,7 +59,11 @@ namespace Azure.Messaging.EventGrid
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties AcsRecordingChunkInfoProperties(string documentId = null, long? index = default(long?), string endReason = null, string metadataLocation = null, string contentLocation = null, string deleteLocation = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset? recordingStartTime = default(System.DateTimeOffset?), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.Models.RecordingContentType? recordingContentType = default(Azure.Messaging.EventGrid.Models.RecordingContentType?), Azure.Messaging.EventGrid.Models.RecordingChannelType? recordingChannelType = default(Azure.Messaging.EventGrid.Models.RecordingChannelType?), Azure.Messaging.EventGrid.Models.RecordingFormatType? recordingFormatType = default(Azure.Messaging.EventGrid.Models.RecordingFormatType?), string sessionEndReason = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo = null, System.DateTimeOffset? recordingStartTime = default(System.DateTimeOffset?), long? recordingDurationMs = default(long?), Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType? contentType = default(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType?), Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType? channelType = default(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType?), Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType? formatType = default(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType?), string sessionEndReason = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFileStatusUpdatedEventData AcsRecordingFileStatusUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties recordingStorageInfo, System.DateTimeOffset? recordingStartTime, long? recordingDurationMs, string sessionEndReason) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties AcsRecordingStorageInfoProperties(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> recordingChunks = null) { throw null; }
@@ -116,6 +120,9 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata DeviceTwinMetadata(string lastUpdated = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DeviceTwinProperties DeviceTwinProperties(Azure.Messaging.EventGrid.SystemEvents.DeviceTwinMetadata metadata = null, float? version = default(float?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData EventHubCaptureFileCreatedEventData(string fileurl = null, string fileType = null, string partitionId = null, int? sizeInBytes = default(int?), int? eventCount = default(int?), int? firstSequenceNumber = default(int?), int? lastSequenceNumber = default(int?), System.DateTimeOffset? firstEnqueueTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastEnqueueTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceCreatedEventData HealthcareFhirResourceCreatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceDeletedEventData HealthcareFhirResourceDeletedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceUpdatedEventData HealthcareFhirResourceUpdatedEventData(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? fhirResourceType = default(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType?), string fhirServiceHostName = null, string fhirResourceId = null, long? fhirResourceVersionId = default(long?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.KeyVaultAccessPolicyChangedEventData KeyVaultAccessPolicyChangedEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = default(float?), float? exp = default(float?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.KeyVaultCertificateExpiredEventData KeyVaultCertificateExpiredEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = default(float?), float? exp = default(float?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.KeyVaultCertificateNearExpiryEventData KeyVaultCertificateNearExpiryEventData(string id = null, string vaultName = null, string objectType = null, string objectName = null, string version = null, float? nbf = default(float?), float? exp = default(float?)) { throw null; }
@@ -308,6 +315,9 @@ namespace Azure.Messaging.EventGrid
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
+        public const string HealthcareFhirResourceCreated = "Microsoft.HealthcareApis.FhirResourceCreated";
+        public const string HealthcareFhirResourceDeleted = "Microsoft.HealthcareApis.FhirResourceDeleted";
+        public const string HealthcareFhirResourceUpdated = "Microsoft.HealthcareApis.FhirResourceUpdated";
         public const string IotHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
         public const string IotHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
         public const string IotHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
@@ -405,6 +415,7 @@ namespace Azure.Messaging.EventGrid
 }
 namespace Azure.Messaging.EventGrid.Models
 {
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingChannelType : System.IEquatable<Azure.Messaging.EventGrid.Models.RecordingChannelType>
     {
@@ -423,6 +434,7 @@ namespace Azure.Messaging.EventGrid.Models
         public static bool operator !=(Azure.Messaging.EventGrid.Models.RecordingChannelType left, Azure.Messaging.EventGrid.Models.RecordingChannelType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingContentType : System.IEquatable<Azure.Messaging.EventGrid.Models.RecordingContentType>
     {
@@ -441,6 +453,7 @@ namespace Azure.Messaging.EventGrid.Models
         public static bool operator !=(Azure.Messaging.EventGrid.Models.RecordingContentType left, Azure.Messaging.EventGrid.Models.RecordingContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordingFormatType : System.IEquatable<Azure.Messaging.EventGrid.Models.RecordingFormatType>
     {
@@ -620,6 +633,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsRecordingChannelType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsRecordingChannelType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType Mixed { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType Unmixed { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AcsRecordingChunkInfoProperties
     {
         internal AcsRecordingChunkInfoProperties() { }
@@ -630,16 +661,59 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public long? Index { get { throw null; } }
         public string MetadataLocation { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsRecordingContentType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsRecordingContentType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType Audio { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType AudioVideo { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AcsRecordingFileStatusUpdatedEventData
     {
         internal AcsRecordingFileStatusUpdatedEventData() { }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChannelType? ChannelType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingContentType? ContentType { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType? FormatType { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Messaging.EventGrid.Models.RecordingChannelType? RecordingChannelType { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Messaging.EventGrid.Models.RecordingContentType? RecordingContentType { get { throw null; } }
         public long? RecordingDurationMs { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Messaging.EventGrid.Models.RecordingFormatType? RecordingFormatType { get { throw null; } }
         public System.DateTimeOffset? RecordingStartTime { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties RecordingStorageInfo { get { throw null; } }
         public string SessionEndReason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AcsRecordingFormatType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AcsRecordingFormatType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType Mp3 { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType Mp4 { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType Wav { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType left, Azure.Messaging.EventGrid.SystemEvents.AcsRecordingFormatType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AcsRecordingStorageInfoProperties
     {
@@ -1045,6 +1119,207 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string PartitionId { get { throw null; } }
         public int? SizeInBytes { get { throw null; } }
     }
+    public partial class HealthcareFhirResourceCreatedEventData
+    {
+        internal HealthcareFhirResourceCreatedEventData() { }
+        public string FhirResourceId { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? FhirResourceType { get { throw null; } }
+        public long? FhirResourceVersionId { get { throw null; } }
+        public string FhirServiceHostName { get { throw null; } }
+    }
+    public partial class HealthcareFhirResourceDeletedEventData
+    {
+        internal HealthcareFhirResourceDeletedEventData() { }
+        public string FhirResourceId { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? FhirResourceType { get { throw null; } }
+        public long? FhirResourceVersionId { get { throw null; } }
+        public string FhirServiceHostName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HealthcareFhirResourceType : System.IEquatable<Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HealthcareFhirResourceType(string value) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Account { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ActivityDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType AdverseEvent { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType AllergyIntolerance { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Appointment { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType AppointmentResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType AuditEvent { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Basic { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Binary { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType BiologicallyDerivedProduct { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType BodySite { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType BodyStructure { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Bundle { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CapabilityStatement { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CarePlan { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CareTeam { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CatalogEntry { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ChargeItem { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ChargeItemDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Claim { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ClaimResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ClinicalImpression { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CodeSystem { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Communication { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CommunicationRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CompartmentDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Composition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ConceptMap { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Condition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Consent { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Contract { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Coverage { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CoverageEligibilityRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType CoverageEligibilityResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DataElement { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DetectedIssue { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Device { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DeviceComponent { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DeviceDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DeviceMetric { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DeviceRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DeviceUseStatement { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DiagnosticReport { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DocumentManifest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DocumentReference { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType DomainResource { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EffectEvidenceSynthesis { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EligibilityRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EligibilityResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Encounter { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Endpoint { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EnrollmentRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EnrollmentResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EpisodeOfCare { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EventDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Evidence { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType EvidenceVariable { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ExampleScenario { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ExpansionProfile { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ExplanationOfBenefit { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType FamilyMemberHistory { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Flag { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Goal { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType GraphDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Group { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType GuidanceResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType HealthcareService { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ImagingManifest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ImagingStudy { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Immunization { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ImmunizationEvaluation { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ImmunizationRecommendation { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ImplementationGuide { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType InsurancePlan { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Invoice { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Library { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Linkage { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType List { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Location { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Measure { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MeasureReport { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Media { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Medication { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicationAdministration { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicationDispense { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicationKnowledge { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicationRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicationStatement { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProduct { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductAuthorization { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductContraindication { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductIndication { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductIngredient { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductInteraction { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductManufactured { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductPackaged { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductPharmaceutical { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MedicinalProductUndesirableEffect { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MessageDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MessageHeader { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType MolecularSequence { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType NamingSystem { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType NutritionOrder { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Observation { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ObservationDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType OperationDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType OperationOutcome { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Organization { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType OrganizationAffiliation { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Parameters { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Patient { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType PaymentNotice { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType PaymentReconciliation { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Person { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType PlanDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Practitioner { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType PractitionerRole { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Procedure { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ProcedureRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ProcessRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ProcessResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Provenance { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Questionnaire { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType QuestionnaireResponse { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ReferralRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType RelatedPerson { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType RequestGroup { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ResearchDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ResearchElementDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ResearchStudy { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ResearchSubject { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Resource { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType RiskAssessment { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType RiskEvidenceSynthesis { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Schedule { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SearchParameter { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Sequence { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ServiceDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ServiceRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Slot { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Specimen { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SpecimenDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType StructureDefinition { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType StructureMap { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Subscription { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Substance { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SubstanceNucleicAcid { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SubstancePolymer { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SubstanceProtein { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SubstanceReferenceInformation { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SubstanceSourceMaterial { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SubstanceSpecification { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SupplyDelivery { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType SupplyRequest { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType Task { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType TerminologyCapabilities { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType TestReport { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType TestScript { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType ValueSet { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType VerificationResult { get { throw null; } }
+        public static Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType VisionPrescription { get { throw null; } }
+        public bool Equals(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType left, Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType right) { throw null; }
+        public static implicit operator Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType left, Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class HealthcareFhirResourceUpdatedEventData
+    {
+        internal HealthcareFhirResourceUpdatedEventData() { }
+        public string FhirResourceId { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.HealthcareFhirResourceType? FhirResourceType { get { throw null; } }
+        public long? FhirResourceVersionId { get { throw null; } }
+        public string FhirServiceHostName { get { throw null; } }
+    }
     public partial class IotHubDeviceConnectedEventData : Azure.Messaging.EventGrid.SystemEvents.DeviceConnectionStateEventProperties
     {
         internal IotHubDeviceConnectedEventData() { }
@@ -1280,6 +1555,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         Upload = 2,
         Configuration = 3,
         Content = 4,
+        Account = 5,
     }
     public enum MediaJobErrorCode
     {
@@ -1292,6 +1568,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         ConfigurationUnsupported = 6,
         ContentMalformed = 7,
         ContentUnsupported = 8,
+        IdentityUnsupported = 9,
     }
     public partial class MediaJobErrorDetail
     {

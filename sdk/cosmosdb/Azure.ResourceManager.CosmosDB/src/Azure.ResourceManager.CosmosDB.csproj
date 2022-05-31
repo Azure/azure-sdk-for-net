@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageId>Azure.ResourceManager.CosmosDB</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.DocumentDB</Description>
     <PackageTags>azure;management;arm;resource manager;cosmosdb</PackageTags>

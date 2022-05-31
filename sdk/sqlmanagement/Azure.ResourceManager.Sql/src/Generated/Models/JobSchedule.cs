@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of JobSchedule. </summary>
-        /// <param name="startTime"> Schedule start time. </param>
-        /// <param name="endTime"> Schedule end time. </param>
-        /// <param name="type"> Schedule interval type. </param>
+        /// <param name="startOn"> Schedule start time. </param>
+        /// <param name="endOn"> Schedule end time. </param>
+        /// <param name="scheduleType"> Schedule interval type. </param>
         /// <param name="enabled"> Whether or not the schedule is enabled. </param>
         /// <param name="interval"> Value of the schedule&apos;s recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
-        internal JobSchedule(DateTimeOffset? startTime, DateTimeOffset? endTime, JobScheduleType? type, bool? enabled, string interval)
+        internal JobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, JobScheduleType? scheduleType, bool? enabled, string interval)
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            Type = type;
+            StartOn = startOn;
+            EndOn = endOn;
+            ScheduleType = scheduleType;
             Enabled = enabled;
             Interval = interval;
         }
 
         /// <summary> Schedule start time. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> Schedule end time. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> Schedule interval type. </summary>
-        public JobScheduleType? Type { get; set; }
+        public JobScheduleType? ScheduleType { get; set; }
         /// <summary> Whether or not the schedule is enabled. </summary>
         public bool? Enabled { get; set; }
         /// <summary> Value of the schedule&apos;s recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </summary>

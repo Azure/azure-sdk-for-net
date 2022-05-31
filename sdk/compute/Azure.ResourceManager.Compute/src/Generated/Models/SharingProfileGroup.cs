@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of SharingProfileGroup. </summary>
-        /// <param name="type"> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </param>
+        /// <param name="groupType"> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </param>
         /// <param name="ids"> A list of subscription/tenant ids the gallery is aimed to be shared to. </param>
-        internal SharingProfileGroup(SharingProfileGroupTypes? type, IList<string> ids)
+        internal SharingProfileGroup(SharingProfileGroupTypes? groupType, IList<string> ids)
         {
-            Type = type;
+            GroupType = groupType;
             Ids = ids;
         }
 
         /// <summary> This property allows you to specify the type of sharing group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Subscriptions** &lt;br&gt;&lt;br&gt; **AADTenants**. </summary>
-        public SharingProfileGroupTypes? Type { get; set; }
+        public SharingProfileGroupTypes? GroupType { get; set; }
         /// <summary> A list of subscription/tenant ids the gallery is aimed to be shared to. </summary>
         public IList<string> Ids { get; }
     }

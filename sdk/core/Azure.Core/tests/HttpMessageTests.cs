@@ -117,7 +117,7 @@ namespace Azure.Core.Tests
 
             // This replaces the base classifier with one that thinks
             // only 404 is a non-error.
-            message.ResponseClassifier = new CoreResponseClassifier(stackalloc int[] { 404 });
+            message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 404 });
 
             message.Response = new MockResponse(204);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -147,7 +147,7 @@ namespace Azure.Core.Tests
 
             // This replaces the base classifier with one that only thinks 404 is a non-error
             // and doesn't have opinions on anything else.
-            message.ResponseClassifier = new CoreResponseClassifier(stackalloc int[] { 404 });
+            message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 404 });
 
             message.Response = new MockResponse(304);
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
@@ -166,7 +166,7 @@ namespace Azure.Core.Tests
                 ClientOptions.Default,
                 new HttpPipelinePolicy[] { },
                 new HttpPipelinePolicy[] { },
-                new CoreResponseClassifier(stackalloc int[] { 404 }));
+                new StatusCodeClassifier(stackalloc ushort[] { 404 }));
 
             var message = pipeline.CreateMessage();
 
@@ -176,7 +176,7 @@ namespace Azure.Core.Tests
             message.Response = new MockResponse(404);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
 
-            message.ResponseClassifier = new CoreResponseClassifier(stackalloc int[] { 304 });
+            message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 304 });
 
             message.Response = new MockResponse(304);
             Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
@@ -242,7 +242,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void AppliesNonCoreResponseClassifier_HeadResponseClassifier()
+        public void AppliesNonStatusCodeClassifier_HeadResponseClassifier()
         {
             HttpMessage message = new HttpMessage(new MockRequest(), default);
             message.ApplyRequestContext(new RequestContext(), HeadResponseClassifier.Instance);
@@ -357,7 +357,7 @@ namespace Azure.Core.Tests
 
         // Example DPG classifier for testing purposes.
         private static ResponseClassifier _responseClassifier200204304;
-        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new CoreResponseClassifier(stackalloc int[] { 200, 204, 304 });
+        private static ResponseClassifier ResponseClassifier200204304 => _responseClassifier200204304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204, 304 });
 
         private sealed class HeadResponseClassifier : ResponseClassifier
         {

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                outputBlobUri = null;
                                 continue;
                             }
                             outputBlobUri = new Uri(property0.Value.GetString());
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                errorBlobUri = null;
                                 continue;
                             }
                             errorBlobUri = new Uri(property0.Value.GetString());

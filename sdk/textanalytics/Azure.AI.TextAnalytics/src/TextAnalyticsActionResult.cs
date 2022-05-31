@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class TextAnalyticsActionResult
     {
-        internal TextAnalyticsActionResult(string actionName, DateTimeOffset completedOn, TextAnalyticsErrorInternal error)
+        internal TextAnalyticsActionResult(string actionName, DateTimeOffset completedOn, Error error)
         {
             ActionName = actionName;
             CompletedOn = completedOn;

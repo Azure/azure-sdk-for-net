@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="connectionStringNames"> List of connection string names. </param>
         /// <param name="appSettingNames"> List of application settings names. </param>
         /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
-        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames) : base(id, name, type, systemData, kind)
+        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames) : base(id, name, resourceType, systemData, kind)
         {
             ConnectionStringNames = connectionStringNames;
             AppSettingNames = appSettingNames;

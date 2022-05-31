@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,15 +19,15 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -126,10 +127,10 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitPeeringData DeserializeExpressRouteCircuitPeeringData(JsonElement element)
         {
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> etag = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceType> type = default;
             Optional<ExpressRoutePeeringType> peeringType = default;
             Optional<ExpressRoutePeeringState> state = default;
             Optional<int> azureASN = default;
@@ -142,34 +143,49 @@ namespace Azure.ResourceManager.Network
             Optional<int> vlanId = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
             Optional<ExpressRouteCircuitStats> stats = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> gatewayManagerEtag = default;
             Optional<string> lastModifiedBy = default;
             Optional<WritableSubResource> routeFilter = default;
             Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
-            Optional<Resources.Models.SubResource> expressRouteConnection = default;
+            Optional<SubResource> expressRouteConnection = default;
             Optional<IList<ExpressRouteCircuitConnectionData>> connections = default;
             Optional<IReadOnlyList<PeerExpressRouteCircuitConnectionData>> peeredConnections = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -283,7 +299,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayManagerEtag"))
@@ -323,7 +339,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteConnection = JsonSerializer.Deserialize<Resources.Models.SubResource>(property0.Value.ToString());
+                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("connections"))
@@ -360,7 +376,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitPeeringData(id.Value, name.Value, etag.Value, type.Value, Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, Optional.ToList(connections), Optional.ToList(peeredConnections));
+            return new ExpressRouteCircuitPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerEtag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, Optional.ToList(connections), Optional.ToList(peeredConnections));
         }
     }
 }

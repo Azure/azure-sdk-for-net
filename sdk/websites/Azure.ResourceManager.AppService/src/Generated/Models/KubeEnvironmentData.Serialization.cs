@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("internalLoadBalancerEnabled");
                 writer.WriteBooleanValue(InternalLoadBalancerEnabled.Value);
             }
-            if (Optional.IsDefined(StaticIp))
+            if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp");
-                writer.WriteStringValue(StaticIp);
+                writer.WriteStringValue(StaticIP);
             }
             if (Optional.IsDefined(ArcConfiguration))
             {
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("appLogsConfiguration");
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
-            if (Optional.IsDefined(AksResourceID))
+            if (Optional.IsDefined(AksResourceId))
             {
                 writer.WritePropertyName("aksResourceID");
-                writer.WriteStringValue(AksResourceID);
+                writer.WriteStringValue(AksResourceId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

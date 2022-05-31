@@ -44,6 +44,12 @@ namespace Azure.Communication.PhoneNumbers
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
+        public override Response<PhoneNumberSearchResult> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response<PhoneNumberSearchResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+
+        /// <inheritdoc />
         public override ValueTask<Response<PhoneNumberSearchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />

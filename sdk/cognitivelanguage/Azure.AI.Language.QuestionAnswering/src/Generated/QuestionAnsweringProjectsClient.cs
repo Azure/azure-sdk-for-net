@@ -40,15 +40,23 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options = null)
+        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new QuestionAnsweringClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -1405,7 +1413,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
+            return GetProjectsImplementationAsync("QuestionAnsweringProjectsClient.GetProjects", top, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1466,7 +1479,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </remarks>
         public virtual Pageable<BinaryData> GetProjects(int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetProjects");
+            return GetProjectsImplementation("QuestionAnsweringProjectsClient.GetProjects", top, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1524,7 +1542,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
+            return GetDeploymentsImplementationAsync("QuestionAnsweringProjectsClient.GetDeployments", projectName, top, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1582,7 +1605,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetDeployments");
+            return GetDeploymentsImplementation("QuestionAnsweringProjectsClient.GetDeployments", projectName, top, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1639,7 +1667,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
+            return GetSynonymsImplementationAsync("QuestionAnsweringProjectsClient.GetSynonyms", projectName, top, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1696,7 +1729,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSynonyms");
+            return GetSynonymsImplementation("QuestionAnsweringProjectsClient.GetSynonyms", projectName, top, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1758,7 +1796,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
+            return GetSourcesImplementationAsync("QuestionAnsweringProjectsClient.GetSources", projectName, top, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1820,7 +1863,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetSources");
+            return GetSourcesImplementation("QuestionAnsweringProjectsClient.GetSources", projectName, top, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1914,7 +1962,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
+            return GetQnasImplementationAsync("QuestionAnsweringProjectsClient.GetQnas", projectName, source, top, skip, maxpagesize, context);
+        }
+
+        private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -2008,7 +2061,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "QuestionAnsweringProjectsClient.GetQnas");
+            return GetQnasImplementation("QuestionAnsweringProjectsClient.GetQnas", projectName, source, top, skip, maxpagesize, context);
+        }
+
+        private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -2024,7 +2082,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Delete the project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -2049,7 +2107,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(bool waitForCompletion, string projectName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2058,7 +2116,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2068,7 +2126,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Delete the project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
@@ -2093,7 +2151,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeleteProject(bool waitForCompletion, string projectName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2102,7 +2160,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2112,7 +2170,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Export project metadata and assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
@@ -2164,7 +2222,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ExportAsync(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2173,7 +2231,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2183,7 +2241,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Export project metadata and assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
         /// <param name="assetKind"> Kind of the asset of the project. Allowed values: &quot;qnas&quot; | &quot;synonyms&quot;. </param>
@@ -2235,7 +2293,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Export(bool waitForCompletion, string projectName, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string projectName, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2244,7 +2302,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2254,7 +2312,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Import project assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
@@ -2344,7 +2402,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportAsync(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2353,7 +2411,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2363,7 +2421,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Import project assets. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="format"> Knowledge base Import or Export format. Allowed values: &quot;json&quot; | &quot;tsv&quot; | &quot;excel&quot;. </param>
@@ -2453,7 +2511,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Import(bool waitForCompletion, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Import(WaitUntil waitUntil, string projectName, RequestContent content, string format = null, string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
@@ -2462,7 +2520,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2472,7 +2530,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Deploy project to production. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2498,7 +2556,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2508,7 +2566,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2518,7 +2576,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Deploy project to production. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2544,7 +2602,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> DeployProject(bool waitForCompletion, string projectName, string deploymentName, RequestContext context = null)
+        public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -2554,7 +2612,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2564,7 +2622,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the sources of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2603,7 +2661,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2613,7 +2671,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2623,7 +2681,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the sources of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2662,7 +2720,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateSources(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2672,7 +2730,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2682,7 +2740,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the QnAs of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2743,7 +2801,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2753,7 +2811,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2763,7 +2821,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         /// <summary> Updates the QnAs of a project. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -2824,7 +2882,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateQnas(bool waitForCompletion, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2834,7 +2892,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2845,7 +2903,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
 
         internal HttpMessage CreateGetProjectsRequest(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2867,13 +2925,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetProjectDetailsRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2884,13 +2941,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -2903,13 +2959,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -2920,13 +2975,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDeleteStatusRequest(string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2937,13 +2991,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateExportRequest(string projectName, string format, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -2963,13 +3016,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetExportStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2982,13 +3034,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, string assetKind, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3010,13 +3061,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetImportStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3029,13 +3079,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3048,13 +3097,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDeployStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3069,13 +3117,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3099,13 +3146,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSynonymsRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3129,13 +3175,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateSynonymsRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3149,13 +3194,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSourcesRequest(string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3179,13 +3223,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateSourcesRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -3199,13 +3242,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetUpdateSourcesStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3218,13 +3260,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetQnasRequest(string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3252,13 +3293,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateQnasRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -3272,13 +3312,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetUpdateQnasStatusRequest(string projectName, string jobId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3291,13 +3330,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateAddFeedbackRequest(string projectName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3311,13 +3349,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3326,13 +3363,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3341,13 +3377,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3356,13 +3391,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3371,13 +3405,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3386,76 +3419,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200201 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    201 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier _responseClassifier200202;
+        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

@@ -208,9 +208,9 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
 }
 ```
 
-By default tests are run in playback mode. To change the mode use the `AZURE_TEST_MODE` environment variable and set it to one of the followind values: `Live`, `Playback`, `Record`.
+By default tests are run in playback mode. To change the mode use the `AZURE_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
-In development scenarios where it's required to change mode quickly without restarting the Visual Studio use the two-parameter constructor of `RecordedTestBase` to change the mode:
+In development scenarios where it's required to change mode quickly without restarting Visual Studio, use the two-parameter constructor of `RecordedTestBase` to change the mode, or use the `.runsettings` file as described [here](#test-settings).
 
 Recorded tests can be attributed with the `RecordedTestAttribute` in lieu of the standard `TestAttribute` to enable functionality to automatically re-record tests that fail due to recording session file mismatches.
 Tests that are auto-rerecorded will fail with the following error and succeed if re-run.
@@ -233,6 +233,7 @@ public class ConfigurationLiveTests: RecordedTestBase<AppConfigurationTestEnviro
     }
 }
 ```
+In addition to the auto-rerecording functionality, using the RecordedTestAttribute also will automatically retry tests that fail due due to exceeding the global test time limit.
 
 ### Recording
 
@@ -288,6 +289,13 @@ When tests are run in `Playback` mode, the HTTP method, Uri, and headers are use
     }
 ```
 
+### Ignoring intermittent service errors
+
+If your live tests are impacted by temporary or intermittent services errors, be sure the service team is aware and has a plan to address the issues.
+If these issues cannot be resolved, you can attribute test classes or test methods with `[IgnoreServiceError]` which takes a required HTTP status code, Azure service error, and optional error message substring.
+This attribute, when used with `RecordedTestBase`-derived test fixtures and methods attributed with `[RecordedTest]`, which mark tests that failed with that specific error as "inconclusive", along with an optional
+reason you specify and the original error information.
+
 ### Misc
 
 You can use `Recording.GenerateId()` to generate repeatable random IDs.
@@ -301,6 +309,8 @@ It's possible to add additional recording variables for advanced scenarios (like
 You can use `if (Mode == RecordingMode.Playback) { ... }` to change behavior for playback only scenarios (in particular to make polling times instantaneous)
 
 You can use `using (Recording.DisableRecording()) { ... }` to disable recording in the code block (useful for polling methods)
+
+In order to enable testing with Fiddler, you can either set the  `AZURE_ENABLE_FIDDLER` environment variable or the `EnableFiddler` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 ## Support multi service version testing
 

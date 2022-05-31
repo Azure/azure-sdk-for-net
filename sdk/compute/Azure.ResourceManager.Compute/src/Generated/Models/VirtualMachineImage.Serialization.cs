@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineImage DeserializeVirtualMachineImage(JsonElement element)
         {
             string name = default;
-            string location = default;
+            AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<PurchasePlan> plan = default;
             Optional<OSDiskImage> osDiskImage = default;
             Optional<IList<DataDiskImage>> dataDiskImages = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -145,7 +145,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

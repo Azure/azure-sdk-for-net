@@ -9,14 +9,14 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomEntitiesTaskParameters. </summary>
-    internal partial class CustomEntitiesTaskParameters
+    /// <summary> Supported parameters for a Custom Entities task. </summary>
+    internal partial class CustomEntitiesTaskParameters : CustomTaskParameters
     {
         /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public CustomEntitiesTaskParameters(string projectName, string deploymentName)
+        public CustomEntitiesTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
         {
             if (projectName == null)
             {
@@ -26,18 +26,19 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(deploymentName));
             }
-
-            ProjectName = projectName;
-            DeploymentName = deploymentName;
         }
 
-        /// <summary> Gets the project name. </summary>
-        public string ProjectName { get; }
-        /// <summary> Gets the deployment name. </summary>
-        public string DeploymentName { get; }
-        /// <summary> Gets or sets the logging opt out. </summary>
-        public bool? LoggingOptOut { get; set; }
-        /// <summary> Gets or sets the string index type. </summary>
+        /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="projectName"></param>
+        /// <param name="deploymentName"></param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        internal CustomEntitiesTaskParameters(bool? loggingOptOut, string projectName, string deploymentName, StringIndexType? stringIndexType) : base(loggingOptOut, projectName, deploymentName)
+        {
+            StringIndexType = stringIndexType;
+        }
+
+        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType? StringIndexType { get; set; }
     }
 }

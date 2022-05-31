@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class WebPubSubTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
 
         private ResourceIdentifier _resourceGroupIdentifier;
 
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true,SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         [OneTimeTearDown]
         public async Task GlobleTearDown()
         {
-            await _resourceGroup.DeleteAsync(true);
+            await _resourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             var list = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        public async Task<WebPubSub> CreateWebPubSub(string webPubSubName)
+        public async Task<WebPubSubResource> CreateWebPubSub(string webPubSubName)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             };
 
             // Create WebPubSub
-            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await _resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(WaitUntil.Completed, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             await CreateWebPubSub(webPubSubName);
-            List<WebPubSub> webPubSubList = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
+            List<WebPubSubResource> webPubSubList = await _resourceGroup.GetWebPubSubs().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, webPubSubList.Count);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         {
             string webPubSubName = Recording.GenerateAssetName("webpubsub-");
             var webPubSub = await CreateWebPubSub(webPubSubName);
-            await webPubSub.DeleteAsync(true);
+            await webPubSub.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

@@ -259,7 +259,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies,
-                new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
+                new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 new ResponseClassifier());
 
             _version = options.VersionString;
@@ -360,7 +360,12 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            return new(Name, permissions, expiresOn) { Version = _version };
+            TableSasBuilder builder = new(Name, permissions, expiresOn);
+            if (!_isCosmosEndpoint)
+            {
+                builder.Version = _version;
+            }
+            return builder;
         }
 
         /// <summary>
@@ -377,7 +382,12 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(string rawPermissions, DateTimeOffset expiresOn)
         {
-            return new(Name, rawPermissions, expiresOn) { Version = _version };
+            TableSasBuilder builder = new(Name, rawPermissions, expiresOn);
+            if (!_isCosmosEndpoint)
+            {
+                builder.Version = _version;
+            }
+            return builder;
         }
 
         /// <summary>

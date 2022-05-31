@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -97,17 +98,17 @@ namespace Azure.ResourceManager.Network
         internal static PrivateLinkServiceData DeserializePrivateLinkServiceData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IList<FrontendIPConfigurationData>> loadBalancerFrontendIpConfigurations = default;
             Optional<IList<PrivateLinkServiceIPConfiguration>> ipConfigurations = default;
             Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<NetworkPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
             Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
             Optional<IList<string>> fqdns = default;
@@ -127,12 +128,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -142,12 +153,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -226,7 +247,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -236,10 +257,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<NetworkPrivateEndpointConnectionData> array = new List<NetworkPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -298,7 +319,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateLinkServiceData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(loadBalancerFrontendIpConfigurations), Optional.ToList(ipConfigurations), Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Optional.ToList(fqdns), @alias.Value, Optional.ToNullable(enableProxyProtocol));
+            return new PrivateLinkServiceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation.Value, Optional.ToNullable(etag), Optional.ToList(loadBalancerFrontendIpConfigurations), Optional.ToList(ipConfigurations), Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Optional.ToList(fqdns), @alias.Value, Optional.ToNullable(enableProxyProtocol));
         }
     }
 }

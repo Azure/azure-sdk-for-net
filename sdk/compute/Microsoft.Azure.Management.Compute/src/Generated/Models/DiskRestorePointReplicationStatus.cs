@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="status">The resource status information.</param>
-        public DiskRestorePointReplicationStatus(object status = default(object))
+        /// <param name="completionPercent">Replication completion
+        /// percentage.</param>
+        public DiskRestorePointReplicationStatus(InstanceViewStatus status = default(InstanceViewStatus), int? completionPercent = default(int?))
         {
             Status = status;
+            CompletionPercent = completionPercent;
             CustomInit();
         }
 
@@ -47,7 +50,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the resource status information.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public object Status { get; set; }
+        public InstanceViewStatus Status { get; set; }
+
+        /// <summary>
+        /// Gets or sets replication completion percentage.
+        /// </summary>
+        [JsonProperty(PropertyName = "completionPercent")]
+        public int? CompletionPercent { get; set; }
 
     }
 }

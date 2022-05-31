@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -35,8 +35,9 @@ namespace Azure.ResourceManager.Cdn
             ResourceType type = default;
             SystemData systemData = default;
             Optional<AfdProvisioningState> provisioningState = default;
-            Optional<DeploymentStatus> deploymentStatus = default;
-            Optional<SecurityPolicyParameters> parameters = default;
+            Optional<AfdDeploymentStatus> deploymentStatus = default;
+            Optional<string> profileName = default;
+            Optional<SecurityPolicyProperties> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -85,7 +86,12 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            deploymentStatus = new DeploymentStatus(property0.Value.GetString());
+                            deploymentStatus = new AfdDeploymentStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("profileName"))
+                        {
+                            profileName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -95,14 +101,14 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecurityPolicyParameters.DeserializeSecurityPolicyParameters(property0.Value);
+                            parameters = SecurityPolicyProperties.DeserializeSecurityPolicyProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AfdSecurityPolicyData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), parameters.Value);
+            return new AfdSecurityPolicyData(id, name, type, systemData, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value, parameters.Value);
         }
     }
 }

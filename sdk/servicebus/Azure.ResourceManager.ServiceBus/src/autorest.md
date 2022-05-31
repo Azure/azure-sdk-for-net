@@ -9,14 +9,48 @@ namespace: Azure.ResourceManager.ServiceBus
 require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-mgmt-debug:
-  show-request-path: true
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
-    Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
-    DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+  Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
+  DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
+# temporary enable this because of a bug in modeler v4: https://github.com/Azure/autorest/issues/4524
+modelerfour:
+  lenient-model-deduplication: true
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
+    - from: namespace-preview.json
+      where: $.definitions.Encryption
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.Identity
+      transform: $['x-ms-client-flatten'] = false
+    - from: namespace-preview.json
+      where: $.definitions.userAssignedIdentityProperties
+      transform: $['x-ms-client-flatten'] = false
     - rename-model:
         from: SBNamespace
         to: ServiceBusNamespace
@@ -161,10 +195,10 @@ directive:
       transform: $['description'] = 'Request to update Status of PrivateEndpoint Connection accepted.'
     - rename-model:
         from: RegenerateAccessKeyParameters
-        to: RegenerateAccessKeyOptions
+        to: RegenerateAccessKeyContent
     - rename-model:
         from: ServiceBusNamespaceUpdateParameters
-        to: ServiceBusNamespaceUpdateOptions
+        to: ServiceBusNamespaceUpdateContent
     - from: swagger-document
       where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
       transform: $['x-ms-client-name'] = 'iPRules'
@@ -175,7 +209,7 @@ directive:
       where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
       transform: >
         $['x-ms-enum'] = {
-          "name": "ProvisioningStateDisasterRecovery",
+          "name": "DisasterRecoveryProvisioningState",
           "modelAsString": false
         }
 ```

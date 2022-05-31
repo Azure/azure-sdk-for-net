@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.AppPlatform
     using System.Net.Http;
 
     /// <summary>
-    /// REST API for Azure Spring Cloud
+    /// REST API for Azure Spring Apps
     /// </summary>
     public partial class AppPlatformManagementClient : ServiceClient<AppPlatformManagementClient>, IAppPlatformManagementClient, IAzureClient
     {
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             ApiPortals = new ApiPortalsOperations(this);
             ApiPortalCustomDomains = new ApiPortalCustomDomainsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-01-01-preview";
+            ApiVersion = "2022-05-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -493,6 +493,8 @@ namespace Microsoft.Azure.Management.AppPlatform
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StorageProperties>("storageType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UserSourceInfo>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UserSourceInfo>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProbeAction>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProbeAction>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }

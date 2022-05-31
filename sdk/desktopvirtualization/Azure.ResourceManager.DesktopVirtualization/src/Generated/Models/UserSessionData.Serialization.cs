@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("activeDirectoryUserName");
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
-            if (Optional.IsDefined(CreateTime))
+            if (Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime");
-                writer.WriteStringValue(CreateTime.Value, "O");
+                writer.WriteStringValue(CreateOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

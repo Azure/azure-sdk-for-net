@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(MembershipType.Value.ToSerialString());
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(TargetType.ToString());
             if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName");

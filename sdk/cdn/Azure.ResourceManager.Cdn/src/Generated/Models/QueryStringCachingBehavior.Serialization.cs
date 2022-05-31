@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public static string ToSerialString(this QueryStringCachingBehavior value) => value switch
         {
+            QueryStringCachingBehavior.NotSet => "NotSet",
             QueryStringCachingBehavior.IgnoreQueryString => "IgnoreQueryString",
             QueryStringCachingBehavior.BypassCaching => "BypassCaching",
             QueryStringCachingBehavior.UseQueryString => "UseQueryString",
-            QueryStringCachingBehavior.NotSet => "NotSet",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryStringCachingBehavior value.")
         };
 
         public static QueryStringCachingBehavior ToQueryStringCachingBehavior(this string value)
         {
+            if (string.Equals(value, "NotSet", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.NotSet;
             if (string.Equals(value, "IgnoreQueryString", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.IgnoreQueryString;
             if (string.Equals(value, "BypassCaching", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.BypassCaching;
             if (string.Equals(value, "UseQueryString", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.UseQueryString;
-            if (string.Equals(value, "NotSet", StringComparison.InvariantCultureIgnoreCase)) return QueryStringCachingBehavior.NotSet;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryStringCachingBehavior value.");
         }
     }

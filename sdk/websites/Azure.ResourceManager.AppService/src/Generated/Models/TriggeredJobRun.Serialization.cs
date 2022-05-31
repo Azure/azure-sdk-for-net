@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end_time");
-                writer.WriteStringValue(EndTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration);
+                writer.WriteStringValue(Duration.Value, "c");
             }
-            if (Optional.IsDefined(OutputUrl))
+            if (Optional.IsDefined(OutputUri))
             {
                 writer.WritePropertyName("output_url");
-                writer.WriteStringValue(OutputUrl);
+                writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ErrorUrl))
+            if (Optional.IsDefined(ErrorUri))
             {
                 writer.WritePropertyName("error_url");
-                writer.WriteStringValue(ErrorUrl);
+                writer.WriteStringValue(ErrorUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(JobName))
             {
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<TriggeredWebJobStatus> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<string> duration = default;
-            Optional<string> outputUrl = default;
-            Optional<string> errorUrl = default;
-            Optional<string> url = default;
+            Optional<TimeSpan> duration = default;
+            Optional<Uri> outputUrl = default;
+            Optional<Uri> errorUrl = default;
+            Optional<Uri> url = default;
             Optional<string> jobName = default;
             Optional<string> trigger = default;
             foreach (var property in element.EnumerateObject())
@@ -131,22 +131,42 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    duration = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("output_url"))
                 {
-                    outputUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputUrl = null;
+                        continue;
+                    }
+                    outputUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error_url"))
                 {
-                    errorUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        errorUrl = null;
+                        continue;
+                    }
+                    errorUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("url"))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        url = null;
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("job_name"))
@@ -160,7 +180,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), duration.Value, outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value);
+            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value);
         }
     }
 }

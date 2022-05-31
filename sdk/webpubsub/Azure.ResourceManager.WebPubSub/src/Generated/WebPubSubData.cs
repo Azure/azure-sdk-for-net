@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> The location. </param>
         public WebPubSubData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
         /// </param>
-        /// <param name="networkAcls"> Network Acls. </param>
+        /// <param name="networkAcls"> Network ACLs. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.
         /// When it&apos;s Enabled, network ACLs still apply.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubSku sku, ManagedIdentity identity, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, type, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubSku sku, ManagedIdentity identity, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
         public string Version { get; }
         /// <summary> Private endpoint connections to the resource. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources. </summary>
         public IReadOnlyList<SharedPrivateLinkData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings. </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Network Acls. </summary>
+        /// <summary> Network ACLs. </summary>
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.

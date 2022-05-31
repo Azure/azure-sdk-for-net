@@ -37,7 +37,13 @@ namespace Azure.Data.SchemaRegistry
         {
         }
 
-        /// <summary>Initializes a new instance of <see cref="SchemaRegistryClient"/> for mocking.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryClient"/> class for mocking use in testing.
+        /// </summary>
+        /// <remarks>
+        /// This constructor exists only to support mocking. When used, class state is not fully initialized, and
+        /// will not function correctly; virtual members are meant to be mocked.
+        ///</remarks>
         protected SchemaRegistryClient()
         {
         }
@@ -123,7 +129,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.Register(groupName, schemaName,format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(format, response.Headers.SchemaId);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
 
                 return Response.FromValue(properties, response);
             }
@@ -195,7 +201,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.QueryIdByContent(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(format, response.Headers.SchemaId);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
 
                 return Response.FromValue(properties, response);
             }
@@ -245,7 +251,7 @@ namespace Azure.Data.SchemaRegistry
                 }
 
                 SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                var properties = new SchemaProperties(format, response.Headers.SchemaId);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);

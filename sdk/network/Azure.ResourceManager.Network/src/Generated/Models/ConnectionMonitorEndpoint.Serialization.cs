@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(EndpointType.Value.ToString());
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             string name = default;
             Optional<EndpointType> type = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> address = default;
             Optional<ConnectionMonitorEndpointFilter> filter = default;
             Optional<ConnectionMonitorEndpointScope> scope = default;
@@ -78,7 +78,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("address"))

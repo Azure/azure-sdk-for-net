@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of StartMenuItem. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="appAlias"> Alias of StartMenuItem. </param>
         /// <param name="filePath"> Path to the file of StartMenuItem. </param>
         /// <param name="commandLineArguments"> Command line arguments for StartMenuItem. </param>
         /// <param name="iconPath"> Path to the icon. </param>
         /// <param name="iconIndex"> Index of the icon. </param>
-        internal StartMenuItem(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex) : base(id, name, type, systemData)
+        internal StartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex) : base(id, name, resourceType, systemData)
         {
             AppAlias = appAlias;
             FilePath = filePath;

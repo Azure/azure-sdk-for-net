@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             Optional<DateTimeOffset> createdTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
             Optional<BuildStatus> status = default;
-            Optional<IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
+            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.StaticSiteUserProvidedFunctionApp> array = new List<Models.StaticSiteUserProvidedFunctionApp>();
+                            List<StaticSiteUserProvidedFunctionApp> array = new List<StaticSiteUserProvidedFunctionApp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
+                                array.Add(StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
                             }
                             userProvidedFunctionApps = array;
                             continue;

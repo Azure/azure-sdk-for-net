@@ -39,15 +39,13 @@ namespace Azure.Identity.Tests
                 new CredentialPipeline(new Uri("https://w.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                logPii,
-                new InteractiveBrowserCredentialOptions());
+                new InteractiveBrowserCredentialOptions(){ IsLoggingPIIEnabled = logPii });
 
             var client_2 = new MockMsalClient(
                 new CredentialPipeline(new Uri("https://w.com"), new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                false, // never log PII
-                new InteractiveBrowserCredentialOptions());
+                new InteractiveBrowserCredentialOptions(){ IsLoggingPIIEnabled = false }); // never log PII
 
             Assert.AreEqual(logPii, client_1.IsPiiLoggingEnabled);
 
@@ -70,8 +68,8 @@ namespace Azure.Identity.Tests
 
         private class MockMsalClient : MsalClientBase<IClientApplicationBase>
         {
-            public MockMsalClient(CredentialPipeline pipeline, string tenantId, string clientId, bool isPiiLoggingEnabled, ITokenCacheOptions cacheOptions)
-                : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+            public MockMsalClient(CredentialPipeline pipeline, string tenantId, string clientId, TokenCredentialOptions options)
+                : base(pipeline, tenantId, clientId, options)
             { }
 
             public ManualResetEventSlim Evt { get; set; }

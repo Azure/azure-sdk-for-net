@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains encryption settings for an OS disk image. </summary>
-    public partial class OSDiskImageEncryption : DiskImageEncryption
+    internal partial class OSDiskImageEncryption : DiskImageEncryption
     {
         /// <summary> Initializes a new instance of OSDiskImageEncryption. </summary>
         public OSDiskImageEncryption()
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of OSDiskImageEncryption. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
-        internal OSDiskImageEncryption(string diskEncryptionSetId) : base(diskEncryptionSetId)
+        internal OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId) : base(diskEncryptionSetId)
         {
         }
     }

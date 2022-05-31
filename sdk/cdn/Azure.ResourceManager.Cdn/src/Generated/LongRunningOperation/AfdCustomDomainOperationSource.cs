@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class AfdCustomDomainOperationSource : IOperationSource<AfdCustomDomain>
+    internal class AfdCustomDomainOperationSource : IOperationSource<AfdCustomDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        AfdCustomDomain IOperationSource<AfdCustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
+        AfdCustomDomainResource IOperationSource<AfdCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AfdCustomDomainData.DeserializeAfdCustomDomainData(document.RootElement);
-            return new AfdCustomDomain(_client, data);
+            return new AfdCustomDomainResource(_client, data);
         }
 
-        async ValueTask<AfdCustomDomain> IOperationSource<AfdCustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AfdCustomDomainResource> IOperationSource<AfdCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AfdCustomDomainData.DeserializeAfdCustomDomainData(document.RootElement);
-            return new AfdCustomDomain(_client, data);
+            return new AfdCustomDomainResource(_client, data);
         }
     }
 }

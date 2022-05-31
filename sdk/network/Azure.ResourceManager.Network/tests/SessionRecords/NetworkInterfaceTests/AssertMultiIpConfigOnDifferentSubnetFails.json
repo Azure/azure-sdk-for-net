@@ -532,7 +532,7 @@
       ]
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/networkInterfaces/azsmnet796?api-version=2021-02-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/networkInterfaces/azsmnet5268?api-version=2021-02-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -551,7 +551,7 @@
         "properties": {
           "ipConfigurations": [
             {
-              "name": "azsmnet6132",
+              "name": "azsmnet9134",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
@@ -562,7 +562,7 @@
               }
             },
             {
-              "name": "azsmnet2602",
+              "name": "azsmnet2406",
               "properties": {
                 "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
@@ -600,7 +600,7 @@
         "{\r\n",
         "  \u0022error\u0022: {\r\n",
         "    \u0022code\u0022: \u0022IpConfigurationsOnSameNicCannotUseDifferentSubnets\u0022,\r\n",
-        "    \u0022message\u0022: \u0022IPConfigurations on a Nic /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/networkInterfaces/azsmnet796 cannot belong to different subnets. Subnets referred: /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830;/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612\u0022,\r\n",
+        "    \u0022message\u0022: \u0022IPConfigurations on a Nic /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/networkInterfaces/azsmnet5268 cannot belong to different subnets. Subnets referred: /subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet8830;/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg1747/providers/Microsoft.Network/virtualNetworks/azsmnet6234/subnets/azsmnet7612\u0022,\r\n",
         "    \u0022details\u0022: []\r\n",
         "  }\r\n",
         "}"

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static DedicatedHostData DeserializeDedicatedHostData(JsonElement element)
         {
-            Models.Sku sku = default;
+            ComputeSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
             Optional<int> platformFaultDomain = default;
             Optional<bool> autoReplaceOnFailure = default;
             Optional<string> hostId = default;
-            Optional<IReadOnlyList<Resources.Models.SubResource>> virtualMachines = default;
+            Optional<IReadOnlyList<SubResource>> virtualMachines = default;
             Optional<DedicatedHostLicenseTypes> licenseType = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             virtualMachines = array;
                             continue;

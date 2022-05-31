@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -57,26 +59,36 @@ namespace Azure.ResourceManager.Network
 
         internal static DdosCustomPolicyData DeserializeDdosCustomPolicyData(JsonElement element)
         {
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<string> resourceGuid = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<WritableSubResource>> publicIPAddresses = default;
             Optional<IList<ProtocolCustomSettingsFormat>> protocolCustomSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -86,12 +98,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -120,7 +142,12 @@ namespace Azure.ResourceManager.Network
                     {
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -130,7 +157,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicIPAddresses"))
@@ -167,7 +194,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosCustomPolicyData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(protocolCustomSettings));
+            return new DdosCustomPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(publicIPAddresses), Optional.ToList(protocolCustomSettings));
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<ComputePrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<ComputePrivateEndpointConnectionData> array = new List<ComputePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

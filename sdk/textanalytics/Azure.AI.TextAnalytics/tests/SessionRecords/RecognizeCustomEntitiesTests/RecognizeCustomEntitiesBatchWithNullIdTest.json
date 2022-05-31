@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/analyze",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-04-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json, text/json",
-        "Content-Length": "253",
+        "Accept": "application/json",
+        "Content-Length": "251",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-a70ebe4e3cca0b489142d9ee12505df5-785f41c15f43664a-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "701610698e4e2836b2896021426da6ec",
+        "traceparent": "00-801c6d376dd6564fa29d53128415e445-00300cfa5877414f-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220513.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "922face38902be99c518b43af41aae87",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,31 +23,30 @@
             }
           ]
         },
-        "tasks": {
-          "customEntityRecognitionTasks": [
-            {
-              "parameters": {
-                "project-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
-                "deployment-name": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
-              }
-            }
-          ]
-        }
+        "tasks": [
+          {
+            "parameters": {
+              "projectName": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
+              "deploymentName": "88ee0f78-fbca-444d-98e2-7c4c8631e494"
+            },
+            "kind": "CustomEntityRecognition"
+          }
+        ]
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "2f144cf5-e8d6-47db-9feb-bcaafefb3bd4",
+        "apim-request-id": "f8ffeb8a-9270-4a59-9aca-fb6a518b636a",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Oct 2021 23:44:07 GMT",
+        "Date": "Fri, 13 May 2022 19:22:23 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
+        "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "5"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidRequest",
-          "message": "Invalid document in request.",
+          "message": "Invalid Document in request.",
           "innererror": {
             "code": "InvalidDocument",
             "message": "At least one document is missing an Id attribute."
@@ -57,7 +56,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1937417632",
+    "RandomSeed": "1448191087",
     "TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
     "TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",

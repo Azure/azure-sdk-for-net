@@ -184,9 +184,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
             foreach (JProperty property in entity.Properties())
             {
                 var key = property.Name;
-                if (key == nameof(TableEntity.ETag))
+
+                // For reserved attributes, normalize to the casing used when communicating with service
+                if (nameof(TableEntity.ETag).Equals(key, StringComparison.OrdinalIgnoreCase))
                 {
                     key = PocoTypeBinder.ETagKeyName;
+                }
+                else if (nameof(TableEntity.PartitionKey).Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = nameof(TableEntity.PartitionKey);
+                }
+                else if (nameof(TableEntity.RowKey).Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    key = nameof(TableEntity.RowKey);
                 }
 
                 if (property.Value is JValue value)

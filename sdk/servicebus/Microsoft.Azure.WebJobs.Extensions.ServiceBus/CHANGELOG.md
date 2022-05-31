@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.0-beta.1 (Unreleased)
+## 5.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.5.0 (2022-05-16)
+
+### Bugs Fixed
+
+- Updated dependency on `Azure.Messaging.ServiceBus` to benefit from bug fix.
+- Messages will now be abandoned if the function invocation throws for multiple dispatch functions. This was already the behavior for single dispatch functions.
+
+## 5.4.0 (2022-05-10)
+
+### Features Added
+
+- Added the `ServiceBusReceiveActions` type to support receiving additional messages from a function invocation.
+- Added the ability to bind to the `SessionId` property.
+
+## 5.3.0 (2022-03-09)
+
+### Acknowledgments
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Features Added
+
+- Added the ability to renew message and session locks using the `ServiceBusMessageActions` and `ServiceBusSessionActions`.
+
+### Bugs Fixed
+
+- Ignore scheduled/deferred messages when computing scale monitor metrics. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 ## 5.2.0 (2021-12-08)
 

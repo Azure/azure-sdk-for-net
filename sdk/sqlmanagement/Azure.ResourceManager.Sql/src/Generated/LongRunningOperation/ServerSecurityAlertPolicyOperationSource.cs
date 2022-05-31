@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerSecurityAlertPolicyOperationSource : IOperationSource<ServerSecurityAlertPolicy>
+    internal class ServerSecurityAlertPolicyOperationSource : IOperationSource<ServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ServerSecurityAlertPolicy IOperationSource<ServerSecurityAlertPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerSecurityAlertPolicyResource IOperationSource<ServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
-            return new ServerSecurityAlertPolicy(_client, data);
+            return new ServerSecurityAlertPolicyResource(_client, data);
         }
 
-        async ValueTask<ServerSecurityAlertPolicy> IOperationSource<ServerSecurityAlertPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerSecurityAlertPolicyResource> IOperationSource<ServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(document.RootElement);
-            return new ServerSecurityAlertPolicy(_client, data);
+            return new ServerSecurityAlertPolicyResource(_client, data);
         }
     }
 }

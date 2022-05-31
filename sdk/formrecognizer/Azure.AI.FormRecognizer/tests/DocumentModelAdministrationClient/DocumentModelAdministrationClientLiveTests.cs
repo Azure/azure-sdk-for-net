@@ -17,6 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentModelAdministrationClientLiveTests : DocumentAnalysisLiveTestBase
     {
         private readonly IReadOnlyDictionary<string, string> TestingTags = new Dictionary<string, string>()
@@ -113,14 +114,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("Issue https://github.com/Azure/azure-sdk-for-net-pr/issues/1442")]
         public async Task StartBuildModelSucceedsWithValidPrefix()
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder" });
+            BuildModelOperation operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId, new BuildModelOptions() { Prefix = "subfolder/" });
 
             await operation.WaitForCompletionAsync();
 
@@ -129,6 +129,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/azure/azure-sdk-for-net/issues/28272")]
         public void StartBuildModelFailsWithInvalidPrefix()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -184,8 +185,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             AccountProperties accountP = await client.GetAccountPropertiesAsync();
 
-            Assert.IsNotNull(accountP.Count);
-            Assert.IsNotNull(accountP.Limit);
+            Assert.IsNotNull(accountP.DocumentModelCount);
+            Assert.IsNotNull(accountP.DocumentModelLimit);
         }
 
         [RecordedTest]
@@ -202,6 +203,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/28705")]
         public async Task AdminOps(bool useTokenCredential)
         {
             var client = CreateDocumentModelAdministrationClient(useTokenCredential);
@@ -236,8 +238,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             await client.DeleteModelAsync(modelId);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetModelAsync(modelId));
-            Console.WriteLine(ex.ErrorCode);
+            Assert.ThrowsAsync<RequestFailedException>(() => client.GetModelAsync(modelId));
         }
 
         [RecordedTest]
@@ -336,7 +337,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId);
 
-            CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            CopyModelOperation operation = await sourceClient.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
 
             await operation.WaitForCompletionAsync();
             Assert.IsTrue(operation.HasValue);
@@ -383,7 +384,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(targetModelId, tags: tags);
-            CopyModelOperation operation = await sourceClient.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
+            CopyModelOperation operation = await sourceClient.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
 
             await operation.WaitForCompletionAsync();
 
@@ -403,7 +404,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var modelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync(modelId);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelAsync(modelId, targetAuth));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sourceClient.StartCopyModelToAsync(modelId, targetAuth));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 

@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.AppPlatform.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,13 +34,18 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="type">Type of the managed identity. Possible values
         /// include: 'None', 'SystemAssigned', 'UserAssigned',
         /// 'SystemAssigned,UserAssigned'</param>
-        /// <param name="principalId">Principal Id</param>
-        /// <param name="tenantId">Tenant Id</param>
-        public ManagedIdentityProperties(string type = default(string), string principalId = default(string), string tenantId = default(string))
+        /// <param name="principalId">Principal Id of system-assigned managed
+        /// identity.</param>
+        /// <param name="tenantId">Tenant Id of system-assigned managed
+        /// identity.</param>
+        /// <param name="userAssignedIdentities">Properties of user-assigned
+        /// managed identities</param>
+        public ManagedIdentityProperties(string type = default(string), string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedManagedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedManagedIdentity>))
         {
             Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
 
@@ -56,16 +63,22 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets principal Id
+        /// Gets or sets principal Id of system-assigned managed identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary>
-        /// Gets or sets tenant Id
+        /// Gets or sets tenant Id of system-assigned managed identity.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets properties of user-assigned managed identities
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserAssignedManagedIdentity> UserAssignedIdentities { get; set; }
 
     }
 }
