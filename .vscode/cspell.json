@@ -372,6 +372,15 @@
         "Plex",
         "Vstsrm"
       ]
+    },
+	{
+      "filename": "**/sdk/workloads/**/*.cs",
+      "words": [
+        "ascs",
+        "hana",
+        "ssdlrs",
+        "vmss"
+      ]
     }
   ],
   "allowCompoundWords": true
