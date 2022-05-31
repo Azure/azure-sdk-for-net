@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendIPConfigurations"> Collection of references to IPs defined in network interfaces. </param>
         /// <param name="backendAddresses"> Backend addresses. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             BackendIPConfigurations = backendIPConfigurations;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Collection of references to IPs defined in network interfaces. </summary>
         public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
         /// <summary> Backend addresses. </summary>

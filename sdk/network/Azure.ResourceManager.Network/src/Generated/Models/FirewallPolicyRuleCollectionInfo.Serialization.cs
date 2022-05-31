@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyRuleCollection : IUtf8JsonSerializable
+    public partial class FirewallPolicyRuleCollectionInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyRuleCollection DeserializeFirewallPolicyRuleCollection(JsonElement element)
+        internal static FirewallPolicyRuleCollectionInfo DeserializeFirewallPolicyRuleCollectionInfo(JsonElement element)
         {
             if (element.TryGetProperty("ruleCollectionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "FirewallPolicyFilterRuleCollection": return FirewallPolicyFilterRuleCollection.DeserializeFirewallPolicyFilterRuleCollection(element);
-                    case "FirewallPolicyNatRuleCollection": return FirewallPolicyNatRuleCollection.DeserializeFirewallPolicyNatRuleCollection(element);
+                    case "FirewallPolicyFilterRuleCollection": return FirewallPolicyFilterRuleCollectionInfo.DeserializeFirewallPolicyFilterRuleCollectionInfo(element);
+                    case "FirewallPolicyNatRuleCollection": return FirewallPolicyNatRuleCollectionInfo.DeserializeFirewallPolicyNatRuleCollectionInfo(element);
                 }
             }
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyRuleCollection(ruleCollectionType, name.Value, Optional.ToNullable(priority));
+            return new FirewallPolicyRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority));
         }
     }
 }

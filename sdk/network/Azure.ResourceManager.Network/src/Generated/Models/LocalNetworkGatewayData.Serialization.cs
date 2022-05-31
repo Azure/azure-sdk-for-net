@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Network
 
         internal static LocalNetworkGatewayData DeserializeLocalNetworkGatewayData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -83,7 +84,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -199,7 +205,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new LocalNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, localNetworkAddressSpace.Value, gatewayIpAddress.Value, fqdn.Value, bgpSettings.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LocalNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), localNetworkAddressSpace.Value, gatewayIpAddress.Value, fqdn.Value, bgpSettings.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall IP configuration resource. </param>
-        internal AzureFirewallIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal AzureFirewallIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             PrivateIPAddress = privateIPAddress;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </summary>
         public string PrivateIPAddress { get; }
         /// <summary> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </summary>

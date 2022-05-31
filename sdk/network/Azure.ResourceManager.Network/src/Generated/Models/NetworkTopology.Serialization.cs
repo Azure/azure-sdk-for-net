@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class Topology
+    public partial class NetworkTopology
     {
-        internal static Topology DeserializeTopology(JsonElement element)
+        internal static NetworkTopology DeserializeNetworkTopology(JsonElement element)
         {
             Optional<string> id = default;
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> lastModified = default;
-            Optional<IReadOnlyList<TopologyResource>> resources = default;
+            Optional<IReadOnlyList<TopologyResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TopologyResource> array = new List<TopologyResource>();
+                    List<TopologyResourceInfo> array = new List<TopologyResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyResource.DeserializeTopologyResource(item));
+                        array.Add(TopologyResourceInfo.DeserializeTopologyResourceInfo(item));
                     }
                     resources = array;
                     continue;
                 }
             }
-            return new Topology(id.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastModified), Optional.ToList(resources));
+            return new NetworkTopology(id.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastModified), Optional.ToList(resources));
         }
     }
 }

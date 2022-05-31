@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<Topology>> GetTopologyAsync(TopologyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkTopology>> GetTopologyAsync(TopologyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<Topology> GetTopology(TopologyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkTopology> GetTopology(TopologyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

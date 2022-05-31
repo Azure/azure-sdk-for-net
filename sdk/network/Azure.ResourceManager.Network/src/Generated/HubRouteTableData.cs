@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Routes = routes;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> List of all routes. </summary>
         public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>

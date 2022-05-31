@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType)
+        internal NetworkPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, PrivateEndpointData privateEndpoint, NetworkPrivateLinkServiceConnectionState connectionState, NetworkProvisioningState? provisioningState, string linkIdentifier) : base(id, name, resourceType)
         {
             Etag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

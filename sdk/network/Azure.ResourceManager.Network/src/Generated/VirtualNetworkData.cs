@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the virtual network. </param>
         /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, IList<WritableSubResource> ipAllocations) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The extended location of the virtual network. </summary>
         public Models.ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </summary>
         internal AddressSpace AddressSpace { get; set; }
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>

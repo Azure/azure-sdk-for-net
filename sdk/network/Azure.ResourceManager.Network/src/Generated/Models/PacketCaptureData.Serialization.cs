@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -17,8 +18,8 @@ namespace Azure.ResourceManager.Network
         internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ETag> etag = default;
             Optional<string> target = default;
             Optional<long> bytesToCapturePerPacket = default;
             Optional<long> totalBytesPerSession = default;
@@ -35,12 +36,22 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -126,7 +137,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PacketCaptureData(name.Value, id.Value, etag.Value, target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
+            return new PacketCaptureData(name.Value, id.Value, Optional.ToNullable(etag), target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
         }
     }
 }

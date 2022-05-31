@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="migrationPhase"> Migration phase of Public IP Address. </param>
         /// <param name="linkedPublicIPAddress"> The linked public IP address of the public IP address resource. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM using it is deleted. </param>
-        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPAddressSku sku, string etag, IList<string> zones, IPAllocationMethod? publicIPAllocationMethod, IPVersion? publicIPAddressVersion, IPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, DeleteOptions? deleteOption) : base(id, name, resourceType, location, tags)
+        internal PublicIPAddressData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, PublicIPAddressSku sku, ETag? etag, IList<string> zones, IPAllocationMethod? publicIPAllocationMethod, IPVersion? publicIPAddressVersion, IPConfiguration ipConfiguration, PublicIPAddressDnsSettings dnsSettings, DdosSettings ddosSettings, IList<IPTag> ipTags, string ipAddress, WritableSubResource publicIPPrefix, int? idleTimeoutInMinutes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, PublicIPAddressData servicePublicIPAddress, NatGatewayData natGateway, PublicIPAddressMigrationPhase? migrationPhase, PublicIPAddressData linkedPublicIPAddress, DeleteOptions? deleteOption) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The public IP address SKU. </summary>
         public PublicIPAddressSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         public IList<string> Zones { get; }
         /// <summary> The public IP address allocation method. </summary>

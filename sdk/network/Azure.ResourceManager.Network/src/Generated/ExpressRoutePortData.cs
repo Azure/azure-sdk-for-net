@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRoutePort resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route port resource. </param>
-        internal ExpressRoutePortData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
+        internal ExpressRoutePortData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, string peeringLocation, int? bandwidthInGbps, float? provisionedBandwidthInGbps, string mtu, ExpressRoutePortsEncapsulation? encapsulation, string etherType, string allocationDate, IList<ExpressRouteLinkData> links, IReadOnlyList<WritableSubResource> circuits, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Identity = identity;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The identity of ExpressRoutePort, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The name of the peering location that the ExpressRoutePort is mapped to physically. </summary>

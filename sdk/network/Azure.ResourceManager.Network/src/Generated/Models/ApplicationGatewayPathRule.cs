@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
         {
             Etag = etag;
             Paths = paths;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Path rules of URL path map. </summary>
         public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>

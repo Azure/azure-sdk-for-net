@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The ip configuration for a container network interface. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="containerNetworkInterfaceIpConfigurationType"> Sub Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface IP configuration resource. </param>
-        internal ContainerNetworkInterfaceIPConfiguration(string name, string containerNetworkInterfaceIpConfigurationType, string etag, NetworkProvisioningState? provisioningState)
+        internal ContainerNetworkInterfaceIPConfiguration(string name, string containerNetworkInterfaceIpConfigurationType, ETag? etag, NetworkProvisioningState? provisioningState)
         {
             Name = name;
             ContainerNetworkInterfaceIpConfigurationType = containerNetworkInterfaceIpConfigurationType;
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Sub Resource type. </summary>
         public string ContainerNetworkInterfaceIpConfigurationType { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The provisioning state of the container network interface IP configuration resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

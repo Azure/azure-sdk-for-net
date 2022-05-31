@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="iPv6CircuitConnectionConfig"> IPv6 Address PrefixProperties of the express route circuit connection. </param>
         /// <param name="circuitConnectionStatus"> Express Route Circuit connection state. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit connection resource. </param>
-        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ExpressRouteCircuitConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource expressRouteCircuitPeering, WritableSubResource peerExpressRouteCircuitPeering, string addressPrefix, string authorizationKey, IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig, CircuitConnectionStatus? circuitConnectionStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             ExpressRouteCircuitPeering = expressRouteCircuitPeering;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit initiating connection. </summary>
         internal WritableSubResource ExpressRouteCircuitPeering { get; set; }
         /// <summary> Gets or sets Id. </summary>

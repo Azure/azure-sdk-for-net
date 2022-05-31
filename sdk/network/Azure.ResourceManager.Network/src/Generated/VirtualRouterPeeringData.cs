@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             PeerAsn = peerAsn;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Peer ASN. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>

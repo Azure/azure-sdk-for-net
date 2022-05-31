@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -139,15 +140,15 @@ namespace Azure.ResourceManager.Network
         internal static AzureFirewallData DeserializeAzureFirewallData(JsonElement element)
         {
             Optional<IList<string>> zones = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AzureFirewallApplicationRuleCollection>> applicationRuleCollections = default;
-            Optional<IList<AzureFirewallNatRuleCollection>> natRuleCollections = default;
-            Optional<IList<AzureFirewallNetworkRuleCollection>> networkRuleCollections = default;
+            Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
+            Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
+            Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
             Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
             Optional<AzureFirewallIPConfiguration> managementIpConfiguration = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -177,7 +178,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -246,10 +252,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallApplicationRuleCollection> array = new List<AzureFirewallApplicationRuleCollection>();
+                            List<AzureFirewallApplicationRuleCollectionData> array = new List<AzureFirewallApplicationRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallApplicationRuleCollection.DeserializeAzureFirewallApplicationRuleCollection(item));
+                                array.Add(AzureFirewallApplicationRuleCollectionData.DeserializeAzureFirewallApplicationRuleCollectionData(item));
                             }
                             applicationRuleCollections = array;
                             continue;
@@ -261,10 +267,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallNatRuleCollection> array = new List<AzureFirewallNatRuleCollection>();
+                            List<AzureFirewallNatRuleCollectionData> array = new List<AzureFirewallNatRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRuleCollection.DeserializeAzureFirewallNatRuleCollection(item));
+                                array.Add(AzureFirewallNatRuleCollectionData.DeserializeAzureFirewallNatRuleCollectionData(item));
                             }
                             natRuleCollections = array;
                             continue;
@@ -276,10 +282,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallNetworkRuleCollection> array = new List<AzureFirewallNetworkRuleCollection>();
+                            List<AzureFirewallNetworkRuleCollectionData> array = new List<AzureFirewallNetworkRuleCollectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNetworkRuleCollection.DeserializeAzureFirewallNetworkRuleCollection(item));
+                                array.Add(AzureFirewallNetworkRuleCollectionData.DeserializeAzureFirewallNetworkRuleCollectionData(item));
                             }
                             networkRuleCollections = array;
                             continue;
@@ -403,7 +409,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), etag.Value, Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIpConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIpConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
         }
     }
 }

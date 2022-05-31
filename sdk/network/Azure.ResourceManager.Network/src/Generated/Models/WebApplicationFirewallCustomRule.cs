@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Type of Actions. </param>
-        internal WebApplicationFirewallCustomRule(string name, string etag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
+        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, WebApplicationFirewallAction action)
         {
             Name = name;
             Etag = etag;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is unique within a policy. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </summary>
         public int Priority { get; set; }
         /// <summary> The rule type. </summary>

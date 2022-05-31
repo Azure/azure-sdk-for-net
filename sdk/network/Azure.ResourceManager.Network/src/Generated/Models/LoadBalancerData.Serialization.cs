@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Network
         {
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<LoadBalancerSku> sku = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -168,7 +169,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -359,7 +365,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new LoadBalancerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, etag.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new LoadBalancerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation.Value, sku.Value, Optional.ToNullable(etag), Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), Optional.ToList(loadBalancingRules), Optional.ToList(probes), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, string etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
             Etag = etag;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The SKU. </summary>
         public ExpressRouteCircuitSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Allow classic operations. </summary>
         public bool? AllowClassicOperations { get; set; }
         /// <summary> The CircuitProvisioningState state of the resource. </summary>

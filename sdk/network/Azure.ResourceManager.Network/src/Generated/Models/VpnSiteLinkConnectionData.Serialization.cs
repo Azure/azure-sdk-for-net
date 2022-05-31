@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnSiteLinkConnectionData DeserializeVpnSiteLinkConnectionData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -141,7 +142,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -362,7 +368,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), etag.Value, vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIpAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
+            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIpAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
         }
     }
 }

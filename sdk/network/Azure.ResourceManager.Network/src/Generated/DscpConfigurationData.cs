@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedNetworkInterfaces"> Associated Network Interfaces to the DSCP Configuration. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
-        internal DscpConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal DscpConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Markings = markings;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> List of markings to be used in the configuration. </summary>
         public IList<int> Markings { get; }
         /// <summary> Source IP ranges. </summary>

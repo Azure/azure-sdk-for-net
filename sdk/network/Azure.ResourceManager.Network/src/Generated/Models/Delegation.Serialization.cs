@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static Delegation DeserializeDelegation(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -55,7 +56,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new Delegation(id.Value, name.Value, Optional.ToNullable(type), etag.Value, serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
+            return new Delegation(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), serviceName.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState));
         }
     }
 }

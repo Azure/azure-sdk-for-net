@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCrossConnectionData DeserializeExpressRouteCrossConnectionData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -92,7 +93,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -243,7 +249,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
+            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
         }
     }
 }

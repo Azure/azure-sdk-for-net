@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </param>
         /// <param name="protocolCustomSettings"> The protocol-specific DDoS policy customization parameters. </param>
-        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, resourceType, location, tags)
+        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ResourceGuid = resourceGuid;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the DDoS custom policy resource. </summary>

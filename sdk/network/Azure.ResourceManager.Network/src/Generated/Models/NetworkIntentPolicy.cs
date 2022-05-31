@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkIntentPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag) : base(id, name, resourceType, location, tags)
+        internal NetworkIntentPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
     }
 }

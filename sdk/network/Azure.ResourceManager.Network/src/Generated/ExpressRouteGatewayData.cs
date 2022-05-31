@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
         /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IReadOnlyList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             AutoScaleConfiguration = autoScaleConfiguration;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Configuration for auto scaling. </summary>
         internal ExpressRouteGatewayPropertiesAutoScaleConfiguration AutoScaleConfiguration { get; set; }
         /// <summary> Minimum and maximum number of scale units to deploy. </summary>

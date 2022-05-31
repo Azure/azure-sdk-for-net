@@ -6,30 +6,31 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NAT rule collection resource. </summary>
-    public partial class AzureFirewallNatRuleCollection : NetworkSubResource
+    public partial class AzureFirewallNatRuleCollectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
-        public AzureFirewallNatRuleCollection()
+        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
+        public AzureFirewallNatRuleCollectionData()
         {
             Rules = new ChangeTrackingList<AzureFirewallNatRule>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
+        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within the Azure firewall. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the NAT rule collection resource. </param>
         /// <param name="action"> The action type of a NAT rule collection. </param>
         /// <param name="rules"> Collection of rules used by a NAT rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT rule collection resource. </param>
-        internal AzureFirewallNatRuleCollection(ResourceIdentifier id, string name, string etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id)
+        internal AzureFirewallNatRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
             Priority = priority;
             Action = action;
@@ -37,10 +38,8 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within the Azure firewall. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Priority of the NAT rule collection resource. </summary>
         public int? Priority { get; set; }
         /// <summary> The action type of a NAT rule collection. </summary>

@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Firewall Policy NAT Rule Collection. </summary>
-    public partial class FirewallPolicyNatRuleCollection : FirewallPolicyRuleCollection
+    /// <summary> Firewall Policy Filter Rule Collection. </summary>
+    public partial class FirewallPolicyFilterRuleCollectionInfo : FirewallPolicyRuleCollectionInfo
     {
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollection. </summary>
-        public FirewallPolicyNatRuleCollection()
+        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionInfo. </summary>
+        public FirewallPolicyFilterRuleCollectionInfo()
         {
             Rules = new ChangeTrackingList<FirewallPolicyRule>();
-            RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection;
+            RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection;
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyNatRuleCollection. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionInfo. </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
-        /// <param name="action"> The action type of a Nat rule collection. </param>
+        /// <param name="action"> The action type of a Filter rule collection. </param>
         /// <param name="rules"> List of rules included in a rule collection. </param>
-        internal FirewallPolicyNatRuleCollection(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, FirewallPolicyNatRuleCollectionAction action, IList<FirewallPolicyRule> rules) : base(ruleCollectionType, name, priority)
+        internal FirewallPolicyFilterRuleCollectionInfo(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, FirewallPolicyFilterRuleCollectionAction action, IList<FirewallPolicyRule> rules) : base(ruleCollectionType, name, priority)
         {
             Action = action;
             Rules = rules;
             RuleCollectionType = ruleCollectionType;
         }
 
-        /// <summary> The action type of a Nat rule collection. </summary>
-        internal FirewallPolicyNatRuleCollectionAction Action { get; set; }
+        /// <summary> The action type of a Filter rule collection. </summary>
+        internal FirewallPolicyFilterRuleCollectionAction Action { get; set; }
         /// <summary> The type of action. </summary>
-        public FirewallPolicyNatRuleCollectionActionType? ActionType
+        public FirewallPolicyFilterRuleCollectionActionType? ActionType
         {
             get => Action is null ? default : Action.ActionType;
             set
             {
                 if (Action is null)
-                    Action = new FirewallPolicyNatRuleCollectionAction();
+                    Action = new FirewallPolicyFilterRuleCollectionAction();
                 Action.ActionType = value;
             }
         }

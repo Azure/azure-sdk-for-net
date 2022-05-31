@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityProviderName"> The security provider name. </param>
         /// <param name="connectionStatus"> The connection status with the Security Partner Provider. </param>
         /// <param name="virtualHub"> The virtualHub to which the Security Partner Provider belongs. </param>
-        internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
+        internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The provisioning state of the Security Partner Provider resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The security provider name. </summary>

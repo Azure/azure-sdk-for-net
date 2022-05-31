@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnServerConfigurationData DeserializeVpnServerConfigurationData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -164,7 +165,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -390,7 +396,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2SVpnGateways));
+            return new VpnServerConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(vpnProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(radiusServerRootCertificates), Optional.ToList(radiusClientRootCertificates), Optional.ToList(vpnClientIpsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadAuthenticationParameters.Value, provisioningState.Value, Optional.ToList(p2SVpnGateways));
         }
     }
 }
