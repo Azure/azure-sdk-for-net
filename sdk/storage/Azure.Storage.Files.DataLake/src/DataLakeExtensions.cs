@@ -583,20 +583,30 @@ namespace Azure.Storage.Files.DataLake
 
         internal static DateTimeOffset? ParseFileTimeString(string fileTimeString)
         {
-            if (fileTimeString == null || string.Equals(Constants.DefaultTicksString, fileTimeString))
+            if (string.IsNullOrEmpty(fileTimeString))
             {
                 return null;
             }
 
             // fileTimeString can come back as either in ticks or in a proper readable format
-            long.TryParse(fileTimeString, NumberStyles.None, CultureInfo.InvariantCulture, out long fileTimeLong);
-
-            if (fileTimeLong == 0)
+            // If the service gives us the format in ticks
+            if (long.TryParse(fileTimeString, NumberStyles.None, CultureInfo.InvariantCulture, out long fileTimeLong))
             {
-                DateTimeOffset.TryParse(fileTimeString, default, DateTimeStyles.None, out DateTimeOffset parsedTime);
+                if (fileTimeLong == 0)
+                {
+                    return null;
+                }
+                return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
+            }
+            // If the service gives the format in DAYOFTHEWEEK, DD MMMM YYYY HH:MM:SS ZONE
+            if (DateTimeOffset.TryParse(fileTimeString, default, DateTimeStyles.None, out DateTimeOffset parsedTime))
+            {
                 return parsedTime;
             }
-            return DateTimeOffset.FromFileTime(fileTimeLong).ToUniversalTime();
+            // Reaching here means we got a format from the service we did not expect
+            // Even though we got a successful response from the service we should at least return what the service gave us
+            Errors.InvalidFormat($"When parsing a File Time property of the PathItem, it return in an unexpected format: \"{fileTimeString}\"");
+            return default;
         }
 
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
