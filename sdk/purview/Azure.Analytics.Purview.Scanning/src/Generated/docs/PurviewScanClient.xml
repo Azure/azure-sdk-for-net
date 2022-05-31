@@ -1,0 +1,1839 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+    <assembly>
+        <name>Azure.Analytics.Purview.Scanning</name>
+    </assembly>
+    <members>
+        <member name="T:Azure.Analytics.Purview.Scanning.PurviewScanClient">
+            <summary> The PurviewScan service client. </summary>
+        </member>
+        <member name="P:Azure.Analytics.Purview.Scanning.PurviewScanClient.ClientDiagnostics">
+            <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        </member>
+        <member name="P:Azure.Analytics.Purview.Scanning.PurviewScanClient.Pipeline">
+            <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor">
+            <summary> Initializes a new instance of PurviewScanClient for mocking. </summary>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential)">
+            <summary> Initializes a new instance of PurviewScanClient. </summary>
+            <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+            <param name="dataSourceName"> The String to use. </param>
+            <param name="scanName"> The String to use. </param>
+            <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="endpoint" />, <paramref name="dataSourceName" />, <paramref name="scanName" /> or <paramref name="credential" /> is null. </exception>
+            <exception cref="T:System.ArgumentException"> <paramref name="dataSourceName" /> or <paramref name="scanName" /> is an empty string, and was expected to be non-empty. </exception>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.#ctor(System.Uri,System.String,System.String,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)">
+            <summary> Initializes a new instance of PurviewScanClient. </summary>
+            <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+            <param name="dataSourceName"> The String to use. </param>
+            <param name="scanName"> The String to use. </param>
+            <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+            <param name="options"> The options for configuring the client. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="endpoint" />, <paramref name="dataSourceName" />, <paramref name="scanName" /> or <paramref name="credential" /> is null. </exception>
+            <exception cref="T:System.ArgumentException"> <paramref name="dataSourceName" /> or <paramref name="scanName" /> is an empty string, and was expected to be non-empty. </exception>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilterAsync(Azure.RequestContext)">
+            <summary> Get a filter. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                excludeUriPrefixes: [string],
+                includeUriPrefixes: [string]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetFilter(Azure.RequestContext)">
+            <summary> Get a filter. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                excludeUriPrefixes: [string],
+                includeUriPrefixes: [string]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilterAsync(Azure.Core.RequestContent,Azure.RequestContext)">
+            <summary> Creates or updates a filter. </summary>
+            <param name="content"> The content to send as the body of the request. </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                excludeUriPrefixes: [string],
+                includeUriPrefixes: [string]
+              }
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                excludeUriPrefixes: [string],
+                includeUriPrefixes: [string]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateFilter(Azure.Core.RequestContent,Azure.RequestContext)">
+            <summary> Creates or updates a filter. </summary>
+            <param name="content"> The content to send as the body of the request. </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                excludeUriPrefixes: [string],
+                includeUriPrefixes: [string]
+              }
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                excludeUriPrefixes: [string],
+                includeUriPrefixes: [string]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateAsync(Azure.Core.RequestContent,Azure.RequestContext)">
+            <summary>
+            Creates an instance of a scan.
+            </summary>
+            <remarks>
+            Schema for <c>Request Body</c>: <code><![CDATA[{
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi" (required),
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary<string, number>
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }]]>
+            </code>
+             Schema for <c>Response Body</c>: <code><![CDATA[{
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary<string, number>
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }]]></code>
+             Schema for <c>Response Error</c>: <code><![CDATA[{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }]]></code></remarks>
+            <param name="content">The content to send as the body of the request.</param>
+            <param name="context">The request context, which can override default behaviors
+            on the request on a per-call basis.</param>
+            <exception cref="T:System.ArgumentNullException">
+              <paramref name="content" /> is
+            null.</exception>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdate(Azure.Core.RequestContent,Azure.RequestContext)">
+             <summary>
+             Creates an instance of a scan.
+             </summary>
+             
+             <remarks>
+             <para>
+             Below is the JSON schema for the request and response payloads.
+             </para>
+             <para>
+             Additional information can be found in the Purview service REST API
+             documentation: <see href="https://docs.microsoft.com/en-us/rest/api/purview/scanningdataplane/scans/create-or-update" />
+             </para>
+             <para>
+             This method takes one of the scan JSON object below as a payload. Please
+             select a scan JSON object to view the schema for this.
+             </para>
+            
+             Request Body:
+             <details><Summary>AzureSubscriptionCredential</Summary>
+             Schema for AzureSubscriptionCredential <c>Request Body</c>: 
+             <code><![CDATA[
+             {
+             # Base type properties
+               id: string, # Optional. <Description>Scan id.</Description>
+               name: string, # Optional.
+               kind: # Required. "AzureSubscriptionCredential"
+               scanResults: [
+                 {
+                   parentId: string, # Optional.
+                   id: string, # Optional.
+                   resourceId: string, # Optional.
+                   status: string, # Optional.
+                   assetsDiscovered: number, # Optional.
+                   assetsClassified: number, # Optional.
+                   diagnostics: {
+                     notifications: [
+                       {
+                         message: string, # Optional.
+                         code: number # Optional.
+                       }
+                     ],
+                     exceptionCountMap: # Optional. Dictionary<string, number>
+                   },
+                   startTime: string (ISO 8601 Format), # Optional.
+                   queuedTime: string (ISO 8601 Format), # Optional.
+                   pipelineStartTime: string (ISO 8601 Format), # Optional.
+                   endTime: string (ISO 8601 Format), # Optional.
+                   scanRulesetVersion: number, # Optional.
+                   scanRulesetType: # Optional. "Custom" | "System",
+                   scanLevelType: # Optional. "Full" | "Incremental",
+                   errorMessage: string, # Optional.
+                   error: {
+                     code: string, # Optional.
+                     message: string, # Optional.
+                     target: string, # Optional.
+                     details: [
+                       {
+                         code: string, # Optional.
+                         message: string, # Optional.
+                         target: string, # Optional.
+                         details: [ErrorModel] # Optional.
+                       }
+                     ]
+                   },
+                   runType: string, # Optional.
+                   dataSourceType: # Optional. "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                   }
+               ]
+             # Derived type properties
+               properties: {
+                 scanRulesetName: string, # Optional.
+                 scanRulesetType: # Optional. "Custom" | "System",
+                 collection: {
+                     lastModifiedAt: string (ISO 8601 Format), # Optional.
+                     referenceName: string, # Optional.
+                     type: string, # Optional.
+                   }
+                 workers: number # Optional.
+                 createdAt: string (ISO 8601 Format), # Optional.
+                 lastModifiedAt: string (ISO 8601 Format), # Optional.
+                 connectedVia: {
+                     referenceName: string, # Optional.
+                   }
+                 resourceTypes: string # Optional.
+                 credential: { # Required.
+                     referenceName: string, # Required.
+                     credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
+                   }
+               },
+             }]]>
+             </code>
+             </details>
+             
+             <details><Summary>AmazonS3Credential</Summary>
+             Schema for AmazonS3Credential <c>Request Body</c>: 
+             <code><![CDATA[
+             {
+             # Base type properties
+               id: string, # Optional. <Description>Scan id.</Description>
+               name: string, # Optional.
+               kind: # Required. "AmazonS3Credential"
+               scanResults: [
+                 {
+                   parentId: string, # Optional.
+                   id: string, # Optional.
+                   resourceId: string, # Optional.
+                   status: string, # Optional.
+                   assetsDiscovered: number, # Optional.
+                   assetsClassified: number, # Optional.
+                   diagnostics: {
+                     notifications: [
+                       {
+                         message: string, # Optional.
+                         code: number # Optional.
+                       }
+                     ],
+                     exceptionCountMap: # Optional. Dictionary<string, number>
+                   },
+                   startTime: string (ISO 8601 Format), # Optional.
+                   queuedTime: string (ISO 8601 Format), # Optional.
+                   pipelineStartTime: string (ISO 8601 Format), # Optional.
+                   endTime: string (ISO 8601 Format), # Optional.
+                   scanRulesetVersion: number, # Optional.
+                   scanRulesetType: # Optional. "Custom" | "System",
+                   scanLevelType: # Optional. "Full" | "Incremental",
+                   errorMessage: string, # Optional.
+                   error: {
+                     code: string, # Optional.
+                     message: string, # Optional.
+                     target: string, # Optional.
+                     details: [
+                       {
+                         code: string, # Optional.
+                         message: string, # Optional.
+                         target: string, # Optional.
+                         details: [ErrorModel] # Optional.
+                       }
+                     ]
+                   },
+                   runType: string, # Optional.
+                   dataSourceType: # Optional. "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                   }
+               ]
+             # Derived type properties
+               properties: {
+                 scanRulesetName: string, # Optional.
+                 scanRulesetType: # Optional. "Custom" | "System",
+                 collection: {
+                     lastModifiedAt: string (ISO 8601 Format), # Optional.
+                     referenceName: string, # Optional.
+                     type: string, # Optional.
+                   }
+                 workers: number # Optional.
+                 createdAt: string (ISO 8601 Format), # Optional.
+                 lastModifiedAt: string (ISO 8601 Format), # Optional.
+                 connectedVia: {
+                     referenceName: string, # Optional.
+                   }
+                 credential: { # Required.
+                     referenceName: string, # Required.
+                     credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
+                   }
+                 roleARN: string # Optional.
+               },
+             }]]>
+             </code>
+             </details>
+             ~+50 more JSON objects<br />
+             <br />
+             
+             Response Body: 
+             <details><Summary>AmazonS3Credential</Summary>
+             Schema for AmazonS3Credential <c>Response Body</c>: 
+             <code><![CDATA[
+             {
+             # Base type properties
+               id: string, # Optional. <Description>Scan id.</Description>
+               name: string, # Optional.
+               kind: # Required. "AmazonS3Credential" 
+               scanResults: [
+                 {
+                   parentId: string, # Optional.
+                   id: string, # Optional.
+                   resourceId: string, # Optional.
+                   status: string, # Optional.
+                   assetsDiscovered: number, # Optional.
+                   assetsClassified: number, # Optional.
+                   diagnostics: {
+                     notifications: [
+                       {
+                         message: string, # Optional.
+                         code: number # Optional.
+                       }
+                     ],
+                     exceptionCountMap: # Optional. Dictionary<string, number>
+                   },
+                   startTime: string (ISO 8601 Format), # Optional.
+                   queuedTime: string (ISO 8601 Format), # Optional.
+                   pipelineStartTime: string (ISO 8601 Format), # Optional.
+                   endTime: string (ISO 8601 Format), # Optional.
+                   scanRulesetVersion: number, # Optional.
+                   scanRulesetType: # Optional. "Custom" | "System",
+                   scanLevelType:  # Optional. "Full" | "Incremental",
+                   errorMessage: string, # Optional.
+                   error: {
+                     code: string, # Optional.
+                     message: string, # Optional.
+                     target: string, # Optional.
+                     details: [
+                       {
+                         code: string, # Optional.
+                         message: string, # Optional.
+                         target: string, # Optional.
+                         details: [ErrorModel] # Optional.
+                       }
+                     ]
+                   },
+                   runType: string, # Optional.
+                   dataSourceType: # Optional. "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                 }
+               ]
+               # Derived type properties
+               properties: {
+                 scanRulesetName: string, # Optional.
+                 scanRulesetType: # Optional. "Custom" | "System",
+                 collection: {
+                     lastModifiedAt: string (ISO 8601 Format), # Optional.
+                     referenceName: string, # Optional.
+                     type: string, # Optional.
+                   }
+                 workers: number # Optional.
+                 createdAt: string (ISO 8601 Format), # Optional.
+                 lastModifiedAt: string (ISO 8601 Format), # Optional.
+                 connectedVia: {
+                     referenceName: string, # Optional.
+                   }
+                 credential: { # Required.
+                     referenceName: string, # Required.
+                     credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
+                   }
+                 roleARN: string # Optional.
+               },
+             }]]>
+             </code>
+             </details>
+             
+             <details><Summary>AzureSubscriptionCredential</Summary>
+             Schema for AzureSubscriptionCredential <c>Response Body</c>: 
+             <code><![CDATA[
+             {
+             # Base type properties
+               id: string, # Optional. <Description>Scan id.</Description>
+               name: string, # Optional.
+               kind: # Required. "AzureSubscriptionCredential"
+               scanResults: [
+                 {
+                   parentId: string, # Optional.
+                   id: string, # Optional.
+                   resourceId: string, # Optional.
+                   status: string, # Optional.
+                   assetsDiscovered: number, # Optional.
+                   assetsClassified: number, # Optional.
+                   diagnostics: {
+                     notifications: [
+                       {
+                         message: string, # Optional.
+                         code: number # Optional.
+                       }
+                     ],
+                     exceptionCountMap: # Optional. Dictionary<string, number>
+                   },
+                   startTime: string (ISO 8601 Format), # Optional.
+                   queuedTime: string (ISO 8601 Format), # Optional.
+                   pipelineStartTime: string (ISO 8601 Format), # Optional.
+                   endTime: string (ISO 8601 Format), # Optional.
+                   scanRulesetVersion: number, # Optional.
+                   scanRulesetType: # Optional. "Custom" | "System",
+                   scanLevelType: # Optional. "Full" | "Incremental",
+                   errorMessage: string, # Optional.
+                   error: {
+                     code: string, # Optional.
+                     message: string, # Optional.
+                     target: string, # Optional.
+                     details: [
+                       {
+                         code: string, # Optional.
+                         message: string, # Optional.
+                         target: string, # Optional.
+                         details: [ErrorModel] # Optional.
+                       }
+                     ]
+                   },
+                   runType: string, # Optional.
+                   dataSourceType: # Optional. "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                   }
+               ]
+             # Derived type properties
+               properties: {
+                 scanRulesetName: string, # Optional.
+                 scanRulesetType: # Optional. "Custom" | "System",
+                 collection: {
+                     lastModifiedAt: string (ISO 8601 Format), # Optional.
+                     referenceName: string, # Optional.
+                     type: string, # Optional.
+                   }
+                 workers: number # Optional.
+                 createdAt: string (ISO 8601 Format), # Optional.
+                 lastModifiedAt: string (ISO 8601 Format), # Optional.
+                 connectedVia: {
+                     referenceName: string, # Optional.
+                   }
+                 resourceTypes: string # Optional.
+                 credential: { # Required.
+                     referenceName: string, # Required.
+                     credentialType: # Required. "AccountKey" | "ServicePrincipal" | "BasicAuth" | "SqlAuth" | "AmazonARN",
+                   }
+               },
+             }]]>
+             </code>
+             </details>
+             ~+50 more JSON objects<br />
+             <br />
+             
+             Error Response: 
+             <p>
+             We throw <a href="RequestFailedException">RequestFailedException</a> in case of error response. 
+             </p>
+             </remarks>
+             
+             <param name="content">The content to send as the body of the request. The
+             details of the content are below in the remarks.</param>
+             <param name="context">The request context, which can override default behaviors
+             on the request on a per-call basis.</param>
+             <returns cref="T:Azure.Response"> The details of the response are below in the remarks.</returns>
+             <exception cref="T:System.ArgumentNullException"><paramref name="content" /> is null.</exception>
+             <exception cref="T:Azure.RequestFailedException">Thrown in case of error response.</exception>
+             
+             <example>
+             This sample shows how to call CreateOrUpdate with required parameters <code lang="C#"><![CDATA[
+             var credential = new DefaultAzureCredential();
+             var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
+             var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
+              
+             var data = new
+             {
+                 kind = "AmazonS3Credential",
+                 properties = new
+                 {
+                     credential = new
+                     {
+                         referenceName = "test-credential-s3",
+                         credentialType = "AmazonARN"
+                     }
+                  }
+             };
+             Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+             JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+             Console.WriteLine(result.GetProperty("kind").GetString());
+             Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("referenceName").ToString());
+             Console.WriteLine(result.GetProperty("properties").GetProperty("credential").GetProperty("credentialType").ToString());]]>
+             </code>
+             This sample shows how to call CreateOrUpdate with all the parameters <code lang="C#"><![CDATA[
+             var credential = new DefaultAzureCredential();
+             var endpoint = new Uri("https://my-account-name.scan.purview.azure.com");
+             var client = new PurviewScanClient(endpoint, "dataSourceName", "scanName", credential);
+              
+             var data = new
+             {
+                 id = "test-id",
+                 name = "test-name",
+                 kind = "AmazonS3Credential",
+                 scanResults = new[]
+                 {
+                         new
+                         {
+                             parentId = "test-scanResults-parentId",
+                             id = "test-scanResults-Id",
+                             resourceId = "test-scanResults-resourceId",
+                             status = "test-scanResults-status",
+                             assetsDiscovered = 4513,
+                             assetsClassified = 5423,
+                             diagnostics = new
+                             {
+                                 notifications = new[]
+                                 {
+                                     new
+                                     {
+                                         message = "test-scanResults-diagnostics-message",
+                                         code =  3423
+                                     }
+                                 },
+                                 exceptionCountMap = new Dictionary<string, int>(){{ "exceptionCountMapKey1", 4243}},
+                             },
+                             startTime = "2022-05-10T13:57:31.2311892-04:00",
+                             queuedTime = "2022-05-10T14:57:31.2311892-04:00",
+                             pipelineStartTime = "2022-05-10T15:57:31.2311892-04:00",
+                             endTime = "2022-05-10T16:57:31.2311892-04:00",
+                             scanRulesetVersion = 9284,
+                             scanRulesetType = "Custom",
+                             scanLevelType = "Full",
+                             errorMessage = "test-scanResults-errorMessage",
+                             error = new
+                             {
+                                 code = "test-scanResults-error-code",
+                                 message = "test-scanResults-error-message",
+                                 target = "test-scanResults-error-target",
+                                 details = new[]
+                                 {
+                                     new
+                                     {
+                                         code = "test-scanResults-error-details-code",
+                                         message = "test-scanResults-error-details-message",
+                                         target = "test-scanResults-error-details-target",
+                                         details = new[]
+                                         {
+                                             new
+                                             {
+                                             }
+                                         }
+                                     }
+                                 }
+                             },
+                             runType = "test-scanResults-runType",
+                             dataSourceType = "AzureSubscription"
+                         },
+                     }
+                 properties = new
+                  {
+                      scanRulesetName = "properties-scanRulesetName",
+                      scanRulesetType = "Customquot",
+                      collection = new
+                      {
+                          lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00",
+                          referenceName = "properties-referenceName",
+                          type = "properties-type"
+                      },
+                      workers = 434,
+                      createdAt = "2022-05-10T16:57:31.2311892-04:00",
+                      lastModifiedAt = "2022-05-10T16:57:31.2311892-04:00"
+                      connectedVia = new
+                      {
+                          referenceName = "properties-connectedVia-referenceName"
+                      },
+                      credential = new
+                      {
+                          referenceName = "properties-credential-referenceName",
+                          credentialType = "AmazonARN",
+                      },
+                      roleARN = "roleRn"
+                  },
+             };
+             Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+             JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+             Console.WriteLine(result.GetProperty("id").GetString());
+             Console.WriteLine(result.GetProperty("name").GetString());
+             Console.WriteLine(result.GetProperty("kind").GetString());
+             ....
+             ]]>
+             </code>
+             </example>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetPropertiesAsync(Azure.RequestContext)">
+            <summary> Gets a scan information. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetProperties(Azure.RequestContext)">
+            <summary> Gets a scan information. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteAsync(Azure.RequestContext)">
+            <summary> Deletes the scan associated with the data source. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.Delete(Azure.RequestContext)">
+            <summary> Deletes the scan associated with the data source. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+              scanResults: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ]
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScanAsync(System.String,System.String,Azure.RequestContext)">
+            <summary> Runs the scan. </summary>
+            <param name="runId"> The String to use. </param>
+            <param name="scanLevel"> The ScanLevelType to use. Allowed values: "Full" | "Incremental". </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="runId" /> is null. </exception>
+            <exception cref="T:System.ArgumentException"> <paramref name="runId" /> is an empty string, and was expected to be non-empty. </exception>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanResultId: OperationResponseScanResultId,
+              startTime: string (ISO 8601 Format),
+              endTime: string (ISO 8601 Format),
+              status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorInfo]
+                  }
+                ]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.RunScan(System.String,System.String,Azure.RequestContext)">
+            <summary> Runs the scan. </summary>
+            <param name="runId"> The String to use. </param>
+            <param name="scanLevel"> The ScanLevelType to use. Allowed values: "Full" | "Incremental". </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="runId" /> is null. </exception>
+            <exception cref="T:System.ArgumentException"> <paramref name="runId" /> is an empty string, and was expected to be non-empty. </exception>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanResultId: OperationResponseScanResultId,
+              startTime: string (ISO 8601 Format),
+              endTime: string (ISO 8601 Format),
+              status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorInfo]
+                  }
+                ]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScanAsync(System.String,Azure.RequestContext)">
+            <summary> Cancels a scan. </summary>
+            <param name="runId"> The String to use. </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="runId" /> is null. </exception>
+            <exception cref="T:System.ArgumentException"> <paramref name="runId" /> is an empty string, and was expected to be non-empty. </exception>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanResultId: OperationResponseScanResultId,
+              startTime: string (ISO 8601 Format),
+              endTime: string (ISO 8601 Format),
+              status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorInfo]
+                  }
+                ]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CancelScan(System.String,Azure.RequestContext)">
+            <summary> Cancels a scan. </summary>
+            <param name="runId"> The String to use. </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="runId" /> is null. </exception>
+            <exception cref="T:System.ArgumentException"> <paramref name="runId" /> is an empty string, and was expected to be non-empty. </exception>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanResultId: OperationResponseScanResultId,
+              startTime: string (ISO 8601 Format),
+              endTime: string (ISO 8601 Format),
+              status: "Accepted" | "InProgress" | "TransientFailure" | "Succeeded" | "Failed" | "Canceled",
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorInfo]
+                  }
+                ]
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTriggerAsync(Azure.RequestContext)">
+            <summary> Gets trigger information. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetTrigger(Azure.RequestContext)">
+            <summary> Gets trigger information. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTriggerAsync(Azure.Core.RequestContent,Azure.RequestContext)">
+            <summary> Creates an instance of a trigger. </summary>
+            <param name="content"> The content to send as the body of the request. </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="content" /> is null. </exception>
+            <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.CreateOrUpdateTrigger(Azure.Core.RequestContent,Azure.RequestContext)">
+            <summary> Creates an instance of a trigger. </summary>
+            <param name="content"> The content to send as the body of the request. </param>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <exception cref="T:System.ArgumentNullException"> <paramref name="content" /> is null. </exception>
+            <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTriggerAsync(Azure.RequestContext)">
+            <summary> Deletes the trigger associated with the scan. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.DeleteTrigger(Azure.RequestContext)">
+            <summary> Deletes the trigger associated with the scan. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                recurrence: {
+                  frequency: "Week" | "Month",
+                  interval: number,
+                  startTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  schedule: {
+                    additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                    minutes: [number],
+                    hours: [number],
+                    weekDays: ["Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday"],
+                    monthDays: [number],
+                    monthlyOccurrences: [
+                      {
+                        additionalProperties: Dictionary&lt;string, AnyObject&gt;,
+                        day: "Sunday" | "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday",
+                        occurrence: number
+                      }
+                    ]
+                  },
+                  timeZone: string
+                },
+                recurrenceInterval: string,
+                createdAt: string (ISO 8601 Format),
+                lastModifiedAt: string (ISO 8601 Format),
+                lastScheduled: string (ISO 8601 Format),
+                scanLevel: "Full" | "Incremental",
+                incrementalScanStartTime: string (ISO 8601 Format)
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRunsAsync(Azure.RequestContext)">
+            <summary> Lists the scan history of a scan. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+        <member name="M:Azure.Analytics.Purview.Scanning.PurviewScanClient.GetRuns(Azure.RequestContext)">
+            <summary> Lists the scan history of a scan. </summary>
+            <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+            <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  parentId: string,
+                  id: string,
+                  resourceId: string,
+                  status: string,
+                  assetsDiscovered: number,
+                  assetsClassified: number,
+                  diagnostics: {
+                    notifications: [
+                      {
+                        message: string,
+                        code: number
+                      }
+                    ],
+                    exceptionCountMap: Dictionary&lt;string, number&gt;
+                  },
+                  startTime: string (ISO 8601 Format),
+                  queuedTime: string (ISO 8601 Format),
+                  pipelineStartTime: string (ISO 8601 Format),
+                  endTime: string (ISO 8601 Format),
+                  scanRulesetVersion: number,
+                  scanRulesetType: "Custom" | "System",
+                  scanLevelType: "Full" | "Incremental",
+                  errorMessage: string,
+                  error: {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [
+                      {
+                        code: string,
+                        message: string,
+                        target: string,
+                        details: [ErrorModel]
+                      }
+                    ]
+                  },
+                  runType: string,
+                  dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code>
+            
+            </remarks>
+        </member>
+    </members>
+</doc>
