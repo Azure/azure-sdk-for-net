@@ -105,7 +105,6 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Desktop" Version="4.39.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
-    <PackageReference Update="Microsoft.Graph" Version="4.28.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
