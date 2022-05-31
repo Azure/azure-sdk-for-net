@@ -1,0 +1,2045 @@
+<Type Name="PurviewScanningServiceClient" FullName="Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient">
+  <TypeSignature Language="C#" Value="public class PurviewScanningServiceClient" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit PurviewScanningServiceClient extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient" />
+  <TypeSignature Language="VB.NET" Value="Public Class PurviewScanningServiceClient" />
+  <TypeSignature Language="F#" Value="type PurviewScanningServiceClient = class" />
+  <AssemblyInfo>
+    <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary> The PurviewScanningService service client. </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected PurviewScanningServiceClient ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary> Initializes a new instance of PurviewScanningServiceClient for mocking. </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PurviewScanningServiceClient (Uri endpoint, Azure.Core.TokenCredential credential);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Uri endpoint, class Azure.Core.TokenCredential credential) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (endpoint As Uri, credential As TokenCredential)" />
+      <MemberSignature Language="F#" Value="new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient : Uri * Azure.Core.TokenCredential -&gt; Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient" Usage="new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient (endpoint, credential)" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="endpoint" Type="System.Uri" />
+        <Parameter Name="credential" Type="Azure.Core.TokenCredential" />
+      </Parameters>
+      <Docs>
+        <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        <summary> Initializes a new instance of PurviewScanningServiceClient. </summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="endpoint" /> or <paramref name="credential" /> is null. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PurviewScanningServiceClient (Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class System.Uri endpoint, class Azure.Core.TokenCredential credential, class Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions options) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.#ctor(System.Uri,Azure.Core.TokenCredential,Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (endpoint As Uri, credential As TokenCredential, options As PurviewScanningServiceClientOptions)" />
+      <MemberSignature Language="F#" Value="new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient : Uri * Azure.Core.TokenCredential * Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions -&gt; Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient" Usage="new Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient (endpoint, credential, options)" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="endpoint" Type="System.Uri" />
+        <Parameter Name="credential" Type="Azure.Core.TokenCredential" />
+        <Parameter Name="options" Type="Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions" />
+      </Parameters>
+      <Docs>
+        <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        <param name="options"> The options for configuring the client. </param>
+        <summary> Initializes a new instance of PurviewScanningServiceClient. </summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="endpoint" /> or <paramref name="credential" /> is null. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrUpdateKeyVaultReference">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response CreateOrUpdateKeyVaultReference (string keyVaultName, Azure.Core.RequestContent content, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response CreateOrUpdateKeyVaultReference(string keyVaultName, class Azure.Core.RequestContent content, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReference(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateOrUpdateKeyVaultReference (keyVaultName As String, content As RequestContent, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member CreateOrUpdateKeyVaultReference : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; Azure.Response&#xA;override this.CreateOrUpdateKeyVaultReference : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.CreateOrUpdateKeyVaultReference (keyVaultName, content, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="keyVaultName" Type="System.String" />
+        <Parameter Name="content" Type="Azure.Core.RequestContent" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="keyVaultName"> The String to use. </param>
+        <param name="content"> The content to send as the body of the request. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Creates an instance of a key vault connection. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="keyVaultName" /> or <paramref name="content" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="keyVaultName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrUpdateKeyVaultReferenceAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateKeyVaultReferenceAsync (string keyVaultName, Azure.Core.RequestContent content, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; CreateOrUpdateKeyVaultReferenceAsync(string keyVaultName, class Azure.Core.RequestContent content, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateOrUpdateKeyVaultReferenceAsync (keyVaultName As String, content As RequestContent, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member CreateOrUpdateKeyVaultReferenceAsync : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.CreateOrUpdateKeyVaultReferenceAsync : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.CreateOrUpdateKeyVaultReferenceAsync (keyVaultName, content, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="keyVaultName" Type="System.String" />
+        <Parameter Name="content" Type="Azure.Core.RequestContent" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="keyVaultName"> The String to use. </param>
+        <param name="content"> The content to send as the body of the request. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Creates an instance of a key vault connection. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="keyVaultName" /> or <paramref name="content" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="keyVaultName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrUpdateScanRuleset">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response CreateOrUpdateScanRuleset (string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response CreateOrUpdateScanRuleset(string scanRulesetName, class Azure.Core.RequestContent content, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRuleset(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateOrUpdateScanRuleset (scanRulesetName As String, content As RequestContent, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member CreateOrUpdateScanRuleset : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; Azure.Response&#xA;override this.CreateOrUpdateScanRuleset : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.CreateOrUpdateScanRuleset (scanRulesetName, content, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scanRulesetName" Type="System.String" />
+        <Parameter Name="content" Type="Azure.Core.RequestContent" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="scanRulesetName"> The String to use. </param>
+        <param name="content"> The content to send as the body of the request. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Creates or Updates a scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI" (required)
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="scanRulesetName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="scanRulesetName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateOrUpdateScanRulesetAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; CreateOrUpdateScanRulesetAsync (string scanRulesetName, Azure.Core.RequestContent content, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; CreateOrUpdateScanRulesetAsync(string scanRulesetName, class Azure.Core.RequestContent content, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.CreateOrUpdateScanRulesetAsync(System.String,Azure.Core.RequestContent,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function CreateOrUpdateScanRulesetAsync (scanRulesetName As String, content As RequestContent, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member CreateOrUpdateScanRulesetAsync : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.CreateOrUpdateScanRulesetAsync : string * Azure.Core.RequestContent * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.CreateOrUpdateScanRulesetAsync (scanRulesetName, content, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scanRulesetName" Type="System.String" />
+        <Parameter Name="content" Type="Azure.Core.RequestContent" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="scanRulesetName"> The String to use. </param>
+        <param name="content"> The content to send as the body of the request. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Creates or Updates a scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Request Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI" (required)
+            }
+            </code>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="scanRulesetName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="scanRulesetName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteKeyVaultReference">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response DeleteKeyVaultReference (string keyVaultName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response DeleteKeyVaultReference(string keyVaultName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReference(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function DeleteKeyVaultReference (keyVaultName As String, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member DeleteKeyVaultReference : string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.DeleteKeyVaultReference : string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.DeleteKeyVaultReference (keyVaultName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="keyVaultName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="keyVaultName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Deletes the key vault connection associated with the account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="keyVaultName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="keyVaultName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteKeyVaultReferenceAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteKeyVaultReferenceAsync (string keyVaultName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; DeleteKeyVaultReferenceAsync(string keyVaultName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteKeyVaultReferenceAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function DeleteKeyVaultReferenceAsync (keyVaultName As String, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member DeleteKeyVaultReferenceAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.DeleteKeyVaultReferenceAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.DeleteKeyVaultReferenceAsync (keyVaultName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="keyVaultName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="keyVaultName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Deletes the key vault connection associated with the account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="keyVaultName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="keyVaultName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteScanRuleset">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response DeleteScanRuleset (string scanRulesetName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response DeleteScanRuleset(string scanRulesetName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRuleset(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function DeleteScanRuleset (scanRulesetName As String, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member DeleteScanRuleset : string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.DeleteScanRuleset : string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.DeleteScanRuleset (scanRulesetName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scanRulesetName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="scanRulesetName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Deletes a scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="scanRulesetName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="scanRulesetName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteScanRulesetAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; DeleteScanRulesetAsync (string scanRulesetName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; DeleteScanRulesetAsync(string scanRulesetName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.DeleteScanRulesetAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function DeleteScanRulesetAsync (scanRulesetName As String, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member DeleteScanRulesetAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.DeleteScanRulesetAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.DeleteScanRulesetAsync (scanRulesetName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scanRulesetName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="scanRulesetName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Deletes a scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="scanRulesetName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="scanRulesetName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetClassificationRuleClient">
+      <MemberSignature Language="C#" Value="public virtual Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient (string classificationRuleName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient GetClassificationRuleClient(string classificationRuleName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRuleClient(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetClassificationRuleClient (classificationRuleName As String) As PurviewClassificationRuleClient" />
+      <MemberSignature Language="F#" Value="abstract member GetClassificationRuleClient : string -&gt; Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient&#xA;override this.GetClassificationRuleClient : string -&gt; Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient" Usage="purviewScanningServiceClient.GetClassificationRuleClient classificationRuleName" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="classificationRuleName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="classificationRuleName">To be added.</param>
+        <summary />
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetClassificationRules">
+      <MemberSignature Language="C#" Value="public virtual Azure.Pageable&lt;BinaryData&gt; GetClassificationRules (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Pageable`1&lt;class System.BinaryData&gt; GetClassificationRules(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRules(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetClassificationRules (Optional context As RequestContext = Nothing) As Pageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetClassificationRules : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;&#xA;override this.GetClassificationRules : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetClassificationRules context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Pageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List classification rules in Account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  id: string,
+                  name: string,
+                  kind: "System" | "Custom"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetClassificationRulesAsync">
+      <MemberSignature Language="C#" Value="public virtual Azure.AsyncPageable&lt;BinaryData&gt; GetClassificationRulesAsync (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.AsyncPageable`1&lt;class System.BinaryData&gt; GetClassificationRulesAsync(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetClassificationRulesAsync(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetClassificationRulesAsync (Optional context As RequestContext = Nothing) As AsyncPageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetClassificationRulesAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;&#xA;override this.GetClassificationRulesAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetClassificationRulesAsync context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.AsyncPageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List classification rules in Account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  id: string,
+                  name: string,
+                  kind: "System" | "Custom"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetDataSourceClient">
+      <MemberSignature Language="C#" Value="public virtual Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient (string dataSourceName);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Analytics.Purview.Scanning.PurviewDataSourceClient GetDataSourceClient(string dataSourceName) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourceClient(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetDataSourceClient (dataSourceName As String) As PurviewDataSourceClient" />
+      <MemberSignature Language="F#" Value="abstract member GetDataSourceClient : string -&gt; Azure.Analytics.Purview.Scanning.PurviewDataSourceClient&#xA;override this.GetDataSourceClient : string -&gt; Azure.Analytics.Purview.Scanning.PurviewDataSourceClient" Usage="purviewScanningServiceClient.GetDataSourceClient dataSourceName" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Analytics.Purview.Scanning.PurviewDataSourceClient</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceName" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceName">To be added.</param>
+        <summary />
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetDataSources">
+      <MemberSignature Language="C#" Value="public virtual Azure.Pageable&lt;BinaryData&gt; GetDataSources (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Pageable`1&lt;class System.BinaryData&gt; GetDataSources(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSources(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetDataSources (Optional context As RequestContext = Nothing) As Pageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetDataSources : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;&#xA;override this.GetDataSources : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetDataSources context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Pageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List data sources in Data catalog. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI",
+                  scans: [
+                    {
+                      id: string,
+                      name: string,
+                      kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+                      scanResults: [
+                        {
+                          parentId: string,
+                          id: string,
+                          resourceId: string,
+                          status: string,
+                          assetsDiscovered: number,
+                          assetsClassified: number,
+                          diagnostics: {
+                            notifications: [
+                              {
+                                message: string,
+                                code: number
+                              }
+                            ],
+                            exceptionCountMap: Dictionary&lt;string, number&gt;
+                          },
+                          startTime: string (ISO 8601 Format),
+                          queuedTime: string (ISO 8601 Format),
+                          pipelineStartTime: string (ISO 8601 Format),
+                          endTime: string (ISO 8601 Format),
+                          scanRulesetVersion: number,
+                          scanRulesetType: "Custom" | "System",
+                          scanLevelType: "Full" | "Incremental",
+                          errorMessage: string,
+                          error: {
+                            code: string,
+                            message: string,
+                            target: string,
+                            details: [
+                              {
+                                code: string,
+                                message: string,
+                                target: string,
+                                details: [ErrorModel]
+                              }
+                            ]
+                          },
+                          runType: string,
+                          dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetDataSourcesAsync">
+      <MemberSignature Language="C#" Value="public virtual Azure.AsyncPageable&lt;BinaryData&gt; GetDataSourcesAsync (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.AsyncPageable`1&lt;class System.BinaryData&gt; GetDataSourcesAsync(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetDataSourcesAsync(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetDataSourcesAsync (Optional context As RequestContext = Nothing) As AsyncPageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetDataSourcesAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;&#xA;override this.GetDataSourcesAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetDataSourcesAsync context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.AsyncPageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List data sources in Data catalog. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI",
+                  scans: [
+                    {
+                      id: string,
+                      name: string,
+                      kind: "AzureSubscriptionCredential" | "AzureSubscriptionMsi" | "AzureResourceGroupCredential" | "AzureResourceGroupMsi" | "AzureSynapseWorkspaceCredential" | "AzureSynapseWorkspaceMsi" | "AzureSynapseCredential" | "AzureSynapseMsi" | "AdlsGen1Credential" | "AdlsGen1Msi" | "AdlsGen2Credential" | "AdlsGen2Msi" | "AmazonAccountCredential" | "AmazonS3Credential" | "AmazonS3RoleARN" | "AmazonSqlCredential" | "AzureCosmosDbCredential" | "AzureDataExplorerCredential" | "AzureDataExplorerMsi" | "AzureFileServiceCredential" | "AzureSqlDatabaseCredential" | "AzureSqlDatabaseMsi" | "AmazonPostgreSqlCredential" | "AzurePostgreSqlCredential" | "SqlServerDatabaseCredential" | "AzureSqlDatabaseManagedInstanceCredential" | "AzureSqlDatabaseManagedInstanceMsi" | "AzureSqlDataWarehouseCredential" | "AzureSqlDataWarehouseMsi" | "AzureMySqlCredential" | "AzureStorageCredential" | "AzureStorageMsi" | "TeradataTeradataCredential" | "TeradataTeradataUserPass" | "TeradataUserPass" | "OracleOracleCredential" | "OracleOracleUserPass" | "SapS4HanaSapS4HanaCredential" | "SapS4HanaSapS4HanaUserPass" | "SapEccSapEccCredential" | "SapEccSapEccUserPass" | "PowerBIDelegated" | "PowerBIMsi",
+                      scanResults: [
+                        {
+                          parentId: string,
+                          id: string,
+                          resourceId: string,
+                          status: string,
+                          assetsDiscovered: number,
+                          assetsClassified: number,
+                          diagnostics: {
+                            notifications: [
+                              {
+                                message: string,
+                                code: number
+                              }
+                            ],
+                            exceptionCountMap: Dictionary&lt;string, number&gt;
+                          },
+                          startTime: string (ISO 8601 Format),
+                          queuedTime: string (ISO 8601 Format),
+                          pipelineStartTime: string (ISO 8601 Format),
+                          endTime: string (ISO 8601 Format),
+                          scanRulesetVersion: number,
+                          scanRulesetType: "Custom" | "System",
+                          scanLevelType: "Full" | "Incremental",
+                          errorMessage: string,
+                          error: {
+                            code: string,
+                            message: string,
+                            target: string,
+                            details: [
+                              {
+                                code: string,
+                                message: string,
+                                target: string,
+                                details: [ErrorModel]
+                              }
+                            ]
+                          },
+                          runType: string,
+                          dataSourceType: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetKeyVaultReference">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response GetKeyVaultReference (string keyVaultName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response GetKeyVaultReference(string keyVaultName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReference(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetKeyVaultReference (keyVaultName As String, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member GetKeyVaultReference : string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.GetKeyVaultReference : string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.GetKeyVaultReference (keyVaultName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="keyVaultName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="keyVaultName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Gets key vault information. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="keyVaultName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="keyVaultName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetKeyVaultReferenceAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetKeyVaultReferenceAsync (string keyVaultName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; GetKeyVaultReferenceAsync(string keyVaultName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferenceAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetKeyVaultReferenceAsync (keyVaultName As String, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member GetKeyVaultReferenceAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.GetKeyVaultReferenceAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.GetKeyVaultReferenceAsync (keyVaultName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="keyVaultName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="keyVaultName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Gets key vault information. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              id: string,
+              name: string,
+              properties: {
+                baseUrl: string,
+                description: string
+              }
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="keyVaultName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="keyVaultName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetKeyVaultReferences">
+      <MemberSignature Language="C#" Value="public virtual Azure.Pageable&lt;BinaryData&gt; GetKeyVaultReferences (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Pageable`1&lt;class System.BinaryData&gt; GetKeyVaultReferences(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferences(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetKeyVaultReferences (Optional context As RequestContext = Nothing) As Pageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetKeyVaultReferences : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;&#xA;override this.GetKeyVaultReferences : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetKeyVaultReferences context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Pageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List key vault connections in account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  id: string,
+                  name: string,
+                  properties: {
+                    baseUrl: string,
+                    description: string
+                  }
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetKeyVaultReferencesAsync">
+      <MemberSignature Language="C#" Value="public virtual Azure.AsyncPageable&lt;BinaryData&gt; GetKeyVaultReferencesAsync (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.AsyncPageable`1&lt;class System.BinaryData&gt; GetKeyVaultReferencesAsync(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetKeyVaultReferencesAsync(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetKeyVaultReferencesAsync (Optional context As RequestContext = Nothing) As AsyncPageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetKeyVaultReferencesAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;&#xA;override this.GetKeyVaultReferencesAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetKeyVaultReferencesAsync context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.AsyncPageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List key vault connections in account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  id: string,
+                  name: string,
+                  properties: {
+                    baseUrl: string,
+                    description: string
+                  }
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetLatestSystemRulesets">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response GetLatestSystemRulesets (string dataSourceType = default, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response GetLatestSystemRulesets(string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesets(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetLatestSystemRulesets (Optional dataSourceType As String = Nothing, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member GetLatestSystemRulesets : string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.GetLatestSystemRulesets : string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.GetLatestSystemRulesets (dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get the latest version of a system scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetLatestSystemRulesetsAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetLatestSystemRulesetsAsync (string dataSourceType = default, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; GetLatestSystemRulesetsAsync(string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetLatestSystemRulesetsAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetLatestSystemRulesetsAsync (Optional dataSourceType As String = Nothing, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member GetLatestSystemRulesetsAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.GetLatestSystemRulesetsAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.GetLatestSystemRulesetsAsync (dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get the latest version of a system scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetScanRuleset">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response GetScanRuleset (string scanRulesetName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response GetScanRuleset(string scanRulesetName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRuleset(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetScanRuleset (scanRulesetName As String, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member GetScanRuleset : string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.GetScanRuleset : string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.GetScanRuleset (scanRulesetName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scanRulesetName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="scanRulesetName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get a scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="scanRulesetName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="scanRulesetName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetScanRulesetAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetScanRulesetAsync (string scanRulesetName, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; GetScanRulesetAsync(string scanRulesetName, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetScanRulesetAsync (scanRulesetName As String, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member GetScanRulesetAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.GetScanRulesetAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.GetScanRulesetAsync (scanRulesetName, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scanRulesetName" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="scanRulesetName"> The String to use. </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get a scan ruleset. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="scanRulesetName" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="scanRulesetName" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetScanRulesets">
+      <MemberSignature Language="C#" Value="public virtual Azure.Pageable&lt;BinaryData&gt; GetScanRulesets (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Pageable`1&lt;class System.BinaryData&gt; GetScanRulesets(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesets(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetScanRulesets (Optional context As RequestContext = Nothing) As Pageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetScanRulesets : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;&#xA;override this.GetScanRulesets : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetScanRulesets context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Pageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List scan rulesets in Data catalog. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  scanRulesetType: "Custom" | "System",
+                  status: "Enabled" | "Disabled",
+                  version: number,
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetScanRulesetsAsync">
+      <MemberSignature Language="C#" Value="public virtual Azure.AsyncPageable&lt;BinaryData&gt; GetScanRulesetsAsync (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.AsyncPageable`1&lt;class System.BinaryData&gt; GetScanRulesetsAsync(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetScanRulesetsAsync(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetScanRulesetsAsync (Optional context As RequestContext = Nothing) As AsyncPageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetScanRulesetsAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;&#xA;override this.GetScanRulesetsAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetScanRulesetsAsync context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.AsyncPageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List scan rulesets in Data catalog. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  scanRulesetType: "Custom" | "System",
+                  status: "Enabled" | "Disabled",
+                  version: number,
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesets">
+      <MemberSignature Language="C#" Value="public virtual Azure.Pageable&lt;BinaryData&gt; GetSystemRulesets (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Pageable`1&lt;class System.BinaryData&gt; GetSystemRulesets(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesets(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesets (Optional context As RequestContext = Nothing) As Pageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesets : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;&#xA;override this.GetSystemRulesets : Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetSystemRulesets context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Pageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List all system scan rulesets for an account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  scanRulesetType: "Custom" | "System",
+                  status: "Enabled" | "Disabled",
+                  version: number,
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsAsync">
+      <MemberSignature Language="C#" Value="public virtual Azure.AsyncPageable&lt;BinaryData&gt; GetSystemRulesetsAsync (Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.AsyncPageable`1&lt;class System.BinaryData&gt; GetSystemRulesetsAsync(class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsAsync(Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsAsync (Optional context As RequestContext = Nothing) As AsyncPageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;&#xA;override this.GetSystemRulesetsAsync : Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetSystemRulesetsAsync context" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.AsyncPageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List all system scan rulesets for an account. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  scanRulesetType: "Custom" | "System",
+                  status: "Enabled" | "Disabled",
+                  version: number,
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsForDataSource">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response GetSystemRulesetsForDataSource (string dataSourceType, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response GetSystemRulesetsForDataSource(string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSource(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsForDataSource (dataSourceType As String, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsForDataSource : string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.GetSystemRulesetsForDataSource : string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.GetSystemRulesetsForDataSource (dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get a system scan ruleset for a data source. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="dataSourceType" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="dataSourceType" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsForDataSourceAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetSystemRulesetsForDataSourceAsync (string dataSourceType, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; GetSystemRulesetsForDataSourceAsync(string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsForDataSourceAsync (dataSourceType As String, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsForDataSourceAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.GetSystemRulesetsForDataSourceAsync : string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.GetSystemRulesetsForDataSourceAsync (dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get a system scan ruleset for a data source. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="dataSourceType" /> is null. </exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="dataSourceType" /> is an empty string, and was expected to be non-empty. </exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsForVersion">
+      <MemberSignature Language="C#" Value="public virtual Azure.Response GetSystemRulesetsForVersion (int version, string dataSourceType = default, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Response GetSystemRulesetsForVersion(int32 version, string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersion(System.Int32,System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsForVersion (version As Integer, Optional dataSourceType As String = Nothing, Optional context As RequestContext = Nothing) As Response" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsForVersion : int * string * Azure.RequestContext -&gt; Azure.Response&#xA;override this.GetSystemRulesetsForVersion : int * string * Azure.RequestContext -&gt; Azure.Response" Usage="purviewScanningServiceClient.GetSystemRulesetsForVersion (version, dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Response</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="version" Type="System.Int32" />
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="version"> The Integer to use. </param>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get a scan ruleset by version. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsForVersionAsync">
+      <MemberSignature Language="C#" Value="public virtual System.Threading.Tasks.Task&lt;Azure.Response&gt; GetSystemRulesetsForVersionAsync (int version, string dataSourceType = default, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class Azure.Response&gt; GetSystemRulesetsForVersionAsync(int32 version, string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsForVersionAsync(System.Int32,System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsForVersionAsync (version As Integer, Optional dataSourceType As String = Nothing, Optional context As RequestContext = Nothing) As Task(Of Response)" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsForVersionAsync : int * string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;&#xA;override this.GetSystemRulesetsForVersionAsync : int * string * Azure.RequestContext -&gt; System.Threading.Tasks.Task&lt;Azure.Response&gt;" Usage="purviewScanningServiceClient.GetSystemRulesetsForVersionAsync (version, dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Diagnostics.DebuggerStepThrough]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Diagnostics.DebuggerStepThrough&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;Azure.Response&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="version" Type="System.Int32" />
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="version"> The Integer to use. </param>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> Get a scan ruleset by version. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              scanRulesetType: "Custom" | "System",
+              status: "Enabled" | "Disabled",
+              version: number,
+              id: string,
+              name: string,
+              kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsVersions">
+      <MemberSignature Language="C#" Value="public virtual Azure.Pageable&lt;BinaryData&gt; GetSystemRulesetsVersions (string dataSourceType = default, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.Pageable`1&lt;class System.BinaryData&gt; GetSystemRulesetsVersions(string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersions(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsVersions (Optional dataSourceType As String = Nothing, Optional context As RequestContext = Nothing) As Pageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsVersions : string * Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;&#xA;override this.GetSystemRulesetsVersions : string * Azure.RequestContext -&gt; Azure.Pageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetSystemRulesetsVersions (dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Pageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List system scan ruleset versions in Data catalog. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  scanRulesetType: "Custom" | "System",
+                  status: "Enabled" | "Disabled",
+                  version: number,
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSystemRulesetsVersionsAsync">
+      <MemberSignature Language="C#" Value="public virtual Azure.AsyncPageable&lt;BinaryData&gt; GetSystemRulesetsVersionsAsync (string dataSourceType = default, Azure.RequestContext context = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class Azure.AsyncPageable`1&lt;class System.BinaryData&gt; GetSystemRulesetsVersionsAsync(string dataSourceType, class Azure.RequestContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.GetSystemRulesetsVersionsAsync(System.String,Azure.RequestContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetSystemRulesetsVersionsAsync (Optional dataSourceType As String = Nothing, Optional context As RequestContext = Nothing) As AsyncPageable(Of BinaryData)" />
+      <MemberSignature Language="F#" Value="abstract member GetSystemRulesetsVersionsAsync : string * Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;&#xA;override this.GetSystemRulesetsVersionsAsync : string * Azure.RequestContext -&gt; Azure.AsyncPageable&lt;BinaryData&gt;" Usage="purviewScanningServiceClient.GetSystemRulesetsVersionsAsync (dataSourceType, context)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.AsyncPageable&lt;System.BinaryData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="dataSourceType" Type="System.String" />
+        <Parameter Name="context" Type="Azure.RequestContext" />
+      </Parameters>
+      <Docs>
+        <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        <summary> List system scan ruleset versions in Data catalog. </summary>
+        <returns>To be added.</returns>
+        <remarks>
+            Schema for <c>Response Body</c>:
+            <code>{
+              value: [
+                {
+                  scanRulesetType: "Custom" | "System",
+                  status: "Enabled" | "Disabled",
+                  version: number,
+                  id: string,
+                  name: string,
+                  kind: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI"
+                }
+              ],
+              nextLink: string,
+              count: number
+            }
+            </code>
+            Schema for <c>Response Error</c>:
+            <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+            </code></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Pipeline">
+      <MemberSignature Language="C#" Value="public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Azure.Core.Pipeline.HttpPipeline Pipeline" />
+      <MemberSignature Language="DocId" Value="P:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Pipeline As HttpPipeline" />
+      <MemberSignature Language="F#" Value="member this.Pipeline : Azure.Core.Pipeline.HttpPipeline" Usage="Azure.Analytics.Purview.Scanning.PurviewScanningServiceClient.Pipeline" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Azure.Analytics.Purview.Scanning</AssemblyName>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Azure.Core.Pipeline.HttpPipeline</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
