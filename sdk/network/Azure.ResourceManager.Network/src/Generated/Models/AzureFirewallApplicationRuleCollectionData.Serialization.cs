@@ -7,24 +7,25 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallNatRuleCollection : IUtf8JsonSerializable
+    public partial class AzureFirewallApplicationRuleCollectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -52,25 +53,26 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureFirewallNatRuleCollection DeserializeAzureFirewallNatRuleCollection(JsonElement element)
+        internal static AzureFirewallApplicationRuleCollectionData DeserializeAzureFirewallApplicationRuleCollectionData(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             Optional<int> priority = default;
-            Optional<AzureFirewallNatRCAction> action = default;
-            Optional<IList<AzureFirewallNatRule>> rules = default;
+            Optional<AzureFirewallRCAction> action = default;
+            Optional<IList<AzureFirewallApplicationRule>> rules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -81,6 +83,21 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -109,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            action = AzureFirewallNatRCAction.DeserializeAzureFirewallNatRCAction(property0.Value);
+                            action = AzureFirewallRCAction.DeserializeAzureFirewallRCAction(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rules"))
@@ -119,10 +136,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallNatRule> array = new List<AzureFirewallNatRule>();
+                            List<AzureFirewallApplicationRule> array = new List<AzureFirewallApplicationRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRule.DeserializeAzureFirewallNatRule(item));
+                                array.Add(AzureFirewallApplicationRule.DeserializeAzureFirewallApplicationRule(item));
                             }
                             rules = array;
                             continue;
@@ -141,7 +158,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallNatRuleCollection(id.Value, name.Value, etag.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallApplicationRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
         }
     }
 }

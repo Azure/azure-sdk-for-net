@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AvailableProvidersListContent. </summary>
         public AvailableProvidersListContent()
         {
-            AzureLocations = new ChangeTrackingList<string>();
+            AzureLocations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> A list of Azure regions. </summary>
-        public IList<string> AzureLocations { get; }
+        public IList<AzureLocation> AzureLocations { get; }
         /// <summary> The country for available providers list. </summary>
         public string Country { get; set; }
         /// <summary> The state for available providers list. </summary>
